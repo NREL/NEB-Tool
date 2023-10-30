@@ -2,17 +2,31 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
 
-## Development server
+## For Developers
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- When developing in electron window use `npm run build-watch` and a re-build will trigger on save of changes
 
-## Code scaffolding
+- To start the electron app (kill and restart app after rebuild on save): `npm run electron`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- When developing for web run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Build
+- To install all required packages: `npm install`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Built artifacts will be stored in the `/dist` directory.
+
+- General build for electron `npm run build`
+
+- Production Web Build `npm run build-prod`
+
+- Production Electron Build `npm run build-prod-electron`
+
+## Native Installers
+
+- `npm run dist` will create electron installers for your operating system
+
+- Installer will be created in an `/output/verifi/` directory in the parent directory you run the command in
+
 
 ## Running unit tests
 
