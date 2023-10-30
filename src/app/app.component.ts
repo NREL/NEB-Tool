@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ElectronService } from './electron/electron.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'NEB-Tool';
+
+  constructor(private electronService: ElectronService){
+  }
 }
