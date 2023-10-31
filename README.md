@@ -30,7 +30,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - `npm run dist` will create electron installers for your operating system
 
-- Installer will be created in an `/output/verifi/` directory in the parent directory you run the command in
+- Installer will be created in an `/output/neb-tool/` directory in the **parent** directory you run the command in
 
 
 ## Running unit tests
