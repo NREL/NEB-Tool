@@ -1,6 +1,12 @@
-# NEBTool
+# NEB Tool
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
+
+## Dependencies
+
+- We are using NodeJS v 20.9 LTS [nodejs.org](https://nodejs.org/en/download)
+
+- To install all required packages: `npm install`
 
 ## For Developers
 
@@ -11,7 +17,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - When developing for web run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Build
-- To install all required packages: `npm install`
 
 - Built artifacts will be stored in the `/dist` directory.
 
