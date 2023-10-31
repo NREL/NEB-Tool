@@ -8,6 +8,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - To install all required packages: `npm install`
 
+- To install the Angular CLI which is required for tests, `npm install -g @angular/cli`
+
+    - Note: If you don't want to install angular cli globally, you can install it locally using `npm install @angular/cli` and then run it using `npm run-script ng`
+
 ## For Developers
 
 - When developing in electron window use `npm run build-watch` and a re-build will trigger on save of changes
