@@ -48,7 +48,11 @@ If you plan to contribute your code changes to this repository, please review th
 
 - Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-- Karma unit tests use Google Chrome as a default browser. This will need to be installed on your machine for the tests to run. Otherwise you can check the documentation on how to target other browsers using a config file: [Karma Config](https://karma-runner.github.io/6.4/config/configuration-file.html)
+Karma unit tests use Google Chrome as a default browser. This will need to be installed on your machine for the tests to run using `ng test` or `npm run test`.
+
+Otherwise, you can run the tests with a headless version of chrome using `ng test --browsers=ChromeHeadless` or `npm run test-ci`.
+
+Check the [Karma Config](https://karma-runner.github.io/6.4/config/configuration-file.html) documentation on how to target other browsers using a config file.
 
 ## Further help
 

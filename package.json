@@ -13,7 +13,8 @@
     "build-watch": "ng build --base-href . --watch",
     "electron": "electron .",
     "dist": "electron-builder",
-    "test": "ng test"
+    "test": "ng test",
+    "test-ci": "ng test --no-watch --no-progress --browsers=ChromeHeadless"
   },
   "private": true,
   "build": {
