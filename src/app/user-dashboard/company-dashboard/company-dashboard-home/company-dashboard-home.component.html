@@ -6,5 +6,22 @@
                 <li class="breadcrumb-item active" aria-current="page">Company {{companyId}}</li>
             </ol>
         </nav>
+        <div class="h4 pt-2">Company {{companyId}} Facilities:</div>
+        <ul>
+            <li>
+                <a [routerLink]="'/user/company/'+companyId+'/facility/A'">Facility A</a>
+                <ul>
+                    <li>
+                        Project 1
+                    </li>
+                    <li>
+                        Project 2
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a [routerLink]="'/user/company/'+companyId+'/facility/B'">Facility B</a>
+            </li>
+        </ul>
     </div>
 </div>

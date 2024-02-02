@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CompanyDashboardComponent } from './company-dashboard.component';
 import { CompanyDashboardHomeComponent } from './company-dashboard-home/company-dashboard-home.component';
 import { RouterModule } from '@angular/router';
+import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard.module';
 
 
 
@@ -13,7 +14,8 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FacilityDashboardModule
   ]
 })
 export class CompanyDashboardModule { }
