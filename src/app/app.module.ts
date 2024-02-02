@@ -6,19 +6,19 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './core-components/navbar/navbar.component';
 import { WelcomeComponent } from './core-components/welcome/welcome.component';
 import { PageNotFoundComponent } from './core-components/page-not-found/page-not-found.component';
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     WelcomeComponent,
-    PageNotFoundComponent,
-    UserDashboardComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    UserDashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
