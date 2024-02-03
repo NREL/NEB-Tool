@@ -7,6 +7,9 @@ import { NavbarComponent } from './core-components/navbar/navbar.component';
 import { WelcomeComponent } from './core-components/welcome/welcome.component';
 import { PageNotFoundComponent } from './core-components/page-not-found/page-not-found.component';
 import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
+import { CompanyDashboardModule } from './company-dashboard/company-dashboard.module';
+import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard.module';
+import { ProjectDashboardModule } from './project-dashboard/project-dashboard.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UserDashboardModule
+    UserDashboardModule,
+    CompanyDashboardModule,
+    FacilityDashboardModule,
+    ProjectDashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

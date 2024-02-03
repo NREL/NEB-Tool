@@ -8,14 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FacilityDashboardHomeComponent {
 
-  companyId: string = '';
+  companyId: string = 'A';
   facilityId: string = '';
   constructor(private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.companyId = params['id'];
+      this.facilityId = params['id'];
     });
   }
 }

@@ -7,5 +7,14 @@
                 <li class="breadcrumb-item active">Facility {{facilityId}}</li>
             </ol>
         </nav>
+        <div class="h4 pt-2">Facility {{facilityId}} Project:</div>
+        <ul>
+            <li>
+                <a [routerLink]="'/user/company/'+companyId+'/facility/A/project/1'">Project 1</a>
+            </li>
+            <li>
+                <a [routerLink]="'/user/company/'+companyId+'/facility/A/project/2'">Project 2</a>
+            </li>
+        </ul>
     </div>
 </div>
