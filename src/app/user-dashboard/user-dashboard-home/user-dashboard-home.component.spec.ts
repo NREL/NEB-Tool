@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserDashboardHomeComponent } from './user-dashboard-home.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('UserDashboardHomeComponent', () => {
   let component: UserDashboardHomeComponent;
@@ -8,6 +9,7 @@ describe('UserDashboardHomeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [UserDashboardHomeComponent]
     });
     fixture = TestBed.createComponent(UserDashboardHomeComponent);
