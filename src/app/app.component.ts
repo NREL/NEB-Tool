@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ElectronService } from './electron/electron.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +7,6 @@ import { ElectronService } from './electron/electron.service';
 })
 export class AppComponent {
 
-  constructor(private electronService: ElectronService){
+  constructor(){
   }
 }
