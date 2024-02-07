@@ -3,12 +3,14 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
-                <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+companyId">Company {{companyId}}</a></li>
-                <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+companyId+'/facility/'+facilityId">Facility {{facilityId}}</a></li>
-                <li class="breadcrumb-item active">Project {{projectId}}</li>
+                <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedProject.companyId">Company
+                        {{selectedProject.companyId}}</a></li>
+                <li class="breadcrumb-item"><a
+                        [routerLink]="'/user/company/'+selectedProject.companyId+'/facility/'+selectedProject.facilityId">Facility
+                        {{selectedProject.facilityId}}</a></li>
+                <li class="breadcrumb-item active">{{selectedProject.name}}</li>
             </ol>
         </nav>
-
-        <div class="h4 pt-2">Project {{projectId}} Details:</div>
+        <app-project-details-form></app-project-details-form>
     </div>
 </div>

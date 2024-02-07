@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbProject } from 'src/app/models/project';
 
 @Component({
-  selector: 'app-project-dashboard-home',
-  templateUrl: './project-dashboard-home.component.html',
-  styleUrls: ['./project-dashboard-home.component.css']
+  selector: 'app-project-details-form',
+  templateUrl: './project-details-form.component.html',
+  styleUrls: ['./project-details-form.component.css']
 })
-export class ProjectDashboardHomeComponent {
+export class ProjectDetailsFormComponent {
 
   selectedProject: IdbProject;
   selectedProjectSub: Subscription;
@@ -24,5 +23,10 @@ export class ProjectDashboardHomeComponent {
 
   ngOnDestroy() {
     this.selectedProjectSub.unsubscribe();
+  }
+
+ 
+  async saveChanges(){
+    await this.projectIdbService.asyncUpdate(this.selectedProject);
   }
 }

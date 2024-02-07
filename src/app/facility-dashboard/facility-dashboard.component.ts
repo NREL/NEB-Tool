@@ -14,9 +14,9 @@ export class FacilityDashboardComponent {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      let companyGUID: string = params['id'];
-      this.facilityIdbService.setSelectedFromGUID(companyGUID);
-      //TODO: if no company matching id, navigate to dashboard
+      let facilityGUID: string = params['id'];
+      this.facilityIdbService.setSelectedFromGUID(facilityGUID);
+      //TODO: if no project matching id, navigate to dashboard
     });
   }
 }

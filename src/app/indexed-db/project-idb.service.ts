@@ -9,8 +9,10 @@ import { NgxIndexedDBService } from 'ngx-indexed-db';
 export class ProjectIdbService {
 
   projects: BehaviorSubject<Array<IdbProject>>;
+  selectedProject: BehaviorSubject<IdbProject>;
   constructor(private dbService: NgxIndexedDBService) {
     this.projects = new BehaviorSubject<Array<IdbProject>>([]);
+    this.selectedProject = new BehaviorSubject<IdbProject>(undefined);
   }
 
   async initializeData() {
@@ -42,5 +44,17 @@ export class ProjectIdbService {
   async setProjects() {
     let _projects: Array<IdbProject> = await firstValueFrom(this.getAll());
     this.projects.next(_projects);
+  }
+
+  setSelectedFromGUID(guid: string) {
+    let projects: Array<IdbProject> = this.projects.getValue();
+    let project: IdbProject = projects.find(_project => { return _project.guid == guid });
+    this.selectedProject.next(project);
+  }
+
+  async asyncUpdate(project: IdbProject) {
+    project = await firstValueFrom(this.updateWithObservable(project));
+    await this.setProjects();
+    this.selectedProject.next(project);
   }
 }

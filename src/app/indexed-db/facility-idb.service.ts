@@ -57,6 +57,5 @@ export class FacilityIdbService {
     facility = await firstValueFrom(this.updateWithObservable(facility));
     await this.setFacilities();
     this.selectedFacility.next(facility);
-
   }
 }
