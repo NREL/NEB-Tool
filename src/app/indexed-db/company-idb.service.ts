@@ -9,8 +9,10 @@ import { NgxIndexedDBService } from 'ngx-indexed-db';
 export class CompanyIdbService {
 
   companies: BehaviorSubject<Array<IdbCompany>>;
+  selectedCompany: BehaviorSubject<IdbCompany>;
   constructor(private dbService: NgxIndexedDBService) {
     this.companies = new BehaviorSubject<Array<IdbCompany>>([]);
+    this.selectedCompany = new BehaviorSubject<IdbCompany>(undefined);
   }
 
   async initializeData() {
@@ -42,5 +44,17 @@ export class CompanyIdbService {
   async setCompanies() {
     let allCompanies: Array<IdbCompany> = await firstValueFrom(this.getAll());
     this.companies.next(allCompanies);
+  }
+
+  setSelectedFromGUID(guid: string) {
+    let companies: Array<IdbCompany> = this.companies.getValue();
+    let company: IdbCompany = companies.find(_company => { return _company.guid == guid });
+    this.selectedCompany.next(company);
+  }
+
+  async asyncUpdate(company: IdbCompany) {
+    company = await firstValueFrom(this.updateWithObservable(company));
+    await this.setCompanies();
+    this.selectedCompany.next(company);
   }
 }

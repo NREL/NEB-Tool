@@ -1,0 +1,21 @@
+<div class="h4 pt-2">{{selectedCompany.name}} Facilities:</div>
+<ng-container *ngIf="facilities.length > 0">
+    <ul>
+        <li *ngFor="let facility of facilities">
+            <a [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">
+                {{facility.name}}
+            </a>
+            <!-- <ul>
+                <li>
+                    <a [routerLink]="'/user/company/A/facility/B'">Facility B</a>
+                </li>
+            </ul> -->
+        </li>
+    </ul>
+</ng-container>
+
+<ng-container *ngIf="facilities.length == 0">
+    <div class="alert alert-info">
+        No facilites found. Please click "Add Facility" to get started.
+    </div>
+</ng-container>

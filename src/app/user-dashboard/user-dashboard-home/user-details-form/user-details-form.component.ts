@@ -26,6 +26,6 @@ export class UserDetailsFormComponent {
   }
 
   async saveChanges() {
-    await this.userIdbService.asyncUpdateUser(this.user);
+    await this.userIdbService.asyncUpdate(this.user);
   }
 }

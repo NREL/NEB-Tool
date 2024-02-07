@@ -1,28 +1,32 @@
 <div class="row justify-content-center pt-3">
     <div class="col-lg-8 col-sm-12">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Company {{companyId}}</li>
-            </ol>
-        </nav>
-        <div class="h4 pt-2">Company {{companyId}} Facilities:</div>
-        <ul>
-            <li>
-                <a [routerLink]="'/user/company/'+companyId+'/facility/A'">Facility A</a>
-                <ul>
-                    <li>
-                        <a [routerLink]="'/user/company/'+companyId+'/facility/A/project/1'">Project 1</a>
-
-                    </li>
-                    <li>
-                        <a [routerLink]="'/user/company/'+companyId+'/facility/A/project/2'">Project 2</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a [routerLink]="'/user/company/'+companyId+'/facility/B'">Facility B</a>
-            </li>
-        </ul>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{selectedCompany.name}}
+                            Dashboard
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="d-flex">
+                <div class="m-1">
+                    <button class="btn btn-sm btn-primary" (click)="addFacility()">Add Facility</button>
+                </div>
+                <div class="m-1">
+                    <button class="btn btn-sm btn-secondary" [disabled]="true">Import Data</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-8">
+                <app-facilities-list></app-facilities-list>
+            </div>
+            <div class="col-4">
+                <app-company-details-form></app-company-details-form>
+            </div>
+        </div>
     </div>
 </div>

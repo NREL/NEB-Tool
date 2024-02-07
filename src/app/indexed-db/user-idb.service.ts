@@ -48,7 +48,7 @@ export class UserIdbService {
     return this.dbService.update('user', user);
   }
 
-  async asyncUpdateUser(_user: IdbUser): Promise<IdbUser> {
+  async asyncUpdate(_user: IdbUser): Promise<IdbUser> {
     _user = await firstValueFrom(this.updateWithObservable(_user));
     this.user.next(_user);
     return this.user.getValue();

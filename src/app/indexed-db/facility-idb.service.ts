@@ -39,4 +39,9 @@ export class FacilityIdbService {
     facility.modifiedDate = new Date();
     return this.dbService.update('facility', facility);
   }
+
+  async setFacilities() {
+    let _facilities: Array<IdbFacility> = await firstValueFrom(this.getAll());
+    this.facilities.next(_facilities);
+  }
 }

@@ -1,23 +1,16 @@
-<div class="h4 pt-2">Companies</div>
+<div class="h4 pt-2">{{user.name}} Companies</div>
 <ng-container *ngIf="companies.length > 0">
     <ul>
         <li *ngFor="let company of companies">
             <a [routerLink]="'/user/company/'+company.guid">
                 {{company.name}}
             </a>
-            <!-- <a [routerLink]="'/user/company/A'">Company A</a> -->
             <!-- <ul>
-                <li>
-                    <a [routerLink]="'/user/company/A/facility/A'">Facility A</a>
-                </li>
                 <li>
                     <a [routerLink]="'/user/company/A/facility/B'">Facility B</a>
                 </li>
             </ul> -->
         </li>
-        <!-- <li>
-            <a [routerLink]="'/user/company/B'">Company B</a>
-        </li> -->
     </ul>
 </ng-container>
 
