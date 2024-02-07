@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Company } from '../models/company';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { IdbCompany } from '../models/company';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Injectable({
@@ -8,20 +8,25 @@ import { NgxIndexedDBService } from 'ngx-indexed-db';
 })
 export class CompanyIdbService {
 
-  companies: BehaviorSubject<Array<Company>>;
+  companies: BehaviorSubject<Array<IdbCompany>>;
   constructor(private dbService: NgxIndexedDBService) {
-    this.companies = new BehaviorSubject<Array<Company>>([]);
+    this.companies = new BehaviorSubject<Array<IdbCompany>>([]);
   }
 
-  getAll(): Observable<Array<Company>> {
+  async initializeData() {
+    let _companies: Array<IdbCompany> = await firstValueFrom(this.getAll());
+    this.companies.next(_companies);
+  }
+
+  getAll(): Observable<Array<IdbCompany>> {
     return this.dbService.getAll('company');
   }
 
-  getById(id: number): Observable<Company> {
+  getById(id: number): Observable<IdbCompany> {
     return this.dbService.getByKey('company', id);
   }
 
-  addWithObservable(company: Company): Observable<Company> {
+  addWithObservable(company: IdbCompany): Observable<IdbCompany> {
     return this.dbService.add('company', company);
   }
 
@@ -29,8 +34,13 @@ export class CompanyIdbService {
     return this.dbService.delete('company', id);
   }
 
-  updateWithObservable(company: Company): Observable<Company> {
-    company.setModifiedDate();
+  updateWithObservable(company: IdbCompany): Observable<IdbCompany> {
+    company.modifiedDate = new Date();
     return this.dbService.update('company', company);
+  }
+
+  async setCompanies() {
+    let allCompanies: Array<IdbCompany> = await firstValueFrom(this.getAll());
+    this.companies.next(allCompanies);
   }
 }

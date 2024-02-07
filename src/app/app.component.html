@@ -1,2 +1,7 @@
 <app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<ng-container *ngIf="dataInitialized">
+    <router-outlet></router-outlet>
+</ng-container>
+<ng-container *ngIf="!dataInitialized">
+    Initializing data...
+</ng-container>

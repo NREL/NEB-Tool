@@ -1,20 +1,17 @@
-import { getGUID } from "../shared/helpFunctions";
+import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
-export class Facility {
+export interface IdbFacility extends IdbEntry {
+    name: string,
+    companyId: string,
+    userId: string
+}
 
-    id?: number;
-    guid: string;
-    name: string;
-    createdDate: Date;
-    modifiedDate: Date;
-    constructor(){
-        this.guid = getGUID();
-        this.name = '';
-        this.createdDate = new Date();
-        this.setModifiedDate();
-    }
-
-    setModifiedDate(){
-        this.modifiedDate = new Date();
+export function getNewIdbFacility(userId: string, companyId: string): IdbFacility {
+    let idbEntry: IdbEntry = getNewIdbEntry();
+    return {
+        ...idbEntry,
+        name: 'New Facility',
+        userId: userId,
+        companyId: companyId
     }
 }
