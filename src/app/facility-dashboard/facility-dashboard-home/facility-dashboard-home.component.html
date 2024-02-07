@@ -5,9 +5,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
-                        <!--TODO: use a name pipe for company name instead of ID-->
-                        <li class="breadcrumb-item"><a
-                                [routerLink]="'/user/company/'+selectedFacility.companyId">Company
+                        <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedFacility.companyId">
                                 {{selectedFacility.companyId | companyName}}</a></li>
                         <li class="breadcrumb-item active">{{selectedFacility.name}}</li>
                     </ol>

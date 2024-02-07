@@ -5,11 +5,12 @@
             <a [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">
                 {{facility.name}}
             </a>
-            <!-- <ul>
+            <ul *ngFor="let project of facility.guid | projectsList">
                 <li>
-                    <a [routerLink]="'/user/company/A/facility/B'">Facility B</a>
+                    <a
+                        [routerLink]="'/user/company/'+project.companyId+'/facility/'+project.facilityId+'/project/'+project.guid">{{project.name}}</a>
                 </li>
-            </ul> -->
+            </ul>
         </li>
     </ul>
 </ng-container>

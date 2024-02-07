@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FacilitiesListComponent } from './company-dashboard-home/facilities-list/facilities-list.component';
 import { CompanyDetailsFormComponent } from './company-dashboard-home/company-details-form/company-details-form.component';
 import { FormsModule } from '@angular/forms';
+import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    HelperPipesModule
   ]
 })
 export class CompanyDashboardModule { }
