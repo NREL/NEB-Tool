@@ -8,7 +8,7 @@
                         <!--TODO: use a name pipe for company name instead of ID-->
                         <li class="breadcrumb-item"><a
                                 [routerLink]="'/user/company/'+selectedFacility.companyId">Company
-                                {{selectedFacility.companyId}}</a></li>
+                                {{selectedFacility.companyId | companyName}}</a></li>
                         <li class="breadcrumb-item active">{{selectedFacility.name}}</li>
                     </ol>
                 </nav>

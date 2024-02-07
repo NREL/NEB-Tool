@@ -48,8 +48,7 @@ export class FacilityIdbService {
   }
 
   setSelectedFromGUID(guid: string) {
-    let facilities: Array<IdbFacility> = this.facilities.getValue();
-    let facility: IdbFacility = facilities.find(_facility => { return _facility.guid == guid });
+    let facility: IdbFacility = this.getByGUID(guid);
     this.selectedFacility.next(facility);
   }
 
@@ -57,5 +56,12 @@ export class FacilityIdbService {
     facility = await firstValueFrom(this.updateWithObservable(facility));
     await this.setFacilities();
     this.selectedFacility.next(facility);
+  }
+
+  getByGUID(guid: string): IdbFacility {
+    let facilities: Array<IdbFacility> = this.facilities.getValue();
+    let facility: IdbFacility = facilities.find(_facility => { return _facility.guid == guid });
+    return facility;
+
   }
 }

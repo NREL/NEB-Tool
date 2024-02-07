@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FacilityDetailsFormComponent } from './facility-dashboard-home/facility-details-form/facility-details-form.component';
 import { ProjectsListComponent } from './facility-dashboard-home/projects-list/projects-list.component';
 import { FormsModule } from '@angular/forms';
+import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 
 
 
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    HelperPipesModule
   ]
 })
 export class FacilityDashboardModule { }

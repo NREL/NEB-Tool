@@ -5,6 +5,7 @@ import { ProjectDashboardHomeComponent } from './project-dashboard-home/project-
 import { RouterModule } from '@angular/router';
 import { ProjectDetailsFormComponent } from './project-dashboard-home/project-details-form/project-details-form.component';
 import { FormsModule } from '@angular/forms';
+import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 
 
 
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    HelperPipesModule
   ]
 })
 export class ProjectDashboardModule { }

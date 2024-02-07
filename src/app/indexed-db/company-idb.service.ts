@@ -47,8 +47,7 @@ export class CompanyIdbService {
   }
 
   setSelectedFromGUID(guid: string) {
-    let companies: Array<IdbCompany> = this.companies.getValue();
-    let company: IdbCompany = companies.find(_company => { return _company.guid == guid });
+    let company: IdbCompany = this.getByGUID(guid);
     this.selectedCompany.next(company);
   }
 
@@ -57,4 +56,11 @@ export class CompanyIdbService {
     await this.setCompanies();
     this.selectedCompany.next(company);
   }
+
+  getByGUID(guid: string): IdbCompany {
+    let companies: Array<IdbCompany> = this.companies.getValue();
+    let company: IdbCompany = companies.find(_company => { return _company.guid == guid });
+    return company;
+  }
+
 }

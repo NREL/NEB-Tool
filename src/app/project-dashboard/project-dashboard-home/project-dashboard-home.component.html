@@ -4,10 +4,10 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
                 <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedProject.companyId">Company
-                        {{selectedProject.companyId}}</a></li>
+                        {{selectedProject.companyId | companyName}}</a></li>
                 <li class="breadcrumb-item"><a
-                        [routerLink]="'/user/company/'+selectedProject.companyId+'/facility/'+selectedProject.facilityId">Facility
-                        {{selectedProject.facilityId}}</a></li>
+                        [routerLink]="'/user/company/'+selectedProject.companyId+'/facility/'+selectedProject.facilityId">
+                        {{selectedProject.facilityId | facilityName}}</a></li>
                 <li class="breadcrumb-item active">{{selectedProject.name}}</li>
             </ol>
         </nav>
