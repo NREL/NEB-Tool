@@ -1,20 +1,34 @@
 <div class="row justify-content-center pt-3">
     <div class="col-lg-8 col-sm-12">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
-                <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+companyId">Company {{companyId}}</a></li>
-                <li class="breadcrumb-item active">Facility {{facilityId}}</li>
-            </ol>
-        </nav>
-        <div class="h4 pt-2">Facility {{facilityId}} Project:</div>
-        <ul>
-            <li>
-                <a [routerLink]="'/user/company/'+companyId+'/facility/A/project/1'">Project 1</a>
-            </li>
-            <li>
-                <a [routerLink]="'/user/company/'+companyId+'/facility/A/project/2'">Project 2</a>
-            </li>
-        </ul>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
+                        <!--TODO: use a name pipe for company name instead of ID-->
+                        <li class="breadcrumb-item"><a
+                                [routerLink]="'/user/company/'+selectedFacility.companyId">Company
+                                {{selectedFacility.companyId}}</a></li>
+                        <li class="breadcrumb-item active">{{selectedFacility.name}}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="d-flex">
+                <div class="m-1">
+                    <button class="btn btn-sm btn-primary" (click)="addProject()">Add Project</button>
+                </div>
+                <div class="m-1">
+                    <button class="btn btn-sm btn-secondary" [disabled]="true">Import Data</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-8">
+                <app-projects-list></app-projects-list>
+            </div>
+            <div class="col-4">
+                <app-facility-details-form></app-facility-details-form>
+            </div>
+        </div>
     </div>
 </div>

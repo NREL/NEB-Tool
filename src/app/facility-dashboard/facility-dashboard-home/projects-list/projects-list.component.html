@@ -1,0 +1,17 @@
+<div class="h4 pt-2">{{selectedFacility.name}} Projects:</div>
+<ng-container *ngIf="projects.length > 0">
+    <ul>
+        <li *ngFor="let project of projects">
+            <a
+                [routerLink]="'/user/company/'+project.companyId+'/facility/'+project.facilityId+'/project/'+project.guid">
+                {{project.name}}
+            </a>
+        </li>
+    </ul>
+</ng-container>
+
+<ng-container *ngIf="projects.length == 0">
+    <div class="alert alert-info">
+        No Projects found. Please click "Add Project" to get started.
+    </div>
+</ng-container>

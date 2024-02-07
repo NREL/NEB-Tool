@@ -19,7 +19,7 @@ export class ProjectIdbService {
   }
 
   getAll(): Observable<Array<IdbProject>> {
-    return this.dbService.getAll('facility');
+    return this.dbService.getAll('project');
   }
 
   getById(id: number): Observable<IdbProject> {
@@ -37,5 +37,10 @@ export class ProjectIdbService {
   updateWithObservable(project: IdbProject): Observable<IdbProject> {
     project.modifiedDate = new Date();
     return this.dbService.update('project', project);
+  }
+
+  async setProjects() {
+    let _projects: Array<IdbProject> = await firstValueFrom(this.getAll());
+    this.projects.next(_projects);
   }
 }

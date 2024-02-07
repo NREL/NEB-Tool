@@ -10,8 +10,10 @@ export class FacilityIdbService {
 
 
   facilities: BehaviorSubject<Array<IdbFacility>>;
+  selectedFacility: BehaviorSubject<IdbFacility>;
   constructor(private dbService: NgxIndexedDBService) {
     this.facilities = new BehaviorSubject<Array<IdbFacility>>([]);
+    this.selectedFacility = new BehaviorSubject<IdbFacility>(undefined);
   }
 
   async initializeData() {
@@ -43,5 +45,18 @@ export class FacilityIdbService {
   async setFacilities() {
     let _facilities: Array<IdbFacility> = await firstValueFrom(this.getAll());
     this.facilities.next(_facilities);
+  }
+
+  setSelectedFromGUID(guid: string) {
+    let facilities: Array<IdbFacility> = this.facilities.getValue();
+    let facility: IdbFacility = facilities.find(_facility => { return _facility.guid == guid });
+    this.selectedFacility.next(facility);
+  }
+
+  async asyncUpdate(facility: IdbFacility) {
+    facility = await firstValueFrom(this.updateWithObservable(facility));
+    await this.setFacilities();
+    this.selectedFacility.next(facility);
+
   }
 }

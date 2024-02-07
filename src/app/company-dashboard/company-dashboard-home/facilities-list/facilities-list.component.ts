@@ -27,7 +27,9 @@ export class FacilitiesListComponent {
       this.selectedCompany = _company;
     });
 
+
     this.facilitiesSub = this.facilityIdbService.facilities.subscribe(_facilities => {
+      //TODO: use pipe for facilities list filter
       this.facilities = _facilities.filter(facility => {return facility.companyId == this.selectedCompany.guid});
     });
   }

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
@@ -16,8 +15,7 @@ export class UserDashboardHomeComponent {
 
   user: IdbUser;
   userSub: Subscription;
-  constructor(private userIdbService: UserIdbService, private companyIdbService: CompanyIdbService,
-    private router: Router) {
+  constructor(private userIdbService: UserIdbService, private companyIdbService: CompanyIdbService) {
 
   }
 
