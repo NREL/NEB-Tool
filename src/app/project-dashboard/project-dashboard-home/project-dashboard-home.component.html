@@ -1,16 +1,25 @@
 <div class="row justify-content-center pt-3">
     <div class="col-lg-8 col-sm-12">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
-                <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedProject.companyId">
-                        {{selectedProject.companyId | companyName}}</a></li>
-                <li class="breadcrumb-item"><a
-                        [routerLink]="'/user/company/'+selectedProject.companyId+'/facility/'+selectedProject.facilityId">
-                        {{selectedProject.facilityId | facilityName}}</a></li>
-                <li class="breadcrumb-item active">{{selectedProject.name}}</li>
-            </ol>
-        </nav>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedProject.companyId">
+                                {{selectedProject.companyId | companyName}}</a></li>
+                        <li class="breadcrumb-item"><a
+                                [routerLink]="'/user/company/'+selectedProject.companyId+'/facility/'+selectedProject.facilityId">
+                                {{selectedProject.facilityId | facilityName}}</a></li>
+                        <li class="breadcrumb-item active">{{selectedProject.name}}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="d-flex">
+                <div class="m-1">
+                    <button class="btn btn-sm btn-danger" (click)="deleteProject()">Delete Project</button>
+                </div>
+            </div>
+        </div>
         <app-project-details-form></app-project-details-form>
     </div>
 </div>

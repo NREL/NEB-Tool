@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbProject } from 'src/app/models/project';
 
@@ -13,7 +14,9 @@ export class ProjectDashboardHomeComponent {
 
   selectedProject: IdbProject;
   selectedProjectSub: Subscription;
-  constructor(private projectIdbService: ProjectIdbService) {
+  constructor(private projectIdbService: ProjectIdbService,
+    private dbChangesService: DbChangesService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -24,5 +27,10 @@ export class ProjectDashboardHomeComponent {
 
   ngOnDestroy() {
     this.selectedProjectSub.unsubscribe();
+  }
+
+  async deleteProject() {
+    await this.dbChangesService.deleteProjects([this.selectedProject]);
+    this.router.navigateByUrl('/user/company/' + this.selectedProject.companyId + '/facility/' + this.selectedProject.facilityId);
   }
 }
