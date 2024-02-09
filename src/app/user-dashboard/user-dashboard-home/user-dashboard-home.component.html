@@ -1,0 +1,37 @@
+<div class="row justify-content-center pt-3">
+    <div class="col-lg-8 col-sm-12">
+        <div class="h3">User Dashboard</div>
+        <div class="row">
+            <div class="col-8">
+                <div class="d-flex">
+                    <div class="m-1">
+                        <button class="btn btn-sm btn-primary">Add Company</button>
+                    </div>
+                    <div class="m-1">
+                        <button class="btn btn-sm btn-secondary" [disabled]="true">Import Data</button>
+                    </div>
+                </div>
+                <div class="h4 pt-2">Companies</div>
+                <ul>
+                    <li>
+                        <a [routerLink]="'/user/company/A'">Company A</a>
+                        <ul>
+                            <li>
+                                <a [routerLink]="'/user/company/A/facility/A'">Facility A</a>
+                            </li>
+                            <li>
+                                <a [routerLink]="'/user/company/A/facility/B'">Facility B</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a [routerLink]="'/user/company/B'">Company B</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-4">
+                Dashboard Actions
+            </div>
+        </div>
+    </div>
+</div>
