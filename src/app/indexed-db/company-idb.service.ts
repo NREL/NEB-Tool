@@ -15,9 +15,9 @@ export class CompanyIdbService {
     this.selectedCompany = new BehaviorSubject<IdbCompany>(undefined);
   }
 
-  async initializeData() {
-    let _companies: Array<IdbCompany> = await firstValueFrom(this.getAll());
-    this.companies.next(_companies);
+  async setCompanies() {
+    let allCompanies: Array<IdbCompany> = await firstValueFrom(this.getAll());
+    this.companies.next(allCompanies);
   }
 
   getAll(): Observable<Array<IdbCompany>> {
@@ -39,11 +39,6 @@ export class CompanyIdbService {
   updateWithObservable(company: IdbCompany): Observable<IdbCompany> {
     company.modifiedDate = new Date();
     return this.dbService.update('company', company);
-  }
-
-  async setCompanies() {
-    let allCompanies: Array<IdbCompany> = await firstValueFrom(this.getAll());
-    this.companies.next(allCompanies);
   }
 
   setSelectedFromGUID(guid: string) {

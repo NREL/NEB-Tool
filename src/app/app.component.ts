@@ -27,13 +27,13 @@ export class AppComponent {
     await this.userIdbService.initializeData();
     console.log('users init..');
     //companies
-    await this.companyIdbService.initializeData();
+    await this.companyIdbService.setCompanies();
     console.log('companies init..');
     //facilities
-    await this.facilityIdbService.initializeData();
+    await this.facilityIdbService.setFacilities();
     console.log('facilities init..');
     //projects 
-    await this.projectIdbService.initializeData();
+    await this.projectIdbService.setProjects();
     console.log('projects init..');
     this.dataInitialized = true;
   }

@@ -16,7 +16,7 @@ export class FacilityIdbService {
     this.selectedFacility = new BehaviorSubject<IdbFacility>(undefined);
   }
 
-  async initializeData() {
+  async setFacilities() {
     let _facilities: Array<IdbFacility> = await firstValueFrom(this.getAll());
     this.facilities.next(_facilities);
   }
@@ -41,12 +41,7 @@ export class FacilityIdbService {
     facility.modifiedDate = new Date();
     return this.dbService.update('facility', facility);
   }
-
-  async setFacilities() {
-    let _facilities: Array<IdbFacility> = await firstValueFrom(this.getAll());
-    this.facilities.next(_facilities);
-  }
-
+  
   setSelectedFromGUID(guid: string) {
     let facility: IdbFacility = this.getByGUID(guid);
     this.selectedFacility.next(facility);

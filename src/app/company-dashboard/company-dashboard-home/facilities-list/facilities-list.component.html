@@ -1,5 +1,5 @@
 <div class="h4 pt-2">{{selectedCompany.name}} Facilities:</div>
-<ng-container *ngIf="facilities.length > 0">
+<ng-template [ngIf]="facilities.length > 0" [ngIfElse]="noFacilitiesBlock">
     <ul>
         <li *ngFor="let facility of facilities">
             <a [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">
@@ -13,10 +13,10 @@
             </ul>
         </li>
     </ul>
-</ng-container>
+</ng-template>
 
-<ng-container *ngIf="facilities.length == 0">
+<ng-template #noFacilitiesBlock>
     <div class="alert alert-info">
         No facilites found. Please click "Add Facility" to get started.
     </div>
-</ng-container>
+</ng-template>

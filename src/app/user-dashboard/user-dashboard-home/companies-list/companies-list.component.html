@@ -1,5 +1,5 @@
 <div class="h4 pt-2">{{user.name}} Companies</div>
-<ng-container *ngIf="companies.length > 0">
+<ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompaniesBlock">
     <ul>
         <li *ngFor="let company of companies">
             <a [routerLink]="'/user/company/'+company.guid">
@@ -13,10 +13,10 @@
             </ul>
         </li>
     </ul>
-</ng-container>
+</ng-template>
 
-<ng-container *ngIf="companies.length == 0">
+<ng-template #noCompaniesBlock>
     <div class="alert alert-info">
         No companies found. Please click "Add New Company" to get started.
     </div>
-</ng-container>
+</ng-template>

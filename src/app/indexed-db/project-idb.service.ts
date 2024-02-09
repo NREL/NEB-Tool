@@ -15,7 +15,7 @@ export class ProjectIdbService {
     this.selectedProject = new BehaviorSubject<IdbProject>(undefined);
   }
 
-  async initializeData() {
+  async setProjects() {
     let _projects: Array<IdbProject> = await firstValueFrom(this.getAll());
     this.projects.next(_projects);
   }
@@ -39,12 +39,7 @@ export class ProjectIdbService {
   updateWithObservable(project: IdbProject): Observable<IdbProject> {
     project.modifiedDate = new Date();
     return this.dbService.update('project', project);
-  }
-
-  async setProjects() {
-    let _projects: Array<IdbProject> = await firstValueFrom(this.getAll());
-    this.projects.next(_projects);
-  }
+  } 
 
   setSelectedFromGUID(guid: string) {
     let projects: Array<IdbProject> = this.projects.getValue();
