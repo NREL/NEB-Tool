@@ -1,14 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavbarComponent } from './navbar.component';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
 
   beforeEach(() => {
+    let userDbService: Partial<UserIdbService> = {}
     TestBed.configureTestingModule({
-      declarations: [NavbarComponent]
+      imports: [RouterTestingModule],
+      declarations: [NavbarComponent],
+      providers: [
+        { provide: UserIdbService, useValue: userDbService }
+      ]
     });
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;

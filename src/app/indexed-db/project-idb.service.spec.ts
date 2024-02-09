@@ -1,12 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ProjectIdbService } from './project-idb.service';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 describe('ProjectIdbService', () => {
   let service: ProjectIdbService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    let dbService: Partial<NgxIndexedDBService> = {}
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: NgxIndexedDBService, useValue: dbService }
+      ]
+    });
     service = TestBed.inject(ProjectIdbService);
   });
 

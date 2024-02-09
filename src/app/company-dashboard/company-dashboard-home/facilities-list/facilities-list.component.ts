@@ -30,7 +30,7 @@ export class FacilitiesListComponent {
 
     this.facilitiesSub = this.facilityIdbService.facilities.subscribe(_facilities => {
       //TODO: use pipe for facilities list filter
-      this.facilities = _facilities.filter(facility => {return facility.companyId == this.selectedCompany.guid});
+      this.facilities = _facilities;
     });
   }
 
