@@ -8,6 +8,8 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbFacility } from 'src/app/models/facility';
 
 describe('CompaniesListComponent', () => {
   let component: CompaniesListComponent;
@@ -19,13 +21,17 @@ describe('CompaniesListComponent', () => {
     };
     let companyIdbService: Partial<CompanyIdbService> = {
       companies: new BehaviorSubject<Array<IdbCompany>>([])
-    }
+    };
+    let facilityIdbService: Partial<FacilityIdbService> = {
+      facilities: new BehaviorSubject<Array<IdbFacility>>([])
+    };
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HelperPipesModule],
       declarations: [CompaniesListComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
-        { provide: CompanyIdbService, useVale: companyIdbService }
+        { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: FacilityIdbService, useValue: facilityIdbService }
       ]
     });
     fixture = TestBed.createComponent(CompaniesListComponent);

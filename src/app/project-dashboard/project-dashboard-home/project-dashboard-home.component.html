@@ -6,10 +6,10 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
                         <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedProject.companyId">
-                                {{selectedProject.companyId | companyName}}</a></li>
+                                {{selectedProject.companyId | companyName:companies}}</a></li>
                         <li class="breadcrumb-item"><a
                                 [routerLink]="'/user/company/'+selectedProject.companyId+'/facility/'+selectedProject.facilityId">
-                                {{selectedProject.facilityId | facilityName}}</a></li>
+                                {{selectedProject.facilityId | facilityName:facilities}}</a></li>
                         <li class="breadcrumb-item active">{{selectedProject.name}}</li>
                     </ol>
                 </nav>

@@ -6,7 +6,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
                         <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedFacility.companyId">
-                                {{selectedFacility.companyId | companyName}}</a></li>
+                                {{selectedFacility.companyId | companyName:companies}}</a></li>
                         <li class="breadcrumb-item active">{{selectedFacility.name}}</li>
                     </ol>
                 </nav>

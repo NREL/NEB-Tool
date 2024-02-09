@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
 
 @Pipe({
@@ -7,11 +6,10 @@ import { IdbFacility } from 'src/app/models/facility';
 })
 export class FacilityNamePipe implements PipeTransform {
 
-  constructor(private facilityIdbService: FacilityIdbService) {
-  }
-
-  transform(facilityGUID: string): string {
-    let facility: IdbFacility = this.facilityIdbService.getByGUID(facilityGUID);
+  transform(facilityGUID: string, facilities: Array<IdbFacility>): string {
+    let facility: IdbFacility = facilities.find(_facility => {
+      return _facility.guid == facilityGUID;
+    });
     if (facility) {
       return facility.name;
     }

@@ -8,6 +8,11 @@ import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 import { BehaviorSubject } from 'rxjs';
 import { ProjectDetailsFormComponent } from './project-details-form/project-details-form.component';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbFacility } from 'src/app/models/facility';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { IdbCompany } from 'src/app/models/company';
+import { FormsModule } from '@angular/forms';
 
 describe('ProjectDashboardHomeComponent', () => {
   let component: ProjectDashboardHomeComponent;
@@ -19,13 +24,21 @@ describe('ProjectDashboardHomeComponent', () => {
     }
     let dbChangesService: Partial<DbChangesService> = {
 
-    }
+    };
+    let facilityIdbService: Partial<FacilityIdbService> = {
+      facilities: new BehaviorSubject<Array<IdbFacility>>([])
+    };
+    let companyIdbService: Partial<CompanyIdbService> = {
+      companies: new BehaviorSubject<Array<IdbCompany>>([])
+    };
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HelperPipesModule],
+      imports: [RouterTestingModule, HelperPipesModule, FormsModule],
       declarations: [ProjectDashboardHomeComponent, ProjectDetailsFormComponent],
       providers: [
         { provide: ProjectIdbService, useValue: projectIdbService },
-        { provide: DbChangesService, useValue: dbChangesService }
+        { provide: DbChangesService, useValue: dbChangesService },
+        { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: FacilityIdbService, useValue: facilityIdbService }
       ]
     });
     fixture = TestBed.createComponent(ProjectDashboardHomeComponent);

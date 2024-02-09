@@ -5,7 +5,7 @@
             <a [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">
                 {{facility.name}}
             </a>
-            <ul *ngFor="let project of facility.guid | projectsList">
+            <ul *ngFor="let project of facility.guid | projectsList: projects">
                 <li>
                     <a
                         [routerLink]="'/user/company/'+project.companyId+'/facility/'+project.facilityId+'/project/'+project.guid">{{project.name}}</a>

@@ -11,6 +11,8 @@ import { BehaviorSubject } from 'rxjs';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { FormsModule } from '@angular/forms';
+import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { IdbProject } from 'src/app/models/project';
 
 describe('CompanyDashboardHomeComponent', () => {
   let component: CompanyDashboardHomeComponent;
@@ -25,13 +27,17 @@ describe('CompanyDashboardHomeComponent', () => {
       facilities: new BehaviorSubject<Array<IdbFacility>>([]),
       selectedFacility: new BehaviorSubject<IdbFacility>(undefined)
     }
+    let projectDbService: Partial<ProjectIdbService> = {
+      projects: new BehaviorSubject<Array<IdbProject>>([])
+    }
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FormsModule],
       declarations: [CompanyDashboardHomeComponent, FacilitiesListComponent, CompanyDetailsFormComponent],
       providers: [
         {provide: CompanyIdbService, useValue: companyDbServiceStub},
         {provide: FacilityIdbService, useValue: facilityDbServiceStub},
-        {provide: DbChangesService, useValue: {}}
+        {provide: DbChangesService, useValue: {}},
+        { provide: ProjectIdbService, useValue: projectDbService }
       ]
     });
     fixture = TestBed.createComponent(CompanyDashboardHomeComponent);
