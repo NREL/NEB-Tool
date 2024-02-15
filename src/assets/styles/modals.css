@@ -1,0 +1,47 @@
+.window-overlay {
+    position: fixed;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+    z-index: 9990;
+}
+
+.popup {
+    border-style: solid;
+    border: 1px solid #ffffff;
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px #0000003d;
+    z-index: 9999;
+    transform: scale(0);
+    position: fixed;
+    width: 500px;
+    left: calc(50% - 250px);
+    top: 20%;
+    background-color: white;
+    transition: 0.2s transform;
+}
+
+.popup.open {
+    transform: scale(1);
+}
+
+.popup .popup-header {
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 3px 3px 0 0;
+}
+
+.popup .popup-body {
+    background-color: #ffffff;
+    color: black;
+    padding: 10px;
+}
+
+.popup .popup-footer {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}

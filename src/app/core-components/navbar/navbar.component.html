@@ -2,9 +2,28 @@
     <div class="container-fluid">
         <a class="navbar-brand" routerLink="/welcome">NEB Tool</a>
         <div>
-            <button class="btn btn-danger" (click)="resetDatabase()">
+            <button class="btn btn-danger" (click)="openResetDatabaseModal()">
                 Reset Database
             </button>
         </div>
     </div>
 </nav>
+
+
+<div [ngClass]="{'window-overlay': showResetModal}"></div>
+<div class="popup" [ngClass]="{'open': showResetModal }">
+    <div class="popup-header">Reset Your Database
+        <button type="button" class="btn-close float-end" aria-label="Close"
+            (click)="closeResetDatabaseModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-danger">
+            Are you sure you want to reset your data? This cannot be undone.
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeResetDatabaseModal()">Cancel</button>
+        <button class="btn btn-danger" (click)="resetDatabase()">Reset Database</button>
+    </div>
+</div>
