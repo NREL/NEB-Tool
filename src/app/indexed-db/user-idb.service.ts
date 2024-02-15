@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, first, firstValueFrom } from 'rxjs';
 import { IdbUser, getNewIdbUser } from '../models/user';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { ElectronService } from '../electron/electron.service';
@@ -59,18 +59,12 @@ export class UserIdbService {
   }
 
   // *WARNING* Can not be undone
-  deleteDatabase() {
+  async deleteDatabase() {
     try {
-      this.dbService.deleteDatabase().subscribe(
-        () => {
-          console.log('database deleted..');
-          this.finishDelete();
-        },
-        error => {
-          console.log(error);
-          this.finishDelete();
-        }
-      );
+      this.dbService.deleteDatabase().subscribe(() => {
+        console.log('database deleted..');
+        this.finishDelete();
+      });
     } catch (err) {
       console.log('ERROR')
       console.log(err);
@@ -79,6 +73,7 @@ export class UserIdbService {
   }
 
   finishDelete() {
+    //Refresh application on delete
     if (this.electronService.isElectron) {
       this.electronService.sendAppRelaunch();
     } else {

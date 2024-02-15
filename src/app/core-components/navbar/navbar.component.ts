@@ -18,9 +18,9 @@ export class NavbarComponent {
 
   resetDatabase() {
     this.closeResetDatabaseModal();
-    this.loadingService.setLoadingMessage('Resetting Database...');
+    this.loadingService.setLoadingMessage('Resetting Database... This may take a moment. The page will refresh after the database is reset. If this takes more than a minute, refresh the page.');
     this.loadingService.setLoadingStatus(true);
-    // this.userIdbService.deleteDatabase();
+    this.userIdbService.deleteDatabase();
   }
 
   openResetDatabaseModal() {
