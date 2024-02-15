@@ -11,13 +11,15 @@ import { CompanyDashboardModule } from './company-dashboard/company-dashboard.mo
 import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard.module';
 import { ProjectDashboardModule } from './project-dashboard/project-dashboard.module';
 import { IndexedDbModule } from './indexed-db/indexed-db.module';
+import { LoadingComponent } from './core-components/loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     WelcomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

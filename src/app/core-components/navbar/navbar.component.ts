@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { LoadingService } from '../loading/loading.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,19 +11,23 @@ export class NavbarComponent {
 
 
   showResetModal: boolean = false;
-  constructor(private userIdbService: UserIdbService) {
+  constructor(private userIdbService: UserIdbService,
+    private loadingService: LoadingService) {
 
   }
 
   resetDatabase() {
-    this.userIdbService.deleteDatabase();
+    this.closeResetDatabaseModal();
+    this.loadingService.setLoadingMessage('Resetting Database...');
+    this.loadingService.setLoadingStatus(true);
+    // this.userIdbService.deleteDatabase();
   }
 
-  openResetDatabaseModal(){
+  openResetDatabaseModal() {
     this.showResetModal = true;
   }
 
-  closeResetDatabaseModal(){
+  closeResetDatabaseModal() {
     this.showResetModal = false;
   }
 }
