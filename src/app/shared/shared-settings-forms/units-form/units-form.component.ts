@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EnergyUnitOptions, MassUnitOptions, UnitOption, VolumeGasOptions, VolumeLiquidOptions } from './unitOptions';
 import { IdbCompany } from 'src/app/models/company';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { UnitSettings } from 'src/app/models/unitSettings';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbFacility } from 'src/app/models/facility';
 
 @Component({
   selector: 'app-units-form',
@@ -12,6 +14,8 @@ import { UnitSettings } from 'src/app/models/unitSettings';
   styleUrls: ['./units-form.component.css']
 })
 export class UnitsFormComponent {
+  @Input()
+  inCompany: boolean;
 
   form: FormGroup;
   energyUnitOptions: Array<UnitOption> = EnergyUnitOptions;
@@ -19,23 +23,35 @@ export class UnitsFormComponent {
   volumeLiquidOptions: Array<UnitOption> = VolumeLiquidOptions;
   massUnitOptions: Array<UnitOption> = MassUnitOptions;
 
+  facility: IdbFacility;
   company: IdbCompany;
-  selectedCompanySub: Subscription;
-  constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService) {
+  companyOrFacilitySub: Subscription;
+  constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
+    private facilityIdbService: FacilityIdbService) {
   }
 
   ngOnInit() {
-    this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(_company => {
-      if (!this.company || (this.company.guid != _company.guid)) {
-        //initialize form on company change
-        this.form = this.getUnitsForm(_company);
-      }
-      this.company = _company;
-    });
+    if (this.inCompany) {
+      this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+        if (!this.company || (this.company.guid != _company.guid)) {
+          //initialize form on company change
+          this.form = this.getUnitsForm(_company);
+        }
+        this.company = _company;
+      });
+    } else {
+      this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
+        if (!this.facility || (this.facility.guid != _facility.guid)) {
+          //initialize form on company change
+          this.form = this.getUnitsForm(_facility);
+        }
+        this.facility = _facility;
+      });
+    }
   }
 
   ngOnDestroy() {
-    this.selectedCompanySub.unsubscribe();
+    this.companyOrFacilitySub.unsubscribe();
   }
 
   getUnitsForm(unitSettings: UnitSettings): FormGroup {
@@ -50,10 +66,17 @@ export class UnitsFormComponent {
     return form;
   }
   async saveChanges() {
-    let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company);
-    this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
-    this.updateCompanyFromForm();
-    await this.companyIdbService.asyncUpdate(this.company);
+    if (this.inCompany) {
+      let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company);
+      this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
+      this.updateCompanyFromForm();
+      await this.companyIdbService.asyncUpdate(this.company);
+    } else {
+      let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.facility);
+      this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
+      this.updateFacilityFromForm();
+      await this.facilityIdbService.asyncUpdate(this.facility);
+    }
   }
 
   async setUnitsOfMeasure() {
@@ -79,6 +102,16 @@ export class UnitsFormComponent {
     this.company.volumeGasUnit = this.form.controls['volumeGasUnit'].value;
     this.company.electricityUnit = this.form.controls['electricityUnit'].value;
   }
+
+  updateFacilityFromForm() {
+    this.facility.unitsOfMeasure = this.form.controls['unitsOfMeasure'].value;
+    this.facility.energyUnit = this.form.controls['energyUnit'].value;
+    this.facility.massUnit = this.form.controls['massUnit'].value;
+    this.facility.volumeLiquidUnit = this.form.controls['volumeLiquidUnit'].value;
+    this.facility.volumeGasUnit = this.form.controls['volumeGasUnit'].value;
+    this.facility.electricityUnit = this.form.controls['electricityUnit'].value;
+  }
+
 
   getUnitsOfMeasure(unitSettings: UnitSettings): "Metric" | "Imperial" | "Custom" {
     let selectedEnergyOption: UnitOption = EnergyUnitOptions.find(option => { return option.value == unitSettings.energyUnit });

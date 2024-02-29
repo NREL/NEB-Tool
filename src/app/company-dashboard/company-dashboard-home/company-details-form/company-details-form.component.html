@@ -7,7 +7,7 @@
             onfocus="this.select();" minlength="1" maxlength="42" required>
     </div>
     <div class="col-4">
-        <app-units-form></app-units-form>
+        <app-units-form [inCompany]="true"></app-units-form>
     </div>
     <div class="col-12 mt-2">
         Last modified: {{company.modifiedDate | date:'medium'}}

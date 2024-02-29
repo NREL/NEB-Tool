@@ -1,10 +1,13 @@
 <div class="h4 pt-2">Facility Details</div>
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-8">
         <label for="name">Name</label>
-        <input type="text" class="form-control" [(ngModel)]="facility.name" (input)="saveChanges()" onfocus="this.select();"
-            minlength="1" maxlength="42" required>
+        <input type="text" class="form-control" [(ngModel)]="facility.name" (input)="saveChanges()"
+            onfocus="this.select();" minlength="1" maxlength="42" required>
+    </div>
+    <div class="col-4">
+        <app-units-form [inCompany]="false"></app-units-form>
     </div>
     <div class="col-12 mt-2">
         Last modified: {{facility.modifiedDate | date:'medium'}}
