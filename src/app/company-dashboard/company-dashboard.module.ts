@@ -7,6 +7,7 @@ import { FacilitiesListComponent } from './company-dashboard-home/facilities-lis
 import { CompanyDetailsFormComponent } from './company-dashboard-home/company-details-form/company-details-form.component';
 import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
+import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
     CommonModule,
     RouterModule,
     FormsModule,
-    HelperPipesModule
+    HelperPipesModule,
+    SharedSettingsFormsModule
   ]
 })
 export class CompanyDashboardModule { }
