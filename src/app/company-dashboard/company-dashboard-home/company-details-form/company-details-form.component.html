@@ -1,14 +1,17 @@
 <div class="h4 pt-2">Company Details</div>
 
 <div class="row">
-    <div class="col-8">
+    <div class="col-12">
+        <app-settings-form [inCompany]="true"></app-settings-form>
+    </div>
+    <!-- <div class="col-8">
         <app-general-information-form [inCompany]="true"></app-general-information-form>
     </div>
     <div class="col-4">
         <app-units-form [inCompany]="true"></app-units-form>
-    </div>
-    <div class="col-12 mt-2 text-end">
+    </div> -->
+    <!-- <div class="col-12 mt-2 text-end">
         Last modified: {{company.modifiedDate | date:'medium'}}
-    </div>
+    </div> -->
 </div>
 <hr>

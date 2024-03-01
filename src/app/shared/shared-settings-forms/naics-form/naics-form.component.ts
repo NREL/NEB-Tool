@@ -1,21 +1,19 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IdbCompany } from 'src/app/models/company';
-import { Subscription } from 'rxjs';
-import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { IdbFacility } from 'src/app/models/facility';
 import { GeneralInformation } from 'src/app/models/generalInformation';
 import { FirstNaicsList, NAICS, SecondNaicsList, ThirdNaicsList } from '../form-data-options/naics-data';
-import { Countries, Country } from '../form-data-options/countries';
-import { State, States } from '../form-data-options/states';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { Subscription } from 'rxjs';
+import { IdbCompany } from 'src/app/models/company';
+import { IdbFacility } from 'src/app/models/facility';
 
 @Component({
-  selector: 'app-general-information-form',
-  templateUrl: './general-information-form.component.html',
-  styleUrls: ['./general-information-form.component.css']
+  selector: 'app-naics-form',
+  templateUrl: './naics-form.component.html',
+  styleUrls: ['./naics-form.component.css']
 })
-export class GeneralInformationFormComponent {
+export class NaicsFormComponent {
   @Input()
   inCompany: boolean;
 
@@ -27,8 +25,6 @@ export class GeneralInformationFormComponent {
   firstNaicsList: Array<NAICS> = FirstNaicsList;
   secondNaicsList: Array<NAICS> = SecondNaicsList;
   thirdNaicsList: Array<NAICS> = ThirdNaicsList;
-  countries: Array<Country> = Countries;
-  states: Array<State> = States;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService) {
   }
@@ -59,19 +55,10 @@ export class GeneralInformationFormComponent {
 
   getGeneralInformationForm(generalInformation: GeneralInformation): FormGroup {
     let form: FormGroup = this.formBuilder.group({
-      name: [generalInformation.name, [Validators.required]],
-      country: [generalInformation.country],
-      city: [generalInformation.city],
-      state: [generalInformation.state],
-      zip: [generalInformation.zip],
       address: [generalInformation.address],
       naics1: [generalInformation.naics1],
       naics2: [generalInformation.naics2],
-      naics3: [generalInformation.naics3],
-      contactName: [generalInformation.contactName],
-      contactPhone: [generalInformation.contactPhone],
-      contactEmail: [generalInformation.contactEmail],
-      contactRole: [generalInformation.contactRole]
+      naics3: [generalInformation.naics3]
     });
     return form;
   }
@@ -86,19 +73,9 @@ export class GeneralInformationFormComponent {
   }
 
   updateGeneralInformationFromForm(generalInformation: GeneralInformation): GeneralInformation {
-    generalInformation.name = this.form.controls['name'].value;
-    generalInformation.country = this.form.controls['country'].value;
-    generalInformation.city = this.form.controls['city'].value;
-    generalInformation.state = this.form.controls['state'].value;
-    generalInformation.zip = this.form.controls['zip'].value;
-    generalInformation.address = this.form.controls['address'].value;
     generalInformation.naics1 = this.form.controls['naics1'].value;
     generalInformation.naics2 = this.form.controls['naics2'].value;
     generalInformation.naics3 = this.form.controls['naics3'].value;
-    generalInformation.contactName = this.form.controls['contactName'].value;
-    generalInformation.contactPhone = this.form.controls['contactPhone'].value;
-    generalInformation.contactEmail = this.form.controls['contactEmail'].value;
-    generalInformation.contactRole = this.form.controls['contactRole'].value;
     return generalInformation;
   }
 
@@ -121,4 +98,6 @@ export class GeneralInformationFormComponent {
     }
     this.saveChanges();
   }
+
+
 }

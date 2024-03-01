@@ -2,16 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UnitsFormComponent } from './units-form/units-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GeneralInformationFormComponent } from './general-information-form/general-information-form.component';
 import { NaicsListPipe } from './general-information-form/naics-list.pipe';
-
-
+import { SettingsFormComponent } from './settings-form/settings-form.component';
+import { NaicsFormComponent } from './naics-form/naics-form.component';
+import { PrimaryContactFormComponent } from './primary-contact-form/primary-contact-form.component';
+import { LocationFormComponent } from './location-form/location-form.component';
 
 @NgModule({
   declarations: [
     UnitsFormComponent,
-    GeneralInformationFormComponent,
-    NaicsListPipe
+    NaicsListPipe,
+    SettingsFormComponent,
+    NaicsFormComponent,
+    PrimaryContactFormComponent,
+    LocationFormComponent
   ],
   imports: [
     CommonModule,
@@ -19,8 +23,7 @@ import { NaicsListPipe } from './general-information-form/naics-list.pipe';
     ReactiveFormsModule
   ],
   exports: [
-    UnitsFormComponent,
-    GeneralInformationFormComponent
+    SettingsFormComponent
   ]
 })
 export class SharedSettingsFormsModule { }

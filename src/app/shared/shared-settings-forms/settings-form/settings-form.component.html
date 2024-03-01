@@ -1,0 +1,22 @@
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-12">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" formControlName="name" (input)="saveChanges()" minlength="1"
+                maxlength="42" id="name">
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+</form>
+
+<app-location-form [inCompany]="inCompany"></app-location-form>
+<app-primary-contact-form [inCompany]="inCompany"></app-primary-contact-form>
+<app-units-form [inCompany]="inCompany"></app-units-form>
+<app-naics-form [inCompany]="inCompany"></app-naics-form>
+
+
+  
+
+
