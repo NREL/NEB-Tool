@@ -3,12 +3,12 @@
     <ul>
         <li *ngFor="let company of companies">
             <a [routerLink]="'/user/company/'+company.guid">
-                {{company.name}}
+                {{company.generalInformation.name}}
             </a>
             <ul *ngFor="let facility of company.guid | facilityList:facilities">
                 <li>
                     <a
-                        [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">{{facility.name}}</a>
+                        [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">{{facility.generalInformation.name}}</a>
                 </li>
             </ul>
         </li>

@@ -11,7 +11,7 @@ export class CompanyNamePipe implements PipeTransform {
       return company.guid == companyGUID;
     })
     if (company) {
-      return company.name;
+      return company.generalInformation.name;
     }
     return '';
   }

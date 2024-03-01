@@ -7,7 +7,7 @@
                         <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
                         <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedFacility.companyId">
                                 {{selectedFacility.companyId | companyName:companies}}</a></li>
-                        <li class="breadcrumb-item active">{{selectedFacility.name}}</li>
+                        <li class="breadcrumb-item active">{{selectedFacility.generalInformation.name}}</li>
                     </ol>
                 </nav>
             </div>

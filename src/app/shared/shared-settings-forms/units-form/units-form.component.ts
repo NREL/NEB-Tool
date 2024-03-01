@@ -35,15 +35,15 @@ export class UnitsFormComponent {
       this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
         if (!this.company || (this.company.guid != _company.guid)) {
           //initialize form on company change
-          this.form = this.getUnitsForm(_company);
+          this.form = this.getUnitsForm(_company.unitSettings);
         }
         this.company = _company;
       });
     } else {
       this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
         if (!this.facility || (this.facility.guid != _facility.guid)) {
-          //initialize form on company change
-          this.form = this.getUnitsForm(_facility);
+          //initialize form on facility change
+          this.form = this.getUnitsForm(_facility.unitSettings);
         }
         this.facility = _facility;
       });
@@ -67,14 +67,14 @@ export class UnitsFormComponent {
   }
   async saveChanges() {
     if (this.inCompany) {
-      let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company);
+      let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company.unitSettings);
       this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
-      this.updateCompanyFromForm();
+      this.company.unitSettings = this.updateUnitSettingsFromForm(this.company.unitSettings);
       await this.companyIdbService.asyncUpdate(this.company);
     } else {
-      let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.facility);
+      let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.facility.unitSettings);
       this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
-      this.updateFacilityFromForm();
+      this.facility.unitSettings = this.updateUnitSettingsFromForm(this.facility.unitSettings);
       await this.facilityIdbService.asyncUpdate(this.facility);
     }
   }
@@ -94,24 +94,15 @@ export class UnitsFormComponent {
     await this.saveChanges();
   }
 
-  updateCompanyFromForm() {
-    this.company.unitsOfMeasure = this.form.controls['unitsOfMeasure'].value;
-    this.company.energyUnit = this.form.controls['energyUnit'].value;
-    this.company.massUnit = this.form.controls['massUnit'].value;
-    this.company.volumeLiquidUnit = this.form.controls['volumeLiquidUnit'].value;
-    this.company.volumeGasUnit = this.form.controls['volumeGasUnit'].value;
-    this.company.electricityUnit = this.form.controls['electricityUnit'].value;
+  updateUnitSettingsFromForm(unitSettings: UnitSettings): UnitSettings {
+    unitSettings.unitsOfMeasure = this.form.controls['unitsOfMeasure'].value;
+    unitSettings.energyUnit = this.form.controls['energyUnit'].value;
+    unitSettings.massUnit = this.form.controls['massUnit'].value;
+    unitSettings.volumeLiquidUnit = this.form.controls['volumeLiquidUnit'].value;
+    unitSettings.volumeGasUnit = this.form.controls['volumeGasUnit'].value;
+    unitSettings.electricityUnit = this.form.controls['electricityUnit'].value;
+    return unitSettings;
   }
-
-  updateFacilityFromForm() {
-    this.facility.unitsOfMeasure = this.form.controls['unitsOfMeasure'].value;
-    this.facility.energyUnit = this.form.controls['energyUnit'].value;
-    this.facility.massUnit = this.form.controls['massUnit'].value;
-    this.facility.volumeLiquidUnit = this.form.controls['volumeLiquidUnit'].value;
-    this.facility.volumeGasUnit = this.form.controls['volumeGasUnit'].value;
-    this.facility.electricityUnit = this.form.controls['electricityUnit'].value;
-  }
-
 
   getUnitsOfMeasure(unitSettings: UnitSettings): "Metric" | "Imperial" | "Custom" {
     let selectedEnergyOption: UnitOption = EnergyUnitOptions.find(option => { return option.value == unitSettings.energyUnit });

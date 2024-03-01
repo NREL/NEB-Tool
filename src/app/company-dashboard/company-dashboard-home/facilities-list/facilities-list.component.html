@@ -1,9 +1,9 @@
-<div class="h4 pt-2">{{selectedCompany.name}} Facilities:</div>
+<div class="h4 pt-2">{{selectedCompany.generalInformation.name}} Facilities:</div>
 <ng-template [ngIf]="facilities.length > 0" [ngIfElse]="noFacilitiesBlock">
     <ul>
         <li *ngFor="let facility of facilities">
             <a [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">
-                {{facility.name}}
+                {{facility.generalInformation.name}}
             </a>
             <ul *ngFor="let project of facility.guid | projectsList: projects">
                 <li>

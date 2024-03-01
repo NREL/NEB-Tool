@@ -1,20 +1,24 @@
+import { GeneralInformation, getGeneralInformation } from "./generalInformation";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 import { UnitSettings, getDefaultUnitSettings } from "./unitSettings";
 
-export interface IdbFacility extends IdbEntry, UnitSettings {
-    name: string,
+export interface IdbFacility extends IdbEntry {
+    // name: string,
     companyId: string,
-    userId: string
+    userId: string,
+    unitSettings: UnitSettings,
+    generalInformation: GeneralInformation
 }
 
 export function getNewIdbFacility(userId: string, companyId: string): IdbFacility {
     let idbEntry: IdbEntry = getNewIdbEntry();
     let defaultSettings: UnitSettings = getDefaultUnitSettings();
+    let generalInformation: GeneralInformation = getGeneralInformation('New Facility');
     return {
         ...idbEntry,
-        name: 'New Facility',
         userId: userId,
         companyId: companyId,
-        ...defaultSettings
+        unitSettings: defaultSettings,
+        generalInformation: generalInformation
     }
 }

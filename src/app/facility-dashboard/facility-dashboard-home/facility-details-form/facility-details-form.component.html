@@ -2,9 +2,7 @@
 
 <div class="row">
     <div class="col-8">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" [(ngModel)]="facility.name" (input)="saveChanges()"
-            onfocus="this.select();" minlength="1" maxlength="42" required>
+        <app-general-information-form [inCompany]="false"></app-general-information-form>
     </div>
     <div class="col-4">
         <app-units-form [inCompany]="false"></app-units-form>
@@ -13,3 +11,4 @@
         Last modified: {{facility.modifiedDate | date:'medium'}}
     </div>
 </div>
+<hr>

@@ -1,4 +1,4 @@
-<div class="h4 pt-2">{{selectedFacility.name}} Projects:</div>
+<div class="h4 pt-2">{{selectedFacility.generalInformation.name}} Projects:</div>
 <ng-template [ngIf]="(selectedFacility.guid | projectsList:projects).length" [ngIfElse]="noProjectsFoundBlock">
     <ul>
         <li *ngFor="let project of (selectedFacility.guid | projectsList:projects)">
