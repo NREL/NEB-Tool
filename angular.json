@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "NEB-Tool:build:production"
+              "buildTarget": "NEB-Tool:build:production"
             },
             "development": {
-              "browserTarget": "NEB-Tool:build:development"
+              "buildTarget": "NEB-Tool:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "NEB-Tool:build"
+            "buildTarget": "NEB-Tool:build"
           }
         },
         "test": {
