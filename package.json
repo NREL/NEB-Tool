@@ -4,6 +4,9 @@
   "main": "main.js",
   "author": "National Renewable Energy Laboratory",
   "repository": "https://github.com/NREL/NEB-Tool.git",
+  "engines": {
+    "node": ">=18.13.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
