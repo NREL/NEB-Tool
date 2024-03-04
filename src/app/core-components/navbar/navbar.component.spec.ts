@@ -4,6 +4,7 @@ import { NavbarComponent } from './navbar.component';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoadingService } from '../loading/loading.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -13,7 +14,7 @@ describe('NavbarComponent', () => {
     let userDbService: Partial<UserIdbService> = {};
     let loadingService: Partial<LoadingService> = {};
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, FontAwesomeModule],
       declarations: [NavbarComponent],
       providers: [
         { provide: UserIdbService, useValue: userDbService },

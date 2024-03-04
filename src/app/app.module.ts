@@ -12,6 +12,7 @@ import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard
 import { ProjectDashboardModule } from './project-dashboard/project-dashboard.module';
 import { IndexedDbModule } from './indexed-db/indexed-db.module';
 import { LoadingComponent } from './core-components/loading/loading.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoadingComponent } from './core-components/loading/loading.component';
     CompanyDashboardModule,
     FacilityDashboardModule,
     ProjectDashboardModule,
-    IndexedDbModule
+    IndexedDbModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

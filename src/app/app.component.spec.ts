@@ -8,11 +8,12 @@ import { FacilityIdbService } from './indexed-db/facility-idb.service';
 import { UserIdbService } from './indexed-db/user-idb.service';
 import { ProjectIdbService } from './indexed-db/project-idb.service';
 import { LoadingComponent } from './core-components/loading/loading.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, FontAwesomeModule],
       declarations: [AppComponent, NavbarComponent, WelcomeComponent, LoadingComponent],
       providers: [
         { provide: CompanyIdbService, useValue: {} },

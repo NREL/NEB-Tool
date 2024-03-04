@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { LoadingService } from '../loading/loading.service';
+import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +11,7 @@ import { LoadingService } from '../loading/loading.service';
 export class NavbarComponent {
 
 
+  faHome: IconDefinition = faHome;
   showResetModal: boolean = false;
   constructor(private userIdbService: UserIdbService,
     private loadingService: LoadingService) {
