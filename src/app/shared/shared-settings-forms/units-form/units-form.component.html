@@ -3,12 +3,14 @@
         <!-- Units-->
         <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                aria-expanded="true" aria-controls="collapseThree">
+                aria-expanded="true" aria-controls="collapseThree" [ngClass]="{'collapsed': !accordionOpen}"
+                (click)="toggleAccordion()">
                 <fa-icon [icon]="faGear" class="me-2"></fa-icon>
                 Units
             </button>
         </h2>
-        <div id="collapseThree" class="accordion-collapse collapse show" data-bs-parent="#unitAccoridion">
+        <div id="collapseThree" class="accordion-collapse collapse show" data-bs-parent="#unitAccoridion"
+            [ngClass]="{'show': accordionOpen}">
             <div class="accordion-body">
                 <form [formGroup]="form">
                     <div class="row">

@@ -7,6 +7,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { GeneralInformation } from 'src/app/models/generalInformation';
+import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-primary-contact-form',
@@ -23,11 +24,14 @@ export class PrimaryContactFormComponent {
   facility: IdbFacility;
   company: IdbCompany;
   companyOrFacilitySub: Subscription;
+  accordionOpen: boolean;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService) {
+    private facilityIdbService: FacilityIdbService,
+    private localStorageDataService: LocalStorageDataService) {
   }
 
   ngOnInit() {
+    this.accordionOpen = this.localStorageDataService.primaryContactAccordionOpen;
     if (this.inCompany) {
       this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
         if (!this.company || (this.company.guid != _company.guid)) {
@@ -78,4 +82,8 @@ export class PrimaryContactFormComponent {
     return generalInformation;
   }
 
+  toggleAccordion() {
+    this.accordionOpen = !this.accordionOpen;
+    this.localStorageDataService.setPrimaryContactAccordionOpen(this.accordionOpen);
+  }
 }

@@ -3,12 +3,14 @@
         <!--location-->
         <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                aria-expanded="true" aria-controls="collapseOne">
+                aria-expanded="true" aria-controls="collapseOne" [ngClass]="{'collapsed': !accordionOpen}"
+                (click)="toggleAccordion()">
                 <fa-icon [icon]="faLocationDot" class="me-2"></fa-icon>
                 Location
             </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#locationAccordion">
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#locationAccordion"
+            [ngClass]="{'show': accordionOpen}">
             <div class="accordion-body">
                 <form [formGroup]="form">
                     <div class="row">

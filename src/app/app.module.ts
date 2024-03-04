@@ -13,6 +13,7 @@ import { ProjectDashboardModule } from './project-dashboard/project-dashboard.mo
 import { IndexedDbModule } from './indexed-db/indexed-db.module';
 import { LoadingComponent } from './core-components/loading/loading.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FacilityDashboardModule,
     ProjectDashboardModule,
     IndexedDbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxWebstorageModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faFilePen } from '@fortawesome/free-solid-svg-icons';
+import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-additional-details-form',
@@ -28,11 +29,14 @@ export class AdditionalDetailsFormComponent {
   firstNaicsList: Array<NAICS> = FirstNaicsList;
   secondNaicsList: Array<NAICS> = SecondNaicsList;
   thirdNaicsList: Array<NAICS> = ThirdNaicsList;
+  accordionOpen: boolean;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService) {
+    private facilityIdbService: FacilityIdbService,
+    private localStorageDataService: LocalStorageDataService) {
   }
 
   ngOnInit() {
+    this.accordionOpen = this.localStorageDataService.additionalDetailsAccordionOpen;
     if (this.inCompany) {
       this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
         if (!this.company || (this.company.guid != _company.guid)) {
@@ -104,4 +108,9 @@ export class AdditionalDetailsFormComponent {
     this.saveChanges();
   }
 
+
+  toggleAccordion() {
+    this.accordionOpen = !this.accordionOpen;
+    this.localStorageDataService.setAdditionalDetailsAccordionOpen(this.accordionOpen);
+  }
 }

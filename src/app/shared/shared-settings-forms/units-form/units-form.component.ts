@@ -8,6 +8,7 @@ import { UnitSettings } from 'src/app/models/unitSettings';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faGear } from '@fortawesome/free-solid-svg-icons';
+import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-units-form',
@@ -28,11 +29,14 @@ export class UnitsFormComponent {
   facility: IdbFacility;
   company: IdbCompany;
   companyOrFacilitySub: Subscription;
+  accordionOpen: boolean;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService) {
+    private facilityIdbService: FacilityIdbService,
+    private localStorageDataService: LocalStorageDataService) {
   }
 
   ngOnInit() {
+    this.accordionOpen = this.localStorageDataService.unitsAccordionOpen;
     if (this.inCompany) {
       this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
         if (!this.company || (this.company.guid != _company.guid)) {
@@ -121,5 +125,10 @@ export class UnitsFormComponent {
       }
     }
     return "Custom";
+  }
+
+  toggleAccordion() {
+    this.accordionOpen = !this.accordionOpen;
+    this.localStorageDataService.setUnitsAccordionOpen(this.accordionOpen);
   }
 }

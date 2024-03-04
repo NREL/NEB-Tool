@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-location-form',
@@ -27,11 +28,14 @@ export class LocationFormComponent {
   companyOrFacilitySub: Subscription;
   countries: Array<Country> = Countries;
   states: Array<State> = States;
+  accordionOpen: boolean;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService) {
+    private facilityIdbService: FacilityIdbService,
+    private localStorageDataService: LocalStorageDataService) {
   }
 
   ngOnInit() {
+    this.accordionOpen = this.localStorageDataService.locationAccordionOpen;
     if (this.inCompany) {
       this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
         if (!this.company || (this.company.guid != _company.guid)) {
@@ -84,4 +88,8 @@ export class LocationFormComponent {
     return generalInformation;
   }
 
+  toggleAccordion() {
+    this.accordionOpen = !this.accordionOpen;
+    this.localStorageDataService.setLocationAccordionOpen(this.accordionOpen);
+  }
 }
