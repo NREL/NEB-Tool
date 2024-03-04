@@ -9,11 +9,11 @@ import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 
 @Component({
-  selector: 'app-naics-form',
-  templateUrl: './naics-form.component.html',
-  styleUrls: ['./naics-form.component.css']
+  selector: 'app-additional-details-form',
+  templateUrl: './additional-details-form.component.html',
+  styleUrls: ['./additional-details-form.component.css']
 })
-export class NaicsFormComponent {
+export class AdditionalDetailsFormComponent {
   @Input()
   inCompany: boolean;
 
@@ -58,7 +58,8 @@ export class NaicsFormComponent {
       address: [generalInformation.address],
       naics1: [generalInformation.naics1],
       naics2: [generalInformation.naics2],
-      naics3: [generalInformation.naics3]
+      naics3: [generalInformation.naics3],
+      notes: [generalInformation.notes]
     });
     return form;
   }
@@ -76,6 +77,7 @@ export class NaicsFormComponent {
     generalInformation.naics1 = this.form.controls['naics1'].value;
     generalInformation.naics2 = this.form.controls['naics2'].value;
     generalInformation.naics3 = this.form.controls['naics3'].value;
+    generalInformation.notes = this.form.controls['notes'].value;
     return generalInformation;
   }
 
@@ -98,6 +100,5 @@ export class NaicsFormComponent {
     }
     this.saveChanges();
   }
-
 
 }

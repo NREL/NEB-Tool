@@ -11,7 +11,8 @@ export interface GeneralInformation {
     contactName: string,
     contactPhone: string,
     contactEmail: string,
-    contactRole: string
+    contactRole: string,
+    notes: string
 }
 
 
@@ -29,6 +30,7 @@ export function getGeneralInformation(name: string): GeneralInformation {
         contactName: '',
         contactPhone: '',
         contactEmail: '',
-        contactRole: ''
+        contactRole: '',
+        notes: ''
     }
 }

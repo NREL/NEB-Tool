@@ -4,7 +4,7 @@
         <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
                 aria-expanded="true" aria-controls="collapseFour">
-                NAICS
+                Additional Details
             </button>
         </h2>
         <div id="collapseFour" class="accordion-collapse collapse show" data-bs-parent="#naicsAccordion">
@@ -12,6 +12,7 @@
                 <form [formGroup]="form">
                     <div class="row">
                         <div class="col-12">
+                            <label>NAICS Code</label>
                             <select class="form-select" formControlName="naics1" (change)="checkNAICS()" id="naics1">
                                 <option *ngFor="let naics of firstNaicsList" [ngValue]="naics.code">{{naics.code}} -
                                     {{naics.industryType}}</option>
@@ -30,6 +31,11 @@
                                     {{naics.industryType}}</option>
                                 <option [ngValue]=null></option>
                             </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="notes">Notes</label>
+                            <textarea id="notes" name="notes" class="form-control" formControlName="notes"
+                                (input)="saveChanges()"></textarea>
                         </div>
                     </div>
                 </form>

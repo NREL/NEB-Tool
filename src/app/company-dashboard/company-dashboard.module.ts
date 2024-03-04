@@ -4,7 +4,6 @@ import { CompanyDashboardComponent } from './company-dashboard.component';
 import { CompanyDashboardHomeComponent } from './company-dashboard-home/company-dashboard-home.component';
 import { RouterModule } from '@angular/router';
 import { FacilitiesListComponent } from './company-dashboard-home/facilities-list/facilities-list.component';
-import { CompanyDetailsFormComponent } from './company-dashboard-home/company-details-form/company-details-form.component';
 import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
@@ -13,8 +12,7 @@ import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/share
   declarations: [
     CompanyDashboardComponent,
     CompanyDashboardHomeComponent,
-    FacilitiesListComponent,
-    CompanyDetailsFormComponent
+    FacilitiesListComponent
   ],
   imports: [
     CommonModule,
