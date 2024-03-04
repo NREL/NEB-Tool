@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IconDefinition, faContactCard } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -16,6 +17,7 @@ export class PrimaryContactFormComponent {
   @Input()
   inCompany: boolean;
 
+  faContactCard: IconDefinition = faContactCard;
   form: FormGroup;
 
   facility: IdbFacility;

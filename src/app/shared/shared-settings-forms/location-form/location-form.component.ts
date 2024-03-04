@@ -8,6 +8,7 @@ import { Countries, Country } from '../form-data-options/countries';
 import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
+import { IconDefinition, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-location-form',
@@ -18,6 +19,7 @@ export class LocationFormComponent {
   @Input()
   inCompany: boolean;
 
+  faLocationDot: IconDefinition = faLocationDot;
   form: FormGroup;
 
   facility: IdbFacility;

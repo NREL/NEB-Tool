@@ -6,6 +6,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">
+                            <fa-icon [icon]="faBuilding"></fa-icon>
                             {{selectedCompany.generalInformation.name}} </li>
                     </ol>
                 </nav>
@@ -21,7 +22,8 @@
         </div>
         <div class="row mt-3">
             <div class="col-12">
-                <div class="h4 pt-2">Company Details</div>
+                <div class="h4 pt-2">
+                    Company Details</div>
                 <app-settings-form [inCompany]="true"></app-settings-form>
             </div>
         </div>

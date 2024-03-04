@@ -7,6 +7,7 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
+import { IconDefinition, faFilePen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-additional-details-form',
@@ -16,6 +17,8 @@ import { IdbFacility } from 'src/app/models/facility';
 export class AdditionalDetailsFormComponent {
   @Input()
   inCompany: boolean;
+
+  faFilePen: IconDefinition = faFilePen;
 
   form: FormGroup;
 

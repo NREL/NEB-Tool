@@ -7,6 +7,7 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { UnitSettings } from 'src/app/models/unitSettings';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
+import { IconDefinition, faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-units-form',
@@ -17,6 +18,7 @@ export class UnitsFormComponent {
   @Input()
   inCompany: boolean;
 
+  faGear: IconDefinition = faGear;
   form: FormGroup;
   energyUnitOptions: Array<UnitOption> = EnergyUnitOptions;
   volumeGasOptions: Array<UnitOption> = VolumeGasOptions;

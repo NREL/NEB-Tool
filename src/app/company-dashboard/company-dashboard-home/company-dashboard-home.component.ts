@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IconDefinition, faBuilding, faGears } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
@@ -13,6 +14,9 @@ import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
   styleUrls: ['./company-dashboard-home.component.css']
 })
 export class CompanyDashboardHomeComponent {
+
+  faBuilding: IconDefinition = faBuilding;
+  faGears: IconDefinition = faGears;
 
   selectedCompany: IdbCompany;
   selectedCompanySub: Subscription;

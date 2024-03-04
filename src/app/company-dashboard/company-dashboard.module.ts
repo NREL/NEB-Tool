@@ -7,6 +7,7 @@ import { FacilitiesListComponent } from './company-dashboard-home/facilities-lis
 import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/share
     RouterModule,
     FormsModule,
     HelperPipesModule,
-    SharedSettingsFormsModule
+    SharedSettingsFormsModule,
+    FontAwesomeModule
   ]
 })
 export class CompanyDashboardModule { }
