@@ -1,0 +1,7 @@
+<div class="loading" [class.open]="loading">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    <div class="loading_message" [hidden]="!loading">{{loadingMessage}}</div>
+</div>
+<div [ngClass]="{'window-overlay': loading}"></div>

@@ -12,13 +12,15 @@ import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard
 import { ProjectDashboardModule } from './project-dashboard/project-dashboard.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IndexedDbModule } from './indexed-db/indexed-db.module';
+import { LoadingComponent } from './core-components/loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     WelcomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

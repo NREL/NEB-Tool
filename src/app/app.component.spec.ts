@@ -8,12 +8,13 @@ import { CompanyIdbService } from './indexed-db/company-idb.service';
 import { FacilityIdbService } from './indexed-db/facility-idb.service';
 import { UserIdbService } from './indexed-db/user-idb.service';
 import { ProjectIdbService } from './indexed-db/project-idb.service';
+import { LoadingComponent } from './core-components/loading/loading.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FontAwesomeModule],
-      declarations: [AppComponent, NavbarComponent, WelcomeComponent],
+      declarations: [AppComponent, NavbarComponent, WelcomeComponent, LoadingComponent],
       providers: [
         { provide: CompanyIdbService, useValue: {} },
         { provide: FacilityIdbService, useValue: {} },

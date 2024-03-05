@@ -1,0 +1,17 @@
+.loading {
+    position: fixed;
+    top: -9999px;
+    left: calc(50% - 100px);
+    background-color: white;
+    box-shadow: 0px 0px 31px #0000002e;
+    z-index: 9999;
+    text-align: center;
+    padding: 20px;
+    width: 200px;
+    opacity: 0;
+    transition: .5s opacity;
+}
+.loading.open {
+    top: calc(30% - 100px);
+    opacity: 1;
+}
