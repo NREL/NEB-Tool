@@ -11,6 +11,7 @@ import { CompanyDashboardModule } from './company-dashboard/company-dashboard.mo
 import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard.module';
 import { ProjectDashboardModule } from './project-dashboard/project-dashboard.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IndexedDbModule } from './indexed-db/indexed-db.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CompanyDashboardModule,
     FacilityDashboardModule,
     ProjectDashboardModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    IndexedDbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,4 +9,13 @@ import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
 })
 export class NavbarComponent {
   faHome: IconDefinition = faHome;
+
+
+  constructor(private userIdbService: UserIdbService) {
+
+  }
+
+  resetDatabase() {
+    this.userIdbService.deleteDatabase();
+  }
 }
