@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CompanyIdbService } from '../indexed-db/company-idb.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-company-dashboard',
@@ -7,4 +9,14 @@ import { Component } from '@angular/core';
 })
 export class CompanyDashboardComponent {
 
+  constructor(private activatedRoute: ActivatedRoute, private companyIdbService: CompanyIdbService) {
+  }
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      let companyGUID: string = params['id'];
+      this.companyIdbService.setSelectedFromGUID(companyGUID);
+      //TODO: if no company matching id, navigate to dashboard
+    });
+  }
 }

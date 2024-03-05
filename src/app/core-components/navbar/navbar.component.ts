@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+
+  constructor(private userIdbService: UserIdbService) {
+
+  }
+
+  resetDatabase() {
+    this.userIdbService.deleteDatabase();
+  }
 }

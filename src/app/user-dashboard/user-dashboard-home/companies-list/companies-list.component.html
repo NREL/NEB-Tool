@@ -1,0 +1,22 @@
+<div class="h4 pt-2">{{user.name}} Companies</div>
+<ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompaniesBlock">
+    <ul>
+        <li *ngFor="let company of companies">
+            <a [routerLink]="'/user/company/'+company.guid">
+                {{company.name}}
+            </a>
+            <ul *ngFor="let facility of company.guid | facilityList:facilities">
+                <li>
+                    <a
+                        [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">{{facility.name}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</ng-template>
+
+<ng-template #noCompaniesBlock>
+    <div class="alert alert-info">
+        No companies found. Please click "Add New Company" to get started.
+    </div>
+</ng-template>

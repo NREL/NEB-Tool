@@ -1,0 +1,12 @@
+<div class="h4 pt-2">User Details</div>
+
+<div class="row">
+    <div class="col-12">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="user.name" (input)="saveChanges()" onfocus="this.select();"
+            minlength="1" maxlength="42" required>
+    </div>
+    <div class="col-12 mt-2">
+        Last modified: {{user.modifiedDate | date:'medium'}}
+    </div>
+</div>
