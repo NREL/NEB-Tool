@@ -8,12 +8,14 @@ import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CompanyGoalsComponent } from './company-dashboard-home/company-goals/company-goals.component';
 
 @NgModule({
   declarations: [
     CompanyDashboardComponent,
     CompanyDashboardHomeComponent,
-    FacilitiesListComponent
+    FacilitiesListComponent,
+    CompanyGoalsComponent
   ],
   imports: [
     CommonModule,

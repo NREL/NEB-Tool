@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FacilityProductionDetailsComponent } from './facility-dashboard-home/facility-production-details/facility-production-details.component';
 
 
 
@@ -15,7 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   declarations: [
     FacilityDashboardComponent,
     FacilityDashboardHomeComponent,
-    ProjectsListComponent
+    ProjectsListComponent,
+    FacilityProductionDetailsComponent
   ],
   imports: [
     CommonModule,

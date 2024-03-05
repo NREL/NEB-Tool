@@ -9,7 +9,8 @@
                                 <fa-icon class="pe-1" [icon]="faBuilding"></fa-icon>
                                 {{selectedFacility.companyId | companyName:companies}}</a></li>
                         <li class="breadcrumb-item active">
-                            <fa-icon [icon]="faIndustry" class="pe-1"></fa-icon>{{selectedFacility.generalInformation.name}}
+                            <fa-icon [icon]="faIndustry"
+                                class="pe-1"></fa-icon>{{selectedFacility.generalInformation.name}}
                         </li>
                     </ol>
                 </nav>
@@ -27,6 +28,16 @@
             </div>
             <div class="col-12">
                 <hr>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="h4 pt-2">
+                        Facility Production</div>
+                    <app-facility-production-details></app-facility-production-details>
+                </div>
+                <div class="col-12">
+                    <hr>
+                </div>
             </div>
             <div class="col-12">
                 <app-projects-list></app-projects-list>
