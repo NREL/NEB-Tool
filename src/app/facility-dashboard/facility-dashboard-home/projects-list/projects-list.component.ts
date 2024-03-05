@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { IconDefinition, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
-import { IdbProject } from 'src/app/models/project';
+import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 
 @Component({
   selector: 'app-projects-list',
@@ -12,6 +13,7 @@ import { IdbProject } from 'src/app/models/project';
 })
 export class ProjectsListComponent {
 
+  faPlus: IconDefinition = faPlus;
   selectedFacility: IdbFacility;
   facilitySub: Subscription;
 
@@ -36,5 +38,11 @@ export class ProjectsListComponent {
   ngOnDestroy() {
     this.projectsSub.unsubscribe();
     this.facilitySub.unsubscribe();
+  }
+
+  async addProject() {
+    let newProject: IdbProject = getNewIdbProject(this.selectedFacility.userId, this.selectedFacility.companyId, this.selectedFacility.guid);
+    newProject = await firstValueFrom(this.projectIdbService.addWithObservable(newProject));
+    await this.projectIdbService.setProjects();
   }
 }

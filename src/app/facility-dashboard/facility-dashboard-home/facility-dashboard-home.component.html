@@ -6,15 +6,15 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
                         <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedFacility.companyId">
+                                <fa-icon class="pe-1" [icon]="faBuilding"></fa-icon>
                                 {{selectedFacility.companyId | companyName:companies}}</a></li>
-                        <li class="breadcrumb-item active">{{selectedFacility.generalInformation.name}}</li>
+                        <li class="breadcrumb-item active">
+                            <fa-icon [icon]="faIndustry" class="pe-1"></fa-icon>{{selectedFacility.generalInformation.name}}
+                        </li>
                     </ol>
                 </nav>
             </div>
             <div class="d-flex">
-                <div class="m-1">
-                    <button class="btn btn-sm btn-primary" (click)="addProject()">Add Project</button>
-                </div>
                 <div class="m-1">
                     <button class="btn btn-sm btn-danger" (click)="deleteFacility()">Delete Facility</button>
                 </div>
@@ -24,6 +24,9 @@
             <div class="col-12">
                 <div class="h4 pt-2">Facility Details</div>
                 <app-settings-form [inCompany]="false"></app-settings-form>
+            </div>
+            <div class="col-12">
+                <hr>
             </div>
             <div class="col-12">
                 <app-projects-list></app-projects-list>

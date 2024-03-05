@@ -1,13 +1,43 @@
-<div class="h4 pt-2">{{selectedFacility.generalInformation.name}} Projects:</div>
+<div class="d-flex justify-content-between">
+    <div class="h4 pt-2">Projects
+    </div>
+    <div class="p-0">
+        <button class="btn btn-sm btn-primary" (click)="addProject()">
+            <fa-icon [icon]="faPlus"></fa-icon>Add Project</button>
+    </div>
+</div>
 <ng-template [ngIf]="(selectedFacility.guid | projectsList:projects).length" [ngIfElse]="noProjectsFoundBlock">
-    <ul>
-        <li *ngFor="let project of (selectedFacility.guid | projectsList:projects)">
-            <a
-                [routerLink]="'/user/company/'+project.companyId+'/facility/'+project.facilityId+'/project/'+project.guid">
-                {{project.name}}
-            </a>
-        </li>
-    </ul>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Project
+                </th>
+                <th>
+                    Created Date
+                </th>
+                <th>
+                    Modified Date
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let project of (selectedFacility.guid | projectsList:projects)">
+                <td>
+                    <a
+                        [routerLink]="'/user/company/'+project.companyId+'/facility/'+project.facilityId+'/project/'+project.guid">
+                        {{project.name}}
+                    </a>
+                </td>
+                <td>
+                    {{project.createdDate | date:'short'}}
+                </td>
+                <td>
+                    {{project.modifiedDate | date:'short'}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </ng-template>
 
 <ng-template #noProjectsFoundBlock>
