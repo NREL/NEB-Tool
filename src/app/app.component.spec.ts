@@ -3,12 +3,26 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './core-components/navbar/navbar.component';
 import { WelcomeComponent } from './core-components/welcome/welcome.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CompanyIdbService } from './indexed-db/company-idb.service';
+import { FacilityIdbService } from './indexed-db/facility-idb.service';
+import { UserIdbService } from './indexed-db/user-idb.service';
+import { ProjectIdbService } from './indexed-db/project-idb.service';
+import { LoadingComponent } from './core-components/loading/loading.component';
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent, NavbarComponent, WelcomeComponent]
-  }));
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule, FontAwesomeModule],
+      declarations: [AppComponent, NavbarComponent, WelcomeComponent, LoadingComponent],
+      providers: [
+        { provide: CompanyIdbService, useValue: {} },
+        { provide: FacilityIdbService, useValue: {} },
+        { provide: UserIdbService, useValue: {} },
+        { provide: ProjectIdbService, useValue: {} }
+      ]
+    })
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);

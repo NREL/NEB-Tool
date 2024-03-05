@@ -1,0 +1,17 @@
+<div class="h4 pt-2">{{selectedFacility.name}} Projects:</div>
+<ng-template [ngIf]="(selectedFacility.guid | projectsList:projects).length" [ngIfElse]="noProjectsFoundBlock">
+    <ul>
+        <li *ngFor="let project of (selectedFacility.guid | projectsList:projects)">
+            <a
+                [routerLink]="'/user/company/'+project.companyId+'/facility/'+project.facilityId+'/project/'+project.guid">
+                {{project.name}}
+            </a>
+        </li>
+    </ul>
+</ng-template>
+
+<ng-template #noProjectsFoundBlock>
+    <div class="alert alert-info">
+        No Projects found. Please click "Add Project" to get started.
+    </div>
+</ng-template>
