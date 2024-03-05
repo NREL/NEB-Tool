@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { IconDefinition, faContactCard, faFileLines, faIndustry, faLocationDot, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbCompany } from 'src/app/models/company';
-import { IdbFacility } from 'src/app/models/facility';
+import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { IdbProject } from 'src/app/models/project';
 
 @Component({
@@ -14,6 +15,11 @@ import { IdbProject } from 'src/app/models/project';
 })
 export class FacilitiesListComponent {
 
+  faPlus: IconDefinition = faPlus;
+  faIndustry: IconDefinition = faIndustry;
+  faLocationDot: IconDefinition = faLocationDot;
+  faContactCard: IconDefinition = faContactCard;
+  faFileLines: IconDefinition = faFileLines;
 
   selectedCompany: IdbCompany;
   companiesSub: Subscription;
@@ -47,4 +53,11 @@ export class FacilitiesListComponent {
     this.facilitiesSub.unsubscribe();
     this.projectsSub.unsubscribe();
   }
+
+  async addFacility() {
+    let newFacility: IdbFacility = getNewIdbFacility(this.selectedCompany.userId, this.selectedCompany.guid);
+    newFacility = await firstValueFrom(this.facilityIdbService.addWithObservable(newFacility));
+    await this.facilityIdbService.setFacilities();
+  }
+
 }

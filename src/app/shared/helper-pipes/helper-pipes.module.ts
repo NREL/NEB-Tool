@@ -4,6 +4,7 @@ import { CompanyNamePipe } from './company-name.pipe';
 import { FacilityNamePipe } from './facility-name.pipe';
 import { FacilityListPipe } from './facility-list.pipe';
 import { ProjectsListPipe } from './projects-list.pipe';
+import { AddressDisplayPipe } from './address-display.pipe';
 
 
 
@@ -12,7 +13,8 @@ import { ProjectsListPipe } from './projects-list.pipe';
     CompanyNamePipe,
     FacilityNamePipe,
     FacilityListPipe,
-    ProjectsListPipe
+    ProjectsListPipe,
+    AddressDisplayPipe
   ],
   imports: [
     CommonModule
@@ -21,7 +23,8 @@ import { ProjectsListPipe } from './projects-list.pipe';
     CompanyNamePipe,
     FacilityNamePipe,
     FacilityListPipe,
-    ProjectsListPipe
+    ProjectsListPipe,
+    AddressDisplayPipe
   ]
 })
 export class HelperPipesModule { }
