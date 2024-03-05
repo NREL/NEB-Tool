@@ -1,7 +1,8 @@
 <nav class="navbar bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/welcome">NEB Tool</a>
-        <!--TODO: hide reset database in production once app is further along and has real users-->
+        <a [style]="{'color': 'white'}" class="navbar-brand" routerLink="/welcome">
+            <fa-icon [icon]="faHome" [style]="{'color': 'white'}"></fa-icon>
+            NEB Tool</a>
         <div>
             <button class="btn btn-danger" (click)="openResetDatabaseModal()">
                 Reset Database

@@ -10,6 +10,7 @@ import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { CompanyDashboardModule } from './company-dashboard/company-dashboard.module';
 import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard.module';
 import { ProjectDashboardModule } from './project-dashboard/project-dashboard.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IndexedDbModule } from './indexed-db/indexed-db.module';
 import { LoadingComponent } from './core-components/loading/loading.component';
 
@@ -28,6 +29,7 @@ import { LoadingComponent } from './core-components/loading/loading.component';
     CompanyDashboardModule,
     FacilityDashboardModule,
     ProjectDashboardModule,
+    FontAwesomeModule,
     IndexedDbModule
   ],
   providers: [],
