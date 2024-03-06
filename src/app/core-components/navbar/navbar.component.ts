@@ -10,7 +10,6 @@ import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
 })
 export class NavbarComponent {
 
-
   faHome: IconDefinition = faHome;
   showResetModal: boolean = false;
   constructor(private userIdbService: UserIdbService,

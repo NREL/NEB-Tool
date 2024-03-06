@@ -4,6 +4,9 @@
   "main": "main.js",
   "author": "National Renewable Energy Laboratory",
   "repository": "https://github.com/NREL/NEB-Tool.git",
+  "engines": {
+    "node": ">=18.13.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -64,7 +67,7 @@
     "@angular/platform-browser": "^17.2.3",
     "@angular/platform-browser-dynamic": "^17.2.3",
     "@angular/router": "^17.2.3",
-    "@fortawesome/angular-fontawesome": "0.14.1",
+    "@fortawesome/angular-fontawesome": "^0.14.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "bootstrap": "^5.3.2",
