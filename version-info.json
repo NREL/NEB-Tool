@@ -1,0 +1,9 @@
+{
+  "git": {
+    "hash": "DevMode"
+  },
+  "pkg": {
+    "version": "DevMode",
+    "name": "neb-tool"
+  }
+}
