@@ -25,6 +25,10 @@ export class CompanyDashboardHomeComponent {
   ngOnInit() {
     this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.selectedCompany = _company;
+      //No company selected. Go back to dashboard.
+      if(!this.selectedCompany){
+        this.router.navigateByUrl('/');
+      }
     });
   }
 

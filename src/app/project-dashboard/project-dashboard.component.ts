@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectIdbService } from '../indexed-db/project-idb.service';
 
 @Component({
@@ -16,7 +16,6 @@ export class ProjectDashboardComponent {
     this.activatedRoute.params.subscribe(params => {
       let projectGUID: string = params['id'];
       this.projectIdbService.setSelectedFromGUID(projectGUID);
-      //TODO: if no project matching id, navigate to dashboard
     });
   }
 }

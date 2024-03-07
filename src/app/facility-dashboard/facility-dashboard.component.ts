@@ -16,7 +16,6 @@ export class FacilityDashboardComponent {
     this.activatedRoute.params.subscribe(params => {
       let facilityGUID: string = params['id'];
       this.facilityIdbService.setSelectedFromGUID(facilityGUID);
-      //TODO: if no project matching id, navigate to dashboard
     });
   }
 }

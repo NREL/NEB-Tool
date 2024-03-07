@@ -16,7 +16,6 @@ export class CompanyDashboardComponent {
     this.activatedRoute.params.subscribe(params => {
       let companyGUID: string = params['id'];
       this.companyIdbService.setSelectedFromGUID(companyGUID);
-      //TODO: if no company matching id, navigate to dashboard
     });
   }
 }

@@ -31,6 +31,10 @@ export class FacilityDashboardHomeComponent {
   ngOnInit() {
     this.selectedFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
       this.selectedFacility = _facility;
+      //no selected facility. navigate to home dashboard
+      if (!this.selectedFacility) {
+        this.router.navigateByUrl('/');
+      }
     });
 
     this.companiesSub = this.companyIdbService.companies.subscribe(_companies => {

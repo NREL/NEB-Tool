@@ -32,6 +32,10 @@ export class ProjectDashboardHomeComponent {
   ngOnInit() {
     this.selectedProjectSub = this.projectIdbService.selectedProject.subscribe(_project => {
       this.selectedProject = _project;
+      //No project selected. Go back to dashboard.
+      if(!this.selectedProject){
+        this.router.navigateByUrl('/');
+      }
     });
     this.companiesSub = this.companyIdbService.companies.subscribe(_companies => {
       this.companies = _companies;
