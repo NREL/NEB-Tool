@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IconDefinition, faBuilding, faChevronDown, faChevronRight, faIndustry } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -13,6 +14,12 @@ import { IdbUser } from 'src/app/models/user';
   styleUrls: ['./companies-list.component.css']
 })
 export class CompaniesListComponent {
+
+
+  faChevronRight: IconDefinition = faChevronRight;
+  faChevronDown: IconDefinition = faChevronDown;
+  faBuilding: IconDefinition = faBuilding;
+  faIndustry: IconDefinition = faIndustry;
 
   companies: Array<IdbCompany>;
   companiesSub: Subscription;
@@ -44,5 +51,9 @@ export class CompaniesListComponent {
     this.companiesSub.unsubscribe();
     this.userSub.unsubscribe();
     this.facilitiesSub.unsubscribe();
+  }
+
+  toggleShowFacilities(company: IdbCompany){
+    company.displayFacilities = !company.displayFacilities;
   }
 }

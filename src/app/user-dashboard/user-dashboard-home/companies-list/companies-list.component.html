@@ -1,16 +1,24 @@
-<div class="h4 pt-2">{{user.name}} Companies</div>
+<div class="h4 pt-2">NEB Tool Companies</div>
 <ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompaniesBlock">
-    <ul>
-        <li *ngFor="let company of companies">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let company of companies">
+            <button class="btn" (click)="toggleShowFacilities(company)">
+                <fa-icon [icon]="faChevronDown" *ngIf="company.displayFacilities"></fa-icon>
+                <fa-icon [icon]="faChevronRight" *ngIf="!company.displayFacilities"></fa-icon>
+            </button>
             <a [routerLink]="'/user/company/'+company.guid">
+                <fa-icon class="pe-1" [icon]="faBuilding"></fa-icon>
                 {{company.generalInformation.name}}
             </a>
-            <ul *ngFor="let facility of company.guid | facilityList:facilities">
-                <li>
-                    <a
-                        [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">{{facility.generalInformation.name}}</a>
-                </li>
-            </ul>
+            <div class="collapse" [ngClass]="{'show': company.displayFacilities}">
+                <ul class="list-group" *ngFor="let facility of company.guid | facilityList:facilities">
+                    <li class="list-group-item">
+                        <a [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">
+                            <fa-icon [icon]="faIndustry" class="pe-1"></fa-icon>
+                            {{facility.generalInformation.name}}</a>
+                    </li>
+                </ul>
+            </div>
         </li>
     </ul>
 </ng-template>

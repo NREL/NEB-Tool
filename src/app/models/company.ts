@@ -5,7 +5,8 @@ import { UnitSettings, getDefaultUnitSettings } from "./unitSettings";
 export interface IdbCompany extends IdbEntry {
     userId: string,
     unitSettings: UnitSettings,
-    generalInformation: GeneralInformation
+    generalInformation: GeneralInformation,
+    displayFacilities: boolean
 }
 
 export function getNewIdbCompany(userId: string): IdbCompany {
@@ -16,6 +17,7 @@ export function getNewIdbCompany(userId: string): IdbCompany {
         ...idbEntry,
         userId: userId,
         unitSettings: defaultSettings,
-        generalInformation: generalInformation
+        generalInformation: generalInformation,
+        displayFacilities: true
     }
 }
