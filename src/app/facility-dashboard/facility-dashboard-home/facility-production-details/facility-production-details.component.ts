@@ -9,7 +9,7 @@ import { IconDefinition, faClipboardCheck, faClipboardList } from '@fortawesome/
 export class FacilityProductionDetailsComponent {
 
   faClipboardList: IconDefinition = faClipboardList;
-  accordionOpen: boolean = true;
+  accordionOpen: boolean = false;
 
 
   constructor(){

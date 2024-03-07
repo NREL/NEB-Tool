@@ -8,6 +8,7 @@ export interface IdbFacility extends IdbEntry {
     userId: string,
     unitSettings: UnitSettings,
     generalInformation: GeneralInformation
+    displayProjects: boolean
 }
 
 export function getNewIdbFacility(userId: string, companyId: string): IdbFacility {
@@ -19,6 +20,7 @@ export function getNewIdbFacility(userId: string, companyId: string): IdbFacilit
         userId: userId,
         companyId: companyId,
         unitSettings: defaultSettings,
-        generalInformation: generalInformation
+        generalInformation: generalInformation,
+        displayProjects: true
     }
 }

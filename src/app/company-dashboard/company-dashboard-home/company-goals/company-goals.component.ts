@@ -9,7 +9,7 @@ import { IconDefinition, faBullseye } from '@fortawesome/free-solid-svg-icons';
 export class CompanyGoalsComponent {
 
   faBullseye: IconDefinition = faBullseye;
-  accordionOpen: boolean = true;
+  accordionOpen: boolean = false;
 
 
   constructor(){

@@ -1,5 +1,46 @@
 <div class="h4 pt-2">NEB Tool Companies</div>
 <ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompaniesBlock">
+    <div class="d-flex flex-column">
+        <div class="d-flex flex-column" *ngFor="let company of companies">
+            <div class="d-flex">
+                <button class="btn" (click)="toggleShowFacilities(company)">
+                    <fa-icon [icon]="faChevronDown" *ngIf="company.displayFacilities"></fa-icon>
+                    <fa-icon [icon]="faChevronRight" *ngIf="!company.displayFacilities"></fa-icon>
+                </button>
+                <a [routerLink]="'/user/company/'+company.guid">
+                    <fa-icon class="pe-1" [icon]="faBuilding"></fa-icon>
+                    {{company.generalInformation.name}}
+                </a>
+            </div>
+            <div class="collapse" [ngClass]="{'show': company.displayFacilities}">
+                <div class="d-flex flex-column ms-4">
+                    <div class="d-flex flex-column" *ngFor="let facility of company.guid | facilityList:facilities">
+                        <div class="d-flex">
+                            <button class="btn" (click)="toggleShowProjects(facility)">
+                                <fa-icon [icon]="faChevronDown" *ngIf="facility.displayProjects"></fa-icon>
+                                <fa-icon [icon]="faChevronRight" *ngIf="!facility.displayProjects"></fa-icon>
+                            </button>
+                            <a [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid">
+                                <fa-icon [icon]="faIndustry" class="pe-1"></fa-icon>
+                                {{facility.generalInformation.name}}</a>
+                        </div>
+                        <div class="collapse" [ngClass]="{'show': facility.displayProjects}">
+                            <div class="d-flex flex-column ms-5">
+                                <div class="d-flex" *ngFor="let project of (facility.guid | projectsList:projects)">
+                                    <a
+                                        [routerLink]="'/user/company/'+facility.companyId+'/facility/'+facility.guid+'/project/'+project.guid">
+                                        <fa-icon [icon]="faFileLines" class="pe-1"></fa-icon>
+                                        {{project.name}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
     <ul class="list-group">
         <li class="list-group-item" *ngFor="let company of companies">
             <button class="btn" (click)="toggleShowFacilities(company)">
@@ -20,7 +61,7 @@
                 </ul>
             </div>
         </li>
-    </ul>
+    </ul> -->
 </ng-template>
 
 <ng-template #noCompaniesBlock>
