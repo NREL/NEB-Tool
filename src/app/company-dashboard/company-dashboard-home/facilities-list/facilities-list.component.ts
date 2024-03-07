@@ -29,6 +29,7 @@ export class FacilitiesListComponent {
 
   projects: Array<IdbProject>;
   projectsSub: Subscription;
+  accordionOpen: boolean = true;
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private projectIdbService: ProjectIdbService) {
   }
@@ -60,4 +61,8 @@ export class FacilitiesListComponent {
     await this.facilityIdbService.setFacilities();
   }
 
+
+  toggleAccordion(){
+    this.accordionOpen = !this.accordionOpen;
+  }
 }

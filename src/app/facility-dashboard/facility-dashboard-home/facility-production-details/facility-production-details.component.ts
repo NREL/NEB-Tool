@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IconDefinition, faClipboardCheck, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-facility-production-details',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class FacilityProductionDetailsComponent {
 
+  faClipboardList: IconDefinition = faClipboardList;
+  accordionOpen: boolean = true;
+
+
+  constructor(){
+
+  }
+
+  toggleAccordion(){
+    this.accordionOpen = !this.accordionOpen;
+  }
 }

@@ -1,3 +1,73 @@
+<div class="accordion" id="projectsAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseProjects" aria-expanded="true" aria-controls="collapseProjects"
+                [ngClass]="{'collapsed': !accordionOpen}" (click)="toggleAccordion()">
+                <!-- <fa-icon [icon]="faIndustry" class="me-2"></fa-icon> -->
+                <fa-icon [icon]="faFileLines" class="me-2"></fa-icon>
+                Projects
+            </button>
+        </h2>
+        <div id="collapseProjects" class="accordion-collapse collapse" data-bs-parent="#projectsAccordion"
+            [ngClass]="{'show': accordionOpen}">
+            <div class="accordion-body">
+                <div class="d-flex w-100 justify-content-end pb-2">
+                    <button class="btn btn-sm btn-primary" (click)="addProject()">
+                        <fa-icon [icon]="faPlus"></fa-icon>Add Project</button>
+                </div>
+                <ng-template [ngIf]="(selectedFacility.guid | projectsList:projects).length"
+                    [ngIfElse]="noProjectsFoundBlock">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Project
+                                </th>
+                                <th>
+                                    Created Date
+                                </th>
+                                <th>
+                                    Modified Date
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let project of (selectedFacility.guid | projectsList:projects)">
+                                <td>
+                                    <a
+                                        [routerLink]="'/user/company/'+project.companyId+'/facility/'+project.facilityId+'/project/'+project.guid">
+                                        {{project.name}}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{project.createdDate | date:'short'}}
+                                </td>
+                                <td>
+                                    {{project.modifiedDate | date:'short'}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-template>
+
+                <ng-template #noProjectsFoundBlock>
+                    <div class="alert alert-info">
+                        No Projects found. Please click "Add Project" to get started.
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- 
 <div class="d-flex justify-content-between">
     <div class="h4 pt-2">Projects
     </div>
@@ -44,4 +114,4 @@
     <div class="alert alert-info">
         No Projects found. Please click "Add Project" to get started.
     </div>
-</ng-template>
+</ng-template> -->

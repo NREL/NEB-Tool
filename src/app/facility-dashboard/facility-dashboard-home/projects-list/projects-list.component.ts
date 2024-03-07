@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
@@ -14,12 +14,13 @@ import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 export class ProjectsListComponent {
 
   faPlus: IconDefinition = faPlus;
+  faFileLines: IconDefinition = faFileLines;
   selectedFacility: IdbFacility;
   facilitySub: Subscription;
 
   projects: Array<IdbProject>;
   projectsSub: Subscription;
-
+  accordionOpen: boolean = true;
   constructor(private facilityIdbService: FacilityIdbService,
     private projectIdbService: ProjectIdbService) {
   }
@@ -44,5 +45,9 @@ export class ProjectsListComponent {
     let newProject: IdbProject = getNewIdbProject(this.selectedFacility.userId, this.selectedFacility.companyId, this.selectedFacility.guid);
     newProject = await firstValueFrom(this.projectIdbService.addWithObservable(newProject));
     await this.projectIdbService.setProjects();
+  }
+
+  toggleAccordion(){
+    this.accordionOpen = !this.accordionOpen;
   }
 }
