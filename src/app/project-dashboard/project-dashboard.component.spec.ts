@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectDashboardComponent } from './project-dashboard.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ProjectIdbService } from '../indexed-db/project-idb.service';
 
 describe('ProjectDashboardComponent', () => {
   let component: ProjectDashboardComponent;
@@ -10,7 +11,8 @@ describe('ProjectDashboardComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ProjectDashboardComponent]
+      declarations: [ProjectDashboardComponent],
+      providers: [{ provide: ProjectIdbService, useValue: {} }]
     });
     fixture = TestBed.createComponent(ProjectDashboardComponent);
     component = fixture.componentInstance;

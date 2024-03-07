@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FacilityIdbService } from '../indexed-db/facility-idb.service';
 
 @Component({
   selector: 'app-facility-dashboard',
@@ -7,4 +9,14 @@ import { Component } from '@angular/core';
 })
 export class FacilityDashboardComponent {
 
+  constructor(private activatedRoute: ActivatedRoute, private facilityIdbService: FacilityIdbService) {
+  }
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      let facilityGUID: string = params['id'];
+      this.facilityIdbService.setSelectedFromGUID(facilityGUID);
+      //TODO: if no project matching id, navigate to dashboard
+    });
+  }
 }

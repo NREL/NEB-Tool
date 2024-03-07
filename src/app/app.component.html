@@ -1,2 +1,8 @@
 <app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<ng-template [ngIf]="dataInitialized" [ngIfElse]="initializingDataBlock">
+    <router-outlet></router-outlet>
+</ng-template>
+<ng-template #initializingDataBlock>
+    Initializing data...
+</ng-template>
+<app-loading></app-loading>
