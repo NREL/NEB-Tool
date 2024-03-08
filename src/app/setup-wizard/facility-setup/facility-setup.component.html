@@ -1,1 +1,15 @@
-<p>facility-setup works!</p>
+<div class="d-flex w-100 justify-content-center mt-3">
+    <div class="card col-6">
+        <div class="card-header text-center">
+            <h5 class="card-title mb-0">Create New Facility</h5>
+        </div>
+        <div class="d-flex">
+            <div class="card-body">
+                <app-settings-form [inCompany]="false"></app-settings-form>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <button class="btn btn-primary" (click)="goToProject()">Setup Project</button>
+        </div>
+    </div>
+</div>

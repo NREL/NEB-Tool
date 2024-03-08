@@ -8,6 +8,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanySetupComponent } from './company-setup/company-setup.component';
 import { FacilitySetupComponent } from './facility-setup/facility-setup.component';
 import { ProjectSetupComponent } from './project-setup/project-setup.component';
+import { SetupWizardFooterComponent } from './setup-wizard-footer/setup-wizard-footer.component';
+import { FormsModule } from '@angular/forms';
+import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 
 
 
@@ -18,12 +21,15 @@ import { ProjectSetupComponent } from './project-setup/project-setup.component';
     GettingStartedComponent,
     CompanySetupComponent,
     FacilitySetupComponent,
-    ProjectSetupComponent
+    ProjectSetupComponent,
+    SetupWizardFooterComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
+    SharedSettingsFormsModule
   ]
 })
 export class SetupWizardModule { }
