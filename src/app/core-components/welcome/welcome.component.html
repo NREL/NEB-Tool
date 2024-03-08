@@ -10,13 +10,20 @@
                     non-energy benefits.
                 </p>
                 <hr>
-                <button class="btn btn-secondary" routerLink="/user">Go to Project Dashboard</button>
-
-                <div class="input-group pt-3">
-                    <label>
-                        <input class="form-check-input mt-0" type="checkbox" [(ngModel)]="user.skipSplashScreen"
-                            (change)="saveChanges()">
-                        Skip this screen next time and go directly to dashboard.</label>
+                <div class="row">
+                    <div class="col-6">
+                        <button class="btn btn-secondary" routerLink="/user">Go to Project Dashboard</button>
+        
+                        <div class="input-group pt-3">
+                            <label>
+                                <input class="form-check-input mt-0" type="checkbox" [(ngModel)]="user.skipSplashScreen"
+                                    (change)="saveChanges()">
+                                Skip this screen next time and go directly to dashboard.</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-secondary" routerLink="/setup-wizard">Add a new project</button>
+                    </div>
                 </div>
             </div>
         </div>

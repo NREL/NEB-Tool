@@ -10,6 +10,11 @@ import { FacilityDashboardComponent } from './facility-dashboard/facility-dashbo
 import { FacilityDashboardHomeComponent } from './facility-dashboard/facility-dashboard-home/facility-dashboard-home.component';
 import { ProjectDashboardComponent } from './project-dashboard/project-dashboard.component';
 import { ProjectDashboardHomeComponent } from './project-dashboard/project-dashboard-home/project-dashboard-home.component';
+import { SetupWizardComponent } from './setup-wizard/setup-wizard.component';
+import { GettingStartedComponent } from './setup-wizard/getting-started/getting-started.component';
+import { CompanySetupComponent } from './setup-wizard/company-setup/company-setup.component';
+import { FacilitySetupComponent } from './setup-wizard/facility-setup/facility-setup.component';
+import { ProjectSetupComponent } from './setup-wizard/project-setup/project-setup.component';
 
 const routes: Routes = [
   {
@@ -20,6 +25,33 @@ const routes: Routes = [
   {
     path: 'welcome',
     component: WelcomeComponent
+  },
+  {
+    path: 'setup-wizard',
+    component: SetupWizardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'getting-started'
+      },
+      {
+        path: 'getting-started',
+        component: GettingStartedComponent
+      },
+      {
+        path: 'company-setup',
+        component: CompanySetupComponent
+      },
+      {
+        path: 'facility-setup',
+        component: FacilitySetupComponent
+      },
+      {
+        path: 'project-setup',
+        component: ProjectSetupComponent
+      }
+    ]
   },
   {
     path: 'user',

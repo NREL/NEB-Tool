@@ -1,0 +1,4 @@
+.nav-link.active .badge.text-bg-secondary{
+    background-color: blue !important;
+
+}

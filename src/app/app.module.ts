@@ -15,6 +15,7 @@ import { LoadingComponent } from './core-components/loading/loading.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { FormsModule } from '@angular/forms';
+import { SetupWizardModule } from './setup-wizard/setup-wizard.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FormsModule } from '@angular/forms';
     IndexedDbModule,
     FontAwesomeModule,
     NgxWebstorageModule.forRoot(),
-    FormsModule
+    FormsModule,
+    SetupWizardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
