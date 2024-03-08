@@ -5,6 +5,7 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
+import { SetupWizardService } from '../setup-wizard.service';
 
 @Component({
   selector: 'app-getting-started',
@@ -19,10 +20,10 @@ export class GettingStartedComponent {
   companies: Array<IdbCompany>;
   companiesSub: Subscription;
 
-  selectedCompany: IdbCompany;
-  selectedFacility: IdbFacility;
+  selectedCompanyGuid: string;
+  selectedFacilityGuid: string;
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
-    private router: Router) {
+    private router: Router, private setupWizardService: SetupWizardService) {
 
   }
 
@@ -43,6 +44,36 @@ export class GettingStartedComponent {
   }
 
   createNewProject() {
-    this.router.navigateByUrl('setup-wizard/company-setup')
+    let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
+    if (!selectedCompany) {
+      //Start from scratch with new company
+      this.router.navigateByUrl('setup-wizard/company-setup')
+    } else {
+      let selectedFacility: IdbFacility = this.setupWizardService.facility.getValue();
+      if (!selectedFacility) {
+        //start from new facility
+        this.router.navigateByUrl('setup-wizard/facility-setup');
+      } else {
+        //create project within existing facility
+        this.router.navigateByUrl('setup-wizard/project-setup');
+      }
+    }
+  }
+
+  setSelectedCompany() {
+    let selectedCompany: IdbCompany = this.companies.find(company => {
+      return company.guid == this.selectedCompanyGuid;
+    });
+    this.setupWizardService.company.next(selectedCompany);
+    this.selectedFacilityGuid = undefined;
+    this.setSelectedFacility();
+  }
+
+  setSelectedFacility() {
+    let selectedFacility: IdbFacility = this.facilities.find(facility => {
+      return facility.guid == this.selectedFacilityGuid;
+    })
+    this.setupWizardService.facility.next(selectedFacility);
+
   }
 }

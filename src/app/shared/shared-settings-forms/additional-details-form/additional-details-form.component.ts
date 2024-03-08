@@ -9,6 +9,7 @@ import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faFilePen } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-additional-details-form',
@@ -18,6 +19,8 @@ import { LocalStorageDataService } from '../../shared-services/local-storage-dat
 export class AdditionalDetailsFormComponent {
   @Input()
   inCompany: boolean;
+  @Input()
+  inSetupWizard: boolean;
 
   faFilePen: IconDefinition = faFilePen;
 
@@ -32,27 +35,49 @@ export class AdditionalDetailsFormComponent {
   accordionOpen: boolean;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
-    private localStorageDataService: LocalStorageDataService) {
+    private localStorageDataService: LocalStorageDataService,
+    private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
     this.accordionOpen = this.localStorageDataService.additionalDetailsAccordionOpen;
-    if (this.inCompany) {
-      this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
-        if (!this.company || (this.company.guid != _company.guid)) {
-          //initialize form on company change
-          this.form = this.getGeneralInformationForm(_company.generalInformation);
-        }
-        this.company = _company;
-      });
+    if (this.inSetupWizard) {
+      if (this.inCompany) {
+        this.companyOrFacilitySub = this.setupWizardService.company.subscribe(_company => {
+          if (!this.company || (this.company.guid != _company.guid)) {
+            //initialize form on company change
+            this.form = this.getGeneralInformationForm(_company.generalInformation);
+          }
+          this.company = _company;
+        });
+      } else {
+        this.companyOrFacilitySub = this.setupWizardService.facility.subscribe(_facility => {
+          if (!this.facility || (this.facility.guid != _facility.guid)) {
+            //initialize form on facility change
+            this.form = this.getGeneralInformationForm(_facility.generalInformation);
+          }
+          this.facility = _facility;
+        });
+      }
+
     } else {
-      this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
-        if (!this.facility || (this.facility.guid != _facility.guid)) {
-          //initialize form on facility change
-          this.form = this.getGeneralInformationForm(_facility.generalInformation);
-        }
-        this.facility = _facility;
-      });
+      if (this.inCompany) {
+        this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+          if (!this.company || (this.company.guid != _company.guid)) {
+            //initialize form on company change
+            this.form = this.getGeneralInformationForm(_company.generalInformation);
+          }
+          this.company = _company;
+        });
+      } else {
+        this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
+          if (!this.facility || (this.facility.guid != _facility.guid)) {
+            //initialize form on facility change
+            this.form = this.getGeneralInformationForm(_facility.generalInformation);
+          }
+          this.facility = _facility;
+        });
+      }
     }
   }
 
@@ -71,12 +96,22 @@ export class AdditionalDetailsFormComponent {
     return form;
   }
   async saveChanges() {
-    if (this.inCompany) {
-      this.company.generalInformation = this.updateGeneralInformationFromForm(this.company.generalInformation);
-      await this.companyIdbService.asyncUpdate(this.company);
+    if (this.inSetupWizard) {
+      if (this.inCompany) {
+        this.company.generalInformation = this.updateGeneralInformationFromForm(this.company.generalInformation);
+        this.setupWizardService.company.next(this.company);
+      } else {
+        this.facility.generalInformation = this.updateGeneralInformationFromForm(this.facility.generalInformation);
+        this.setupWizardService.facility.next(this.facility);
+      }
     } else {
-      this.facility.generalInformation = this.updateGeneralInformationFromForm(this.facility.generalInformation);
-      await this.facilityIdbService.asyncUpdate(this.facility);
+      if (this.inCompany) {
+        this.company.generalInformation = this.updateGeneralInformationFromForm(this.company.generalInformation);
+        await this.companyIdbService.asyncUpdate(this.company);
+      } else {
+        this.facility.generalInformation = this.updateGeneralInformationFromForm(this.facility.generalInformation);
+        await this.facilityIdbService.asyncUpdate(this.facility);
+      }
     }
   }
 

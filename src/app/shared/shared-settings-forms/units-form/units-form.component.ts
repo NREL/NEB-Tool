@@ -9,6 +9,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faGear } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-units-form',
@@ -18,6 +19,8 @@ import { LocalStorageDataService } from '../../shared-services/local-storage-dat
 export class UnitsFormComponent {
   @Input()
   inCompany: boolean;
+  @Input()
+  inSetupWizard: boolean;
 
   faGear: IconDefinition = faGear;
   form: FormGroup;
@@ -32,27 +35,48 @@ export class UnitsFormComponent {
   accordionOpen: boolean;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
-    private localStorageDataService: LocalStorageDataService) {
+    private localStorageDataService: LocalStorageDataService,
+    private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
     this.accordionOpen = this.localStorageDataService.unitsAccordionOpen;
-    if (this.inCompany) {
-      this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
-        if (!this.company || (this.company.guid != _company.guid)) {
-          //initialize form on company change
-          this.form = this.getUnitsForm(_company.unitSettings);
-        }
-        this.company = _company;
-      });
+    if (this.inSetupWizard) {
+      if (this.inCompany) {
+        this.companyOrFacilitySub = this.setupWizardService.company.subscribe(_company => {
+          if (!this.company || (this.company.guid != _company.guid)) {
+            //initialize form on company change
+            this.form = this.getUnitsForm(_company.unitSettings);
+          }
+          this.company = _company;
+        });
+      } else {
+        this.companyOrFacilitySub = this.setupWizardService.facility.subscribe(_facility => {
+          if (!this.facility || (this.facility.guid != _facility.guid)) {
+            //initialize form on facility change
+            this.form = this.getUnitsForm(_facility.unitSettings);
+          }
+          this.facility = _facility;
+        });
+      }
     } else {
-      this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
-        if (!this.facility || (this.facility.guid != _facility.guid)) {
-          //initialize form on facility change
-          this.form = this.getUnitsForm(_facility.unitSettings);
-        }
-        this.facility = _facility;
-      });
+      if (this.inCompany) {
+        this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+          if (!this.company || (this.company.guid != _company.guid)) {
+            //initialize form on company change
+            this.form = this.getUnitsForm(_company.unitSettings);
+          }
+          this.company = _company;
+        });
+      } else {
+        this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
+          if (!this.facility || (this.facility.guid != _facility.guid)) {
+            //initialize form on facility change
+            this.form = this.getUnitsForm(_facility.unitSettings);
+          }
+          this.facility = _facility;
+        });
+      }
     }
   }
 
@@ -72,16 +96,30 @@ export class UnitsFormComponent {
     return form;
   }
   async saveChanges() {
-    if (this.inCompany) {
-      let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company.unitSettings);
-      this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
-      this.company.unitSettings = this.updateUnitSettingsFromForm(this.company.unitSettings);
-      await this.companyIdbService.asyncUpdate(this.company);
+    if (this.inSetupWizard) {
+      if (this.inCompany) {
+        let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company.unitSettings);
+        this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
+        this.company.unitSettings = this.updateUnitSettingsFromForm(this.company.unitSettings);
+        this.setupWizardService.company.next(this.company);
+      } else {
+        let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.facility.unitSettings);
+        this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
+        this.facility.unitSettings = this.updateUnitSettingsFromForm(this.facility.unitSettings);
+        this.setupWizardService.facility.next(this.facility);
+      }
     } else {
-      let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.facility.unitSettings);
-      this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
-      this.facility.unitSettings = this.updateUnitSettingsFromForm(this.facility.unitSettings);
-      await this.facilityIdbService.asyncUpdate(this.facility);
+      if (this.inCompany) {
+        let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company.unitSettings);
+        this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
+        this.company.unitSettings = this.updateUnitSettingsFromForm(this.company.unitSettings);
+        await this.companyIdbService.asyncUpdate(this.company);
+      } else {
+        let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.facility.unitSettings);
+        this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
+        this.facility.unitSettings = this.updateUnitSettingsFromForm(this.facility.unitSettings);
+        await this.facilityIdbService.asyncUpdate(this.facility);
+      }
     }
   }
 

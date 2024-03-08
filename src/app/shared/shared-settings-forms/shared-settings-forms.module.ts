@@ -25,7 +25,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ],
   exports: [
-    SettingsFormComponent
+    UnitsFormComponent,
+    SettingsFormComponent,
+    PrimaryContactFormComponent,
+    LocationFormComponent,
+    AdditionalDetailsFormComponent
   ]
 })
 export class SharedSettingsFormsModule { }
