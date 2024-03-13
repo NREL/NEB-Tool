@@ -6,6 +6,10 @@ import { RouterModule } from '@angular/router';
 import { ProjectDetailsFormComponent } from './project-dashboard-home/project-details-form/project-details-form.component';
 import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
+import { ProjectDashboardTabsComponent } from './project-dashboard-tabs/project-dashboard-tabs.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ProjectSettingsComponent } from './project-settings/project-settings.component';
+import { ProjectReportComponent } from './project-report/project-report.component';
 
 
 
@@ -13,13 +17,17 @@ import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
   declarations: [
     ProjectDashboardComponent,
     ProjectDashboardHomeComponent,
-    ProjectDetailsFormComponent
+    ProjectDetailsFormComponent,
+    ProjectDashboardTabsComponent,
+    ProjectSettingsComponent,
+    ProjectReportComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    HelperPipesModule
+    HelperPipesModule,
+    FontAwesomeModule
   ]
 })
 export class ProjectDashboardModule { }

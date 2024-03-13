@@ -20,6 +20,8 @@ import { CompanySettingsComponent } from './company-dashboard/company-settings/c
 import { CompanyReportsComponent } from './company-dashboard/company-reports/company-reports.component';
 import { FacilitySettingsComponent } from './facility-dashboard/facility-settings/facility-settings.component';
 import { FacilityReportsComponent } from './facility-dashboard/facility-reports/facility-reports.component';
+import { ProjectReportComponent } from './project-dashboard/project-report/project-report.component';
+import { ProjectSettingsComponent } from './project-dashboard/project-settings/project-settings.component';
 
 const routes: Routes = [
   {
@@ -126,6 +128,25 @@ const routes: Routes = [
   {
     path: 'project/:id',
     component: ProjectDashboardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: ProjectDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: ProjectSettingsComponent
+      },
+      {
+        path: 'reports',
+        component: ProjectReportComponent
+      },
+    ]
   },
   // children: [
   //   {
