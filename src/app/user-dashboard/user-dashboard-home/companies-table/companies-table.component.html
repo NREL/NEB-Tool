@@ -1,6 +1,12 @@
 <div class="card">
     <div class="card-header">
-        Companies
+        <span class="h4">
+            <fa-icon [icon]="faBuilding"></fa-icon>
+            Companies
+        </span>
+        <button class="btn btn-sm btn-success float-end" (click)="openAddNewModal()">
+            <fa-icon [icon]="faPlus" title="Add Company"></fa-icon> Add New
+        </button>
     </div>
     <div class="card-body">
         <ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompaniesBlock">
@@ -56,5 +62,23 @@
                 No companies found. Please click "Add New" to get started.
             </div>
         </ng-template>
+    </div>
+</div>
+
+<div [ngClass]="{'window-overlay': displayAddNewModal}"></div>
+<div class="popup" [ngClass]="{'open': displayAddNewModal }">
+    <div class="popup-header">Create New Company?
+        <button type="button" class="btn-close float-end" aria-label="Close"
+            (click)="closeAddNewModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-info">
+            Would you like to create a new company for your portfolio?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeAddNewModal()">Cancel</button>
+        <button class="btn btn-success" (click)="confirmCreate()">Create Company</button>
     </div>
 </div>

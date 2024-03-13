@@ -7,6 +7,8 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { GeneralInformation } from 'src/app/models/generalInformation';
 import { UnitSettings } from 'src/app/models/unitSettings';
+import { IconDefinition, faBuilding, faContactCard, faFilePen, faGear, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-settings-form',
@@ -21,12 +23,31 @@ export class SettingsFormComponent {
   facility: IdbFacility;
   company: IdbCompany;
   companyOrFacilitySub: Subscription;
+
+
+  faFilePen: IconDefinition = faFilePen;
+  faGear: IconDefinition = faGear;
+  faContactCard: IconDefinition = faContactCard;
+  faLocationDot: IconDefinition = faLocationDot;
+  faBuilding: IconDefinition = faBuilding;
+
+  additionalDetailsAccordionOpen: boolean = false;
+  unitsAccordionOpen: boolean = false;
+  primaryContactAccordionOpen: boolean = false;
+  locationAccordionOpen: boolean = false;
+  nameLabel: 'Company' | 'Facility';
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService) {
+    private facilityIdbService: FacilityIdbService,
+    private localStorageDataService: LocalStorageDataService) {
   }
 
   ngOnInit() {
+    this.additionalDetailsAccordionOpen = this.localStorageDataService.additionalDetailsAccordionOpen;
+    this.locationAccordionOpen = this.localStorageDataService.locationAccordionOpen;
+    this.primaryContactAccordionOpen = this.localStorageDataService.primaryContactAccordionOpen;
+    this.unitsAccordionOpen = this.localStorageDataService.unitsAccordionOpen;
     if (this.inCompany) {
+      this.nameLabel = 'Company';
       this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
         if (!this.company || (this.company.guid != _company.guid)) {
           //initialize form on company change
@@ -35,6 +56,7 @@ export class SettingsFormComponent {
         this.company = _company;
       });
     } else {
+      this.nameLabel = 'Facility';
       this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
         if (!this.facility || (this.facility.guid != _facility.guid)) {
           //initialize form on facility change
@@ -70,5 +92,25 @@ export class SettingsFormComponent {
     return generalInformation;
   }
 
+  toggleLocation() {
+    this.locationAccordionOpen = !this.locationAccordionOpen;
+    this.localStorageDataService.setLocationAccordionOpen(this.locationAccordionOpen);
+
+  }
+
+  toggleContact() {
+    this.primaryContactAccordionOpen = !this.primaryContactAccordionOpen;
+    this.localStorageDataService.setPrimaryContactAccordionOpen(this.primaryContactAccordionOpen);
+  }
+
+  toggleUnits() {
+    this.unitsAccordionOpen = !this.unitsAccordionOpen;
+    this.localStorageDataService.setUnitsAccordionOpen(this.unitsAccordionOpen);
+  }
+
+  toggleAdditionalInformation() {
+    this.additionalDetailsAccordionOpen = !this.additionalDetailsAccordionOpen;
+    this.localStorageDataService.setAdditionalDetailsAccordionOpen(this.additionalDetailsAccordionOpen);
+  }
 
 }

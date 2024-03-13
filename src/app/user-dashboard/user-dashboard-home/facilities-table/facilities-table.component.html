@@ -1,6 +1,12 @@
 <div class="card">
     <div class="card-header">
-        Facilities
+        <span class="h4">
+            <fa-icon [icon]="faIndustry"></fa-icon>
+            Facilities
+        </span>
+        <button class="btn btn-sm btn-success float-end" (click)="openAddNewModal()">
+            <fa-icon [icon]="faPlus" title="Add Company"></fa-icon> Add New
+        </button>
     </div>
     <div class="card-body">
         <ng-template [ngIf]="facilities.length > 0" [ngIfElse]="noFacilitiesBlock">
@@ -56,5 +62,31 @@
                 No facilities found. Please click "Add New" to get started.
             </div>
         </ng-template>
+    </div>
+</div>
+
+<div [ngClass]="{'window-overlay': displayAddNewModal}"></div>
+<div class="popup" [ngClass]="{'open': displayAddNewModal }">
+    <div class="popup-header">Create New Facility?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeAddNewModal()"></button>
+    </div>
+    <div class="popup-body">
+        <form>
+            <label for="selectedCompany" class="form-label">Select New Facility Company</label>
+            <select id="selectedCompany" name="selectedCompany" class="form-select"
+                [(ngModel)]="selectedNewCompanyGuid">
+                <option *ngFor="let company of companies" [ngValue]="company.guid">
+                    {{company.generalInformation.name}}</option>
+            </select>
+            <div class="mt-1 alert alert-danger small" *ngIf="!selectedNewCompanyGuid">
+                Company selection required.
+            </div>
+        </form>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeAddNewModal()">Cancel</button>
+        <button class="btn btn-success" (click)="confirmCreate()" [disabled]="!selectedNewCompanyGuid">Create
+            Facility</button>
     </div>
 </div>

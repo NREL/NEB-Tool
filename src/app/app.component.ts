@@ -57,7 +57,8 @@ export class AppComponent {
   }
 
   collapseSidebar(){
-    console.log('collapse..')
-    this.sharedDataService.sidebarOpen.next(false);
+    if(this.sharedDataService.sidebarOpen.getValue() == true){
+      this.sharedDataService.sidebarOpen.next(false);
+    }
   }
 }

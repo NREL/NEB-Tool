@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faBuilding, faFileLines, faIndustry } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { IconDefinition, faBuilding, faFileLines, faIndustry, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -15,6 +16,10 @@ import { IdbProject } from 'src/app/models/project';
 })
 export class ProjectsTableComponent {
   
+
+  faPlus: IconDefinition = faPlus;
+  faFileLines: IconDefinition = faFileLines;
+
   companies: Array<IdbCompany>;
   companiesSub: Subscription;
 
@@ -23,9 +28,12 @@ export class ProjectsTableComponent {
 
   projects: Array<IdbProject>;
   projectsSub: Subscription;
+
+  displayAddNewModal: boolean = false;
   constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
-    private projectIdbService: ProjectIdbService) {
+    private projectIdbService: ProjectIdbService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -45,6 +53,18 @@ export class ProjectsTableComponent {
     this.companiesSub.unsubscribe();
     this.facilitiesSub.unsubscribe();
     this.projectsSub.unsubscribe();
+  }
+
+  openAddNewModal() {
+    this.displayAddNewModal = true;
+  }
+
+  closeAddNewModal() {
+    this.displayAddNewModal = false;
+  }
+
+  confirmCreate() {
+    this.router.navigateByUrl('/setup-wizard');
   }
 
 }
