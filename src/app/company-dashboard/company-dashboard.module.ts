@@ -9,13 +9,23 @@ import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanyGoalsComponent } from './company-dashboard-home/company-goals/company-goals.component';
+import { CompanyDashboardTabsComponent } from './company-dashboard-tabs/company-dashboard-tabs.component';
+import { CompanyReportsComponent } from './company-reports/company-reports.component';
+import { CompanySettingsComponent } from './company-settings/company-settings.component';
+import { ProjectsTableComponent } from './company-dashboard-home/projects-table/projects-table.component';
+import { FacilitiesTableComponent } from './company-dashboard-home/facilities-table/facilities-table.component';
 
 @NgModule({
   declarations: [
     CompanyDashboardComponent,
     CompanyDashboardHomeComponent,
     FacilitiesListComponent,
-    CompanyGoalsComponent
+    CompanyGoalsComponent,
+    CompanyDashboardTabsComponent,
+    CompanyReportsComponent,
+    CompanySettingsComponent,
+    ProjectsTableComponent,
+    FacilitiesTableComponent
   ],
   imports: [
     CommonModule,

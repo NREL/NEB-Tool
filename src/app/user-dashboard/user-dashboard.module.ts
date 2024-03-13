@@ -10,6 +10,7 @@ import { ProjectsTableComponent } from './user-dashboard-home/projects-table/pro
 import { CompaniesTableComponent } from './user-dashboard-home/companies-table/companies-table.component';
 import { FacilitiesTableComponent } from './user-dashboard-home/facilities-table/facilities-table.component';
 import { UserDashboardTabsComponent } from './user-dashboard-tabs/user-dashboard-tabs.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UserDashboardTabsComponent } from './user-dashboard-tabs/user-dashboard
     ProjectsTableComponent,
     CompaniesTableComponent,
     FacilitiesTableComponent,
-    UserDashboardTabsComponent
+    UserDashboardTabsComponent,
+    UserSettingsComponent
   ],
   imports: [
     CommonModule,

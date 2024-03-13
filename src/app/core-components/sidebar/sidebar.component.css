@@ -13,3 +13,13 @@
 hr{
     margin: .2rem 0;
 }
+
+.nav-link.active{
+    background-color: #0079c2;
+    color: white;
+}
+
+.nav-link:hover{
+    background-color: #8DABBE;
+    color: black;
+}

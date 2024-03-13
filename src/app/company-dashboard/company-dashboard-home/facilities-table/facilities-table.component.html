@@ -3,7 +3,7 @@
         Facilities
     </div>
     <div class="card-body">
-        <ng-template [ngIf]="facilities.length > 0" [ngIfElse]="noFacilitiesBlock">
+        <ng-template [ngIf]="(company.guid| facilityList: facilities).length > 0" [ngIfElse]="noFacilitiesBlock">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let facility of facilities">
+                    <tr *ngFor="let facility of company.guid| facilityList: facilities">
                         <td>
                             <a [routerLink]="'/facility/'+facility.guid">
                                 {{facility.generalInformation.name}}

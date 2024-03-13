@@ -15,6 +15,9 @@ import { GettingStartedComponent } from './setup-wizard/getting-started/getting-
 import { CompanySetupComponent } from './setup-wizard/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './setup-wizard/facility-setup/facility-setup.component';
 import { ProjectSetupComponent } from './setup-wizard/project-setup/project-setup.component';
+import { UserSettingsComponent } from './user-dashboard/user-settings/user-settings.component';
+import { CompanySettingsComponent } from './company-dashboard/company-settings/company-settings.component';
+import { CompanyReportsComponent } from './company-dashboard/company-reports/company-reports.component';
 
 const routes: Routes = [
   {
@@ -65,12 +68,35 @@ const routes: Routes = [
       {
         path: 'home',
         component: UserDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: UserSettingsComponent
       }
     ]
   },
   {
     path: 'company/:id',
-    component: CompanyDashboardComponent,
+    component: CompanyDashboardComponent,    
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: CompanyDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: CompanySettingsComponent
+      },
+      {
+        path: 'reports',
+        component: CompanyReportsComponent
+      },
+    ]
   },
   {
     path: 'facility/:id',
