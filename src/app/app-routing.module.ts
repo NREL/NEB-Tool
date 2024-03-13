@@ -59,40 +59,64 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: UserDashboardHomeComponent
+        pathMatch: 'full',
+        redirectTo: 'home'
       },
       {
-        path: 'company/:id',
-        component: CompanyDashboardComponent,
-        children: [
-          {
-            path: '',
-            component: CompanyDashboardHomeComponent
-          },
-          {
-            path: 'facility/:id',
-            component: FacilityDashboardComponent,
-            children: [
-              {
-                path: '',
-                component: FacilityDashboardHomeComponent
-              },
-              {
-                path: 'project/:id',
-                component: ProjectDashboardComponent,
-                children: [
-                  {
-                    path: '',
-                    component: ProjectDashboardHomeComponent
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+        path: 'home',
+        component: UserDashboardHomeComponent
       }
     ]
   },
+  {
+    path: 'company/:id',
+    component: CompanyDashboardComponent,
+  },
+  {
+    path: 'facility/:id',
+    component: FacilityDashboardComponent,
+  },
+  {
+    path: 'project/:id',
+    component: ProjectDashboardComponent,
+  },
+  // children: [
+  //   {
+  //     path: '',
+  //     component: UserDashboardHomeComponent
+  //   },
+  //   {
+  //     path: 'company/:id',
+  //     component: CompanyDashboardComponent,
+  //     children: [
+  //       {
+  //         path: '',
+  //         component: CompanyDashboardHomeComponent
+  //       },
+  //       {
+  //         path: 'facility/:id',
+  //         component: FacilityDashboardComponent,
+  //         children: [
+  //           {
+  //             path: '',
+  //             component: FacilityDashboardHomeComponent
+  //           },
+  //           {
+  //             path: 'project/:id',
+  //             component: ProjectDashboardComponent,
+  //             children: [
+  //               {
+  //                 path: '',
+  //                 component: ProjectDashboardHomeComponent
+  //               }
+  //             ]
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ]
+  // },
   //wildcard/page not found needs to be last route
   //triggered after entire route tree is checked
   { path: "**", component: PageNotFoundComponent },

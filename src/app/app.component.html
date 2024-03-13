@@ -1,7 +1,15 @@
-<div class="neb-container">
+<div class="neb-container d-flex flex-column">
     <app-navbar></app-navbar>
     <ng-template [ngIf]="dataInitialized" [ngIfElse]="initializingDataBlock">
-        <router-outlet></router-outlet>
+        <div class="d-flex w-100 flex-grow-1 flex-fill overflow-hidden">
+            <div class="d-flex">
+                <app-sidebar></app-sidebar>
+            </div>
+            <div class="w-100 overflow-auto" (click)="collapseSidebar()">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <!-- <router-outlet></router-outlet> -->
     </ng-template>
     <ng-template #initializingDataBlock>
         Initializing data...

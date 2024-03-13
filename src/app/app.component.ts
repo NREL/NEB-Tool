@@ -3,8 +3,9 @@ import { UserIdbService } from './indexed-db/user-idb.service';
 import { CompanyIdbService } from './indexed-db/company-idb.service';
 import { FacilityIdbService } from './indexed-db/facility-idb.service';
 import { ProjectIdbService } from './indexed-db/project-idb.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { IdbUser } from './models/user';
+import { SharedDataService } from './shared/shared-services/shared-data.service';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +17,14 @@ export class AppComponent {
   dataInitialized: boolean = false;
   constructor(private userIdbService: UserIdbService, private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService, private projectIdbService: ProjectIdbService,
-    private router: Router) {
+    private router: Router,
+    private sharedDataService: SharedDataService) {
   }
 
   async ngOnInit() {
     await this.initializeData();
     this.checkRouter();
+
   }
 
   async initializeData() {
@@ -51,5 +54,10 @@ export class AppComponent {
         this.router.navigateByUrl('/user')
       }
     }
+  }
+
+  collapseSidebar(){
+    console.log('collapse..')
+    this.sharedDataService.sidebarOpen.next(false);
   }
 }

@@ -6,7 +6,11 @@ import { IdbProject } from 'src/app/models/project';
 })
 export class ProjectsListPipe implements PipeTransform {
 
-  transform(facilityGUID: string, allProjects: Array<IdbProject>): Array<IdbProject> {
-    return allProjects.filter(project => { return project.facilityId == facilityGUID });
+  transform(facilityOrCompanyGUID: string, allProjects: Array<IdbProject>, isCompany?: boolean): Array<IdbProject> {
+    if (!isCompany) {
+      return allProjects.filter(project => { return project.facilityId == facilityOrCompanyGUID });
+    } else {
+      return allProjects.filter(project => { return project.companyId == facilityOrCompanyGUID });
+    }
   }
 }

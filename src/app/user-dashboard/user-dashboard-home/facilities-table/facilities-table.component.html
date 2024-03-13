@@ -1,0 +1,60 @@
+<div class="card">
+    <div class="card-header">
+        Facilities
+    </div>
+    <div class="card-body">
+        <ng-template [ngIf]="companies.length > 0" [ngIfElse]="noFacilitiesBlock">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="w-25">
+                            Name
+                        </th>
+                        <th class="w-25">
+                            <!-- <fa-icon [icon]="faLocationDot"></fa-icon> -->
+                            Location
+                        </th>
+                        <th class="w-25">
+                            <!-- <fa-icon [icon]="faContactCard"></fa-icon> -->
+                            Contact
+                        </th>
+                        <th>
+                            Projects
+                        </th>
+                        <th class="w-25">
+                            Last Modified
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let facility of facilities">
+                        <td>
+                            <a [routerLink]="'/facility/'+facility.guid">
+                                {{facility.generalInformation.name}}
+                            </a>
+                        </td>
+                        <td>
+                            {{facility.generalInformation | addressDisplay}}
+                        </td>
+                        <td>
+                            {{facility.generalInformation.contactName}}
+                        </td>
+                        <td>
+                            {{(facility.guid | projectsList: projects).length}}
+                        </td>
+                        <td>
+                            {{facility.modifiedDate | date:'short'}}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </ng-template>
+
+        <ng-template #noFacilitiesBlock>
+            <div class="alert alert-info">
+                No facilities found. Please click "Add New" to get started.
+            </div>
+        </ng-template>
+    </div>
+</div>

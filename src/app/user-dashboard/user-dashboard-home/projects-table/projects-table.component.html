@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-header">
+        Projects
+    </div>
+    <div class="card-body">
+
+        <ng-template [ngIf]="projects.length > 0" [ngIfElse]="noProjectBlock">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="w-25">
+                            Name
+                        </th>
+                        <th class="w-25">
+                            <!-- <fa-icon [icon]="faLocationDot"></fa-icon> -->
+                            Company
+                        </th>
+                        <th class="w-25">
+                            <!-- <fa-icon [icon]="faContactCard"></fa-icon> -->
+                            Facility
+                        </th>
+                        <th class="w-25">
+                            Last Modified
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let project of projects">
+                        <td>
+                            <a [routerLink]="'/project/'+project.guid">
+                                {{project.name}}
+                            </a>
+                        </td>
+                        <td>
+                            {{project.companyId | companyName:companies}}
+                        </td>
+                        <td>
+                            {{project.facilityId | facilityName:facilities}}
+                        </td>
+                        <td>
+                            {{project.modifiedDate |date:'short'}}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </ng-template>
+
+        <ng-template #noProjectBlock>
+            <div class="alert alert-info">
+                No projects found. Please click "Add New" to get started.
+            </div>
+        </ng-template>
+    </div>
+</div>

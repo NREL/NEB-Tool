@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { LoadingService } from '../loading/loading.service';
 import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
+import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,8 @@ export class NavbarComponent {
   faHome: IconDefinition = faHome;
   showResetModal: boolean = false;
   constructor(private userIdbService: UserIdbService,
-    private loadingService: LoadingService) {
+    private loadingService: LoadingService,
+    private sharedDataService: SharedDataService) {
 
   }
 
@@ -30,5 +32,9 @@ export class NavbarComponent {
 
   closeResetDatabaseModal() {
     this.showResetModal = false;
+  }
+
+  openSidebar(){
+    this.sharedDataService.sidebarOpen.next(true);
   }
 }

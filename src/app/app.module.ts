@@ -16,6 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { FormsModule } from '@angular/forms';
 import { SetupWizardModule } from './setup-wizard/setup-wizard.module';
+import { SidebarComponent } from './core-components/sidebar/sidebar.component';
+import { HelperPipesModule } from './shared/helper-pipes/helper-pipes.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { SetupWizardModule } from './setup-wizard/setup-wizard.module';
     NavbarComponent,
     WelcomeComponent,
     PageNotFoundComponent,
-    LoadingComponent
+    LoadingComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { SetupWizardModule } from './setup-wizard/setup-wizard.module';
     FontAwesomeModule,
     NgxWebstorageModule.forRoot(),
     FormsModule,
-    SetupWizardModule
+    SetupWizardModule,
+    HelperPipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
