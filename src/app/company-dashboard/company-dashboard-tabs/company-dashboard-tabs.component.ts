@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faBuilding, faGears } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBuilding, faChartLine, faChevronLeft, faFolderOpen, faGears } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany } from 'src/app/models/company';
@@ -14,21 +14,23 @@ export class CompanyDashboardTabsComponent {
 
   faBuilding: IconDefinition = faBuilding;
   faGears: IconDefinition = faGears;
+  faFolderOpen: IconDefinition = faFolderOpen;
+  faChartLine: IconDefinition = faChartLine;
 
   company: IdbCompany;
   copmanySub: Subscription;
 
-  constructor(private companyIdbService: CompanyIdbService){
+  constructor(private companyIdbService: CompanyIdbService) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.copmanySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.company = _company;
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.copmanySub.unsubscribe();
   }
 }

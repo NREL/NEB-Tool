@@ -18,6 +18,8 @@ import { ProjectSetupComponent } from './setup-wizard/project-setup/project-setu
 import { UserSettingsComponent } from './user-dashboard/user-settings/user-settings.component';
 import { CompanySettingsComponent } from './company-dashboard/company-settings/company-settings.component';
 import { CompanyReportsComponent } from './company-dashboard/company-reports/company-reports.component';
+import { FacilitySettingsComponent } from './facility-dashboard/facility-settings/facility-settings.component';
+import { FacilityReportsComponent } from './facility-dashboard/facility-reports/facility-reports.component';
 
 const routes: Routes = [
   {
@@ -77,7 +79,7 @@ const routes: Routes = [
   },
   {
     path: 'company/:id',
-    component: CompanyDashboardComponent,    
+    component: CompanyDashboardComponent,
     children: [
       {
         path: '',
@@ -101,6 +103,25 @@ const routes: Routes = [
   {
     path: 'facility/:id',
     component: FacilityDashboardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: FacilityDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: FacilitySettingsComponent
+      },
+      {
+        path: 'reports',
+        component: FacilityReportsComponent
+      },
+    ]
   },
   {
     path: 'project/:id',

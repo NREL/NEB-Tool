@@ -1,46 +1,5 @@
-<div class="row justify-content-center pt-3">
-    <div class="col-lg-8 col-sm-12">
-        <div class="d-flex justify-content-between">
-            <div class="d-flex">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedFacility.companyId">
-                                <fa-icon class="pe-1" [icon]="faBuilding"></fa-icon>
-                                {{selectedFacility.companyId | companyName:companies}}</a></li>
-                        <li class="breadcrumb-item active">
-                            <fa-icon [icon]="faIndustry"
-                                class="pe-1"></fa-icon>{{selectedFacility.generalInformation.name}}
-                        </li>
-                    </ol>
-                </nav>
-            </div>
-            <div class="d-flex">
-                <div class="m-1">
-                    <button class="btn btn-sm btn-danger" (click)="deleteFacility()">Delete Facility</button>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12">
-                <div class="h4 pt-2">Facility Details</div>
-                <app-settings-form [inCompany]="false"></app-settings-form>
-            </div>
-            <div class="col-12">
-                <hr>
-            </div>
-            <div class="col-12">
-                <app-facility-production-details></app-facility-production-details>
-            </div>
-            <div class="col-12">
-                <hr>
-            </div>
-            <div class="col-12">
-                <app-projects-list></app-projects-list>
-            </div>
-            <div class="col-12">
-                <hr>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-12 p-4">
+        <app-projects-table></app-projects-table>
     </div>
 </div>
