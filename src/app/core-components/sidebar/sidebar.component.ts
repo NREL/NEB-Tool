@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { IconDefinition, faBuilding, faChevronDown, faChevronRight, faFileLines, faFolder, faFolderOpen, faIndustry, faMinusSquare, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBuilding, faChevronDown, faChevronRight, faCircleInfo, faFileLines, faFolder, faFolderOpen, faInbox, faIndustry, faMinusSquare, faPlusSquare, faQuestionCircle, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
-import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbProject } from 'src/app/models/project';
@@ -27,10 +25,10 @@ export class SidebarComponent {
   faBuilding: IconDefinition = faBuilding;
   faIndustry: IconDefinition = faIndustry;
   faFileLines: IconDefinition = faFileLines;
-
-  open: boolean = true;
-  // hideSidebar: boolean;
-  myProjectsOpen: boolean = true;
+  faTrophy: IconDefinition = faTrophy;
+  faCircleInfo: IconDefinition = faCircleInfo;
+  faInbox: IconDefinition = faInbox;
+  faQuestionCircle: IconDefinition = faQuestionCircle;
 
   companies: Array<IdbCompany>;
   companiesSub: Subscription;
@@ -44,23 +42,15 @@ export class SidebarComponent {
 
   sidebarOpen: boolean;
   sidebarOpenSub: Subscription;
-  constructor(private router: Router, private userIdbService: UserIdbService, private companyIdbService: CompanyIdbService,
+  constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService, private projectIdbService: ProjectIdbService,
     private sharedDataService: SharedDataService) {
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     this.setShowSidebar();
-    //   }
-    // });
   }
 
   ngOnInit() {
     this.sidebarOpenSub = this.sharedDataService.sidebarOpen.subscribe(_sidebarOpen => {
       this.sidebarOpen = _sidebarOpen;
     })
-
-
-    // this.setShowSidebar();
 
     this.companiesSub = this.companyIdbService.companies.subscribe(_companies => {
       this.companies = _companies;
@@ -83,35 +73,6 @@ export class SidebarComponent {
     this.sidebarOpenSub.unsubscribe();
   }
 
-  toggleSidebar() {
-    this.open = !this.open;
-    // setTimeout(() => {
-    //   //used to trigger responsive graph resizing
-    //   window.dispatchEvent(new Event("resize"));
-    // }, 100)
-    // this.localStorageService.store('sidebarOpen', this.open);
-    // this.sharedDataService.sidebarOpen.next(this.open);
-  }
-
-
-  // setShowSidebar() {
-  //   this.hideSidebar = (this.router.url.includes('setup-wizard') || this.router.url.includes('welcome'));
-  // }
-
-
-  toggleMyProjects() {
-    this.myProjectsOpen = !this.myProjectsOpen;
-  }
-
-  async toggleShowFacilities(company: IdbCompany) {
-    company.displayFacilities = !company.displayFacilities;
-    await this.companyIdbService.asyncUpdate(company);
-  }
-
-  async toggleShowProjects(facility: IdbFacility) {
-    facility.displayProjects = !facility.displayProjects;
-    await this.facilityIdbService.asyncUpdate(facility);
-  }
 
   hideSidebar(){
     this.sharedDataService.sidebarOpen.next(false);
