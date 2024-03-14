@@ -13,6 +13,7 @@ import { CompanyReportsComponent } from './company-reports/company-reports.compo
 import { CompanySettingsComponent } from './company-settings/company-settings.component';
 import { ProjectsTableComponent } from './company-dashboard-home/projects-table/projects-table.component';
 import { FacilitiesTableComponent } from './company-dashboard-home/facilities-table/facilities-table.component';
+import { ManageCompanyComponent } from './company-settings/manage-company/manage-company.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FacilitiesTableComponent } from './company-dashboard-home/facilities-ta
     CompanyReportsComponent,
     CompanySettingsComponent,
     ProjectsTableComponent,
-    FacilitiesTableComponent
+    FacilitiesTableComponent,
+    ManageCompanyComponent
   ],
   imports: [
     CommonModule,

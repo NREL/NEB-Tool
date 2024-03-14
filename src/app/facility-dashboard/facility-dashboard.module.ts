@@ -12,6 +12,7 @@ import { FacilityDashboardTabsComponent } from './facility-dashboard-tabs/facili
 import { FacilitySettingsComponent } from './facility-settings/facility-settings.component';
 import { FacilityReportsComponent } from './facility-reports/facility-reports.component';
 import { ProjectsTableComponent } from './facility-dashboard-home/projects-table/projects-table.component';
+import { ManageFacilityComponent } from './facility-settings/manage-facility/manage-facility.component';
 
 
 
@@ -23,7 +24,8 @@ import { ProjectsTableComponent } from './facility-dashboard-home/projects-table
     FacilityDashboardTabsComponent,
     FacilitySettingsComponent,
     FacilityReportsComponent,
-    ProjectsTableComponent
+    ProjectsTableComponent,
+    ManageFacilityComponent
   ],
   imports: [
     CommonModule,

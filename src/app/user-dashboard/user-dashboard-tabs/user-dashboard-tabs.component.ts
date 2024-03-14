@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faFolderOpen, faGears } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faDatabase, faFolderOpen, faGears, faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-dashboard-tabs',
@@ -10,4 +10,6 @@ export class UserDashboardTabsComponent {
 
   faFolderOpen: IconDefinition = faFolderOpen;
   faGears: IconDefinition = faGears;
+  faDatabase: IconDefinition = faDatabase;
+  faQuestion: IconDefinition = faQuestion;
 }
