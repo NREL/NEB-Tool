@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CompanyGoalsComponent } from './company-dashboard-home/company-goals/company-goals.component';
+import { CompanyGoalsComponent } from './company-goals/company-goals.component';
 import { CompanyDashboardTabsComponent } from './company-dashboard-tabs/company-dashboard-tabs.component';
 import { CompanyReportsComponent } from './company-reports/company-reports.component';
 import { CompanySettingsComponent } from './company-settings/company-settings.component';

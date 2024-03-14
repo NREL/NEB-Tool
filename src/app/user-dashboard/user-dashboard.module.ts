@@ -12,6 +12,8 @@ import { FacilitiesTableComponent } from './user-dashboard-home/facilities-table
 import { UserDashboardTabsComponent } from './user-dashboard-tabs/user-dashboard-tabs.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { UserDashboardHomeActionsComponent } from './user-dashboard-home/user-dashboard-home-actions/user-dashboard-home-actions.component';
+import { UserDashboardHelpComponent } from './user-dashboard-help/user-dashboard-help.component';
+import { ExploreNEBsComponent } from './explore-nebs/explore-nebs.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { UserDashboardHomeActionsComponent } from './user-dashboard-home/user-da
     FacilitiesTableComponent,
     UserDashboardTabsComponent,
     UserSettingsComponent,
-    UserDashboardHomeActionsComponent
+    UserDashboardHomeActionsComponent,
+    UserDashboardHelpComponent,
+    ExploreNEBsComponent
   ],
   imports: [
     CommonModule,

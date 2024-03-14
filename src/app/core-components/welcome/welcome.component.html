@@ -11,57 +11,93 @@
                 </p>
                 <hr>
                 <div class="row">
-                    <div class="col-6">
-                        <button class="btn btn-secondary" routerLink="/user">Go to Project Dashboard</button>
-        
+                    <div class="col-12">
+                        <div class="display-6">
+                            Choose how you would like to get started.
+                        </div>
+                    </div>
+                    <div class="col-12 pt-3">
+                        <!-- <hr> -->
+                        <div class="d-flex">
+
+                            <fa-icon [icon]="faChevronRight"></fa-icon>
+                            <p class="card-text ms-2">
+                                Use the setup wizard to create a new project. Here you can create a company and facility
+                                to
+                                add your new project to or pick from existing ones in your system.
+                            </p>
+
+                        </div>
+                        <div class="d-flex justify-content-center pt-2">
+                            <button class="btn btn-outline-success" routerLink="/setup-wizard">
+                                <fa-icon [icon]="faWandMagicSparkles"></fa-icon>
+                                Project Wizard</button>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="col-12 pt-3">
+                        <!-- <hr> -->
+                        <div class="d-flex">
+                            <fa-icon [icon]="faChevronRight"></fa-icon>
+                            <p class="card-text ms-2">
+                                Go directly to your application portfolio to view and manage your existing projects.
+                            </p>
+
+                        </div>
+                        <div class="d-flex justify-content-center pt-2">
+                            <button class="btn btn-primary" routerLink="/user">
+                                <fa-icon [icon]="faFolderOpen"></fa-icon>
+                                My Portfolio</button>
+                        </div>
+
                         <div class="input-group pt-3">
                             <label>
                                 <input class="form-check-input mt-0" type="checkbox" [(ngModel)]="user.skipSplashScreen"
                                     (change)="saveChanges()">
                                 Skip this screen next time and go directly to dashboard.</label>
                         </div>
+                        <hr>
                     </div>
-                    <div class="col-6">
-                        <button class="btn btn-secondary" routerLink="/setup-wizard">Add a new project</button>
+                    <div class="col-12 pt-3">
+                        <div class="d-flex">
+                            <fa-icon [icon]="faChevronRight"></fa-icon>
+                            <p class="card-text ms-2">
+                                Explore common projects with Non-Energy Benefits.
+                            </p>
+
+                        </div>
+                        <div class="d-flex justify-content-center pt-2">
+                            <button class="btn btn-secondary">Explore NEBs</button>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="col-12 pt-3">
+                        <div class="d-flex">
+                            <fa-icon [icon]="faChevronRight"></fa-icon>
+                            <p class="card-text ms-2">
+                                Learn more about NEBs research at NREL.
+                            </p>
+
+                        </div>
+                        <div class="d-flex justify-content-center pt-2">
+                            <button class="btn btn-secondary">Learn More</button>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="col-12 pt-3">
+                        <div class="d-flex">
+                            <fa-icon [icon]="faChevronRight"></fa-icon>
+                            <p class="card-text ms-2">
+                                View help documents and tutorials to learn more about using the NEB-Tool application.
+                            </p>
+
+                        </div>
+                        <div class="d-flex justify-content-center pt-2">
+                            <button class="btn btn-secondary">Help & Tutorials</button>
+                        </div>
+                        <hr>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-center pt-3">
-        <div class="card m-1 col-lg-4 col-sm-10">
-            <div class="card-body">
-                <button class="btn btn-secondary">Explore NEBs</button>
-                <p class="card-text">
-                    Explore common projects with Non-Energy Benefits.
-                </p>
-            </div>
-        </div>
-        <div class="card m-1 col-lg-4 col-sm-10">
-            <div class="card-body">
-                <button class="btn btn-secondary">Learn More</button>
-                <p class="card-text">
-                    Learn more about NEBs research at NREL.
-                </p>
-            </div>
-        </div>
-
-    </div>
-    <div class="row justify-content-center pt-3">
-        <div class="card m-1 col-lg-4 col-sm-10">
-            <div class="card-body">
-                <button class="btn btn-secondary">Settings</button>
-                <p class="card-text">
-                    Manage application wide settings.
-                </p>
-            </div>
-        </div>
-        <div class="card m-1 col-lg-4 col-sm-10">
-            <div class="card-body">
-                <button class="btn btn-secondary">Help & Tutorials</button>
-                <p class="card-text">
-                    View help documents and tutorials to learn more about using the NEB-Tool application.
-                </p>
             </div>
         </div>
     </div>

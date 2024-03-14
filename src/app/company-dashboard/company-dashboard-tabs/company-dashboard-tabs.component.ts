@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faBuilding, faChartLine, faChevronLeft, faFolderOpen, faGears } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBuilding, faBullseye, faChartLine, faChevronLeft, faFolderOpen, faGears } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany } from 'src/app/models/company';
@@ -16,6 +16,7 @@ export class CompanyDashboardTabsComponent {
   faGears: IconDefinition = faGears;
   faFolderOpen: IconDefinition = faFolderOpen;
   faChartLine: IconDefinition = faChartLine;
+  faBullseye: IconDefinition = faBullseye
 
   company: IdbCompany;
   copmanySub: Subscription;

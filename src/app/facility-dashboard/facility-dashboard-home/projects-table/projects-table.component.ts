@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faFileLines, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faPlus, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -17,7 +17,7 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 })
 export class ProjectsTableComponent {
 
-  faPlus: IconDefinition = faPlus;
+  faWandMagicSparkles: IconDefinition = faWandMagicSparkles;
   faFileLines: IconDefinition = faFileLines;
 
   facility: IdbFacility;

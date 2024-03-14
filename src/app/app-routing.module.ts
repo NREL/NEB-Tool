@@ -22,6 +22,10 @@ import { FacilitySettingsComponent } from './facility-dashboard/facility-setting
 import { FacilityReportsComponent } from './facility-dashboard/facility-reports/facility-reports.component';
 import { ProjectReportComponent } from './project-dashboard/project-report/project-report.component';
 import { ProjectSettingsComponent } from './project-dashboard/project-settings/project-settings.component';
+import { UserDashboardHelpComponent } from './user-dashboard/user-dashboard-help/user-dashboard-help.component';
+import { ExploreNEBsComponent } from './user-dashboard/explore-nebs/explore-nebs.component';
+import { CompanyGoalsComponent } from './company-dashboard/company-goals/company-goals.component';
+import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/facility-goals.component';
 
 const routes: Routes = [
   {
@@ -76,6 +80,14 @@ const routes: Routes = [
       {
         path: 'settings',
         component: UserSettingsComponent
+      },
+      {
+        path: 'help',
+        component: UserDashboardHelpComponent
+      },
+      {
+        path: 'nebs-database',
+        component: ExploreNEBsComponent
       }
     ]
   },
@@ -100,6 +112,10 @@ const routes: Routes = [
         path: 'reports',
         component: CompanyReportsComponent
       },
+      {
+        path: 'goals',
+        component: CompanyGoalsComponent
+      }
     ]
   },
   {
@@ -123,6 +139,10 @@ const routes: Routes = [
         path: 'reports',
         component: FacilityReportsComponent
       },
+      {
+        path: 'goals',
+        component: FacilityGoalsComponent
+      }
     ]
   },
   {
