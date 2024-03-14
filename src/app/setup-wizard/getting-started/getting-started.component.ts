@@ -24,14 +24,22 @@ export class GettingStartedComponent {
   selectedFacilityGuid: string;
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private router: Router, private setupWizardService: SetupWizardService) {
-
   }
 
   ngOnInit() {
+    let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
+    console.log(selectedCompany)
+    if(selectedCompany){
+      this.selectedCompanyGuid = selectedCompany.guid;
+    }
+    let selectedFacility: IdbFacility = this.setupWizardService.facility.getValue();
+    console.log(selectedFacility)
+    if(selectedFacility){
+      this.selectedFacilityGuid = selectedFacility.guid;
+    }
     this.companiesSub = this.companyIdbService.companies.subscribe(_companies => {
       this.companies = _companies;
     });
-
 
     this.facilitiesSub = this.facilityIdbService.facilities.subscribe(_facilities => {
       this.facilities = _facilities;
@@ -40,7 +48,7 @@ export class GettingStartedComponent {
 
   ngOnDestroy() {
     this.companiesSub.unsubscribe();
-    this.facilitiesSub.unsubscribe();
+    this.facilitiesSub.unsubscribe()
   }
 
   createNewProject() {

@@ -74,7 +74,7 @@ export class ProjectSetupComponent {
     let project: IdbProject = this.setupWizardService.project.getValue();
     project = await firstValueFrom(this.projectIdbService.addWithObservable(project));
     await this.projectIdbService.setProjects();
-    this.router.navigateByUrl('user/company/' + company.guid + '/facility/' + facility.guid);
+    this.router.navigateByUrl('/project/' + project.guid);
   }
 
   saveChanges() {
