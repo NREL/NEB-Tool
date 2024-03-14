@@ -10,6 +10,7 @@ import { ProjectDashboardTabsComponent } from './project-dashboard-tabs/project-
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProjectSettingsComponent } from './project-settings/project-settings.component';
 import { ProjectReportComponent } from './project-report/project-report.component';
+import { ManageProjectComponent } from './project-settings/manage-project/manage-project.component';
 
 
 
@@ -20,7 +21,8 @@ import { ProjectReportComponent } from './project-report/project-report.componen
     ProjectDetailsFormComponent,
     ProjectDashboardTabsComponent,
     ProjectSettingsComponent,
-    ProjectReportComponent
+    ProjectReportComponent,
+    ManageProjectComponent
   ],
   imports: [
     CommonModule,
