@@ -20,9 +20,11 @@ jobs:
           submodules: true
           lfs: false
       - name: Attach SHA to build
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           BUILD_VERSION=$(grep -o -P -m 1 '(?<=version":\s").*(?=")' package.json)
-          sed -i "s/$BUILD_VERSION/$BUILD_VERSION-${GITHUB_SHA::7}/g" package.json
+          sed -i "s/$BUILD_VERSION/$BUILD_VERSION-${SOURCE_SHA::7}/g" package.json
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
