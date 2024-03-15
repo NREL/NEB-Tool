@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityIdbService } from '../indexed-db/facility-idb.service';
 
 @Component({
@@ -9,14 +9,17 @@ import { FacilityIdbService } from '../indexed-db/facility-idb.service';
 })
 export class FacilityDashboardComponent {
 
-  constructor(private activatedRoute: ActivatedRoute, private facilityIdbService: FacilityIdbService) {
+  constructor(private activatedRoute: ActivatedRoute, private facilityIdbService: FacilityIdbService,
+    private router: Router) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       let facilityGUID: string = params['id'];
-      this.facilityIdbService.setSelectedFromGUID(facilityGUID);
-      //TODO: if no project matching id, navigate to dashboard
+      let facilityExists: boolean = this.facilityIdbService.setSelectedFromGUID(facilityGUID);
+      if(!facilityExists){
+        this.router.navigateByUrl('/user');
+      }
     });
   }
 }

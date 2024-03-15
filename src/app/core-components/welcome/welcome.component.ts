@@ -24,7 +24,6 @@ export class WelcomeComponent {
   }
 
   async saveChanges() {
-    console.log(this.user.skipSplashScreen)
     await this.userIdbService.asyncUpdate(this.user);
   }
 }

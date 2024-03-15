@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectIdbService } from '../indexed-db/project-idb.service';
 
 @Component({
@@ -9,14 +9,18 @@ import { ProjectIdbService } from '../indexed-db/project-idb.service';
 })
 export class ProjectDashboardComponent {
 
-  constructor(private activatedRoute: ActivatedRoute, private projectIdbService: ProjectIdbService) {
+  constructor(private activatedRoute: ActivatedRoute, private projectIdbService: ProjectIdbService,
+    private router: Router) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       let projectGUID: string = params['id'];
-      this.projectIdbService.setSelectedFromGUID(projectGUID);
-      //TODO: if no project matching id, navigate to dashboard
+      let projectExists: boolean = this.projectIdbService.setSelectedFromGUID(projectGUID);
+      if(!projectExists){
+        this.router.navigateByUrl('/user');
+      }
+
     });
   }
 }
