@@ -1,64 +1,22 @@
-import { time } from "./definitions/time";
-import { area } from "./definitions/area";
+
 import { mass } from "./definitions/mass";
 import { temperature } from "./definitions/temperature";
 import { volume } from "./definitions/volume";
-import { digital } from "./definitions/digital";
-import { partsPer } from "./definitions/partsPer";
-import { speed } from "./definitions/speed";
 import { pressure } from "./definitions/pressure";
 import { power } from "./definitions/power";
-import { current } from "./definitions/current";
 import { energy } from "./definitions/energy";
-import { voltage } from "./definitions/voltage";
-import { apparentPower } from "./definitions/apparentPower";
-import { reactiveEnergy } from "./definitions/reactiveEnergy";
-import { reactivePower } from "./definitions/reactivePower";
-import { volumeFlowRate } from "./definitions/volumeFlowRate";
-import { viscosity } from "./definitions/viscosity";
-import { frequency } from "./definitions/frequency";
-import { force } from "./definitions/force";
-import { specificHeat } from "./definitions/specificHeat";
-import { volumetricHeat } from "./definitions/volumetricHeat";
-import { specificEnergy } from "./definitions/specificEnergy";
-import { density } from "./definitions/density";
-import { volumetricEnergy } from "./definitions/volumetricEnergy";
-import { specificVolume } from "./definitions/specificVolume";
-import { thermalConductivity } from "./definitions/thermalConductivity";
 import { length } from './definitions/length';
 import * as _ from 'lodash';
 
 export class ConvertValue {
     _measures = {
         length: length,
-        area: area,
         mass: mass,
         volume: volume,
         temperature: temperature,
-        time: time,
-        digital: digital,
-        partsPer: partsPer,
-        speed: speed,
         pressure: pressure,
         power: power,
-        current: current,
         energy: energy,
-        voltage: voltage,
-        apparentPower: apparentPower,
-        reactiveEnergy: reactiveEnergy,
-        reactivePower: reactivePower,
-        volumeFlowRate: volumeFlowRate,
-        viscosity: viscosity,
-        frequency: frequency,
-        force: force,
-        //kineViscosity: kineViscosity,
-        specificHeat: specificHeat,
-        volumetricHeat: volumetricHeat,
-        specificEnergy: specificEnergy,
-        density: density,
-        volumetricEnergy: volumetricEnergy,
-        specificVolume: specificVolume,
-        thermalConductivity: thermalConductivity
     };
 
     origin: any;
