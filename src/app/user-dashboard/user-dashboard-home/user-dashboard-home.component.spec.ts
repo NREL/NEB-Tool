@@ -5,8 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { BehaviorSubject } from 'rxjs';
 import { IdbUser, getNewIdbUser } from 'src/app/models/user';
-import { UserDetailsFormComponent } from './user-details-form/user-details-form.component';
-import { CompaniesListComponent } from './companies-list/companies-list.component';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { FormsModule } from '@angular/forms';
@@ -29,7 +27,7 @@ describe('UserDashboardHomeComponent', () => {
     };
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FormsModule],
-      declarations: [UserDashboardHomeComponent, UserDetailsFormComponent, CompaniesListComponent],
+      declarations: [UserDashboardHomeComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
