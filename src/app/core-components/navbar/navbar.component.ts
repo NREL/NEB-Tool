@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { LoadingService } from '../loading/loading.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,7 @@ export class NavbarComponent {
   faHome: IconDefinition = faHome;
 
 
+  version: string = environment.version;
   showResetModal: boolean = false;
   constructor(private userIdbService: UserIdbService,
     private loadingService: LoadingService) {
