@@ -12,6 +12,8 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbProject } from 'src/app/models/project';
 import { FormsModule } from '@angular/forms';
+import { ProjectsTableComponent } from './projects-table/projects-table.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('FacilityDashboardHomeComponent', () => {
   let component: FacilityDashboardHomeComponent;
@@ -29,8 +31,8 @@ describe('FacilityDashboardHomeComponent', () => {
       companies: new BehaviorSubject<Array<IdbCompany>>([])
     }
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HelperPipesModule, FormsModule],
-      declarations: [FacilityDashboardHomeComponent],
+      imports: [RouterTestingModule, HelperPipesModule, FormsModule, FontAwesomeModule],
+      declarations: [FacilityDashboardHomeComponent, ProjectsTableComponent],
       providers: [
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: ProjectIdbService, useValue: projectIdbService },

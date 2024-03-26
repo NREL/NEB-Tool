@@ -28,12 +28,10 @@ export class GettingStartedComponent {
 
   ngOnInit() {
     let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
-    console.log(selectedCompany)
     if(selectedCompany){
       this.selectedCompanyGuid = selectedCompany.guid;
     }
     let selectedFacility: IdbFacility = this.setupWizardService.facility.getValue();
-    console.log(selectedFacility)
     if(selectedFacility){
       this.selectedFacilityGuid = selectedFacility.guid;
     }

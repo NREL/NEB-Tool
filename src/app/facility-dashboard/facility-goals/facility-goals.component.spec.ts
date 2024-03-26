@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FacilityGoalsComponent } from './facility-goals.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('FacilityGoalsComponent', () => {
   let component: FacilityGoalsComponent;
@@ -8,7 +9,7 @@ describe('FacilityGoalsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FacilityGoalsComponent]
+      declarations: [FontAwesomeModule]
     })
     .compileComponents();
     

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SetupWizardComponent } from './setup-wizard.component';
+import { SetupWizardTabsComponent } from './setup-wizard-tabs/setup-wizard-tabs.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SetupWizardComponent', () => {
   let component: SetupWizardComponent;
@@ -8,7 +10,8 @@ describe('SetupWizardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SetupWizardComponent]
+      imports: [RouterTestingModule],
+      declarations: [SetupWizardTabsComponent]
     })
     .compileComponents();
     
