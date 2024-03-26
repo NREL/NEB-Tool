@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
@@ -31,15 +30,12 @@ export class LocationFormComponent {
   companyOrFacilitySub: Subscription;
   countries: Array<Country> = Countries;
   states: Array<State> = States;
-  accordionOpen: boolean;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
-    private localStorageDataService: LocalStorageDataService,
     private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
-    this.accordionOpen = this.localStorageDataService.locationAccordionOpen;
     if (this.inSetupWizard) {
       if (this.inCompany) {
         this.companyOrFacilitySub = this.setupWizardService.company.subscribe(_company => {
@@ -122,10 +118,5 @@ export class LocationFormComponent {
     generalInformation.zip = this.form.controls['zip'].value;
     generalInformation.address = this.form.controls['address'].value;
     return generalInformation;
-  }
-
-  toggleAccordion() {
-    this.accordionOpen = !this.accordionOpen;
-    this.localStorageDataService.setLocationAccordionOpen(this.accordionOpen);
   }
 }

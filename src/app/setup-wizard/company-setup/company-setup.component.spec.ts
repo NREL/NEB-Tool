@@ -13,7 +13,6 @@ import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/
 import { FormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 
 describe('CompanySetupComponent', () => {
   let component: CompanySetupComponent;
@@ -42,8 +41,7 @@ describe('CompanySetupComponent', () => {
         { provide: UserIdbService, useValue: userIdbService },
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },   
-        { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: LocalStorageDataService, useValue: {}},     
+        { provide: FacilityIdbService, useValue: facilityIdbService }
       ]
     })
     .compileComponents();

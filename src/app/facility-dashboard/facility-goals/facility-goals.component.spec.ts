@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FacilityGoalsComponent } from './facility-goals.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { BehaviorSubject } from 'rxjs';
@@ -29,7 +28,6 @@ describe('FacilityGoalsComponent', () => {
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: LocalStorageDataService, useValue: {}},
         { provide: DbChangesService, useValue: {}}
       ]
     })

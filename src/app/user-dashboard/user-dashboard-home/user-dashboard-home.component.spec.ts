@@ -10,6 +10,12 @@ import { IdbFacility } from 'src/app/models/facility';
 import { FormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany } from 'src/app/models/company';
+import { CompaniesTableComponent } from './companies-table/companies-table.component';
+import { FacilitiesTableComponent } from './facilities-table/facilities-table.component';
+import { ProjectsTableComponent } from './projects-table/projects-table.component';
+import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { IdbProject } from 'src/app/models/project';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('UserDashboardHomeComponent', () => {
   let component: UserDashboardHomeComponent;
@@ -25,13 +31,18 @@ describe('UserDashboardHomeComponent', () => {
     let facilityIdbService: Partial<FacilityIdbService> = {
       facilities: new BehaviorSubject<Array<IdbFacility>>([])
     };
+    let projectIdbService: Partial<ProjectIdbService> = {
+      selectedProject: new BehaviorSubject<IdbProject>(undefined),
+      projects: new BehaviorSubject<Array<IdbProject>>([])
+    }
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule],
-      declarations: [UserDashboardHomeComponent],
+      imports: [RouterTestingModule, FormsModule, FontAwesomeModule],
+      declarations: [UserDashboardHomeComponent, CompaniesTableComponent, FacilitiesTableComponent, ProjectsTableComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: FacilityIdbService, useValue: facilityIdbService }
+        { provide: FacilityIdbService, useValue: facilityIdbService },
+        { provide: ProjectIdbService, useValue: projectIdbService },
       ]
     });
     fixture = TestBed.createComponent(UserDashboardHomeComponent);
