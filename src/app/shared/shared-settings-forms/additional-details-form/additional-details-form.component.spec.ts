@@ -28,12 +28,12 @@ describe('AdditionalDetailsFormComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FontAwesomeModule],
-      declarations: [AdditionalDetailsFormComponent],    
+      declarations: [AdditionalDetailsFormComponent],
       providers: [
-      { provide: SetupWizardService, useValue: setupWizardService },
-      { provide: CompanyIdbService, useValue: companyIdbService },
-      { provide: FacilityIdbService, useValue: facilityIdbService }
-    ]
+        { provide: SetupWizardService, useValue: setupWizardService },
+        { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: FacilityIdbService, useValue: facilityIdbService }
+      ]
     });
     fixture = TestBed.createComponent(AdditionalDetailsFormComponent);
     component = fixture.componentInstance;

@@ -3,6 +3,7 @@ import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { LoadingService } from '../loading/loading.service';
 import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
 import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,9 @@ import { SharedDataService } from 'src/app/shared/shared-services/shared-data.se
 export class NavbarComponent {
 
   faHome: IconDefinition = faHome;
+
+
+  version: string = environment.version;
   showResetModal: boolean = false;
   constructor(private userIdbService: UserIdbService,
     private loadingService: LoadingService,
