@@ -11,11 +11,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 describe('ProjectDashboardComponent', () => {
   let component: ProjectDashboardComponent;
   let fixture: ComponentFixture<ProjectDashboardComponent>;
-
+  let projectIdbService: Partial<ProjectIdbService> = {
+    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', ''))
+  }
   beforeEach(() => {
-    let projectIdbService: Partial<ProjectIdbService> = {
-      selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', ''))
-    }
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FontAwesomeModule],
       declarations: [ProjectDashboardComponent, ProjectDashboardTabsComponent],

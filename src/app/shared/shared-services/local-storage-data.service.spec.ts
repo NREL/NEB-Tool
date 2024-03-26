@@ -1,12 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 
 import { LocalStorageDataService } from './local-storage-data.service';
+import { LocalStorageService } from 'ngx-webstorage';
 
 describe('LocalStorageDataService', () => {
   let service: LocalStorageDataService;
 
+  let localStorageService: Partial<LocalStorageService> = {
+    retrieve: () => { return undefined },
+    store: () => { return undefined },
+  };
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: LocalStorageService, useValue: localStorageService }
+      ]
+    });
     service = TestBed.inject(LocalStorageDataService);
   });
 

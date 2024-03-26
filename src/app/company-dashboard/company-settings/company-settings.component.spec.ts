@@ -17,16 +17,16 @@ import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 describe('CompanySettingsComponent', () => {
   let component: CompanySettingsComponent;
   let fixture: ComponentFixture<CompanySettingsComponent>;
+  let companyIdbService: Partial<CompanyIdbService> = {
+    companies: new BehaviorSubject<Array<IdbCompany>>([]),
+    selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
+  };
+  let facilityIdbService: Partial<FacilityIdbService> = {
+    facilities: new BehaviorSubject<Array<IdbFacility>>([]),
+    selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
+  };
 
   beforeEach(async () => {
-    let companyIdbService: Partial<CompanyIdbService> = {
-      companies: new BehaviorSubject<Array<IdbCompany>>([]),
-      selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
-    };
-    let facilityIdbService: Partial<FacilityIdbService> = {
-      facilities: new BehaviorSubject<Array<IdbFacility>>([]),
-      selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
-    };
     await TestBed.configureTestingModule({
       imports: [SharedSettingsFormsModule, FontAwesomeModule, FormsModule, RouterTestingModule],
       declarations: [CompanySettingsComponent, ManageCompanyComponent],
