@@ -12,6 +12,7 @@ import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbProject } from 'src/app/models/project';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 describe('FacilitiesTableComponent', () => {
   let component: FacilitiesTableComponent;
@@ -32,7 +33,7 @@ describe('FacilitiesTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FontAwesomeModule],
+      imports: [RouterTestingModule, FontAwesomeModule, FormsModule],
       declarations: [FacilitiesTableComponent],    
         providers: [
         { provide: UserIdbService, useValue: userIdbService },

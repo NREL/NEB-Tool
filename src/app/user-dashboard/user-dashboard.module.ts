@@ -11,7 +11,6 @@ import { CompaniesTableComponent } from './user-dashboard-home/companies-table/c
 import { FacilitiesTableComponent } from './user-dashboard-home/facilities-table/facilities-table.component';
 import { UserDashboardTabsComponent } from './user-dashboard-tabs/user-dashboard-tabs.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { UserDashboardHomeActionsComponent } from './user-dashboard-home/user-dashboard-home-actions/user-dashboard-home-actions.component';
 import { UserDashboardHelpComponent } from './user-dashboard-help/user-dashboard-help.component';
 import { ExploreNEBsComponent } from './explore-nebs/explore-nebs.component';
 
@@ -24,7 +23,6 @@ import { ExploreNEBsComponent } from './explore-nebs/explore-nebs.component';
     FacilitiesTableComponent,
     UserDashboardTabsComponent,
     UserSettingsComponent,
-    UserDashboardHomeActionsComponent,
     UserDashboardHelpComponent,
     ExploreNEBsComponent
   ],

@@ -20,21 +20,20 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 describe('UserDashboardHomeComponent', () => {
   let component: UserDashboardHomeComponent;
   let fixture: ComponentFixture<UserDashboardHomeComponent>;
-
+  let userIdbService: Partial<UserIdbService> = {
+    user: new BehaviorSubject<IdbUser>(getNewIdbUser())
+  }
+  let companyIdbService: Partial<CompanyIdbService> = {
+    companies: new BehaviorSubject<Array<IdbCompany>>([])
+  };
+  let facilityIdbService: Partial<FacilityIdbService> = {
+    facilities: new BehaviorSubject<Array<IdbFacility>>([])
+  };
+  let projectIdbService: Partial<ProjectIdbService> = {
+    selectedProject: new BehaviorSubject<IdbProject>(undefined),
+    projects: new BehaviorSubject<Array<IdbProject>>([])
+  }
   beforeEach(() => {
-    let userIdbService: Partial<UserIdbService> = {
-      user: new BehaviorSubject<IdbUser>(getNewIdbUser())
-    }
-    let companyIdbService: Partial<CompanyIdbService> = {
-      companies: new BehaviorSubject<Array<IdbCompany>>([])
-    };
-    let facilityIdbService: Partial<FacilityIdbService> = {
-      facilities: new BehaviorSubject<Array<IdbFacility>>([])
-    };
-    let projectIdbService: Partial<ProjectIdbService> = {
-      selectedProject: new BehaviorSubject<IdbProject>(undefined),
-      projects: new BehaviorSubject<Array<IdbProject>>([])
-    }
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FormsModule, FontAwesomeModule],
       declarations: [UserDashboardHomeComponent, CompaniesTableComponent, FacilitiesTableComponent, ProjectsTableComponent],
