@@ -49,7 +49,7 @@ export class GettingStartedComponent {
     this.facilitiesSub.unsubscribe()
   }
 
-  createNewProject() {
+  createNewAssessment() {
     let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
     if (!selectedCompany) {
       //Start from scratch with new company
@@ -60,8 +60,8 @@ export class GettingStartedComponent {
         //start from new facility
         this.router.navigateByUrl('setup-wizard/facility-setup');
       } else {
-        //create project within existing facility
-        this.router.navigateByUrl('setup-wizard/project-setup');
+        //create assessment within existing facility
+        this.router.navigateByUrl('setup-wizard/assessment-setup');
       }
     }
   }

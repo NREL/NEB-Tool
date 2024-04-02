@@ -41,11 +41,11 @@ export class ProjectSetupComponent {
     if (!newIdbFacility) {
       newIdbFacility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
     }
-    this.project = this.setupWizardService.project.getValue();
-    if (!this.project) {
-      this.project = getNewIdbProject(newIdbFacility.userId, newIdbFacility.companyId, newIdbFacility.guid);
-    }
-    this.setupWizardService.project.next(this.project);
+    // this.project = this.setupWizardService.project.getValue();
+    // if (!this.project) {
+    //   this.project = getNewIdbProject(newIdbFacility.userId, newIdbFacility.companyId, newIdbFacility.guid);
+    // }
+    // this.setupWizardService.project.next(this.project);
 
   }
 
@@ -55,29 +55,29 @@ export class ProjectSetupComponent {
   }
 
   async createProject() {
-    let company: IdbCompany = this.setupWizardService.company.getValue();
-    //Add or update
-    if (!company.id) {
-      company = await firstValueFrom(this.companyIdbService.addWithObservable(company));
-    } else {
-      company = await firstValueFrom(this.companyIdbService.updateWithObservable(company));
-    }
-    await this.companyIdbService.setCompanies();
-    let facility: IdbFacility = this.setupWizardService.facility.getValue();
-    //Add or update
-    if (!facility.id) {
-      facility = await firstValueFrom(this.facilityIdbService.addWithObservable(facility));
-    } else {
-      facility = await firstValueFrom(this.facilityIdbService.updateWithObservable(facility));
-    }
-    await this.facilityIdbService.setFacilities();
-    let project: IdbProject = this.setupWizardService.project.getValue();
-    project = await firstValueFrom(this.projectIdbService.addWithObservable(project));
-    await this.projectIdbService.setProjects();
-    this.router.navigateByUrl('/project/' + project.guid);
+    // let company: IdbCompany = this.setupWizardService.company.getValue();
+    // //Add or update
+    // if (!company.id) {
+    //   company = await firstValueFrom(this.companyIdbService.addWithObservable(company));
+    // } else {
+    //   company = await firstValueFrom(this.companyIdbService.updateWithObservable(company));
+    // }
+    // await this.companyIdbService.setCompanies();
+    // let facility: IdbFacility = this.setupWizardService.facility.getValue();
+    // //Add or update
+    // if (!facility.id) {
+    //   facility = await firstValueFrom(this.facilityIdbService.addWithObservable(facility));
+    // } else {
+    //   facility = await firstValueFrom(this.facilityIdbService.updateWithObservable(facility));
+    // }
+    // await this.facilityIdbService.setFacilities();
+    // let project: IdbProject = this.setupWizardService.project.getValue();
+    // project = await firstValueFrom(this.projectIdbService.addWithObservable(project));
+    // await this.projectIdbService.setProjects();
+    // this.router.navigateByUrl('/project/' + project.guid);
   }
 
   saveChanges() {
-    this.setupWizardService.project.next(this.project);
+    // this.setupWizardService.project.next(this.project);
   }
 }

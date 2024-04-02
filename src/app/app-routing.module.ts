@@ -26,6 +26,8 @@ import { UserDashboardHelpComponent } from './user-dashboard/user-dashboard-help
 import { ExploreNEBsComponent } from './user-dashboard/explore-nebs/explore-nebs.component';
 import { CompanyGoalsComponent } from './company-dashboard/company-goals/company-goals.component';
 import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/facility-goals.component';
+import { AssessmentDashboardComponent } from './assessment-dashboard/assessment-dashboard.component';
+import { AssessmentSetupComponent } from './setup-wizard/assessment-setup/assessment-setup.component';
 
 const routes: Routes = [
   {
@@ -59,9 +61,13 @@ const routes: Routes = [
         component: FacilitySetupComponent
       },
       {
-        path: 'project-setup',
-        component: ProjectSetupComponent
+        path: 'assessment-setup',
+        component: AssessmentSetupComponent
       }
+      // {
+      //   path: 'project-setup',
+      //   component: ProjectSetupComponent
+      // }
     ]
   },
   {
@@ -168,43 +174,10 @@ const routes: Routes = [
       },
     ]
   },
-  // children: [
-  //   {
-  //     path: '',
-  //     component: UserDashboardHomeComponent
-  //   },
-  //   {
-  //     path: 'company/:id',
-  //     component: CompanyDashboardComponent,
-  //     children: [
-  //       {
-  //         path: '',
-  //         component: CompanyDashboardHomeComponent
-  //       },
-  //       {
-  //         path: 'facility/:id',
-  //         component: FacilityDashboardComponent,
-  //         children: [
-  //           {
-  //             path: '',
-  //             component: FacilityDashboardHomeComponent
-  //           },
-  //           {
-  //             path: 'project/:id',
-  //             component: ProjectDashboardComponent,
-  //             children: [
-  //               {
-  //                 path: '',
-  //                 component: ProjectDashboardHomeComponent
-  //               }
-  //             ]
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ]
-  // },
+  {
+    path: 'assessment/:id',
+    component: AssessmentDashboardComponent,
+  },
   //wildcard/page not found needs to be last route
   //triggered after entire route tree is checked
   { path: "**", component: PageNotFoundComponent },

@@ -48,8 +48,8 @@ export class FacilitySetupComponent {
   }
 
 
-  goToProject() {
-    this.router.navigateByUrl('setup-wizard/project-setup');
+  goToAssessment() {
+    this.router.navigateByUrl('setup-wizard/assessment-setup');
 
   }
 

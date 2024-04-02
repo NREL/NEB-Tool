@@ -11,6 +11,7 @@ import { ProjectSetupComponent } from './project-setup/project-setup.component';
 import { FormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
+import { AssessmentSetupComponent } from './assessment-setup/assessment-setup.component';
 
 
 
@@ -21,7 +22,8 @@ import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
     GettingStartedComponent,
     CompanySetupComponent,
     FacilitySetupComponent,
-    ProjectSetupComponent
+    ProjectSetupComponent,
+    AssessmentSetupComponent
   ],
   imports: [
     CommonModule,
