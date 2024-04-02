@@ -9,7 +9,7 @@
 
             <button class="btn btn-outline-success" [routerLink]="'/setup-wizard'" [routerLinkActive]="['active']">
                 <fa-icon [icon]="faWandMagicSparkles"></fa-icon>
-                Project Wizard
+                Setup Wizard
             </button>
             <hr>
             <li class="nav-item">
@@ -34,12 +34,12 @@
                             {{facility.generalInformation.name}}</a>
                     </li>
 
-                    <ng-container *ngFor="let project of (facility.guid | projectsList:projects)">
+                    <ng-container *ngFor="let assessment of (facility.guid | assessmentsList:assessments)">
                         <li class="nav-item">
-                            <a class="nav-link project-link" [routerLink]="'/project/'+project.guid"
+                            <a class="nav-link assessment-link" [routerLink]="'/assessment/'+assessment.guid"
                                 [routerLinkActive]="['active']">
                                 <fa-icon [icon]="faFileLines" class="pe-1"></fa-icon>
-                                {{project.name}}</a>
+                                {{assessment.name}}</a>
                         </li>
                     </ng-container>
 

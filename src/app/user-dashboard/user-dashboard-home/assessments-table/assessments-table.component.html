@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-header">
+        <span class="h4">
+            <fa-icon [icon]="faFileLines"></fa-icon>
+            Assessments
+        </span>
+        <button class="btn btn-sm btn-success float-end" (click)="openAddNewModal()">
+            <fa-icon [icon]="faWandMagicSparkles"></fa-icon> Setup Wizard
+        </button>
+    </div>
+    <div class="card-body">
+
+        <ng-template [ngIf]="assessments.length > 0" [ngIfElse]="noAssessmentBlock">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="w-25">
+                            Name
+                        </th>
+                        <th class="w-25">
+                            <!-- <fa-icon [icon]="faLocationDot"></fa-icon> -->
+                            Company
+                        </th>
+                        <th class="w-25">
+                            <!-- <fa-icon [icon]="faContactCard"></fa-icon> -->
+                            Facility
+                        </th>
+                        <th class="w-25">
+                            Last Modified
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let assessment of assessments">
+                        <td>
+                            <a [routerLink]="'/assessment/'+assessment.guid">
+                                {{assessment.name}}
+                            </a>
+                        </td>
+                        <td>
+                            {{assessment.companyId | companyName:companies}}
+                        </td>
+                        <td>
+                            {{assessment.facilityId | facilityName:facilities}}
+                        </td>
+                        <td>
+                            {{assessment.modifiedDate |date:'short'}}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </ng-template>
+
+        <ng-template #noAssessmentBlock>
+            <div class="alert alert-info">
+                No assessments found. Please use the "Setup Wizard" to get started.
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+<div [ngClass]="{'window-overlay': displayAddNewModal}"></div>
+<div class="popup" [ngClass]="{'open': displayAddNewModal }">
+    <div class="popup-header">Create New Assessment?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeAddNewModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-info">
+            Would you like to use the setup wizard to create a new assessment?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeAddNewModal()">Cancel</button>
+        <button class="btn btn-success" (click)="confirmCreate()">Create Assessment</button>
+    </div>
+</div>
