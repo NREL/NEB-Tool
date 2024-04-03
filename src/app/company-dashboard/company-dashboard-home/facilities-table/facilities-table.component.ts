@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faIndustry, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, firstValueFrom } from 'rxjs';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { IdbProject } from 'src/app/models/project';
 
 @Component({
   selector: 'app-facilities-table',
@@ -23,8 +23,8 @@ export class FacilitiesTableComponent {
   facilities: Array<IdbFacility>;
   facilitiesSub: Subscription;
 
-  projects: Array<IdbProject>;
-  projectsSub: Subscription;
+  assessments: Array<IdbAssessment>;
+  assessmentsSub: Subscription;
 
   company: IdbCompany;
   companySub: Subscription;
@@ -32,7 +32,7 @@ export class FacilitiesTableComponent {
   constructor(
     private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
-    private projectIdbService: ProjectIdbService,
+    private assessmentIdbService: AssessmentIdbService,
     private router: Router) {
   }
 
@@ -43,14 +43,14 @@ export class FacilitiesTableComponent {
     this.facilitiesSub = this.facilityIdbService.facilities.subscribe(_facilities => {
       this.facilities = _facilities;
     });
-    this.projectsSub = this.projectIdbService.projects.subscribe(_projects => {
-      this.projects = _projects;
+    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
+      this.assessments = _assessments;
     })
   }
 
   ngOnDestroy() {
     this.facilitiesSub.unsubscribe();
-    this.projectsSub.unsubscribe();
+    this.assessmentsSub.unsubscribe();
     this.companySub.unsubscribe();
   }
 

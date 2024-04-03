@@ -28,6 +28,9 @@ import { CompanyGoalsComponent } from './company-dashboard/company-goals/company
 import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/facility-goals.component';
 import { AssessmentDashboardComponent } from './assessment-dashboard/assessment-dashboard.component';
 import { AssessmentSetupComponent } from './setup-wizard/assessment-setup/assessment-setup.component';
+import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessment-dashboard-home/assessment-dashboard-home.component';
+import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
+import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
 
 const routes: Routes = [
   {
@@ -177,6 +180,25 @@ const routes: Routes = [
   {
     path: 'assessment/:id',
     component: AssessmentDashboardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: AssessmentDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: AssessmentSettingsComponent
+      },
+      {
+        path: 'reports',
+        component: AssessmentReportComponent
+      },
+    ]
   },
   //wildcard/page not found needs to be last route
   //triggered after entire route tree is checked

@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { SetupWizardModule } from './setup-wizard/setup-wizard.module';
 import { SidebarComponent } from './core-components/sidebar/sidebar.component';
 import { HelperPipesModule } from './shared/helper-pipes/helper-pipes.module';
+import { AssessmentDashboardModule } from './assessment-dashboard/assessment-dashboard.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { HelperPipesModule } from './shared/helper-pipes/helper-pipes.module';
     NgxWebstorageModule.forRoot(),
     FormsModule,
     SetupWizardModule,
-    HelperPipesModule
+    HelperPipesModule,
+    AssessmentDashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
