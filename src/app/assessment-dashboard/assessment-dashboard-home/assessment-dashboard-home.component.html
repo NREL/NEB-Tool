@@ -1,7 +1,88 @@
 <div class="row pt-4 justify-content-center">
-    <div class="col-lg-9 col-md-12">
-        <div class="alert alert-dark">
-            Assessment related content goes here..
+    <div class="col-md-12 col-lg-9 pt-4 pb-2">
+        <nav class="navbar border-bottom">
+            <h4 class="mb-0">{{assessment.name}}</h4>
+            <button class="btn btn-sm btn-success float-end" (click)="openEditModal()">
+                <fa-icon [icon]="faWandMagicSparkles"></fa-icon> Setup Wizard
+            </button>
+        </nav>
+    </div>
+    <div class="col-md-12 col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                {{assessment.name}} Details
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Energy System
+                            </td>
+                            <td>
+                                {{assessment.energySystem}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Annual Consumption
+                            </td>
+                            <td>
+                                {{assessment.consumption}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Annual Costs
+                            </td>
+                            <td>
+                                {{assessment.cost}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </div>
+    <div class="col-md-12 col-lg-9">
+        <hr>
+    </div>
+    <div class="col-md-12 col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                {{assessment.name}} Projects
+            </div>
+            <ng-template [ngIf]="(assessment.guid | projectsList:projects:'assessment').length > 0"
+                [ngIfElse]="noProjectBlock">
+                <div class="card-body" *ngFor="let project of assessment.guid | projectsList:projects:'assessment'">
+                    {{project.name}}
+                </div>
+            </ng-template>
+            <ng-template #noProjectBlock>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        No projects found for this assessment.
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+
+<div [ngClass]="{'window-overlay': displayEditModal}"></div>
+<div class="popup" [ngClass]="{'open': displayEditModal }">
+    <div class="popup-header">Edit {{assessment.name}}?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeEditModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-info">
+            Would you like to edit this assessment using the setup wizard?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeEditModal()">Cancel</button>
+        <button class="btn btn-success" (click)="confirmEdit()">Edit Assessment</button>
     </div>
 </div>

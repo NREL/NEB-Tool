@@ -10,7 +10,7 @@
     </div>
     <div class="card-body">
 
-        <ng-template [ngIf]="(company.guid | projectsList:projects:true).length > 0" [ngIfElse]="noProjectBlock">
+        <ng-template [ngIf]="(company.guid | projectsList:projects:'company').length > 0" [ngIfElse]="noProjectBlock">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let project of company.guid | projectsList:projects:true">
+                    <tr *ngFor="let project of company.guid | projectsList:projects:'company'">
                         <td>
                             <a [routerLink]="'/project/'+project.guid">
                                 {{project.name}}

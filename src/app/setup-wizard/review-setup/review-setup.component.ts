@@ -58,7 +58,6 @@ export class ReviewSetupComponent {
       newAssessment = getNewIdbAssessment(newIdbFacility.userId, newIdbFacility.companyId, newIdbFacility.guid);
       this.setupWizardService.assessment.next(newAssessment);
     }
-    this.setupWizardService.assessment.next(newAssessment);
     //--
     this.company = this.setupWizardService.company.getValue();
     this.facility = this.setupWizardService.facility.getValue();
@@ -79,6 +78,7 @@ export class ReviewSetupComponent {
     } else {
       await firstValueFrom(this.companyIdbService.updateWithObservable(this.company));
     }
+    await this.companyIdbService.setCompanies();
 
     if (!this.facility.id) {
       //no id = new Add
@@ -86,6 +86,7 @@ export class ReviewSetupComponent {
     } else {
       await firstValueFrom(this.facilityIdbService.updateWithObservable(this.facility));
     }
+    await this.facilityIdbService.setFacilities();
 
     if (!this.assessment.id) {
       //no id = new Add
@@ -93,6 +94,7 @@ export class ReviewSetupComponent {
     } else {
       await firstValueFrom(this.assessmentIdbService.updateWithObservable(this.assessment));
     }
+    await this.assessmentIdbService.setAssessments();
 
     for (let i = 0; i < this.projects.length; i++) {
       if (!this.projects[i].id) {
@@ -102,6 +104,9 @@ export class ReviewSetupComponent {
         await firstValueFrom(this.projectIdbService.updateWithObservable(this.projects[i]));
       }
     }
+    await this.projectIdbService.setProjects();
+
+
     this.loadingService.setLoadingStatus(false);
     this.router.navigateByUrl('/assessment/' + this.assessment.guid);
   }

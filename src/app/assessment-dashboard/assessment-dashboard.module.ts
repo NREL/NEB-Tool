@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ManageAssessmentComponent } from './assessment-settings/manage-assessment/manage-assessment.component';
 import { FormsModule } from '@angular/forms';
+import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 
 
 
@@ -25,7 +26,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    HelperPipesModule
   ]
 })
 export class AssessmentDashboardModule { }

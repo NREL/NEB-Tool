@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faDog, faPaw, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
@@ -13,7 +13,7 @@ import { IdbCompany } from 'src/app/models/company';
 })
 export class ManageCompanyComponent {
 
-  faPaw: IconDefinition = faPaw;
+  faPenToSquare: IconDefinition = faPenToSquare;
   faTrash: IconDefinition = faTrash;
 
   accordionOpen: boolean = false;

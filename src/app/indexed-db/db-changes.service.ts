@@ -51,11 +51,21 @@ export class DbChangesService {
     await this.facilityIdbService.setFacilities();
   }
 
+  async deleteAssessment(assessment: IdbAssessment) {
+    //delete projects
+    let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
+    let assessmentProjects: Array<IdbProject> = projects.filter(project => { return project.assessmentId == assessment.guid });
+    await this.deleteProjects(assessmentProjects);
+    //delete assessment
+    await firstValueFrom(this.assessmentIdbService.deleteWithObservable(assessment.id));
+    await this.assessmentIdbService.setAssessments();
+  }
+
   async deleteAssessments(assessments: Array<IdbAssessment>) {
     for (let i = 0; i < assessments.length; i++) {
       await firstValueFrom(this.assessmentIdbService.deleteWithObservable(assessments[i].id));
     }
-    await this.projectIdbService.setProjects();
+    await this.assessmentIdbService.setAssessments();
   }
 
   async deleteProjects(projects: Array<IdbProject>) {

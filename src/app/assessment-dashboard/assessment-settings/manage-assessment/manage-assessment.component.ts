@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faPaw, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
@@ -13,7 +13,7 @@ import { IdbAssessment } from 'src/app/models/assessment';
 })
 export class ManageAssessmentComponent {
 
-  faPaw: IconDefinition = faPaw;
+  faPenToSquare: IconDefinition = faPenToSquare;
   faTrash: IconDefinition = faTrash;
 
   accordionOpen: boolean = false;
@@ -47,7 +47,7 @@ export class ManageAssessmentComponent {
   }
 
   async confirmDelete() {
-    await this.dbChangesService.deleteAssessments([this.assessment]);
+    await this.dbChangesService.deleteAssessment(this.assessment);
     this.router.navigateByUrl('/user')
   }
 }
