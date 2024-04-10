@@ -5,7 +5,10 @@ export interface IdbProject extends IdbEntry {
     userId: string,
     facilityId: string,
     companyId: string,
-    assessmentId: string
+    assessmentId: string,
+    energySavings: number,
+    implementationCost: number,
+    projectType: string
 }
 
 export function getNewIdbProject(userId: string, companyId: string, facilityId: string, assessmentId: string): IdbProject {
@@ -16,6 +19,9 @@ export function getNewIdbProject(userId: string, companyId: string, facilityId: 
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
-        assessmentId: assessmentId
+        assessmentId: assessmentId,
+        energySavings: undefined,
+        implementationCost: undefined,
+        projectType: undefined
     }
 }

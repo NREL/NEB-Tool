@@ -12,12 +12,12 @@ export class SetupWizardService {
 
   company: BehaviorSubject<IdbCompany>;
   facility: BehaviorSubject<IdbFacility>;
-  // project: BehaviorSubject<IdbProject>;
+  projects: BehaviorSubject<Array<IdbProject>>;
   assessment: BehaviorSubject<IdbAssessment>;
   constructor() { 
     this.company = new BehaviorSubject<IdbCompany>(undefined);
     this.facility = new BehaviorSubject<IdbFacility>(undefined);
-    // this.project = new BehaviorSubject<IdbProject>(undefined);
+    this.projects = new BehaviorSubject<Array<IdbProject>>([]);
     this.assessment = new BehaviorSubject<IdbAssessment>(undefined);
   }
 }

@@ -1,0 +1,8 @@
+.card-body {
+    height: 650px;
+}
+
+
+.list-group-item-action:hover {
+    cursor: pointer;
+}

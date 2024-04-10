@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faFileLines, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
@@ -32,7 +32,7 @@ export class AssessmentsTableComponent {
   displayAddNewModal: boolean = false;
   constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
-    private projectIdbService: ProjectIdbService,
+    private assessmentIdbService: AssessmentIdbService,
     private router: Router,
     private setupWizardService: SetupWizardService) {
   }
@@ -45,8 +45,8 @@ export class AssessmentsTableComponent {
     this.facilitiesSub = this.facilityIdbService.facilities.subscribe(_facilities => {
       this.facilities = _facilities;
     });
-    this.assessmentsSub = this.projectIdbService.projects.subscribe(_projects => {
-      this.assessments = _projects;
+    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
+      this.assessments = _assessments;
     })
   }
 

@@ -11,15 +11,67 @@
                 <input name="assessmentName" type="text" class="form-control" [(ngModel)]="assessment.name"
                     (input)="saveChanges()" minlength="1" maxlength="42" id="assessmentName">
             </form>
+            <hr>
+            <div class="accordion" id="assessmentAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseAssessmentDetails" aria-expanded="true"
+                            aria-controls="collapseAssessmentDetails" [ngClass]="{'collapsed': accordionIndex != 0}"
+                            (click)="setAccordionIndex(0)">
+                            <fa-icon [icon]="faFilePen" class="me-2"></fa-icon>
+                            Details
+                        </button>
+                    </h2>
+                    <div id="collapseAssessmentDetails" class="accordion-collapse collapse"
+                        data-bs-parent="#assessmentAccordion" [ngClass]="{'show': accordionIndex == 0}">
+                        <div class="accordion-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="energySystem">Energy System</label>
+                                        <select name="energySystem" class="form-select" id="energySystem"
+                                            [(ngModel)]="assessment.energySystem">
+                                            <option *ngFor="let system of energySystems | keyvalue"
+                                                [ngValue]="system.key">
+                                                {{system.value}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="consumption">Annual Consumption</label>
+                                        <div class="input-group">
+                                            <input name="consumption" type="number" class="form-control"
+                                                [(ngModel)]="assessment.consumption" (input)="saveChanges()"
+                                                minlength="1" maxlength="42" id="consumption">
+                                            <span class="input-group-text">MMBtu/yr</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="cost">Annual Costs</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">&dollar;</span>
+                                            <input name="cost" type="number" class="form-control"
+                                                [(ngModel)]="assessment.cost" (input)="saveChanges()" minlength="1"
+                                                maxlength="42" id="cost">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
         <div class="card-footer">
             <div class="d-flex w-100 justify-content-between">
                 <div class="pe-1">
                     <button class="btn btn-secondary" (click)="goBack()">Go Back</button>
                 </div>
                 <div class="ps-1">
-                    <button class="btn btn-primary" (click)="createAssessment()">Create Assessment</button>
+                    <!-- <button class="btn btn-primary" (click)="goToNext()" *ngIf="accordionIndex != 3">Next</button> -->
+                    <button class="btn btn-primary" (click)="goToProjects()" *ngIf="accordionIndex == 0">Setup
+                        Projects</button>
                 </div>
             </div>
         </div>

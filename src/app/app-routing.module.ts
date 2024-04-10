@@ -31,6 +31,8 @@ import { AssessmentSetupComponent } from './setup-wizard/assessment-setup/assess
 import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessment-dashboard-home/assessment-dashboard-home.component';
 import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
 import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
+import { ProjectSetupListComponent } from './setup-wizard/project-setup/project-setup-list/project-setup-list.component';
+import { ProjectSetupFormComponent } from './setup-wizard/project-setup/project-setup-form/project-setup-form.component';
 
 const routes: Routes = [
   {
@@ -66,11 +68,26 @@ const routes: Routes = [
       {
         path: 'assessment-setup',
         component: AssessmentSetupComponent
+      },
+      {
+        path: 'project-setup',
+        component: ProjectSetupComponent,
+        children:[
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'projects'
+          },
+          {
+            path: 'projects',
+            component: ProjectSetupListComponent
+          },
+          {
+            path: 'edit-project/:id',
+            component: ProjectSetupFormComponent,
+          }
+        ]
       }
-      // {
-      //   path: 'project-setup',
-      //   component: ProjectSetupComponent
-      // }
     ]
   },
   {
