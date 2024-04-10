@@ -14,6 +14,7 @@ import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { AssessmentSetupComponent } from './assessment-setup/assessment-setup.component';
 import { ProjectSetupListComponent } from './project-setup/project-setup-list/project-setup-list.component';
 import { ProjectSetupFormComponent } from './project-setup/project-setup-form/project-setup-form.component';
+import { ReviewSetupComponent } from './review-setup/review-setup.component';
 
 
 
@@ -27,7 +28,8 @@ import { ProjectSetupFormComponent } from './project-setup/project-setup-form/pr
     ProjectSetupComponent,
     AssessmentSetupComponent,
     ProjectSetupListComponent,
-    ProjectSetupFormComponent
+    ProjectSetupFormComponent,
+    ReviewSetupComponent
   ],
   imports: [
     CommonModule,

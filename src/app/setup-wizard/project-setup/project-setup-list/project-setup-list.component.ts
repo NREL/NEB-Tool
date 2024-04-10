@@ -36,10 +36,12 @@ export class ProjectSetupListComponent {
     let newIdbFacility: IdbFacility = this.setupWizardService.facility.getValue();;
     if (!newIdbFacility) {
       newIdbFacility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
+      this.setupWizardService.facility.next(newIdbFacility);
     }
     let newAssessment: IdbAssessment = this.setupWizardService.assessment.getValue();
     if (!newAssessment) {
       newAssessment = getNewIdbAssessment(newIdbFacility.userId, newIdbFacility.companyId, newIdbFacility.guid);
+      this.setupWizardService.assessment.next(newAssessment);
     }
     this.setupWizardService.assessment.next(newAssessment);
     this.projects = this.setupWizardService.projects.getValue();

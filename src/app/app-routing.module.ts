@@ -33,6 +33,7 @@ import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-s
 import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
 import { ProjectSetupListComponent } from './setup-wizard/project-setup/project-setup-list/project-setup-list.component';
 import { ProjectSetupFormComponent } from './setup-wizard/project-setup/project-setup-form/project-setup-form.component';
+import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
 
 const routes: Routes = [
   {
@@ -72,7 +73,7 @@ const routes: Routes = [
       {
         path: 'project-setup',
         component: ProjectSetupComponent,
-        children:[
+        children: [
           {
             path: '',
             pathMatch: 'full',
@@ -87,6 +88,10 @@ const routes: Routes = [
             component: ProjectSetupFormComponent,
           }
         ]
+      },
+      {
+        path: 'review-setup',
+        component: ReviewSetupComponent
       }
     ]
   },

@@ -1,0 +1,35 @@
+<div class="d-flex w-100 justify-content-center mt-3">
+    <div class="card col-6">
+        <div class="card-header text-center">
+            <h5 class="card-title mb-0">
+                <fa-icon [icon]="faMagnifyingGlassChart" class="me-2"></fa-icon>Review Setup
+            </h5>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li>
+                    Company: {{company.generalInformation.name}}
+                </li>
+                <li>
+                    Facility: {{facility.generalInformation.name}}
+                </li>
+                <li>
+                    Assessment: {{assessment.name}}
+                </li>
+                <li>
+                    Projects: {{projects.length}}
+                </li>
+            </ul>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex w-100 justify-content-between">
+                <div class="pe-1">
+                    <button class="btn btn-secondary" (click)="goBack()">Go Back</button>
+                </div>
+                <div class="ps-1">
+                    <button class="btn btn-success" (click)="submit()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
