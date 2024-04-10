@@ -20,26 +20,8 @@
                             <option [ngValue]="undefined">
                                 Other
                             </option>
-                            <option [ngValue]="'installVFD'">
-                                Install VFD
-                            </option>
-                            <option [ngValue]="'installDriveType'">
-                                Install More Efficient Drive Type
-                            </option>
-                            <option [ngValue]="'installEfficientFan'">
-                                Install More Efficient Fan
-                            </option>
-                            <option [ngValue]="'installEfficientMotor'">
-                                Install More Efficient Motor
-                            </option>
-                            <option [ngValue]="'reduceFlowRate'">
-                                Reduce System Flow Rate
-                            </option>
-                            <option [ngValue]="'reduceSystemPressure'">
-                                Reduce System Pressure
-                            </option>
-                            <option [ngValue]="'adjustOperationalData'">
-                                Adjust Operational Data
+                            <option *ngFor="let projectType of projectTypes" [ngValue]="projectType.value">
+                                {{projectType.label}}
                             </option>
                         </select>
                     </div>

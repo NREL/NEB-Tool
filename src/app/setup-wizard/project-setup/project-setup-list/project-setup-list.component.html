@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-12 mt-3">
                         <div class="list-group">
-                            <div *ngFor="let project of projects" class="list-group-item list-group-item-action"
+                            <div *ngFor="let project of projects" class="list-group-item list-group-item-action list-group-item-success"
                                 (click)="selectProject(project)">
                                 {{project.name}}
                             </div>
@@ -43,7 +43,6 @@
                     <button class="btn btn-secondary" (click)="goBack()">Go Back</button>
                 </div>
                 <div class="ps-1">
-                    <!-- <button class="btn btn-primary" (click)="goToNext()" *ngIf="accordionIndex != 3">Next</button> -->
                     <button class="btn btn-primary" (click)="goToReviewSetup()">Review Setup</button>
                 </div>
             </div>

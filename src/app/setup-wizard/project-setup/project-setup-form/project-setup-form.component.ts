@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbProject } from 'src/app/models/project';
 import { IconDefinition, faArrowsToDot, faFileLines, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FanProjects, ProjectType } from 'src/app/shared/constants/projectOptions';
 
 @Component({
   selector: 'app-project-setup-form',
@@ -18,6 +19,8 @@ export class ProjectSetupFormComponent {
 
   project: IdbProject;
   projects: Array<IdbProject>;
+
+  projectTypes: Array<ProjectType> = FanProjects;
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private setupWizardService: SetupWizardService) {
