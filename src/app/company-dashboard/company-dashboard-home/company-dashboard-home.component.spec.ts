@@ -15,6 +15,9 @@ import { ProjectsTableComponent } from './projects-table/projects-table.componen
 import { FacilitiesTableComponent } from './facilities-table/facilities-table.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { AssessmentsTableComponent } from './assessments-table/assessments-table.component';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 describe('CompanyDashboardHomeComponent', () => {
   let component: CompanyDashboardHomeComponent;
@@ -31,15 +34,20 @@ describe('CompanyDashboardHomeComponent', () => {
     }
     let projectDbService: Partial<ProjectIdbService> = {
       projects: new BehaviorSubject<Array<IdbProject>>([])
-    }
+    };
+    let assessmentIdbService: Partial<AssessmentIdbService> = {
+      selectedAssessment: new BehaviorSubject<IdbAssessment>(undefined),
+      assessments: new BehaviorSubject<Array<IdbAssessment>>([])
+    };
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FormsModule, FontAwesomeModule, HelperPipesModule],
-      declarations: [CompanyDashboardHomeComponent, ProjectsTableComponent, FacilitiesTableComponent],
+      declarations: [CompanyDashboardHomeComponent, ProjectsTableComponent, FacilitiesTableComponent, AssessmentsTableComponent],
       providers: [
-        {provide: CompanyIdbService, useValue: companyDbServiceStub},
-        {provide: FacilityIdbService, useValue: facilityDbServiceStub},
-        {provide: DbChangesService, useValue: {}},
-        { provide: ProjectIdbService, useValue: projectDbService }
+        { provide: CompanyIdbService, useValue: companyDbServiceStub },
+        { provide: FacilityIdbService, useValue: facilityDbServiceStub },
+        { provide: DbChangesService, useValue: {} },
+        { provide: ProjectIdbService, useValue: projectDbService },
+        { provide: AssessmentIdbService, useValue: assessmentIdbService }
       ]
     });
     fixture = TestBed.createComponent(CompanyDashboardHomeComponent);

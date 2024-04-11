@@ -14,30 +14,38 @@ import { IdbProject } from 'src/app/models/project';
 import { FormsModule } from '@angular/forms';
 import { ProjectsTableComponent } from './projects-table/projects-table.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AssessmentsTableComponent } from './assessments-table/assessments-table.component';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 describe('FacilityDashboardHomeComponent', () => {
   let component: FacilityDashboardHomeComponent;
   let fixture: ComponentFixture<FacilityDashboardHomeComponent>;
+  let facilityIdbService: Partial<FacilityIdbService> = {
+    selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
+  }
+  let projectIdbService: Partial<ProjectIdbService> = {
+    projects: new BehaviorSubject<Array<IdbProject>>([])
+  }
+  let dbChangesService: Partial<DbChangesService> = {}
+  let companyIdbService: Partial<CompanyIdbService> = {
+    companies: new BehaviorSubject<Array<IdbCompany>>([])
+  };
+  let assessmentIdbService: Partial<AssessmentIdbService> = {
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(undefined),
+    assessments: new BehaviorSubject<Array<IdbAssessment>>([])
+  };
 
   beforeEach(() => {
-    let facilityIdbService: Partial<FacilityIdbService> = {
-      selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
-    }
-    let projectIdbService: Partial<ProjectIdbService> = {
-      projects: new BehaviorSubject<Array<IdbProject>>([])
-    }
-    let dbChangesService: Partial<DbChangesService> = {}
-    let companyIdbService: Partial<CompanyIdbService> = {
-      companies: new BehaviorSubject<Array<IdbCompany>>([])
-    }
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HelperPipesModule, FormsModule, FontAwesomeModule],
-      declarations: [FacilityDashboardHomeComponent, ProjectsTableComponent],
+      declarations: [FacilityDashboardHomeComponent, ProjectsTableComponent, AssessmentsTableComponent],
       providers: [
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: ProjectIdbService, useValue: projectIdbService },
         { provide: DbChangesService, useValue: dbChangesService },
-        { provide: CompanyIdbService, useValue: companyIdbService }
+        { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: AssessmentIdbService, useValue: assessmentIdbService }
       ]
     });
     fixture = TestBed.createComponent(FacilityDashboardHomeComponent);

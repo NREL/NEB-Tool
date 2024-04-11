@@ -14,6 +14,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 describe('ProjectSetupComponent', () => {
   let component: ProjectSetupComponent;
@@ -30,7 +31,8 @@ describe('ProjectSetupComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     company: new BehaviorSubject<IdbCompany>(undefined),
     facility: new BehaviorSubject<IdbFacility>(undefined),
-    project: new BehaviorSubject<IdbProject>(undefined)
+    assessment: new BehaviorSubject<IdbAssessment>(undefined),
+    projects: new BehaviorSubject<Array<IdbProject>>([])
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({

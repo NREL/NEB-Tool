@@ -19,7 +19,7 @@ describe('ProjectDashboardHomeComponent', () => {
 
   beforeEach(() => {
     let projectIdbService: Partial<ProjectIdbService> = {
-      selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', ''))
+      selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', '', ''))
     }
     let dbChangesService: Partial<DbChangesService> = {
 

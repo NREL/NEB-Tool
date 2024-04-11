@@ -22,7 +22,7 @@ describe('GettingStartedComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     company: new BehaviorSubject<IdbCompany>(undefined),
     facility: new BehaviorSubject<IdbFacility>(undefined),
-    project: new BehaviorSubject<IdbProject>(undefined)
+    projects: new BehaviorSubject<Array<IdbProject>>([])
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({

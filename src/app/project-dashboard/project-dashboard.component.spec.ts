@@ -12,7 +12,7 @@ describe('ProjectDashboardComponent', () => {
   let component: ProjectDashboardComponent;
   let fixture: ComponentFixture<ProjectDashboardComponent>;
   let projectIdbService: Partial<ProjectIdbService> = {
-    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', ''))
+    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', '', ''))
   }
   beforeEach(() => {
     TestBed.configureTestingModule({
