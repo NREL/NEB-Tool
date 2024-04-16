@@ -1,0 +1,76 @@
+<!-- <div class="accordion" id="unitAccoridion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                aria-expanded="true" aria-controls="collapseThree" [ngClass]="{'collapsed': !accordionOpen}"
+                (click)="toggleAccordion()">
+                <fa-icon [icon]="faGear" class="me-2"></fa-icon>
+                Units
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse show" data-bs-parent="#unitAccoridion"
+            [ngClass]="{'show': accordionOpen}">
+            <div class="accordion-body"> -->
+                <form [formGroup]="form">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="unitsOfMeasure">Units of Measure</label>
+                            <select class="form-select" formControlName="unitsOfMeasure" (change)="setUnitsOfMeasure()">
+                                <option [ngValue]="'Imperial'">Imperial</option>
+                                <option [ngValue]="'Metric'">Metric</option>
+                                <option [ngValue]="'Custom'">Custom</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label for="energyUnit">Result Energy Unit</label>
+                            <select class="form-select" formControlName="energyUnit" (change)="saveChanges()">
+                                <option *ngFor="let energyUnitOption of energyUnitOptions"
+                                    [ngValue]="energyUnitOption.value">
+                                    <span [innerHTML]="energyUnitOption.display"></span>
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <label for="electricityUnit">Electricity Unit</label>
+                            <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
+                                <option *ngFor="let energyUnitOption of energyUnitOptions"
+                                    [ngValue]="energyUnitOption.value">
+                                    <span [innerHTML]="energyUnitOption.display"></span>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label for="volumeLiquidUnit">Volume Unit (Liquid)</label>
+                            <select class="form-select" formControlName="volumeLiquidUnit" (change)="saveChanges()">
+                                <option *ngFor="let volumeUnitOption of volumeLiquidOptions"
+                                    [ngValue]="volumeUnitOption.value">
+                                    <span [innerHTML]="volumeUnitOption.display"></span>
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <label for="volumeGasUnit">Volume Unit (Gases)</label>
+                            <select class="form-select" formControlName="volumeGasUnit" (change)="saveChanges()">
+                                <option *ngFor="let volumeUnitOption of volumeGasOptions"
+                                    [ngValue]="volumeUnitOption.value">
+                                    <span [innerHTML]="volumeUnitOption.display"></span>
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <label for="massUnit">Mass Unit</label>
+                            <select class="form-select" formControlName="massUnit" (change)="saveChanges()">
+                                <option *ngFor="let massUnitOption of massUnitOptions" [ngValue]="massUnitOption.value">
+                                    <span [innerHTML]="massUnitOption.display"></span>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            <!-- </div>
+        </div>
+    </div>
+</div> -->

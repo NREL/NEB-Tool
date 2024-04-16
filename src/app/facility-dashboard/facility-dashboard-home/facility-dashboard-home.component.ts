@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, firstValueFrom } from 'rxjs';
+import { IconDefinition, faBuilding, faIndustry } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
-import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 
 @Component({
   selector: 'app-facility-dashboard-home',
@@ -16,13 +15,14 @@ import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 })
 export class FacilityDashboardHomeComponent {
 
+  faBuilding: IconDefinition = faBuilding;
+  faIndustry: IconDefinition = faIndustry;
   selectedFacility: IdbFacility;
   selectedFacilitySub: Subscription;
 
   companies: Array<IdbCompany>;
   companiesSub: Subscription;
   constructor(private facilityIdbService: FacilityIdbService,
-    private projectIdbService: ProjectIdbService,
     private dbChangesService: DbChangesService,
     private router: Router,
     private companyIdbService: CompanyIdbService) {
@@ -43,11 +43,6 @@ export class FacilityDashboardHomeComponent {
     this.companiesSub.unsubscribe();
   }
 
-  async addProject() {
-    let newProject: IdbProject = getNewIdbProject(this.selectedFacility.userId, this.selectedFacility.companyId, this.selectedFacility.guid);
-    newProject = await firstValueFrom(this.projectIdbService.addWithObservable(newProject));
-    await this.projectIdbService.setProjects();
-  }
 
   async deleteFacility() {
     this.dbChangesService.deleteFacility(this.selectedFacility);

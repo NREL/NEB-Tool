@@ -1,0 +1,99 @@
+<div class="d-flex w-100 justify-content-center mt-3">
+    <div class="card col-6">
+        <div class="card-header text-center">
+            <h5 class="card-title mb-0">
+                <fa-icon [icon]="faIndustry" class="me-2"></fa-icon>Create New Facility
+            </h5>
+        </div>
+        <div class="card-body">
+            <form>
+                <label for="facilityName">Facility Name</label>
+                <input name="facilityName" type="text" class="form-control" [(ngModel)]="facilityName"
+                    (input)="saveChanges()" minlength="1" maxlength="42" id="facilityName">
+            </form>
+            <hr>
+            <div class="accordion" id="facilityAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLocation" aria-expanded="true" aria-controls="collapseLocation"
+                            [ngClass]="{'collapsed': accordionIndex != 0}" (click)="setAccordionIndex(0)">
+                            <fa-icon [icon]="faLocationDot" class="me-2"></fa-icon>
+                            Location
+                        </button>
+                    </h2>
+                    <div id="collapseLocation" class="accordion-collapse collapse" data-bs-parent="#facilityAccordion"
+                        [ngClass]="{'show': accordionIndex == 0}">
+                        <div class="accordion-body">
+                            <app-location-form [inCompany]="false" [inSetupWizard]="true"></app-location-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseContact" aria-expanded="true" aria-controls="collapseContact"
+                            [ngClass]="{'collapsed': accordionIndex != 1}" (click)="setAccordionIndex(1)">
+                            <fa-icon [icon]="faContactCard" class="me-2"></fa-icon>
+                            Contact Information
+                        </button>
+                    </h2>
+                    <div id="collapseContact" class="accordion-collapse collapse" data-bs-parent="#facilityAccordion"
+                        [ngClass]="{'show': accordionIndex == 1}">
+                        <div class="accordion-body">
+                            <app-primary-contact-form [inCompany]="false"
+                                [inSetupWizard]="true"></app-primary-contact-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseUnits" aria-expanded="true" aria-controls="collapseUnits"
+                            [ngClass]="{'collapsed': accordionIndex != 2}" (click)="setAccordionIndex(2)">
+                            <fa-icon [icon]="faGear" class="me-2"></fa-icon>
+                            Company Units
+                        </button>
+                    </h2>
+                    <div id="collapseUnits" class="accordion-collapse collapse" data-bs-parent="#facilityAccordion"
+                        [ngClass]="{'show': accordionIndex == 2}">
+                        <div class="accordion-body">
+                            <app-units-form [inCompany]="false" [inSetupWizard]="true"></app-units-form>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseAdditionalInformation" aria-expanded="true"
+                            aria-controls="collapseAdditionalInformation" [ngClass]="{'collapsed': accordionIndex != 3}"
+                            (click)="setAccordionIndex(3)">
+                            <fa-icon [icon]="faFilePen" class="me-2"></fa-icon>
+                            Additional Information
+                        </button>
+                    </h2>
+                    <div id="collapseAdditionalInformation" class="accordion-collapse collapse"
+                        data-bs-parent="#facilityAccordion" [ngClass]="{'show': accordionIndex == 3}">
+                        <div class="accordion-body">
+                            <app-additional-details-form [inCompany]="false"
+                                [inSetupWizard]="true"></app-additional-details-form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <div class="d-flex w-100 justify-content-between">
+                <div class="pe-1">
+                    <button class="btn btn-secondary" (click)="goBack()">Go Back</button>
+                </div>
+                <div class="ps-1">
+                    <button class="btn btn-primary" (click)="goToNext()" *ngIf="accordionIndex != 3">Next</button>
+                    <button class="btn btn-primary" (click)="goToProject()" *ngIf="accordionIndex == 3">Setup
+                        Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@ export class FacilityNamePipe implements PipeTransform {
       return _facility.guid == facilityGUID;
     });
     if (facility) {
-      return facility.name;
+      return facility.generalInformation.name;
     }
     return '';
   }

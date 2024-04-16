@@ -7,13 +7,13 @@ import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { BehaviorSubject } from 'rxjs';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { ProjectsListComponent } from './projects-list/projects-list.component';
-import { FacilityDetailsFormComponent } from './facility-details-form/facility-details-form.component';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbProject } from 'src/app/models/project';
 import { FormsModule } from '@angular/forms';
+import { ProjectsTableComponent } from './projects-table/projects-table.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('FacilityDashboardHomeComponent', () => {
   let component: FacilityDashboardHomeComponent;
@@ -31,8 +31,8 @@ describe('FacilityDashboardHomeComponent', () => {
       companies: new BehaviorSubject<Array<IdbCompany>>([])
     }
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HelperPipesModule, FormsModule],
-      declarations: [FacilityDashboardHomeComponent, ProjectsListComponent, FacilityDetailsFormComponent],
+      imports: [RouterTestingModule, HelperPipesModule, FormsModule, FontAwesomeModule],
+      declarations: [FacilityDashboardHomeComponent, ProjectsTableComponent],
       providers: [
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: ProjectIdbService, useValue: projectIdbService },

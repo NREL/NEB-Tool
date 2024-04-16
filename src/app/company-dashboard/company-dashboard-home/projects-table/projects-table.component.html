@@ -1,0 +1,72 @@
+<div class="card">
+    <div class="card-header">
+        <span class="h4">
+            <fa-icon [icon]="faFileLines"></fa-icon>
+            Projects
+        </span>
+        <button class="btn btn-sm btn-success float-end" (click)="openAddNewModal()">
+            <fa-icon [icon]="faWandMagicSparkles"></fa-icon> Project Wizard
+        </button>
+    </div>
+    <div class="card-body">
+
+        <ng-template [ngIf]="(company.guid | projectsList:projects:true).length > 0" [ngIfElse]="noProjectBlock">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="w-25">
+                            Name
+                        </th>
+                        <th class="w-25">
+                            <!-- <fa-icon [icon]="faContactCard"></fa-icon> -->
+                            Facility
+                        </th>
+                        <th class="w-25">
+                            Last Modified
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let project of company.guid | projectsList:projects:true">
+                        <td>
+                            <a [routerLink]="'/project/'+project.guid">
+                                {{project.name}}
+                            </a>
+                        </td>
+                        <td>
+                            {{project.facilityId | facilityName:facilities}}
+                        </td>
+                        <td>
+                            {{project.modifiedDate |date:'short'}}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </ng-template>
+
+        <ng-template #noProjectBlock>
+            <div class="alert alert-info">
+                No projects found. Please click "Add New" to get started.
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+
+<div [ngClass]="{'window-overlay': displayAddNewModal}"></div>
+<div class="popup" [ngClass]="{'open': displayAddNewModal }">
+    <div class="popup-header">Create New Project?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeAddNewModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-info">
+            Would you like to use the project wizard to create a new project for <b>{{company.generalInformation.name}}</b>?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeAddNewModal()">Cancel</button>
+        <button class="btn btn-success" (click)="confirmCreate()">Create Project</button>
+    </div>
+</div>

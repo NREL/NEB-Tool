@@ -1,0 +1,67 @@
+<div class="offcanvas offcanvas-start" tabindex="-1" [ngClass]="{'show': sidebarOpen}">
+    <div class="offcanvas-header">
+        <!-- <h5 class="offcanvas-title" id="offcanvasNavbarLabel">NEB Tool</h5> -->
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+            (click)="hideSidebar()"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+            <button class="btn btn-outline-success" [routerLink]="'/setup-wizard'" [routerLinkActive]="['active']">
+                <fa-icon [icon]="faWandMagicSparkles"></fa-icon>
+                Project Wizard
+            </button>
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="'/user'" [routerLinkActive]="['active']">
+                    <fa-icon [icon]="faFolderOpen"></fa-icon>
+                    My Portfolio</a>
+            </li>
+            <hr>
+            <ng-container *ngFor="let company of companies">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="'/company/'+company.guid" [routerLinkActive]="['active']">
+                        <fa-icon class="pe-1" [icon]="faBuilding"></fa-icon>
+                        {{company.generalInformation.name}}
+                    </a>
+                </li>
+
+                <ng-container *ngFor="let facility of company.guid | facilityList:facilities">
+                    <li class="nav-item">
+                        <a class="nav-link facility-link" [routerLink]="'/facility/'+facility.guid"
+                            [routerLinkActive]="['active']">
+                            <fa-icon [icon]="faIndustry" class="pe-1"></fa-icon>
+                            {{facility.generalInformation.name}}</a>
+                    </li>
+
+                    <ng-container *ngFor="let project of (facility.guid | projectsList:projects)">
+                        <li class="nav-item">
+                            <a class="nav-link project-link" [routerLink]="'/project/'+project.guid"
+                                [routerLinkActive]="['active']">
+                                <fa-icon [icon]="faFileLines" class="pe-1"></fa-icon>
+                                {{project.name}}</a>
+                        </li>
+                    </ng-container>
+
+                </ng-container>
+                <hr>
+            </ng-container>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <fa-icon [icon]="faQuestionCircle" class="pe-1"></fa-icon>Help</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <fa-icon [icon]="faCircleInfo" class="pe-1"></fa-icon>About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <fa-icon [icon]="faInbox" class="pe-1"></fa-icon>Feedback</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">
+                    <fa-icon [icon]="faTrophy" class="pe-1"></fa-icon>Acknowledgments</a>
+            </li>
+        </ul>
+    </div>
+</div>

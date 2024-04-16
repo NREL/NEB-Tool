@@ -41,9 +41,10 @@ export class CompanyIdbService {
     return this.dbService.update('company', company);
   }
 
-  setSelectedFromGUID(guid: string) {
+  setSelectedFromGUID(guid: string): boolean {
     let company: IdbCompany = this.getByGUID(guid);
     this.selectedCompany.next(company);
+    return company != undefined;
   }
 
   async asyncUpdate(company: IdbCompany) {

@@ -6,7 +6,6 @@ import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 import { BehaviorSubject } from 'rxjs';
-import { ProjectDetailsFormComponent } from './project-details-form/project-details-form.component';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
@@ -33,7 +32,7 @@ describe('ProjectDashboardHomeComponent', () => {
     };
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HelperPipesModule, FormsModule],
-      declarations: [ProjectDashboardHomeComponent, ProjectDetailsFormComponent],
+      declarations: [ProjectDashboardHomeComponent],
       providers: [
         { provide: ProjectIdbService, useValue: projectIdbService },
         { provide: DbChangesService, useValue: dbChangesService },

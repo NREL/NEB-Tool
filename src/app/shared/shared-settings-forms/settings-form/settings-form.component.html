@@ -1,0 +1,89 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form">
+            <!-- <div class="row">
+                <div class="col-12"> -->
+            <label for="name">{{nameLabel}} Name</label>
+            <input type="text" class="form-control" formControlName="name" (input)="saveChanges()" minlength="1"
+                maxlength="42" id="name">
+            <!-- </div>
+            </div> -->
+        </form>
+    </div>
+</div>
+<div class="accordion" id="locationAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLocation"
+                aria-expanded="true" aria-controls="collapseLocation" [ngClass]="{'collapsed': !locationAccordionOpen}"
+                (click)="toggleLocation()">
+                <fa-icon [icon]="faLocationDot" class="me-2"></fa-icon>
+                Location
+            </button>
+        </h2>
+        <div id="collapseLocation" class="accordion-collapse collapse" data-bs-parent="#locationAccordion"
+            [ngClass]="{'show': locationAccordionOpen}">
+            <div class="accordion-body">
+                <app-location-form [inCompany]="inCompany" [inSetupWizard]="false"></app-location-form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="accordion" id="contactAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContact"
+                aria-expanded="true" aria-controls="collapseContact"
+                [ngClass]="{'collapsed': !primaryContactAccordionOpen}" (click)="toggleContact()">
+                <fa-icon [icon]="faContactCard" class="me-2"></fa-icon>
+                Contact Information
+            </button>
+        </h2>
+        <div id="collapseContact" class="accordion-collapse collapse" data-bs-parent="#contactAccordion"
+            [ngClass]="{'show': primaryContactAccordionOpen}">
+            <div class="accordion-body">
+                <app-primary-contact-form [inCompany]="inCompany" [inSetupWizard]="false"></app-primary-contact-form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="accordion" id="unitsAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUnits"
+                aria-expanded="true" aria-controls="collapseUnits" [ngClass]="{'collapsed': !unitsAccordionOpen}"
+                (click)="toggleUnits()">
+                <fa-icon [icon]="faGear" class="me-2"></fa-icon>
+                Company Units
+            </button>
+        </h2>
+        <div id="collapseUnits" class="accordion-collapse collapse" data-bs-parent="#unitsAccordion"
+            [ngClass]="{'show': unitsAccordionOpen}">
+            <div class="accordion-body">
+                <app-units-form [inCompany]="inCompany" [inSetupWizard]="false"></app-units-form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="accordion" id="addtionalInformationAccordion">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseAdditionalInformation" aria-expanded="true"
+                aria-controls="collapseAdditionalInformation" [ngClass]="{'collapsed': !additionalDetailsAccordionOpen}"
+                (click)="toggleAdditionalInformation()">
+                <fa-icon [icon]="faFilePen" class="me-2"></fa-icon>
+                Additional Information
+            </button>
+        </h2>
+        <div id="collapseAdditionalInformation" class="accordion-collapse collapse"
+            data-bs-parent="#addtionalInformationAccordion" [ngClass]="{'show': additionalDetailsAccordionOpen}">
+            <div class="accordion-body">
+                <app-additional-details-form [inCompany]="inCompany"
+                    [inSetupWizard]="false"></app-additional-details-form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { FacilitySettingsComponent } from './facility-settings.component';
+import { ManageFacilityComponent } from './manage-facility/manage-facility.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/shared-settings-forms.module';
+import { FormsModule } from '@angular/forms';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
+import { BehaviorSubject } from 'rxjs';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+
+describe('FacilitySettingsComponent', () => {
+  let component: FacilitySettingsComponent;
+  let fixture: ComponentFixture<FacilitySettingsComponent>;
+  let companyIdbService: Partial<CompanyIdbService> = {
+    companies: new BehaviorSubject<Array<IdbCompany>>([]),
+    selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
+  };
+  let facilityIdbService: Partial<FacilityIdbService> = {
+    facilities: new BehaviorSubject<Array<IdbFacility>>([]),
+    selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
+      declarations: [FacilitySettingsComponent, ManageFacilityComponent],
+      providers: [
+        { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: FacilityIdbService, useValue: facilityIdbService },
+        { provide: LocalStorageDataService, useValue: {}},
+        { provide: DbChangesService, useValue: {}}
+      ]
+    })
+    .compileComponents();
+    
+    fixture = TestBed.createComponent(FacilitySettingsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

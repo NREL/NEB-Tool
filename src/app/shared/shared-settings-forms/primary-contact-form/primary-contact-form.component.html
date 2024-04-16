@@ -1,0 +1,24 @@
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <label for="contactName">Name</label>
+            <input type="text" class="form-control" formControlName="contactName" (input)="saveChanges()" minlength="1"
+                maxlength="60" id="contactName" name="contactName">
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <label for="contactRole">Role</label>
+            <input type="text" class="form-control" formControlName="contactRole" (input)="saveChanges()" minlength="1"
+                maxlength="60" id="contactRole" name="contactRole">
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <label for="phone">Phone</label>
+            <input type="tel" class="form-control" formControlName="contactPhone" (input)="saveChanges()" minlength="1"
+                maxlength="10" id="phone" name="phone">
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" formControlName="contactEmail" (input)="saveChanges()"
+                minlength="1" maxlength="85" id="email" name="email">
+        </div>
+    </div>
+</form>

@@ -41,10 +41,11 @@ export class ProjectIdbService {
     return this.dbService.update('project', project);
   } 
 
-  setSelectedFromGUID(guid: string) {
+  setSelectedFromGUID(guid: string): boolean {
     let projects: Array<IdbProject> = this.projects.getValue();
     let project: IdbProject = projects.find(_project => { return _project.guid == guid });
     this.selectedProject.next(project);
+    return project != undefined;
   }
 
   async asyncUpdate(project: IdbProject) {

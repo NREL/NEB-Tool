@@ -1,0 +1,42 @@
+<div class="d-flex w-100 justify-content-center mt-3">
+    <div class="card col-6">
+        <div class="card-header text-center">
+            <h5 class="card-title mb-0">Getting Started</h5>
+        </div>
+        <div class="d-flex">
+            <div class="card-body">
+                <p class="card-text text-center">This is the project creation wizard. From here you will work through
+                    the steps to
+                    create a new project and find the Non-energy Benefits that come with that project.</p>
+                <ng-template [ngIf]="companies.length > 0">
+                    <hr>
+                    <form>
+                        <label for="selectedCompany" class="form-label">Select Company</label>
+                        <select id="selectedCompany" name="selectedCompany" class="form-select"
+                            [(ngModel)]="selectedCompanyGuid" (change)="setSelectedCompany()">
+                            <option [ngValue]="undefined">Setup New Company</option>
+                            <optgroup label="Existing Companies">
+                                <option *ngFor="let company of companies" [ngValue]="company.guid">
+                                    {{company.generalInformation.name}}</option>
+                            </optgroup>
+                        </select>
+                        <ng-container *ngIf="selectedCompanyGuid">
+                            <label for="selectedFacility" class="form-label">Select Facility</label>
+                            <select id="selectedFacility" name="selectedFacility" class="form-select"
+                                [(ngModel)]="selectedFacilityGuid" (change)="setSelectedFacility()">
+                                <option [ngValue]="undefined">Setup New Facility</option>
+                                <optgroup label="Existing Facilities">
+                                    <option *ngFor="let facility of selectedCompanyGuid | facilityList:facilities"
+                                        [ngValue]="facility.guid">{{facility.generalInformation.name}}</option>
+                                </optgroup>
+                            </select>
+                        </ng-container>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <button class="btn btn-primary" (click)="createNewProject()">Begin New Project</button>
+        </div>
+    </div>
+</div>

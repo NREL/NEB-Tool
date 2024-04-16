@@ -3,23 +3,37 @@ import { CommonModule } from '@angular/common';
 import { CompanyDashboardComponent } from './company-dashboard.component';
 import { CompanyDashboardHomeComponent } from './company-dashboard-home/company-dashboard-home.component';
 import { RouterModule } from '@angular/router';
-import { FacilitiesListComponent } from './company-dashboard-home/facilities-list/facilities-list.component';
-import { CompanyDetailsFormComponent } from './company-dashboard-home/company-details-form/company-details-form.component';
 import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
+import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CompanyGoalsComponent } from './company-goals/company-goals.component';
+import { CompanyDashboardTabsComponent } from './company-dashboard-tabs/company-dashboard-tabs.component';
+import { CompanyReportsComponent } from './company-reports/company-reports.component';
+import { CompanySettingsComponent } from './company-settings/company-settings.component';
+import { ProjectsTableComponent } from './company-dashboard-home/projects-table/projects-table.component';
+import { FacilitiesTableComponent } from './company-dashboard-home/facilities-table/facilities-table.component';
+import { ManageCompanyComponent } from './company-settings/manage-company/manage-company.component';
 
 @NgModule({
   declarations: [
     CompanyDashboardComponent,
     CompanyDashboardHomeComponent,
-    FacilitiesListComponent,
-    CompanyDetailsFormComponent
+    CompanyGoalsComponent,
+    CompanyDashboardTabsComponent,
+    CompanyReportsComponent,
+    CompanySettingsComponent,
+    ProjectsTableComponent,
+    FacilitiesTableComponent,
+    ManageCompanyComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
-    HelperPipesModule
+    HelperPipesModule,
+    SharedSettingsFormsModule,
+    FontAwesomeModule
   ]
 })
 export class CompanyDashboardModule { }

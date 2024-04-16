@@ -10,9 +10,14 @@ import { UserDashboardModule } from './user-dashboard/user-dashboard.module';
 import { CompanyDashboardModule } from './company-dashboard/company-dashboard.module';
 import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard.module';
 import { ProjectDashboardModule } from './project-dashboard/project-dashboard.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IndexedDbModule } from './indexed-db/indexed-db.module';
 import { LoadingComponent } from './core-components/loading/loading.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { FormsModule } from '@angular/forms';
+import { SetupWizardModule } from './setup-wizard/setup-wizard.module';
+import { SidebarComponent } from './core-components/sidebar/sidebar.component';
+import { HelperPipesModule } from './shared/helper-pipes/helper-pipes.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,8 @@ import { LoadingComponent } from './core-components/loading/loading.component';
     NavbarComponent,
     WelcomeComponent,
     PageNotFoundComponent,
-    LoadingComponent
+    LoadingComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -29,8 +35,12 @@ import { LoadingComponent } from './core-components/loading/loading.component';
     CompanyDashboardModule,
     FacilityDashboardModule,
     ProjectDashboardModule,
+    IndexedDbModule,
     FontAwesomeModule,
-    IndexedDbModule
+    NgxWebstorageModule.forRoot(),
+    FormsModule,
+    SetupWizardModule,
+    HelperPipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

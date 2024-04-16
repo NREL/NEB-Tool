@@ -1,0 +1,25 @@
+.nav-link{
+    padding-left: .5em;
+}
+
+.nav-link.facility-link{
+    padding-left: 1rem;
+}
+
+.nav-link.project-link{
+    padding-left: 1.75rem;
+}
+
+hr{
+    margin: .2rem 0;
+}
+
+.nav-link.active{
+    background-color: #0079c2;
+    color: white;
+}
+
+.nav-link:hover{
+    background-color: #8DABBE;
+    color: black;
+}

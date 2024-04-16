@@ -1,32 +1,14 @@
-<div class="row justify-content-center pt-3">
-    <div class="col-lg-8 col-sm-12">
-        <div class="d-flex justify-content-between">
-            <div class="d-flex">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="'/user'">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a [routerLink]="'/user/company/'+selectedFacility.companyId">
-                                {{selectedFacility.companyId | companyName:companies}}</a></li>
-                        <li class="breadcrumb-item active">{{selectedFacility.name}}</li>
-                    </ol>
-                </nav>
+<div class="row justify-content-center">
+    <div class="col-md-12 col-lg-9 pt-4 pb-2">
+        <nav class="navbar border-bottom">
+            <h4 class="mb-0">{{selectedFacility.generalInformation.name}}</h4>
+            <div class="float-end">
+                <button class="btn btn-secondary btn-sm">Import</button>
+                <button class="btn btn-secondary btn-sm ms-2">Export</button>
             </div>
-            <div class="d-flex">
-                <div class="m-1">
-                    <button class="btn btn-sm btn-primary" (click)="addProject()">Add Project</button>
-                </div>
-                <div class="m-1">
-                    <button class="btn btn-sm btn-danger" (click)="deleteFacility()">Delete Facility</button>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-8">
-                <app-projects-list></app-projects-list>
-            </div>
-            <div class="col-4">
-                <app-facility-details-form></app-facility-details-form>
-            </div>
-        </div>
+        </nav>
+    </div>
+    <div class="col-md-12 col-lg-9">
+        <app-projects-table></app-projects-table>
     </div>
 </div>

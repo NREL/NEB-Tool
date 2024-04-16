@@ -1,0 +1,15 @@
+<div class="row justify-content-center">
+    <div class="col-md-12 col-lg-9 mt-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <label for="selectedProjectName">Name</label>
+                    <input type="text" id="selectedProjectName" name="selectedProjectName" class="form-control" [(ngModel)]="selectedProject.name" (input)="saveChanges()"
+                        onfocus="this.select();" minlength="1" maxlength="42" required>
+                </form>
+            </div>
+        </div>
+        <app-manage-project></app-manage-project>
+    </div>
+
+</div>

@@ -10,6 +10,22 @@ import { FacilityDashboardComponent } from './facility-dashboard/facility-dashbo
 import { FacilityDashboardHomeComponent } from './facility-dashboard/facility-dashboard-home/facility-dashboard-home.component';
 import { ProjectDashboardComponent } from './project-dashboard/project-dashboard.component';
 import { ProjectDashboardHomeComponent } from './project-dashboard/project-dashboard-home/project-dashboard-home.component';
+import { SetupWizardComponent } from './setup-wizard/setup-wizard.component';
+import { GettingStartedComponent } from './setup-wizard/getting-started/getting-started.component';
+import { CompanySetupComponent } from './setup-wizard/company-setup/company-setup.component';
+import { FacilitySetupComponent } from './setup-wizard/facility-setup/facility-setup.component';
+import { ProjectSetupComponent } from './setup-wizard/project-setup/project-setup.component';
+import { UserSettingsComponent } from './user-dashboard/user-settings/user-settings.component';
+import { CompanySettingsComponent } from './company-dashboard/company-settings/company-settings.component';
+import { CompanyReportsComponent } from './company-dashboard/company-reports/company-reports.component';
+import { FacilitySettingsComponent } from './facility-dashboard/facility-settings/facility-settings.component';
+import { FacilityReportsComponent } from './facility-dashboard/facility-reports/facility-reports.component';
+import { ProjectReportComponent } from './project-dashboard/project-report/project-report.component';
+import { ProjectSettingsComponent } from './project-dashboard/project-settings/project-settings.component';
+import { UserDashboardHelpComponent } from './user-dashboard/user-dashboard-help/user-dashboard-help.component';
+import { ExploreNEBsComponent } from './user-dashboard/explore-nebs/explore-nebs.component';
+import { CompanyGoalsComponent } from './company-dashboard/company-goals/company-goals.component';
+import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/facility-goals.component';
 
 const routes: Routes = [
   {
@@ -22,45 +38,173 @@ const routes: Routes = [
     component: WelcomeComponent
   },
   {
+    path: 'setup-wizard',
+    component: SetupWizardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'getting-started'
+      },
+      {
+        path: 'getting-started',
+        component: GettingStartedComponent
+      },
+      {
+        path: 'company-setup',
+        component: CompanySetupComponent
+      },
+      {
+        path: 'facility-setup',
+        component: FacilitySetupComponent
+      },
+      {
+        path: 'project-setup',
+        component: ProjectSetupComponent
+      }
+    ]
+  },
+  {
     path: 'user',
     component: UserDashboardComponent,
     children: [
       {
         path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
         component: UserDashboardHomeComponent
       },
       {
-        path: 'company/:id',
-        component: CompanyDashboardComponent,
-        children: [
-          {
-            path: '',
-            component: CompanyDashboardHomeComponent
-          },
-          {
-            path: 'facility/:id',
-            component: FacilityDashboardComponent,
-            children: [
-              {
-                path: '',
-                component: FacilityDashboardHomeComponent
-              },
-              {
-                path: 'project/:id',
-                component: ProjectDashboardComponent,
-                children: [
-                  {
-                    path: '',
-                    component: ProjectDashboardHomeComponent
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+        path: 'settings',
+        component: UserSettingsComponent
+      },
+      {
+        path: 'help',
+        component: UserDashboardHelpComponent
+      },
+      {
+        path: 'nebs-database',
+        component: ExploreNEBsComponent
       }
     ]
   },
+  {
+    path: 'company/:id',
+    component: CompanyDashboardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: CompanyDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: CompanySettingsComponent
+      },
+      {
+        path: 'reports',
+        component: CompanyReportsComponent
+      },
+      {
+        path: 'goals',
+        component: CompanyGoalsComponent
+      }
+    ]
+  },
+  {
+    path: 'facility/:id',
+    component: FacilityDashboardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: FacilityDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: FacilitySettingsComponent
+      },
+      {
+        path: 'reports',
+        component: FacilityReportsComponent
+      },
+      {
+        path: 'goals',
+        component: FacilityGoalsComponent
+      }
+    ]
+  },
+  {
+    path: 'project/:id',
+    component: ProjectDashboardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: ProjectDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: ProjectSettingsComponent
+      },
+      {
+        path: 'reports',
+        component: ProjectReportComponent
+      },
+    ]
+  },
+  // children: [
+  //   {
+  //     path: '',
+  //     component: UserDashboardHomeComponent
+  //   },
+  //   {
+  //     path: 'company/:id',
+  //     component: CompanyDashboardComponent,
+  //     children: [
+  //       {
+  //         path: '',
+  //         component: CompanyDashboardHomeComponent
+  //       },
+  //       {
+  //         path: 'facility/:id',
+  //         component: FacilityDashboardComponent,
+  //         children: [
+  //           {
+  //             path: '',
+  //             component: FacilityDashboardHomeComponent
+  //           },
+  //           {
+  //             path: 'project/:id',
+  //             component: ProjectDashboardComponent,
+  //             children: [
+  //               {
+  //                 path: '',
+  //                 component: ProjectDashboardHomeComponent
+  //               }
+  //             ]
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ]
+  // },
   //wildcard/page not found needs to be last route
   //triggered after entire route tree is checked
   { path: "**", component: PageNotFoundComponent },

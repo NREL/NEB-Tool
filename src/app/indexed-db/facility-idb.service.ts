@@ -42,9 +42,10 @@ export class FacilityIdbService {
     return this.dbService.update('facility', facility);
   }
   
-  setSelectedFromGUID(guid: string) {
+  setSelectedFromGUID(guid: string): boolean {
     let facility: IdbFacility = this.getByGUID(guid);
     this.selectedFacility.next(facility);
+    return facility != undefined;
   }
 
   async asyncUpdate(facility: IdbFacility) {
