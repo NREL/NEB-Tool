@@ -21,6 +21,7 @@ export class ProjectSetupFormComponent {
   projects: Array<IdbProject>;
 
   projectTypes: Array<ProjectType> = FanProjects;
+  displayDeleteModal: boolean = false;
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private setupWizardService: SetupWizardService) {
@@ -39,7 +40,7 @@ export class ProjectSetupFormComponent {
 
   deleteProject() {
     this.projects = this.projects.filter(_project => {
-      return _project.guid == this.project.guid
+      return _project.guid != this.project.guid
     });
     this.setupWizardService.projects.next(this.projects);
     this.goToProjectList();
@@ -54,5 +55,13 @@ export class ProjectSetupFormComponent {
 
   goToProjectList(){
     this.router.navigateByUrl('/setup-wizard/project-setup/projects');
+  }
+
+  showDeleteModal(){
+    this.displayDeleteModal = true;
+  }
+
+  closeDeleteModal(){
+    this.displayDeleteModal = false;
   }
 }

@@ -7,8 +7,10 @@ export interface IdbAssessment extends IdbEntry {
     facilityId: string,
     companyId: string,
     energySystem: EnergySystem,
-    consumption: number,
-    cost: number
+    energyUse: number,
+    cost: number,
+    energySavings: number,
+    costSavings: number
 }
 
 export function getNewIdbAssessment(userId: string, companyId: string, facilityId: string): IdbAssessment {
@@ -20,7 +22,9 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         companyId: companyId,
         facilityId: facilityId,
         energySystem: undefined,
-        consumption: undefined,
-        cost: undefined
+        energyUse: undefined,
+        cost: undefined,
+        energySavings: undefined,
+        costSavings: undefined
     }
 }

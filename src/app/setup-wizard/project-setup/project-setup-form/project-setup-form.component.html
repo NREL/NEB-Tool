@@ -28,18 +28,37 @@
                     <div class="col-12">
                         <label for="implementationCost">Implementation Cost</label>
                         <div class="input-group">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" [(ngModel)]="project.hasImplementationCost"
+                                    id="hasImplementationCost" name="hasImplementationCost" type="checkbox" value="">
+                            </div>
+                            <input [disabled]="!project.hasImplementationCost" name="implementationCost" type="number"
+                                class="form-control" [(ngModel)]="project.implementationCost" id="implementationCost">
                             <span class="input-group-text">&dollar;</span>
-                            <input name="implementationCost" type="number" class="form-control"
-                                [(ngModel)]="project.implementationCost" minlength="1" maxlength="42"
-                                id="implementationCost">
                         </div>
                     </div>
                     <div class="col-12">
                         <label for="energySavings">Energy Savings</label>
                         <div class="input-group">
-                            <input name="energySavings" type="number" class="form-control"
-                                [(ngModel)]="project.energySavings" minlength="1" maxlength="42" id="energySavings">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" [(ngModel)]="project.hasEnergySavings"
+                                    type="checkbox" value="" id="hasEnergySavings" name="hasEnergySavings">
+                            </div>
+                            <input [disabled]="!project.hasEnergySavings" name="energySavings" type="number"
+                                class="form-control" [(ngModel)]="project.energySavings" id="energySavings">
                             <span class="input-group-text">MMBtu/yr</span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="costSavings">Cost Savings</label>
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" [(ngModel)]="project.hasCostSavings"
+                                    id="hasCostSavings" name="hasCostSavings" type="checkbox" value="">
+                            </div>
+                            <input [disabled]="!project.hasCostSavings" name="costSavings" type="number"
+                                class="form-control" [(ngModel)]="project.costSavings" id="costSavings">
+                            <span class="input-group-text">&dollar;</span>
                         </div>
                     </div>
                     <div class="col-12">
@@ -58,7 +77,7 @@
         <div class="card-footer">
             <div class="d-flex w-100 justify-content-between">
                 <div class="pe-1">
-                    <button class="btn btn-danger" (click)="deleteProject()">
+                    <button class="btn btn-danger" (click)="showDeleteModal()">
                         <fa-icon [icon]="faTrash" class="me-1"></fa-icon>Discard Project</button>
                 </div>
                 <div class="ps-1">
@@ -79,5 +98,24 @@
                 Provide list of NEBs that can be added to the project.
             </div>
         </div>
+    </div>
+</div>
+
+
+<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div class="popup" [ngClass]="{'open': displayDeleteModal }">
+    <div class="popup-header">Discard this project?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-info">
+            Are you sure you want to discard this project?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteProject()"><fa-icon [icon]="faTrash"
+                class="me-1"></fa-icon>Discard Project</button>
     </div>
 </div>
