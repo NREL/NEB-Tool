@@ -34,6 +34,7 @@ import { AssessmentReportComponent } from './assessment-dashboard/assessment-rep
 import { ProjectSetupListComponent } from './setup-wizard/project-setup/project-setup-list/project-setup-list.component';
 import { ProjectSetupFormComponent } from './setup-wizard/project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
+import { CompanyKpiSetupComponent } from './setup-wizard/company-kpi-setup/company-kpi-setup.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: 'company-setup',
         component: CompanySetupComponent
+      },
+      {
+        path: 'company-kpi',
+        component: CompanyKpiSetupComponent
       },
       {
         path: 'facility-setup',

@@ -1,0 +1,67 @@
+<div class="d-flex w-100 justify-content-center mt-3" *ngIf="company">
+    <div class="card col-6">
+        <div class="card-header text-center">
+            <h5 class="card-title mb-0">
+                <fa-icon [icon]="faChartBar" class="me-2"></fa-icon> Company KPI's
+            </h5>
+        </div>
+        <div class="card-body">
+            <ng-template [ngIf]="company.keyPerformanceIndicators.length != 0" [ngIfElse]="noDataBlock">
+
+                <div class="accordion" id="kpiAccordion">
+                    <div class="accordion-item"
+                        *ngFor="let kpi of company.keyPerformanceIndicators; let index = index;">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#'+kpi.kpiOptionValue" aria-expanded="true"
+                                [attr.aria-controls]="'#'+kpi.kpiOptionValue"
+                                [ngClass]="{'collapsed': accordionIndex != index}" (click)="setAccordionIndex(index)">
+                                <span [innerHTML]="kpi.kpiOptionValue | kpiLabel"></span>
+                            </button>
+                        </h2>
+                        <div [id]="'#'+kpi.kpiOptionValue" class="accordion-collapse collapse"
+                            data-bs-parent="#kpiAccordion" [ngClass]="{'show': accordionIndex == index}">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form>
+                                            SOME FORM DATA!
+                                        </form>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr>
+                                    </div>
+                                    <div class="col-12 justify-content-end">
+                                        <button class="btn btn-sm btn-danger" (click)="removeKPI(kpi)">
+                                            <fa-icon [icon]="faTrash"></fa-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #noDataBlock>
+                <div class="alert alert-info">
+                    No KPI's entered for this company. Add KPI's from the list provided.
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="card col-6">
+        <div class="card-header text-center">
+            <h5 class="card-title mb-0">
+                <fa-icon [icon]="faArrowsToDot" class="me-2"></fa-icon> Available KPI's
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action" *ngFor="let option of kpi_Options"
+                    (click)="addKPI(option)">
+                    <span [innerHTML]="option.label"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

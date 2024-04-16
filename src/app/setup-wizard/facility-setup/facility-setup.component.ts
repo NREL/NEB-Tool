@@ -67,7 +67,7 @@ export class FacilitySetupComponent {
     if (this.accordionIndex != 0) {
       this.accordionIndex--;
     } else {
-      this.router.navigateByUrl('/setup-wizard/company-setup');
+      this.router.navigateByUrl('/setup-wizard/company-kpi');
     }
   }
 
