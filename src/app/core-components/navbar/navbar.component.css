@@ -1,3 +1,7 @@
 .bg-primary{
     background-color:#0079c2 !important;
 }
+
+nav.navbar{
+    height: 4rem;
+}

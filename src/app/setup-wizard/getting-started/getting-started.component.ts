@@ -5,7 +5,8 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
-import { SetupWizardService } from '../setup-wizard.service';
+import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
+import { IconDefinition, fa1, fa2, fa3 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-getting-started',
@@ -14,6 +15,9 @@ import { SetupWizardService } from '../setup-wizard.service';
 })
 export class GettingStartedComponent {
 
+  fa1: IconDefinition = fa1;
+  fa2: IconDefinition = fa2;
+  fa3: IconDefinition = fa3;
 
   facilities: Array<IdbFacility>;
   facilitiesSub: Subscription;
@@ -28,11 +32,11 @@ export class GettingStartedComponent {
 
   ngOnInit() {
     let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
-    if(selectedCompany){
+    if (selectedCompany) {
       this.selectedCompanyGuid = selectedCompany.guid;
     }
     let selectedFacility: IdbFacility = this.setupWizardService.facility.getValue();
-    if(selectedFacility){
+    if (selectedFacility) {
       this.selectedFacilityGuid = selectedFacility.guid;
     }
     this.companiesSub = this.companyIdbService.companies.subscribe(_companies => {
@@ -80,6 +84,16 @@ export class GettingStartedComponent {
       return facility.guid == this.selectedFacilityGuid;
     })
     this.setupWizardService.facility.next(selectedFacility);
+  }
 
+  setSetupContext(context: SetupWizardContext) {
+    this.setupWizardService.setupContext.next(context);
+    if (context == 'full' || context == 'preVisit') {
+      this.router.navigateByUrl('/setup-wizard/company-setup');
+    }else if(context == 'onSite'){
+      this.router.navigateByUrl('/setup-wizard/assessment-setup');
+    }else if(context == 'postVisit'){
+      this.router.navigateByUrl('/setup-wizard/project-setup');
+    }
   }
 }

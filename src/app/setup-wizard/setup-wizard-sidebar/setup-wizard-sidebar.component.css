@@ -1,0 +1,40 @@
+.navbar{
+    width: 20rem;
+    background-color: #ffffff;
+}
+
+.nav-item{
+    width: 100%;
+    font-size: large;
+}
+
+.nav-item.section-header{
+    font-size: x-large;
+}
+
+.nav-link{
+    padding-left: 1rem;
+}
+
+.nav-link.secondary-nav{
+    padding-left: 1.5rem;
+}
+
+
+.nav-link.active{
+    background-color: #0079c2;
+    color: white;
+}
+
+.nav-link:hover{
+    background-color: #8DABBE;
+    color: black;
+}
+
+.alert-danger{
+    color: red;
+}
+
+.bold{
+    font-weight: bold;
+}
