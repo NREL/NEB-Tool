@@ -1,66 +1,164 @@
 <div class="d-flex w-100 justify-content-center mt-3" *ngIf="company">
-    <div class="card col-6">
-        <div class="card-header text-center">
-            <h5 class="card-title mb-0">
-                <fa-icon [icon]="faChartBar" class="me-2"></fa-icon> Company KPI's
-            </h5>
-        </div>
-        <div class="card-body">
-            <ng-template [ngIf]="company.keyPerformanceIndicators.length != 0" [ngIfElse]="noDataBlock">
+    <div class="row w-100">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5 class="card-title mb-0">
+                        <fa-icon [icon]="faChartBar" class="me-2"></fa-icon> Company KPI's
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <ng-template [ngIf]="company.keyPerformanceIndicators.length != 0" [ngIfElse]="noDataBlock">
 
-                <div class="accordion" id="kpiAccordion">
-                    <div class="accordion-item"
-                        *ngFor="let kpi of company.keyPerformanceIndicators; let index = index;">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                [attr.data-bs-target]="'#'+kpi.kpiOptionValue" aria-expanded="true"
-                                [attr.aria-controls]="'#'+kpi.kpiOptionValue"
-                                [ngClass]="{'collapsed': accordionIndex != index}" (click)="setAccordionIndex(index)">
-                                <span [innerHTML]="kpi.kpiOptionValue | kpiLabel"></span>
-                            </button>
-                        </h2>
-                        <div [id]="'#'+kpi.kpiOptionValue" class="accordion-collapse collapse"
-                            data-bs-parent="#kpiAccordion" [ngClass]="{'show': accordionIndex == index}">
-                            <div class="accordion-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <form>
-                                            SOME FORM DATA!
-                                        </form>
-                                    </div>
-                                    <div class="col-12">
-                                        <hr>
-                                    </div>
-                                    <div class="col-12 justify-content-end">
-                                        <button class="btn btn-sm btn-danger" (click)="removeKPI(kpi)">
-                                            <fa-icon [icon]="faTrash"></fa-icon>
-                                        </button>
+                        <div class="accordion" id="kpiAccordion">
+                            <div class="accordion-item"
+                                *ngFor="let kpi of company.keyPerformanceIndicators; let index = index;">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        [attr.data-bs-target]="'#'+kpi.kpiOptionValue" aria-expanded="true"
+                                        [attr.aria-controls]="'#'+kpi.kpiOptionValue"
+                                        [ngClass]="{'collapsed': accordionIndex != index}"
+                                        (click)="setAccordionIndex(index)">
+                                        <span [innerHTML]="kpi.kpiOptionValue | kpiLabel"></span>
+                                    </button>
+                                </h2>
+                                <div [id]="'#'+kpi.kpiOptionValue" class="accordion-collapse collapse"
+                                    data-bs-parent="#kpiAccordion" [ngClass]="{'show': accordionIndex == index}">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <form>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-5 col-form-label" for="kpiCategory">KPI
+                                                            Category</label>
+                                                        <div class="col-sm-7">
+                                                            <select [disabled]="true" name="kpiCategory"
+                                                                class="form-select" id="kpiCategory"
+                                                                [(ngModel)]="kpi.category" (change)="saveChanges()">
+                                                                <option *ngFor="let category of kpi_categories"
+                                                                    [ngValue]="category">
+                                                                    {{category}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-5 col-form-label"
+                                                            for="isQualitative">Qualitative
+                                                            or
+                                                            Quantitative?</label>
+                                                        <div class="col-sm-7">
+                                                            <select [disabled]="true" name="isQualitative"
+                                                                class="form-select" id="isQualitative"
+                                                                [(ngModel)]="kpi.isQualitative"
+                                                                (change)="saveChanges()">
+                                                                <option [ngValue]="true">
+                                                                    Qualitative
+                                                                </option>
+                                                                <option [ngValue]="false">
+                                                                    Quantitative
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <ng-container *ngIf="kpi.isQualitative">
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-5 col-form-label"
+                                                                for="units">Units</label>
+                                                            <div class="col-sm-7">
+                                                                <select name="units" class="form-select" id="units"
+                                                                    [(ngModel)]="kpi.units" (change)="saveChanges()">
+                                                                    <option
+                                                                        *ngFor="let unitOption of kpi.kpiOptionValue | kpiUnitOption"
+                                                                        [ngValue]="unitOption">
+                                                                        {{unitOption}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-5 col-form-label"
+                                                                for="baselineUsePerYear">Baseline Use Per Year</label>
+                                                            <div class="col-sm-7">
+                                                                <div class="input-group">
+                                                                    <input name="baselineUsePerYear" type="number"
+                                                                        class="form-control"
+                                                                        [(ngModel)]="kpi.baselineUsePerYear"
+                                                                        id="baselineUsePerYear" (input)="saveChanges()">
+                                                                    <span
+                                                                        class="input-group-text">{{kpi.units}}/yr</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-5 col-form-label"
+                                                                for="costPerUnit">Cost
+                                                                Per
+                                                                Unit</label>
+                                                            <div class="col-sm-7">
+                                                                <div class="input-group">
+                                                                    <input name="costPerUnit" type="number"
+                                                                        class="form-control"
+                                                                        [(ngModel)]="kpi.costPerUnit" id="costPerUnit"
+                                                                        (input)="saveChanges()">
+                                                                    <span class="input-group-text">&dollar;</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </form>
+                                            </div>
+                                            <div class="col-12">
+                                                <hr>
+                                            </div>
+                                            <div class="col-12 text-end">
+                                                <button class="btn btn-sm btn-danger" (click)="removeKPI(kpi)">
+                                                    <fa-icon [icon]="faTrash"></fa-icon>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </ng-template>
+                    <ng-template #noDataBlock>
+                        <div class="alert alert-info">
+                            No KPI's entered for this company. Add KPI's from the list provided.
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5 class="card-title mb-0">
+                        <fa-icon [icon]="faArrowsToDot" class="me-2"></fa-icon> Available KPI's
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action" *ngFor="let option of kpi_Options"
+                            (click)="addKPI(option)">
+                            <span [innerHTML]="option.label"></span>
+                        </a>
                     </div>
                 </div>
-            </ng-template>
-            <ng-template #noDataBlock>
-                <div class="alert alert-info">
-                    No KPI's entered for this company. Add KPI's from the list provided.
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-footer">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div class="pe-1">
+                            <button class="btn btn-secondary" (click)="goBack()">Go Back</button>
+                        </div>
+                        <div class="ps-1">
+                            <button class="btn btn-primary" (click)="goToFacilityDetails()">Facility Details</button>
+                        </div>
+                    </div>
                 </div>
-            </ng-template>
-        </div>
-    </div>
-    <div class="card col-6">
-        <div class="card-header text-center">
-            <h5 class="card-title mb-0">
-                <fa-icon [icon]="faArrowsToDot" class="me-2"></fa-icon> Available KPI's
-            </h5>
-        </div>
-        <div class="card-body">
-            <div class="list-group">
-                <a class="list-group-item list-group-item-action" *ngFor="let option of kpi_Options"
-                    (click)="addKPI(option)">
-                    <span [innerHTML]="option.label"></span>
-                </a>
             </div>
         </div>
     </div>

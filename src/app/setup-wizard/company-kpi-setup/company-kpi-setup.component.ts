@@ -5,7 +5,7 @@ import { SetupWizardService } from '../setup-wizard.service';
 import { IconDefinition, faArrowsToDot, faChartBar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IdbUser } from 'src/app/models/user';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
-import { KPI_Option, KPI_Options, KeyPerformanceIndicator, getKeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
+import { KPI_Category, KPI_Option, KPI_Options, KPI_categories, KeyPerformanceIndicator, getKeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
 
 @Component({
   selector: 'app-company-kpi-setup',
@@ -22,6 +22,7 @@ export class CompanyKpiSetupComponent {
   kpi_Options: Array<KPI_Option>;
 
   company: IdbCompany;
+  kpi_categories: Array<KPI_Category> = KPI_categories;
   constructor(private setupWizardService: SetupWizardService, private router: Router,
     private userIdbService: UserIdbService) {
 
@@ -54,7 +55,7 @@ export class CompanyKpiSetupComponent {
     if (this.accordionIndex != 0) {
       this.accordionIndex--;
     } else {
-      this.router.navigateByUrl('/setup-wizard/getting-started');
+      this.router.navigateByUrl('/setup-wizard/company-details');
     }
   }
 
@@ -67,8 +68,8 @@ export class CompanyKpiSetupComponent {
     this.company.keyPerformanceIndicators.push(newKPI);
     this.setKpiOptions();
   }
-  
-  removeKPI(kpi: KeyPerformanceIndicator){
+
+  removeKPI(kpi: KeyPerformanceIndicator) {
     this.company.keyPerformanceIndicators = this.company.keyPerformanceIndicators.filter(_kpi => {
       return kpi.kpiOptionValue != _kpi.kpiOptionValue;
     });
@@ -76,12 +77,16 @@ export class CompanyKpiSetupComponent {
   }
 
 
-  setKpiOptions(){
+  setKpiOptions() {
     let currentSelections: Array<string> = this.company.keyPerformanceIndicators.map(kpi => {
       return kpi.kpiOptionValue;
     })
     this.kpi_Options = KPI_Options.filter(option => {
       return currentSelections.includes(option.value) == false;
     });
+  }
+
+  goToFacilityDetails() {
+    this.router.navigateByUrl('/setup-wizard/facility-setup');
   }
 }

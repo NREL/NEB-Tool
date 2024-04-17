@@ -16,6 +16,7 @@ import { ProjectSetupListComponent } from './project-setup/project-setup-list/pr
 import { ProjectSetupFormComponent } from './project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './company-kpi-setup/company-kpi-setup.component';
+import { KpiUnitOptionPipe } from './company-kpi-setup/kpi-unit-option.pipe';
 
 
 
@@ -31,7 +32,8 @@ import { CompanyKpiSetupComponent } from './company-kpi-setup/company-kpi-setup.
     ProjectSetupListComponent,
     ProjectSetupFormComponent,
     ReviewSetupComponent,
-    CompanyKpiSetupComponent
+    CompanyKpiSetupComponent,
+    KpiUnitOptionPipe
   ],
   imports: [
     CommonModule,
