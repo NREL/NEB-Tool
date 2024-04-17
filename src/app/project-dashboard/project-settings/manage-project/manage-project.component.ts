@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faPaw, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
@@ -13,7 +13,7 @@ import { IdbProject } from 'src/app/models/project';
 })
 export class ManageProjectComponent {
 
-  faPaw: IconDefinition = faPaw;
+  faPenToSquare: IconDefinition = faPenToSquare;
   faTrash: IconDefinition = faTrash;
 
   accordionOpen: boolean = false;

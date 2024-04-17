@@ -6,6 +6,7 @@ import { ProjectIdbService } from './indexed-db/project-idb.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { IdbUser } from './models/user';
 import { SharedDataService } from './shared/shared-services/shared-data.service';
+import { AssessmentIdbService } from './indexed-db/assessment-idb.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent {
   constructor(private userIdbService: UserIdbService, private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService, private projectIdbService: ProjectIdbService,
     private router: Router,
-    private sharedDataService: SharedDataService) {
+    private sharedDataService: SharedDataService,
+    private assessmentIdbService: AssessmentIdbService) {
   }
 
   async ngOnInit() {
@@ -39,6 +41,9 @@ export class AppComponent {
     //facilities
     await this.facilityIdbService.setFacilities();
     console.log('facilities init..');
+    //assessments 
+    await this.assessmentIdbService.setAssessments();
+    console.log('assessments init..');
     //projects 
     await this.projectIdbService.setProjects();
     console.log('projects init..');

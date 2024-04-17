@@ -9,6 +9,7 @@ import { UserIdbService } from './indexed-db/user-idb.service';
 import { ProjectIdbService } from './indexed-db/project-idb.service';
 import { LoadingComponent } from './core-components/loading/loading.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AssessmentIdbService } from './indexed-db/assessment-idb.service';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -19,7 +20,8 @@ describe('AppComponent', () => {
         { provide: CompanyIdbService, useValue: {} },
         { provide: FacilityIdbService, useValue: {} },
         { provide: UserIdbService, useValue: {} },
-        { provide: ProjectIdbService, useValue: {} }
+        { provide: ProjectIdbService, useValue: {} },
+        { provide: AssessmentIdbService, useValue: {} }
       ]
     })
   });

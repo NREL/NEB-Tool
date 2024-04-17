@@ -11,6 +11,8 @@ import { SharedDataService } from 'src/app/shared/shared-services/shared-data.se
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -26,9 +28,13 @@ describe('SidebarComponent', () => {
     sidebarOpen: new BehaviorSubject<boolean>(true)
   }
   let projectIdbService: Partial<ProjectIdbService> = {
-    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', '')),
+    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', '', '')),
     projects: new BehaviorSubject<Array<IdbProject>>([])
   }
+  let assessmentIdbService: Partial<AssessmentIdbService> = {
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(undefined),
+    assessments: new BehaviorSubject<Array<IdbAssessment>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule],
@@ -38,6 +44,7 @@ describe('SidebarComponent', () => {
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: SharedDataService, useValue: sharedDataService },
         { provide: ProjectIdbService, useValue: projectIdbService },
+        { provide: AssessmentIdbService, useValue: assessmentIdbService },
       ]
     })
     .compileComponents();

@@ -13,6 +13,7 @@ import { UserDashboardTabsComponent } from './user-dashboard-tabs/user-dashboard
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { UserDashboardHelpComponent } from './user-dashboard-help/user-dashboard-help.component';
 import { ExploreNEBsComponent } from './explore-nebs/explore-nebs.component';
+import { AssessmentsTableComponent } from './user-dashboard-home/assessments-table/assessments-table.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ExploreNEBsComponent } from './explore-nebs/explore-nebs.component';
     UserDashboardTabsComponent,
     UserSettingsComponent,
     UserDashboardHelpComponent,
-    ExploreNEBsComponent
+    ExploreNEBsComponent,
+    AssessmentsTableComponent
   ],
   imports: [
     CommonModule,

@@ -14,6 +14,7 @@ import { CompanySettingsComponent } from './company-settings/company-settings.co
 import { ProjectsTableComponent } from './company-dashboard-home/projects-table/projects-table.component';
 import { FacilitiesTableComponent } from './company-dashboard-home/facilities-table/facilities-table.component';
 import { ManageCompanyComponent } from './company-settings/manage-company/manage-company.component';
+import { AssessmentsTableComponent } from './company-dashboard-home/assessments-table/assessments-table.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ManageCompanyComponent } from './company-settings/manage-company/manage
     CompanySettingsComponent,
     ProjectsTableComponent,
     FacilitiesTableComponent,
-    ManageCompanyComponent
+    ManageCompanyComponent,
+    AssessmentsTableComponent
   ],
   imports: [
     CommonModule,

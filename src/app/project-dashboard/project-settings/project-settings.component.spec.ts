@@ -17,7 +17,7 @@ describe('ProjectSettingsComponent', () => {
 
   let projectIdbService: Partial<ProjectIdbService> = {
     projects: new BehaviorSubject<Array<IdbProject>>([]),
-    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', ''))
+    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', '', ''))
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),

@@ -6,11 +6,14 @@ import { IdbProject } from 'src/app/models/project';
 })
 export class ProjectsListPipe implements PipeTransform {
 
-  transform(facilityOrCompanyGUID: string, allProjects: Array<IdbProject>, isCompany?: boolean): Array<IdbProject> {
-    if (!isCompany) {
-      return allProjects.filter(project => { return project.facilityId == facilityOrCompanyGUID });
-    } else {
-      return allProjects.filter(project => { return project.companyId == facilityOrCompanyGUID });
+  transform(contextGUID: string, allProjects: Array<IdbProject>, context: 'company' | 'facility' | 'assessment'): Array<IdbProject> {
+    if (context == 'company') {
+      return allProjects.filter(project => { return project.facilityId == contextGUID });
+    } else if(context == 'facility') {
+      return allProjects.filter(project => { return project.companyId == contextGUID });
+    } else if(context == 'assessment') {
+      return allProjects.filter(project => { return project.assessmentId == contextGUID });
     }
+    return [];
   }
 }

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faBuilding, faChevronDown, faChevronRight, faCircleInfo, faFileLines, faFolder, faFolderOpen, faInbox, faIndustry, faMinusSquare, faPlusSquare, faQuestionCircle, faTrophy, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbProject } from 'src/app/models/project';
@@ -37,15 +39,19 @@ export class SidebarComponent {
   facilities: Array<IdbFacility>;
   facilitiesSub: Subscription;
 
-  projects: Array<IdbProject>;
-  projectsSub: Subscription;
+  // projects: Array<IdbProject>;
+  // projectsSub: Subscription;
+
+  assessments: Array<IdbAssessment>;
+  assessmentsSub: Subscription;
 
 
   sidebarOpen: boolean;
   sidebarOpenSub: Subscription;
   constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService, private projectIdbService: ProjectIdbService,
-    private sharedDataService: SharedDataService) {
+    private sharedDataService: SharedDataService,
+    private assessmentIdbService: AssessmentIdbService) {
   }
 
   ngOnInit() {
@@ -62,20 +68,20 @@ export class SidebarComponent {
       this.facilities = _facilities;
     });
 
-    this.projectsSub = this.projectIdbService.projects.subscribe(_projects => {
-      this.projects = _projects;
+    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
+      this.assessments = _assessments;
     })
   }
 
   ngOnDestroy() {
     this.companiesSub.unsubscribe();
     this.facilitiesSub.unsubscribe();
-    this.projectsSub.unsubscribe();
+    this.assessmentsSub.unsubscribe();
     this.sidebarOpenSub.unsubscribe();
   }
 
 
-  hideSidebar(){
+  hideSidebar() {
     this.sharedDataService.sidebarOpen.next(false);
   }
 }

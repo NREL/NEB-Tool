@@ -1,0 +1,56 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { IdbAssessment } from '../models/assessment';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AssessmentIdbService {
+
+  assessments: BehaviorSubject<Array<IdbAssessment>>;
+  selectedAssessment: BehaviorSubject<IdbAssessment>;
+  constructor(private dbService: NgxIndexedDBService) {
+    this.assessments = new BehaviorSubject<Array<IdbAssessment>>([]);
+    this.selectedAssessment = new BehaviorSubject<IdbAssessment>(undefined);
+  }
+
+  async setAssessments() {
+    let _assessments: Array<IdbAssessment> = await firstValueFrom(this.getAll());
+    this.assessments.next(_assessments);
+  }
+
+  getAll(): Observable<Array<IdbAssessment>> {
+    return this.dbService.getAll('assessment');
+  }
+
+  getById(id: number): Observable<IdbAssessment> {
+    return this.dbService.getByKey('assessment', id);
+  }
+
+  addWithObservable(assessment: IdbAssessment): Observable<IdbAssessment> {
+    return this.dbService.add('assessment', assessment);
+  }
+
+  deleteWithObservable(id: number): Observable<any> {
+    return this.dbService.delete('assessment', id);
+  }
+
+  updateWithObservable(assessment: IdbAssessment): Observable<IdbAssessment> {
+    assessment.modifiedDate = new Date();
+    return this.dbService.update('assessment', assessment);
+  }
+
+  setSelectedFromGUID(guid: string): boolean {
+    let assessments: Array<IdbAssessment> = this.assessments.getValue();
+    let assessment: IdbAssessment = assessments.find(_assessment => { return _assessment.guid == guid });
+    this.selectedAssessment.next(assessment);
+    return assessment != undefined;
+  }
+
+  async asyncUpdate(assessment: IdbAssessment) {
+    assessment = await firstValueFrom(this.updateWithObservable(assessment));
+    await this.setAssessments();
+    this.selectedAssessment.next(assessment);
+  }
+}

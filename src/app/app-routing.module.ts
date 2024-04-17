@@ -26,6 +26,14 @@ import { UserDashboardHelpComponent } from './user-dashboard/user-dashboard-help
 import { ExploreNEBsComponent } from './user-dashboard/explore-nebs/explore-nebs.component';
 import { CompanyGoalsComponent } from './company-dashboard/company-goals/company-goals.component';
 import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/facility-goals.component';
+import { AssessmentDashboardComponent } from './assessment-dashboard/assessment-dashboard.component';
+import { AssessmentSetupComponent } from './setup-wizard/assessment-setup/assessment-setup.component';
+import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessment-dashboard-home/assessment-dashboard-home.component';
+import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
+import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
+import { ProjectSetupListComponent } from './setup-wizard/project-setup/project-setup-list/project-setup-list.component';
+import { ProjectSetupFormComponent } from './setup-wizard/project-setup/project-setup-form/project-setup-form.component';
+import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
 
 const routes: Routes = [
   {
@@ -59,8 +67,31 @@ const routes: Routes = [
         component: FacilitySetupComponent
       },
       {
+        path: 'assessment-setup',
+        component: AssessmentSetupComponent
+      },
+      {
         path: 'project-setup',
-        component: ProjectSetupComponent
+        component: ProjectSetupComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'projects'
+          },
+          {
+            path: 'projects',
+            component: ProjectSetupListComponent
+          },
+          {
+            path: 'edit-project/:id',
+            component: ProjectSetupFormComponent,
+          }
+        ]
+      },
+      {
+        path: 'review-setup',
+        component: ReviewSetupComponent
       }
     ]
   },
@@ -168,43 +199,29 @@ const routes: Routes = [
       },
     ]
   },
-  // children: [
-  //   {
-  //     path: '',
-  //     component: UserDashboardHomeComponent
-  //   },
-  //   {
-  //     path: 'company/:id',
-  //     component: CompanyDashboardComponent,
-  //     children: [
-  //       {
-  //         path: '',
-  //         component: CompanyDashboardHomeComponent
-  //       },
-  //       {
-  //         path: 'facility/:id',
-  //         component: FacilityDashboardComponent,
-  //         children: [
-  //           {
-  //             path: '',
-  //             component: FacilityDashboardHomeComponent
-  //           },
-  //           {
-  //             path: 'project/:id',
-  //             component: ProjectDashboardComponent,
-  //             children: [
-  //               {
-  //                 path: '',
-  //                 component: ProjectDashboardHomeComponent
-  //               }
-  //             ]
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ]
-  // },
+  {
+    path: 'assessment/:id',
+    component: AssessmentDashboardComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        component: AssessmentDashboardHomeComponent
+      },
+      {
+        path: 'settings',
+        component: AssessmentSettingsComponent
+      },
+      {
+        path: 'reports',
+        component: AssessmentReportComponent
+      },
+    ]
+  },
   //wildcard/page not found needs to be last route
   //triggered after entire route tree is checked
   { path: "**", component: PageNotFoundComponent },

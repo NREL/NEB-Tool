@@ -25,7 +25,7 @@
                             Contact
                         </th>
                         <th>
-                            Projects
+                            Assessments
                         </th>
                         <th class="w-25">
                             Last Modified
@@ -46,7 +46,7 @@
                             {{company.generalInformation.contactName}}
                         </td>
                         <td>
-                            {{(company.guid | projectsList: projects :true).length}}
+                            {{(company.guid | assessmentsList: assessments :true).length}}
                         </td>
                         <td>
                             {{company.modifiedDate | date:'short'}}

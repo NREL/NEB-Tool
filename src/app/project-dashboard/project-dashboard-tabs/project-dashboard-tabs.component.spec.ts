@@ -13,7 +13,7 @@ describe('ProjectDashboardTabsComponent', () => {
 
   let projectIdbService: Partial<ProjectIdbService> = {
     projects: new BehaviorSubject<Array<IdbProject>>([]),
-    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', ''))
+    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', '', ''))
   }
   beforeEach(async () => {
     await TestBed.configureTestingModule({

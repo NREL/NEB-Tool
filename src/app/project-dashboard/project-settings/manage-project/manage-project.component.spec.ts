@@ -12,7 +12,7 @@ describe('ManageProjectComponent', () => {
   let fixture: ComponentFixture<ManageProjectComponent>;
 
   let projectIdbService: Partial<ProjectIdbService> = {
-    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', '')),
+    selectedProject: new BehaviorSubject<IdbProject>(getNewIdbProject('', '', '', '')),
     projects: new BehaviorSubject<Array<IdbProject>>([])
   }
   beforeEach(async () => {
