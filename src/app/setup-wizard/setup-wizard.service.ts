@@ -14,10 +14,17 @@ export class SetupWizardService {
   facility: BehaviorSubject<IdbFacility>;
   projects: BehaviorSubject<Array<IdbProject>>;
   assessment: BehaviorSubject<IdbAssessment>;
+
+  setupContext: BehaviorSubject<SetupWizardContext>;
+
   constructor() { 
     this.company = new BehaviorSubject<IdbCompany>(undefined);
     this.facility = new BehaviorSubject<IdbFacility>(undefined);
     this.projects = new BehaviorSubject<Array<IdbProject>>([]);
     this.assessment = new BehaviorSubject<IdbAssessment>(undefined);
+    this.setupContext = new BehaviorSubject<SetupWizardContext>('full');
   }
 }
+
+
+export type SetupWizardContext = 'preVisit' | 'postVisit' | 'onSite' | 'full';

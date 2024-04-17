@@ -15,6 +15,7 @@ import { AssessmentSetupComponent } from './assessment-setup/assessment-setup.co
 import { ProjectSetupListComponent } from './project-setup/project-setup-list/project-setup-list.component';
 import { ProjectSetupFormComponent } from './project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './review-setup/review-setup.component';
+import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
 
 
 
@@ -29,7 +30,8 @@ import { ReviewSetupComponent } from './review-setup/review-setup.component';
     AssessmentSetupComponent,
     ProjectSetupListComponent,
     ProjectSetupFormComponent,
-    ReviewSetupComponent
+    ReviewSetupComponent,
+    SetupWizardSidebarComponent
   ],
   imports: [
     CommonModule,

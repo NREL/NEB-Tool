@@ -1,42 +1,117 @@
-<div class="d-flex w-100 justify-content-center mt-3">
-    <div class="card col-6">
-        <div class="card-header text-center">
-            <h5 class="card-title mb-0">Getting Started</h5>
-        </div>
-        <div class="d-flex">
+<div class="row justify-content-center mt-3">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header text-center">
+                <h5 class="card-title mb-0">Getting Started</h5>
+            </div>
             <div class="card-body">
-                <p class="card-text text-center">This is the project creation wizard. From here you will work through
-                    the steps to
-                    create a new project and find the Non-energy Benefits that come with that project.</p>
-                <ng-template [ngIf]="companies.length > 0">
-                    <hr>
-                    <form>
-                        <label for="selectedCompany" class="form-label">Select Company</label>
-                        <select id="selectedCompany" name="selectedCompany" class="form-select"
-                            [(ngModel)]="selectedCompanyGuid" (change)="setSelectedCompany()">
-                            <option [ngValue]="undefined">Setup New Company</option>
-                            <optgroup label="Existing Companies">
-                                <option *ngFor="let company of companies" [ngValue]="company.guid">
-                                    {{company.generalInformation.name}}</option>
-                            </optgroup>
-                        </select>
-                        <ng-container *ngIf="selectedCompanyGuid">
-                            <label for="selectedFacility" class="form-label">Select Facility</label>
-                            <select id="selectedFacility" name="selectedFacility" class="form-select"
-                                [(ngModel)]="selectedFacilityGuid" (change)="setSelectedFacility()">
-                                <option [ngValue]="undefined">Setup New Facility</option>
-                                <optgroup label="Existing Facilities">
-                                    <option *ngFor="let facility of selectedCompanyGuid | facilityList:facilities"
-                                        [ngValue]="facility.guid">{{facility.generalInformation.name}}</option>
-                                </optgroup>
-                            </select>
-                        </ng-container>
-                    </form>
-                </ng-template>
+                <p class="card-text text-center">This is the setup wizard. First choose what you would like to setup
+                    with
+                    the help of the wizard. This process has been broken up into three steps but can also be completed in
+                    one
+                    pass. Please choose how you would like to proceed.</p>
             </div>
         </div>
-        <div class="card-footer text-end">
-            <button class="btn btn-primary" (click)="createNewAssessment()">Begin New Project</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0 text-center">
+                    <span class="badge text-bg-primary">
+                        <fa-icon [icon]="fa1"></fa-icon>
+                    </span>
+                    Pre-Visit Company and Facility Setup
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Get to know the company and facility you will be visiting. Input data related to
+                </p>
+            </div>
+            <div class="card-footer text-end">
+                <button class="btn btn-primary" (click)="setSetupContext('preVisit')">
+                    Pre-Visit
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0 text-center">
+                    <span class="badge text-bg-dark">
+                        <fa-icon [icon]="fa2"></fa-icon>
+                    </span>
+                    On-site Assessment
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Input assessment data and identify potential NEBs.
+                </p>
+            </div>
+            <div class="card-footer text-end">
+                <button class="btn btn-dark" (click)="setSetupContext('onSite')">
+                    On-Site
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0 text-center">
+                    <span class="badge text-bg-success">
+                        <fa-icon [icon]="fa3"></fa-icon>
+                    </span>
+                    Post-Visit Evaluation
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Evaluate the results of the assessment and generate reports for decision makers.
+                </p>
+            </div>
+            <div class="card-footer text-end">
+                <button class="btn btn-success" (click)="setSetupContext('postVisit')">
+                    Post-Visit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0 text-center">
+                    <span class="badge text-bg-info">
+                        &mdash;
+                    </span>
+                    Complete All Steps
+                </h5>
+            </div>
+            <div class="card-body">
+                Want to do all the work in a single run? Click here to complete all the steps in one pass. We will save
+                where you left off if needed.
+            </div>
+            <div class="card-footer text-end">
+                <button class="btn btn-info" (click)="setSetupContext('full')">
+                    Full Setup
+                </button>
+            </div>
         </div>
     </div>
 </div>

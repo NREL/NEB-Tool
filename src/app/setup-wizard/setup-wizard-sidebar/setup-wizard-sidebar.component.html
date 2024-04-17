@@ -1,0 +1,106 @@
+<div *ngIf="displaySidebar" class="h-100 navbar d-flex flex-column align-items-start justify-content-start">
+    <ng-container *ngIf="setupContext == 'preVisit' || setupContext == 'full'">
+
+        <div class="ps-1 pe-1 w-100">
+            <div class="p-2 w-100 text-bg-primary">
+                Pre-Visit
+            </div>
+            <div class="nav-item ms-2">
+                <!-- <fa-icon [icon]="faExclamationCircle" class="alert-danger"></fa-icon> -->
+                Company Setup
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" routerLink="company-setup" [routerLinkActive]="['active']">
+                    General Details
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" [routerLinkActive]="['active']">
+                    Key Performance Indicators
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" [routerLinkActive]="['active']">
+                    Team Details
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" [routerLinkActive]="['active']">
+                    Facility Setup
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" routerLink="facility-setup" [routerLinkActive]="['active']">
+                    General Details
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" [routerLinkActive]="['active']">
+                    Process Equipment
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" [routerLinkActive]="['active']">
+                    Pre-Assessment
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" [routerLinkActive]="['active']">
+                    Review Pre-Visit
+                </a>
+            </div>
+        </div>
+        <div class="p-2 w-100">
+            <hr class="my-1">
+        </div>
+    </ng-container>
+    <ng-container *ngIf="setupContext == 'onSite' || setupContext == 'full'">
+        <div class="ps-1 pe-1 w-100">
+            <div class="p-2 w-100 text-bg-dark">
+                On-Site
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" routerLink="assessment-setup" [routerLinkActive]="['active']">
+                    Assessment Details
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" routerLink="project-setup" [routerLinkActive]="['active']">
+                    Potential Projects
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" [routerLinkActive]="['active']">
+                    Preliminary Results
+                </a>
+            </div>
+            <div class="p-2 w-100">
+                <hr class="my-1">
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="setupContext == 'postVisit' || setupContext == 'full'">
+        <div class="ps-1 pe-1 w-100">
+            <div class="p-2 w-100 text-bg-success">
+                Post-Visit
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" [routerLinkActive]="['active']">
+                    Follow-up
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" [routerLinkActive]="['active']">
+                    Results
+                </a>
+            </div>
+            <div class="p-2 w-100">
+                <hr class="my-1">
+            </div>
+        </div>
+    </ng-container>
+    <div class="nav-item">
+        <a class="nav-link bold" routerLink="getting-started" [routerLinkActive]="['active']">Start Over</a>
+    </div>
+</div>
