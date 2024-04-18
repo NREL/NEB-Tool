@@ -7,7 +7,8 @@
             <div class="card-body">
                 <p class="card-text text-center">This is the setup wizard. First choose what you would like to setup
                     with
-                    the help of the wizard. This process has been broken up into three steps but can also be completed in
+                    the help of the wizard. This process has been broken up into three steps but can also be completed
+                    in
                     one
                     pass. Please choose how you would like to proceed.</p>
             </div>
@@ -19,38 +20,44 @@
         <hr>
     </div>
 </div>
-<div class="row mt-3">
-    <div class="col-4">
+<div class="row mt-3 justify-content-center">
+    <div class="col-6">
         <div class="card h-100">
-            <div class="card-header">
-                <h5 class="card-title mb-0 text-center">
-                    <span class="badge text-bg-primary">
+            <div class="card-header text-center">
+                <!-- <h5 class="card-title mb-0 text-center"> -->
+                <button class="btn btn-dark" (click)="setSetupContext('preVisit')">
+                    <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa1"></fa-icon>
                     </span>
                     Pre-Visit Company and Facility Setup
-                </h5>
+                </button>
+                <!-- </h5> -->
             </div>
             <div class="card-body">
                 <p class="card-text">
                     Get to know the company and facility you will be visiting. Input data related to
                 </p>
             </div>
-            <div class="card-footer text-end">
-                <button class="btn btn-primary" (click)="setSetupContext('preVisit')">
+            <!-- <div class="card-footer text-end">
+                <button class="btn btn-dark" (click)="setSetupContext('preVisit')">
                     Pre-Visit
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
-    <div class="col-4">
+</div>
+<div class="row mt-3 justify-content-center">
+    <div class="col-6">
         <div class="card h-100">
-            <div class="card-header">
-                <h5 class="card-title mb-0 text-center">
-                    <span class="badge text-bg-dark">
+            <div class="card-header text-center">
+                <!-- <h5 class="card-title mb-0 text-center"> -->
+                <button class="btn btn-dark" (click)="setSetupContext('onSite')">
+                    <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa2"></fa-icon>
                     </span>
-                    On-site Assessment
-                </h5>
+                    On-Site Assessment
+                </button>
+                <!-- </h5> -->
             </div>
             <div class="card-body">
                 <p class="card-text">
@@ -58,21 +65,23 @@
                 </p>
             </div>
             <div class="card-footer text-end">
-                <button class="btn btn-dark" (click)="setSetupContext('onSite')">
-                    On-Site
-                </button>
             </div>
         </div>
     </div>
-    <div class="col-4">
+</div>
+
+<div class="row mt-3 justify-content-center">
+    <div class="col-6">
         <div class="card h-100">
-            <div class="card-header">
-                <h5 class="card-title mb-0 text-center">
-                    <span class="badge text-bg-success">
+            <div class="card-header text-center">
+                <!-- <h5 class="card-title mb-0 text-center"> -->
+                <button class="btn btn-dark" (click)="setSetupContext('postVisit')">
+                    <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa3"></fa-icon>
                     </span>
                     Post-Visit Evaluation
-                </h5>
+                </button>
+                <!-- </h5> -->
             </div>
             <div class="card-body">
                 <p class="card-text">
@@ -80,9 +89,6 @@
                 </p>
             </div>
             <div class="card-footer text-end">
-                <button class="btn btn-success" (click)="setSetupContext('postVisit')">
-                    Post-Visit
-                </button>
             </div>
         </div>
     </div>
@@ -92,26 +98,28 @@
         <hr>
     </div>
 </div>
-<div class="row">
-    <div class="col-4">
+<div class="row justify-content-center">
+    <div class="col-6">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0 text-center">
-                    <span class="badge text-bg-info">
+            <div class="card-header text-center">
+                <!-- <h5 class="card-title mb-0 text-center"> -->
+                <button class="btn btn-dark" (click)="setSetupContext('full')">
+                    <span class="badge text-bg-secondary">
                         &mdash;
                     </span>
                     Complete All Steps
-                </h5>
+                </button>
+                <!-- </h5> -->
             </div>
             <div class="card-body">
                 Want to do all the work in a single run? Click here to complete all the steps in one pass. We will save
                 where you left off if needed.
             </div>
-            <div class="card-footer text-end">
-                <button class="btn btn-info" (click)="setSetupContext('full')">
+            <!-- <div class="card-footer text-end">
+                <button class="btn btn-dark" (click)="setSetupContext('full')">
                     Full Setup
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

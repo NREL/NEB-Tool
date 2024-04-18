@@ -1,4 +1,4 @@
-<div class="d-flex w-100 justify-content-center mt-3">
+<!-- <div class="d-flex w-100 justify-content-center mt-3">
     <div class="card col-10">
         <div class="card-header text-center">
             <h5 class="card-title mb-0">
@@ -95,4 +95,41 @@
             </div>
         </div>
     </div>
+</div> -->
+
+<div class="company-content">
+    <div class="row justify-content-center h-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="bg-white w-100 shadow p-3">
+                <h5>
+                    <fa-icon [icon]="faBuilding" class="me-2"></fa-icon>Company Details</h5>
+                <hr>
+                <form>
+                    <label class="bold" for="companyName">Company Name</label>
+                    <input name="companyName" type="text" class="form-control" [(ngModel)]="companyName"
+                        (input)="saveChanges()" minlength="1" maxlength="42" id="companyName">
+                </form>
+                <hr>
+                <label class="bold">Location</label>
+                <app-location-form [inCompany]="true" [inSetupWizard]="true"></app-location-form>
+                <hr>
+                <label class="bold">Units</label>
+                <app-units-form [inCompany]="true" [inSetupWizard]="true"></app-units-form>
+                <hr>
+                <label class="bold">Additional Details</label>
+                <app-additional-details-form [inCompany]="true"
+                    [inSetupWizard]="true"></app-additional-details-form>
+            </div>
+        </div>
+    </div>
 </div>
+<nav class="navbar footer shadow">
+    <div class="container-fluid justify-content-end">
+        <!-- <button class="btn btn-primary">
+            Test
+        </button> -->
+        <button class="btn btn-secondary" (click)="goToKpis()">
+            Enter KPI's 
+        </button>
+    </div>
+</nav>

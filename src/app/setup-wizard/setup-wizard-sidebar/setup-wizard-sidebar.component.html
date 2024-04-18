@@ -1,8 +1,8 @@
-<div *ngIf="displaySidebar" class="h-100 navbar d-flex flex-column align-items-start justify-content-start">
+<div *ngIf="displaySidebar" class="h-100 navbar d-flex flex-column align-items-start justify-content-start shadow">
     <ng-container *ngIf="setupContext == 'preVisit' || setupContext == 'full'">
 
         <div class="ps-1 pe-1 w-100">
-            <div class="p-2 w-100 text-bg-primary">
+            <div class="p-2 w-100 text-bg-dark">
                 Pre-Visit
             </div>
             <div class="nav-item ms-2">
@@ -82,7 +82,7 @@
 
     <ng-container *ngIf="setupContext == 'postVisit' || setupContext == 'full'">
         <div class="ps-1 pe-1 w-100">
-            <div class="p-2 w-100 text-bg-success">
+            <div class="p-2 w-100 text-bg-dark">
                 Post-Visit
             </div>
             <div class="nav-item">

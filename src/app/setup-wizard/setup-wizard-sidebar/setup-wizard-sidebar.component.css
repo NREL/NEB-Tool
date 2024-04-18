@@ -1,6 +1,7 @@
 .navbar{
     width: 20rem;
     background-color: #ffffff;
+    overflow-y: auto;
 }
 
 .nav-item{
