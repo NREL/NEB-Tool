@@ -11,7 +11,7 @@
         <div id="collapseThree" class="accordion-collapse collapse show" data-bs-parent="#unitAccoridion"
             [ngClass]="{'show': accordionOpen}">
             <div class="accordion-body"> -->
-                <form [formGroup]="form">
+                <!-- <form [formGroup]="form">
                     <div class="row">
                         <div class="col-12">
                             <label for="unitsOfMeasure">Units of Measure</label>
@@ -69,8 +69,108 @@
                             </select>
                         </div>
                     </div>
-                </form>
+                </form> -->
             <!-- </div>
         </div>
     </div>
 </div> -->
+
+<!--TODO: Proper units setup-->
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-4">
+
+        </div>
+        <div class="col-4">
+            <label>Unit</label>
+        </div>
+        <div class="col-4">
+            <label>Price</label>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label class="col-4 col-form-label" for="electricity">Electricity</label>
+        <div class="col-4">
+            <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
+                <option *ngFor="let energyUnitOption of energyUnitOptions"
+                    [ngValue]="energyUnitOption.value">
+                    <span [innerHTML]="energyUnitOption.display"></span>
+                </option>
+            </select>           
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input class="form-control" type="number">
+                <span class="input-group-text">&dollar;</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label class="col-4 col-form-label" for="naturalGas">Natural Gas</label>
+        <div class="col-4">
+            <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
+                <option *ngFor="let energyUnitOption of energyUnitOptions"
+                    [ngValue]="energyUnitOption.value">
+                    <span [innerHTML]="energyUnitOption.display"></span>
+                </option>
+            </select>           
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input class="form-control" type="number">
+                <span class="input-group-text">&dollar;</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label class="col-4 col-form-label" for="steam">Steam</label>
+        <div class="col-4">
+            <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
+                <option *ngFor="let energyUnitOption of energyUnitOptions"
+                    [ngValue]="energyUnitOption.value">
+                    <span [innerHTML]="energyUnitOption.display"></span>
+                </option>
+            </select>           
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input class="form-control" type="number">
+                <span class="input-group-text">&dollar;</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label class="col-4 col-form-label" for="otherFuels">Other Fuels</label>
+        <div class="col-4">
+            <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
+                <option *ngFor="let energyUnitOption of energyUnitOptions"
+                    [ngValue]="energyUnitOption.value">
+                    <span [innerHTML]="energyUnitOption.display"></span>
+                </option>
+            </select>           
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input class="form-control" type="number">
+                <span class="input-group-text">&dollar;</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <label class="col-4 col-form-label" for="compressedAir">Compressed Air</label>
+        <div class="col-4">
+            <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
+                <option *ngFor="let energyUnitOption of energyUnitOptions"
+                    [ngValue]="energyUnitOption.value">
+                    <span [innerHTML]="energyUnitOption.display"></span>
+                </option>
+            </select>           
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input class="form-control" type="number">
+                <span class="input-group-text">&dollar;</span>
+            </div>
+        </div>
+    </div>
+</form>

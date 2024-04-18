@@ -18,6 +18,7 @@ import { ReviewSetupComponent } from './review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './company-kpi-setup/company-kpi-setup.component';
 import { KpiUnitOptionPipe } from './company-kpi-setup/kpi-unit-option.pipe';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
+import { KpiCategoryClassPipe } from './company-kpi-setup/kpi-category-class.pipe';
 
 
 
@@ -35,7 +36,8 @@ import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard
     ReviewSetupComponent,
     CompanyKpiSetupComponent,
     KpiUnitOptionPipe,
-    SetupWizardSidebarComponent
+    SetupWizardSidebarComponent,
+    KpiCategoryClassPipe
   ],
   imports: [
     CommonModule,

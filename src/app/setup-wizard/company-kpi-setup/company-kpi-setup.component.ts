@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { SetupWizardService } from '../setup-wizard.service';
-import { IconDefinition, faArrowsToDot, faChartBar, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faArrowsToDot, faChartBar, faChevronLeft, faChevronRight, faMagnifyingGlass, faMagnifyingGlassPlus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IdbUser } from 'src/app/models/user';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { KPI_Category, KPI_Option, KPI_Options, KPI_categories, KeyPerformanceIndicator, getKeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
@@ -18,11 +18,16 @@ export class CompanyKpiSetupComponent {
   faChartBar: IconDefinition = faChartBar;
   faArrowsToDot: IconDefinition = faArrowsToDot;
   faTrash: IconDefinition = faTrash;
-
+  faChevronRight: IconDefinition = faChevronRight;
+  faChevronLeft: IconDefinition = faChevronLeft;
+  faMagnifyingGlassPlus: IconDefinition = faMagnifyingGlassPlus;
+  faMagnifyingGlass: IconDefinition = faMagnifyingGlass;
+  faPlus: IconDefinition = faPlus;
   kpi_Options: Array<KPI_Option>;
 
   company: IdbCompany;
   kpi_categories: Array<KPI_Category> = KPI_categories;
+  kpiCategorySearch: KPI_Category | undefined = undefined;
   constructor(private setupWizardService: SetupWizardService, private router: Router,
     private userIdbService: UserIdbService) {
 
@@ -55,7 +60,7 @@ export class CompanyKpiSetupComponent {
     if (this.accordionIndex != 0) {
       this.accordionIndex--;
     } else {
-      this.router.navigateByUrl('/setup-wizard/company-details');
+      this.router.navigateByUrl('/setup-wizard/company-setup');
     }
   }
 

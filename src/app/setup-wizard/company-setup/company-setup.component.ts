@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { SetupWizardService } from '../setup-wizard.service';
-import { IconDefinition, faBuilding, faContactCard, faFilePen, faGear, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { IdbUser } from 'src/app/models/user';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
@@ -21,7 +21,7 @@ export class CompanySetupComponent {
   faContactCard: IconDefinition = faContactCard;
   faLocationDot: IconDefinition = faLocationDot;
   faBuilding: IconDefinition = faBuilding;
-
+  faChevronRight: IconDefinition = faChevronRight;
 
   constructor(private setupWizardService: SetupWizardService, private router: Router,
     private userIdbService: UserIdbService) {
