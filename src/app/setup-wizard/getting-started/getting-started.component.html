@@ -15,8 +15,8 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
+<div class="row justify-content-center">
+    <div class="col-6">
         <hr>
     </div>
 </div>
@@ -24,25 +24,18 @@
     <div class="col-6">
         <div class="card h-100">
             <div class="card-header text-center">
-                <!-- <h5 class="card-title mb-0 text-center"> -->
                 <button class="btn btn-dark" (click)="setSetupContext('preVisit')">
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa1"></fa-icon>
                     </span>
                     Pre-Visit Company and Facility Setup
                 </button>
-                <!-- </h5> -->
             </div>
             <div class="card-body">
                 <p class="card-text">
                     Get to know the company and facility you will be visiting. Input data related to
                 </p>
             </div>
-            <!-- <div class="card-footer text-end">
-                <button class="btn btn-dark" (click)="setSetupContext('preVisit')">
-                    Pre-Visit
-                </button>
-            </div> -->
         </div>
     </div>
 </div>
@@ -50,21 +43,17 @@
     <div class="col-6">
         <div class="card h-100">
             <div class="card-header text-center">
-                <!-- <h5 class="card-title mb-0 text-center"> -->
                 <button class="btn btn-dark" (click)="setSetupContext('onSite')">
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa2"></fa-icon>
                     </span>
                     On-Site Assessment
                 </button>
-                <!-- </h5> -->
             </div>
             <div class="card-body">
                 <p class="card-text">
                     Input assessment data and identify potential NEBs.
                 </p>
-            </div>
-            <div class="card-footer text-end">
             </div>
         </div>
     </div>
@@ -74,27 +63,23 @@
     <div class="col-6">
         <div class="card h-100">
             <div class="card-header text-center">
-                <!-- <h5 class="card-title mb-0 text-center"> -->
                 <button class="btn btn-dark" (click)="setSetupContext('postVisit')">
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa3"></fa-icon>
                     </span>
                     Post-Visit Evaluation
                 </button>
-                <!-- </h5> -->
             </div>
             <div class="card-body">
                 <p class="card-text">
                     Evaluate the results of the assessment and generate reports for decision makers.
                 </p>
             </div>
-            <div class="card-footer text-end">
-            </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
+<div class="row justify-content-center">
+    <div class="col-6">
         <hr>
     </div>
 </div>
@@ -102,24 +87,68 @@
     <div class="col-6">
         <div class="card">
             <div class="card-header text-center">
-                <!-- <h5 class="card-title mb-0 text-center"> -->
                 <button class="btn btn-dark" (click)="setSetupContext('full')">
                     <span class="badge text-bg-secondary">
                         &mdash;
                     </span>
                     Complete All Steps
                 </button>
-                <!-- </h5> -->
             </div>
             <div class="card-body">
                 Want to do all the work in a single run? Click here to complete all the steps in one pass. We will save
                 where you left off if needed.
             </div>
-            <!-- <div class="card-footer text-end">
-                <button class="btn btn-dark" (click)="setSetupContext('full')">
-                    Full Setup
-                </button>
-            </div> -->
         </div>
+    </div>
+</div>
+
+
+
+
+
+<div [ngClass]="{'window-overlay': displayCreateNewModal}"></div>
+<div class="popup" [ngClass]="{'open': displayCreateNewModal }">
+    <div class="popup-header">How would you like to start?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeCreateNewModal()"></button>
+    </div>
+    <div class="popup-body">
+        <ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompaniesBlock">
+            <div class="alert alert-info">
+                Select a company and a facility to pre-populate your setup with existing data entered.
+            </div>
+            <hr>
+            <form>
+                <label for="selectedCompany" class="form-label">Select Company</label>
+                <select id="selectedCompany" name="selectedCompany" class="form-select"
+                    [(ngModel)]="selectedCompanyGuid" (change)="setSelectedCompany()">
+                    <option [ngValue]="undefined">Setup New Company</option>
+                    <optgroup label="Existing Companies">
+                        <option *ngFor="let company of companies" [ngValue]="company.guid">
+                            {{company.generalInformation.name}}</option>
+                    </optgroup>
+                </select>
+                <ng-container *ngIf="selectedCompanyGuid">
+                    <label for="selectedFacility" class="form-label">Select Facility</label>
+                    <select id="selectedFacility" name="selectedFacility" class="form-select"
+                        [(ngModel)]="selectedFacilityGuid" (change)="setSelectedFacility()">
+                        <option [ngValue]="undefined">Setup New Facility</option>
+                        <optgroup label="Existing Facilities">
+                            <option *ngFor="let facility of selectedCompanyGuid | facilityList:facilities"
+                                [ngValue]="facility.guid">{{facility.generalInformation.name}}</option>
+                        </optgroup>
+                    </select>
+                </ng-container>
+            </form>
+        </ng-template>
+        <ng-template #noCompaniesBlock>
+            <div class="alert alert-info">
+                No companies found in your system. A new company will be created upon completion of the Pre-Visit.
+            </div>
+        </ng-template>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeCreateNewModal()">Cancel</button>
+        <button class="btn btn-success" (click)="confirmCreate()">Confirm Create</button>
     </div>
 </div>

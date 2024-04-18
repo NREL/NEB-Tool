@@ -26,6 +26,7 @@ export class GettingStartedComponent {
 
   selectedCompanyGuid: string;
   selectedFacilityGuid: string;
+  displayCreateNewModal: boolean = false;
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private router: Router, private setupWizardService: SetupWizardService) {
   }
@@ -88,11 +89,24 @@ export class GettingStartedComponent {
 
   setSetupContext(context: SetupWizardContext) {
     this.setupWizardService.setupContext.next(context);
+    this.openCreateNewModal();
+  }
+
+  openCreateNewModal() {
+    this.displayCreateNewModal = true;
+  }
+
+  closeCreateNewModal() {
+    this.displayCreateNewModal = false;
+  }
+
+  confirmCreate(){
+    let context: SetupWizardContext = this.setupWizardService.setupContext.getValue();
     if (context == 'full' || context == 'preVisit') {
       this.router.navigateByUrl('/setup-wizard/company-setup');
-    }else if(context == 'onSite'){
+    } else if (context == 'onSite') {
       this.router.navigateByUrl('/setup-wizard/assessment-setup');
-    }else if(context == 'postVisit'){
+    } else if (context == 'postVisit') {
       this.router.navigateByUrl('/setup-wizard/project-setup');
     }
   }

@@ -35,12 +35,11 @@ export class CompanyKpiSetupComponent {
 
   ngOnInit() {
     let user: IdbUser = this.userIdbService.user.getValue();
-    let newCompany: IdbCompany = this.setupWizardService.company.getValue();
-    if (!newCompany) {
-      newCompany = getNewIdbCompany(user.guid);
-      this.setupWizardService.company.next(newCompany);
-    }
     this.company = this.setupWizardService.company.getValue();
+    if (!this.company) {
+      this.company = getNewIdbCompany(user.guid);
+      this.setupWizardService.company.next(this.company);
+    }
     this.setKpiOptions();
   }
 
@@ -83,12 +82,17 @@ export class CompanyKpiSetupComponent {
 
 
   setKpiOptions() {
-    let currentSelections: Array<string> = this.company.keyPerformanceIndicators.map(kpi => {
-      return kpi.kpiOptionValue;
-    })
-    this.kpi_Options = KPI_Options.filter(option => {
-      return currentSelections.includes(option.value) == false;
-    });
+    if (this.company.keyPerformanceIndicators) {
+      let currentSelections: Array<string> = this.company.keyPerformanceIndicators.map(kpi => {
+        return kpi.kpiOptionValue;
+      })
+      this.kpi_Options = KPI_Options.filter(option => {
+        return currentSelections.includes(option.value) == false;
+      });
+    }else{
+      this.company.keyPerformanceIndicators = [];
+      this.saveChanges();
+    }
   }
 
   goToFacilityDetails() {
