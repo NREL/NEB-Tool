@@ -19,6 +19,7 @@ import { CompanyKpiSetupComponent } from './company-kpi-setup/company-kpi-setup.
 import { KpiUnitOptionPipe } from './company-kpi-setup/kpi-unit-option.pipe';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
 import { KpiCategoryClassPipe } from './company-kpi-setup/kpi-category-class.pipe';
+import { CompanyContactsSetupComponent } from './company-contacts-setup/company-contacts-setup.component';
 
 
 
@@ -37,7 +38,8 @@ import { KpiCategoryClassPipe } from './company-kpi-setup/kpi-category-class.pip
     CompanyKpiSetupComponent,
     KpiUnitOptionPipe,
     SetupWizardSidebarComponent,
-    KpiCategoryClassPipe
+    KpiCategoryClassPipe,
+    CompanyContactsSetupComponent
   ],
   imports: [
     CommonModule,

@@ -4,3 +4,11 @@
 .list-group-item-action:hover {
     cursor: pointer;
 }
+
+.overflow-scroll{
+    overflow-y: auto;
+}
+
+.bold{
+    font-weight: bold;
+}

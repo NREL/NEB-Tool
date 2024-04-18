@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { SetupWizardService } from '../setup-wizard.service';
-import { IconDefinition, faArrowsToDot, faChartBar, faChevronLeft, faChevronRight, faMagnifyingGlass, faMagnifyingGlassPlus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChartBar, faChevronLeft, faChevronRight, faMagnifyingGlass, faMagnifyingGlassPlus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IdbUser } from 'src/app/models/user';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { KPI_Category, KPI_Option, KPI_Options, KPI_categories, KeyPerformanceIndicator, getKeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
@@ -16,7 +16,6 @@ export class CompanyKpiSetupComponent {
   accordionIndex: number = 0;
 
   faChartBar: IconDefinition = faChartBar;
-  faArrowsToDot: IconDefinition = faArrowsToDot;
   faTrash: IconDefinition = faTrash;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
@@ -43,10 +42,6 @@ export class CompanyKpiSetupComponent {
     this.setKpiOptions();
   }
 
-  goToFacility() {
-    this.router.navigateByUrl('setup-wizard/company-kpi')
-  }
-
   saveChanges() {
     this.setupWizardService.company.next(this.company);
   }
@@ -56,11 +51,7 @@ export class CompanyKpiSetupComponent {
   }
 
   goBack() {
-    if (this.accordionIndex != 0) {
-      this.accordionIndex--;
-    } else {
-      this.router.navigateByUrl('/setup-wizard/company-setup');
-    }
+    this.router.navigateByUrl('/setup-wizard/company-setup');
   }
 
   setAccordionIndex(num: number) {
@@ -89,7 +80,7 @@ export class CompanyKpiSetupComponent {
       this.kpi_Options = KPI_Options.filter(option => {
         return currentSelections.includes(option.value) == false;
       });
-    }else{
+    } else {
       this.company.keyPerformanceIndicators = [];
       this.saveChanges();
     }
@@ -97,5 +88,9 @@ export class CompanyKpiSetupComponent {
 
   goToFacilityDetails() {
     this.router.navigateByUrl('/setup-wizard/facility-setup');
+  }
+
+  goToContacts() {
+    this.router.navigateByUrl('/setup-wizard/company-contacts');
   }
 }

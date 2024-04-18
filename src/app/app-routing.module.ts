@@ -35,6 +35,7 @@ import { ProjectSetupListComponent } from './setup-wizard/project-setup/project-
 import { ProjectSetupFormComponent } from './setup-wizard/project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './setup-wizard/company-kpi-setup/company-kpi-setup.component';
+import { CompanyContactsSetupComponent } from './setup-wizard/company-contacts-setup/company-contacts-setup.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
       {
         path: 'company-kpi',
         component: CompanyKpiSetupComponent
+      },
+      {
+        path: 'company-contacts',
+        component: CompanyContactsSetupComponent
       },
       {
         path: 'facility-setup',

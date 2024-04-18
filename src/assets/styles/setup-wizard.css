@@ -1,0 +1,16 @@
+.setup-wizard-content{
+    height: calc(100% - 4rem);
+    /* background-color: red; */
+    overflow-y: auto;
+}
+
+.setup-wizard-content .form-paper{
+    min-height: 100%;
+    background-color: white;
+    padding: 1rem;
+}
+
+.setup-wizard-footer.navbar{
+    height: 4rem;
+    background-color: #0079c2 !important;
+}
