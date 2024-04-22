@@ -11,7 +11,7 @@ export class KpiLabelPipe implements PipeTransform {
     if (findOption) {
       return findOption.label;
     }
-    return 'Custom';
+    return kpiValue;
   }
 
 }

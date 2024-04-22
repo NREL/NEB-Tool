@@ -23,6 +23,8 @@ import { CompanyContactsSetupComponent } from './pre-visit/company-contacts-setu
 import { FacilityProcessEquipmentSetupComponent } from './pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './pre-visit/pre-assessment-setup/pre-assessment-setup.component';
 import { ReviewPreVisitSetupComponent } from './pre-visit/review-pre-visit-setup/review-pre-visit-setup.component';
+import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-search/add-kpi-search.component';
+import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
 
 
 
@@ -45,7 +47,9 @@ import { ReviewPreVisitSetupComponent } from './pre-visit/review-pre-visit-setup
     CompanyContactsSetupComponent,
     FacilityProcessEquipmentSetupComponent,
     PreAssessmentSetupComponent,
-    ReviewPreVisitSetupComponent
+    ReviewPreVisitSetupComponent,
+    AddKpiSearchComponent,
+    CompanyKpiListComponent
   ],
   imports: [
     CommonModule,
