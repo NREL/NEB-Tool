@@ -5,7 +5,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from '../setup-wizard.service';
-import { IconDefinition, faContactCard, faFilePen, faGear, faIndustry, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen, faGear, faIndustry, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
 
@@ -16,9 +16,11 @@ import { IdbUser } from 'src/app/models/user';
 })
 export class FacilitySetupComponent {
 
-  accordionIndex: number = 0;
   facilityName: string;
 
+
+  faChevronRight: IconDefinition = faChevronRight;
+  faChevronLeft: IconDefinition = faChevronLeft;
   faFilePen: IconDefinition = faFilePen;
   faGear: IconDefinition = faGear;
   faContactCard: IconDefinition = faContactCard;
@@ -47,31 +49,17 @@ export class FacilitySetupComponent {
     this.setupWizardService.facility.next(newIdbFacility);
   }
 
-
-  goToAssessment() {
-    this.router.navigateByUrl('setup-wizard/assessment-setup');
-
-  }
-
   saveChanges() {
     let facility: IdbFacility = this.setupWizardService.facility.getValue();
     facility.generalInformation.name = this.facilityName;
     this.setupWizardService.facility.next(facility);
   }
 
-  goToNext() {
-    this.accordionIndex++;
-  }
-
   goBack() {
-    if (this.accordionIndex != 0) {
-      this.accordionIndex--;
-    } else {
-      this.router.navigateByUrl('/setup-wizard/company-kpi');
-    }
+      this.router.navigateByUrl('/setup-wizard/company-contacts');
   }
 
-  setAccordionIndex(num: number) {
-    this.accordionIndex = num;
+  goToProcessEquipment(){
+    this.router.navigateByUrl('/setup-wizard/process-equipment');
   }
 }

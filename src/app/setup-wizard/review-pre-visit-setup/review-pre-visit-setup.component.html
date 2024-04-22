@@ -1,0 +1,24 @@
+
+<div class="setup-wizard-content">
+    <div class="row justify-content-center h-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow">
+                <h5>
+                    <fa-icon [icon]="faCircleCheck"></fa-icon> Review Pre-Visit
+                </h5>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-between">
+        <button class="btn btn-dark" (click)="goBack()">
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+            Go Back
+        </button>
+        <button class="btn btn-success" (click)="goToFacilitySetup()">
+            Submit Pre-Visit
+        </button>
+    </div>
+</nav>

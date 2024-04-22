@@ -20,6 +20,9 @@ import { KpiUnitOptionPipe } from './company-kpi-setup/kpi-unit-option.pipe';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
 import { KpiCategoryClassPipe } from './company-kpi-setup/kpi-category-class.pipe';
 import { CompanyContactsSetupComponent } from './company-contacts-setup/company-contacts-setup.component';
+import { FacilityProcessEquipmentSetupComponent } from './facility-process-equipment-setup/facility-process-equipment-setup.component';
+import { PreAssessmentSetupComponent } from './pre-assessment-setup/pre-assessment-setup.component';
+import { ReviewPreVisitSetupComponent } from './review-pre-visit-setup/review-pre-visit-setup.component';
 
 
 
@@ -39,7 +42,10 @@ import { CompanyContactsSetupComponent } from './company-contacts-setup/company-
     KpiUnitOptionPipe,
     SetupWizardSidebarComponent,
     KpiCategoryClassPipe,
-    CompanyContactsSetupComponent
+    CompanyContactsSetupComponent,
+    FacilityProcessEquipmentSetupComponent,
+    PreAssessmentSetupComponent,
+    ReviewPreVisitSetupComponent
   ],
   imports: [
     CommonModule,
