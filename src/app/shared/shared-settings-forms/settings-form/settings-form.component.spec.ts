@@ -14,6 +14,7 @@ import { LocationFormComponent } from '../location-form/location-form.component'
 import { PrimaryContactFormComponent } from '../primary-contact-form/primary-contact-form.component';
 import { UnitsFormComponent } from '../units-form/units-form.component';
 import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
+import { HelperPipesModule } from '../../helper-pipes/helper-pipes.module';
 
 describe('SettingsFormComponent', () => {
   let component: SettingsFormComponent;
@@ -38,7 +39,7 @@ describe('SettingsFormComponent', () => {
   }
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FontAwesomeModule],
+      imports: [ReactiveFormsModule, FontAwesomeModule, HelperPipesModule],
       declarations: [SettingsFormComponent, AdditionalDetailsFormComponent, LocationFormComponent, PrimaryContactFormComponent, UnitsFormComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },

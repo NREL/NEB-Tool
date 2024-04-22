@@ -8,6 +8,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from '../setup-wizard.service';
 import { IdbProject } from 'src/app/models/project';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('GettingStartedComponent', () => {
   let component: GettingStartedComponent;
@@ -26,6 +27,7 @@ describe('GettingStartedComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [FontAwesomeModule],
       declarations: [GettingStartedComponent],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },

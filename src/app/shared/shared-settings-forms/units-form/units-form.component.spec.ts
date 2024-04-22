@@ -9,6 +9,7 @@ import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HelperPipesModule } from '../../helper-pipes/helper-pipes.module';
 
 describe('UnitsFormComponent', () => {
   let component: UnitsFormComponent;
@@ -27,7 +28,7 @@ describe('UnitsFormComponent', () => {
   };
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FontAwesomeModule],
+      imports: [ReactiveFormsModule, FontAwesomeModule, HelperPipesModule],
       declarations: [UnitsFormComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },

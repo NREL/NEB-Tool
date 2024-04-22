@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FacilityProcessEquipmentSetupComponent } from './facility-process-equipment-setup.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('FacilityProcessEquipmentSetupComponent', () => {
   let component: FacilityProcessEquipmentSetupComponent;
@@ -8,6 +9,7 @@ describe('FacilityProcessEquipmentSetupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [FontAwesomeModule],
       declarations: [FacilityProcessEquipmentSetupComponent]
     })
     .compileComponents();
