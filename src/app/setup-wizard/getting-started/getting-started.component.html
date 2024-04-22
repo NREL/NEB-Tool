@@ -43,7 +43,7 @@
     <div class="col-6">
         <div class="card h-100">
             <div class="card-header text-center">
-                <button class="btn btn-dark" (click)="setSetupContext('onSite')">
+                <button class="btn btn-dark" (click)="setSetupContext('onSite')" [disabled]="true">
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa2"></fa-icon>
                     </span>
@@ -55,6 +55,9 @@
                     Input assessment data and identify potential NEBs.
                 </p>
             </div>
+            <div class="card-footer text-end">
+                <span class="badge text-bg-warning">Coming Soon</span>
+            </div>
         </div>
     </div>
 </div>
@@ -63,7 +66,7 @@
     <div class="col-6">
         <div class="card h-100">
             <div class="card-header text-center">
-                <button class="btn btn-dark" (click)="setSetupContext('postVisit')">
+                <button class="btn btn-dark" (click)="setSetupContext('postVisit')" [disabled]="true">
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa3"></fa-icon>
                     </span>
@@ -74,6 +77,9 @@
                 <p class="card-text">
                     Evaluate the results of the assessment and generate reports for decision makers.
                 </p>
+            </div>
+            <div class="card-footer text-end">
+                <span class="badge text-bg-warning">Coming Soon</span>
             </div>
         </div>
     </div>
@@ -87,7 +93,7 @@
     <div class="col-6">
         <div class="card">
             <div class="card-header text-center">
-                <button class="btn btn-dark" (click)="setSetupContext('full')">
+                <button class="btn btn-dark" (click)="setSetupContext('full')" [disabled]="true">
                     <span class="badge text-bg-secondary">
                         &mdash;
                     </span>
@@ -97,6 +103,9 @@
             <div class="card-body">
                 Want to do all the work in a single run? Click here to complete all the steps in one pass. We will save
                 where you left off if needed.
+            </div>
+            <div class="card-footer text-end">
+                <span class="badge text-bg-warning">Coming Soon</span>
             </div>
         </div>
     </div>
