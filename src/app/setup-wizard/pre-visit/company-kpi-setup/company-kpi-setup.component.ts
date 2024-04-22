@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { SetupWizardService } from '../setup-wizard.service';
+import { SetupWizardService } from '../../setup-wizard.service';
 import { IconDefinition, faChartBar, faChevronLeft, faChevronRight, faMagnifyingGlass, faMagnifyingGlassPlus, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IdbUser } from 'src/app/models/user';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';

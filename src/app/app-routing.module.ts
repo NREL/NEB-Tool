@@ -12,8 +12,8 @@ import { ProjectDashboardComponent } from './project-dashboard/project-dashboard
 import { ProjectDashboardHomeComponent } from './project-dashboard/project-dashboard-home/project-dashboard-home.component';
 import { SetupWizardComponent } from './setup-wizard/setup-wizard.component';
 import { GettingStartedComponent } from './setup-wizard/getting-started/getting-started.component';
-import { CompanySetupComponent } from './setup-wizard/company-setup/company-setup.component';
-import { FacilitySetupComponent } from './setup-wizard/facility-setup/facility-setup.component';
+import { CompanySetupComponent } from './setup-wizard/pre-visit/company-setup/company-setup.component';
+import { FacilitySetupComponent } from './setup-wizard/pre-visit/facility-setup/facility-setup.component';
 import { ProjectSetupComponent } from './setup-wizard/project-setup/project-setup.component';
 import { UserSettingsComponent } from './user-dashboard/user-settings/user-settings.component';
 import { CompanySettingsComponent } from './company-dashboard/company-settings/company-settings.component';
@@ -34,11 +34,11 @@ import { AssessmentReportComponent } from './assessment-dashboard/assessment-rep
 import { ProjectSetupListComponent } from './setup-wizard/project-setup/project-setup-list/project-setup-list.component';
 import { ProjectSetupFormComponent } from './setup-wizard/project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
-import { CompanyKpiSetupComponent } from './setup-wizard/company-kpi-setup/company-kpi-setup.component';
-import { CompanyContactsSetupComponent } from './setup-wizard/company-contacts-setup/company-contacts-setup.component';
-import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/facility-process-equipment-setup/facility-process-equipment-setup.component';
-import { PreAssessmentSetupComponent } from './setup-wizard/pre-assessment-setup/pre-assessment-setup.component';
-import { ReviewPreVisitSetupComponent } from './setup-wizard/review-pre-visit-setup/review-pre-visit-setup.component';
+import { CompanyKpiSetupComponent } from './setup-wizard/pre-visit/company-kpi-setup/company-kpi-setup.component';
+import { CompanyContactsSetupComponent } from './setup-wizard/pre-visit/company-contacts-setup/company-contacts-setup.component';
+import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
+import { PreAssessmentSetupComponent } from './setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.component';
+import { ReviewPreVisitSetupComponent } from './setup-wizard/pre-visit/review-pre-visit-setup/review-pre-visit-setup.component';
 
 const routes: Routes = [
   {

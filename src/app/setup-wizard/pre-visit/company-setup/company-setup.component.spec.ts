@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FacilitySetupComponent } from './facility-setup.component';
+import { CompanySetupComponent } from './company-setup.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { IdbUser, getNewIdbUser } from 'src/app/models/user';
+import { BehaviorSubject } from 'rxjs';
+import { SetupWizardService } from '../../setup-wizard.service';
+import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
+import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
+import { IdbProject } from 'src/app/models/project';
 import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/shared-settings-forms.module';
 import { FormsModule } from '@angular/forms';
-import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
-import { SetupWizardService } from '../setup-wizard.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { BehaviorSubject } from 'rxjs';
-import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { IdbUser, getNewIdbUser } from 'src/app/models/user';
-import { IdbProject } from 'src/app/models/project';
 
-describe('FacilitySetupComponent', () => {
-  let component: FacilitySetupComponent;
-  let fixture: ComponentFixture<FacilitySetupComponent>;
+describe('CompanySetupComponent', () => {
+  let component: CompanySetupComponent;
+  let fixture: ComponentFixture<CompanySetupComponent>;
   let userIdbService: Partial<UserIdbService> = {
     user: new BehaviorSubject<IdbUser>(getNewIdbUser())
   }
@@ -33,11 +33,10 @@ describe('FacilitySetupComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
-      declarations: [FacilitySetupComponent],
+      declarations: [CompanySetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
         { provide: SetupWizardService, useValue: setupWizardService },
@@ -47,7 +46,7 @@ describe('FacilitySetupComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FacilitySetupComponent);
+    fixture = TestBed.createComponent(CompanySetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
