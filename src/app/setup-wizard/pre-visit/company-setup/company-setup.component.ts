@@ -13,9 +13,7 @@ import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 })
 export class CompanySetupComponent {
 
-  accordionIndex: number = 0;
   companyName: string;
-
   faFilePen: IconDefinition = faFilePen;
   faGear: IconDefinition = faGear;
   faContactCard: IconDefinition = faContactCard;
@@ -46,21 +44,5 @@ export class CompanySetupComponent {
     let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
     selectedCompany.generalInformation.name = this.companyName;
     this.setupWizardService.company.next(selectedCompany);
-  }
-
-  goToNext() {
-    this.accordionIndex++;
-  }
-
-  goBack() {
-    if (this.accordionIndex != 0) {
-      this.accordionIndex--;
-    } else {
-      this.router.navigateByUrl('/setup-wizard/getting-started');
-    }
-  }
-
-  setAccordionIndex(num: number) {
-    this.accordionIndex = num;
   }
 }

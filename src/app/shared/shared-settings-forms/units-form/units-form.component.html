@@ -15,9 +15,9 @@
         <div class="col-4">
             <div class="input-group">
                 <div class="input-group-text">
-                    <input class="form-check-input mt-0" type="checkbox" value="" formControlName="includeElectricity">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeElectricity">
                 </div>
-                <input type="text" class="form-control" [value]="'Electricity'" [disabled]="true">
+                <input type="text" class="form-control disabled-input-label" [value]="'Electricity'" [disabled]="true">
             </div>
         </div>
         <ng-container *ngIf="form.controls['includeElectricity'].value">
@@ -42,9 +42,9 @@
         <div class="col-4">
             <div class="input-group">
                 <div class="input-group-text">
-                    <input class="form-check-input mt-0" type="checkbox" value="" formControlName="includeNaturalGas">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeNaturalGas">
                 </div>
-                <input type="text" class="form-control" [value]="'Natural Gas'" [disabled]="true">
+                <input type="text" class="form-control disabled-input-label" [value]="'Natural Gas'" [disabled]="true">
             </div>
         </div>
         <ng-container *ngIf="form.controls['includeNaturalGas'].value">
@@ -69,9 +69,9 @@
         <div class="col-4">
             <div class="input-group">
                 <div class="input-group-text">
-                    <input class="form-check-input mt-0" type="checkbox" value="" formControlName="includeSteam">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeSteam">
                 </div>
-                <input type="text" class="form-control" [value]="'Steam'" [disabled]="true">
+                <input type="text" class="form-control disabled-input-label" [value]="'Steam'" [disabled]="true">
             </div>
         </div>
         <ng-container *ngIf="form.controls['includeSteam'].value">
@@ -96,9 +96,9 @@
         <div class="col-4">
             <div class="input-group">
                 <div class="input-group-text">
-                    <input class="form-check-input mt-0" type="checkbox" value="" formControlName="includeOtherFuel">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeOtherFuel">
                 </div>
-                <input type="text" class="form-control" [value]="'Other Fuels'" [disabled]="true">
+                <input type="text" class="form-control disabled-input-label" [value]="'Other Fuels'" [disabled]="true">
             </div>
         </div>
         <ng-container *ngIf="form.controls['includeOtherFuel'].value">
@@ -122,10 +122,10 @@
         <div class="col-4">
             <div class="input-group">
                 <div class="input-group-text">
-                    <input class="form-check-input mt-0" type="checkbox" value=""
-                        formControlName="includeCompressedAir">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeCompressedAir">
                 </div>
-                <input type="text" class="form-control" [value]="'Compressed Air'" [disabled]="true">
+                <input type="text" class="form-control disabled-input-label" [value]="'Compressed Air'"
+                    [disabled]="true">
             </div>
         </div>
         <ng-container *ngIf="form.controls['includeCompressedAir'].value">

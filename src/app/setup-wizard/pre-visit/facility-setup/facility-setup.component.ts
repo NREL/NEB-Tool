@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from '../../setup-wizard.service';
@@ -56,10 +54,10 @@ export class FacilitySetupComponent {
   }
 
   goBack() {
-      this.router.navigateByUrl('/setup-wizard/company-contacts');
+    this.router.navigateByUrl('/setup-wizard/company-contacts');
   }
 
-  goToProcessEquipment(){
+  goToProcessEquipment() {
     this.router.navigateByUrl('/setup-wizard/process-equipment');
   }
 }
