@@ -24,6 +24,7 @@ export class AddKpiSearchComponent {
   displayCustomKPIModal: boolean = false;
   customKPIName: string = '';
   kpiCategorySearch: KPI_Category | undefined = undefined;
+  kpiSearchStr: string = '';
   constructor(private setupWizardService: SetupWizardService) {
 
   }

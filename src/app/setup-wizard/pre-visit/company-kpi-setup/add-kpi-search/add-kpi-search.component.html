@@ -7,8 +7,7 @@
                 Add KPI's
             </button>
         </h2>
-        <div id="kpiSearch" class="accordion-collapse collapse"
-            data-bs-parent="#kpiSearchAccordion">
+        <div id="kpiSearch" class="accordion-collapse collapse" data-bs-parent="#kpiSearchAccordion">
             <div class="accordion-body">
                 <div class="row mb-2">
                     <div class="col-4">
@@ -16,16 +15,15 @@
                             <span class="input-group-text">
                                 <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
                             </span>
-                            <input class="form-control me-2" type="search" placeholder="Search"
-                                aria-label="Search" [disabled]="true">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                                name="kpiSearchStr" [(ngModel)]="kpiSearchStr">
                         </div>
                     </div>
                     <div class="col-4">
-                        <select name="kpiCategorySearch" class="form-select"
-                            id="kpiCategorySearch" [(ngModel)]="kpiCategorySearch">
+                        <select name="kpiCategorySearch" class="form-select" id="kpiCategorySearch"
+                            [(ngModel)]="kpiCategorySearch">
                             <option [ngValue]="undefined">All Categories</option>
-                            <option *ngFor="let category of kpi_categories"
-                                [ngValue]="category">
+                            <option *ngFor="let category of kpi_categories" [ngValue]="category">
                                 {{category}}
                             </option>
                         </select>
@@ -39,14 +37,14 @@
                 </div>
                 <div class="list-group">
                     <div class="list-group-item list-group-item-action"
-                        *ngFor="let option of kpi_Options" (click)="addKPI(option)">
+                        *ngFor="let option of kpi_Options | kpiListFilter: kpiSearchStr: kpiCategorySearch"
+                        (click)="addKPI(option)">
                         <div class="d-flex w-100 justify-content-between">
                             <div>
                                 <span [innerHTML]="option.label"></span>
                             </div>
                             <div>
-                                <span class="badge"
-                                    [ngStyle]="{'background-color':option.category | kpiCategoryClass}">
+                                <span class="badge" [ngStyle]="{'background-color':option.category | kpiCategoryClass}">
                                     {{option.category}}
                                 </span>
                             </div>
