@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SetupWizardComponent } from './setup-wizard.component';
-import { SetupWizardTabsComponent } from './setup-wizard-tabs/setup-wizard-tabs.component';
 import { RouterModule } from '@angular/router';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -32,7 +31,6 @@ import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/
 @NgModule({
   declarations: [
     SetupWizardComponent,
-    SetupWizardTabsComponent,
     GettingStartedComponent,
     CompanySetupComponent,
     FacilitySetupComponent,
