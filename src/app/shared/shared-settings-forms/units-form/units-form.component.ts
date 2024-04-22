@@ -81,83 +81,71 @@ export class UnitsFormComponent {
   }
 
   getUnitsForm(unitSettings: UnitSettings): FormGroup {
+    //TODO: Add validation logic (issue-65)
     let form: FormGroup = this.formBuilder.group({
-      unitsOfMeasure: [unitSettings.unitsOfMeasure, [Validators.required]],
-      energyUnit: [unitSettings.energyUnit, [Validators.required]],
-      massUnit: [unitSettings.massUnit, [Validators.required]],
-      volumeLiquidUnit: [unitSettings.volumeLiquidUnit, [Validators.required]],
-      volumeGasUnit: [unitSettings.volumeGasUnit, [Validators.required]],
-      electricityUnit: [unitSettings.electricityUnit, [Validators.required]]
+      includeElectricity: [unitSettings.includeElectricity],
+      electricityUnit: [unitSettings.electricityUnit],
+      electricityPrice: [unitSettings.electricityPrice],
+
+      includeNaturalGas: [unitSettings.includeNaturalGas],
+      naturalGasUnit: [unitSettings.naturalGasUnit],
+      naturalGasPrice: [unitSettings.naturalGasPrice],
+
+      includeSteam: [unitSettings.includeSteam],
+      steamUnit: [unitSettings.steamUnit],
+      steamPrice: [unitSettings.steamPrice],
+
+      includeOtherFuel: [unitSettings.includeOtherFuel],
+      otherFuelUnit: [unitSettings.otherFuelUnit],
+      otherFuelPrice: [unitSettings.otherFuelPrice],
+
+      includeCompressedAir: [unitSettings.includeCompressedAir],
+      compressedAirUnit: [unitSettings.compressedAirUnit],
+      compressedAirPrice: [unitSettings.compressedAirPrice],
     });
     return form;
   }
   async saveChanges() {
     if (this.inSetupWizard) {
       if (this.inCompany) {
-        let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company.unitSettings);
-        this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
         this.company.unitSettings = this.updateUnitSettingsFromForm(this.company.unitSettings);
         this.setupWizardService.company.next(this.company);
       } else {
-        let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.facility.unitSettings);
-        this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
         this.facility.unitSettings = this.updateUnitSettingsFromForm(this.facility.unitSettings);
         this.setupWizardService.facility.next(this.facility);
       }
     } else {
       if (this.inCompany) {
-        let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.company.unitSettings);
-        this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
         this.company.unitSettings = this.updateUnitSettingsFromForm(this.company.unitSettings);
         await this.companyIdbService.asyncUpdate(this.company);
       } else {
-        let unitsOfMeasure: "Metric" | "Imperial" | "Custom" = this.getUnitsOfMeasure(this.facility.unitSettings);
-        this.form.controls['unitsOfMeasure'].patchValue(unitsOfMeasure);
         this.facility.unitSettings = this.updateUnitSettingsFromForm(this.facility.unitSettings);
         await this.facilityIdbService.asyncUpdate(this.facility);
       }
     }
   }
 
-  async setUnitsOfMeasure() {
-    if (this.form.controls['unitsOfMeasure'].value == 'Imperial') {
-      this.form.controls['energyUnit'].setValue('kWh');
-      this.form.controls['volumeLiquidUnit'].setValue('ft3');
-      this.form.controls['volumeGasUnit'].setValue('SCF');
-      this.form.controls['massUnit'].setValue('lb');
-    } else if (this.form.controls['unitsOfMeasure'].value == 'Metric') {
-      this.form.controls['energyUnit'].setValue('MMBtu');
-      this.form.controls['volumeLiquidUnit'].setValue('m3');
-      this.form.controls['volumeGasUnit'].setValue('m3');
-      this.form.controls['massUnit'].setValue('kg');
-    }
-    await this.saveChanges();
-  }
-
   updateUnitSettingsFromForm(unitSettings: UnitSettings): UnitSettings {
-    unitSettings.unitsOfMeasure = this.form.controls['unitsOfMeasure'].value;
-    unitSettings.energyUnit = this.form.controls['energyUnit'].value;
-    unitSettings.massUnit = this.form.controls['massUnit'].value;
-    unitSettings.volumeLiquidUnit = this.form.controls['volumeLiquidUnit'].value;
-    unitSettings.volumeGasUnit = this.form.controls['volumeGasUnit'].value;
+    unitSettings.includeElectricity = this.form.controls['includeElectricity'].value;
     unitSettings.electricityUnit = this.form.controls['electricityUnit'].value;
+    unitSettings.electricityPrice = this.form.controls['electricityPrice'].value;
+
+    unitSettings.includeNaturalGas = this.form.controls['includeNaturalGas'].value;
+    unitSettings.naturalGasUnit = this.form.controls['naturalGasUnit'].value;
+    unitSettings.naturalGasPrice = this.form.controls['naturalGasPrice'].value;
+
+    unitSettings.includeSteam = this.form.controls['includeSteam'].value;
+    unitSettings.steamUnit = this.form.controls['steamUnit'].value;
+    unitSettings.steamPrice = this.form.controls['steamPrice'].value;
+
+    unitSettings.includeOtherFuel = this.form.controls['includeOtherFuel'].value;
+    unitSettings.otherFuelUnit = this.form.controls['otherFuelUnit'].value;
+    unitSettings.otherFuelPrice = this.form.controls['otherFuelPrice'].value;
+
+    unitSettings.includeCompressedAir = this.form.controls['includeCompressedAir'].value;
+    unitSettings.compressedAirUnit = this.form.controls['compressedAirUnit'].value;
+    unitSettings.compressedAirPrice = this.form.controls['compressedAirPrice'].value;
     return unitSettings;
   }
 
-  getUnitsOfMeasure(unitSettings: UnitSettings): "Metric" | "Imperial" | "Custom" {
-    let selectedEnergyOption: UnitOption = EnergyUnitOptions.find(option => { return option.value == unitSettings.energyUnit });
-    let selectedVolumeGasOption: UnitOption = VolumeGasOptions.find(option => { return option.value == unitSettings.volumeGasUnit });
-    let selectedVolumeLiquidOption: UnitOption = VolumeLiquidOptions.find(option => { return option.value == unitSettings.volumeLiquidUnit });
-    let selectedMassOption: UnitOption = MassUnitOptions.find(option => { return option.value == unitSettings.massUnit });
-    if (selectedEnergyOption && selectedVolumeGasOption && selectedVolumeLiquidOption && selectedMassOption) {
-      if (selectedEnergyOption.unitsOfMeasure == 'Metric' && selectedVolumeLiquidOption.unitsOfMeasure == 'Metric' && selectedVolumeGasOption.unitsOfMeasure == 'Metric' && selectedMassOption.unitsOfMeasure == 'Metric') {
-        return 'Metric';
-      } else if (selectedEnergyOption.unitsOfMeasure == 'Imperial' && selectedVolumeLiquidOption.unitsOfMeasure == 'Imperial' && selectedVolumeGasOption.unitsOfMeasure == 'Imperial' && selectedMassOption.unitsOfMeasure == 'Imperial') {
-        return 'Imperial';
-      } else {
-        return 'Custom';
-      }
-    }
-    return "Custom";
-  }
 }

@@ -94,35 +94,28 @@ export class ConvertValue {
     }
 
 
-    getUnit(abbr: string) {
-        var found;
-
-        _.each(this._measures, function (systems, measure) {
-            _.each(systems, function (units, system) {
-                if (system === '_anchors')
-                    return false;
-
-                _.each(units, function (unit, testAbbr) {
-                    if (testAbbr === abbr) {
-                        found = {
-                            abbr: abbr
-                            , measure: measure
-                            , system: system
-                            , unit: unit
-                        };
-                        return false;
+    getUnit(abbr: string): { name: { display: string, plural: string, singular: string }, to_anchor: number } {
+        var found: { name: { display: string, plural: string, singular: string }, to_anchor: number };
+        for (const property in this._measures) {
+            if (!found) {
+                let measure = this._measures[property];
+                for (const measureProp in measure as any) {
+                    if (!found) {
+                        let system = measure[measureProp];
+                        if (system != '_anchors') {
+                            for (const systemProp in system) {
+                                if (!found) {
+                                    if (abbr == systemProp) {
+                                        found = system[systemProp];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
-                });
-
-                if (found)
-                    return false;
-            });
-
-            if (found)
-                return false;
-        });
-        // console.log(found);
-
+                }
+            }
+        }
         return found;
     }
 }
