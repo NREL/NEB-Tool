@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IdbFacility } from '../models/facility';
 import { IdbProject } from '../models/project';
 import { IdbAssessment } from '../models/assessment';
+import { IdbContact } from '../models/contact';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class SetupWizardService {
   facility: BehaviorSubject<IdbFacility>;
   projects: BehaviorSubject<Array<IdbProject>>;
   assessment: BehaviorSubject<IdbAssessment>;
+  contacts: BehaviorSubject<Array<IdbContact>>;
 
   setupContext: BehaviorSubject<SetupWizardContext>;
 
@@ -23,6 +25,7 @@ export class SetupWizardService {
     this.projects = new BehaviorSubject<Array<IdbProject>>([]);
     this.assessment = new BehaviorSubject<IdbAssessment>(undefined);
     this.setupContext = new BehaviorSubject<SetupWizardContext>('preVisit');
+    this.contacts = new BehaviorSubject<Array<IdbContact>>([]);
   }
 }
 
