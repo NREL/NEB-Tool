@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SetupWizardService } from './setup-wizard.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-setup-wizard',

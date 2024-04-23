@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { IconDefinition, faAddressBook, faChevronLeft, faChevronRight, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbContact, getNewIdbContact } from 'src/app/models/contact';
-import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { IdbUser } from 'src/app/models/user';
+import { IdbCompany } from 'src/app/models/company';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
 @Component({
@@ -32,12 +30,10 @@ export class CompanyContactsSetupComponent {
   }
 
   ngOnInit() {
-    let user: IdbUser = this.userIdbService.user.getValue();
-    let newIdbCompany: IdbCompany = this.setupWizardService.company.getValue();
     //TODO: Temporary for dev.
-    if (!newIdbCompany) {
-      newIdbCompany = getNewIdbCompany(user.guid);
-      this.setupWizardService.company.next(newIdbCompany);
+    let company: IdbCompany = this.setupWizardService.company.getValue();
+    if (!company) {
+      this.setupWizardService.initializeDataForDev();
     }
     this.contacts = this.setupWizardService.contacts.getValue();
     if (this.contacts.length == 0) {
@@ -61,6 +57,7 @@ export class CompanyContactsSetupComponent {
     let company: IdbCompany = this.setupWizardService.company.getValue();
     let newContact: IdbContact = getNewIdbContact(company.userId, company.guid);
     this.contacts.push(newContact);
+    this.setAccordionIndex(this.contacts.length - 1)
     this.saveChanges();
   }
 

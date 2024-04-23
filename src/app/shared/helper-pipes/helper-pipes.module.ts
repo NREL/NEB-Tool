@@ -8,6 +8,7 @@ import { AddressDisplayPipe } from './address-display.pipe';
 import { AssessmentsListPipe } from './assessments-list.pipe';
 import { KpiLabelPipe } from './kpi-label.pipe';
 import { UnitsDisplayPipe } from './units-display.pipe';
+import { ContactNamePipe } from './contact-name.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UnitsDisplayPipe } from './units-display.pipe';
     AddressDisplayPipe,
     AssessmentsListPipe,
     KpiLabelPipe,
-    UnitsDisplayPipe
+    UnitsDisplayPipe,
+    ContactNamePipe
   ],
   imports: [
     CommonModule
@@ -31,7 +33,8 @@ import { UnitsDisplayPipe } from './units-display.pipe';
     AddressDisplayPipe,
     AssessmentsListPipe,
     KpiLabelPipe,
-    UnitsDisplayPipe
+    UnitsDisplayPipe,
+    ContactNamePipe
   ]
 })
 export class HelperPipesModule { }

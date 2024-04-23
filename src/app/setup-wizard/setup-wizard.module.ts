@@ -25,6 +25,7 @@ import { ReviewPreVisitSetupComponent } from './pre-visit/review-pre-visit-setup
 import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-search/add-kpi-search.component';
 import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
 import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
+import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
 
 
 
@@ -57,7 +58,8 @@ import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/
     FontAwesomeModule,
     FormsModule,
     SharedSettingsFormsModule,
-    HelperPipesModule
+    HelperPipesModule,
+    ContactModalModule
   ]
 })
 export class SetupWizardModule { }

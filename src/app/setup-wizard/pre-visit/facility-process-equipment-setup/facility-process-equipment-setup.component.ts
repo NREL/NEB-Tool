@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faPlus, faScrewdriverWrench, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faPlus, faScrewdriverWrench, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardService } from '../../setup-wizard.service';
-import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
-import { IdbUser } from 'src/app/models/user';
-import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
+import { IdbCompany } from 'src/app/models/company';
+import { IdbFacility } from 'src/app/models/facility';
 import { ProcessEquipment, getNewProcessEquipment } from 'src/app/shared/constants/processEquipment';
+import { IdbContact } from 'src/app/models/contact';
 
 @Component({
   selector: 'app-facility-process-equipment-setup',
@@ -22,28 +21,26 @@ export class FacilityProcessEquipmentSetupComponent {
   faScrewdriverWrench: IconDefinition = faScrewdriverWrench;
   faTrash: IconDefinition = faTrash;
   faPlus: IconDefinition = faPlus;
+  faUser: IconDefinition = faUser;
   facility: IdbFacility;
-  
+
   equipmentToDelete: ProcessEquipment;
   displayDeleteModal: boolean = false;
-  constructor(private setupWizardService: SetupWizardService, private router: Router,
-    private userIdbService: UserIdbService) {
+  contacts: Array<IdbContact>;
+  displayContactModal: boolean = false;
+  contactEquipmentIndex: number;
+  editContactId: string;
+  constructor(private setupWizardService: SetupWizardService, private router: Router) {
 
   }
 
   ngOnInit() {
-    let user: IdbUser = this.userIdbService.user.getValue();
-    let newIdbCompany: IdbCompany = this.setupWizardService.company.getValue();
-    //TODO: Temporary for dev.
-    if (!newIdbCompany) {
-      newIdbCompany = getNewIdbCompany(user.guid);
-      this.setupWizardService.company.next(newIdbCompany);
+    let company: IdbCompany = this.setupWizardService.company.getValue();
+    if(!company){
+      this.setupWizardService.initializeDataForDev();
     }
-    this.facility = this.setupWizardService.facility.getValue();;
-    if (!this.facility) {
-      this.facility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
-      this.setupWizardService.facility.next(this.facility);
-    }
+    this.facility = this.setupWizardService.facility.getValue();
+    this.contacts = this.setupWizardService.contacts.getValue();
   }
 
   saveChanges() {
@@ -55,7 +52,6 @@ export class FacilityProcessEquipmentSetupComponent {
     this.facility.processEquipment.push(newEquipment);
     this.setAccordionIndex(this.facility.processEquipment.length - 1);
   }
-
 
   goBack() {
     this.router.navigateByUrl('/setup-wizard/facility-setup');
@@ -77,14 +73,31 @@ export class FacilityProcessEquipmentSetupComponent {
   setAccordionIndex(index: number) {
     this.accordionIndex = index;
   }
-  
+
   openDeleteModal(equipment: ProcessEquipment) {
     this.equipmentToDelete = equipment;
     this.displayDeleteModal = true;
   }
 
-  closeDeleteModal(){
-      this.displayDeleteModal = false;
-      this.equipmentToDelete = undefined;
+  closeDeleteModal() {
+    this.displayDeleteModal = false;
+    this.equipmentToDelete = undefined;
+  }
+
+  openContactModal(equipmentIndex: number, contactId: string) {
+    this.contactEquipmentIndex = equipmentIndex;
+    this.editContactId = contactId;
+    this.displayContactModal = true;
+  }
+
+  closeContactModal(){
+    this.displayContactModal = false;
+    this.contactEquipmentIndex = undefined;
+    this.editContactId = undefined;
+  }
+
+  setContact(contactId: string){
+    this.facility.processEquipment[this.contactEquipmentIndex].contactId = contactId;
+    this.closeContactModal();
   }
 }

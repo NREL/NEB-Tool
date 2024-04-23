@@ -98,11 +98,28 @@
                                         <div class="col-12">
                                             <hr>
                                         </div>
-                                        <div class="col-12 text-end">
-                                            <button class="btn btn-sm btn-danger"
-                                                (click)="openDeleteModal(processEquipment)">
-                                                <fa-icon [icon]="faTrash"></fa-icon> Delete
-                                            </button>
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <button class="btn btn-sm btn-secondary"
+                                                        (click)="openContactModal(index, processEquipment.contactId)">
+                                                        <fa-icon [icon]="faUser"></fa-icon>
+                                                        <ng-template [ngIf]="processEquipment.contactId"
+                                                            [ngIfElse]="noContact">
+                                                            {{processEquipment.contactId | contactName: contacts}}
+                                                        </ng-template>
+                                                        <ng-template #noContact>
+                                                            Select Team Member
+                                                        </ng-template>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-danger"
+                                                        (click)="openDeleteModal(processEquipment)">
+                                                        <fa-icon [icon]="faTrash"></fa-icon> Delete
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -147,6 +164,10 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
-        <button class="btn btn-danger" (click)="removeEquipment()"><fa-icon [icon]="faTrash"></fa-icon> Delete Equipment</button>
+        <button class="btn btn-danger" (click)="removeEquipment()"><fa-icon [icon]="faTrash"></fa-icon> Delete
+            Equipment</button>
     </div>
 </div>
+
+<app-contact-modal *ngIf="displayContactModal" (selectedContact)="setContact($event)"
+    (cancelContact)="closeContactModal()" [contactId]="editContactId"></app-contact-modal>

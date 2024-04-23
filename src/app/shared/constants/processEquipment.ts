@@ -6,7 +6,8 @@ export interface ProcessEquipment {
     size: number,
     operatingHours: number,
     loadFactor: number,
-    notes: string
+    notes: string,
+    contactId: string
 }
 
 export function getNewProcessEquipment() {
@@ -16,6 +17,7 @@ export function getNewProcessEquipment() {
         size: undefined,
         operatingHours: undefined,
         loadFactor: undefined,
-        notes: undefined
+        notes: undefined,
+        contactId: undefined
     }
 }
