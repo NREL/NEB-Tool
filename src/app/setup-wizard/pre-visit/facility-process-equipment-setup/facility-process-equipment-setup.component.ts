@@ -23,6 +23,9 @@ export class FacilityProcessEquipmentSetupComponent {
   faTrash: IconDefinition = faTrash;
   faPlus: IconDefinition = faPlus;
   facility: IdbFacility;
+  
+  equipmentToDelete: ProcessEquipment;
+  displayDeleteModal: boolean = false;
   constructor(private setupWizardService: SetupWizardService, private router: Router,
     private userIdbService: UserIdbService) {
 
@@ -62,15 +65,26 @@ export class FacilityProcessEquipmentSetupComponent {
     this.router.navigateByUrl('/setup-wizard/pre-assessment');
   }
 
-  removeEquipment(equipment: ProcessEquipment) {
+  removeEquipment() {
     this.facility.processEquipment = this.facility.processEquipment.filter(_equipment => {
-      return _equipment.guid != equipment.guid;
+      return _equipment.guid != this.equipmentToDelete.guid;
     });
+    this.closeDeleteModal();
     this.setAccordionIndex(0);
     this.saveChanges();
   }
 
   setAccordionIndex(index: number) {
     this.accordionIndex = index;
+  }
+  
+  openDeleteModal(equipment: ProcessEquipment) {
+    this.equipmentToDelete = equipment;
+    this.displayDeleteModal = true;
+  }
+
+  closeDeleteModal(){
+      this.displayDeleteModal = false;
+      this.equipmentToDelete = undefined;
   }
 }
