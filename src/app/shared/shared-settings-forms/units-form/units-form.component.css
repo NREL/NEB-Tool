@@ -1,0 +1,5 @@
+.disabled-input-label{
+    background-color: white;
+    border: none;
+    border-left: var(--bs-border-width) solid var(--bs-border-color);
+}

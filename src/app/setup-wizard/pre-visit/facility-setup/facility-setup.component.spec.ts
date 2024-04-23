@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/shared-settings-forms.module';
 import { FormsModule } from '@angular/forms';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
-import { SetupWizardService } from '../setup-wizard.service';
+import { SetupWizardService } from '../../setup-wizard.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { BehaviorSubject } from 'rxjs';

@@ -1,76 +1,149 @@
-<!-- <div class="accordion" id="unitAccoridion">
-    <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                aria-expanded="true" aria-controls="collapseThree" [ngClass]="{'collapsed': !accordionOpen}"
-                (click)="toggleAccordion()">
-                <fa-icon [icon]="faGear" class="me-2"></fa-icon>
-                Units
-            </button>
-        </h2>
-        <div id="collapseThree" class="accordion-collapse collapse show" data-bs-parent="#unitAccoridion"
-            [ngClass]="{'show': accordionOpen}">
-            <div class="accordion-body"> -->
-                <form [formGroup]="form">
-                    <div class="row">
-                        <div class="col-12">
-                            <label for="unitsOfMeasure">Units of Measure</label>
-                            <select class="form-select" formControlName="unitsOfMeasure" (change)="setUnitsOfMeasure()">
-                                <option [ngValue]="'Imperial'">Imperial</option>
-                                <option [ngValue]="'Metric'">Metric</option>
-                                <option [ngValue]="'Custom'">Custom</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <label for="energyUnit">Result Energy Unit</label>
-                            <select class="form-select" formControlName="energyUnit" (change)="saveChanges()">
-                                <option *ngFor="let energyUnitOption of energyUnitOptions"
-                                    [ngValue]="energyUnitOption.value">
-                                    <span [innerHTML]="energyUnitOption.display"></span>
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <label for="electricityUnit">Electricity Unit</label>
-                            <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
-                                <option *ngFor="let energyUnitOption of energyUnitOptions"
-                                    [ngValue]="energyUnitOption.value">
-                                    <span [innerHTML]="energyUnitOption.display"></span>
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <label for="volumeLiquidUnit">Volume Unit (Liquid)</label>
-                            <select class="form-select" formControlName="volumeLiquidUnit" (change)="saveChanges()">
-                                <option *ngFor="let volumeUnitOption of volumeLiquidOptions"
-                                    [ngValue]="volumeUnitOption.value">
-                                    <span [innerHTML]="volumeUnitOption.display"></span>
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <label for="volumeGasUnit">Volume Unit (Gases)</label>
-                            <select class="form-select" formControlName="volumeGasUnit" (change)="saveChanges()">
-                                <option *ngFor="let volumeUnitOption of volumeGasOptions"
-                                    [ngValue]="volumeUnitOption.value">
-                                    <span [innerHTML]="volumeUnitOption.display"></span>
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <label for="massUnit">Mass Unit</label>
-                            <select class="form-select" formControlName="massUnit" (change)="saveChanges()">
-                                <option *ngFor="let massUnitOption of massUnitOptions" [ngValue]="massUnitOption.value">
-                                    <span [innerHTML]="massUnitOption.display"></span>
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            <!-- </div>
+<!--TODO: Proper units setup-->
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-4">
+            Include
+        </div>
+        <div class="col-4">
+            <label>Unit</label>
+        </div>
+        <div class="col-4">
+            <label>Price</label>
         </div>
     </div>
-</div> -->
+    <div class="row mb-1">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeElectricity">
+                </div>
+                <input type="text" class="form-control disabled-input-label" [value]="'Electricity'" [disabled]="true">
+            </div>
+        </div>
+        <ng-container *ngIf="form.controls['includeElectricity'].value">
+            <div class="col-4">
+                <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
+                    <option *ngFor="let energyUnitOption of energyUnitOptions" [ngValue]="energyUnitOption.value">
+                        <span [innerHTML]="energyUnitOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number">
+                    <span class="input-group-text">&dollar;/<span
+                            [innerHTML]="form.controls['electricityUnit'].value | unitsDisplay"></span>
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="row mb-1">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeNaturalGas">
+                </div>
+                <input type="text" class="form-control disabled-input-label" [value]="'Natural Gas'" [disabled]="true">
+            </div>
+        </div>
+        <ng-container *ngIf="form.controls['includeNaturalGas'].value">
+            <div class="col-4">
+                <select class="form-select" formControlName="naturalGasUnit" (change)="saveChanges()">
+                    <option *ngFor="let energyUnitOption of energyUnitOptions" [ngValue]="energyUnitOption.value">
+                        <span [innerHTML]="energyUnitOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number">
+                    <span class="input-group-text">&dollar;/<span
+                            [innerHTML]="form.controls['naturalGasUnit'].value | unitsDisplay"></span>
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="row mb-1">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeSteam">
+                </div>
+                <input type="text" class="form-control disabled-input-label" [value]="'Steam'" [disabled]="true">
+            </div>
+        </div>
+        <ng-container *ngIf="form.controls['includeSteam'].value">
+            <div class="col-4">
+                <select class="form-select" formControlName="steamUnit" (change)="saveChanges()">
+                    <option *ngFor="let massUnitOption of massUnitOptions" [ngValue]="massUnitOption.value">
+                        <span [innerHTML]="massUnitOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number">
+                    <span class="input-group-text">&dollar;/<span
+                            [innerHTML]="form.controls['steamUnit'].value | unitsDisplay"></span>
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="row mb-1">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeOtherFuel">
+                </div>
+                <input type="text" class="form-control disabled-input-label" [value]="'Other Fuels'" [disabled]="true">
+            </div>
+        </div>
+        <ng-container *ngIf="form.controls['includeOtherFuel'].value">
+            <div class="col-4">
+                <select class="form-select" formControlName="otherFuelUnit" (change)="saveChanges()">
+                    <option *ngFor="let energyUnitOption of energyUnitOptions" [ngValue]="energyUnitOption.value">
+                        <span [innerHTML]="energyUnitOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number">
+                    <span class="input-group-text">&dollar;/<span
+                            [innerHTML]="form.controls['otherFuelUnit'].value | unitsDisplay"></span></span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="row mb-1">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeCompressedAir">
+                </div>
+                <input type="text" class="form-control disabled-input-label" [value]="'Compressed Air'"
+                    [disabled]="true">
+            </div>
+        </div>
+        <ng-container *ngIf="form.controls['includeCompressedAir'].value">
+            <div class="col-4">
+                <select class="form-select" formControlName="compressedAirUnit" (change)="saveChanges()">
+                    <option *ngFor="let volumeGasOption of volumeGasOptions" [ngValue]="volumeGasOption.value">
+                        <span [innerHTML]="volumeGasOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number">
+                    <span class="input-group-text">&dollar;/<span
+                            [innerHTML]="form.controls['compressedAirUnit'].value | unitsDisplay"></span>
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</form>

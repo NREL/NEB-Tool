@@ -8,6 +8,7 @@ import { PrimaryContactFormComponent } from './primary-contact-form/primary-cont
 import { LocationFormComponent } from './location-form/location-form.component';
 import { AdditionalDetailsFormComponent } from './additional-details-form/additional-details-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HelperPipesModule } from '../helper-pipes/helper-pipes.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HelperPipesModule
   ],
   exports: [
     UnitsFormComponent,

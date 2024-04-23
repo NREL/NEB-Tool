@@ -3,3 +3,7 @@
     height: 100vh;
     background-color: #efefef;
 }
+
+.main-content{
+    height: calc(100vh - 4rem);
+}

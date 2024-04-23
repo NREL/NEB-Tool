@@ -1,11 +1,11 @@
 <div class="neb-container d-flex flex-column">
     <app-navbar></app-navbar>
     <ng-template [ngIf]="dataInitialized" [ngIfElse]="initializingDataBlock">
-        <div class="d-flex w-100 flex-grow-1 flex-fill overflow-hidden">
+        <div class="d-flex w-100">
             <div class="d-flex">
                 <app-sidebar></app-sidebar>
             </div>
-            <div class="w-100 overflow-auto" (click)="collapseSidebar()">
+            <div class="w-100 main-content" (click)="collapseSidebar()">
                 <router-outlet></router-outlet>
             </div>
         </div>

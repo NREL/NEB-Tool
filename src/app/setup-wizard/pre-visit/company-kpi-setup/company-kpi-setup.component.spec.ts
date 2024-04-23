@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CompanySetupComponent } from './company-setup.component';
+import { CompanyKpiSetupComponent } from './company-kpi-setup.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser, getNewIdbUser } from 'src/app/models/user';
 import { BehaviorSubject } from 'rxjs';
-import { SetupWizardService } from '../setup-wizard.service';
+import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { IdbProject } from 'src/app/models/project';
@@ -13,10 +13,15 @@ import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/
 import { FormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { CompanyKpiListComponent } from './company-kpi-list/company-kpi-list.component';
+import { AddKpiSearchComponent } from './add-kpi-search/add-kpi-search.component';
+import { KpiListFilterPipe } from './add-kpi-search/kpi-list-filter.pipe';
+import { KpiCategoryClassPipe } from './kpi-category-class.pipe';
+import { KpiUnitOptionPipe } from './kpi-unit-option.pipe';
 
-describe('CompanySetupComponent', () => {
-  let component: CompanySetupComponent;
-  let fixture: ComponentFixture<CompanySetupComponent>;
+describe('CompanyKpiSetupComponent', () => {
+  let component: CompanyKpiSetupComponent;
+  let fixture: ComponentFixture<CompanyKpiSetupComponent>;
   let userIdbService: Partial<UserIdbService> = {
     user: new BehaviorSubject<IdbUser>(getNewIdbUser())
   }
@@ -36,7 +41,7 @@ describe('CompanySetupComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
-      declarations: [CompanySetupComponent],
+      declarations: [CompanyKpiSetupComponent, CompanyKpiListComponent, AddKpiSearchComponent, KpiListFilterPipe, KpiCategoryClassPipe, KpiUnitOptionPipe],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
         { provide: SetupWizardService, useValue: setupWizardService },
@@ -46,7 +51,7 @@ describe('CompanySetupComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CompanySetupComponent);
+    fixture = TestBed.createComponent(CompanyKpiSetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
