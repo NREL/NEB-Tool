@@ -32,5 +32,11 @@ export const dbConfig: DBConfig = {
     storeConfig: { keyPath: 'id', autoIncrement: true },
     storeSchema: [
     ]
+  },
+  {
+    store: 'contact',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+    ]
   }]
 };

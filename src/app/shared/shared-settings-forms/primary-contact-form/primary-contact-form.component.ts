@@ -77,10 +77,10 @@ export class PrimaryContactFormComponent {
 
   getGeneralInformationForm(generalInformation: GeneralInformation): FormGroup {
     let form: FormGroup = this.formBuilder.group({
-      contactName: [generalInformation.contactName],
-      contactPhone: [generalInformation.contactPhone],
-      contactEmail: [generalInformation.contactEmail],
-      contactRole: [generalInformation.contactRole],
+      contactName: [],
+      contactPhone: [],
+      contactEmail: [],
+      contactRole: [],
     });
     return form;
   }
@@ -105,10 +105,10 @@ export class PrimaryContactFormComponent {
   }
 
   updateGeneralInformationFromForm(generalInformation: GeneralInformation): GeneralInformation {
-    generalInformation.contactName = this.form.controls['contactName'].value;
-    generalInformation.contactPhone = this.form.controls['contactPhone'].value;
-    generalInformation.contactEmail = this.form.controls['contactEmail'].value;
-    generalInformation.contactRole = this.form.controls['contactRole'].value;
+    // generalInformation.contactName = this.form.controls['contactName'].value;
+    // generalInformation.contactPhone = this.form.controls['contactPhone'].value;
+    // generalInformation.contactEmail = this.form.controls['contactEmail'].value;
+    // generalInformation.contactRole = this.form.controls['contactRole'].value;
     return generalInformation;
   }
 }

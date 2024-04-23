@@ -8,6 +8,8 @@ import { IdbFacility } from '../models/facility';
 import { IdbCompany } from '../models/company';
 import { IdbAssessment } from '../models/assessment';
 import { AssessmentIdbService } from './assessment-idb.service';
+import { ContactIdbService } from './contact-idb.service';
+import { IdbContact } from '../models/contact';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +17,20 @@ import { AssessmentIdbService } from './assessment-idb.service';
 export class DbChangesService {
 
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
-    private projectIdbService: ProjectIdbService, private assessmentIdbService: AssessmentIdbService) { }
+    private projectIdbService: ProjectIdbService, private assessmentIdbService: AssessmentIdbService,
+    private contactIdbService: ContactIdbService) { }
 
 
   //TODO: loading service messaging and success toast notification
   async deleteCompany(company: IdbCompany) {
+    //delete contacts
+    let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
+    let companyContacts: Array<IdbContact> = contacts.filter(contact => { return contact.companyId == company.guid });
+    await this.deleteContacts(companyContacts);
     //delete projects
     let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
     let companyProjects: Array<IdbProject> = projects.filter(project => { return project.companyId == company.guid });
-    await this.deleteProjects(companyProjects)
+    await this.deleteProjects(companyProjects);
     //delete assessments
     let assessments: Array<IdbAssessment> = this.assessmentIdbService.assessments.getValue();
     let companyAssessments: Array<IdbAssessment> = assessments.filter(assessment => { return assessment.companyId == company.guid });
@@ -38,6 +45,11 @@ export class DbChangesService {
   }
 
   async deleteFacility(facility: IdbFacility) {
+    //delete contacts?
+    //may want to just delete in company..
+    // let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
+    // let facilityContacts: Array<IdbContact> = contacts.filter(contact => { return contact.facilityId == facility.guid });
+    // await this.deleteContacts(facilityContacts);
     //delete projects
     let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
     let facilityProjects: Array<IdbProject> = projects.filter(project => { return project.facilityId == facility.guid });
@@ -80,5 +92,13 @@ export class DbChangesService {
       await firstValueFrom(this.facilityIdbService.deleteWithObservable(facilities[i].id));
     }
     await this.facilityIdbService.setFacilities();
+  }
+
+  async deleteContacts(contacts: Array<IdbContact>){
+    for (let i = 0; i < contacts.length; i++) {
+      await firstValueFrom(this.contactIdbService.deleteWithObservable(contacts[i].id));
+    }
+    await this.contactIdbService.setContacts();
+
   }
 }

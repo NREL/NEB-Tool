@@ -7,6 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { IdbUser } from './models/user';
 import { SharedDataService } from './shared/shared-services/shared-data.service';
 import { AssessmentIdbService } from './indexed-db/assessment-idb.service';
+import { ContactIdbService } from './indexed-db/contact-idb.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent {
     private facilityIdbService: FacilityIdbService, private projectIdbService: ProjectIdbService,
     private router: Router,
     private sharedDataService: SharedDataService,
-    private assessmentIdbService: AssessmentIdbService) {
+    private assessmentIdbService: AssessmentIdbService,
+    private contactIdbService: ContactIdbService) {
   }
 
   async ngOnInit() {
@@ -38,6 +40,9 @@ export class AppComponent {
     //companies
     await this.companyIdbService.setCompanies();
     console.log('companies init..');
+    //companies
+    await this.contactIdbService.setContacts();
+    console.log('contacts init..');
     //facilities
     await this.facilityIdbService.setFacilities();
     console.log('facilities init..');
@@ -61,8 +66,8 @@ export class AppComponent {
     }
   }
 
-  collapseSidebar(){
-    if(this.sharedDataService.sidebarOpen.getValue() == true){
+  collapseSidebar() {
+    if (this.sharedDataService.sidebarOpen.getValue() == true) {
       this.sharedDataService.sidebarOpen.next(false);
     }
   }
