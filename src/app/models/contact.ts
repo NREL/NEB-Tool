@@ -5,11 +5,15 @@ export interface IdbContact extends IdbEntry {
     phone: string,
     email: string,
     role: string,
+    team: string,
     guid: string,
     companyId: string,
     facilityIds: Array<string>,
     assessmentIds: Array<string>,
-    userId: string
+    userId: string,
+    focusArea: string,
+    notes: string,
+    isPrimary: boolean
 }
 
 export function getNewIdbContact(userId: string, companyId: string): IdbContact {
@@ -23,6 +27,10 @@ export function getNewIdbContact(userId: string, companyId: string): IdbContact 
         assessmentIds: [],
         phone: undefined,
         email: undefined,
-        role: undefined
+        role: undefined,
+        team: undefined,
+        focusArea: undefined,
+        notes: undefined,
+        isPrimary: false
     }
 }

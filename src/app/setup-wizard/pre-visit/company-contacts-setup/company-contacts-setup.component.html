@@ -14,77 +14,106 @@
                         </button>
                     </div>
                 </div>
-                <ng-template [ngIf]="contacts.length != 0" [ngIfElse]="noContactsBlock">
-                    <div class="accordion" id="contactAccordion">
-                        <div class="accordion-item" *ngFor="let contact of contacts; let index = index;">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    [attr.data-bs-target]="'#'+contact.guid" aria-expanded="true"
-                                    [attr.aria-controls]="contact.guid"
-                                    [ngClass]="{'collapsed': accordionIndex != index}"
-                                    (click)="setAccordionIndex(index)">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div class="p-0">
-                                            <fa-icon [icon]="faUser"></fa-icon>
-                                            {{contact.name}}
-                                        </div>
+                <div class="accordion" id="contactAccordion">
+                    <div class="accordion-item" *ngFor="let contact of contacts; let index = index;">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#'+contact.guid" aria-expanded="true"
+                                [attr.aria-controls]="contact.guid" [ngClass]="{'collapsed': accordionIndex != index}"
+                                (click)="setAccordionIndex(index)">
+                                <div class="d-flex justify-content-between w-100">
+                                    <div class="p-0">
+                                        <fa-icon [icon]="faUser"></fa-icon>
+                                        {{contact.name}}
                                     </div>
-                                </button>
-                            </h2>
-                            <div [id]="contact.guid" class="accordion-collapse collapse"
-                                data-bs-parent="#contactAccordion" [ngClass]="{'show': accordionIndex == index}">
-                                <div class="accordion-body">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <form>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label" for="name">Name</label>
-                                                    <div class="col-sm-7">
-                                                        <input name="name" type="text" class="form-control"
-                                                            [(ngModel)]="contact.name" id="name">
+                                </div>
+                            </button>
+                        </h2>
+                        <div [id]="contact.guid" class="accordion-collapse collapse" data-bs-parent="#contactAccordion"
+                            [ngClass]="{'show': accordionIndex == index}">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form>
+                                            <div class="row mb-1">
+                                                <label class="col-sm-5 col-form-label" for="name">Name</label>
+                                                <div class="col-sm-7">
+                                                    <input name="name" type="text" class="form-control"
+                                                        [(ngModel)]="contact.name" id="name">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <label class="col-sm-5 col-form-label" for="phone">Phone Number</label>
+                                                <div class="col-sm-7">
+                                                    <div class="input-group">
+                                                        <input type="tel" class="form-control"
+                                                            [(ngModel)]="contact.phone" (input)="saveChanges()"
+                                                            minlength="1" maxlength="10" id="phone" name="phone">
                                                     </div>
                                                 </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label" for="phone">Phone Number</label>
-                                                    <div class="col-sm-7">
-                                                        <div class="input-group">
-                                                            <input type="tel" class="form-control"
-                                                                [(ngModel)]="contact.phone" (input)="saveChanges()"
-                                                                minlength="1" maxlength="10" id="phone" name="phone">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label"
-                                                        for="email">Email</label>
-                                                    <div class="col-sm-7">
-                                                        <div class="input-group">
-                                                            <input type="email" class="form-control" [(ngModel)]="contact.email" (input)="saveChanges()"
+                                            </div>
+                                            <div class="row mb-1">
+                                                <label class="col-sm-5 col-form-label" for="email">Email</label>
+                                                <div class="col-sm-7">
+                                                    <div class="input-group">
+                                                        <input type="email" class="form-control"
+                                                            [(ngModel)]="contact.email" (input)="saveChanges()"
                                                             minlength="1" maxlength="85" id="email" name="email">
-                                                        </div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-12">
-                                            <hr>
-                                        </div>
-                                        <div class="col-12 text-end">
-                                            <button class="btn btn-sm btn-danger" (click)="openDeleteModal(contact)">
-                                                <fa-icon [icon]="faTrash"></fa-icon> Delete
-                                            </button>
-                                        </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <label class="col-sm-5 col-form-label" for="role">Role</label>
+                                                <div class="col-sm-7">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="contact.role" (input)="saveChanges()"
+                                                            minlength="1" maxlength="85" id="role" name="role"
+                                                            [disabled]="contact.isPrimary">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <label class="col-sm-5 col-form-label" for="team">Team</label>
+                                                <div class="col-sm-7">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="contact.team" (input)="saveChanges()"
+                                                            minlength="1" maxlength="85" id="team" name="team">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <label class="col-sm-5 col-form-label" for="focusArea">Focus
+                                                    Area</label>
+                                                <div class="col-sm-7">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                            [(ngModel)]="contact.focusArea" (input)="saveChanges()"
+                                                            minlength="1" maxlength="85" id="focusArea"
+                                                            name="focusArea">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr>
+                                    </div>
+                                    <div class="col-12 text-end">
+                                        <button *ngIf="!contact.isPrimary" class="btn btn-sm btn-danger"
+                                            (click)="openDeleteModal(contact)">
+                                            <fa-icon [icon]="faTrash"></fa-icon> Delete
+                                        </button>
+                                        <span class="alert alert-info small p-1" *ngIf="contact.isPrimary">
+                                            Primary contact cannot be deleted.
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </ng-template>
-                <ng-template #noContactsBlock>
-                    <div class="alert alert-info text-center">
-                        No team members added. Click "Add Team Member" to add a team member to this company.
-                    </div>
-                </ng-template>
+                </div>
             </div>
         </div>
     </div>

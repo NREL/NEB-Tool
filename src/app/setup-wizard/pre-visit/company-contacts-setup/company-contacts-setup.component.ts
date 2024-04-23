@@ -40,6 +40,9 @@ export class CompanyContactsSetupComponent {
       this.setupWizardService.company.next(newIdbCompany);
     }
     this.contacts = this.setupWizardService.contacts.getValue();
+    if (this.contacts.length == 0) {
+      this.addPrimaryContact();
+    }
   }
 
   goBack() {
@@ -84,4 +87,13 @@ export class CompanyContactsSetupComponent {
     this.saveChanges();
   }
 
+
+  addPrimaryContact() {
+    let company: IdbCompany = this.setupWizardService.company.getValue();
+    let newContact: IdbContact = getNewIdbContact(company.userId, company.guid);
+    newContact.isPrimary = true;
+    newContact.role = 'Primary Contact';
+    this.contacts.push(newContact);
+    this.saveChanges();
+  }
 }
