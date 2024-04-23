@@ -1,3 +1,4 @@
+import { ProcessEquipment } from "../shared/constants/processEquipment";
 import { GeneralInformation, getGeneralInformation } from "./generalInformation";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 import { UnitSettings, getDefaultUnitSettings } from "./unitSettings";
@@ -7,8 +8,9 @@ export interface IdbFacility extends IdbEntry {
     companyId: string,
     userId: string,
     unitSettings: UnitSettings,
-    generalInformation: GeneralInformation
-    displayProjects: boolean
+    generalInformation: GeneralInformation,
+    displayProjects: boolean,
+    processEquipment: Array<ProcessEquipment>
 }
 
 export function getNewIdbFacility(userId: string, companyId: string): IdbFacility {
@@ -21,6 +23,7 @@ export function getNewIdbFacility(userId: string, companyId: string): IdbFacilit
         companyId: companyId,
         unitSettings: defaultSettings,
         generalInformation: generalInformation,
-        displayProjects: true
+        displayProjects: true,
+        processEquipment: []
     }
 }

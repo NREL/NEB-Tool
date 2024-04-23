@@ -19,6 +19,9 @@ export class CompanyKpiListComponent {
   companySub: Subscription;
   kpi_categories: Array<KPI_Category> = KPI_categories;
 
+
+  kpiToDelete: KeyPerformanceIndicator;
+  displayDeleteModal: boolean = false;
   constructor(private setupWizardService: SetupWizardService) {
   }
 
@@ -39,12 +42,23 @@ export class CompanyKpiListComponent {
   setAccordionIndex(num: number) {
     this.accordionIndex = num;
   }
-
-  removeKPI(kpi: KeyPerformanceIndicator) {
-    this.company.keyPerformanceIndicators = this.company.keyPerformanceIndicators.filter(_kpi => {
-      return kpi.kpiOptionValue != _kpi.kpiOptionValue;
-    });
-    this.saveChanges();
+  
+  openDeleteModal(kpi: KeyPerformanceIndicator) {
+    this.kpiToDelete = kpi;
+    this.displayDeleteModal = true;
   }
 
+  closeDeleteModal(){
+      this.displayDeleteModal = false;
+      this.kpiToDelete = undefined;
+  }
+
+  removeKPI() {
+    this.company.keyPerformanceIndicators = this.company.keyPerformanceIndicators.filter(_kpi => {
+      return this.kpiToDelete.kpiOptionValue != _kpi.kpiOptionValue;
+    });
+    this.closeDeleteModal();
+    this.setAccordionIndex(0);
+    this.saveChanges();
+  }
 }

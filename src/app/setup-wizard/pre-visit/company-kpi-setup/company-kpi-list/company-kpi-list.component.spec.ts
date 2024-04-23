@@ -6,6 +6,7 @@ import { IdbFacility } from 'src/app/models/facility';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('CompanyKpiListComponent', () => {
   let component: CompanyKpiListComponent;
@@ -17,6 +18,7 @@ describe('CompanyKpiListComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [FontAwesomeModule],
       declarations: [CompanyKpiListComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService }

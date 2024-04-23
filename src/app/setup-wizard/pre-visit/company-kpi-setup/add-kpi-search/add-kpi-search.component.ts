@@ -63,7 +63,6 @@ export class AddKpiSearchComponent {
 
   confirmCreate() {
     let customKPI: KeyPerformanceIndicator = getCustomKeyPerformanceIndicator(this.customKPIName);
-    console.log(customKPI);
     this.company.keyPerformanceIndicators.push(customKPI);
     this.closeCustomKPIModal();
   }
