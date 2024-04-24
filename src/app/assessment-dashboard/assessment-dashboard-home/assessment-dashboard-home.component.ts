@@ -72,7 +72,7 @@ export class AssessmentDashboardHomeComponent {
       return _facility.guid == this.assessment.facilityId;
     });
     this.setupWizardService.facility.next(facility);
-    this.setupWizardService.assessment.next(this.assessment);
+    this.setupWizardService.assessments.next([this.assessment]);
     let assessmentProjects: Array<IdbProject> = this.projects.filter(_project => {
       return _project.assessmentId == this.assessment.guid;
     })

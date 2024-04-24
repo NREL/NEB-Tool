@@ -53,15 +53,9 @@ export class ReviewSetupComponent {
       newIdbFacility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
       this.setupWizardService.facility.next(newIdbFacility);
     }
-    let newAssessment: IdbAssessment = this.setupWizardService.assessment.getValue();
-    if (!newAssessment) {
-      newAssessment = getNewIdbAssessment(newIdbFacility.userId, newIdbFacility.companyId, newIdbFacility.guid);
-      this.setupWizardService.assessment.next(newAssessment);
-    }
     //--
     this.company = this.setupWizardService.company.getValue();
     this.facility = this.setupWizardService.facility.getValue();
-    this.assessment = this.setupWizardService.assessment.getValue();
     this.projects = this.setupWizardService.projects.getValue();
   }
 
