@@ -12,3 +12,8 @@
 .bold{
     font-weight: bold;
 }
+
+
+a.click-link:hover{
+    cursor: pointer;
+}

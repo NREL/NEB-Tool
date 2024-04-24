@@ -95,6 +95,15 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row mb-1">
+                                                <label class="col-sm-5 col-form-label"
+                                                    for="notes">Notes</label>
+                                                <div class="col-sm-7">
+                                                    <textarea class="form-control" name="notes"
+                                                        [(ngModel)]="contact.notes"
+                                                        (input)="saveChanges()"></textarea>
+                                                </div>
+                                            </div>
                                         </form>
                                     </div>
                                     <div class="col-12">

@@ -86,7 +86,7 @@
                                                 </div>
                                                 <div class="row mb-1">
                                                     <label class="col-sm-5 col-form-label"
-                                                        for="baselineUsePerYear">Notes on the process</label>
+                                                        for="notes">Notes on the process</label>
                                                     <div class="col-sm-7">
                                                         <textarea class="form-control" name="notes"
                                                             [(ngModel)]="processEquipment.notes"
@@ -169,5 +169,5 @@
     </div>
 </div>
 
-<app-contact-modal *ngIf="displayContactModal" (selectedContact)="setContact($event)"
-    (cancelContact)="closeContactModal()" [contactId]="editContactId"></app-contact-modal>
+<app-contact-modal *ngIf="displayContactModal" (emitSelectedContact)="setContact($event)"
+    (emitCancelContact)="closeContactModal()" [contactId]="editContactId"></app-contact-modal>
