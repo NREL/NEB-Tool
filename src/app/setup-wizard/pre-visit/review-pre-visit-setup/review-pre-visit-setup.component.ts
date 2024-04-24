@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { IdbCompany } from 'src/app/models/company';
+import { SetupWizardService } from '../../setup-wizard.service';
 
 @Component({
   selector: 'app-review-pre-visit-setup',
@@ -13,10 +15,17 @@ export class ReviewPreVisitSetupComponent {
   faChevronLeft: IconDefinition = faChevronLeft;
   faCircleCheck: IconDefinition = faCircleCheck;
 
-  constructor(private router: Router) {
-
+  company: IdbCompany;
+  constructor(private router: Router, private setupWizardService: SetupWizardService) {
   }
 
+  ngOnInit() {
+    this.company = this.setupWizardService.company.getValue();
+    if (!this.company) {
+      this.setupWizardService.initializeDataForDev();
+      this.company = this.setupWizardService.company.getValue();
+    }
+  }
 
   goBack() {
     this.router.navigateByUrl('/setup-wizard/process-equipment');
@@ -24,5 +33,9 @@ export class ReviewPreVisitSetupComponent {
 
   goToFacilitySetup() {
     this.router.navigateByUrl('/setup-wizard/review-pre-visit');
+  }
+
+  submitPreVisit(){
+    
   }
 }

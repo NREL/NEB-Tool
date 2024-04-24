@@ -6,13 +6,47 @@
                     <fa-icon [icon]="faCircleCheck"></fa-icon> Review Pre-Visit
                 </h5>
                 <hr>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-warning text-center">
-                            Review Pre-Visit Coming Soon.
-                        </div>
-                    </div>
-                </div>
+                <!--TODO: Finish adding content..-->
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <th class="w-25">
+                                Company Name
+                            </th>
+                            <td>
+                                {{company.generalInformation.name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Address
+                            </td>
+                            <td>
+                                &mdash;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                NAICs
+                            </td>
+                            <td>
+                                <ng-container *ngIf="!company.generalInformation.naics1">
+                                    &mdash;
+                                </ng-container>
+                                <ng-container *ngIf="company.generalInformation.naics1 && !company.generalInformation.naics2 && !company.generalInformation.naics3">
+                                    {{company.generalInformation.naics1}}
+                                </ng-container>
+                                <ng-container *ngIf="company.generalInformation.naics2 && !company.generalInformation.naics3">
+                                    {{company.generalInformation.naics2}}
+                                </ng-container>
+                                <ng-container *ngIf="company.generalInformation.naics3">
+                                    {{company.generalInformation.naics3}}
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h6>Company Tracked Utilities</h6>
             </div>
         </div>
     </div>
@@ -23,7 +57,7 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button [disabled]="true" class="btn btn-success" (click)="goToFacilitySetup()">
+        <button class="btn btn-success" (click)="submitPreVisit()">
             Submit Pre-Visit
         </button>
     </div>
