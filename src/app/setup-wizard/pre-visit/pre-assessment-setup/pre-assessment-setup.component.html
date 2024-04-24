@@ -32,25 +32,42 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <form>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <label for="assessmentName">Assessment Name</label>
+                                                <div class="row mb-1">
+                                                    <label class="col-sm-5 col-form-label"
+                                                        for="assessmentName">Assessment Name</label>
+                                                    <div class="col-sm-7">
                                                         <input name="assessmentName" type="text" class="form-control"
                                                             [(ngModel)]="assessment.name" (input)="saveChanges()"
                                                             minlength="1" maxlength="42" id="assessmentName">
                                                     </div>
-                                                    <div class="col-12">
-                                                        <label for="equipmentType">Equipment Type</label>
-                                                        <select name="equipmentType" class="form-select"
-                                                            id="equipmentType" [(ngModel)]="assessment.equipmentType">
-                                                            <option *ngFor="let equipmentType of equipmentTypeOptions"
-                                                                [ngValue]="equipmentType">
-                                                                {{equipmentType}}
-                                                            </option>
-                                                        </select>
+                                                </div>
+
+                                                <div class="row mb-1">
+                                                    <label class="col-sm-5 col-form-label" for="equipmentId">Process
+                                                        Equipment</label>
+                                                    <div class="col-sm-7">
+                                                        <ng-template [ngIf]="processEquipmentOptions.length != 0" [ngIfElse]="noEquipmentBlock">
+                                                            <select name="equipmentId" class="form-select"
+                                                                id="equipmentId" [(ngModel)]="assessment.equipmentId">
+                                                                <option
+                                                                    *ngFor="let processEquipment of processEquipmentOptions"
+                                                                    [ngValue]="processEquipment.guid">
+                                                                    {{processEquipment.equipmentName}}
+                                                                </option>
+                                                            </select>
+                                                        </ng-template>
+                                                        <ng-template #noEquipmentBlock>
+                                                            <div class="alert alert-warning mb-0 p-1">
+                                                                No process equipment found.
+                                                            </div>
+                                                        </ng-template>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <label for="energyUse">Annual Energy Use</label>
+                                                </div>
+
+                                                <div class="row mb-1">
+                                                    <label class="col-sm-5 col-form-label" for="energyUse">Annual Energy
+                                                        Use</label>
+                                                    <div class="col-sm-7">
                                                         <div class="input-group">
                                                             <input name="energy" type="number" class="form-control"
                                                                 [(ngModel)]="assessment.energyUse"
@@ -58,8 +75,12 @@
                                                             <span class="input-group-text">MMBtu/yr</span>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <label for="cost">Annual Costs</label>
+                                                </div>
+
+                                                <div class="row mb-1">
+                                                    <label class="col-sm-5 col-form-label" for="cost">Annual
+                                                        Costs</label>
+                                                    <div class="col-sm-7">
                                                         <div class="input-group">
                                                             <input name="cost" type="number" class="form-control"
                                                                 [(ngModel)]="assessment.cost" (input)="saveChanges()"

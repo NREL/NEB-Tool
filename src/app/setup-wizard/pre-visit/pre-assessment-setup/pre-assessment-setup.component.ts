@@ -22,7 +22,7 @@ export class PreAssessmentSetupComponent {
   faPlus: IconDefinition = faPlus;
   faTrash: IconDefinition = faTrash;
   
-  equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
+  // equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
   assessments: Array<IdbAssessment>;
 
   accordionIndex: number = 0;

@@ -1,4 +1,3 @@
-import { EquipmentType } from "../shared/constants/equipmentTypes";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
 export interface IdbAssessment extends IdbEntry {
@@ -6,7 +5,7 @@ export interface IdbAssessment extends IdbEntry {
     userId: string,
     facilityId: string,
     companyId: string,
-    equipmentType: EquipmentType,
+    equipmentId: string,
     energyUse: number,
     cost: number,
     energySavings: number,
@@ -23,7 +22,7 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
-        equipmentType: undefined,
+        equipmentId: undefined,
         energyUse: undefined,
         cost: undefined,
         energySavings: undefined,
