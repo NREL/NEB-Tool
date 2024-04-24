@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faC, faChevronLeft, faChevronRight, faFileLines, faListCheck, faPlus, faScrewdriverWrench, faToolbox, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
+import { IconDefinition, faChevronLeft, faChevronRight, faPlus, faScrewdriverWrench, faToolbox, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbFacility } from 'src/app/models/facility';
+import { IdbContact } from 'src/app/models/contact';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -21,14 +21,17 @@ export class PreAssessmentSetupComponent {
   faToolbox: IconDefinition = faToolbox;
   faPlus: IconDefinition = faPlus;
   faTrash: IconDefinition = faTrash;
-  
-  // equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
-  assessments: Array<IdbAssessment>;
+  faUser: IconDefinition = faUser;
 
+  assessments: Array<IdbAssessment>;
+  contacts: Array<IdbContact>;
   accordionIndex: number = 0;
   processEquipmentOptions: Array<ProcessEquipment>;
   displayDeleteModal: boolean = false;
   assessmentToDelete: IdbAssessment;
+  displayContactModal: boolean = false;
+  contactAssessmentIndex: number;
+  editContactId: string;
   constructor(private router: Router, private setupWizardService: SetupWizardService) {
   }
 
@@ -41,6 +44,7 @@ export class PreAssessmentSetupComponent {
     this.assessments = this.setupWizardService.assessments.getValue();
     let facility: IdbFacility = this.setupWizardService.facility.getValue();
     this.processEquipmentOptions = facility.processEquipment;
+    this.contacts = this.setupWizardService.contacts.getValue();
   }
 
   goToProjects() {
@@ -87,6 +91,33 @@ export class PreAssessmentSetupComponent {
     });
     this.closeDeleteModal();
     this.setAccordionIndex(0);
+    this.saveChanges();
+  }
+
+  openContactModal(assessmentIndex: number, contactId: string) {
+    this.contactAssessmentIndex = assessmentIndex;
+    this.editContactId = contactId;
+    this.displayContactModal = true;
+  }
+
+  closeContactModal() {
+    this.displayContactModal = false;
+    this.contactAssessmentIndex = undefined;
+    this.editContactId = undefined;
+  }
+
+  setContact(contactId: string) {
+    this.assessments[this.contactAssessmentIndex].contactId = contactId;
+    this.closeContactModal();
+  }
+
+  setProcessEquipment(assessment: IdbAssessment){
+    let selectedProcessEquipment: ProcessEquipment = this.processEquipmentOptions.find(processEquipment => {
+      return processEquipment.guid == assessment.equipmentId;
+    });
+    if(selectedProcessEquipment && selectedProcessEquipment.contactId){
+      assessment.contactId = selectedProcessEquipment.contactId;
+    }
     this.saveChanges();
   }
 

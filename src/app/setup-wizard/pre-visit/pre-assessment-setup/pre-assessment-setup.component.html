@@ -48,7 +48,7 @@
                                                     <div class="col-sm-7">
                                                         <ng-template [ngIf]="processEquipmentOptions.length != 0" [ngIfElse]="noEquipmentBlock">
                                                             <select name="equipmentId" class="form-select"
-                                                                id="equipmentId" [(ngModel)]="assessment.equipmentId">
+                                                                id="equipmentId" [(ngModel)]="assessment.equipmentId" (change)="setProcessEquipment(assessment)">
                                                                 <option
                                                                     *ngFor="let processEquipment of processEquipmentOptions"
                                                                     [ngValue]="processEquipment.guid">
@@ -97,17 +97,17 @@
                                         <div class="col-12">
                                             <div class="d-flex justify-content-between">
                                                 <div>
-                                                    <!-- <button class="btn btn-sm btn-secondary"
-                                                        (click)="openContactModal(index, processEquipment.contactId)">
+                                                    <button class="btn btn-sm btn-secondary"
+                                                        (click)="openContactModal(index, assessment.contactId)">
                                                         <fa-icon [icon]="faUser"></fa-icon>
-                                                        <ng-template [ngIf]="processEquipment.contactId"
+                                                        <ng-template [ngIf]="assessment.contactId"
                                                             [ngIfElse]="noContact">
-                                                            {{processEquipment.contactId | contactName: contacts}}
+                                                            {{assessment.contactId | contactName: contacts}}
                                                         </ng-template>
                                                         <ng-template #noContact>
-                                                            Select Team Member
+                                                            Select Team Members
                                                         </ng-template>
-                                                    </button> -->
+                                                    </button>
                                                 </div>
                                                 <div>
                                                     <button class="btn btn-sm btn-danger"
@@ -163,3 +163,7 @@
             Assessment</button>
     </div>
 </div>
+
+
+<app-contact-modal *ngIf="displayContactModal" (emitSelectedContact)="setContact($event)"
+    (emitCancelContact)="closeContactModal()" [contactId]="editContactId"></app-contact-modal>

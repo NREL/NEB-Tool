@@ -56,8 +56,27 @@ export class SetupWizardService {
       let newContact: IdbContact = getNewIdbContact(company.userId, company.guid);
       newContact.isPrimary = true;
       newContact.role = 'Primary Contact';
-      newContact.name = 'Primary Contact';
+      newContact.name = 'Mark Root';
+      newContact.email = 'rootrm@ornl.gov';
+      newContact.phone = '9524128045';
+      newContact.team = 'Lead';
       contacts.push(newContact);
+      let secondContact: IdbContact = getNewIdbContact(company.userId, company.guid);
+      secondContact.role = 'Maintenance Lead';
+      secondContact.team = 'Maintenance';
+      secondContact.name = 'Jerry Hill';
+      secondContact.email = 'j.hill@fakeCompany.org';
+      secondContact.notes = '2nd shift maintenance lead';
+      secondContact.phone = '9522333006';
+      contacts.push(secondContact);
+      let thirdContact: IdbContact = getNewIdbContact(company.userId, company.guid);
+      thirdContact.role = 'Machine Engineer';
+      thirdContact.team = 'Operations';
+      thirdContact.name = 'Kathy Costa';
+      thirdContact.email = 'k.costa@fakeCompany.org';
+      thirdContact.notes = '';
+      thirdContact.phone = '94124115088';
+      contacts.push(thirdContact);
       this.contacts.next(contacts);
     }
   }
