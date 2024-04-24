@@ -9,6 +9,7 @@
                     (click)="setAccordionIndex(index)">
                     <div class="d-flex justify-content-between w-100">
                         <div class="p-0">
+                            <fa-icon [icon]="faBullseye" class="pe-1"></fa-icon>
                             <ng-template [ngIf]="!kpi.isCustom" [ngIfElse]="customNameBlock">
                                 <span [innerHTML]="kpi.kpiOptionValue | kpiLabel"></span>
                             </ng-template>

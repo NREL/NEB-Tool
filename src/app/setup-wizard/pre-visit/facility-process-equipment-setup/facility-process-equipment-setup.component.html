@@ -3,13 +3,13 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faScrewdriverWrench"></fa-icon> Process Equipment
+                    <fa-icon [icon]="faDiagramProject"></fa-icon> Process Equipment
                 </h5>
                 <hr>
                 <div class="d-flex w-100 justify-content-end pb-2">
                     <div class="p-0">
                         <button class="btn btn-outline-success" (click)="addEquipment()">
-                            <fa-icon [icon]="faPlus"></fa-icon>
+                            <fa-icon [icon]="faPlus" class="pe-1"></fa-icon>
                             Add Equipment
                         </button>
                     </div>
@@ -24,12 +24,9 @@
                                     [attr.aria-controls]="processEquipment.guid"
                                     [ngClass]="{'collapsed': accordionIndex != index}"
                                     (click)="setAccordionIndex(index)">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div class="p-0">
-                                            {{processEquipment.equipmentName}}
-                                        </div>
-                                    </div>
-
+                                    <fa-icon [icon]="processEquipment.equipmentType | equipmentTypeIcon"
+                                        class="pe-1"></fa-icon>
+                                    {{processEquipment.equipmentName}}
                                 </button>
                             </h2>
                             <div [id]="processEquipment.guid" class="accordion-collapse collapse"
@@ -48,13 +45,26 @@
                                                     </div>
                                                 </div>
                                                 <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label" for="equipmentType">Energy
-                                                        System</label>
+                                                    <label class="col-sm-5 col-form-label" for="equipmentType">Equipment
+                                                        Type</label>
                                                     <div class="col-sm-7">
                                                         <select name="equipmentType" class="form-select"
                                                             id="equipmentType"
                                                             [(ngModel)]="processEquipment.equipmentType">
                                                             <option *ngFor="let option of equipmentTypeOptions"
+                                                                [ngValue]="option">
+                                                                {{option}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-1">
+                                                    <label class="col-sm-5 col-form-label" for="utilityType">Utility
+                                                        Type</label>
+                                                    <div class="col-sm-7">
+                                                        <select name="utilityType" class="form-select" id="utilityType"
+                                                            [(ngModel)]="processEquipment.utilityType">
+                                                            <option *ngFor="let option of utilityTypeOptions"
                                                                 [ngValue]="option">
                                                                 {{option}}
                                                             </option>

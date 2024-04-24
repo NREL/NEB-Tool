@@ -3,43 +3,110 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faListCheck"></fa-icon> Pre-Assessment Setup
+                    <fa-icon [icon]="faToolbox"></fa-icon> Pre-Assessments
                 </h5>
                 <hr>
-                <form>
-                    <div class="row">
-                        <div class="col-12">
-                            <label for="assessmentName">Assessment Name</label>
-                            <input name="assessmentName" type="text" class="form-control" [(ngModel)]="assessment.name"
-                                (input)="saveChanges()" minlength="1" maxlength="42" id="assessmentName">
-                        </div>
-                        <div class="col-12">
-                            <label for="equipmentType">Equipment Type</label>
-                            <select name="equipmentType" class="form-select" id="equipmentType"
-                                [(ngModel)]="assessment.equipmentType">
-                                <option *ngFor="let equipmentType of equipmentTypeOptions" [ngValue]="equipmentType">
-                                    {{equipmentType}}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-12">
-                            <label for="energyUse">Annual Energy Use</label>
-                            <div class="input-group">
-                                <input name="energy" type="number" class="form-control"
-                                    [(ngModel)]="assessment.energyUse" (input)="saveChanges()" id="energyUse">
-                                <span class="input-group-text">MMBtu/yr</span>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label for="cost">Annual Costs</label>
-                            <div class="input-group">
-                                <input name="cost" type="number" class="form-control" [(ngModel)]="assessment.cost"
-                                    (input)="saveChanges()" id="cost">
-                                <span class="input-group-text">&dollar;</span>
+                <div class="d-flex w-100 justify-content-end pb-2">
+                    <div class="p-0">
+                        <button class="btn btn-outline-success" (click)="addAssessment()">
+                            <fa-icon [icon]="faPlus"></fa-icon>
+                            Add Pre-Assessment
+                        </button>
+                    </div>
+                </div>
+                <ng-template [ngIf]="assessments.length != 0" [ngIfElse]="noAssessmentsBlock">
+                    <div class="accordion" id="assessmentAccordion">
+                        <div class="accordion-item" *ngFor="let assessment of assessments; let index = index;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    [attr.data-bs-target]="'#'+assessment.guid" aria-expanded="true"
+                                    [attr.aria-controls]="assessment.guid"
+                                    [ngClass]="{'collapsed': accordionIndex != index}"
+                                    (click)="setAccordionIndex(index)">
+                                    <fa-icon [icon]="faScrewdriverWrench" class="me-1"></fa-icon> {{assessment.name}}
+                                </button>
+                            </h2>
+                            <div [id]="assessment.guid" class="accordion-collapse collapse"
+                                data-bs-parent="#assessmentAccordion" [ngClass]="{'show': accordionIndex == index}">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label for="assessmentName">Assessment Name</label>
+                                                        <input name="assessmentName" type="text" class="form-control"
+                                                            [(ngModel)]="assessment.name" (input)="saveChanges()"
+                                                            minlength="1" maxlength="42" id="assessmentName">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="equipmentType">Equipment Type</label>
+                                                        <select name="equipmentType" class="form-select"
+                                                            id="equipmentType" [(ngModel)]="assessment.equipmentType">
+                                                            <option *ngFor="let equipmentType of equipmentTypeOptions"
+                                                                [ngValue]="equipmentType">
+                                                                {{equipmentType}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="energyUse">Annual Energy Use</label>
+                                                        <div class="input-group">
+                                                            <input name="energy" type="number" class="form-control"
+                                                                [(ngModel)]="assessment.energyUse"
+                                                                (input)="saveChanges()" id="energyUse">
+                                                            <span class="input-group-text">MMBtu/yr</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="cost">Annual Costs</label>
+                                                        <div class="input-group">
+                                                            <input name="cost" type="number" class="form-control"
+                                                                [(ngModel)]="assessment.cost" (input)="saveChanges()"
+                                                                id="cost">
+                                                            <span class="input-group-text">&dollar;</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <!-- <button class="btn btn-sm btn-secondary"
+                                                        (click)="openContactModal(index, processEquipment.contactId)">
+                                                        <fa-icon [icon]="faUser"></fa-icon>
+                                                        <ng-template [ngIf]="processEquipment.contactId"
+                                                            [ngIfElse]="noContact">
+                                                            {{processEquipment.contactId | contactName: contacts}}
+                                                        </ng-template>
+                                                        <ng-template #noContact>
+                                                            Select Team Member
+                                                        </ng-template>
+                                                    </button> -->
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-danger"
+                                                        (click)="openDeleteModal(assessment)">
+                                                        <fa-icon [icon]="faTrash"></fa-icon> Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                </ng-template>
+                <ng-template #noAssessmentsBlock>
+                    <div class="alert alert-info text-center">
+                        No Pre-Assessments added. Click "Add Pre-Assessment" to prepare a pre-assessment.
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -56,3 +123,22 @@
         </button>
     </div>
 </nav>
+
+
+<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div class="popup" [ngClass]="{'open': displayDeleteModal }">
+    <div class="popup-header">Delete Pre-Assessment
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-danger">
+            Are you sure you want to delete this pre-assessment? Changes will be lost.
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" (click)="removeAssessment()"><fa-icon [icon]="faTrash"></fa-icon> Delete
+            Assessment</button>
+    </div>
+</div>

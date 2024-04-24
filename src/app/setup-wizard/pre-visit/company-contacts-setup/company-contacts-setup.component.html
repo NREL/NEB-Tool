@@ -21,12 +21,8 @@
                                 [attr.data-bs-target]="'#'+contact.guid" aria-expanded="true"
                                 [attr.aria-controls]="contact.guid" [ngClass]="{'collapsed': accordionIndex != index}"
                                 (click)="setAccordionIndex(index)">
-                                <div class="d-flex justify-content-between w-100">
-                                    <div class="p-0">
-                                        <fa-icon [icon]="faUser"></fa-icon>
-                                        {{contact.name}}
-                                    </div>
-                                </div>
+                                <fa-icon [icon]="faUser" class="pe-1"></fa-icon>
+                                {{contact.name}}
                             </button>
                         </h2>
                         <div [id]="contact.guid" class="accordion-collapse collapse" data-bs-parent="#contactAccordion"
@@ -96,12 +92,10 @@
                                                 </div>
                                             </div>
                                             <div class="row mb-1">
-                                                <label class="col-sm-5 col-form-label"
-                                                    for="notes">Notes</label>
+                                                <label class="col-sm-5 col-form-label" for="notes">Notes</label>
                                                 <div class="col-sm-7">
                                                     <textarea class="form-control" name="notes"
-                                                        [(ngModel)]="contact.notes"
-                                                        (input)="saveChanges()"></textarea>
+                                                        [(ngModel)]="contact.notes" (input)="saveChanges()"></textarea>
                                                 </div>
                                             </div>
                                         </form>

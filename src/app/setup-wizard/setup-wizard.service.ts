@@ -16,7 +16,10 @@ export class SetupWizardService {
   company: BehaviorSubject<IdbCompany>;
   facility: BehaviorSubject<IdbFacility>;
   projects: BehaviorSubject<Array<IdbProject>>;
+  assessments: BehaviorSubject<Array<IdbAssessment>>;
+  //TODO: Remove
   assessment: BehaviorSubject<IdbAssessment>;
+  //
   contacts: BehaviorSubject<Array<IdbContact>>;
 
   setupContext: BehaviorSubject<SetupWizardContext>;
@@ -24,8 +27,11 @@ export class SetupWizardService {
   constructor(private userIdbService: UserIdbService) {
     this.company = new BehaviorSubject<IdbCompany>(undefined);
     this.facility = new BehaviorSubject<IdbFacility>(undefined);
-    this.projects = new BehaviorSubject<Array<IdbProject>>([]);
+    //TODO: Removew
     this.assessment = new BehaviorSubject<IdbAssessment>(undefined);
+    //
+    this.projects = new BehaviorSubject<Array<IdbProject>>([]);
+    this.assessments = new BehaviorSubject<Array<IdbAssessment>>([]);
     this.setupContext = new BehaviorSubject<SetupWizardContext>('full');
     this.contacts = new BehaviorSubject<Array<IdbContact>>([]);
   }
@@ -53,12 +59,6 @@ export class SetupWizardService {
       newContact.name = 'Primary Contact';
       contacts.push(newContact);
       this.contacts.next(contacts);
-    }
-
-    let assessment: IdbAssessment = this.assessment.getValue();
-    if (!assessment) {
-      assessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
-      this.assessment.next(assessment);
     }
   }
 }

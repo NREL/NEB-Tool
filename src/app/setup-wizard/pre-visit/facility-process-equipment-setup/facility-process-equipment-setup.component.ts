@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faPlus, faScrewdriverWrench, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faCube, faCubesStacked, faDiagramProject, faPlus, faScrewdriverWrench, faToolbox, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { ProcessEquipment, getNewProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbContact } from 'src/app/models/contact';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
+import { UtilityType, UtilityTypeOptions } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-facility-process-equipment-setup',
@@ -17,9 +18,10 @@ export class FacilityProcessEquipmentSetupComponent {
 
   accordionIndex: number = 0;
   equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
+  utilityTypeOptions: Array<UtilityType> = UtilityTypeOptions;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
-  faScrewdriverWrench: IconDefinition = faScrewdriverWrench;
+  faDiagramProject: IconDefinition = faDiagramProject;
   faTrash: IconDefinition = faTrash;
   faPlus: IconDefinition = faPlus;
   faUser: IconDefinition = faUser;
