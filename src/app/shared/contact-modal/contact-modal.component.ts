@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faCircleCheck, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
-import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
@@ -25,15 +23,13 @@ export class ContactModalComponent {
   faChevronLeft: IconDefinition = faChevronLeft;
   faUser: IconDefinition = faUser;
   selectedContact: IdbContact;
-  constructor(private contactIdbService: ContactIdbService, private router: Router, private setupWizardService: SetupWizardService) {
+  constructor(private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
-    if (this.router.url.includes('setup-wizard')) {
-      this.contacts = this.setupWizardService.contacts.getValue();
-    }
-    this.setSelectedContact();
     //TODO: get contact within dashboards..
+    this.contacts = this.setupWizardService.contacts.getValue();
+    this.setSelectedContact();
     setTimeout(() => {
       this.displayModal = true;
     }, 100)

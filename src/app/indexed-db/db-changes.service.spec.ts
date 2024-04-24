@@ -5,6 +5,7 @@ import { CompanyIdbService } from './company-idb.service';
 import { ProjectIdbService } from './project-idb.service';
 import { FacilityIdbService } from './facility-idb.service';
 import { AssessmentIdbService } from './assessment-idb.service';
+import { ContactIdbService } from './contact-idb.service';
 
 describe('DbChangesService', () => {
   let service: DbChangesService;
@@ -14,12 +15,14 @@ describe('DbChangesService', () => {
     let facilityIdbService: Partial<FacilityIdbService> = {};
     let projectIdbService: Partial<ProjectIdbService> = {};
     let assessmentIdbService: Partial<AssessmentIdbService> = {};
+    let contactIdbService: Partial<ContactIdbService> = {};
     TestBed.configureTestingModule({
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: ProjectIdbService, useValue: projectIdbService },
-        { provide: AssessmentIdbService, useValue: assessmentIdbService }
+        { provide: AssessmentIdbService, useValue: assessmentIdbService },
+        { provide: ContactIdbService, useValue: contactIdbService }
       ]
     });
     service = TestBed.inject(DbChangesService);

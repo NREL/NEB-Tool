@@ -18,27 +18,31 @@ import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.modu
 import { AssessmentsTableComponent } from './assessments-table/assessments-table.component';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
 describe('CompanyDashboardHomeComponent', () => {
   let component: CompanyDashboardHomeComponent;
   let fixture: ComponentFixture<CompanyDashboardHomeComponent>;
+  let companyDbServiceStub: Partial<CompanyIdbService> = {
+    companies: new BehaviorSubject<Array<IdbCompany>>([]),
+    selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
+  };
+  let facilityDbServiceStub: Partial<FacilityIdbService> = {
+    facilities: new BehaviorSubject<Array<IdbFacility>>([]),
+    selectedFacility: new BehaviorSubject<IdbFacility>(undefined)
+  }
+  let projectDbService: Partial<ProjectIdbService> = {
+    projects: new BehaviorSubject<Array<IdbProject>>([])
+  };
+  let assessmentIdbService: Partial<AssessmentIdbService> = {
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(undefined),
+    assessments: new BehaviorSubject<Array<IdbAssessment>>([])
+  };
+  let contactIdbService: Partial<ContactIdbService> = {};
+  let userIdbService: Partial<UserIdbService> = {};
 
   beforeEach(() => {
-    let companyDbServiceStub: Partial<CompanyIdbService> = {
-      companies: new BehaviorSubject<Array<IdbCompany>>([]),
-      selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
-    };
-    let facilityDbServiceStub: Partial<FacilityIdbService> = {
-      facilities: new BehaviorSubject<Array<IdbFacility>>([]),
-      selectedFacility: new BehaviorSubject<IdbFacility>(undefined)
-    }
-    let projectDbService: Partial<ProjectIdbService> = {
-      projects: new BehaviorSubject<Array<IdbProject>>([])
-    };
-    let assessmentIdbService: Partial<AssessmentIdbService> = {
-      selectedAssessment: new BehaviorSubject<IdbAssessment>(undefined),
-      assessments: new BehaviorSubject<Array<IdbAssessment>>([])
-    };
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FormsModule, FontAwesomeModule, HelperPipesModule],
       declarations: [CompanyDashboardHomeComponent, ProjectsTableComponent, FacilitiesTableComponent, AssessmentsTableComponent],
@@ -47,7 +51,9 @@ describe('CompanyDashboardHomeComponent', () => {
         { provide: FacilityIdbService, useValue: facilityDbServiceStub },
         { provide: DbChangesService, useValue: {} },
         { provide: ProjectIdbService, useValue: projectDbService },
-        { provide: AssessmentIdbService, useValue: assessmentIdbService }
+        { provide: AssessmentIdbService, useValue: assessmentIdbService },
+        { provide: ContactIdbService, useValue: contactIdbService },
+        { provide: UserIdbService, useValue: userIdbService }
       ]
     });
     fixture = TestBed.createComponent(CompanyDashboardHomeComponent);

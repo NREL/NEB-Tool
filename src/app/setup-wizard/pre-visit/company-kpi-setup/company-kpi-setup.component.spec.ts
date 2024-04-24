@@ -24,11 +24,6 @@ describe('CompanyKpiSetupComponent', () => {
   let fixture: ComponentFixture<CompanyKpiSetupComponent>;
   let userIdbService: Partial<UserIdbService> = {
     user: new BehaviorSubject<IdbUser>(getNewIdbUser())
-  }
-  let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(undefined),
-    facility: new BehaviorSubject<IdbFacility>(undefined),
-    projects: new BehaviorSubject<Array<IdbProject>>([])
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
@@ -38,13 +33,13 @@ describe('CompanyKpiSetupComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
       declarations: [CompanyKpiSetupComponent, CompanyKpiListComponent, AddKpiSearchComponent, KpiListFilterPipe, KpiCategoryClassPipe, KpiUnitOptionPipe],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
-        { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },   
         { provide: FacilityIdbService, useValue: facilityIdbService }
       ]

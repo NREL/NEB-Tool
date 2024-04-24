@@ -13,6 +13,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
 describe('CompanySettingsComponent', () => {
   let component: CompanySettingsComponent;
@@ -25,6 +26,7 @@ describe('CompanySettingsComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
+  let userIdbService: Partial<UserIdbService> = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,7 +36,8 @@ describe('CompanySettingsComponent', () => {
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: LocalStorageDataService, useValue: {}},
-        { provide: DbChangesService, useValue: {}}
+        { provide: DbChangesService, useValue: {}},
+        { provide: UserIdbService, useValue: userIdbService}
       ]
     })
       .compileComponents();
