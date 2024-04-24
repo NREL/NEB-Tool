@@ -6,6 +6,7 @@ import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { ProcessEquipment, getNewProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbContact } from 'src/app/models/contact';
+import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
 
 @Component({
   selector: 'app-facility-process-equipment-setup',
@@ -15,7 +16,7 @@ import { IdbContact } from 'src/app/models/contact';
 export class FacilityProcessEquipmentSetupComponent {
 
   accordionIndex: number = 0;
-
+  equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
   faScrewdriverWrench: IconDefinition = faScrewdriverWrench;

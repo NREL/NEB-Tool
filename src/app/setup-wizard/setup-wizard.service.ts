@@ -3,7 +3,7 @@ import { IdbCompany, getNewIdbCompany } from '../models/company';
 import { BehaviorSubject } from 'rxjs';
 import { IdbFacility, getNewIdbFacility } from '../models/facility';
 import { IdbProject } from '../models/project';
-import { IdbAssessment } from '../models/assessment';
+import { IdbAssessment, getNewIdbAssessment } from '../models/assessment';
 import { IdbContact, getNewIdbContact } from '../models/contact';
 import { IdbUser } from '../models/user';
 import { UserIdbService } from '../indexed-db/user-idb.service';
@@ -26,7 +26,7 @@ export class SetupWizardService {
     this.facility = new BehaviorSubject<IdbFacility>(undefined);
     this.projects = new BehaviorSubject<Array<IdbProject>>([]);
     this.assessment = new BehaviorSubject<IdbAssessment>(undefined);
-    this.setupContext = new BehaviorSubject<SetupWizardContext>('preVisit');
+    this.setupContext = new BehaviorSubject<SetupWizardContext>('full');
     this.contacts = new BehaviorSubject<Array<IdbContact>>([]);
   }
 
@@ -53,6 +53,12 @@ export class SetupWizardService {
       newContact.name = 'Primary Contact';
       contacts.push(newContact);
       this.contacts.next(contacts);
+    }
+
+    let assessment: IdbAssessment = this.assessment.getValue();
+    if (!assessment) {
+      assessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
+      this.assessment.next(assessment);
     }
   }
 }

@@ -1,4 +1,3 @@
-
 <div class="setup-wizard-content">
     <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
         <div class="col-10 pt-4 pb-4">
@@ -7,13 +6,40 @@
                     <fa-icon [icon]="faListCheck"></fa-icon> Pre-Assessment Setup
                 </h5>
                 <hr>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-warning text-center">
-                            Pre-Assessment Setup Coming Soon.
+                <form>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="assessmentName">Assessment Name</label>
+                            <input name="assessmentName" type="text" class="form-control" [(ngModel)]="assessment.name"
+                                (input)="saveChanges()" minlength="1" maxlength="42" id="assessmentName">
+                        </div>
+                        <div class="col-12">
+                            <label for="equipmentType">Equipment Type</label>
+                            <select name="equipmentType" class="form-select" id="equipmentType"
+                                [(ngModel)]="assessment.equipmentType">
+                                <option *ngFor="let equipmentType of equipmentTypeOptions" [ngValue]="equipmentType">
+                                    {{equipmentType}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="energyUse">Annual Energy Use</label>
+                            <div class="input-group">
+                                <input name="energy" type="number" class="form-control"
+                                    [(ngModel)]="assessment.energyUse" (input)="saveChanges()" id="energyUse">
+                                <span class="input-group-text">MMBtu/yr</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="cost">Annual Costs</label>
+                            <div class="input-group">
+                                <input name="cost" type="number" class="form-control" [(ngModel)]="assessment.cost"
+                                    (input)="saveChanges()" id="cost">
+                                <span class="input-group-text">&dollar;</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

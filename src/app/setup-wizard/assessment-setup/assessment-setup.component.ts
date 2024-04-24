@@ -7,7 +7,7 @@ import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { EnergySystem } from 'src/app/shared/constants/energySystems';
+import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
 import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 
 @Component({
@@ -17,7 +17,7 @@ import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 })
 export class AssessmentSetupComponent {
 
-  energySystems = EnergySystem;
+  equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
 
   faFileLines: IconDefinition = faFileLines;
   faFilePen: IconDefinition = faFilePen;

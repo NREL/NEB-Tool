@@ -102,6 +102,14 @@ export class UnitsFormComponent {
       includeCompressedAir: [unitSettings.includeCompressedAir],
       compressedAirUnit: [unitSettings.compressedAirUnit],
       compressedAirPrice: [unitSettings.compressedAirPrice],
+
+      includeWater: [unitSettings.includeWater],
+      waterUnit: [unitSettings.waterUnit],
+      waterPrice: [unitSettings.waterPrice],
+
+      includeWasteWater: [unitSettings.includeWasteWater],
+      wasteWaterUnit: [unitSettings.wasteWaterUnit],
+      wasteWaterPrice: [unitSettings.wasteWaterPrice],
     });
     return form;
   }
@@ -145,6 +153,14 @@ export class UnitsFormComponent {
     unitSettings.includeCompressedAir = this.form.controls['includeCompressedAir'].value;
     unitSettings.compressedAirUnit = this.form.controls['compressedAirUnit'].value;
     unitSettings.compressedAirPrice = this.form.controls['compressedAirPrice'].value;
+
+    unitSettings.includeWater = this.form.controls['includeWater'].value;
+    unitSettings.waterUnit = this.form.controls['waterUnit'].value;
+    unitSettings.waterPrice = this.form.controls['waterPrice'].value;
+
+    unitSettings.includeWasteWater = this.form.controls['includeWasteWater'].value;
+    unitSettings.wasteWaterUnit = this.form.controls['wasteWaterUnit'].value;
+    unitSettings.wasteWaterPrice = this.form.controls['wasteWaterPrice'].value;
     return unitSettings;
   }
 

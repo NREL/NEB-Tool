@@ -29,12 +29,12 @@
                             <form>
                                 <div class="row">
                                     <div class="col-12">
-                                        <label for="energySystem">Energy System</label>
-                                        <select name="energySystem" class="form-select" id="energySystem"
-                                            [(ngModel)]="assessment.energySystem">
-                                            <option *ngFor="let system of energySystems | keyvalue"
-                                                [ngValue]="system.key">
-                                                {{system.value}}
+                                        <label for="equipmentType">Equipment Type</label>
+                                        <select name="equipmentType" class="form-select" id="equipmentType"
+                                            [(ngModel)]="assessment.equipmentType">
+                                            <option *ngFor="let system of equipmentTypeOptions"
+                                                [ngValue]="system">
+                                                {{system}}
                                             </option>
                                         </select>
                                     </div>
