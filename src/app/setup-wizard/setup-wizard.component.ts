@@ -16,7 +16,8 @@ export class SetupWizardComponent {
   ngOnDestroy(){
     this.setupWizardService.company.next(undefined);
     this.setupWizardService.facility.next(undefined);
-    this.setupWizardService.assessment.next(undefined);
+    this.setupWizardService.assessments.next([]);
+    this.setupWizardService.contacts.next([]);
   }
 
 }

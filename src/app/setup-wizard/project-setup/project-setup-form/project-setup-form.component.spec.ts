@@ -18,7 +18,7 @@ describe('ProjectSetupFormComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     company: new BehaviorSubject<IdbCompany>(undefined),
     facility: new BehaviorSubject<IdbFacility>(undefined),
-    assessment: new BehaviorSubject<IdbAssessment>(undefined),
+    assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
     projects: new BehaviorSubject<Array<IdbProject>>([])
   }
   beforeEach(async () => {

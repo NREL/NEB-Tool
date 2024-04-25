@@ -45,11 +45,11 @@ export class AssessmentSetupComponent {
     if (!this.facility) {
       this.facility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
     }
-    this.assessment = this.setupWizardService.assessment.getValue();
+    this.assessment = this.setupWizardService.assessments.getValue()[0];
     if (!this.assessment) {
       this.assessment = getNewIdbAssessment(this.facility.userId, this.facility.companyId, this.facility.guid);
     }
-    this.setupWizardService.assessment.next(this.assessment);
+    this.setupWizardService.assessments.next([this.assessment]);
 
     this.projects = this.setupWizardService.projects.getValue();
   }
@@ -67,7 +67,7 @@ export class AssessmentSetupComponent {
   }
 
   saveChanges() {
-    this.setupWizardService.assessment.next(this.assessment);
+    this.setupWizardService.assessments.next([this.assessment]);
   }
 
   setAccordionIndex(index: number) {
