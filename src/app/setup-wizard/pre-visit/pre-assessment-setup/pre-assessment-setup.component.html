@@ -6,7 +6,16 @@
                     <fa-icon [icon]="faToolbox"></fa-icon> Pre-Assessments
                 </h5>
                 <hr>
-                <div class="d-flex w-100 justify-content-end pb-2">
+                <div class="d-flex w-100 justify-content-between pb-2">
+                    <div class="p-0">
+                        <div class="row mb-1">
+                            <label class="col-sm-5 col-form-label bold" for="visitDate">Visit Date</label>
+                            <div class="col-sm-7">
+                                <input type="date" class="form-control" [(ngModel)]="visitDate" name="visitDate"
+                                    (change)="setVisitDate()">
+                            </div>
+                        </div>
+                    </div>
                     <div class="p-0">
                         <button class="btn btn-outline-success" (click)="addAssessment()">
                             <fa-icon [icon]="faPlus"></fa-icon>
@@ -46,9 +55,11 @@
                                                     <label class="col-sm-5 col-form-label" for="equipmentId">Process
                                                         Equipment</label>
                                                     <div class="col-sm-7">
-                                                        <ng-template [ngIf]="processEquipmentOptions.length != 0" [ngIfElse]="noEquipmentBlock">
+                                                        <ng-template [ngIf]="processEquipmentOptions.length != 0"
+                                                            [ngIfElse]="noEquipmentBlock">
                                                             <select name="equipmentId" class="form-select"
-                                                                id="equipmentId" [(ngModel)]="assessment.equipmentId" (change)="setProcessEquipment(assessment)">
+                                                                id="equipmentId" [(ngModel)]="assessment.equipmentId"
+                                                                (change)="setProcessEquipment(assessment)">
                                                                 <option
                                                                     *ngFor="let processEquipment of processEquipmentOptions"
                                                                     [ngValue]="processEquipment.guid">
@@ -87,6 +98,13 @@
                                                                 id="cost">
                                                             <span class="input-group-text">&dollar;</span>
                                                         </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-1">
+                                                    <label class="col-sm-5 col-form-label" for="visitDate">Scheduled For</label>
+                                                    <div class="col-sm-7">
+                                                        {{assessment.visitDate | date}}
                                                     </div>
                                                 </div>
                                             </form>

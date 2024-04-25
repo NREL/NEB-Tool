@@ -147,6 +147,17 @@
                         </optgroup>
                     </select>
                 </ng-container>
+                <ng-container *ngIf="selectedFacilityGuid">
+                    <label for="selectedVisit" class="form-label">Select Visit</label>
+                    <select id="selectedVisit" name="selectedVisit" class="form-select"
+                        [(ngModel)]="selectedVisit" (change)="setSelectedVisit()">
+                        <option [ngValue]="undefined">Setup New Visit</option>
+                        <optgroup label="Existing Visits">
+                            <option *ngFor="let visitDateOption of visitDates"
+                                [ngValue]="visitDateOption">{{visitDateOption | date}}</option>
+                        </optgroup>
+                    </select>
+                </ng-container>
             </form>
         </ng-template>
         <ng-template #noCompaniesBlock>

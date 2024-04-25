@@ -32,6 +32,7 @@ export class PreAssessmentSetupComponent {
   displayContactModal: boolean = false;
   contactAssessmentIndex: number;
   editContactId: string;
+  visitDate: Date;
   constructor(private router: Router, private setupWizardService: SetupWizardService) {
   }
 
@@ -45,6 +46,10 @@ export class PreAssessmentSetupComponent {
     let facility: IdbFacility = this.setupWizardService.facility.getValue();
     this.processEquipmentOptions = facility.processEquipment;
     this.contacts = this.setupWizardService.contacts.getValue();
+
+    if(this.assessments.length > 0){
+      this.visitDate = this.assessments[0].visitDate;
+    }
   }
 
   goToProjects() {
@@ -70,6 +75,7 @@ export class PreAssessmentSetupComponent {
   addAssessment() {
     let facility: IdbFacility = this.setupWizardService.facility.getValue();
     let assessment: IdbAssessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
+    assessment.visitDate = this.visitDate;
     this.assessments.push(assessment);
     this.setAccordionIndex(this.assessments.length - 1);
     this.saveChanges();
@@ -121,4 +127,11 @@ export class PreAssessmentSetupComponent {
     this.saveChanges();
   }
 
+
+  setVisitDate(){
+    this.assessments.forEach(assessment => {
+      assessment.visitDate = this.visitDate;
+    });
+    this.saveChanges();
+  }
 }
