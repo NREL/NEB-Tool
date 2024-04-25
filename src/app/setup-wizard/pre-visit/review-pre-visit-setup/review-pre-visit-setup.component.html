@@ -6,47 +6,7 @@
                     <fa-icon [icon]="faCircleCheck"></fa-icon> Review Pre-Visit
                 </h5>
                 <hr>
-                <!--TODO: Finish adding content..-->
-                <table class="table table-bordered table-hover">
-                    <tbody>
-                        <tr>
-                            <th class="w-25">
-                                Company Name
-                            </th>
-                            <td>
-                                {{company.generalInformation.name}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Address
-                            </td>
-                            <td>
-                                &mdash;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                NAICs
-                            </td>
-                            <td>
-                                <ng-container *ngIf="!company.generalInformation.naics1">
-                                    &mdash;
-                                </ng-container>
-                                <ng-container *ngIf="company.generalInformation.naics1 && !company.generalInformation.naics2 && !company.generalInformation.naics3">
-                                    {{company.generalInformation.naics1}}
-                                </ng-container>
-                                <ng-container *ngIf="company.generalInformation.naics2 && !company.generalInformation.naics3">
-                                    {{company.generalInformation.naics2}}
-                                </ng-container>
-                                <ng-container *ngIf="company.generalInformation.naics3">
-                                    {{company.generalInformation.naics3}}
-                                </ng-container>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h6>Company Tracked Utilities</h6>
+                <app-company-setup-summary></app-company-setup-summary>
             </div>
         </div>
     </div>
@@ -57,8 +17,27 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button class="btn btn-success" (click)="submitPreVisit()">
-            Submit Pre-Visit
+        <button class="btn btn-success" (click)="openConfirmModal()">
+            <fa-icon [icon]="faSave"></fa-icon> Submit Pre-Visit
         </button>
     </div>
 </nav>
+
+
+
+<div [ngClass]="{'window-overlay': displayConfirmModal}"></div>
+<div class="popup" [ngClass]="{'open': displayConfirmModal }">
+    <div class="popup-header">Submit Pre-Visit
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeConfirmModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-success">
+            Are you done with your Pre-Visit?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
+        <button class="btn btn-success" (click)="submitPreVisit()"><fa-icon [icon]="faSave"></fa-icon> Submit Pre-Visit</button>
+    </div>
+</div>

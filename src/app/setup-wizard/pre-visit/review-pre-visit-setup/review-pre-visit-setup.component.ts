@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faCircleCheck, faSave } from '@fortawesome/free-solid-svg-icons';
 import { IdbCompany } from 'src/app/models/company';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
@@ -23,11 +23,13 @@ export class ReviewPreVisitSetupComponent {
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
   faCircleCheck: IconDefinition = faCircleCheck;
+  faSave: IconDefinition = faSave;
 
   company: IdbCompany;
   facility: IdbFacility;
   assessments: Array<IdbAssessment>;
   contacts: Array<IdbContact>;
+  displayConfirmModal: boolean = false;
   constructor(private router: Router, private setupWizardService: SetupWizardService,
     private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
@@ -58,6 +60,7 @@ export class ReviewPreVisitSetupComponent {
   }
 
   async submitPreVisit() {
+    this.closeConfirmModal();
     this.loadingService.setLoadingMessage("Adding content...");
     this.loadingService.setLoadingStatus(true);
     if (!this.company.id) {
@@ -98,8 +101,15 @@ export class ReviewPreVisitSetupComponent {
     }
     await this.assessmentIdbService.setAssessments();
 
-
     this.loadingService.setLoadingStatus(false);
     this.router.navigateByUrl('/facility/' + this.facility.guid);
+  }
+
+  openConfirmModal(){
+    this.displayConfirmModal = true;
+  }
+
+  closeConfirmModal(){
+    this.displayConfirmModal = false;
   }
 }

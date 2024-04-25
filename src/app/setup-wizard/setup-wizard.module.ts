@@ -26,6 +26,7 @@ import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-sea
 import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
 import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
 import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
+import { CompanySetupSummaryComponent } from './pre-visit/review-pre-visit-setup/company-setup-summary/company-setup-summary.component';
 
 
 
@@ -50,7 +51,8 @@ import { ContactModalModule } from '../shared/contact-modal/contact-modal.module
     ReviewPreVisitSetupComponent,
     AddKpiSearchComponent,
     CompanyKpiListComponent,
-    KpiListFilterPipe
+    KpiListFilterPipe,
+    CompanySetupSummaryComponent
   ],
   imports: [
     CommonModule,
