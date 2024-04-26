@@ -8,9 +8,20 @@
             <!--select contact-->
             <ng-template [ngIf]="contacts.length != 0" [ngIfElse]="noContactsBlock">
                 <div class="list-group">
-                    <div class="list-group-item list-group-item-action" *ngFor="let contact of contacts"
-                        (click)="selectContact(contact.guid)">
-                        {{contact.name}}
+                    <div class="list-group-item list-group-item-action"
+                        *ngFor="let contact of contacts; let index = index;" (click)="toggleContactActive(index)">
+                        <div class="d-flex justify-content-between w-100">
+                            <div class="p-0">
+                                <ng-template
+                                    [ngIf]="(contextGuid | includesContact:contactContext: contact)">
+                                    <fa-icon [icon]="faCircleCheck"></fa-icon>
+                                </ng-template>
+                                {{contact.name}}
+                            </div>
+                            <button class="btn btn-sm btn-primary" (click)="viewContact(contact)">
+                                View
+                            </button>
+                        </div>
                     </div>
                 </div>
             </ng-template>
@@ -21,8 +32,8 @@
             </ng-template>
         </ng-template>
         <ng-template #contactCard>
-            <a class="click-link" (click)="selectContact(undefined)">
-                <fa-icon [icon]="faChevronLeft"></fa-icon> Select Different Contact
+            <a class="click-link" (click)="viewContact(undefined)">
+                <fa-icon [icon]="faChevronLeft"></fa-icon> View All Contacts
             </a>
             <table class="table table-bordered">
                 <thead>
@@ -31,6 +42,10 @@
                             Contact
                         </th>
                         <th>
+                            <ng-template
+                                [ngIf]="(contextGuid | includesContact:contactContext: selectedContact)">
+                                <fa-icon [icon]="faCircleCheck"></fa-icon>
+                            </ng-template>
                             {{selectedContact.name}}
                         </th>
                     </tr>

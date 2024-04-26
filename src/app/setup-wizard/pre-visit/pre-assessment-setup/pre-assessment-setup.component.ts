@@ -31,8 +31,8 @@ export class PreAssessmentSetupComponent {
   assessmentToDelete: IdbAssessment;
   displayContactModal: boolean = false;
   contactAssessmentIndex: number;
-  editContactId: string;
   visitDate: Date;
+  viewContact: IdbContact;
   constructor(private router: Router, private setupWizardService: SetupWizardService) {
   }
 
@@ -47,7 +47,7 @@ export class PreAssessmentSetupComponent {
     this.processEquipmentOptions = facility.processEquipment;
     this.contacts = this.setupWizardService.contacts.getValue();
 
-    if(this.assessments.length > 0){
+    if (this.assessments.length > 0) {
       this.visitDate = this.assessments[0].visitDate;
     }
   }
@@ -95,43 +95,37 @@ export class PreAssessmentSetupComponent {
     this.assessments = this.assessments.filter(_assessment => {
       return _assessment.guid != this.assessmentToDelete.guid;
     });
+    this.contacts.forEach(contact => {
+      contact.assessmentIds = contact.assessmentIds.filter(aId => {
+        return aId != this.assessmentToDelete.guid;
+      });
+    });
+    this.setupWizardService.contacts.next(this.contacts);
     this.closeDeleteModal();
     this.setAccordionIndex(0);
     this.saveChanges();
   }
 
-  openContactModal(assessmentIndex: number, contactId: string) {
+  openContactModal(assessmentIndex: number, viewContact: IdbContact) {
     this.contactAssessmentIndex = assessmentIndex;
-    this.editContactId = contactId;
+    this.viewContact = viewContact;
     this.displayContactModal = true;
   }
 
   closeContactModal() {
     this.displayContactModal = false;
     this.contactAssessmentIndex = undefined;
-    this.editContactId = undefined;
+    this.viewContact = undefined;
   }
 
-  setContact(contactId: string) {
-    this.assessments[this.contactAssessmentIndex].contactId = contactId;
-    this.closeContactModal();
-  }
-
-  setProcessEquipment(assessment: IdbAssessment){
-    let selectedProcessEquipment: ProcessEquipment = this.processEquipmentOptions.find(processEquipment => {
-      return processEquipment.guid == assessment.equipmentId;
-    });
-    if(selectedProcessEquipment && selectedProcessEquipment.contactId){
-      assessment.contactId = selectedProcessEquipment.contactId;
-    }
-    this.saveChanges();
-  }
-
-
-  setVisitDate(){
+  setVisitDate() {
     this.assessments.forEach(assessment => {
       assessment.visitDate = this.visitDate;
     });
     this.saveChanges();
+  }
+
+  setContacts() {
+    this.contacts = this.setupWizardService.contacts.getValue();
   }
 }

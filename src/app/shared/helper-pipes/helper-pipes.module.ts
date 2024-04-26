@@ -10,6 +10,7 @@ import { KpiLabelPipe } from './kpi-label.pipe';
 import { UnitsDisplayPipe } from './units-display.pipe';
 import { ContactNamePipe } from './contact-name.pipe';
 import { EquipmentTypeIconPipe } from './equipment-type-icon.pipe';
+import { IncludesContactPipe } from './includes-contact.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { EquipmentTypeIconPipe } from './equipment-type-icon.pipe';
     KpiLabelPipe,
     UnitsDisplayPipe,
     ContactNamePipe,
-    EquipmentTypeIconPipe
+    EquipmentTypeIconPipe,
+    IncludesContactPipe
   ],
   imports: [
     CommonModule
@@ -37,7 +39,8 @@ import { EquipmentTypeIconPipe } from './equipment-type-icon.pipe';
     KpiLabelPipe,
     UnitsDisplayPipe,
     ContactNamePipe,
-    EquipmentTypeIconPipe
+    EquipmentTypeIconPipe,
+    IncludesContactPipe
   ]
 })
 export class HelperPipesModule { }

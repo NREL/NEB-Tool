@@ -1,19 +1,29 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IdbContact } from 'src/app/models/contact';
+import { ContactContext, IdbContact } from 'src/app/models/contact';
 
 @Pipe({
-  name: 'contactName'
+  name: 'contactName',
+  pure: false
 })
 export class ContactNamePipe implements PipeTransform {
 
-  transform(contactId: string, contacts: Array<IdbContact>): string {
-    let contact: IdbContact = contacts.find(_contact => {
-      return _contact.guid == contactId;
-    })
-    if (contact) {
-      return contact.name;
+  transform(guid: string, context: ContactContext, contacts: Array<IdbContact>): Array<IdbContact> {
+    let _contacts: Array<IdbContact> = new Array();   
+    contacts.forEach(_contact => {
+      if (context == 'processEquipment' && _contact.processEquipmentIds.includes(guid)) {
+        _contacts.push(_contact);
+      } else if (context == 'assessment' && _contact.assessmentIds.includes(guid)) {
+        _contacts.push(_contact);
+      } else if (context == 'facility' && _contact.facilityIds.includes(guid)) {
+        _contacts.push(_contact);
+      } else if (context == 'company' && _contact.companyId == guid) {
+        _contacts.push(_contact);
+      }
+    });
+    if (_contacts.length > 0) {
+      return _contacts;
     }
-    return '';
+    return null;
   }
 
 }

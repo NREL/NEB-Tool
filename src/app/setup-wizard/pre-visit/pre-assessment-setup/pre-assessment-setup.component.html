@@ -25,18 +25,18 @@
                 </div>
                 <ng-template [ngIf]="assessments.length != 0" [ngIfElse]="noAssessmentsBlock">
                     <div class="accordion" id="assessmentAccordion">
-                        <div class="accordion-item" *ngFor="let assessment of assessments; let index = index;">
+                        <div class="accordion-item" *ngFor="let assessment of assessments; let assessmentIndex = index;">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     [attr.data-bs-target]="'#'+assessment.guid" aria-expanded="true"
                                     [attr.aria-controls]="assessment.guid"
-                                    [ngClass]="{'collapsed': accordionIndex != index}"
-                                    (click)="setAccordionIndex(index)">
+                                    [ngClass]="{'collapsed': accordionIndex != assessmentIndex}"
+                                    (click)="setAccordionIndex(assessmentIndex)">
                                     <fa-icon [icon]="faScrewdriverWrench" class="me-1"></fa-icon> {{assessment.name}}
                                 </button>
                             </h2>
                             <div [id]="assessment.guid" class="accordion-collapse collapse"
-                                data-bs-parent="#assessmentAccordion" [ngClass]="{'show': accordionIndex == index}">
+                                data-bs-parent="#assessmentAccordion" [ngClass]="{'show': accordionIndex == assessmentIndex}">
                                 <div class="accordion-body">
                                     <div class="row">
                                         <div class="col-12">
@@ -59,7 +59,7 @@
                                                             [ngIfElse]="noEquipmentBlock">
                                                             <select name="equipmentId" class="form-select"
                                                                 id="equipmentId" [(ngModel)]="assessment.equipmentId"
-                                                                (change)="setProcessEquipment(assessment)">
+                                                                (change)="saveChanges()">
                                                                 <option
                                                                     *ngFor="let processEquipment of processEquipmentOptions"
                                                                     [ngValue]="processEquipment.guid">
@@ -102,7 +102,8 @@
                                                 </div>
 
                                                 <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label" for="visitDate">Scheduled For</label>
+                                                    <label class="col-sm-5 col-form-label" for="visitDate">Scheduled
+                                                        For</label>
                                                     <div class="col-sm-7">
                                                         {{assessment.visitDate | date}}
                                                     </div>
@@ -116,15 +117,15 @@
                                             <div class="d-flex justify-content-between">
                                                 <div>
                                                     <button class="btn btn-sm btn-secondary"
-                                                        (click)="openContactModal(index, assessment.contactId)">
+                                                        *ngFor="let contact of assessment.guid | contactName:'assessment': contacts;"
+                                                        (click)="openContactModal(assessmentIndex, contact)">
                                                         <fa-icon [icon]="faUser"></fa-icon>
-                                                        <ng-template [ngIf]="assessment.contactId"
-                                                            [ngIfElse]="noContact">
-                                                            {{assessment.contactId | contactName: contacts}}
-                                                        </ng-template>
-                                                        <ng-template #noContact>
-                                                            Select Team Members
-                                                        </ng-template>
+                                                        {{contact.name}}
+                                                    </button>
+                                                    <button class="btn btn-sm btn-secondary"
+                                                        (click)="openContactModal(assessmentIndex, undefined)">
+                                                        <fa-icon [icon]="faUser"></fa-icon>
+                                                        Select Team Members
                                                     </button>
                                                 </div>
                                                 <div>
@@ -183,5 +184,6 @@
 </div>
 
 
-<app-contact-modal *ngIf="displayContactModal" (emitSelectedContact)="setContact($event)"
-    (emitCancelContact)="closeContactModal()" [contactId]="editContactId"></app-contact-modal>
+<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
+    [contextGuid]="assessments[contactAssessmentIndex].guid" [contactContext]="'assessment'"
+    [selectedContact]="viewContact"></app-contact-modal>
