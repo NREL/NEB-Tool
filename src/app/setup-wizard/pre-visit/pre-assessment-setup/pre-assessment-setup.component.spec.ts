@@ -13,6 +13,7 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { IdbAssessment } from 'src/app/models/assessment';
+import { FormsModule } from '@angular/forms';
 
 describe('PreAssessmentSetupComponent', () => {
   let component: PreAssessmentSetupComponent;
@@ -38,7 +39,7 @@ describe('PreAssessmentSetupComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule],
+      imports: [FontAwesomeModule, FormsModule],
       declarations: [PreAssessmentSetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
