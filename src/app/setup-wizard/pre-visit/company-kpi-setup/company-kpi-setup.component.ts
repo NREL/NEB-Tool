@@ -29,10 +29,10 @@ export class CompanyKpiSetupComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/company-setup');
+    this.router.navigateByUrl('/setup-wizard/company-contacts');
   }
 
   goToContacts() {
-    this.router.navigateByUrl('/setup-wizard/company-contacts');
+    this.router.navigateByUrl('/setup-wizard/facility-setup');
   }
 }
