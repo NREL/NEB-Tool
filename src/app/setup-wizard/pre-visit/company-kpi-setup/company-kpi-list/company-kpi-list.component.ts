@@ -49,26 +49,32 @@ export class CompanyKpiListComponent {
   setAccordionIndex(num: number) {
     this.accordionIndex = num;
   }
-  
+
   openDeleteModal(kpi: KeyPerformanceIndicator) {
     this.kpiToDelete = kpi;
     this.displayDeleteModal = true;
   }
 
-  closeDeleteModal(){
-      this.displayDeleteModal = false;
-      this.kpiToDelete = undefined;
+  closeDeleteModal() {
+    this.displayDeleteModal = false;
+    this.kpiToDelete = undefined;
   }
 
   removeKPI() {
     this.company.keyPerformanceIndicators = this.company.keyPerformanceIndicators.filter(_kpi => {
       return this.kpiToDelete.kpiOptionValue != _kpi.kpiOptionValue;
     });
+    this.contacts.forEach(contact => {
+      contact.assessmentIds = contact.assessmentIds.filter(aId => {
+        return aId != this.kpiToDelete.kpiOptionValue;
+      });
+    });
+    this.setupWizardService.contacts.next(this.contacts);
     this.closeDeleteModal();
     this.setAccordionIndex(0);
     this.saveChanges();
   }
-  
+
   openContactModal(kpiIndex: number, viewContact: IdbContact) {
     this.contactIndex = kpiIndex;
     this.viewContact = viewContact;
