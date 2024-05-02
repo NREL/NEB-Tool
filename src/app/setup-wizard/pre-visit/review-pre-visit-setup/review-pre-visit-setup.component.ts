@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faCircleCheck, faSave } from '@fortawesome/free-solid-svg-icons';
 import { IdbCompany } from 'src/app/models/company';
-import { SetupWizardService } from '../../setup-wizard.service';
+import { SetupWizardContext, SetupWizardService } from '../../setup-wizard.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
@@ -24,12 +24,14 @@ export class ReviewPreVisitSetupComponent {
   faChevronLeft: IconDefinition = faChevronLeft;
   faCircleCheck: IconDefinition = faCircleCheck;
   faSave: IconDefinition = faSave;
+  
 
   company: IdbCompany;
   facility: IdbFacility;
   assessments: Array<IdbAssessment>;
   contacts: Array<IdbContact>;
   displayConfirmModal: boolean = false;
+  setupContext: SetupWizardContext;
   constructor(private router: Router, private setupWizardService: SetupWizardService,
     private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
@@ -49,6 +51,7 @@ export class ReviewPreVisitSetupComponent {
     this.facility = this.setupWizardService.facility.getValue();
     this.assessments = this.setupWizardService.assessments.getValue();
     this.contacts = this.setupWizardService.contacts.getValue();
+    this.setupContext = this.setupWizardService.setupContext.getValue();
   }
 
   goBack() {
@@ -102,14 +105,19 @@ export class ReviewPreVisitSetupComponent {
     await this.assessmentIdbService.setAssessments();
 
     this.loadingService.setLoadingStatus(false);
-    this.router.navigateByUrl('/facility/' + this.facility.guid);
+    if (this.setupContext == 'preVisit') {
+      this.router.navigateByUrl('/facility/' + this.facility.guid);
+    } else if (this.setupContext == 'full') {
+      this.router.navigateByUrl('/setup-wizard/assessment-setup/' + this.assessments[0].guid)
+    }
   }
 
-  openConfirmModal(){
+  openConfirmModal() {
     this.displayConfirmModal = true;
   }
 
-  closeConfirmModal(){
+  closeConfirmModal() {
     this.displayConfirmModal = false;
   }
+
 }

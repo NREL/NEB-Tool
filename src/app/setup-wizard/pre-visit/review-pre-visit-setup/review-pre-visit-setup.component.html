@@ -17,9 +17,13 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button class="btn btn-success" (click)="openConfirmModal()">
+        <!-- <button class="btn btn-success" (click)="openConfirmModal()">
             <fa-icon [icon]="faSave"></fa-icon> Submit Pre-Visit
-        </button>
+        </button> -->
+        <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'preVisit'"><fa-icon
+                [icon]="faSave"></fa-icon> Submit Pre-Visit</button>
+        <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'full'"><fa-icon
+                [icon]="faSave"></fa-icon> Submit and Continue<fa-icon [icon]="faChevronRight"></fa-icon></button>
     </div>
 </nav>
 
@@ -38,6 +42,9 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
-        <button class="btn btn-success" (click)="submitPreVisit()"><fa-icon [icon]="faSave"></fa-icon> Submit Pre-Visit</button>
+        <button class="btn btn-success" (click)="submitPreVisit()" *ngIf="setupContext == 'preVisit'"><fa-icon
+                [icon]="faSave"></fa-icon> Submit Pre-Visit</button>
+        <button class="btn btn-success" (click)="submitPreVisit()" *ngIf="setupContext == 'full'"><fa-icon
+                [icon]="faSave"></fa-icon> Submit and Continue<fa-icon [icon]="faChevronRight"></fa-icon></button>
     </div>
 </div>
