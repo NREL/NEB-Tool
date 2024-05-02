@@ -36,8 +36,8 @@ export class CompanySetupComponent {
     this.setupWizardService.company.next(newCompany);
   }
 
-  goToKpis() {
-    this.router.navigateByUrl('setup-wizard/company-kpi')
+  goToContacts() {
+    this.router.navigateByUrl('setup-wizard/company-contacts')
   }
 
   saveChanges() {
