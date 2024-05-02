@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
+import { IdbCompany } from 'src/app/models/company';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { IdbUser } from 'src/app/models/user';
-import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
 @Component({
   selector: 'app-company-setup',
@@ -21,16 +19,15 @@ export class CompanySetupComponent {
   faBuilding: IconDefinition = faBuilding;
   faChevronRight: IconDefinition = faChevronRight;
 
-  constructor(private setupWizardService: SetupWizardService, private router: Router,
-    private userIdbService: UserIdbService) {
+  constructor(private setupWizardService: SetupWizardService, private router: Router) {
 
   }
 
   ngOnInit() {
-    let user: IdbUser = this.userIdbService.user.getValue();
     let newCompany: IdbCompany = this.setupWizardService.company.getValue();
     if (!newCompany) {
-      newCompany = getNewIdbCompany(user.guid);
+      this.setupWizardService.initializeDataForDev();
+      newCompany = this.setupWizardService.company.getValue();
     }
     this.companyName = newCompany.generalInformation.name;
     this.setupWizardService.company.next(newCompany);
