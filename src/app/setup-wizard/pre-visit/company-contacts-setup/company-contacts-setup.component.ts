@@ -42,11 +42,11 @@ export class CompanyContactsSetupComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/company-kpi');
+    this.router.navigateByUrl('/setup-wizard/company-setup');
   }
 
-  goToFacilitySetup() {
-    this.router.navigateByUrl('/setup-wizard/facility-setup');
+  goToKPIs() {
+    this.router.navigateByUrl('/setup-wizard/company-kpi');
   }
 
   saveChanges() {
