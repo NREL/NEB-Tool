@@ -70,24 +70,7 @@ export class GettingStartedComponent {
     this.facilitiesSub.unsubscribe()
     this.assessmentsSub.unsubscribe();
   }
-
-  createNewAssessment() {
-    let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
-    if (!selectedCompany) {
-      //Start from scratch with new company
-      this.router.navigateByUrl('setup-wizard/company-setup')
-    } else {
-      let selectedFacility: IdbFacility = this.setupWizardService.facility.getValue();
-      if (!selectedFacility) {
-        //start from new facility
-        this.router.navigateByUrl('setup-wizard/facility-setup');
-      } else {
-        //create assessment within existing facility
-        this.router.navigateByUrl('setup-wizard/assessment-setup');
-      }
-    }
-  }
-
+  
   setSelectedCompany() {
     let selectedCompany: IdbCompany = this.companies.find(company => {
       return company.guid == this.selectedCompanyGuid;

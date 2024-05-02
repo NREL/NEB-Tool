@@ -116,6 +116,7 @@ export class PreAssessmentSetupComponent {
     this.displayContactModal = false;
     this.contactAssessmentIndex = undefined;
     this.viewContact = undefined;
+    this.setContacts();
   }
 
   setVisitDate() {

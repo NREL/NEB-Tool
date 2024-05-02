@@ -115,8 +115,8 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="d-flex justify-content-between">
-                                                <div>
-                                                    <button class="btn btn-sm btn-secondary"
+                                                <div class="col-6">
+                                                    <button class="btn btn-sm btn-primary me-1"
                                                         *ngFor="let contact of assessment.guid | contactName:'assessment': contacts;"
                                                         (click)="openContactModal(assessmentIndex, contact)">
                                                         <fa-icon [icon]="faUser"></fa-icon>
@@ -125,7 +125,7 @@
                                                     <button class="btn btn-sm btn-secondary"
                                                         (click)="openContactModal(assessmentIndex, undefined)">
                                                         <fa-icon [icon]="faUser"></fa-icon>
-                                                        Select Team Members
+                                                        Team Members
                                                     </button>
                                                 </div>
                                                 <div>
