@@ -10,7 +10,8 @@ export interface IdbContact extends IdbEntry {
     companyId: string,
     facilityIds: Array<string>,
     assessmentIds: Array<string>,
-    processEquipmentIds: Array<string>
+    processEquipmentIds: Array<string>,
+    kpiIds: Array<string>,
     userId: string,
     focusArea: string,
     notes: string,
@@ -33,8 +34,9 @@ export function getNewIdbContact(userId: string, companyId: string): IdbContact 
         team: undefined,
         focusArea: undefined,
         notes: undefined,
-        isPrimary: false
+        isPrimary: false,
+        kpiIds: [],
     }
 }
 
-export type ContactContext = 'processEquipment' | 'assessment' | 'facility' | 'company';
+export type ContactContext = 'processEquipment' | 'assessment' | 'facility' | 'company' | 'KPI';
