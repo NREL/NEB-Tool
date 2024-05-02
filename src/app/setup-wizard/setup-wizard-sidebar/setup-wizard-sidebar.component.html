@@ -57,7 +57,25 @@
             <div class="p-2 w-100 text-bg-dark">
                 On-Site
             </div>
-            <div class="nav-item">
+            <ng-container *ngFor="let assessment of assessments">
+                <div class="nav-item ms-2">
+                    <!-- <fa-icon [icon]="faExclamationCircle" class="alert-danger"></fa-icon> -->
+                    {{assessment.name}}
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" [routerLink]="'/assessment-setup/'+assessment.guid"
+                        [routerLinkActive]="['active']">
+                        Details
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" [routerLink]="'/project-setup/'+assessment.guid"
+                        [routerLinkActive]="['active']">
+                        Projects
+                    </a>
+                </div>
+            </ng-container>
+            <!-- <div class="nav-item">
                 <a class="nav-link" routerLink="assessment-setup" [routerLinkActive]="['active']">
                     Assessment Details
                 </a>
@@ -66,9 +84,9 @@
                 <a class="nav-link" routerLink="project-setup" [routerLinkActive]="['active']">
                     Potential Projects
                 </a>
-            </div>
+            </div> -->
             <div class="nav-item">
-                <a class="nav-link" [routerLinkActive]="['active']">
+                <a class="nav-link" routerLink="review-on-site" [routerLinkActive]="['active']">
                     Preliminary Results
                 </a>
             </div>

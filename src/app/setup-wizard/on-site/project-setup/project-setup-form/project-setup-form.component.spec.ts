@@ -4,7 +4,7 @@ import { ProjectSetupFormComponent } from './project-setup-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
-import { SetupWizardService } from '../../setup-wizard.service';
+import { SetupWizardService } from '../../../setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';

@@ -133,7 +133,8 @@ export class GettingStartedComponent {
     if (context == 'full' || context == 'preVisit') {
       this.router.navigateByUrl('/setup-wizard/company-setup');
     } else if (context == 'onSite') {
-      this.router.navigateByUrl('/setup-wizard/assessment-setup');
+      let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
+      this.router.navigateByUrl('/setup-wizard/assessment-setup/' + assessments[0].guid);
     } else if (context == 'postVisit') {
       this.router.navigateByUrl('/setup-wizard/project-setup');
     }
@@ -165,7 +166,6 @@ export class GettingStartedComponent {
     let visitAssessments: Array<IdbAssessment> = facilityAssessments.filter(assessment => {
       return assessment.visitDate == this.selectedVisit;
     });
-    console.log(visitAssessments);
     this.setupWizardService.assessments.next(visitAssessments);
   }
 }

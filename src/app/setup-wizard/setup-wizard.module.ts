@@ -6,13 +6,13 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanySetupComponent } from './pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './pre-visit/facility-setup/facility-setup.component';
-import { ProjectSetupComponent } from './project-setup/project-setup.component';
+import { ProjectSetupComponent } from './on-site/project-setup/project-setup.component';
 import { FormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
-import { AssessmentSetupComponent } from './assessment-setup/assessment-setup.component';
-import { ProjectSetupListComponent } from './project-setup/project-setup-list/project-setup-list.component';
-import { ProjectSetupFormComponent } from './project-setup/project-setup-form/project-setup-form.component';
+import { AssessmentSetupComponent } from './on-site/assessment-setup/assessment-setup.component';
+import { ProjectSetupListComponent } from './on-site/project-setup/project-setup-list/project-setup-list.component';
+import { ProjectSetupFormComponent } from './on-site/project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './pre-visit/company-kpi-setup/company-kpi-setup.component';
 import { KpiUnitOptionPipe } from './pre-visit/company-kpi-setup/kpi-unit-option.pipe';
@@ -27,6 +27,7 @@ import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-k
 import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
 import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
 import { CompanySetupSummaryComponent } from './pre-visit/review-pre-visit-setup/company-setup-summary/company-setup-summary.component';
+import { ReviewOnSiteComponent } from './on-site/review-on-site/review-on-site.component';
 
 
 
@@ -52,7 +53,8 @@ import { CompanySetupSummaryComponent } from './pre-visit/review-pre-visit-setup
     AddKpiSearchComponent,
     CompanyKpiListComponent,
     KpiListFilterPipe,
-    CompanySetupSummaryComponent
+    CompanySetupSummaryComponent,
+    ReviewOnSiteComponent
   ],
   imports: [
     CommonModule,

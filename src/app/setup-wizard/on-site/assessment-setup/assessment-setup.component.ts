@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IconDefinition, faFileLines, faFilePen, faListCheck } from '@fortawesome/free-solid-svg-icons';
-import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
-import { SetupWizardService } from '../setup-wizard.service';
+import { IdbAssessment } from 'src/app/models/assessment';
+import { SetupWizardService } from '../../setup-wizard.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
-import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
+import { IdbFacility } from 'src/app/models/facility';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
 import { IdbProject, getNewIdbProject } from 'src/app/models/project';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-assessment-setup',
@@ -28,30 +28,35 @@ export class AssessmentSetupComponent {
   accordionIndex: number = 0;
 
   projects: Array<IdbProject>;
+
+  assessments: Array<IdbAssessment>;
+  assessmentsSub: Subscription;
   constructor(private router: Router, private setupWizardService: SetupWizardService,
-    private userIdbService: UserIdbService) {
+    private userIdbService: UserIdbService, private activatedRoute: ActivatedRoute) {
 
   }
 
   ngOnInit() {
     let user: IdbUser = this.userIdbService.user.getValue();
-    let newIdbCompany: IdbCompany = this.setupWizardService.company.getValue();
-    //TODO: Temporary for dev.
-    if (!newIdbCompany) {
-      newIdbCompany = getNewIdbCompany(user.guid);
-      this.setupWizardService.company.next(newIdbCompany);
+    if (!user) {
+      this.setupWizardService.initializeDataForDev();
     }
-    this.facility = this.setupWizardService.facility.getValue();;
-    if (!this.facility) {
-      this.facility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
-    }
-    this.assessment = this.setupWizardService.assessments.getValue()[0];
-    if (!this.assessment) {
-      this.assessment = getNewIdbAssessment(this.facility.userId, this.facility.companyId, this.facility.guid);
-    }
-    this.setupWizardService.assessments.next([this.assessment]);
 
-    this.projects = this.setupWizardService.projects.getValue();
+    this.assessmentsSub = this.setupWizardService.assessments.subscribe(_assessments => {
+      this.assessments = _assessments;
+    })
+
+
+    this.activatedRoute.params.subscribe(params => {
+      let assessmentGUID: string = params['id'];
+      this.assessment = this.assessments.find(_assessment => { return _assessment.guid == assessmentGUID });
+      // let facilityExists: boolean = this.facilityIdbService.setSelectedFromGUID(facilityGUID);
+      if(!this.assessment && this.assessments.length > 0){
+        this.router.navigateByUrl('/assessment-setup/'+ this.assessments[0].guid);
+      }
+    });
+
+
   }
 
   goBack() {

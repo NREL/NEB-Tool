@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SetupWizardService } from '../../setup-wizard.service';
+import { SetupWizardService } from '../../../setup-wizard.service';
 import { IdbProject } from 'src/app/models/project';
 import { IconDefinition, faArrowsToDot, faFileLines, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FanProjects, ProjectType } from 'src/app/shared/constants/projectOptions';

@@ -4,7 +4,7 @@ import { AssessmentSetupComponent } from './assessment-setup.component';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser, getNewIdbUser } from 'src/app/models/user';
 import { BehaviorSubject } from 'rxjs';
-import { SetupWizardService } from '../setup-wizard.service';
+import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbProject } from 'src/app/models/project';

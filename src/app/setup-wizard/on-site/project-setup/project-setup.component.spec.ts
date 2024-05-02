@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectSetupComponent } from './project-setup.component';
-import { SetupWizardService } from '../setup-wizard.service';
+import { SetupWizardService } from '../../setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser, getNewIdbUser } from 'src/app/models/user';

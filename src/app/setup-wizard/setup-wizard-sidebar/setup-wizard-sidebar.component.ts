@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { IconDefinition, fa1, fa2, fa3, fa4, fa5, fa6, faCircle, faExclamationCircle, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 @Component({
   selector: 'app-setup-wizard-sidebar',
@@ -25,7 +26,11 @@ export class SetupWizardSidebarComponent {
   setupContext: SetupWizardContext;
   setupContextSub: Subscription;
   displayStartOverModal: boolean;
-  constructor(private router: Router, private setupWizardService: SetupWizardService) {
+
+  assessmentsSub: Subscription;
+  assessments: Array<IdbAssessment>;
+  constructor(private router: Router, private setupWizardService: SetupWizardService
+  ) {
 
   }
 
@@ -40,10 +45,15 @@ export class SetupWizardSidebarComponent {
     this.setupContextSub = this.setupWizardService.setupContext.subscribe(val => {
       this.setupContext = val;
     });
+
+    this.assessmentsSub = this.setupWizardService.assessments.subscribe(val => {
+      this.assessments = val;
+    });
   }
 
   ngOnDestroy() {
     this.setupContextSub.unsubscribe();
+    this.assessmentsSub.unsubscribe();
   }
 
   setDisplaySidebar() {

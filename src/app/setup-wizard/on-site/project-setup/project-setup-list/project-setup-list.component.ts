@@ -7,7 +7,7 @@ import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
-import { SetupWizardService } from '../../setup-wizard.service';
+import { SetupWizardService } from '../../../setup-wizard.service';
 
 @Component({
   selector: 'app-project-setup-list',
