@@ -11,6 +11,14 @@ export interface UnitSettings {
     steamUnit: string,
     steamPrice: number,
     
+    includeWater: boolean,
+    waterUnit: string,
+    waterPrice: number,
+
+    includeWasteWater: boolean,
+    wasteWaterUnit: string,
+    wasteWaterPrice: number,
+
     includeOtherFuel: boolean,
     otherFuelUnit: string,
     otherFuelPrice: number,
@@ -18,7 +26,6 @@ export interface UnitSettings {
     includeCompressedAir: boolean,
     compressedAirUnit: string,
     compressedAirPrice: number,
-
 }
 
 export function getDefaultUnitSettings(): UnitSettings {
@@ -43,5 +50,13 @@ export function getDefaultUnitSettings(): UnitSettings {
         includeCompressedAir: false,
         compressedAirUnit: 'SCF',
         compressedAirPrice: 0,
+
+        includeWater: false,
+        waterUnit: 'gal',
+        waterPrice: undefined,
+    
+        includeWasteWater: false,
+        wasteWaterUnit: 'gal',
+        wasteWaterPrice: undefined,
     }
 }

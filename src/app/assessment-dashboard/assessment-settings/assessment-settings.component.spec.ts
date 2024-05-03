@@ -11,6 +11,8 @@ import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbProject } from 'src/app/models/project';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 
 describe('AssessmentSettingsComponent', () => {
   let component: AssessmentSettingsComponent;
@@ -23,7 +25,9 @@ describe('AssessmentSettingsComponent', () => {
   let facilityIdbService: Partial<FacilityIdbService> = {};
   let projectsIdbService: Partial<ProjectIdbService> = {
     projects: new BehaviorSubject<Array<IdbProject>>([])
-  }
+  };
+  let contactIdbService: Partial<ContactIdbService> = {};
+  let dbChangesService: Partial<DbChangesService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule],
@@ -32,11 +36,13 @@ describe('AssessmentSettingsComponent', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: ProjectIdbService, useValue: projectsIdbService }
+        { provide: ProjectIdbService, useValue: projectsIdbService },
+        { provide: ContactIdbService, useValue: contactIdbService },
+        { provide: DbChangesService, useValue: dbChangesService },
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AssessmentSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

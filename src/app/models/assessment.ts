@@ -1,4 +1,3 @@
-import { EnergySystem } from "../shared/constants/energySystems";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
 export interface IdbAssessment extends IdbEntry {
@@ -6,11 +5,13 @@ export interface IdbAssessment extends IdbEntry {
     userId: string,
     facilityId: string,
     companyId: string,
-    energySystem: EnergySystem,
+    equipmentId: string,
     energyUse: number,
     cost: number,
     energySavings: number,
-    costSavings: number
+    costSavings: number,
+    contactId: string,
+    notes: string
 }
 
 export function getNewIdbAssessment(userId: string, companyId: string, facilityId: string): IdbAssessment {
@@ -21,10 +22,12 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
-        energySystem: undefined,
+        equipmentId: undefined,
         energyUse: undefined,
         cost: undefined,
         energySavings: undefined,
-        costSavings: undefined
+        costSavings: undefined,
+        contactId: undefined,
+        notes: undefined,
     }
 }

@@ -38,17 +38,17 @@ export class ProjectSetupListComponent {
       newIdbFacility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
       this.setupWizardService.facility.next(newIdbFacility);
     }
-    let newAssessment: IdbAssessment = this.setupWizardService.assessment.getValue();
+    let newAssessment: IdbAssessment = this.setupWizardService.assessments.getValue()[0];
     if (!newAssessment) {
       newAssessment = getNewIdbAssessment(newIdbFacility.userId, newIdbFacility.companyId, newIdbFacility.guid);
-      this.setupWizardService.assessment.next(newAssessment);
+      this.setupWizardService.assessments.next([newAssessment]);
     }
-    this.setupWizardService.assessment.next(newAssessment);
+    this.setupWizardService.assessments.next([newAssessment]);
     this.projects = this.setupWizardService.projects.getValue();
   }
 
   addProject() {
-    let assessment: IdbAssessment = this.setupWizardService.assessment.getValue();
+    let assessment: IdbAssessment = this.setupWizardService.assessments.getValue()[0];
     let newProject: IdbProject = getNewIdbProject(assessment.userId, assessment.companyId, assessment.guid, assessment.guid);
     newProject.name = 'Project #' + (this.projects.length + 1);
     this.projects.push(newProject);

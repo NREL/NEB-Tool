@@ -17,6 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AssessmentsTableComponent } from './assessments-table/assessments-table.component';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
 describe('FacilityDashboardHomeComponent', () => {
   let component: FacilityDashboardHomeComponent;
@@ -35,6 +36,7 @@ describe('FacilityDashboardHomeComponent', () => {
     selectedAssessment: new BehaviorSubject<IdbAssessment>(undefined),
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
+  let userIdbService: Partial<UserIdbService> = {};
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,7 +47,8 @@ describe('FacilityDashboardHomeComponent', () => {
         { provide: ProjectIdbService, useValue: projectIdbService },
         { provide: DbChangesService, useValue: dbChangesService },
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: AssessmentIdbService, useValue: assessmentIdbService }
+        { provide: AssessmentIdbService, useValue: assessmentIdbService },
+        { provide: UserIdbService, useValue: userIdbService },
       ]
     });
     fixture = TestBed.createComponent(FacilityDashboardHomeComponent);

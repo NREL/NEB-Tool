@@ -33,7 +33,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/styles/modals.css",
               "src/assets/styles/tabs.css",
-              "src/assets/styles/setup-wizard.css"
+              "src/assets/styles/setup-wizard.css",
+              "src/assets/styles/accordion.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.js"

@@ -11,6 +11,7 @@ import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser, getNewIdbUser } from 'src/app/models/user';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbContact } from 'src/app/models/contact';
 
 describe('FacilityProcessEquipmentSetupComponent', () => {
   let component: FacilityProcessEquipmentSetupComponent;
@@ -21,7 +22,8 @@ describe('FacilityProcessEquipmentSetupComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
     facility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', '')),
-    projects: new BehaviorSubject<Array<IdbProject>>([])
+    projects: new BehaviorSubject<Array<IdbProject>>([]),
+    contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),

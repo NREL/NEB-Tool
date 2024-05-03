@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
@@ -14,7 +14,7 @@ export class CompanyKpiListComponent {
 
   accordionIndex: number = 0;
   faTrash: IconDefinition = faTrash;
-
+  faBullseye: IconDefinition = faBullseye;
   company: IdbCompany;
   companySub: Subscription;
   kpi_categories: Array<KPI_Category> = KPI_categories;

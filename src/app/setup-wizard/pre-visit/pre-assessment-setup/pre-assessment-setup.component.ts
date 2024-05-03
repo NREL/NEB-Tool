@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faListCheck, faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faPlus, faScrewdriverWrench, faToolbox, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
+import { SetupWizardService } from '../../setup-wizard.service';
+import { IdbCompany } from 'src/app/models/company';
+import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
+import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
+import { IdbFacility } from 'src/app/models/facility';
+import { IdbContact } from 'src/app/models/contact';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -11,12 +17,47 @@ export class PreAssessmentSetupComponent {
 
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
-  faListCheck: IconDefinition = faListCheck;
+  faScrewdriverWrench: IconDefinition = faScrewdriverWrench;
+  faToolbox: IconDefinition = faToolbox;
+  faPlus: IconDefinition = faPlus;
+  faTrash: IconDefinition = faTrash;
+  faUser: IconDefinition = faUser;
 
-  constructor(private router: Router) {
-
+  assessments: Array<IdbAssessment>;
+  contacts: Array<IdbContact>;
+  accordionIndex: number = 0;
+  processEquipmentOptions: Array<ProcessEquipment>;
+  displayDeleteModal: boolean = false;
+  assessmentToDelete: IdbAssessment;
+  displayContactModal: boolean = false;
+  contactAssessmentIndex: number;
+  editContactId: string;
+  constructor(private router: Router, private setupWizardService: SetupWizardService) {
   }
 
+  ngOnInit() {
+    //TODO: Temporary for dev.
+    let company: IdbCompany = this.setupWizardService.company.getValue();
+    if (!company) {
+      this.setupWizardService.initializeDataForDev();
+    }
+    this.assessments = this.setupWizardService.assessments.getValue();
+    let facility: IdbFacility = this.setupWizardService.facility.getValue();
+    this.processEquipmentOptions = facility.processEquipment;
+    this.contacts = this.setupWizardService.contacts.getValue();
+  }
+
+  goToProjects() {
+    this.router.navigateByUrl('/setup-wizard/project-setup');
+  }
+
+  saveChanges() {
+    this.setupWizardService.assessments.next(this.assessments);
+  }
+
+  setAccordionIndex(index: number) {
+    this.accordionIndex = index;
+  }
 
   goBack() {
     this.router.navigateByUrl('/setup-wizard/process-equipment');
@@ -25,4 +66,59 @@ export class PreAssessmentSetupComponent {
   goToNext() {
     this.router.navigateByUrl('/setup-wizard/review-pre-visit');
   }
+
+  addAssessment() {
+    let facility: IdbFacility = this.setupWizardService.facility.getValue();
+    let assessment: IdbAssessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
+    this.assessments.push(assessment);
+    this.setAccordionIndex(this.assessments.length - 1);
+    this.saveChanges();
+  }
+
+  openDeleteModal(assessment: IdbAssessment) {
+    this.assessmentToDelete = assessment;
+    this.displayDeleteModal = true;
+  }
+
+  closeDeleteModal() {
+    this.displayDeleteModal = false;
+    this.assessmentToDelete = undefined;
+  }
+
+  removeAssessment() {
+    this.assessments = this.assessments.filter(_assessment => {
+      return _assessment.guid != this.assessmentToDelete.guid;
+    });
+    this.closeDeleteModal();
+    this.setAccordionIndex(0);
+    this.saveChanges();
+  }
+
+  openContactModal(assessmentIndex: number, contactId: string) {
+    this.contactAssessmentIndex = assessmentIndex;
+    this.editContactId = contactId;
+    this.displayContactModal = true;
+  }
+
+  closeContactModal() {
+    this.displayContactModal = false;
+    this.contactAssessmentIndex = undefined;
+    this.editContactId = undefined;
+  }
+
+  setContact(contactId: string) {
+    this.assessments[this.contactAssessmentIndex].contactId = contactId;
+    this.closeContactModal();
+  }
+
+  setProcessEquipment(assessment: IdbAssessment){
+    let selectedProcessEquipment: ProcessEquipment = this.processEquipmentOptions.find(processEquipment => {
+      return processEquipment.guid == assessment.equipmentId;
+    });
+    if(selectedProcessEquipment && selectedProcessEquipment.contactId){
+      assessment.contactId = selectedProcessEquipment.contactId;
+    }
+    this.saveChanges();
+  }
+
 }

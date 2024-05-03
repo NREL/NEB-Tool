@@ -30,25 +30,6 @@
     </div>
 </div>
 
-<div class="accordion" id="contactAccordion">
-    <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContact"
-                aria-expanded="true" aria-controls="collapseContact"
-                [ngClass]="{'collapsed': !primaryContactAccordionOpen}" (click)="toggleContact()">
-                <fa-icon [icon]="faContactCard" class="me-2"></fa-icon>
-                Contact Information
-            </button>
-        </h2>
-        <div id="collapseContact" class="accordion-collapse collapse" data-bs-parent="#contactAccordion"
-            [ngClass]="{'show': primaryContactAccordionOpen}">
-            <div class="accordion-body">
-                <app-primary-contact-form [inCompany]="inCompany" [inSetupWizard]="false"></app-primary-contact-form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="accordion" id="unitsAccordion">
     <div class="accordion-item">
         <h2 class="accordion-header">

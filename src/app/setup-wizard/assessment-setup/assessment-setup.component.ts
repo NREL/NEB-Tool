@@ -7,7 +7,7 @@ import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { EnergySystem } from 'src/app/shared/constants/energySystems';
+import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
 import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 
 @Component({
@@ -17,7 +17,7 @@ import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 })
 export class AssessmentSetupComponent {
 
-  energySystems = EnergySystem;
+  equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
 
   faFileLines: IconDefinition = faFileLines;
   faFilePen: IconDefinition = faFilePen;
@@ -45,11 +45,11 @@ export class AssessmentSetupComponent {
     if (!this.facility) {
       this.facility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
     }
-    this.assessment = this.setupWizardService.assessment.getValue();
+    this.assessment = this.setupWizardService.assessments.getValue()[0];
     if (!this.assessment) {
       this.assessment = getNewIdbAssessment(this.facility.userId, this.facility.companyId, this.facility.guid);
     }
-    this.setupWizardService.assessment.next(this.assessment);
+    this.setupWizardService.assessments.next([this.assessment]);
 
     this.projects = this.setupWizardService.projects.getValue();
   }
@@ -67,7 +67,7 @@ export class AssessmentSetupComponent {
   }
 
   saveChanges() {
-    this.setupWizardService.assessment.next(this.assessment);
+    this.setupWizardService.assessments.next([this.assessment]);
   }
 
   setAccordionIndex(index: number) {

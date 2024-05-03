@@ -1,4 +1,6 @@
 import { getGUID } from "../helpFunctions"
+import { EquipmentType } from "./equipmentTypes"
+import { UtilityType } from "./utilityTypes"
 
 export interface ProcessEquipment {
     guid: string,
@@ -6,16 +8,22 @@ export interface ProcessEquipment {
     size: number,
     operatingHours: number,
     loadFactor: number,
-    notes: string
+    notes: string,
+    contactId: string,
+    equipmentType: EquipmentType,
+    utilityType: UtilityType
 }
 
-export function getNewProcessEquipment() {
+export function getNewProcessEquipment(): ProcessEquipment {
     return {
         guid: getGUID(),
         equipmentName: 'New Equipment',
         size: undefined,
         operatingHours: undefined,
         loadFactor: undefined,
-        notes: undefined
+        notes: undefined,
+        contactId: undefined,
+        equipmentType: undefined,
+        utilityType: undefined
     }
 }

@@ -20,10 +20,6 @@
                             <!-- <fa-icon [icon]="faLocationDot"></fa-icon> -->
                             Location
                         </th>
-                        <th class="w-25">
-                            <!-- <fa-icon [icon]="faContactCard"></fa-icon> -->
-                            Contact
-                        </th>
                         <th>
                             Assessments
                         </th>
@@ -41,9 +37,6 @@
                         </td>
                         <td>
                             {{company.generalInformation | addressDisplay}}
-                        </td>
-                        <td>
-                            {{company.generalInformation.contactName}}
                         </td>
                         <td>
                             {{(company.guid | assessmentsList: assessments :true).length}}

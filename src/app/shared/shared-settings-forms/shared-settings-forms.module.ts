@@ -4,7 +4,6 @@ import { UnitsFormComponent } from './units-form/units-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NaicsListPipe } from './additional-details-form/naics-list.pipe';
 import { SettingsFormComponent } from './settings-form/settings-form.component';
-import { PrimaryContactFormComponent } from './primary-contact-form/primary-contact-form.component';
 import { LocationFormComponent } from './location-form/location-form.component';
 import { AdditionalDetailsFormComponent } from './additional-details-form/additional-details-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -15,7 +14,6 @@ import { HelperPipesModule } from '../helper-pipes/helper-pipes.module';
     UnitsFormComponent,
     NaicsListPipe,
     SettingsFormComponent,
-    PrimaryContactFormComponent,
     LocationFormComponent,
     AdditionalDetailsFormComponent
   ],
@@ -29,7 +27,6 @@ import { HelperPipesModule } from '../helper-pipes/helper-pipes.module';
   exports: [
     UnitsFormComponent,
     SettingsFormComponent,
-    PrimaryContactFormComponent,
     LocationFormComponent,
     AdditionalDetailsFormComponent
   ]

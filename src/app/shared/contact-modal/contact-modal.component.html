@@ -1,0 +1,96 @@
+<div [ngClass]="{'window-overlay': displayModal}"></div>
+<div class="popup" [ngClass]="{'open': displayModal }">
+    <div class="popup-header"><fa-icon [icon]="faUser"></fa-icon> Select Contact
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+    <div class="popup-body">
+        <ng-template [ngIf]="!selectedContact" [ngIfElse]="contactCard">
+            <!--select contact-->
+            <ng-template [ngIf]="contacts.length != 0" [ngIfElse]="noContactsBlock">
+                <div class="list-group">
+                    <div class="list-group-item list-group-item-action" *ngFor="let contact of contacts"
+                        (click)="selectContact(contact.guid)">
+                        {{contact.name}}
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #noContactsBlock>
+                <div class="alert alert-warning">
+                    No Contacts Found.
+                </div>
+            </ng-template>
+        </ng-template>
+        <ng-template #contactCard>
+            <a class="click-link" (click)="selectContact(undefined)">
+                <fa-icon [icon]="faChevronLeft"></fa-icon> Select Different Contact
+            </a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Contact
+                        </th>
+                        <th>
+                            {{selectedContact.name}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Phone
+                        </td>
+                        <td>
+                            {{selectedContact.phone}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Email
+                        </td>
+                        <td>
+                            {{selectedContact.email}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Role
+                        </td>
+                        <td>
+                            {{selectedContact.role}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Team
+                        </td>
+                        <td>
+                            {{selectedContact.team}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Focus Area
+                        </td>
+                        <td>
+                            {{selectedContact.focusArea}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Notes
+                        </td>
+                        <td>
+                            {{selectedContact.notes}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-success" (click)="saveChanges()"><fa-icon [icon]="faSave"></fa-icon> Set Contact</button>
+    </div>
+</div>

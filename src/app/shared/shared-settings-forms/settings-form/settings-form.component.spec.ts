@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AdditionalDetailsFormComponent } from '../additional-details-form/additional-details-form.component';
 import { LocationFormComponent } from '../location-form/location-form.component';
-import { PrimaryContactFormComponent } from '../primary-contact-form/primary-contact-form.component';
 import { UnitsFormComponent } from '../units-form/units-form.component';
 import { LocalStorageDataService } from '../../shared-services/local-storage-data.service';
 import { HelperPipesModule } from '../../helper-pipes/helper-pipes.module';
@@ -40,7 +39,7 @@ describe('SettingsFormComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FontAwesomeModule, HelperPipesModule],
-      declarations: [SettingsFormComponent, AdditionalDetailsFormComponent, LocationFormComponent, PrimaryContactFormComponent, UnitsFormComponent],
+      declarations: [SettingsFormComponent, AdditionalDetailsFormComponent, LocationFormComponent, UnitsFormComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },

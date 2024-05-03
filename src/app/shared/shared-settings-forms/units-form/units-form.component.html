@@ -11,6 +11,7 @@
             <label>Price</label>
         </div>
     </div>
+    <!--Electricity-->
     <div class="row mb-1">
         <div class="col-4">
             <div class="input-group">
@@ -30,7 +31,7 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number">
+                    <input class="form-control" type="number" formControlName="electricityPrice" name="electricityPrice">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['electricityUnit'].value | unitsDisplay"></span>
                     </span>
@@ -38,6 +39,7 @@
             </div>
         </ng-container>
     </div>
+    <!--Natural Gas-->
     <div class="row mb-1">
         <div class="col-4">
             <div class="input-group">
@@ -57,7 +59,7 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number">
+                    <input class="form-control" type="number" formControlName="naturalGasPrice" name="naturalGasPrice">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['naturalGasUnit'].value | unitsDisplay"></span>
                     </span>
@@ -65,33 +67,7 @@
             </div>
         </ng-container>
     </div>
-    <div class="row mb-1">
-        <div class="col-4">
-            <div class="input-group">
-                <div class="input-group-text">
-                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeSteam">
-                </div>
-                <input type="text" class="form-control disabled-input-label" [value]="'Steam'" [disabled]="true">
-            </div>
-        </div>
-        <ng-container *ngIf="form.controls['includeSteam'].value">
-            <div class="col-4">
-                <select class="form-select" formControlName="steamUnit" (change)="saveChanges()">
-                    <option *ngFor="let massUnitOption of massUnitOptions" [ngValue]="massUnitOption.value">
-                        <span [innerHTML]="massUnitOption.value | unitsDisplay"></span>
-                    </option>
-                </select>
-            </div>
-            <div class="col-4">
-                <div class="input-group">
-                    <input class="form-control" type="number">
-                    <span class="input-group-text">&dollar;/<span
-                            [innerHTML]="form.controls['steamUnit'].value | unitsDisplay"></span>
-                    </span>
-                </div>
-            </div>
-        </ng-container>
-    </div>
+    <!--Other Fuels-->
     <div class="row mb-1">
         <div class="col-4">
             <div class="input-group">
@@ -111,20 +87,103 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number">
+                    <input class="form-control" type="number" formControlName="otherFuelPrice" name="otherFuelPrice">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['otherFuelUnit'].value | unitsDisplay"></span></span>
                 </div>
             </div>
         </ng-container>
     </div>
+    <!--Water-->
+    <div class="row mb-1">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeWater">
+                </div>
+                <input type="text" class="form-control disabled-input-label" [value]="'Water'" [disabled]="true">
+            </div>
+        </div>
+        <ng-container *ngIf="form.controls['includeWater'].value">
+            <div class="col-4">
+                <select class="form-select" formControlName="waterUnit" (change)="saveChanges()">
+                    <option *ngFor="let liquidOption of volumeLiquidOptions" [ngValue]="liquidOption.value">
+                        <span [innerHTML]="liquidOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number" formControlName="waterPrice" name="waterPrice">
+                    <span class="input-group-text">&dollar;/<span
+                            [innerHTML]="form.controls['waterUnit'].value | unitsDisplay"></span></span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <!--Waste Water-->
+    <div class="row mb-1">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeWasteWater">
+                </div>
+                <input type="text" class="form-control disabled-input-label" [value]="'Waste Water'" [disabled]="true">
+            </div>
+        </div>
+        <ng-container *ngIf="form.controls['includeWasteWater'].value">
+            <div class="col-4">
+                <select class="form-select" formControlName="wasteWaterUnit" (change)="saveChanges()">
+                    <option *ngFor="let liquidOption of volumeLiquidOptions" [ngValue]="liquidOption.value">
+                        <span [innerHTML]="liquidOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number" formControlName="wasteWaterPrice" name="wasteWaterPrice">
+                    <span class="input-group-text">&dollar;/<span
+                            [innerHTML]="form.controls['wasteWaterUnit'].value | unitsDisplay"></span></span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <!--Steam-->
+    <div class="row mb-1">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <input class="form-check-input mt-0" type="checkbox" formControlName="includeSteam">
+                </div>
+                <input type="text" class="form-control disabled-input-label" [value]="'Steam (as Utility)'" [disabled]="true">
+            </div>
+        </div>
+        <ng-container *ngIf="form.controls['includeSteam'].value">
+            <div class="col-4">
+                <select class="form-select" formControlName="steamUnit" (change)="saveChanges()">
+                    <option *ngFor="let massUnitOption of massUnitOptions" [ngValue]="massUnitOption.value">
+                        <span [innerHTML]="massUnitOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number" formControlName="steamPrice" name="steamPrice">
+                    <span class="input-group-text">&dollar;/<span
+                            [innerHTML]="form.controls['steamUnit'].value | unitsDisplay"></span>
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <!--Compressed Air-->
     <div class="row mb-1">
         <div class="col-4">
             <div class="input-group">
                 <div class="input-group-text">
                     <input class="form-check-input mt-0" type="checkbox" formControlName="includeCompressedAir">
                 </div>
-                <input type="text" class="form-control disabled-input-label" [value]="'Compressed Air'"
+                <input type="text" class="form-control disabled-input-label" [value]="'Compressed Air (as Utility)'"
                     [disabled]="true">
             </div>
         </div>
@@ -138,7 +197,7 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number">
+                    <input class="form-control" type="number" formControlName="compressedAirPrice" name="compressedAirPrice">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['compressedAirUnit'].value | unitsDisplay"></span>
                     </span>
