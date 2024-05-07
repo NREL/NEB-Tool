@@ -37,7 +37,7 @@ export class SetupWizardService {
     console.log('init wizard..');
     let user: IdbUser = this.userIdbService.user.getValue();
     let company: IdbCompany = getNewIdbCompany(user.guid);
-    company.generalInformation.name = 'Demo Example Company';
+    company.generalInformation.name = 'Example Company';
     [1, 3, 5].forEach(kpiIndex => {
       let kpiOption: KPI_Option = KPI_Options[kpiIndex];
       let kpi: KeyPerformanceIndicator = getKeyPerformanceIndicator(kpiOption);
@@ -45,7 +45,7 @@ export class SetupWizardService {
     })
     this.company.next(company);
     let facility: IdbFacility = getNewIdbFacility(company.userId, company.guid);
-    facility.generalInformation.name = 'Demo Example Facility';
+    facility.generalInformation.name = 'Example Facility';
 
 
     let pump: ProcessEquipment = getNewProcessEquipment();

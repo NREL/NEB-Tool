@@ -26,7 +26,6 @@ import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-sea
 import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
 import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
 import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
-import { CompanySetupSummaryComponent } from './pre-visit/review-pre-visit-setup/company-setup-summary/company-setup-summary.component';
 import { CompanyDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/company-details-summary/company-details-summary.component';
 import { TeamDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/team-details-summary.component';
 import { ContactSummaryCardComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/contact-summary-card/contact-summary-card.component';
@@ -60,7 +59,6 @@ import { TableEntriesModule } from '../shared/table-entries/table-entries.module
     AddKpiSearchComponent,
     CompanyKpiListComponent,
     KpiListFilterPipe,
-    CompanySetupSummaryComponent,
     CompanyDetailsSummaryComponent,
     TeamDetailsSummaryComponent,
     ContactSummaryCardComponent,

@@ -1,5 +1,11 @@
 <ng-template [ngIf]="value" [ngIfElse]="mdash">
     {{value}}
+    <ng-template [ngIf]="units && !per">
+        <span [innerHTML]="units | unitsDisplay"></span>
+    </ng-template>
+    <ng-template [ngIf]="units && per">
+        <span [innerHTML]="units | unitsDisplay"></span>/<span [innerHTML]="per | unitsDisplay"></span>
+    </ng-template>
 </ng-template>
 <ng-template #mdash>
     &mdash;

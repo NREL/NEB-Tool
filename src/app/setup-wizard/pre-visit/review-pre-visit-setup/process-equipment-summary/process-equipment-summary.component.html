@@ -1,1 +1,89 @@
-<p>process-equipment-summary works!</p>
+<h5 class="bold w-100 text-center"><fa-icon [icon]="faDiagramProject" class="me-2"></fa-icon>Process Equipment</h5>
+<div class="row">
+    <div class="col-lg-6 col-md-12 pb-2" *ngFor="let equipment of processEquipment">
+        <div class="card">
+            <div class="card-header">
+                <fa-icon [icon]="equipment.equipmentType | equipmentTypeIcon" class="pe-1"></fa-icon>
+                {{equipment.equipmentName}}
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Equipment Type
+                            </td>
+                            <td>
+                                <app-single-cell-item [value]="equipment.equipmentType"></app-single-cell-item>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Utility Type
+                            </td>
+                            <td>
+                                <app-single-cell-item [value]="equipment.utilityType"></app-single-cell-item>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Total Size
+                            </td>
+                            <td>
+                                <app-single-cell-item [value]="equipment.size"></app-single-cell-item>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Operating Hours
+                            </td>
+                            <td>
+                                <app-single-cell-item [value]="equipment.operatingHours" [units]="'Hrs'"
+                                    [per]="'yr'"></app-single-cell-item>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Load Factor
+                            </td>
+                            <td>
+                                <app-single-cell-item [value]="equipment.loadFactor"
+                                    [units]="'%'"></app-single-cell-item>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Notes
+                            </td>
+                            <td>
+                                <app-single-cell-item [value]="equipment.notes"></app-single-cell-item>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Contacts
+                            </td>
+                            <td>
+                                <ng-template [ngIf]="(equipment.guid| contactName:'processEquipment': contacts).length != 0"
+                                    [ngIfElse]="contactMdash">
+                                    <div class="d-flex">
+                                        <div class="pe-1"
+                                            *ngFor="let contact of equipment.guid| contactName:'processEquipment': contacts;">
+                                            <span class="badge bg-primary">
+                                                <fa-icon [icon]="faUser"></fa-icon>
+                                                {{contact.name}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #contactMdash>
+                                    &mdash;
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

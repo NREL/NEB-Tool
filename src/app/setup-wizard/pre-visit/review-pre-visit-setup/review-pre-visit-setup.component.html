@@ -11,6 +11,12 @@
                 <app-team-details-summary></app-team-details-summary>
                 <hr>
                 <app-company-kpis-summary></app-company-kpis-summary>
+                <hr class="solid-hr">
+                <app-facility-details-summary></app-facility-details-summary>
+                <hr>
+                <app-process-equipment-summary></app-process-equipment-summary>
+                <hr class="solid-hr">
+                <app-pre-assessment-summary></app-pre-assessment-summary>
             </div>
         </div>
     </div>
@@ -20,6 +26,10 @@
         <button class="btn btn-dark" (click)="goBack()">
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
+        </button>
+        <button class="btn btn-secondary" [disabled]="true">
+            <fa-icon [icon]="faFilePdf"></fa-icon>
+            Generate PDF
         </button>
         <button class="btn btn-success" (click)="openConfirmModal()">
             <fa-icon [icon]="faSave"></fa-icon> Submit Pre-Visit

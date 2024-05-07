@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IconDefinition, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
@@ -12,6 +13,7 @@ export class CompanyDetailsSummaryComponent {
 
   company: IdbCompany;
   contacts: Array<IdbContact>;
+  faBuilding: IconDefinition = faBuilding;
   constructor(private setupWizardService: SetupWizardService) {
   }
 

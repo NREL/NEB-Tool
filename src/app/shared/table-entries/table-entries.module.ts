@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SingleCellItemComponent } from './single-cell-item/single-cell-item.component';
+import { HelperPipesModule } from '../helper-pipes/helper-pipes.module';
 
 
 
@@ -9,7 +10,8 @@ import { SingleCellItemComponent } from './single-cell-item/single-cell-item.com
     SingleCellItemComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HelperPipesModule
   ],
   exports: [
     SingleCellItemComponent
