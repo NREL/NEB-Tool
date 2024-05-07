@@ -6,7 +6,9 @@
                     <fa-icon [icon]="faCircleCheck"></fa-icon> Review Pre-Visit
                 </h5>
                 <hr>
-                <app-company-setup-summary></app-company-setup-summary>
+                <app-company-details-summary></app-company-details-summary>
+                <hr>
+                <app-team-details-summary></app-team-details-summary>
             </div>
         </div>
     </div>
@@ -38,6 +40,7 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
-        <button class="btn btn-success" (click)="submitPreVisit()"><fa-icon [icon]="faSave"></fa-icon> Submit Pre-Visit</button>
+        <button class="btn btn-success" (click)="submitPreVisit()"><fa-icon [icon]="faSave"></fa-icon> Submit
+            Pre-Visit</button>
     </div>
 </div>

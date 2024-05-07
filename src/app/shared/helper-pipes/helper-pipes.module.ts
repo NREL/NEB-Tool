@@ -11,6 +11,8 @@ import { UnitsDisplayPipe } from './units-display.pipe';
 import { ContactNamePipe } from './contact-name.pipe';
 import { EquipmentTypeIconPipe } from './equipment-type-icon.pipe';
 import { IncludesContactPipe } from './includes-contact.pipe';
+import { AssessmentNameDisplayPipe } from './assessment-name-display.pipe';
+import { ProcessEquipmentDisplayPipe } from './process-equipment-display.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { IncludesContactPipe } from './includes-contact.pipe';
     UnitsDisplayPipe,
     ContactNamePipe,
     EquipmentTypeIconPipe,
-    IncludesContactPipe
+    IncludesContactPipe,
+    AssessmentNameDisplayPipe,
+    ProcessEquipmentDisplayPipe
   ],
   imports: [
     CommonModule
@@ -40,7 +44,9 @@ import { IncludesContactPipe } from './includes-contact.pipe';
     UnitsDisplayPipe,
     ContactNamePipe,
     EquipmentTypeIconPipe,
-    IncludesContactPipe
+    IncludesContactPipe,
+    AssessmentNameDisplayPipe,
+    ProcessEquipmentDisplayPipe
   ]
 })
 export class HelperPipesModule { }

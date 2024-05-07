@@ -1,0 +1,147 @@
+<table class="table table-bordered table-hover">
+    <tbody>
+        <tr>
+            <th class="w-25">
+                Company Name
+            </th>
+            <td>
+                {{company.generalInformation.name}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Address
+            </td>
+            <td>
+                &mdash;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                NAICs
+            </td>
+            <td>
+                <ng-container *ngIf="!company.generalInformation.naics1">
+                    &mdash;
+                </ng-container>
+                <ng-container
+                    *ngIf="company.generalInformation.naics1 && !company.generalInformation.naics2 && !company.generalInformation.naics3">
+                    {{company.generalInformation.naics1}}
+                </ng-container>
+                <ng-container *ngIf="company.generalInformation.naics2 && !company.generalInformation.naics3">
+                    {{company.generalInformation.naics2}}
+                </ng-container>
+                <ng-container *ngIf="company.generalInformation.naics3">
+                    {{company.generalInformation.naics3}}
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h6 class="bold">Tracked Utilities</h6>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-25">
+                Utility
+            </th>
+            <th>
+                Unit
+            </th>
+            <th>
+                Unit Price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="company.unitSettings.includeElectricity">
+            <td>
+                Electricity
+            </td>
+            <td>
+                <span [innerHTML]="company.unitSettings.electricityUnit | unitsDisplay"></span>
+            </td>
+            <td>
+                {{company.unitSettings.electricityPrice}} &dollar;/<span
+                    [innerHTML]="company.unitSettings.electricityUnit | unitsDisplay"></span>
+            </td>
+        </tr>
+        <tr *ngIf="company.unitSettings.includeNaturalGas">
+            <td>
+                Natural Gas
+            </td>
+            <td>
+                <span [innerHTML]="company.unitSettings.naturalGasUnit | unitsDisplay"></span>
+            </td>
+            <td>
+                {{company.unitSettings.naturalGasPrice}} &dollar;/<span
+                    [innerHTML]="company.unitSettings.naturalGasUnit | unitsDisplay"></span>
+            </td>
+        </tr>
+
+        <tr *ngIf="company.unitSettings.includeOtherFuel">
+            <td>
+                Other Fuel
+            </td>
+            <td>
+                <span [innerHTML]="company.unitSettings.otherFuelUnit | unitsDisplay"></span>
+            </td>
+            <td>
+                {{company.unitSettings.otherFuelPrice}} &dollar;/<span
+                    [innerHTML]="company.unitSettings.otherFuelUnit | unitsDisplay"></span>
+            </td>
+        </tr>
+
+        <tr *ngIf="company.unitSettings.includeWater">
+            <td>
+                Water
+            </td>
+            <td>
+                <span [innerHTML]="company.unitSettings.waterUnit | unitsDisplay"></span>
+            </td>
+            <td>
+                {{company.unitSettings.waterPrice}} &dollar;/<span
+                    [innerHTML]="company.unitSettings.waterUnit | unitsDisplay"></span>
+            </td>
+        </tr>
+
+        <tr *ngIf="company.unitSettings.includeWasteWater">
+            <td>
+                Waste Water
+            </td>
+            <td>
+                <span [innerHTML]="company.unitSettings.wasteWaterUnit | unitsDisplay"></span>
+            </td>
+            <td>
+                {{company.unitSettings.wasteWaterPrice}} &dollar;/<span
+                    [innerHTML]="company.unitSettings.wasteWaterUnit | unitsDisplay"></span>
+            </td>
+        </tr>
+
+        <tr *ngIf="company.unitSettings.includeSteam">
+            <td>
+                Steam (as Utility)
+            </td>
+            <td>
+                <span [innerHTML]="company.unitSettings.steamUnit | unitsDisplay"></span>
+            </td>
+            <td>
+                {{company.unitSettings.steamPrice}} &dollar;/<span
+                    [innerHTML]="company.unitSettings.steamUnit | unitsDisplay"></span>
+            </td>
+        </tr>
+
+        <tr *ngIf="company.unitSettings.includeCompressedAir">
+            <td>
+                Compressed Air (as Utility)
+            </td>
+            <td>
+                <span [innerHTML]="company.unitSettings.compressedAirUnit | unitsDisplay"></span>
+            </td>
+            <td>
+                {{company.unitSettings.compressedAirPrice}} &dollar;/<span
+                    [innerHTML]="company.unitSettings.compressedAirUnit | unitsDisplay"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
