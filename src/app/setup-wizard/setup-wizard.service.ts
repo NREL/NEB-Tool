@@ -34,6 +34,7 @@ export class SetupWizardService {
 
 
   initializeDataForDev() {
+    console.log('init wizard..');
     let user: IdbUser = this.userIdbService.user.getValue();
     let company: IdbCompany = getNewIdbCompany(user.guid);
     company.generalInformation.name = 'Demo Example Company';
