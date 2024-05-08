@@ -8,7 +8,7 @@ import { ContactContext, IdbContact } from 'src/app/models/contact';
 export class ContactNamePipe implements PipeTransform {
 
   transform(guid: string, context: ContactContext, contacts: Array<IdbContact>): Array<IdbContact> {
-    let _contacts: Array<IdbContact> = new Array();   
+    let _contacts: Array<IdbContact> = new Array();
     contacts.forEach(_contact => {
       if (context == 'processEquipment' && _contact.processEquipmentIds.includes(guid)) {
         _contacts.push(_contact);
@@ -17,6 +17,8 @@ export class ContactNamePipe implements PipeTransform {
       } else if (context == 'facility' && _contact.facilityIds.includes(guid)) {
         _contacts.push(_contact);
       } else if (context == 'company' && _contact.companyId == guid) {
+        _contacts.push(_contact);
+      } else if (context == 'KPI' && _contact.kpiIds.includes(guid)) {
         _contacts.push(_contact);
       }
     });

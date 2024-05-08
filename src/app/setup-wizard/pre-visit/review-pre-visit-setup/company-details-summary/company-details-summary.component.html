@@ -1,18 +1,15 @@
+<h5 class="bold w-100 text-center">
+    <fa-icon [icon]="faBuilding" class="me-2"></fa-icon> {{company.generalInformation.name}}
+</h5>
+
 <table class="table table-bordered table-hover">
     <tbody>
         <tr>
-            <th class="w-25">
-                Company Name
-            </th>
-            <td>
-                {{company.generalInformation.name}}
-            </td>
-        </tr>
-        <tr>
-            <td>
+            <td class="w-25">
                 Address
             </td>
             <td>
+                <!--TODO: add address format-->
                 &mdash;
             </td>
         </tr>
@@ -141,145 +138,6 @@
             <td>
                 {{company.unitSettings.compressedAirPrice}} &dollar;/<span
                     [innerHTML]="company.unitSettings.compressedAirUnit | unitsDisplay"></span>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<h6 class="bold">Key Performance Indicators</h6>
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
-                Qualitative or<br>
-                Quantitative?
-            </th>
-            <th>
-                Units
-            </th>
-            <th>
-                Baseline Use
-            </th>
-            <th>
-                Cost Per Unit
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let kpi of company.keyPerformanceIndicators">
-            <td>
-                <ng-template [ngIf]="!kpi.isCustom" [ngIfElse]="customNameBlock">
-                    <span [innerHTML]="kpi.kpiOptionValue | kpiLabel"></span>
-                </ng-template>
-                <ng-template #customNameBlock>
-                    {{kpi.customKPIName}}
-                </ng-template>
-            </td>
-            <td>
-                <span class="badge" [ngStyle]="{'background-color':kpi.category | kpiCategoryClass}">
-                    {{kpi.category}}
-                </span>
-            </td>
-            <td>
-                <ng-template [ngIf]="!kpi.isQualitative" [ngIfElse]="quantitativeBlock">
-                    Qualitative
-                </ng-template>
-                <ng-template #quantitativeBlock>
-                    Quantitative
-                </ng-template>
-            </td>
-            <td>
-                <ng-template [ngIf]="kpi.isQualitative || !kpi.units" [ngIfElse]="unitsBlock">
-                    &mdash;
-                </ng-template>
-                <ng-template #unitsBlock>
-                    {{kpi.units}}
-                </ng-template>
-            </td>
-            <td>
-                <ng-template [ngIf]="kpi.isQualitative || !kpi.baselineUsePerYear" [ngIfElse]="baselineUseBlock">
-                    &mdash;
-                </ng-template>
-                <ng-template #baselineUseBlock>
-                    {{kpi.baselineUsePerYear}}
-                </ng-template>
-            </td>
-            <td>
-                <ng-template [ngIf]="kpi.isQualitative || !kpi.costPerUnit" [ngIfElse]="costBlock">
-                    &mdash;
-                </ng-template>
-                <ng-template #costBlock>
-                    {{kpi.costPerUnit}}
-                </ng-template>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<h6 class="bold">Company Contacts</h6>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>
-                Contact
-            </th>
-            <td *ngFor="let contact of contacts">
-                {{contact.name}}
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th>
-                Phone
-            </th>
-            <td *ngFor="let contact of contacts">
-                {{contact.phone}}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Email
-            </th>
-            <td *ngFor="let contact of contacts">
-                {{contact.email}}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Role
-            </th>
-            <td *ngFor="let contact of contacts">
-                {{contact.role}}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Team
-            </th>
-            <td *ngFor="let contact of contacts">
-                {{contact.team}}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Focus Area
-            </th>
-            <td *ngFor="let contact of contacts">
-                {{contact.focusArea}}
-            </td>
-        </tr>
-        <tr>
-            <th>
-                Notes
-            </th>
-            <td *ngFor="let contact of contacts">
-                {{contact.notes}}
             </td>
         </tr>
     </tbody>

@@ -70,6 +70,14 @@ export class ContactModalComponent {
       } else {
         this.contacts[contactIndex].processEquipmentIds.push(this.contextGuid);
       }
+    } else if (this.contactContext == 'KPI') {
+      if (this.contacts[contactIndex].kpiIds.includes(this.contextGuid)) {
+        this.contacts[contactIndex].kpiIds = this.contacts[contactIndex].kpiIds.filter(id => {
+          return id != this.contextGuid;
+        });
+      } else {
+        this.contacts[contactIndex].kpiIds.push(this.contextGuid);
+      }
     }
   }
 }

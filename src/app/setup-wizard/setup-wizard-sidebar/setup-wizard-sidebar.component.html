@@ -15,13 +15,13 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="company-kpi" [routerLinkActive]="['active']">
-                    KPI's
+                <a class="nav-link secondary-nav" routerLink="company-contacts" [routerLinkActive]="['active']">
+                    Team Details
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="company-contacts" [routerLinkActive]="['active']">
-                    Team Details
+                <a class="nav-link secondary-nav" routerLink="company-kpi" [routerLinkActive]="['active']">
+                    KPI's
                 </a>
             </div>
             <div class="nav-item ms-2">
@@ -55,7 +55,7 @@
     <ng-container *ngIf="setupContext == 'onSite' || setupContext == 'full'">
         <div class="ps-1 pe-1 w-100">
             <div class="p-2 w-100 text-bg-dark">
-                On-Site
+                Data Collection
             </div>
             <ng-container *ngFor="let assessment of assessments">
                 <div class="nav-item ms-2">
@@ -104,7 +104,7 @@
     <ng-container *ngIf="setupContext == 'postVisit' || setupContext == 'full'">
         <div class="ps-1 pe-1 w-100">
             <div class="p-2 w-100 text-bg-dark">
-                Post-Visit
+                Data Collection
             </div>
             <div class="nav-item">
                 <a class="nav-link" [routerLinkActive]="['active']">

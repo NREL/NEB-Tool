@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faCircleCheck, faSave } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faCircleCheck, faFilePdf, faSave } from '@fortawesome/free-solid-svg-icons';
 import { IdbCompany } from 'src/app/models/company';
 import { SetupWizardContext, SetupWizardService } from '../../setup-wizard.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
@@ -25,6 +25,7 @@ export class ReviewPreVisitSetupComponent {
   faCircleCheck: IconDefinition = faCircleCheck;
   faSave: IconDefinition = faSave;
   
+  faFilePdf: IconDefinition = faFilePdf;
 
   company: IdbCompany;
   facility: IdbFacility;

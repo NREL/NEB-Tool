@@ -1,0 +1,115 @@
+<div class="card">
+    <div class="card-header">
+        <fa-icon [icon]="faUser"></fa-icon> {{contact.name}}
+    </div>
+    <div class="card-body">
+        <table class="table table-sm">
+            <tbody>
+                <tr>
+                    <td>
+                        Phone
+                    </td>
+                    <td>
+                        <app-single-cell-item [value]="contact.phone"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Email
+                    </td>
+                    <td>
+                        <app-single-cell-item [value]="contact.email"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Role
+                    </td>
+                    <td>
+                        <app-single-cell-item [value]="contact.role"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Team
+                    </td>
+                    <td>
+                        <app-single-cell-item [value]="contact.team"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Focus Area
+                    </td>
+                    <td>
+                        <app-single-cell-item [value]="contact.focusArea"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Notes
+                    </td>
+                    <td>
+                        <app-single-cell-item [value]="contact.notes"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        KPI's
+                    </td>
+                    <td>
+                        <ng-template [ngIf]="contact.kpiIds.length != 0" [ngIfElse]="kpiMdash">
+                            <div class="d-flex">
+                                <div class="pe-1">
+                                    <span class="badge bg-dark" *ngFor="let kpi of contact.kpiIds"
+                                        [innerHTML]="kpi | kpiLabel"></span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #kpiMdash>
+                            &mdash;
+                        </ng-template>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Equipment
+                    </td>
+                    <td>
+                        <ng-template [ngIf]="contact.kpiIds.length != 0" [ngIfElse]="equipmentMdash">
+                            <div class="d-flex">
+                                <div class="pe-1">
+                                    <span class="badge bg-dark"
+                                        *ngFor="let processEquipmentId of contact.processEquipmentIds">{{processEquipmentId
+                                        | processEquipmentDisplay: processEquipment}}</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #equipmentMdash>
+                            &mdash;
+                        </ng-template>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Assessments
+                    </td>
+                    <td>
+                        <ng-template [ngIf]="contact.kpiIds.length != 0" [ngIfElse]="assessmentMdash">
+                            <div class="d-flex">
+                                <div class="pe-1">
+                                    <span class="badge bg-dark"
+                                        *ngFor="let assessmentId of contact.assessmentIds">{{assessmentId |
+                                        assessmentNameDisplay: assessments}}</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #assessmentMdash>
+                            &mdash;
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

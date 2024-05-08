@@ -31,7 +31,7 @@ export class FacilitySetupComponent {
   ngOnInit() {
     //TODO: Temporary for dev.
     let company: IdbCompany = this.setupWizardService.company.getValue();
-    if (company) {
+    if (!company) {
       this.setupWizardService.initializeDataForDev();
     }
     let facility: IdbFacility = this.setupWizardService.facility.getValue();

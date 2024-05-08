@@ -18,7 +18,7 @@ export class UnitsDisplayPipe implements PipeTransform {
         }
         return dispUnit;
       } else {
-        return value + ' (unsupported unit)';
+        return value;
       }
     } else if (value && (value === 'F' || value === 'C' || value === 'K')) {
       if (value === 'F') {

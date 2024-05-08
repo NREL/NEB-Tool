@@ -6,7 +6,17 @@
                     <fa-icon [icon]="faCircleCheck"></fa-icon> Review Pre-Visit
                 </h5>
                 <hr>
-                <app-company-setup-summary></app-company-setup-summary>
+                <app-company-details-summary></app-company-details-summary>
+                <hr>
+                <app-team-details-summary></app-team-details-summary>
+                <hr>
+                <app-company-kpis-summary></app-company-kpis-summary>
+                <hr class="solid-hr">
+                <app-facility-details-summary></app-facility-details-summary>
+                <hr>
+                <app-process-equipment-summary></app-process-equipment-summary>
+                <hr class="solid-hr">
+                <app-pre-assessment-summary></app-pre-assessment-summary>
             </div>
         </div>
     </div>
@@ -17,9 +27,10 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <!-- <button class="btn btn-success" (click)="openConfirmModal()">
-            <fa-icon [icon]="faSave"></fa-icon> Submit Pre-Visit
-        </button> -->
+        <button class="btn btn-secondary" [disabled]="true">
+            <fa-icon [icon]="faFilePdf"></fa-icon>
+            Generate PDF
+        </button>
         <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'preVisit'"><fa-icon
                 [icon]="faSave"></fa-icon> Submit Pre-Visit</button>
         <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'full'"><fa-icon

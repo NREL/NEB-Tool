@@ -26,8 +26,15 @@ import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-sea
 import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
 import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
 import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
-import { CompanySetupSummaryComponent } from './pre-visit/review-pre-visit-setup/company-setup-summary/company-setup-summary.component';
 import { ReviewOnSiteComponent } from './on-site/review-on-site/review-on-site.component';
+import { CompanyDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/company-details-summary/company-details-summary.component';
+import { TeamDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/team-details-summary.component';
+import { ContactSummaryCardComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/contact-summary-card/contact-summary-card.component';
+import { CompanyKpisSummaryComponent } from './pre-visit/review-pre-visit-setup/company-kpis-summary/company-kpis-summary.component';
+import { FacilityDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/facility-details-summary/facility-details-summary.component';
+import { ProcessEquipmentSummaryComponent } from './pre-visit/review-pre-visit-setup/process-equipment-summary/process-equipment-summary.component';
+import { PreAssessmentSummaryComponent } from './pre-visit/review-pre-visit-setup/pre-assessment-summary/pre-assessment-summary.component';
+import { TableEntriesModule } from '../shared/table-entries/table-entries.module';
 
 
 
@@ -53,8 +60,14 @@ import { ReviewOnSiteComponent } from './on-site/review-on-site/review-on-site.c
     AddKpiSearchComponent,
     CompanyKpiListComponent,
     KpiListFilterPipe,
-    CompanySetupSummaryComponent,
-    ReviewOnSiteComponent
+    ReviewOnSiteComponent,
+    CompanyDetailsSummaryComponent,
+    TeamDetailsSummaryComponent,
+    ContactSummaryCardComponent,
+    CompanyKpisSummaryComponent,
+    FacilityDetailsSummaryComponent,
+    ProcessEquipmentSummaryComponent,
+    PreAssessmentSummaryComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +76,8 @@ import { ReviewOnSiteComponent } from './on-site/review-on-site/review-on-site.c
     FormsModule,
     SharedSettingsFormsModule,
     HelperPipesModule,
-    ContactModalModule
+    ContactModalModule,
+    TableEntriesModule
   ]
 })
 export class SetupWizardModule { }
