@@ -25,7 +25,7 @@ export class ContactNamePipe implements PipeTransform {
     if (_contacts.length > 0) {
       return _contacts;
     }
-    return null;
+    return [];
   }
 
 }

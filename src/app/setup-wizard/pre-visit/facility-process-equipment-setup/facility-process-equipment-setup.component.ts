@@ -69,7 +69,7 @@ export class FacilityProcessEquipmentSetupComponent {
       return _equipment.guid != this.equipmentToDelete.guid;
     });
     this.contacts.forEach(contact => {
-      contact.assessmentIds = contact.processEquipmentIds.filter(aId => {
+      contact.processEquipmentIds = contact.processEquipmentIds.filter(aId => {
         return aId != this.equipmentToDelete.guid;
       });
     });
