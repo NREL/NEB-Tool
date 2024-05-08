@@ -35,6 +35,9 @@ import { FacilityDetailsSummaryComponent } from './pre-visit/review-pre-visit-se
 import { ProcessEquipmentSummaryComponent } from './pre-visit/review-pre-visit-setup/process-equipment-summary/process-equipment-summary.component';
 import { PreAssessmentSummaryComponent } from './pre-visit/review-pre-visit-setup/pre-assessment-summary/pre-assessment-summary.component';
 import { TableEntriesModule } from '../shared/table-entries/table-entries.module';
+import { OnSiteAssessmentComponent } from './on-site/on-site-assessment/on-site-assessment.component';
+import { AssessmentDetailsFormComponent } from './on-site/on-site-assessment/assessment-details-form/assessment-details-form.component';
+import { AssessmentProjectsFormComponent } from './on-site/on-site-assessment/assessment-projects-form/assessment-projects-form.component';
 
 
 
@@ -67,7 +70,10 @@ import { TableEntriesModule } from '../shared/table-entries/table-entries.module
     CompanyKpisSummaryComponent,
     FacilityDetailsSummaryComponent,
     ProcessEquipmentSummaryComponent,
-    PreAssessmentSummaryComponent
+    PreAssessmentSummaryComponent,
+    OnSiteAssessmentComponent,
+    AssessmentDetailsFormComponent,
+    AssessmentProjectsFormComponent
   ],
   imports: [
     CommonModule,

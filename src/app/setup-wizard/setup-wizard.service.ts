@@ -28,7 +28,7 @@ export class SetupWizardService {
     this.facility = new BehaviorSubject<IdbFacility>(undefined);
     this.projects = new BehaviorSubject<Array<IdbProject>>([]);
     this.assessments = new BehaviorSubject<Array<IdbAssessment>>([]);
-    this.setupContext = new BehaviorSubject<SetupWizardContext>('preVisit');
+    this.setupContext = new BehaviorSubject<SetupWizardContext>('full');
     this.contacts = new BehaviorSubject<Array<IdbContact>>([]);
   }
 

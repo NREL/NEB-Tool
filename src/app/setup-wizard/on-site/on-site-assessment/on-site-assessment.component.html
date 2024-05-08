@@ -1,0 +1,41 @@
+<div class="setup-wizard-content" *ngIf="assessment">
+    <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow">
+                <h5>
+                    <fa-icon [icon]="faToolbox"></fa-icon> {{assessment.name}}
+                </h5>
+                <hr>
+                <app-assessment-details-form></app-assessment-details-form>
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-sm btn-primary me-1"
+                            *ngFor="let contact of assessment.guid | contactName:'assessment': contacts;"
+                            (click)="openContactModal(contact)">
+                            <fa-icon [icon]="faUser"></fa-icon>
+                            {{contact.name}}
+                        </button>
+                        <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
+                            <fa-icon [icon]="faUser"></fa-icon>
+                            Team Members
+                        </button>
+                    </div>
+                </div>
+                <hr>
+                <app-assessment-projects-form></app-assessment-projects-form>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-end">
+        <button class="btn btn-dark" (click)="goToProjects()">
+            Enter Projects
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+        </button>
+    </div>
+</nav>
+
+<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()" [contextGuid]="assessment.guid"
+    [contactContext]="'assessment'" [selectedContact]="viewContact"></app-contact-modal>

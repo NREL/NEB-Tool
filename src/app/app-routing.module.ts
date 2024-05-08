@@ -39,6 +39,7 @@ import { CompanyContactsSetupComponent } from './setup-wizard/pre-visit/company-
 import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.component';
 import { ReviewPreVisitSetupComponent } from './setup-wizard/pre-visit/review-pre-visit-setup/review-pre-visit-setup.component';
+import { OnSiteAssessmentComponent } from './setup-wizard/on-site/on-site-assessment/on-site-assessment.component';
 
 const routes: Routes = [
   {
@@ -113,6 +114,10 @@ const routes: Routes = [
             component: ProjectSetupFormComponent,
           }
         ]
+      },
+      {
+        path: 'on-site-assessment/:id',
+        component: OnSiteAssessmentComponent
       },
       {
         path: 'review-setup',

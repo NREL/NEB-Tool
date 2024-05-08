@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IconDefinition, faChevronRight, faFileLines, faFilePen, faListCheck, faToolbox, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { SetupWizardService } from '../../setup-wizard.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
 import { IdbProject } from 'src/app/models/project';
@@ -12,12 +12,11 @@ import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
 
 @Component({
-  selector: 'app-assessment-setup',
-  templateUrl: './assessment-setup.component.html',
-  styleUrl: './assessment-setup.component.css'
+  selector: 'app-assessment-details-form',
+  templateUrl: './assessment-details-form.component.html',
+  styleUrl: './assessment-details-form.component.css'
 })
-export class AssessmentSetupComponent {
-
+export class AssessmentDetailsFormComponent {
   equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
 
   faFileLines: IconDefinition = faFileLines;
@@ -54,11 +53,6 @@ export class AssessmentSetupComponent {
     this.activatedRoute.params.subscribe(params => {
       let assessmentGUID: string = params['id'];
       this.assessment = this.assessments.find(_assessment => { return _assessment.guid == assessmentGUID });
-      if (!this.assessment && this.assessments.length > 0) {
-        this.router.navigateByUrl('/setup-wizard/assessment-setup/' + this.assessments[0].guid);
-      } else if (!this.assessment) {
-        this.router.navigateByUrl('/setup-wizard');
-      }
     });
   }
 

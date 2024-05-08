@@ -58,9 +58,11 @@
                 Data Collection
             </div>
             <ng-container *ngFor="let assessment of assessments">
-                <div class="nav-item ms-2">
-                    <!-- <fa-icon [icon]="faExclamationCircle" class="alert-danger"></fa-icon> -->
-                    {{assessment.name}}
+                <div class="nav-item">
+                    <a class="nav-link" [routerLink]="'/setup-wizard/on-site-assessment/'+assessment.guid"
+                        [routerLinkActive]="['active']">
+                        {{assessment.name}}
+                    </a>
                 </div>
                 <div class="nav-item">
                     <a class="nav-link secondary-nav" [routerLink]="'/setup-wizard/assessment-setup/'+assessment.guid"
@@ -104,7 +106,7 @@
     <ng-container *ngIf="setupContext == 'postVisit' || setupContext == 'full'">
         <div class="ps-1 pe-1 w-100">
             <div class="p-2 w-100 text-bg-dark">
-                Data Collection
+                Data Evaluation
             </div>
             <div class="nav-item">
                 <a class="nav-link" [routerLinkActive]="['active']">

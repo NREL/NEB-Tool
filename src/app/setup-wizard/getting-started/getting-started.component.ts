@@ -70,7 +70,7 @@ export class GettingStartedComponent {
     this.facilitiesSub.unsubscribe()
     this.assessmentsSub.unsubscribe();
   }
-  
+
   setSelectedCompany() {
     let selectedCompany: IdbCompany = this.companies.find(company => {
       return company.guid == this.selectedCompanyGuid;
@@ -130,7 +130,10 @@ export class GettingStartedComponent {
     let assessmentDates: Array<Date> = facilityAssessments.map(assessment => {
       return assessment.visitDate;
     });
-    this.visitDates = _.uniq(assessmentDates);
+    this.visitDates = _.uniqBy(assessmentDates, (date: Date) => {
+      let dateStr = date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate()
+      return dateStr
+    });
     if (this.selectedVisit) {
       let checkExists = this.visitDates.find(date => {
         return date == this.selectedVisit;
