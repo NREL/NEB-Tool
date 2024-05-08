@@ -12,7 +12,6 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
-import { CompanySetupSummaryComponent } from './company-setup-summary/company-setup-summary.component';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
@@ -40,7 +39,7 @@ describe('ReviewPreVisitSetupComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, HelperPipesModule],
-      declarations: [ReviewPreVisitSetupComponent, CompanySetupSummaryComponent],
+      declarations: [ReviewPreVisitSetupComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },   
