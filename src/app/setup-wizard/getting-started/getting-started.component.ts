@@ -148,7 +148,6 @@ export class GettingStartedComponent {
     let visitAssessments: Array<IdbAssessment> = facilityAssessments.filter(assessment => {
       return assessment.visitDate == this.selectedVisit;
     });
-    console.log(visitAssessments);
     this.setupWizardService.assessments.next(visitAssessments);
   }
 }
