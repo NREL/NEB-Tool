@@ -1,0 +1,45 @@
+import { Component, Input } from '@angular/core';
+import { IconDefinition, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { KeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
+
+@Component({
+  selector: 'app-neb-setup-form',
+  templateUrl: './neb-setup-form.component.html',
+  styleUrl: './neb-setup-form.component.css'
+})
+export class NebSetupFormComponent {
+  @Input({ required: true })
+  nonEnergyBenefit: IdbNonEnergyBenefit;
+
+
+  faTrash: IconDefinition = faTrash;
+  faWeightHanging: IconDefinition = faWeightHanging;
+
+  displayDeleteModal: boolean = false;
+  keyPerformanceIndicators: Array<KeyPerformanceIndicator>;
+  constructor(
+    private setupWizardService: SetupWizardService) {
+  }
+
+  ngOnInit() {
+    this.keyPerformanceIndicators = this.setupWizardService.company.getValue().keyPerformanceIndicators;
+  }
+
+  deleteNonEnergyBenefit() {
+    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
+    nonEnergyBenefits = nonEnergyBenefits.filter(_nonEnergyBenefit => {
+      return _nonEnergyBenefit.guid != this.nonEnergyBenefit.guid
+    });
+    this.setupWizardService.nonEnergyBenefits.next(nonEnergyBenefits);
+  }
+
+  showDeleteModal() {
+    this.displayDeleteModal = true;
+  }
+
+  closeDeleteModal() {
+    this.displayDeleteModal = false;
+  }
+}

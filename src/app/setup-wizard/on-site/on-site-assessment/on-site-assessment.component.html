@@ -8,11 +8,22 @@
                 <hr>
                 <app-assessment-details-form></app-assessment-details-form>
                 <hr>
-                <h5>
-                    <fa-icon [icon]="faFileLines"></fa-icon> Projects
-                </h5>
-                <app-assessment-projects-form [assessment]="assessment"></app-assessment-projects-form>
-                <hr>
+                <div class="row">
+                    <div class="col-md-12 col-lg-6">
+                        <h5>
+                            <fa-icon [icon]="faFileLines"></fa-icon> Projects
+                        </h5>
+                        <app-assessment-projects-form></app-assessment-projects-form>
+                        <hr>
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                        <h5>
+                            <fa-icon [icon]="faScaleUnbalancedFlip"></fa-icon> NEBs
+                        </h5>
+                        <app-assessment-nebs-form></app-assessment-nebs-form>
+                        <hr>
+                    </div>
+                </div>
                 <h5>
                     <fa-icon [icon]="faPeople"></fa-icon> Contacts
                 </h5>
@@ -39,13 +50,13 @@
     <div class="container-fluid justify-content-between">
         <div class="d-flex">
             <div class="pe-1">
-                <button class="btn btn-secondary">
+                <button class="btn btn-dark add-project-btn">
                     <fa-icon [icon]="faPlus"></fa-icon>
                     Add Project
                 </button>
             </div>
             <div class="pe-1">
-                <button class="btn btn-secondary">
+                <button class="btn btn-dark add-neb-btn">
                     <fa-icon [icon]="faPlus"></fa-icon>
                     Add NEB
                 </button>

@@ -1,3 +1,7 @@
+/* .card{
+    border: solid #186A3B;
+} */
+
 .card-header, .card-footer{
     background-color: white;
 }
@@ -7,5 +11,5 @@
 }
 
 .card{
-    border: solid #D35400;
+    border: solid #186A3B;
 }

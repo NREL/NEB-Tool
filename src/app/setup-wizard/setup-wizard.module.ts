@@ -38,6 +38,8 @@ import { OnSiteAssessmentComponent } from './on-site/on-site-assessment/on-site-
 import { AssessmentDetailsFormComponent } from './on-site/on-site-assessment/assessment-details-form/assessment-details-form.component';
 import { AssessmentProjectsFormComponent } from './on-site/on-site-assessment/assessment-projects-form/assessment-projects-form.component';
 import { ProjectSetupFormComponent } from './on-site/on-site-assessment/assessment-projects-form/project-setup-form/project-setup-form.component';
+import { AssessmentNebsFormComponent } from './on-site/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
+import { NebSetupFormComponent } from './on-site/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
 
 
 
@@ -73,7 +75,9 @@ import { ProjectSetupFormComponent } from './on-site/on-site-assessment/assessme
     PreAssessmentSummaryComponent,
     OnSiteAssessmentComponent,
     AssessmentDetailsFormComponent,
-    AssessmentProjectsFormComponent
+    AssessmentProjectsFormComponent,
+    AssessmentNebsFormComponent,
+    NebSetupFormComponent
   ],
   imports: [
     CommonModule,

@@ -11,7 +11,7 @@ import { FanProjects, ProjectType } from 'src/app/shared/constants/projectOption
   styleUrl: './project-setup-form.component.css'
 })
 export class ProjectSetupFormComponent {
-  @Input({required: true})
+  @Input({ required: true })
   project: IdbProject;
 
 
@@ -20,51 +20,37 @@ export class ProjectSetupFormComponent {
   faSave: IconDefinition = faSave;
   faTrash: IconDefinition = faTrash;
 
-  // project: IdbProject;
-  projects: Array<IdbProject>;
 
   projectTypes: Array<ProjectType> = FanProjects;
   displayDeleteModal: boolean = false;
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
     private router: Router,
     private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
-    // this.activatedRoute.params.subscribe(params => {
-    //   let projectGUID: string = params['id'];
-    //   this.projects = this.setupWizardService.projects.getValue();
-    //   this.project = this.projects.find(prj => { return prj.guid == projectGUID });
-    //   if (!this.project) {
-    //     this.goToProjectList();
-    //   }
-    // });
   }
 
   deleteProject() {
-    this.projects = this.projects.filter(_project => {
+    let projects: Array<IdbProject> = this.setupWizardService.projects.getValue();
+    projects = projects.filter(_project => {
       return _project.guid != this.project.guid
     });
-    this.setupWizardService.projects.next(this.projects);
-    this.goToProjectList();
+    this.setupWizardService.projects.next(projects);
   }
 
   saveProject() {
-    let projectIndex: number = this.projects.findIndex(prj => { return prj.guid == this.project.guid });
-    this.projects[projectIndex] = this.project;
-    this.setupWizardService.projects.next(this.projects);
-    this.goToProjectList();
+    let projects: Array<IdbProject> = this.setupWizardService.projects.getValue();
+    let projectIndex: number = projects.findIndex(prj => { return prj.guid == this.project.guid });
+    projects[projectIndex] = this.project;
+    this.setupWizardService.projects.next(projects);
   }
 
-  goToProjectList(){
-    this.router.navigateByUrl('/setup-wizard/project-setup/projects');
-  }
-
-  showDeleteModal(){
+  showDeleteModal() {
     this.displayDeleteModal = true;
   }
 
-  closeDeleteModal(){
+  closeDeleteModal() {
     this.displayDeleteModal = false;
   }
 }

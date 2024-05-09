@@ -9,6 +9,7 @@ import { IdbUser } from '../models/user';
 import { UserIdbService } from '../indexed-db/user-idb.service';
 import { KPI_Option, KPI_Options, KeyPerformanceIndicator, getKeyPerformanceIndicator } from '../shared/constants/keyPerformanceIndicators';
 import { ProcessEquipment, getNewProcessEquipment } from '../shared/constants/processEquipment';
+import { IdbNonEnergyBenefit } from '../models/nonEnergyBenefit';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class SetupWizardService {
   projects: BehaviorSubject<Array<IdbProject>>;
   assessments: BehaviorSubject<Array<IdbAssessment>>;
   contacts: BehaviorSubject<Array<IdbContact>>;
+  nonEnergyBenefits: BehaviorSubject<Array<IdbNonEnergyBenefit>>;
 
   setupContext: BehaviorSubject<SetupWizardContext>;
 
@@ -30,6 +32,7 @@ export class SetupWizardService {
     this.assessments = new BehaviorSubject<Array<IdbAssessment>>([]);
     this.setupContext = new BehaviorSubject<SetupWizardContext>('full');
     this.contacts = new BehaviorSubject<Array<IdbContact>>([]);
+    this.nonEnergyBenefits = new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]);
   }
 
 

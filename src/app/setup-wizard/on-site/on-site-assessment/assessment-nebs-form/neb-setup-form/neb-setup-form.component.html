@@ -1,0 +1,61 @@
+<!-- <div class="d-flex w-100 justify-content-center mt-3" *ngIf="project"> -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">
+            <fa-icon [icon]="faWeightHanging" class="me-2"></fa-icon>
+        </h5>
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="projectName">NEB Name</label>
+                <div class="col-sm-7">
+                    <input name="nebName" type="text" class="form-control" [(ngModel)]="nonEnergyBenefit.name"
+                        minlength="1" maxlength="42" id="nebName">
+                </div>
+            </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="kpiId">Associated KPI</label>
+                <div class="col-sm-7">
+                    <select class="form-select" name="kpiId" [(ngModel)]="nonEnergyBenefit.kpiId">
+                        <option *ngFor="let kpi of keyPerformanceIndicators" [ngValue]="kpi.kpiOptionValue">
+                            <span [innerHTML]="kpi | kpiLabel"></span>
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="nebNotes">Notes</label>
+                <div class="col-sm-7">
+                    <textarea name="nebNotes" type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.notes"
+                        id="nebNotes"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex w-100 justify-content-end">
+            <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
+                <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div class="popup" [ngClass]="{'open': displayDeleteModal }">
+    <div class="popup-header">Discard this NEB?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-info">
+            Are you sure you want to discard this NEB?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteNonEnergyBenefit()"><fa-icon [icon]="faTrash"
+                class="me-1"></fa-icon>Discard NEB</button>
+    </div>
+</div>

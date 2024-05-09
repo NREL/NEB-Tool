@@ -61,8 +61,8 @@
                         <ng-template [ngIf]="contact.kpiIds.length != 0" [ngIfElse]="kpiMdash">
                             <div class="d-flex">
                                 <div class="pe-1">
-                                    <span class="badge bg-dark" *ngFor="let kpi of contact.kpiIds"
-                                        [innerHTML]="kpi | kpiLabel"></span>
+                                    <!-- <span class="badge bg-dark" *ngFor="let kpi of contact.kpiIds"
+                                        [innerHTML]="kpi | kpiLabel"></span> -->
                                 </div>
                             </div>
                         </ng-template>

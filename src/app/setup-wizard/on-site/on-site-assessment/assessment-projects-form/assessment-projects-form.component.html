@@ -1,13 +1,13 @@
 <ng-template [ngIf]="projects.length > 0" [ngIfElse]="noProjectsBlock">
     <div class="row">
-        <div class="col-md-12 col-lg-6 pb-2" *ngFor="let project of projects">
+        <div class="col-12 pb-2" *ngFor="let project of projects">
             <app-project-setup-form [project]="project"></app-project-setup-form>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
             <div class="float-end">
-                <button class="btn btn-secondary btn-sm" (click)="addProject()"><fa-icon [icon]="faPlus"
+                <button class="btn btn-dark btn-sm add-project-btn" (click)="addProject()"><fa-icon [icon]="faPlus"
                         class="me-1"></fa-icon>Add Project</button>
             </div>
         </div>
@@ -20,7 +20,7 @@
             No projects found for this assessment.
         </div>
         <div class="text-center pt-1">
-            <button class="btn btn-secondary btn-sm" (click)="addProject()"><fa-icon [icon]="faPlus"
+            <button class="btn btn-dark btn-sm add-project-btn" (click)="addProject()"><fa-icon [icon]="faPlus"
                     class="me-1"></fa-icon>Add Project</button>
         </div>
     </div>
