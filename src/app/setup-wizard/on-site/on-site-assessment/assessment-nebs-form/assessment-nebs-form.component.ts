@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IconDefinition, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faPlus, faScaleUnbalancedFlip } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
@@ -14,6 +14,7 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 export class AssessmentNebsFormComponent {
 
   faPlus: IconDefinition = faPlus;
+  faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
 
   nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
   nonEnergyBenefitsSub: Subscription;

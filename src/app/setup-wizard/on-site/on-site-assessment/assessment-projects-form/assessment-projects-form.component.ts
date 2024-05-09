@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IconDefinition, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbProject, getNewIdbProject } from 'src/app/models/project';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
@@ -12,6 +12,7 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 })
 export class AssessmentProjectsFormComponent {
 
+  faFileLines: IconDefinition = faFileLines;
   faPlus: IconDefinition = faPlus;
   projects: Array<IdbProject>;
 

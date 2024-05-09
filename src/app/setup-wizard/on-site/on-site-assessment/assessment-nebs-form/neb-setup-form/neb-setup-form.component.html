@@ -1,6 +1,6 @@
 <!-- <div class="d-flex w-100 justify-content-center mt-3" *ngIf="project"> -->
 <div class="card">
-    <div class="card-header">
+    <div class="card-header text-bg-dark">
         <h5 class="card-title mb-0">
             <fa-icon [icon]="faWeightHanging" class="me-2"></fa-icon>
         </h5>
@@ -25,27 +25,33 @@
                 </div>
             </div>
             <div class="row mb-1">
-                <label class="col-sm-5 col-form-label" for="projectIds">Projects</label>
-                <div class="col-sm-7">
-                    <ng-template [ngIf]="nonEnergyBenefit.projectIds.length != 0" [ngIfElse]="nonNebsBlock">
-                        <button class="btn btn-dark btn-sm add-project-btn m-1" *ngFor="let projectGUID of nonEnergyBenefit.projectIds"
-                            (click)="highlightProject(projectGUID)">
-                            <fa-icon [icon]="faFileLines"></fa-icon>
-                            {{projectGUID | projectDisplay: projects}}
-                        </button>
-                    </ng-template>
-                    <ng-template #nonNebsBlock>
-                        <button class="btn btn-dark btn-sm add-project-btn w-100" (click)="showConnectedProjects()">
-                            <fa-icon [icon]="faFileLines"></fa-icon> Connect Projects
-                        </button>
-                    </ng-template>
-                </div>
-            </div>
-            <div class="row mb-1">
                 <label class="col-sm-5 col-form-label" for="nebNotes">Notes</label>
                 <div class="col-sm-7">
                     <textarea name="nebNotes" type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.notes"
                         id="nebNotes"></textarea>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="projectIds">Connected Projects</label>
+                <div class="col-sm-7">
+                    <ng-template [ngIf]="nonEnergyBenefit.projectIds.length != 0" [ngIfElse]="noProjectsBlock">
+                        <div class="list-group">
+                            <div class="list-group-item project-item"
+                                *ngFor="let projectId of nonEnergyBenefit.projectIds">
+                                <div class="d-flex justify-content-between w-100">
+                                    <div class="p-0">
+                                        <fa-icon [icon]="faCircleCheck"></fa-icon>
+                                        {{projectId | projectDisplay: projects}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template #noProjectsBlock>
+                        <div class="alert alert-info small p-1">
+                            No projects connected to this NEB.
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </form>

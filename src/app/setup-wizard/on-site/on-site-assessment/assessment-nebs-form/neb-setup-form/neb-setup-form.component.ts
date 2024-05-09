@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IconDefinition, faFileLines, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faCircle, faCircleCheck, faFileLines, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { IdbProject } from 'src/app/models/project';
@@ -19,11 +19,14 @@ export class NebSetupFormComponent {
   faTrash: IconDefinition = faTrash;
   faWeightHanging: IconDefinition = faWeightHanging;
   faFileLines: IconDefinition = faFileLines;
+  faCircleCheck: IconDefinition = faCircleCheck;
+  faCircle: IconDefinition = faCircle;
 
   displayDeleteModal: boolean = false;
   keyPerformanceIndicators: Array<KeyPerformanceIndicator>;
   projects: Array<IdbProject>;
   projectsSub: Subscription;
+
   constructor(
     private setupWizardService: SetupWizardService) {
   }
@@ -56,10 +59,6 @@ export class NebSetupFormComponent {
   }
 
   highlightProject(projectGUID: string) {
-
-  }
-
-  showConnectedProjects() {
 
   }
 }

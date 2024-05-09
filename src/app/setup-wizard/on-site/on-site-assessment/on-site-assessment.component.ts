@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconDefinition, faChevronRight, faFileLines, faFilePen, faListCheck, faPeopleGroup, faPlus, faScaleUnbalancedFlip, faScrewdriverWrench, faToolbox, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronRight, faFilePen, faListCheck, faPeopleGroup, faPlus, faScrewdriverWrench, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
-import { IdbProject } from 'src/app/models/project';
 import { Subscription } from 'rxjs';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbCompany } from 'src/app/models/company';
@@ -19,7 +18,6 @@ export class OnSiteAssessmentComponent {
 
   equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
 
-  faFileLines: IconDefinition = faFileLines;
   faFilePen: IconDefinition = faFilePen;
   faListCheck: IconDefinition = faListCheck;
   faChevronRight: IconDefinition = faChevronRight;
@@ -27,7 +25,6 @@ export class OnSiteAssessmentComponent {
   faPeople: IconDefinition = faPeopleGroup;
   faUser: IconDefinition = faUser;
   faPlus: IconDefinition = faPlus;
-  faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
 
   assessment: IdbAssessment;
 

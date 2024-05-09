@@ -1,11 +1,11 @@
-.card-header, .card-footer{
+.card-footer {
     background-color: white;
 }
 
-.btn-sm{
-    font-size: small;
+.card-header {
+    background-color: #D35400 !important;
 }
 
-.card{
-    border: solid #D35400;
+.btn-sm {
+    font-size: small;
 }

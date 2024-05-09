@@ -2,14 +2,23 @@
     border: solid #186A3B;
 } */
 
-.card-header, .card-footer{
+.card-header {
+    background-color: #186A3B !important;
+}
+
+.card-footer{
     background-color: white;
 }
+
 
 .btn-sm{
     font-size: small;
 }
 
-.card{
+/* .card{
     border: solid #186A3B;
+} */
+
+.list-group-item.project-item{
+    border: solid #D35400 !important;
 }
