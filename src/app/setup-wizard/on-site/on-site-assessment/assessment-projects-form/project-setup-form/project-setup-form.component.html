@@ -1,0 +1,102 @@
+<!-- <div class="d-flex w-100 justify-content-center mt-3" *ngIf="project"> -->
+<div class="card">
+    <!-- <div class="card-header">
+        <div class="d-flex w-100 justify-content-between">
+            <div class="p-0">
+                <h5 class="card-title mb-0">
+                    <fa-icon [icon]="faFileLines" class="me-2"></fa-icon> {{project.name}}
+                </h5>
+            </div>
+            <button class="btn btn-danger btn-sm">
+                <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+        </div>
+    </div> -->
+    <div class="card-body">
+        <form>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="projectName">Project Name</label>
+                <div class="col-sm-7">
+                    <input name="projectName" type="text" class="form-control" [(ngModel)]="project.name" minlength="1"
+                        maxlength="42" id="projectName">
+                </div>
+            </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="projectType">Project</label>
+                <div class="col-sm-7">
+                    <select name="projectType" class="form-select" id="projectType" [(ngModel)]="project.projectType">
+                        <option [ngValue]="undefined">
+                            Other
+                        </option>
+                        <option *ngFor="let projectType of projectTypes" [ngValue]="projectType.value">
+                            {{projectType.label}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="implementationCost">Implementation Cost</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input name="implementationCost" type="number" class="form-control"
+                            [(ngModel)]="project.implementationCost" id="implementationCost">
+                        <span class="input-group-text">&dollar;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="energySavings">Energy Savings</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input name="energySavings" type="number" class="form-control"
+                            [(ngModel)]="project.energySavings" id="energySavings">
+                        <span class="input-group-text">MMBtu/yr</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="costSavings">Cost Savings</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input name="costSavings" type="number" class="form-control" [(ngModel)]="project.costSavings"
+                            id="costSavings">
+                        <span class="input-group-text">&dollar;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="notes">Notes</label>
+                <div class="col-sm-7">
+                    <textarea name="notes" type="number" class="form-control" [(ngModel)]="project.notes"
+                        id="notes"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex w-100 justify-content-end">
+            <button class="btn btn-danger btn-sm">
+                <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div class="popup" [ngClass]="{'open': displayDeleteModal }">
+    <div class="popup-header">Discard this project?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-info">
+            Are you sure you want to discard this project?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteProject()"><fa-icon [icon]="faTrash"
+                class="me-1"></fa-icon>Discard Project</button>
+    </div>
+</div>

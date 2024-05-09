@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconDefinition, faChevronRight, faFileLines, faFilePen, faListCheck, faToolbox, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronRight, faFileLines, faFilePen, faListCheck, faPeopleGroup, faPlus, faScrewdriverWrench, faToolbox, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbFacility } from 'src/app/models/facility';
@@ -23,8 +23,10 @@ export class OnSiteAssessmentComponent {
   faFilePen: IconDefinition = faFilePen;
   faListCheck: IconDefinition = faListCheck;
   faChevronRight: IconDefinition = faChevronRight;
-  faToolbox: IconDefinition = faToolbox;
+  faScrewdriverWrench: IconDefinition = faScrewdriverWrench;
+  faPeople: IconDefinition = faPeopleGroup;
   faUser: IconDefinition = faUser;
+  faPlus: IconDefinition = faPlus;
 
   assessment: IdbAssessment;
 

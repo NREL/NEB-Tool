@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { IconDefinition, fa1, fa2, fa3, fa4, fa5, fa6, faCircle, faExclamationCircle, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faMaximize, faMinimize, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
@@ -12,16 +12,11 @@ import { IdbAssessment } from 'src/app/models/assessment';
 })
 export class SetupWizardSidebarComponent {
 
-  fa1: IconDefinition = fa1;
-  fa2: IconDefinition = fa2;
-  fa3: IconDefinition = fa3;
-  fa4: IconDefinition = fa4;
-  fa5: IconDefinition = fa5;
-  fa6: IconDefinition = fa6;
-  faRotateLeft: IconDefinition = faRotateLeft;
 
-  faCircle: IconDefinition = faCircle;
-  faExclamationCircle: IconDefinition = faExclamationCircle;
+  faRotateLeft: IconDefinition = faRotateLeft;
+  faMinimize: IconDefinition = faMinimize;
+  faMaximize: IconDefinition = faMaximize;
+
   displaySidebar: boolean = true;
   setupContext: SetupWizardContext;
   setupContextSub: Subscription;
@@ -29,6 +24,7 @@ export class SetupWizardSidebarComponent {
 
   assessmentsSub: Subscription;
   assessments: Array<IdbAssessment>;
+  open: boolean = false;
   constructor(private router: Router, private setupWizardService: SetupWizardService
   ) {
 
@@ -76,5 +72,9 @@ export class SetupWizardSidebarComponent {
       this.setupWizardService.contacts.next([]);
       this.closeStartOverModal();
     });
+  }
+
+  toggleSidebar() {
+    this.open = !this.open;
   }
 }

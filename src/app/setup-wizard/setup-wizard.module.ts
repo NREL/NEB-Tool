@@ -12,7 +12,6 @@ import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/share
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { AssessmentSetupComponent } from './on-site/assessment-setup/assessment-setup.component';
 import { ProjectSetupListComponent } from './on-site/project-setup/project-setup-list/project-setup-list.component';
-import { ProjectSetupFormComponent } from './on-site/project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './pre-visit/company-kpi-setup/company-kpi-setup.component';
 import { KpiUnitOptionPipe } from './pre-visit/company-kpi-setup/kpi-unit-option.pipe';
@@ -38,6 +37,7 @@ import { TableEntriesModule } from '../shared/table-entries/table-entries.module
 import { OnSiteAssessmentComponent } from './on-site/on-site-assessment/on-site-assessment.component';
 import { AssessmentDetailsFormComponent } from './on-site/on-site-assessment/assessment-details-form/assessment-details-form.component';
 import { AssessmentProjectsFormComponent } from './on-site/on-site-assessment/assessment-projects-form/assessment-projects-form.component';
+import { ProjectSetupFormComponent } from './on-site/on-site-assessment/assessment-projects-form/project-setup-form/project-setup-form.component';
 
 
 

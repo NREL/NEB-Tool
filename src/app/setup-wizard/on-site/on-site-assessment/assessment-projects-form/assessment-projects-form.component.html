@@ -1,1 +1,27 @@
-<p>assessment-projects-form works!</p>
+<ng-template [ngIf]="projects.length > 0" [ngIfElse]="noProjectsBlock">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 pb-2" *ngFor="let project of projects">
+            <app-project-setup-form [project]="project"></app-project-setup-form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="float-end">
+                <button class="btn btn-secondary btn-sm" (click)="addProject()"><fa-icon [icon]="faPlus"
+                        class="me-1"></fa-icon>Add Project</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noProjectsBlock>
+    <div class="d-flex flex-column w-100 justify-content-center mt-3">
+        <div class="alert alert-info small text-center p-2">
+            No projects found for this assessment.
+        </div>
+        <div class="text-center pt-1">
+            <button class="btn btn-secondary btn-sm" (click)="addProject()"><fa-icon [icon]="faPlus"
+                    class="me-1"></fa-icon>Add Project</button>
+        </div>
+    </div>
+</ng-template>

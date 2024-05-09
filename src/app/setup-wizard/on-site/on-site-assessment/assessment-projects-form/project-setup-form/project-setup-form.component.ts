@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SetupWizardService } from '../../../setup-wizard.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbProject } from 'src/app/models/project';
 import { IconDefinition, faArrowsToDot, faFileLines, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FanProjects, ProjectType } from 'src/app/shared/constants/projectOptions';
@@ -11,13 +11,16 @@ import { FanProjects, ProjectType } from 'src/app/shared/constants/projectOption
   styleUrl: './project-setup-form.component.css'
 })
 export class ProjectSetupFormComponent {
+  @Input({required: true})
+  project: IdbProject;
+
 
   faFileLines: IconDefinition = faFileLines;
   faArrowsToDot: IconDefinition = faArrowsToDot;
   faSave: IconDefinition = faSave;
   faTrash: IconDefinition = faTrash;
 
-  project: IdbProject;
+  // project: IdbProject;
   projects: Array<IdbProject>;
 
   projectTypes: Array<ProjectType> = FanProjects;
@@ -28,14 +31,14 @@ export class ProjectSetupFormComponent {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      let projectGUID: string = params['id'];
-      this.projects = this.setupWizardService.projects.getValue();
-      this.project = this.projects.find(prj => { return prj.guid == projectGUID });
-      if (!this.project) {
-        this.goToProjectList();
-      }
-    });
+    // this.activatedRoute.params.subscribe(params => {
+    //   let projectGUID: string = params['id'];
+    //   this.projects = this.setupWizardService.projects.getValue();
+    //   this.project = this.projects.find(prj => { return prj.guid == projectGUID });
+    //   if (!this.project) {
+    //     this.goToProjectList();
+    //   }
+    // });
   }
 
   deleteProject() {

@@ -1,0 +1,7 @@
+.card-header, .card-footer{
+    background-color: white;
+}
+
+.btn-sm{
+    font-size: small;
+}

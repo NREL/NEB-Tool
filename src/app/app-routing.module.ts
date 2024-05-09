@@ -31,8 +31,6 @@ import { AssessmentSetupComponent } from './setup-wizard/on-site/assessment-setu
 import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessment-dashboard-home/assessment-dashboard-home.component';
 import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
 import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
-import { ProjectSetupListComponent } from './setup-wizard/on-site/project-setup/project-setup-list/project-setup-list.component';
-import { ProjectSetupFormComponent } from './setup-wizard/on-site/project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './setup-wizard/pre-visit/company-kpi-setup/company-kpi-setup.component';
 import { CompanyContactsSetupComponent } from './setup-wizard/pre-visit/company-contacts-setup/company-contacts-setup.component';
@@ -95,25 +93,6 @@ const routes: Routes = [
       {
         path: 'review-pre-visit',
         component: ReviewPreVisitSetupComponent
-      },
-      {
-        path: 'project-setup/:id',
-        component: ProjectSetupComponent,
-        children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: 'projects'
-          },
-          {
-            path: 'projects',
-            component: ProjectSetupListComponent
-          },
-          {
-            path: 'edit-project/:id',
-            component: ProjectSetupFormComponent,
-          }
-        ]
       },
       {
         path: 'on-site-assessment/:id',

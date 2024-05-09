@@ -1,7 +1,25 @@
-<div *ngIf="displaySidebar" class="h-100 navbar d-flex flex-column align-items-start justify-content-start shadow">
-    <ng-container *ngIf="setupContext == 'preVisit' || setupContext == 'full'">
+<div *ngIf="displaySidebar" class="h-100 navbar d-flex flex-column align-items-start justify-content-start shadow"
+    [ngClass]="{'collapsed': !open}">
 
-        <div class="ps-1 pe-1 w-100">
+    <!-- <div class="ps-1 pe-1 w-100">
+        <div class="text-end toggle-collapse">
+            <a (click)="toggleSidebar()">
+                <fa-icon *ngIf="open" [icon]="faAlignLeft"></fa-icon>
+                <fa-icon *ngIf="!open" [icon]="faAlignRight"></fa-icon>
+            </a>
+        </div>
+    </div> -->
+
+    <div class="ps-1 pe-1 w-100 pb-2">
+        <div class="text-end toggle-collapse">
+            <button class="btn btn-sm btn-outline-secondary" (click)="toggleSidebar()">
+                <fa-icon *ngIf="open" [icon]="faMinimize"></fa-icon>
+                <fa-icon *ngIf="!open" [icon]="faMaximize"></fa-icon>
+            </button>
+        </div>
+    </div>
+    <ng-container *ngIf="setupContext == 'preVisit' || setupContext == 'full'">
+        <div class="ps-1 pe-1 w-100" [hidden]="!open">
             <div class="p-2 w-100 text-bg-dark">
                 Pre-Visit
             </div>
@@ -53,7 +71,7 @@
         </div>
     </ng-container>
     <ng-container *ngIf="setupContext == 'onSite' || setupContext == 'full'">
-        <div class="ps-1 pe-1 w-100">
+        <div class="ps-1 pe-1 w-100" [hidden]="!open">
             <div class="p-2 w-100 text-bg-dark">
                 Data Collection
             </div>
@@ -64,7 +82,7 @@
                         {{assessment.name}}
                     </a>
                 </div>
-                <div class="nav-item">
+                <!-- <div class="nav-item">
                     <a class="nav-link secondary-nav" [routerLink]="'/setup-wizard/assessment-setup/'+assessment.guid"
                         [routerLinkActive]="['active']">
                         Details
@@ -80,7 +98,7 @@
                     <a class="nav-link secondary-nav" [routerLinkActive]="['active']">
                         NEBs
                     </a>
-                </div>
+                </div> -->
             </ng-container>
             <!-- <div class="nav-item">
                 <a class="nav-link" routerLink="assessment-setup" [routerLinkActive]="['active']">
@@ -104,7 +122,7 @@
     </ng-container>
 
     <ng-container *ngIf="setupContext == 'postVisit' || setupContext == 'full'">
-        <div class="ps-1 pe-1 w-100">
+        <div class="ps-1 pe-1 w-100" [hidden]="!open">
             <div class="p-2 w-100 text-bg-dark">
                 Data Evaluation
             </div>
@@ -123,7 +141,7 @@
             </div>
         </div>
     </ng-container>
-    <div class="nav-item">
+    <div class="nav-item" [hidden]="!open">
         <a class="nav-link bold" (click)="openStartOverModal()">
             <fa-icon [icon]="faRotateLeft"></fa-icon>
             Start Over</a>

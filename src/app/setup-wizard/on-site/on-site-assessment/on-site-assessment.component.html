@@ -3,11 +3,19 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faToolbox"></fa-icon> {{assessment.name}}
+                    <fa-icon [icon]="faScrewdriverWrench"></fa-icon> {{assessment.name}}
                 </h5>
                 <hr>
                 <app-assessment-details-form></app-assessment-details-form>
                 <hr>
+                <h5>
+                    <fa-icon [icon]="faFileLines"></fa-icon> Projects
+                </h5>
+                <app-assessment-projects-form [assessment]="assessment"></app-assessment-projects-form>
+                <hr>
+                <h5>
+                    <fa-icon [icon]="faPeople"></fa-icon> Contacts
+                </h5>
                 <div class="row">
                     <div class="col-12">
                         <button class="btn btn-sm btn-primary me-1"
@@ -23,15 +31,30 @@
                     </div>
                 </div>
                 <hr>
-                <app-assessment-projects-form></app-assessment-projects-form>
             </div>
         </div>
     </div>
 </div>
 <nav class="setup-wizard-footer navbar shadow">
-    <div class="container-fluid justify-content-end">
+    <div class="container-fluid justify-content-between">
+        <div class="d-flex">
+            <div class="pe-1">
+                <button class="btn btn-secondary">
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                    Add Project
+                </button>
+            </div>
+            <div class="pe-1">
+                <button class="btn btn-secondary">
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                    Add NEB
+                </button>
+            </div>
+        </div>
+
+
         <button class="btn btn-dark" (click)="goToProjects()">
-            Enter Projects
+            Next Assessment
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>
