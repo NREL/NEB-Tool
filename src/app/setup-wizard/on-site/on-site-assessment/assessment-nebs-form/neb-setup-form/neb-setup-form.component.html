@@ -25,6 +25,23 @@
                 </div>
             </div>
             <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="projectIds">Projects</label>
+                <div class="col-sm-7">
+                    <ng-template [ngIf]="nonEnergyBenefit.projectIds.length != 0" [ngIfElse]="nonNebsBlock">
+                        <button class="btn btn-dark btn-sm add-project-btn m-1" *ngFor="let projectGUID of nonEnergyBenefit.projectIds"
+                            (click)="highlightProject(projectGUID)">
+                            <fa-icon [icon]="faFileLines"></fa-icon>
+                            {{projectGUID | projectDisplay: projects}}
+                        </button>
+                    </ng-template>
+                    <ng-template #nonNebsBlock>
+                        <button class="btn btn-dark btn-sm add-project-btn w-100" (click)="showConnectedProjects()">
+                            <fa-icon [icon]="faFileLines"></fa-icon> Connect Projects
+                        </button>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="row mb-1">
                 <label class="col-sm-5 col-form-label" for="nebNotes">Notes</label>
                 <div class="col-sm-7">
                     <textarea name="nebNotes" type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.notes"

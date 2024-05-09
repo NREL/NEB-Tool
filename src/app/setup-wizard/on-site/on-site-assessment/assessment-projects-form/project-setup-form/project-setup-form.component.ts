@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbProject } from 'src/app/models/project';
-import { IconDefinition, faArrowsToDot, faFileLines, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faCircleCheck, faFileLines, faPlus, faSave, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { FanProjects, ProjectType } from 'src/app/shared/constants/projectOptions';
+import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-setup-form',
@@ -16,19 +17,37 @@ export class ProjectSetupFormComponent {
 
 
   faFileLines: IconDefinition = faFileLines;
-  faArrowsToDot: IconDefinition = faArrowsToDot;
   faSave: IconDefinition = faSave;
   faTrash: IconDefinition = faTrash;
-
+  faSearchPlus: IconDefinition = faSearchPlus;
+  faPlus: IconDefinition = faPlus;
+  faCircleCheck: IconDefinition = faCircleCheck;
+  faWeightHanging: IconDefinition = faWeightHanging;
 
   projectTypes: Array<ProjectType> = FanProjects;
   displayDeleteModal: boolean = false;
+  displaySuggestedNEBsModal: boolean = false;
+
+  suggestedNEBs: Array<IdbNonEnergyBenefit>;
+  selectedNEBs: Array<string> = [];
+
+  nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
+  nonEnergyBenefitsSub: Subscription;
   constructor(
-    private router: Router,
     private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
+    this.nonEnergyBenefitsSub = this.setupWizardService.nonEnergyBenefits.subscribe(_nonEnergyBenefits => {
+      this.nonEnergyBenefits = _nonEnergyBenefits;
+      console.log(this.nonEnergyBenefits);
+    });
+    this.suggestedNEBs = this.setupWizardService.suggestedNEBs;
+    this.selectedNEBs = this.project.nonEnergyBenefitIds;
+  }
+
+  ngOnDestroy() {
+    this.nonEnergyBenefitsSub.unsubscribe();
   }
 
   deleteProject() {
@@ -52,5 +71,45 @@ export class ProjectSetupFormComponent {
 
   closeDeleteModal() {
     this.displayDeleteModal = false;
+  }
+
+  showSuggestedNEBs() {
+    this.displaySuggestedNEBsModal = true;
+  }
+
+  closeSuggestedNEBs() {
+    this.displaySuggestedNEBsModal = false;
+  }
+
+  addSuggestedNEBs() {
+    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
+    this.suggestedNEBs.forEach(nonEnergyBenefit => {
+      if (this.selectedNEBs.includes(nonEnergyBenefit.guid)) {
+        let nonEnergyBenefitCpy: IdbNonEnergyBenefit = JSON.parse(JSON.stringify(nonEnergyBenefit));
+        nonEnergyBenefitCpy.assessmentId = this.project.assessmentId;
+        nonEnergyBenefitCpy.userId = this.project.userId;
+        nonEnergyBenefitCpy.facilityId = this.project.facilityId;
+        nonEnergyBenefitCpy.companyId = this.project.companyId;
+        nonEnergyBenefitCpy.projectIds.push(this.project.guid);
+        nonEnergyBenefits.push(nonEnergyBenefitCpy);
+      }
+    });
+    this.setupWizardService.nonEnergyBenefits.next(nonEnergyBenefits);
+    this.closeSuggestedNEBs();
+
+  }
+
+  toggleSuggestedNEB(nebGUID: string) {
+    if (this.selectedNEBs.includes(nebGUID)) {
+      this.selectedNEBs = this.selectedNEBs.filter(selectedGUID => {
+        return selectedGUID != nebGUID;
+      });
+    } else {
+      this.selectedNEBs.push(nebGUID);
+    }
+  }
+
+  highlightNEB(nebGUID: String) {
+
   }
 }

@@ -64,10 +64,30 @@
                         id="notes"></textarea>
                 </div>
             </div>
+            <div class="row mb-1">
+                <label class="col-sm-5 col-form-label" for="nonEnergyBenefitIds">Non-Energy Benefits</label>
+                <div class="col-sm-7">
+                    <ng-template [ngIf]="project.nonEnergyBenefitIds.length != 0" [ngIfElse]="nonNebsBlock">
+                        <button class="btn  btn-dark btn-sm add-neb-btn m-1" *ngFor="let nebGUID of project.nonEnergyBenefitIds"
+                            (click)="highlightNEB(nebGUID)">
+                            <fa-icon [icon]="faWeightHanging"></fa-icon>
+                            {{nebGUID | nebDisplay: nonEnergyBenefits}}
+                        </button>
+                        <button class="btn btn-dark btn-sm add-neb-btn m-1" (click)="showSuggestedNEBs()">
+                            <fa-icon [icon]="faSearchPlus"></fa-icon> Suggested NEBs
+                        </button>
+                    </ng-template>
+                    <ng-template #nonNebsBlock>
+                        <button class="btn btn-dark btn-sm add-neb-btn w-100" (click)="showSuggestedNEBs()">
+                            <fa-icon [icon]="faSearchPlus"></fa-icon> Suggested NEBs
+                        </button>
+                    </ng-template>
+                </div>
+            </div>
         </form>
     </div>
     <div class="card-footer">
-        <div class="d-flex w-100 justify-content-end">
+        <div class="d-flex w-100 justify-content-between">
             <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
                 <fa-icon [icon]="faTrash"></fa-icon>
             </button>
@@ -76,7 +96,7 @@
 </div>
 
 
-<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div [ngClass]="{'window-overlay': displayDeleteModal || displaySuggestedNEBsModal}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">
     <div class="popup-header">Discard this project?
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
@@ -91,5 +111,37 @@
         <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
         <button class="btn btn-danger" (click)="deleteProject()"><fa-icon [icon]="faTrash"
                 class="me-1"></fa-icon>Discard Project</button>
+    </div>
+</div>
+
+
+<div class="popup" [ngClass]="{'open': displaySuggestedNEBsModal }">
+    <div class="popup-header">Suggest NEBs for {{project.name}}
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeSuggestedNEBs()"></button>
+    </div>
+    <div class="popup-body">
+        <p>
+            These NEBs were commonly found associated with this type of project.
+        </p>
+        <div class="list-group">
+            <div class="list-group-item list-group-item-action"
+                *ngFor="let suggestedNEB of suggestedNEBs; let index = index;"
+                (click)="toggleSuggestedNEB(suggestedNEB.guid)">
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-0">
+                        <ng-template [ngIf]="selectedNEBs.includes(suggestedNEB.guid)">
+                            <fa-icon [icon]="faCircleCheck"></fa-icon>
+                        </ng-template>
+                        {{suggestedNEB.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeSuggestedNEBs()">Cancel</button>
+        <button class="btn btn-dark add-neb-btn" (click)="addSuggestedNEBs()"><fa-icon [icon]="faPlus"
+                class="me-1"></fa-icon>Add NEBs</button>
     </div>
 </div>

@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { IconDefinition, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { IdbProject } from 'src/app/models/project';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { KeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
 
@@ -16,15 +18,25 @@ export class NebSetupFormComponent {
 
   faTrash: IconDefinition = faTrash;
   faWeightHanging: IconDefinition = faWeightHanging;
+  faFileLines: IconDefinition = faFileLines;
 
   displayDeleteModal: boolean = false;
   keyPerformanceIndicators: Array<KeyPerformanceIndicator>;
+  projects: Array<IdbProject>;
+  projectsSub: Subscription;
   constructor(
     private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
     this.keyPerformanceIndicators = this.setupWizardService.company.getValue().keyPerformanceIndicators;
+    this.projectsSub = this.setupWizardService.projects.subscribe(_projects => {
+      this.projects = _projects;
+    })
+  }
+
+  ngOnDestroy() {
+    this.projectsSub.unsubscribe();
   }
 
   deleteNonEnergyBenefit() {
@@ -41,5 +53,13 @@ export class NebSetupFormComponent {
 
   closeDeleteModal() {
     this.displayDeleteModal = false;
+  }
+
+  highlightProject(projectGUID: string) {
+
+  }
+
+  showConnectedProjects() {
+
   }
 }

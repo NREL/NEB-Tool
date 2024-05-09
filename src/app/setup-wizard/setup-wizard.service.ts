@@ -9,7 +9,7 @@ import { IdbUser } from '../models/user';
 import { UserIdbService } from '../indexed-db/user-idb.service';
 import { KPI_Option, KPI_Options, KeyPerformanceIndicator, getKeyPerformanceIndicator } from '../shared/constants/keyPerformanceIndicators';
 import { ProcessEquipment, getNewProcessEquipment } from '../shared/constants/processEquipment';
-import { IdbNonEnergyBenefit } from '../models/nonEnergyBenefit';
+import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from '../models/nonEnergyBenefit';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class SetupWizardService {
   nonEnergyBenefits: BehaviorSubject<Array<IdbNonEnergyBenefit>>;
 
   setupContext: BehaviorSubject<SetupWizardContext>;
-
+  suggestedNEBs: Array<IdbNonEnergyBenefit>;
   constructor(private userIdbService: UserIdbService) {
     this.company = new BehaviorSubject<IdbCompany>(undefined);
     this.facility = new BehaviorSubject<IdbFacility>(undefined);
@@ -127,6 +127,17 @@ export class SetupWizardService {
     thirdContact.assessmentIds = [assessments[2].guid];
     contacts.push(thirdContact);
     this.contacts.next(contacts);
+    this.setSuggestedNEBs();
+  }
+
+
+  setSuggestedNEBs() {
+    this.suggestedNEBs = new Array();
+    for (let i = 0; i < 5; i++) {
+      let neb: IdbNonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '');
+      neb.name = "NEB #" + (i + 1);
+      this.suggestedNEBs.push(neb);
+    }
   }
 }
 
