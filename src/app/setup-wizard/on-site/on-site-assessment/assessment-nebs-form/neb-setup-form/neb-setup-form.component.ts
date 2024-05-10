@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IconDefinition, faCircle, faCircleCheck, faFileLines, faSave, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faCircle, faCircleCheck, faFileLines, faNoteSticky, faSave, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { IdbProject } from 'src/app/models/project';
@@ -23,6 +23,7 @@ export class NebSetupFormComponent {
   faCircle: IconDefinition = faCircle;
   faSearchPlus: IconDefinition = faSearchPlus;
   faSave: IconDefinition = faSave;
+  faNoteSticky: IconDefinition = faNoteSticky;
 
   displayDeleteModal: boolean = false;
   keyPerformanceIndicators: Array<KeyPerformanceIndicator>;
@@ -31,6 +32,9 @@ export class NebSetupFormComponent {
 
   displayProjectsModal: boolean = false;
   previousProjectIds: Array<string>;
+  kpi: KeyPerformanceIndicator;
+  highlighNebGuidSub: Subscription;
+  highlighNebGuid: string;
   constructor(
     private setupWizardService: SetupWizardService) {
   }
@@ -39,14 +43,25 @@ export class NebSetupFormComponent {
     this.keyPerformanceIndicators = this.setupWizardService.company.getValue().keyPerformanceIndicators;
     this.projectsSub = this.setupWizardService.projects.subscribe(_projects => {
       this.projects = _projects;
-    })
+    });
+    this.setKPI()
+
+    this.highlighNebGuidSub = this.setupWizardService.highlighNebGuid.subscribe(_highlighNebGuid => {
+      this.highlighNebGuid = _highlighNebGuid;
+      if (this.highlighNebGuid) {
+        setTimeout(() => {
+          this.setupWizardService.highlighNebGuid.next(undefined);
+        }, 5000)
+      }
+    });
   }
 
   ngOnDestroy() {
     this.projectsSub.unsubscribe();
+    this.highlighNebGuidSub.unsubscribe();
   }
 
-  saveNonEnergyBenefit() {
+  saveChanges() {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
     let findNebIndex: number = nonEnergyBenefits.findIndex(neb => {
       return neb.guid == this.nonEnergyBenefit.guid
@@ -79,8 +94,8 @@ export class NebSetupFormComponent {
   }
 
   highlightProject(projectGUID: string) {
-    document.getElementById('project_' + projectGUID).scrollIntoView({ behavior: "smooth" })
-
+    document.getElementById('project_' + projectGUID).scrollIntoView({ behavior: "smooth" });
+    this.setupWizardService.highlighProjectGuid.next(projectGUID);
   }
 
   showProjectsModal() {
@@ -122,7 +137,19 @@ export class NebSetupFormComponent {
       }
     });
     this.setupWizardService.projects.next(this.projects);
-    this.saveNonEnergyBenefit();
+    this.saveChanges();
     this.closeProjectsModal();
+  }
+
+  toggleNote() {
+    this.nonEnergyBenefit.includeNote = !this.nonEnergyBenefit.includeNote;
+    this.saveChanges();
+  }
+
+  setKPI() {
+    this.kpi = this.keyPerformanceIndicators.find(kpi => {
+      return kpi.kpiOptionValue == this.nonEnergyBenefit.kpiId;
+    });
+    this.saveChanges();
   }
 }

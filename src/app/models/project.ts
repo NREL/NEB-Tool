@@ -12,7 +12,8 @@ export interface IdbProject extends IdbEntry {
     costSavings: number,
     notes: string,
     nonEnergyBenefitIds: Array<string>,
-    includeSavings: boolean
+    includeSavings: boolean,
+    includeNote: boolean
 }
 
 export function getNewIdbProject(userId: string, companyId: string, facilityId: string, assessmentId: string): IdbProject {
@@ -30,6 +31,7 @@ export function getNewIdbProject(userId: string, companyId: string, facilityId: 
         costSavings: undefined,
         notes: undefined,
         nonEnergyBenefitIds: [],
-        includeSavings: false
+        includeSavings: false,
+        includeNote: false
     }
 }

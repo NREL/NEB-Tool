@@ -1,14 +1,16 @@
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
-export interface IdbNonEnergyBenefit extends IdbEntry{
+export interface IdbNonEnergyBenefit extends IdbEntry {
     name: string
     userId: string,
     facilityId: string,
     companyId: string,
     assessmentId: string,
     kpiId: string,
+    includeNote: boolean,
     notes: string,
-    projectIds: Array<string>
+    projectIds: Array<string>,
+    annualKpiImpact: number
 }
 
 export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, facilityId: string, assessmentId: string): IdbNonEnergyBenefit {
@@ -22,6 +24,8 @@ export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, fac
         assessmentId: assessmentId,
         kpiId: undefined,
         notes: undefined,
-        projectIds: []
+        projectIds: [],
+        includeNote: false,
+        annualKpiImpact: undefined
     }
 }

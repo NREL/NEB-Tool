@@ -35,6 +35,8 @@ export class ProjectSetupFormComponent {
 
   nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
   nonEnergyBenefitsSub: Subscription;
+  highlighProjectGuid: string;
+  highlighProjectGuidSub: Subscription;
   constructor(
     private setupWizardService: SetupWizardService,
     private scroller: ViewportScroller) {
@@ -45,10 +47,20 @@ export class ProjectSetupFormComponent {
       this.nonEnergyBenefits = _nonEnergyBenefits;
     });
     this.suggestedNEBs = SuggestedNEBs;
+
+    this.highlighProjectGuidSub = this.setupWizardService.highlighProjectGuid.subscribe(_projectGuid => {
+      this.highlighProjectGuid = _projectGuid;
+      if (this.highlighProjectGuid) {
+        setTimeout(() => {
+          this.setupWizardService.highlighProjectGuid.next(undefined);
+        }, 5000)
+      }
+    });
   }
 
   ngOnDestroy() {
     this.nonEnergyBenefitsSub.unsubscribe();
+    this.highlighProjectGuidSub.unsubscribe();
   }
 
   deleteProject() {
@@ -139,11 +151,8 @@ export class ProjectSetupFormComponent {
     }
   }
 
-  highlightNEB(nebGUID: String) {
-    console.log('scroll to..' + nebGUID);
+  highlightNEB(nebGUID: string) {
     document.getElementById('neb_' + nebGUID).scrollIntoView({ behavior: "smooth" })
-
-    // 
-    // this.scroller.scrollToAnchor('neb_' + nebGUID);
+    this.setupWizardService.highlighNebGuid.next(nebGUID);
   }
 }

@@ -1,7 +1,7 @@
-<div class="card" [id]="'project_'+project.guid">
+<div class="card" [id]="'project_'+project.guid" [ngClass]="{'shadow-lg': project.guid == highlighProjectGuid  }">
     <div class="card-header text-bg-dark">
         <h5 class="card-title mb-0">
-            <fa-icon [icon]="faFileLines" class="me-2"></fa-icon>
+            <fa-icon [icon]="faFileLines" class="me-2"></fa-icon>{{project.name}}
         </h5>
     </div>
     <div class="card-body">
@@ -36,12 +36,17 @@
                     </div>
                 </div>
             </div>
-            <hr>
+            <hr class="my-1">
+            <div class="row mb-1">
+                <div class="col-12">
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
                     [(ngModel)]="project.includeSavings" name="includeSavings">
                 <label class="form-check-label" for="includeSavings">Include Savings</label>
               </div>
+              </div>
+              </div>
+              
             <ng-container *ngIf="project.includeSavings">
                 <div class="row mb-1">
                     <label class="col-sm-5 col-form-label" for="energySavings">Energy Savings</label>
@@ -64,14 +69,30 @@
                     </div>
                 </div>
             </ng-container>
-            <hr>
-            <div class="row mb-1">
+            <hr class="my-1">
+            <!-- <div class="row mb-1">
                 <label class="col-sm-5 col-form-label" for="notes">Notes</label>
                 <div class="col-sm-7">
                     <textarea name="notes" type="number" class="form-control" [(ngModel)]="project.notes"
                         id="notes"></textarea>
                 </div>
+            </div> -->
+
+            <div class="row mb-1">
+                <div class="col-sm-5 col-form-label">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
+                            [(ngModel)]="project.includeNote" name="includeNote">
+                        <label class="form-check-label" for="includeNote">Notes</label>
+                    </div>
+                </div>
+                <div class="col-sm-7" *ngIf="project.includeNote">
+                    <textarea name="nebNotes" type="number" class="form-control" [(ngModel)]="project.notes"
+                        id="nebNotes"></textarea>
+                </div>
             </div>
+            <hr class="my-1">
+
             <div class="row mb-1">
                 <label class="col-sm-5 col-form-label" for="nonEnergyBenefitIds">Non-Energy Benefits</label>
                 <div class="col-sm-7">

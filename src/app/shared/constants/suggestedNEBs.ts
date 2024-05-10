@@ -8,12 +8,14 @@ export const SuggestedNEBs: Array<IdbNonEnergyBenefit> = [
         facilityId: '',
         companyId: '',
         assessmentId: '',
-        kpiId: '',
+        kpiId: 'accidents',
         notes: '',
         projectIds: [],
         createdDate: new Date(),
         modifiedDate: new Date(),
-        guid: 'neb_1'       
+        guid: 'neb_1',
+        includeNote: false,
+        annualKpiImpact: undefined
     },
     {
         name: "Suggested NEB #2",
@@ -26,7 +28,9 @@ export const SuggestedNEBs: Array<IdbNonEnergyBenefit> = [
         projectIds: [],
         createdDate: new Date(),
         modifiedDate: new Date(),
-        guid: 'neb_2'       
+        guid: 'neb_2',
+        includeNote: false,
+        annualKpiImpact: undefined
     },
     {
         name: "Suggested NEB #3",
@@ -39,7 +43,9 @@ export const SuggestedNEBs: Array<IdbNonEnergyBenefit> = [
         projectIds: [],
         createdDate: new Date(),
         modifiedDate: new Date(),
-        guid: 'neb_3'       
+        guid: 'neb_3',
+        includeNote: false,
+        annualKpiImpact: undefined
     },
     {
         name: "Suggested NEB #4",
@@ -52,7 +58,9 @@ export const SuggestedNEBs: Array<IdbNonEnergyBenefit> = [
         projectIds: [],
         createdDate: new Date(),
         modifiedDate: new Date(),
-        guid: 'neb_4'       
+        guid: 'neb_4',
+        includeNote: false,
+        annualKpiImpact: undefined
     },
     {
         name: "Suggested NEB #5",
@@ -65,6 +73,8 @@ export const SuggestedNEBs: Array<IdbNonEnergyBenefit> = [
         projectIds: [],
         createdDate: new Date(),
         modifiedDate: new Date(),
-        guid: 'neb_5'       
+        guid: 'neb_5',
+        includeNote: false,
+        annualKpiImpact: undefined
     }
 ]

@@ -25,15 +25,21 @@ export class AssessmentNebsFormComponent {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       this.assessmentId = params['id'];
+      this.setNEBs()
     });
 
     this.nonEnergyBenefitsSub = this.setupWizardService.nonEnergyBenefits.subscribe(_nonEnergyBenefits => {
-      if (this.assessmentId) {
-        this.nonEnergyBenefits = _nonEnergyBenefits.filter(neb => {
-          return neb.assessmentId == this.assessmentId
-        });
-      }
+      this.setNEBs();
     });
+  }
+
+  setNEBs() {
+    if (this.assessmentId) {
+      let _nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
+      this.nonEnergyBenefits = _nonEnergyBenefits.filter(neb => {
+        return neb.assessmentId == this.assessmentId
+      });
+    }
   }
 
   addNEB() {

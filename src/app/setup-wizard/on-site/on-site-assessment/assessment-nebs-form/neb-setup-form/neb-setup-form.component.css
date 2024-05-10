@@ -6,12 +6,12 @@
     background-color: #186A3B !important;
 }
 
-.card-footer{
+.card-footer {
     background-color: white;
 }
 
 
-.btn-sm{
+.btn-sm {
     font-size: small;
 }
 
@@ -19,6 +19,6 @@
     border: solid #186A3B;
 } */
 
-.list-group-item.project-item{
+.list-group-item.project-item {
     border: solid #D35400 !important;
 }
