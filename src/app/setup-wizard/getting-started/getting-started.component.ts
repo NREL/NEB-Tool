@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { IdbCompany } from 'src/app/models/company';
+import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { IconDefinition, fa1, fa2, fa3 } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,8 @@ import { IdbAssessment } from 'src/app/models/assessment';
 import * as _ from 'lodash';
 import { IdbContact } from 'src/app/models/contact';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { IdbUser } from 'src/app/models/user';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 
 @Component({
   selector: 'app-getting-started',
@@ -40,7 +42,8 @@ export class GettingStartedComponent {
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private router: Router, private setupWizardService: SetupWizardService,
     private assessmentIdbService: AssessmentIdbService,
-    private contactIdbService: ContactIdbService) {
+    private contactIdbService: ContactIdbService,
+    private userIdbService: UserIdbService) {
   }
 
   ngOnInit() {
@@ -111,16 +114,28 @@ export class GettingStartedComponent {
     this.displayCreateNewModal = false;
   }
 
-  confirmCreate() {
-    let context: SetupWizardContext = this.setupWizardService.setupContext.getValue();
-    if (context == 'full' || context == 'preVisit') {
-      this.router.navigateByUrl('/setup-wizard/company-setup');
-    } else if (context == 'onSite') {
-      let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
-      this.router.navigateByUrl('/setup-wizard/assessment-setup/' + assessments[0].guid);
-    } else if (context == 'postVisit') {
-      this.router.navigateByUrl('/setup-wizard/project-setup');
+  async confirmCreate() {
+    if (this.selectedCompanyGuid) {
+      this.router.navigateByUrl('/setup-wizard/company-setup/' + this.selectedCompanyGuid);
+    } else {
+      console.log('add new..')
+      let user: IdbUser = this.userIdbService.user.getValue();
+      let newCompany: IdbCompany = getNewIdbCompany(user.guid);
+      await firstValueFrom(this.companyIdbService.addWithObservable(newCompany));
+      await this.companyIdbService.setCompanies();
+      this.router.navigateByUrl('/setup-wizard/company-setup/' + newCompany.guid);
     }
+
+
+    // let context: SetupWizardContext = this.setupWizardService.setupContext.getValue();
+    // if (context == 'full' || context == 'preVisit') {
+    //   this.router.navigateByUrl('/setup-wizard/company-setup');
+    // } else if (context == 'onSite') {
+    //   let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
+    //   this.router.navigateByUrl('/setup-wizard/assessment-setup/' + assessments[0].guid);
+    // } else if (context == 'postVisit') {
+    //   this.router.navigateByUrl('/setup-wizard/project-setup');
+    // }
   }
 
   setVisitDates() {

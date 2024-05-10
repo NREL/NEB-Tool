@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IdbCompany } from 'src/app/models/company';
-import { SetupWizardService } from '../../setup-wizard.service';
 import { IconDefinition, faChartBar, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 
 @Component({
   selector: 'app-company-kpi-setup',
@@ -14,22 +14,25 @@ export class CompanyKpiSetupComponent {
   faChartBar: IconDefinition = faChartBar;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
-  company: IdbCompany;
-
-  constructor(private setupWizardService: SetupWizardService, private router: Router) {
-
-  }
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private companyIdbService: CompanyIdbService
+  ) { }
 
   ngOnInit() {
-    this.company = this.setupWizardService.company.getValue();
-    if (!this.company) {
-      this.setupWizardService.initializeDataForDev();
-      this.company = this.setupWizardService.company.getValue();
-    }
+    this.activatedRoute.params.subscribe(params => {
+      let companyGUID: string = params['id'];
+      let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
+      if (!selectedCompany || selectedCompany.guid != companyGUID) {
+        let company: IdbCompany = this.companyIdbService.getByGUID(companyGUID);
+        this.companyIdbService.selectedCompany.next(company);
+      }
+    });
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/company-contacts');
+    let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
+    this.router.navigateByUrl('setup-wizard/company-contacts/' + selectedCompany.guid);
   }
 
   goToContacts() {

@@ -26,7 +26,6 @@ import { ExploreNEBsComponent } from './user-dashboard/explore-nebs/explore-nebs
 import { CompanyGoalsComponent } from './company-dashboard/company-goals/company-goals.component';
 import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/facility-goals.component';
 import { AssessmentDashboardComponent } from './assessment-dashboard/assessment-dashboard.component';
-import { AssessmentSetupComponent } from './setup-wizard/on-site/assessment-setup/assessment-setup.component';
 import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessment-dashboard-home/assessment-dashboard-home.component';
 import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
 import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
@@ -63,15 +62,15 @@ const routes: Routes = [
         component: GettingStartedComponent
       },
       {
-        path: 'company-setup',
+        path: 'company-setup/:id',
         component: CompanySetupComponent
       },
       {
-        path: 'company-kpi',
+        path: 'company-kpi/:id',
         component: CompanyKpiSetupComponent
       },
       {
-        path: 'company-contacts',
+        path: 'company-contacts/:id',
         component: CompanyContactsSetupComponent
       },
       {
@@ -81,10 +80,6 @@ const routes: Routes = [
       {
         path: 'process-equipment',
         component: FacilityProcessEquipmentSetupComponent
-      },
-      {
-        path: 'assessment-setup/:id',
-        component: AssessmentSetupComponent
       },
       {
         path: 'pre-assessment',

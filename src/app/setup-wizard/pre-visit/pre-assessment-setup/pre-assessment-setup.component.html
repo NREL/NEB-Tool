@@ -186,4 +186,4 @@
 
 <app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
     [contextGuid]="assessments[contactAssessmentIndex].guid" [contactContext]="'assessment'"
-    [selectedContact]="viewContact"></app-contact-modal>
+    [selectedContact]="viewContact" [companyGuid]="assessments[contactAssessmentIndex].companyId"></app-contact-modal>

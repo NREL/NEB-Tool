@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faMagnifyingGlass, faMagnifyingGlassPlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany } from 'src/app/models/company';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { KPI_Category, KPI_Option, KPI_Options, KPI_categories, KeyPerformanceIndicator, getCustomKeyPerformanceIndicator, getKeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
 
 @Component({
@@ -25,23 +25,23 @@ export class AddKpiSearchComponent {
   customKPIName: string = '';
   kpiCategorySearch: KPI_Category | undefined = undefined;
   kpiSearchStr: string = '';
-  constructor(private setupWizardService: SetupWizardService) {
+  constructor(private companyIdbService: CompanyIdbService) {
 
   }
 
   ngOnInit() {
-    this.companySub = this.setupWizardService.company.subscribe(_company => {
+    this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.company = _company;
       this.setKpiOptions();
-    })
+    });
   }
 
   ngOnDestroy() {
     this.companySub.unsubscribe();
   }
 
-  saveChanges() {
-    this.setupWizardService.company.next(this.company);
+  async saveChanges() {
+    await this.companyIdbService.asyncUpdate(this.company);
   }
 
   setKpiOptions() {
@@ -68,9 +68,9 @@ export class AddKpiSearchComponent {
   }
 
 
-  addKPI(option: KPI_Option) {
+  async addKPI(option: KPI_Option) {
     let newKPI: KeyPerformanceIndicator = getKeyPerformanceIndicator(option);
     this.company.keyPerformanceIndicators.push(newKPI);
-    this.setKpiOptions();
+    await this.saveChanges();
   }
 }

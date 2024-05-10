@@ -195,4 +195,4 @@
 
 <app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
     [contextGuid]="facility.processEquipment[contactEquipmentIndex].guid" [contactContext]="'processEquipment'"
-    [selectedContact]="viewContact"></app-contact-modal>
+    [selectedContact]="viewContact" [companyGuid]="facility.companyId"></app-contact-modal>

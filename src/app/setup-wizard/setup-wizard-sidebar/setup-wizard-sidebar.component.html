@@ -1,4 +1,5 @@
-<div *ngIf="displaySidebar" class="h-100 navbar d-flex flex-column align-items-start justify-content-start shadow"
+<div *ngIf="displaySidebar && selectedCompany"
+    class="h-100 navbar d-flex flex-column align-items-start justify-content-start shadow"
     [ngClass]="{'collapsed': !open}">
 
     <!-- <div class="ps-1 pe-1 w-100">
@@ -28,17 +29,20 @@
                 Company Setup
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="company-setup" [routerLinkActive]="['active']">
+                <a class="nav-link secondary-nav" [routerLink]="'company-setup/'+selectedCompany.guid"
+                    [routerLinkActive]="['active']">
                     General Details
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="company-contacts" [routerLinkActive]="['active']">
+                <a class="nav-link secondary-nav" [routerLink]="'company-contacts/'+selectedCompany.guid"
+                    [routerLinkActive]="['active']">
                     Team Details
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="company-kpi" [routerLinkActive]="['active']">
+                <a class="nav-link secondary-nav" [routerLink]="'company-kpi/'+selectedCompany.guid"
+                    [routerLinkActive]="['active']">
                     KPI's
                 </a>
             </div>

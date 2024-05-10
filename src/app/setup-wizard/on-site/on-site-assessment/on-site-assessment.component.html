@@ -94,4 +94,5 @@
 </nav>
 
 <app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()" [contextGuid]="assessment.guid"
-    [contactContext]="'assessment'" [selectedContact]="viewContact"></app-contact-modal>
+    [contactContext]="'assessment'" [selectedContact]="viewContact"
+    [companyGuid]="assessment.companyId"></app-contact-modal>

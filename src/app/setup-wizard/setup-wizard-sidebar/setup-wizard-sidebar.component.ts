@@ -4,6 +4,8 @@ import { IconDefinition, faMaximize, faMinimize, faRotateLeft } from '@fortaweso
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { IdbCompany } from 'src/app/models/company';
 
 @Component({
   selector: 'app-setup-wizard-sidebar',
@@ -25,7 +27,11 @@ export class SetupWizardSidebarComponent {
   assessmentsSub: Subscription;
   assessments: Array<IdbAssessment>;
   open: boolean = false;
-  constructor(private router: Router, private setupWizardService: SetupWizardService
+
+  selectedCompany: IdbCompany;
+  selectedCompanySub: Subscription;
+  constructor(private router: Router, private setupWizardService: SetupWizardService,
+    private companyIdbService: CompanyIdbService
   ) {
 
   }
@@ -45,11 +51,17 @@ export class SetupWizardSidebarComponent {
     this.assessmentsSub = this.setupWizardService.assessments.subscribe(val => {
       this.assessments = val;
     });
+
+    this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(val => {
+      this.selectedCompany = val;
+    });
+
   }
 
   ngOnDestroy() {
     this.setupContextSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
+    this.selectedCompanySub.unsubscribe();
   }
 
   setDisplaySidebar() {

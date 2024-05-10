@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IdbCompany } from 'src/app/models/company';
-import { SetupWizardService } from '../../setup-wizard.service';
 import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-company-setup',
@@ -19,27 +20,48 @@ export class CompanySetupComponent {
   faBuilding: IconDefinition = faBuilding;
   faChevronRight: IconDefinition = faChevronRight;
 
-  constructor(private setupWizardService: SetupWizardService, private router: Router) {
+  selectedCompany: IdbCompany
+  selectedCompanySub: Subscription;
+
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private companyIdbService: CompanyIdbService
+  ) {
 
   }
 
   ngOnInit() {
-    let newCompany: IdbCompany = this.setupWizardService.company.getValue();
-    if (!newCompany) {
-      this.setupWizardService.initializeDataForDev();
-      newCompany = this.setupWizardService.company.getValue();
-    }
-    this.companyName = newCompany.generalInformation.name;
-    this.setupWizardService.company.next(newCompany);
+    this.activatedRoute.params.subscribe(params => {
+      let companyGUID: string = params['id'];
+      let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
+      if (!selectedCompany || (selectedCompany.guid != companyGUID)) {
+        console.log('here...?')
+        let company: IdbCompany = this.companyIdbService.getByGUID(companyGUID);
+        console.log(company);
+        this.companyIdbService.selectedCompany.next(company);
+      }
+    });
+
+    this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+      this.selectedCompany = _company;
+      if (this.selectedCompany) {
+        this.companyName = _company.generalInformation.name;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.selectedCompanySub.unsubscribe();
   }
 
   goToContacts() {
-    this.router.navigateByUrl('setup-wizard/company-contacts')
+    let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
+    this.router.navigateByUrl('setup-wizard/company-contacts/' + selectedCompany.guid);
   }
 
-  saveChanges() {
-    let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
+  async saveChanges() {
+    let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
     selectedCompany.generalInformation.name = this.companyName;
-    this.setupWizardService.company.next(selectedCompany);
+    await this.companyIdbService.asyncUpdate(selectedCompany);
   }
 }
