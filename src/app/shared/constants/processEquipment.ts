@@ -9,7 +9,6 @@ export interface ProcessEquipment {
     operatingHours: number,
     loadFactor: number,
     notes: string,
-    contactId: string,
     equipmentType: EquipmentType,
     utilityType: UtilityType
 }
@@ -22,7 +21,6 @@ export function getNewProcessEquipment(): ProcessEquipment {
         operatingHours: undefined,
         loadFactor: undefined,
         notes: undefined,
-        contactId: undefined,
         equipmentType: undefined,
         utilityType: undefined
     }

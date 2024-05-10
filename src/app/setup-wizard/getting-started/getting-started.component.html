@@ -47,7 +47,7 @@
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa2"></fa-icon>
                     </span>
-                    On-Site Assessment
+                    Data Collection
                 </button>
             </div>
             <div class="card-body">
@@ -70,7 +70,7 @@
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa3"></fa-icon>
                     </span>
-                    Post-Visit Evaluation
+                    Data Evaluation
                 </button>
             </div>
             <div class="card-body">
@@ -144,6 +144,17 @@
                         <optgroup label="Existing Facilities">
                             <option *ngFor="let facility of selectedCompanyGuid | facilityList:facilities"
                                 [ngValue]="facility.guid">{{facility.generalInformation.name}}</option>
+                        </optgroup>
+                    </select>
+                </ng-container>
+                <ng-container *ngIf="selectedFacilityGuid">
+                    <label for="selectedVisit" class="form-label">Select Visit</label>
+                    <select id="selectedVisit" name="selectedVisit" class="form-select"
+                        [(ngModel)]="selectedVisit" (change)="setSelectedVisit()">
+                        <option [ngValue]="undefined">Setup New Visit</option>
+                        <optgroup label="Existing Visits">
+                            <option *ngFor="let visitDateOption of visitDates"
+                                [ngValue]="visitDateOption">{{visitDateOption | date}}</option>
                         </optgroup>
                     </select>
                 </ng-container>

@@ -9,6 +9,10 @@ import { IdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from '../setup-wizard.service';
 import { IdbProject } from 'src/app/models/project';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
+import { FormsModule } from '@angular/forms';
 
 describe('GettingStartedComponent', () => {
   let component: GettingStartedComponent;
@@ -25,14 +29,20 @@ describe('GettingStartedComponent', () => {
     facility: new BehaviorSubject<IdbFacility>(undefined),
     projects: new BehaviorSubject<Array<IdbProject>>([])
   };
+  let assessmentIdbService: Partial<AssessmentIdbService> = {
+    assessments: new BehaviorSubject<Array<IdbAssessment>>([])
+   };
+  let contactIdbService: Partial<ContactIdbService> = { };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule],
+      imports: [FontAwesomeModule, FormsModule],
       declarations: [GettingStartedComponent],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: SetupWizardService, useValue: setupWizardService }
+        { provide: SetupWizardService, useValue: setupWizardService },
+        { provide: AssessmentIdbService, useValue: assessmentIdbService },
+        { provide: ContactIdbService, useValue: contactIdbService }
       ]
     })
       .compileComponents();

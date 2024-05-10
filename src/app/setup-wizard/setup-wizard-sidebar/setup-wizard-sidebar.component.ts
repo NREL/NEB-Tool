@@ -59,7 +59,12 @@ export class SetupWizardSidebarComponent {
   }
 
   confirmStartOver() {
-    this.router.navigateByUrl('/setup-wizard/getting-started');
-    this.closeStartOverModal();
+    this.router.navigateByUrl('/setup-wizard/getting-started').then(() => {
+      this.setupWizardService.company.next(undefined);
+      this.setupWizardService.facility.next(undefined);
+      this.setupWizardService.assessments.next([]);
+      this.setupWizardService.contacts.next([]);
+      this.closeStartOverModal();
+    });
   }
 }

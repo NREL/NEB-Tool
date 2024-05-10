@@ -18,6 +18,7 @@ import { AddKpiSearchComponent } from './add-kpi-search/add-kpi-search.component
 import { KpiListFilterPipe } from './add-kpi-search/kpi-list-filter.pipe';
 import { KpiCategoryClassPipe } from './kpi-category-class.pipe';
 import { KpiUnitOptionPipe } from './kpi-unit-option.pipe';
+import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 
 describe('CompanyKpiSetupComponent', () => {
   let component: CompanyKpiSetupComponent;
@@ -36,7 +37,7 @@ describe('CompanyKpiSetupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
+      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule, HelperPipesModule],
       declarations: [CompanyKpiSetupComponent, CompanyKpiListComponent, AddKpiSearchComponent, KpiListFilterPipe, KpiCategoryClassPipe, KpiUnitOptionPipe],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },

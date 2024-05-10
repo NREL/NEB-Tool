@@ -21,9 +21,12 @@ describe('CompanySetupComponent', () => {
     user: new BehaviorSubject<IdbUser>(getNewIdbUser())
   }
   let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(undefined),
+    company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
     facility: new BehaviorSubject<IdbFacility>(undefined),
-    projects: new BehaviorSubject<Array<IdbProject>>([])
+    projects: new BehaviorSubject<Array<IdbProject>>([]),
+    initializeDataForDev: () => {
+
+    }
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
@@ -40,12 +43,12 @@ describe('CompanySetupComponent', () => {
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
         { provide: SetupWizardService, useValue: setupWizardService },
-        { provide: CompanyIdbService, useValue: companyIdbService },   
+        { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService }
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(CompanySetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

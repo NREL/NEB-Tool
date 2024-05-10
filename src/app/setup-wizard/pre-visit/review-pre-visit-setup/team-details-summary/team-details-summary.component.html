@@ -1,0 +1,7 @@
+
+<h5 class="bold w-100 text-center"><fa-icon [icon]="faAddressBook" class="me-2"></fa-icon>Team Details</h5>
+<div class="row">
+    <div class="col-lg-6 col-md-12 pb-2" *ngFor="let contact of contacts">
+        <app-contact-summary-card [contact]="contact"></app-contact-summary-card>
+    </div>
+</div>

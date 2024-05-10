@@ -32,18 +32,18 @@ export class FacilityProcessEquipmentSetupComponent {
   contacts: Array<IdbContact>;
   displayContactModal: boolean = false;
   contactEquipmentIndex: number;
-  editContactId: string;
+  viewContact: IdbContact;
   constructor(private setupWizardService: SetupWizardService, private router: Router) {
 
   }
 
   ngOnInit() {
     let company: IdbCompany = this.setupWizardService.company.getValue();
-    if(!company){
+    if (!company) {
       this.setupWizardService.initializeDataForDev();
     }
     this.facility = this.setupWizardService.facility.getValue();
-    this.contacts = this.setupWizardService.contacts.getValue();
+    this.setContacts();
   }
 
   saveChanges() {
@@ -68,6 +68,12 @@ export class FacilityProcessEquipmentSetupComponent {
     this.facility.processEquipment = this.facility.processEquipment.filter(_equipment => {
       return _equipment.guid != this.equipmentToDelete.guid;
     });
+    this.contacts.forEach(contact => {
+      contact.processEquipmentIds = contact.processEquipmentIds.filter(aId => {
+        return aId != this.equipmentToDelete.guid;
+      });
+    });
+    this.setupWizardService.contacts.next(this.contacts);
     this.closeDeleteModal();
     this.setAccordionIndex(0);
     this.saveChanges();
@@ -87,20 +93,20 @@ export class FacilityProcessEquipmentSetupComponent {
     this.equipmentToDelete = undefined;
   }
 
-  openContactModal(equipmentIndex: number, contactId: string) {
-    this.contactEquipmentIndex = equipmentIndex;
-    this.editContactId = contactId;
+  openContactModal(assessmentIndex: number, viewContact: IdbContact) {
+    this.contactEquipmentIndex = assessmentIndex;
+    this.viewContact = viewContact;
     this.displayContactModal = true;
   }
 
-  closeContactModal(){
+  closeContactModal() {
     this.displayContactModal = false;
     this.contactEquipmentIndex = undefined;
-    this.editContactId = undefined;
+    this.viewContact = undefined;
+    this.setContacts();
   }
 
-  setContact(contactId: string){
-    this.facility.processEquipment[this.contactEquipmentIndex].contactId = contactId;
-    this.closeContactModal();
+  setContacts() {
+    this.contacts = this.setupWizardService.contacts.getValue();
   }
 }

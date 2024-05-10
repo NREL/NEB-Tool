@@ -6,13 +6,17 @@
                     <fa-icon [icon]="faCircleCheck"></fa-icon> Review Pre-Visit
                 </h5>
                 <hr>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-warning text-center">
-                            Review Pre-Visit Coming Soon.
-                        </div>
-                    </div>
-                </div>
+                <app-company-details-summary></app-company-details-summary>
+                <hr>
+                <app-team-details-summary></app-team-details-summary>
+                <hr>
+                <app-company-kpis-summary></app-company-kpis-summary>
+                <hr class="solid-hr">
+                <app-facility-details-summary></app-facility-details-summary>
+                <hr>
+                <app-process-equipment-summary></app-process-equipment-summary>
+                <hr class="solid-hr">
+                <app-pre-assessment-summary></app-pre-assessment-summary>
             </div>
         </div>
     </div>
@@ -23,8 +27,32 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button [disabled]="true" class="btn btn-success" (click)="goToFacilitySetup()">
-            Submit Pre-Visit
+        <button class="btn btn-secondary" [disabled]="true">
+            <fa-icon [icon]="faFilePdf"></fa-icon>
+            Generate PDF
+        </button>
+        <button class="btn btn-success" (click)="openConfirmModal()">
+            <fa-icon [icon]="faSave"></fa-icon> Submit Pre-Visit
         </button>
     </div>
 </nav>
+
+
+
+<div [ngClass]="{'window-overlay': displayConfirmModal}"></div>
+<div class="popup" [ngClass]="{'open': displayConfirmModal }">
+    <div class="popup-header">Submit Pre-Visit
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeConfirmModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-success">
+            Are you done with your Pre-Visit?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
+        <button class="btn btn-success" (click)="submitPreVisit()"><fa-icon [icon]="faSave"></fa-icon> Submit
+            Pre-Visit</button>
+    </div>
+</div>

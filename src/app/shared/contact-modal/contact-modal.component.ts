@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconDefinition, faChevronLeft, faCircleCheck, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
-import { IdbContact } from 'src/app/models/contact';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { ContactContext, IdbContact } from 'src/app/models/contact';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
@@ -10,9 +11,11 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 })
 export class ContactModalComponent {
   @Input()
-  contactId: string;
-  @Output('emitSelectedContact')
-  emitSelectedContact: EventEmitter<string> = new EventEmitter();
+  contextGuid: string;
+  @Input()
+  contactContext: ContactContext;
+  @Input()
+  selectedContact: IdbContact;
   @Output('emitCancelContact')
   emitCancelContact: EventEmitter<boolean> = new EventEmitter();
 
@@ -22,14 +25,15 @@ export class ContactModalComponent {
   faCircleCheck: IconDefinition = faCircleCheck;
   faChevronLeft: IconDefinition = faChevronLeft;
   faUser: IconDefinition = faUser;
-  selectedContact: IdbContact;
-  constructor(private setupWizardService: SetupWizardService) {
+  constructor(private setupWizardService: SetupWizardService,
+    private contactIdbService: ContactIdbService
+  ) {
   }
 
   ngOnInit() {
     //TODO: get contact within dashboards..
-    this.contacts = this.setupWizardService.contacts.getValue();
-    this.setSelectedContact();
+    //Use copy to not modify without hitting save
+    this.contacts = JSON.parse(JSON.stringify(this.setupWizardService.contacts.getValue()));
     setTimeout(() => {
       this.displayModal = true;
     }, 100)
@@ -41,22 +45,39 @@ export class ContactModalComponent {
   }
 
   saveChanges() {
-    this.displayModal = false;
-    this.emitSelectedContact.emit(this.contactId);
+    this.setupWizardService.contacts.next(this.contacts);
+    this.closeModal();
   }
 
-  selectContact(contactId: string) {
-    this.contactId = contactId;
-    this.setSelectedContact();
+  viewContact(contact: IdbContact) {
+    this.selectedContact = contact;
   }
 
-  setSelectedContact() {
-    if (this.contactId) {
-      this.selectedContact = this.contacts.find(_contact => {
-        return _contact.guid == this.contactId
-      });
-    } else {
-      this.selectedContact = undefined;
+  async toggleContactActive(contactIndex: number) {
+    if (this.contactContext == 'assessment') {
+      if (this.contacts[contactIndex].assessmentIds.includes(this.contextGuid)) {
+        this.contacts[contactIndex].assessmentIds = this.contacts[contactIndex].assessmentIds.filter(id => {
+          return id != this.contextGuid;
+        });
+      } else {
+        this.contacts[contactIndex].assessmentIds.push(this.contextGuid);
+      }
+    } else if (this.contactContext == 'processEquipment') {
+      if (this.contacts[contactIndex].processEquipmentIds.includes(this.contextGuid)) {
+        this.contacts[contactIndex].processEquipmentIds = this.contacts[contactIndex].processEquipmentIds.filter(id => {
+          return id != this.contextGuid;
+        });
+      } else {
+        this.contacts[contactIndex].processEquipmentIds.push(this.contextGuid);
+      }
+    } else if (this.contactContext == 'KPI') {
+      if (this.contacts[contactIndex].kpiIds.includes(this.contextGuid)) {
+        this.contacts[contactIndex].kpiIds = this.contacts[contactIndex].kpiIds.filter(id => {
+          return id != this.contextGuid;
+        });
+      } else {
+        this.contacts[contactIndex].kpiIds.push(this.contextGuid);
+      }
     }
   }
 }

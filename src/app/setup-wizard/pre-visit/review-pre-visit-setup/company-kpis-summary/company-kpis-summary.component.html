@@ -1,0 +1,95 @@
+<h5 class="bold w-100 text-center">
+    <fa-icon [icon]="faChartBar" class="me-2"></fa-icon> Key Performance Indicators
+</h5>
+<div class="row">
+    <div class="col-lg-6 col-md-12 pb-2" *ngFor="let kpi of keyPerformanceIndicators">
+        <div class="card">
+            <div class="card-header">
+                <fa-icon [icon]="faBullseye" class="pe-1"></fa-icon>
+                <ng-template [ngIf]="!kpi.isCustom" [ngIfElse]="customNameBlock">
+                    <span [innerHTML]="kpi.kpiOptionValue | kpiLabel"></span>
+                </ng-template>
+                <ng-template #customNameBlock>
+                    {{kpi.customKPIName}}
+                </ng-template>
+            </div>
+            <div class="card-body">
+
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td class="w-50">
+                                KPI Category
+                            </td>
+                            <td>
+                                <span class="badge" [ngStyle]="{'background-color':kpi.category | kpiCategoryClass}">
+                                    {{kpi.category}}
+                                </span>
+                            </td>
+                        </tr>
+                        <ng-template [ngIf]="!kpi.isQualitative">
+                            <tr>
+                                <td class="w-50">
+                                    Units
+                                </td>
+                                <td>
+                                    <span [innerHTML]="kpi.units | unitsDisplay"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50">
+                                    Baseline Use Per Year
+                                </td>
+                                <td>
+                                    <ng-template [ngIf]="kpi.baselineUsePerYear" [ngIfElse]="useMdash">
+                                        {{kpi.baselineUsePerYear}}
+                                        <span [innerHTML]="(kpi.units | unitsDisplay) + '/yr'"></span>
+                                    </ng-template>
+                                    <ng-template #useMdash>
+                                        &mdash;
+                                    </ng-template>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-50">
+                                    Cost Per Unit
+                                </td>
+                                <td>
+                                    <ng-template [ngIf]="kpi.costPerUnit" [ngIfElse]="costMdash">
+                                        {{kpi.costPerUnit}} &dollar;
+                                    </ng-template>
+                                    <ng-template #costMdash>
+                                        &mdash;
+                                    </ng-template>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <tr>
+                            <td>
+                                Contacts
+                            </td>
+                            <td>
+                                <ng-template [ngIf]="(kpi.kpiOptionValue| contactName:'KPI': contacts).length != 0"
+                                    [ngIfElse]="contactMdash">
+                                    <div class="d-flex">
+                                        <div class="pe-1"
+                                            *ngFor="let contact of kpi.kpiOptionValue| contactName:'KPI': contacts;">
+                                            <span class="badge bg-primary">
+                                                <fa-icon [icon]="faUser"></fa-icon>
+                                                {{contact.name}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #contactMdash>
+                                    &mdash;
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,7 +7,7 @@
                 </h5>
                 <hr>
                 <form>
-                    <label class="bold" for="facilityName">Faiclity Name</label>
+                    <label class="bold" for="facilityName">Facility Name</label>
                     <input name="facilityName" type="text" class="form-control" [(ngModel)]="facilityName"
                         (input)="saveChanges()" id="facilityName">
                 </form>
@@ -15,7 +15,7 @@
                 <label class="bold">Location</label>
                 <app-location-form [inCompany]="false" [inSetupWizard]="true"></app-location-form>
                 <hr>
-                <label class="bold">Energy Systems</label>
+                <label class="bold">Tracked Utilities</label>
                 <app-units-form [inCompany]="false" [inSetupWizard]="true"></app-units-form>
                 <hr>
                 <label class="bold">Additional Details</label>
