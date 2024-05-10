@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconDefinition, faChevronRight, faFilePen, faListCheck, faPeopleGroup, faPlus, faScrewdriverWrench, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faFilePen, faListCheck, faPeopleGroup, faPlus, faScrewdriverWrench, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbFacility } from 'src/app/models/facility';
@@ -21,6 +21,7 @@ export class OnSiteAssessmentComponent {
   faFilePen: IconDefinition = faFilePen;
   faListCheck: IconDefinition = faListCheck;
   faChevronRight: IconDefinition = faChevronRight;
+  faChevronLeft: IconDefinition = faChevronLeft;
   faScrewdriverWrench: IconDefinition = faScrewdriverWrench;
   faPeople: IconDefinition = faPeopleGroup;
   faUser: IconDefinition = faUser;
@@ -34,6 +35,8 @@ export class OnSiteAssessmentComponent {
   contacts: Array<IdbContact>;
   displayContactModal: boolean = false;
   viewContact: IdbContact;
+
+  assessmentIndex: number;
   constructor(private router: Router, private setupWizardService: SetupWizardService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -52,21 +55,19 @@ export class OnSiteAssessmentComponent {
 
     this.activatedRoute.params.subscribe(params => {
       let assessmentGUID: string = params['id'];
-      this.assessment = this.assessments.find(_assessment => { return _assessment.guid == assessmentGUID });
-      if (!this.assessment && this.assessments.length > 0) {
-        this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + this.assessments[0].guid);
+      this.assessmentIndex = this.assessments.findIndex(_assessment => { return _assessment.guid == assessmentGUID });
+      if (this.assessmentIndex != -1) {
+        this.assessment = this.assessments[this.assessmentIndex];
+      } else if (this.assessmentIndex == -1 && this.assessments.length > 0) {
+        this.navigateToOnSiteAssessment(this.assessments[0].guid);
       } else if (!this.assessment) {
         this.router.navigateByUrl('/setup-wizard');
       }
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.assessmentsSub.unsubscribe();
-  }
-
-  goToProjects() {
-    this.router.navigateByUrl('/setup-wizard/project-setup/' + this.assessment.guid + '/projects');
   }
 
   saveChanges() {
@@ -76,7 +77,7 @@ export class OnSiteAssessmentComponent {
     this.assessments[assessmentIndex] = this.assessment;
     this.setupWizardService.assessments.next(this.assessments);
   }
- 
+
   openContactModal(viewContact: IdbContact) {
     this.viewContact = viewContact;
     this.displayContactModal = true;
@@ -90,5 +91,21 @@ export class OnSiteAssessmentComponent {
 
   setContacts() {
     this.contacts = this.setupWizardService.contacts.getValue();
+  }
+
+  goToNextAssessment() {
+    this.navigateToOnSiteAssessment(this.assessments[this.assessmentIndex + 1].guid);
+  }
+
+  goToPrevious() {
+    this.navigateToOnSiteAssessment(this.assessments[this.assessmentIndex - 1].guid);
+  }
+
+  navigateToOnSiteAssessment(guid: string) {
+    this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + guid);
+  }
+
+  goToResults() {
+    this.router.navigateByUrl('/setup-wizard/review-data-collection');
   }
 }

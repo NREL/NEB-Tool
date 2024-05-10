@@ -43,32 +43,53 @@
 </div>
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-between">
-        <div class="d-flex">
-            <div class="pe-1">
-                <button class="btn btn-dark add-project-btn">
-                    <fa-icon [icon]="faPlus"></fa-icon>
-                    Add Project
-                </button>
+        <div class="col-3">
+            <button class="btn btn-dark" (click)="goToPrevious()" *ngIf="assessmentIndex != 0">
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+                <span class="d-md-none">
+                    {{assessments[assessmentIndex-1]?.name}}
+                </span>
+            </button>
+        </div>
+        <div class="col-6">
+            <div class="d-flex justify-content-center">
+                <div class="pe-1">
+                    <button class="btn btn-dark add-project-btn">
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                        Add Project
+                    </button>
+                </div>
+                <div class="pe-1">
+                    <button class="btn btn-dark add-neb-btn">
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                        Add NEB
+                    </button>
+                </div>
+                <div class="pe-1">
+                    <button class="btn btn-secondary">
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                        Add Contact
+                    </button>
+                </div>
             </div>
-            <div class="pe-1">
-                <button class="btn btn-dark add-neb-btn">
-                    <fa-icon [icon]="faPlus"></fa-icon>
-                    Add NEB
+        </div>
+        <div class="col-3">
+            <div class="d-flex  justify-content-end">
+                <button class="btn btn-dark" (click)="goToNextAssessment()"
+                    *ngIf="assessmentIndex != assessments.length-1">
+                    <span class="d-md-none">
+                        {{assessments[assessmentIndex+1].name}}
+                    </span>
+                    <fa-icon [icon]="faChevronRight"></fa-icon>
                 </button>
-            </div>
-            <div class="pe-1">
-                <button class="btn btn-secondary">
-                    <fa-icon [icon]="faPlus"></fa-icon>
-                    Add Contact
+                <button class="btn btn-dark" (click)="goToResults()" *ngIf="assessmentIndex == assessments.length-1">
+                    <span class="d-md-none">
+                        View Results
+                    </span>
+                    <fa-icon [icon]="faChevronRight"></fa-icon>
                 </button>
             </div>
         </div>
-
-
-        <button class="btn btn-dark" (click)="goToProjects()">
-            Next Assessment
-            <fa-icon [icon]="faChevronRight"></fa-icon>
-        </button>
     </div>
 </nav>
 

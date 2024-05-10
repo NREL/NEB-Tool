@@ -84,14 +84,14 @@ export class SetupWizardService {
 
     let fanAssessment: IdbAssessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
     fanAssessment.name = 'Fan Assessment';
-    fanAssessment.equipmentId = pump.guid;
+    fanAssessment.equipmentId = fan.guid;
     fanAssessment.visitDate = new Date();
     assessments.push(fanAssessment);
 
 
     let furnaceAssessment: IdbAssessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
     furnaceAssessment.name = 'Furnace Assessment';
-    furnaceAssessment.equipmentId = pump.guid;
+    furnaceAssessment.equipmentId = furnace.guid;
     furnaceAssessment.visitDate = new Date();
     assessments.push(furnaceAssessment);
     this.assessments.next(assessments);

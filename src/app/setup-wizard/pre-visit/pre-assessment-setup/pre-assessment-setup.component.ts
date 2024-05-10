@@ -43,6 +43,7 @@ export class PreAssessmentSetupComponent {
       this.setupWizardService.initializeDataForDev();
     }
     this.assessments = this.setupWizardService.assessments.getValue();
+    console.log(this.assessments);
     let facility: IdbFacility = this.setupWizardService.facility.getValue();
     this.processEquipmentOptions = facility.processEquipment;
     this.contacts = this.setupWizardService.contacts.getValue();

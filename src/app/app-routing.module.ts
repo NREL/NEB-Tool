@@ -14,7 +14,6 @@ import { SetupWizardComponent } from './setup-wizard/setup-wizard.component';
 import { GettingStartedComponent } from './setup-wizard/getting-started/getting-started.component';
 import { CompanySetupComponent } from './setup-wizard/pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './setup-wizard/pre-visit/facility-setup/facility-setup.component';
-import { ProjectSetupComponent } from './setup-wizard/on-site/project-setup/project-setup.component';
 import { UserSettingsComponent } from './user-dashboard/user-settings/user-settings.component';
 import { CompanySettingsComponent } from './company-dashboard/company-settings/company-settings.component';
 import { CompanyReportsComponent } from './company-dashboard/company-reports/company-reports.component';
@@ -38,6 +37,7 @@ import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/pre-visit
 import { PreAssessmentSetupComponent } from './setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.component';
 import { ReviewPreVisitSetupComponent } from './setup-wizard/pre-visit/review-pre-visit-setup/review-pre-visit-setup.component';
 import { OnSiteAssessmentComponent } from './setup-wizard/on-site/on-site-assessment/on-site-assessment.component';
+import { ReviewOnSiteComponent } from './setup-wizard/on-site/review-on-site/review-on-site.component';
 
 const routes: Routes = [
   {
@@ -97,6 +97,10 @@ const routes: Routes = [
       {
         path: 'on-site-assessment/:id',
         component: OnSiteAssessmentComponent
+      },
+      {
+        path: 'review-data-collection',
+        component: ReviewOnSiteComponent
       },
       {
         path: 'review-setup',
@@ -238,7 +242,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { anchorScrolling: 'enabled' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

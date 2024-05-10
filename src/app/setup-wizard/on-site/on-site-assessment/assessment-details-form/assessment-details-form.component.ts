@@ -5,7 +5,6 @@ import { IdbAssessment } from 'src/app/models/assessment';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
-import { IdbProject } from 'src/app/models/project';
 import { Subscription } from 'rxjs';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbCompany } from 'src/app/models/company';
@@ -56,7 +55,7 @@ export class AssessmentDetailsFormComponent {
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.assessmentsSub.unsubscribe();
   }
 
@@ -71,7 +70,7 @@ export class AssessmentDetailsFormComponent {
     this.assessments[assessmentIndex] = this.assessment;
     this.setupWizardService.assessments.next(this.assessments);
   }
- 
+
   openContactModal(viewContact: IdbContact) {
     this.viewContact = viewContact;
     this.displayContactModal = true;

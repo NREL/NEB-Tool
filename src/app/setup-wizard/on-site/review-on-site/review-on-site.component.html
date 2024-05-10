@@ -1,1 +1,33 @@
-<p>review-on-site works!</p>
+<div class="setup-wizard-content">
+    <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow">
+                <h5>
+                    Review Data Collection
+                </h5>
+                <hr>
+
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-between">
+        <div class="col-3">
+            <button class="btn btn-dark" (click)="goBack()">
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+                <span class="d-md-none">
+                    Back
+                </span>
+            </button>
+        </div>
+        <div class="col-3">
+            <div class="d-flex  justify-content-end">
+                <button class="btn btn-success" (click)="submitData()">
+                    <fa-icon [icon]="faSave"></fa-icon>
+                    Submit Data Collection
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -6,12 +6,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanySetupComponent } from './pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './pre-visit/facility-setup/facility-setup.component';
-import { ProjectSetupComponent } from './on-site/project-setup/project-setup.component';
 import { FormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { AssessmentSetupComponent } from './on-site/assessment-setup/assessment-setup.component';
-import { ProjectSetupListComponent } from './on-site/project-setup/project-setup-list/project-setup-list.component';
 import { ReviewSetupComponent } from './review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './pre-visit/company-kpi-setup/company-kpi-setup.component';
 import { KpiUnitOptionPipe } from './pre-visit/company-kpi-setup/kpi-unit-option.pipe';
@@ -49,9 +47,7 @@ import { NebSetupFormComponent } from './on-site/on-site-assessment/assessment-n
     GettingStartedComponent,
     CompanySetupComponent,
     FacilitySetupComponent,
-    ProjectSetupComponent,
     AssessmentSetupComponent,
-    ProjectSetupListComponent,
     ProjectSetupFormComponent,
     ReviewSetupComponent,
     CompanyKpiSetupComponent,

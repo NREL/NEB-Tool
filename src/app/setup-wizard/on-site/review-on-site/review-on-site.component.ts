@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IconDefinition, faChevronLeft, faSave } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-review-on-site',
@@ -7,4 +8,18 @@ import { Component } from '@angular/core';
 })
 export class ReviewOnSiteComponent {
 
+  faSave: IconDefinition = faSave;
+  faChevronLeft: IconDefinition = faChevronLeft;
+
+  constructor() {
+
+  }
+
+  goBack() {
+
+  }
+
+  submitData() {
+
+  }
 }
