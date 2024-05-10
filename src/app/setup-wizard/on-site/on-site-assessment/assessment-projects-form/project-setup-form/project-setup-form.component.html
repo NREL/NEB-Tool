@@ -1,5 +1,4 @@
-<!-- <div class="d-flex w-100 justify-content-center mt-3" *ngIf="project"> -->
-<div class="card">
+<div class="card" [id]="'project_'+project.guid">
     <div class="card-header text-bg-dark">
         <h5 class="card-title mb-0">
             <fa-icon [icon]="faFileLines" class="me-2"></fa-icon>
@@ -38,15 +37,6 @@
                 </div>
             </div>
             <hr>
-            <!-- <div class="row mb-1">
-                <label class="col-sm-5 col-form-label" for="includeSavings">Include Savings</label>
-                <div class="col-sm-7">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
-                            [(ngModel)]="project.includeSavings" name="includeSavings">
-                    </div>
-                </div>
-            </div> -->
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
                     [(ngModel)]="project.includeSavings" name="includeSavings">
@@ -159,7 +149,7 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeSuggestedNEBs(true)">Cancel</button>
-        <button class="btn btn-dark add-neb-btn" (click)="addSuggestedNEBs()"><fa-icon [icon]="faPlus"
-                class="me-1"></fa-icon>Add NEBs</button>
+        <button class="btn btn-dark add-neb-btn" (click)="addSuggestedNEBs()"><fa-icon [icon]="faSave"
+                class="me-1"></fa-icon>Save NEBs</button>
     </div>
 </div>

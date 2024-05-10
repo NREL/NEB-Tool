@@ -1,5 +1,5 @@
 <!-- <div class="d-flex w-100 justify-content-center mt-3" *ngIf="project"> -->
-<div class="card">
+<div class="card" [id]="'neb_'+nonEnergyBenefit.guid">
     <div class="card-header text-bg-dark">
         <h5 class="card-title mb-0">
             <fa-icon [icon]="faWeightHanging" class="me-2"></fa-icon>
@@ -34,10 +34,11 @@
             <div class="row mb-1">
                 <label class="col-sm-5 col-form-label" for="projectIds">Connected Projects</label>
                 <div class="col-sm-7">
-                    <ng-template [ngIf]="nonEnergyBenefit.projectIds.length != 0" [ngIfElse]="noProjectsBlock">
+                    <!-- <ng-template [ngIf]="nonEnergyBenefit.projectIds.length != 0" [ngIfElse]="noProjectsBlock">
                         <div class="list-group">
                             <div class="list-group-item project-item"
-                                *ngFor="let projectId of nonEnergyBenefit.projectIds">
+                                *ngFor="let projectId of nonEnergyBenefit.projectIds"
+                                (click)="highlightProject(projectId)">
                                 <div class="d-flex justify-content-between w-100">
                                     <div class="p-0">
                                         <fa-icon [icon]="faCircleCheck"></fa-icon>
@@ -51,9 +52,33 @@
                         <div class="alert alert-info small p-1">
                             No projects connected to this NEB.
                         </div>
+                    </ng-template> -->
+
+
+                    <!-- <div class="row mb-1">
+                        <label class="col-sm-5 col-form-label" for="projectIds">Non-Energy Benefits</label>
+                        <div class="col-sm-7"> -->
+                    <ng-template [ngIf]="nonEnergyBenefit.projectIds.length != 0" [ngIfElse]="nonNebsBlock">
+                        <button class="btn btn-dark btn-sm add-project-btn m-1"
+                            *ngFor="let projectId of nonEnergyBenefit.projectIds" (click)="highlightProject(projectId)">
+                            <fa-icon [icon]="faFileLines"></fa-icon>
+                            {{projectId | projectDisplay: projects}}
+                        </button>
+                        <button class="btn btn-dark btn-sm add-project-btn m-1" (click)="showProjectsModal()">
+                            <fa-icon [icon]="faSearchPlus"></fa-icon> Connect Projects
+                        </button>
+                    </ng-template>
+                    <ng-template #nonNebsBlock>
+                        <button class="btn btn-dark btn-sm add-project-btn w-100" (click)="showProjectsModal()">
+                            <fa-icon [icon]="faSearchPlus"></fa-icon> Connect Projects
+                        </button>
                     </ng-template>
                 </div>
             </div>
+
+
+            <!-- </div> -->
+            <!-- </div> -->
         </form>
     </div>
     <div class="card-footer">
@@ -65,7 +90,7 @@
     </div>
 </div>
 
-<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div [ngClass]="{'window-overlay': (displayDeleteModal || displayProjectsModal)}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">
     <div class="popup-header">Discard this NEB?
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
@@ -80,5 +105,37 @@
         <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
         <button class="btn btn-danger" (click)="deleteNonEnergyBenefit()"><fa-icon [icon]="faTrash"
                 class="me-1"></fa-icon>Discard NEB</button>
+    </div>
+</div>
+
+
+<div class="popup" [ngClass]="{'open': displayProjectsModal }">
+    <div class="popup-header">Projects connects to {{nonEnergyBenefit.name}}
+        <button type="button" class="btn-close float-end" aria-label="Close"
+            (click)="closeProjectsModal(true)"></button>
+    </div>
+    <div class="popup-body">
+        <p>
+            These projects are contributing to this NEB.
+        </p>
+        <div class="list-group">
+            <div class="list-group-item list-group-item-action" *ngFor="let project of projects; let index = index;"
+                (click)="toggleProject(project.guid)">
+                <div class="d-flex justify-content-between w-100">
+                    <div class="p-0">
+                        <ng-template [ngIf]="nonEnergyBenefit.projectIds.includes(project.guid)">
+                            <fa-icon [icon]="faCircleCheck"></fa-icon>
+                        </ng-template>
+                        {{project.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeProjectsModal(true)">Cancel</button>
+        <button class="btn btn-dark add-neb-btn" (click)="saveProjects()"><fa-icon [icon]="faSave"
+                class="me-1"></fa-icon>Save Connected Projects</button>
     </div>
 </div>
