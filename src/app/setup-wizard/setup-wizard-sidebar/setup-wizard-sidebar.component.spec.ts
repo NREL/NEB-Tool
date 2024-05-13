@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbProject } from 'src/app/models/project';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 describe('SetupWizardSidebarComponent', () => {
   let component: SetupWizardSidebarComponent;
@@ -17,7 +18,9 @@ describe('SetupWizardSidebarComponent', () => {
     company: new BehaviorSubject<IdbCompany>(undefined),
     facility: new BehaviorSubject<IdbFacility>(undefined),
     projects: new BehaviorSubject<Array<IdbProject>>([]),
+    assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
     setupContext: new BehaviorSubject<SetupWizardContext>(undefined),
+    sidebarOpen: new BehaviorSubject<boolean>(false)
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
