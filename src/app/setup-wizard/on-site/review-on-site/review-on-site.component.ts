@@ -67,11 +67,7 @@ export class ReviewOnSiteComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/process-equipment');
-  }
-
-  goToFacilitySetup() {
-    this.router.navigateByUrl('/setup-wizard/review-pre-visit');
+    this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + this.assessments[this.assessments.length - 1].guid);
   }
 
   async submitData() {

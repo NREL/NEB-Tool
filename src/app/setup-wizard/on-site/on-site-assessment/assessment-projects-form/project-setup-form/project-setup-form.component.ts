@@ -6,7 +6,6 @@ import { FanProjects, ProjectType } from 'src/app/shared/constants/projectOption
 import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { Subscription } from 'rxjs';
 import { SuggestedNEBs } from 'src/app/shared/constants/suggestedNEBs';
-import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-project-setup-form',
@@ -38,18 +37,14 @@ export class ProjectSetupFormComponent {
   highlighProjectGuid: string;
   highlighProjectGuidSub: Subscription;
   constructor(
-    private setupWizardService: SetupWizardService,
-    private scroller: ViewportScroller) {
+    private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
     this.nonEnergyBenefitsSub = this.setupWizardService.nonEnergyBenefits.subscribe(_nonEnergyBenefits => {
       this.nonEnergyBenefits = _nonEnergyBenefits;
     });
-    console.log('====')
     this.suggestedNEBs = JSON.parse(JSON.stringify(SuggestedNEBs));
-    console.log(this.suggestedNEBs);
-    console.log('===')
     this.highlighProjectGuidSub = this.setupWizardService.highlighProjectGuid.subscribe(_projectGuid => {
       this.highlighProjectGuid = _projectGuid;
       if (this.highlighProjectGuid) {
@@ -110,42 +105,38 @@ export class ProjectSetupFormComponent {
 
   addSuggestedNEBs() {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
-    console.log(nonEnergyBenefits);
     this.suggestedNEBs.forEach(suggestedNEB => {
       if (this.project.nonEnergyBenefitIds.includes(suggestedNEB.guid)) {
         let existingIndex: number = nonEnergyBenefits.findIndex(neb => {
           return neb.assessmentId == this.project.assessmentId && suggestedNEB.guid == neb.guid;
         });
-        let nonEnergyBenefitCpy: IdbNonEnergyBenefit = JSON.parse(JSON.stringify(suggestedNEB));
-        console.log(nonEnergyBenefitCpy);
         if (existingIndex == -1) {
-          console.log('does not exists');
-          nonEnergyBenefitCpy.assessmentId = this.project.assessmentId;
-          nonEnergyBenefitCpy.userId = this.project.userId;
-          nonEnergyBenefitCpy.facilityId = this.project.facilityId;
-          nonEnergyBenefitCpy.companyId = this.project.companyId;
-          nonEnergyBenefitCpy.projectIds.push(this.project.guid);
-          nonEnergyBenefits.push(nonEnergyBenefitCpy);
+          let newNonEnergyBenefit: IdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.project.userId, this.project.companyId, this.project.facilityId, this.project.assessmentId);
+          newNonEnergyBenefit.name = suggestedNEB.name;
+          newNonEnergyBenefit.kpiId = suggestedNEB.kpiId;
+          newNonEnergyBenefit.projectIds.push(this.project.guid);
+          nonEnergyBenefits.push(newNonEnergyBenefit);
+          this.project.nonEnergyBenefitIds = this.project.nonEnergyBenefitIds.filter(nebGuid => {
+            return nebGuid != suggestedNEB.guid
+          });
+          this.project.nonEnergyBenefitIds.push(newNonEnergyBenefit.guid);
         } else {
-          // if (!nonEnergyBenefits[existingIndex].projectIds.includes(this.project.guid)) {
-          //   console.log('add here..')
-          //   nonEnergyBenefits[existingIndex].projectIds.push(this.project.guid);
-          // }
+          if (!nonEnergyBenefits[existingIndex].projectIds.includes(this.project.guid)) {
+            nonEnergyBenefits[existingIndex].projectIds.push(this.project.guid);
+          }
         }
       }
     });
 
-    // nonEnergyBenefits.forEach(neb => {
-    //   if (neb.assessmentId == this.project.assessmentId) {
-    //     if (neb.projectIds.includes(this.project.guid) && !this.project.nonEnergyBenefitIds.includes(neb.guid)) {
-    //       console.log('filtered..')
-    //       neb.projectIds = neb.projectIds.filter(prjId => {
-    //         return prjId != this.project.guid
-    //       });
-    //     }
-    //   }
-    // });
-    console.log(nonEnergyBenefits);
+    nonEnergyBenefits.forEach(neb => {
+      if (neb.assessmentId == this.project.assessmentId) {
+        if (neb.projectIds.includes(this.project.guid) && !this.project.nonEnergyBenefitIds.includes(neb.guid)) {
+          neb.projectIds = neb.projectIds.filter(prjId => {
+            return prjId != this.project.guid
+          });
+        }
+      }
+    });
     this.setupWizardService.nonEnergyBenefits.next(nonEnergyBenefits);
     this.closeSuggestedNEBs();
 
