@@ -24,7 +24,8 @@ export class SetupWizardSidebarComponent {
 
   assessmentsSub: Subscription;
   assessments: Array<IdbAssessment>;
-  open: boolean = false;
+  sidebarOpenSub: Subscription;
+  sidebarOpen: boolean = false;
   constructor(private router: Router, private setupWizardService: SetupWizardService
   ) {
 
@@ -45,11 +46,16 @@ export class SetupWizardSidebarComponent {
     this.assessmentsSub = this.setupWizardService.assessments.subscribe(val => {
       this.assessments = val;
     });
+
+    this.sidebarOpenSub = this.setupWizardService.sidebarOpen.subscribe(val => {
+      this.sidebarOpen = val;
+    });
   }
 
   ngOnDestroy() {
     this.setupContextSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
+    this.sidebarOpenSub.unsubscribe();
   }
 
   setDisplaySidebar() {
@@ -75,6 +81,6 @@ export class SetupWizardSidebarComponent {
   }
 
   toggleSidebar() {
-    this.open = !this.open;
+    this.setupWizardService.sidebarOpen.next(!this.sidebarOpen);
   }
 }

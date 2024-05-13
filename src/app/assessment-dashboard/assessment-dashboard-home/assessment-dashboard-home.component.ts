@@ -77,6 +77,7 @@ export class AssessmentDashboardHomeComponent {
       return _project.assessmentId == this.assessment.guid;
     })
     this.setupWizardService.projects.next(assessmentProjects);
-    this.router.navigateByUrl('/setup-wizard/assessment-setup');
+    this.setupWizardService.setupContext.next('onSite');
+    this.router.navigateByUrl('/setup-wizard/assessment-setup/' + this.assessment.guid);
   }
 }

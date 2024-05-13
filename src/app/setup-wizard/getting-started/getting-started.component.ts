@@ -114,8 +114,10 @@ export class GettingStartedComponent {
   confirmCreate() {
     let context: SetupWizardContext = this.setupWizardService.setupContext.getValue();
     if (context == 'full' || context == 'preVisit') {
+      this.setupWizardService.sidebarOpen.next(true);
       this.router.navigateByUrl('/setup-wizard/company-setup');
     } else if (context == 'onSite') {
+      this.setupWizardService.sidebarOpen.next(false);
       let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
       this.router.navigateByUrl('/setup-wizard/assessment-setup/' + assessments[0].guid);
     } else if (context == 'postVisit') {

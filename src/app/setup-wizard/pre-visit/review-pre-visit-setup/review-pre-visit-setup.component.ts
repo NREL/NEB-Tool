@@ -109,7 +109,7 @@ export class ReviewPreVisitSetupComponent {
     if (this.setupContext == 'preVisit') {
       this.router.navigateByUrl('/facility/' + this.facility.guid);
     } else if (this.setupContext == 'full') {
-      this.router.navigateByUrl('/setup-wizard/assessment-setup/' + this.assessments[0].guid)
+      this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + this.assessments[0].guid);
     }
   }
 

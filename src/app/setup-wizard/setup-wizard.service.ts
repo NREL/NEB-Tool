@@ -27,6 +27,7 @@ export class SetupWizardService {
 
   highlighProjectGuid: BehaviorSubject<string>;
   highlighNebGuid:  BehaviorSubject<string>;
+  sidebarOpen: BehaviorSubject<boolean>;
   constructor(private userIdbService: UserIdbService) {
     this.company = new BehaviorSubject<IdbCompany>(undefined);
     this.facility = new BehaviorSubject<IdbFacility>(undefined);
@@ -37,6 +38,7 @@ export class SetupWizardService {
     this.nonEnergyBenefits = new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]);
     this.highlighNebGuid = new  BehaviorSubject<string>(undefined);
     this.highlighProjectGuid = new  BehaviorSubject<string>(undefined);
+    this.sidebarOpen = new BehaviorSubject<boolean>(true);
   }
 
 

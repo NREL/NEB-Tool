@@ -28,12 +28,12 @@
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa1"></fa-icon>
                     </span>
-                    Pre-Visit Company and Facility Setup
+                    Pre-Visit Setup
                 </button>
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    Get to know the company and facility you will be visiting. Input data related to
+                    Get to know the company and facility you will be visiting.
                 </p>
             </div>
         </div>
@@ -43,7 +43,7 @@
     <div class="col-6">
         <div class="card h-100">
             <div class="card-header text-center">
-                <button class="btn btn-dark" (click)="setSetupContext('onSite')">
+                <button class="btn btn-dark" (click)="setSetupContext('onSite')" [disabled]="companies.length == 0">
                     <span class="badge text-bg-secondary">
                         <fa-icon [icon]="fa2"></fa-icon>
                     </span>
@@ -51,13 +51,17 @@
                 </button>
             </div>
             <div class="card-body">
-                <p class="card-text">
+                <p class="card-text" *ngIf="companies.length != 0">
                     Input assessment data and identify potential NEBs.
                 </p>
+                <p class="card-text alert-warning" *ngIf="companies.length == 0">
+                    Company and facility setup needed before data collection can be done.
+                </p>
+
             </div>
-            <div class="card-footer text-end">
+            <!-- <div class="card-footer text-end">
                 <span class="badge text-bg-warning">Coming Soon</span>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -149,12 +153,12 @@
                 </ng-container>
                 <ng-container *ngIf="selectedFacilityGuid">
                     <label for="selectedVisit" class="form-label">Select Visit</label>
-                    <select id="selectedVisit" name="selectedVisit" class="form-select"
-                        [(ngModel)]="selectedVisit" (change)="setSelectedVisit()">
+                    <select id="selectedVisit" name="selectedVisit" class="form-select" [(ngModel)]="selectedVisit"
+                        (change)="setSelectedVisit()">
                         <option [ngValue]="undefined">Setup New Visit</option>
                         <optgroup label="Existing Visits">
-                            <option *ngFor="let visitDateOption of visitDates"
-                                [ngValue]="visitDateOption">{{visitDateOption | date}}</option>
+                            <option *ngFor="let visitDateOption of visitDates" [ngValue]="visitDateOption">
+                                {{visitDateOption | date}}</option>
                         </optgroup>
                     </select>
                 </ng-container>
@@ -169,6 +173,6 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeCreateNewModal()">Cancel</button>
-        <button class="btn btn-success" (click)="confirmCreate()">Confirm Create</button>
+        <button class="btn btn-success" (click)="confirmCreate()">Confirm</button>
     </div>
 </div>
