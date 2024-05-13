@@ -1,15 +1,6 @@
 <div *ngIf="displaySidebar" class="h-100 navbar d-flex flex-column align-items-start justify-content-start shadow"
     [ngClass]="{'collapsed': !sidebarOpen}">
 
-    <!-- <div class="ps-1 pe-1 w-100">
-        <div class="text-end toggle-collapse">
-            <a (click)="toggleSidebar()">
-                <fa-icon *ngIf="open" [icon]="faAlignLeft"></fa-icon>
-                <fa-icon *ngIf="!open" [icon]="faAlignRight"></fa-icon>
-            </a>
-        </div>
-    </div> -->
-
     <div class="ps-1 pe-1 w-100 pb-2">
         <div class="text-end toggle-collapse">
             <button class="btn btn-sm btn-outline-secondary" (click)="toggleSidebar()">
@@ -18,58 +9,56 @@
             </button>
         </div>
     </div>
-    <!-- <ng-container *ngIf="setupContext == 'preVisit' || setupContext == 'full'"> -->
-        <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
-            <div class="p-2 w-100 text-bg-dark">
-                Pre-Visit
-            </div>
-            <div class="nav-item ms-2">
-                <!-- <fa-icon [icon]="faExclamationCircle" class="alert-danger"></fa-icon> -->
-                Company Setup
-            </div>
-            <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="company-setup" [routerLinkActive]="['active']">
-                    General Details
-                </a>
-            </div>
-            <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="company-contacts" [routerLinkActive]="['active']">
-                    Team Details
-                </a>
-            </div>
-            <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="company-kpi" [routerLinkActive]="['active']">
-                    KPI's
-                </a>
-            </div>
-            <div class="nav-item ms-2">
-                Facility Setup
-            </div>
-            <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="facility-setup" [routerLinkActive]="['active']">
-                    General Details
-                </a>
-            </div>
-            <div class="nav-item">
-                <a class="nav-link secondary-nav" routerLink="process-equipment" [routerLinkActive]="['active']">
-                    Process Equipment
-                </a>
-            </div>
-            <div class="nav-item">
-                <a class="nav-link" routerLink="pre-assessment" [routerLinkActive]="['active']">
-                    Pre-Assessments
-                </a>
-            </div>
-            <div class="nav-item">
-                <a class="nav-link" routerLink="review-pre-visit" [routerLinkActive]="['active']">
-                    Review Pre-Visit
-                </a>
-            </div>
+    <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
+        <div class="p-2 w-100 text-bg-dark">
+            Pre-Visit
         </div>
-        <div class="p-2 w-100">
-            <hr class="my-1">
+        <div class="nav-item ms-2">
+            Company Setup
         </div>
-    <!-- </ng-container> -->
+        <div class="nav-item">
+            <a class="nav-link secondary-nav" routerLink="company-setup" [routerLinkActive]="['active']">
+                General Details
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link secondary-nav" routerLink="company-contacts" [routerLinkActive]="['active']">
+                Team Details
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link secondary-nav" routerLink="company-kpi" [routerLinkActive]="['active']">
+                KPI's
+            </a>
+        </div>
+        <div class="nav-item ms-2">
+            Facility Setup
+        </div>
+        <div class="nav-item">
+            <a class="nav-link secondary-nav" routerLink="facility-setup" [routerLinkActive]="['active']">
+                General Details
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link secondary-nav" routerLink="process-equipment" [routerLinkActive]="['active']">
+                Process Equipment
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link" routerLink="pre-assessment" [routerLinkActive]="['active']">
+                Pre-Assessments
+            </a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link" routerLink="review-pre-visit" [routerLinkActive]="['active']">
+                Review Pre-Visit
+            </a>
+        </div>
+    </div>
+    <div class="p-2 w-100">
+        <hr class="my-1">
+    </div>
+    
     <ng-container *ngIf="setupContext == 'onSite' || setupContext == 'full'">
         <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
             <div class="p-2 w-100 text-bg-dark">

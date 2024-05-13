@@ -33,6 +33,10 @@ export class AssessmentNebsFormComponent {
     });
   }
 
+  ngOnDestroy(){
+    this.nonEnergyBenefitsSub.unsubscribe();
+  }
+
   setNEBs() {
     if (this.assessmentId) {
       let _nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();

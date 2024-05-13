@@ -39,14 +39,14 @@
             <hr class="my-1">
             <div class="row mb-1">
                 <div class="col-12">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
-                    [(ngModel)]="project.includeSavings" name="includeSavings">
-                <label class="form-check-label" for="includeSavings">Include Savings</label>
-              </div>
-              </div>
-              </div>
-              
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
+                            [(ngModel)]="project.includeSavings" name="includeSavings">
+                        <label class="form-check-label" for="includeSavings">Include Savings</label>
+                    </div>
+                </div>
+            </div>
+
             <ng-container *ngIf="project.includeSavings">
                 <div class="row mb-1">
                     <label class="col-sm-5 col-form-label" for="energySavings">Energy Savings</label>
@@ -70,14 +70,6 @@
                 </div>
             </ng-container>
             <hr class="my-1">
-            <!-- <div class="row mb-1">
-                <label class="col-sm-5 col-form-label" for="notes">Notes</label>
-                <div class="col-sm-7">
-                    <textarea name="notes" type="number" class="form-control" [(ngModel)]="project.notes"
-                        id="notes"></textarea>
-                </div>
-            </div> -->
-
             <div class="row mb-1">
                 <div class="col-sm-5 col-form-label">
                     <div class="form-check form-switch">
@@ -146,7 +138,8 @@
 
 <div class="popup" [ngClass]="{'open': displaySuggestedNEBsModal }">
     <div class="popup-header">Suggest NEBs for {{project.name}}
-        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeSuggestedNEBs(true)"></button>
+        <button type="button" class="btn-close float-end" aria-label="Close"
+            (click)="closeSuggestedNEBs(true)"></button>
     </div>
     <div class="popup-body">
         <p>

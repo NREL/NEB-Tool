@@ -76,6 +76,8 @@ export class SetupWizardSidebarComponent {
       this.setupWizardService.facility.next(undefined);
       this.setupWizardService.assessments.next([]);
       this.setupWizardService.contacts.next([]);
+      this.setupWizardService.nonEnergyBenefits.next([]);
+      this.setupWizardService.projects.next([]);
       this.closeStartOverModal();
     });
   }
