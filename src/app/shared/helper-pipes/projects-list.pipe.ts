@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IdbProject } from 'src/app/models/project';
 
 @Pipe({
-  name: 'projectsList'
+  name: 'projectsList',
+  pure: false
 })
 export class ProjectsListPipe implements PipeTransform {
 

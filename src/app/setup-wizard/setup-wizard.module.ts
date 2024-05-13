@@ -6,13 +6,9 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanySetupComponent } from './pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './pre-visit/facility-setup/facility-setup.component';
-import { ProjectSetupComponent } from './project-setup/project-setup.component';
 import { FormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
-import { AssessmentSetupComponent } from './assessment-setup/assessment-setup.component';
-import { ProjectSetupListComponent } from './project-setup/project-setup-list/project-setup-list.component';
-import { ProjectSetupFormComponent } from './project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './pre-visit/company-kpi-setup/company-kpi-setup.component';
 import { KpiUnitOptionPipe } from './pre-visit/company-kpi-setup/kpi-unit-option.pipe';
@@ -26,6 +22,7 @@ import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-sea
 import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
 import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
 import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
+import { ReviewOnSiteComponent } from './on-site/review-on-site/review-on-site.component';
 import { CompanyDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/company-details-summary/company-details-summary.component';
 import { TeamDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/team-details-summary.component';
 import { ContactSummaryCardComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/contact-summary-card/contact-summary-card.component';
@@ -34,6 +31,12 @@ import { FacilityDetailsSummaryComponent } from './pre-visit/review-pre-visit-se
 import { ProcessEquipmentSummaryComponent } from './pre-visit/review-pre-visit-setup/process-equipment-summary/process-equipment-summary.component';
 import { PreAssessmentSummaryComponent } from './pre-visit/review-pre-visit-setup/pre-assessment-summary/pre-assessment-summary.component';
 import { TableEntriesModule } from '../shared/table-entries/table-entries.module';
+import { OnSiteAssessmentComponent } from './on-site/on-site-assessment/on-site-assessment.component';
+import { AssessmentDetailsFormComponent } from './on-site/on-site-assessment/assessment-details-form/assessment-details-form.component';
+import { AssessmentProjectsFormComponent } from './on-site/on-site-assessment/assessment-projects-form/assessment-projects-form.component';
+import { ProjectSetupFormComponent } from './on-site/on-site-assessment/assessment-projects-form/project-setup-form/project-setup-form.component';
+import { AssessmentNebsFormComponent } from './on-site/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
+import { NebSetupFormComponent } from './on-site/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
 
 
 
@@ -43,9 +46,6 @@ import { TableEntriesModule } from '../shared/table-entries/table-entries.module
     GettingStartedComponent,
     CompanySetupComponent,
     FacilitySetupComponent,
-    ProjectSetupComponent,
-    AssessmentSetupComponent,
-    ProjectSetupListComponent,
     ProjectSetupFormComponent,
     ReviewSetupComponent,
     CompanyKpiSetupComponent,
@@ -59,13 +59,19 @@ import { TableEntriesModule } from '../shared/table-entries/table-entries.module
     AddKpiSearchComponent,
     CompanyKpiListComponent,
     KpiListFilterPipe,
+    ReviewOnSiteComponent,
     CompanyDetailsSummaryComponent,
     TeamDetailsSummaryComponent,
     ContactSummaryCardComponent,
     CompanyKpisSummaryComponent,
     FacilityDetailsSummaryComponent,
     ProcessEquipmentSummaryComponent,
-    PreAssessmentSummaryComponent
+    PreAssessmentSummaryComponent,
+    OnSiteAssessmentComponent,
+    AssessmentDetailsFormComponent,
+    AssessmentProjectsFormComponent,
+    AssessmentNebsFormComponent,
+    NebSetupFormComponent
   ],
   imports: [
     CommonModule,

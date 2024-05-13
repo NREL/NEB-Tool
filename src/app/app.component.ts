@@ -8,6 +8,7 @@ import { IdbUser } from './models/user';
 import { SharedDataService } from './shared/shared-services/shared-data.service';
 import { AssessmentIdbService } from './indexed-db/assessment-idb.service';
 import { ContactIdbService } from './indexed-db/contact-idb.service';
+import { NonEnergyBenefitsIdbService } from './indexed-db/non-energy-benefits-idb.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent {
     private router: Router,
     private sharedDataService: SharedDataService,
     private assessmentIdbService: AssessmentIdbService,
-    private contactIdbService: ContactIdbService) {
+    private contactIdbService: ContactIdbService,
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService) {
   }
 
   async ngOnInit() {
@@ -52,6 +54,9 @@ export class AppComponent {
     //projects 
     await this.projectIdbService.setProjects();
     console.log('projects init..');
+    //non energy benefits 
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+    console.log('NEBs init..');
     this.dataInitialized = true;
   }
 

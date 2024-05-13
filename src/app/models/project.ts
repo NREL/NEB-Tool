@@ -6,13 +6,14 @@ export interface IdbProject extends IdbEntry {
     facilityId: string,
     companyId: string,
     assessmentId: string,
-    hasEnergySavings: boolean,
     energySavings: number,
-    hasImplementationCost: boolean,
     implementationCost: number,
     projectType: string,
     costSavings: number,
-    hasCostSavings: boolean
+    notes: string,
+    nonEnergyBenefitIds: Array<string>,
+    includeSavings: boolean,
+    includeNote: boolean
 }
 
 export function getNewIdbProject(userId: string, companyId: string, facilityId: string, assessmentId: string): IdbProject {
@@ -27,9 +28,10 @@ export function getNewIdbProject(userId: string, companyId: string, facilityId: 
         energySavings: undefined,
         implementationCost: undefined,
         projectType: undefined,
-        hasEnergySavings: false,
-        hasImplementationCost: false,
         costSavings: undefined,
-        hasCostSavings: false
+        notes: undefined,
+        nonEnergyBenefitIds: [],
+        includeSavings: false,
+        includeNote: false
     }
 }

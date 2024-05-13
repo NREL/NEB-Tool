@@ -1,0 +1,26 @@
+<div class="d-flex w-100 justify-content-between pb-2">
+    <div class="p-0">
+        <h5>
+            <fa-icon [icon]="faScaleUnbalancedFlip"></fa-icon> NEBs
+        </h5>
+    </div>
+    <div class="p-0">
+        <button class="btn btn-secondary btn-sm add-neb-btn" (click)="addNEB()"><fa-icon [icon]="faPlus"
+                class="me-1"></fa-icon>Add NEB</button>
+    </div>
+</div>
+<ng-template [ngIf]="nonEnergyBenefits.length > 0" [ngIfElse]="noNEBsBlock">
+    <div class="row">
+        <div class="col-12 pb-2" *ngFor="let neb of nonEnergyBenefits">
+            <app-neb-setup-form [nonEnergyBenefit]="neb"></app-neb-setup-form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noNEBsBlock>
+    <div class="d-flex flex-column w-100 justify-content-center mt-3">
+        <div class="alert alert-info small text-center p-2">
+            No NEBs found for this assessment.
+        </div>
+    </div>
+</ng-template>

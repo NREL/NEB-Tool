@@ -4,23 +4,30 @@ import { ProjectSetupFormComponent } from './project-setup-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
-import { SetupWizardService } from '../../setup-wizard.service';
+import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
-import { IdbCompany } from 'src/app/models/company';
-import { IdbFacility } from 'src/app/models/facility';
+import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
+import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { IdbProject } from 'src/app/models/project';
+import { IdbProject, getNewIdbProject } from 'src/app/models/project';
+import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 
 describe('ProjectSetupFormComponent', () => {
   let component: ProjectSetupFormComponent;
   let fixture: ComponentFixture<ProjectSetupFormComponent>;
 
+
   let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(undefined),
-    facility: new BehaviorSubject<IdbFacility>(undefined),
+    company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
+    facility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', '')),
+    projects: new BehaviorSubject<Array<IdbProject>>([]),
     assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
-    projects: new BehaviorSubject<Array<IdbProject>>([])
-  }
+    setupContext: new BehaviorSubject<SetupWizardContext>('full'),
+    sidebarOpen: new BehaviorSubject<boolean>(false),
+    highlighNebGuid: new BehaviorSubject<string>(undefined),
+    highlighProjectGuid: new BehaviorSubject<string>(undefined),
+    nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule, FormsModule],
@@ -34,6 +41,7 @@ describe('ProjectSetupFormComponent', () => {
     
     fixture = TestBed.createComponent(ProjectSetupFormComponent);
     component = fixture.componentInstance;
+    component.project = getNewIdbProject('', '', '', '');
     fixture.detectChanges();
   });
 

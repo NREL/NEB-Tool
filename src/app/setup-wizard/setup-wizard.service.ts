@@ -9,6 +9,7 @@ import { IdbUser } from '../models/user';
 import { UserIdbService } from '../indexed-db/user-idb.service';
 import { KPI_Option, KPI_Options, KeyPerformanceIndicator, getKeyPerformanceIndicator } from '../shared/constants/keyPerformanceIndicators';
 import { ProcessEquipment, getNewProcessEquipment } from '../shared/constants/processEquipment';
+import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from '../models/nonEnergyBenefit';
 
 @Injectable({
   providedIn: 'root'
@@ -20,16 +21,24 @@ export class SetupWizardService {
   projects: BehaviorSubject<Array<IdbProject>>;
   assessments: BehaviorSubject<Array<IdbAssessment>>;
   contacts: BehaviorSubject<Array<IdbContact>>;
+  nonEnergyBenefits: BehaviorSubject<Array<IdbNonEnergyBenefit>>;
 
   setupContext: BehaviorSubject<SetupWizardContext>;
 
+  highlighProjectGuid: BehaviorSubject<string>;
+  highlighNebGuid:  BehaviorSubject<string>;
+  sidebarOpen: BehaviorSubject<boolean>;
   constructor(private userIdbService: UserIdbService) {
     this.company = new BehaviorSubject<IdbCompany>(undefined);
     this.facility = new BehaviorSubject<IdbFacility>(undefined);
     this.projects = new BehaviorSubject<Array<IdbProject>>([]);
     this.assessments = new BehaviorSubject<Array<IdbAssessment>>([]);
-    this.setupContext = new BehaviorSubject<SetupWizardContext>('preVisit');
+    this.setupContext = new BehaviorSubject<SetupWizardContext>('full');
     this.contacts = new BehaviorSubject<Array<IdbContact>>([]);
+    this.nonEnergyBenefits = new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]);
+    this.highlighNebGuid = new  BehaviorSubject<string>(undefined);
+    this.highlighProjectGuid = new  BehaviorSubject<string>(undefined);
+    this.sidebarOpen = new BehaviorSubject<boolean>(true);
   }
 
 
@@ -77,14 +86,14 @@ export class SetupWizardService {
 
     let fanAssessment: IdbAssessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
     fanAssessment.name = 'Fan Assessment';
-    fanAssessment.equipmentId = pump.guid;
+    fanAssessment.equipmentId = fan.guid;
     fanAssessment.visitDate = new Date();
     assessments.push(fanAssessment);
 
 
     let furnaceAssessment: IdbAssessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
     furnaceAssessment.name = 'Furnace Assessment';
-    furnaceAssessment.equipmentId = pump.guid;
+    furnaceAssessment.equipmentId = furnace.guid;
     furnaceAssessment.visitDate = new Date();
     assessments.push(furnaceAssessment);
     this.assessments.next(assessments);

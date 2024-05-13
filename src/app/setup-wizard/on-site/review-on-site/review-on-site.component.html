@@ -1,0 +1,58 @@
+<div class="setup-wizard-content">
+    <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow">
+                <h5>
+                    Review Data Collection
+                </h5>
+                <hr>
+                <div class="row pt-4 justify-content-center">
+                    <div class="col-lg-9 col-md-12">
+                        <div class="alert alert-dark">
+                            Review data collection details here...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-between">
+        <div class="col-3">
+            <button class="btn btn-dark" (click)="goBack()">
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+                <span class="d-md-none">
+                    Back
+                </span>
+            </button>
+        </div>
+        <div class="col-3">
+            <div class="d-flex  justify-content-end">
+                <button class="btn btn-success" (click)="openConfirmModal()">
+                    <fa-icon [icon]="faSave"></fa-icon>
+                    Submit Data Collection
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div [ngClass]="{'window-overlay': displayConfirmModal}"></div>
+<div class="popup" [ngClass]="{'open': displayConfirmModal }">
+    <div class="popup-header">Submit Data Collection
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeConfirmModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-success">
+            Are you done with your data collection?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
+        <button class="btn btn-success" (click)="submitData()"><fa-icon
+                [icon]="faSave"></fa-icon> Submit Data Collection</button>
+    </div>
+</div>

@@ -6,12 +6,7 @@
         <div class="card">
             <div class="card-header">
                 <fa-icon [icon]="faBullseye" class="pe-1"></fa-icon>
-                <ng-template [ngIf]="!kpi.isCustom" [ngIfElse]="customNameBlock">
-                    <span [innerHTML]="kpi.kpiOptionValue | kpiLabel"></span>
-                </ng-template>
-                <ng-template #customNameBlock>
-                    {{kpi.customKPIName}}
-                </ng-template>
+                <span [innerHTML]="kpi | kpiLabel"></span>
             </div>
             <div class="card-body">
 

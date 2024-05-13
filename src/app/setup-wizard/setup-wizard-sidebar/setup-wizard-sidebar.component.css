@@ -4,6 +4,10 @@
     overflow-y: auto;
 }
 
+.navbar.collapsed{
+    width: auto;
+}
+
 .nav-item{
     width: 100%;
     font-size: large;
@@ -30,4 +34,18 @@
 .nav-link:hover{
     background-color: #8DABBE;
     color: black;
+}
+
+
+.text-end{
+    text-align: right;
+}
+
+.toggle-collapse{
+    font-size: x-large;
+}
+
+.toggle-collapse:hover{
+    cursor: pointer;
+    border: so;
 }

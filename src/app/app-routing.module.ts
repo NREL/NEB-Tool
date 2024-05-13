@@ -14,7 +14,6 @@ import { SetupWizardComponent } from './setup-wizard/setup-wizard.component';
 import { GettingStartedComponent } from './setup-wizard/getting-started/getting-started.component';
 import { CompanySetupComponent } from './setup-wizard/pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './setup-wizard/pre-visit/facility-setup/facility-setup.component';
-import { ProjectSetupComponent } from './setup-wizard/project-setup/project-setup.component';
 import { UserSettingsComponent } from './user-dashboard/user-settings/user-settings.component';
 import { CompanySettingsComponent } from './company-dashboard/company-settings/company-settings.component';
 import { CompanyReportsComponent } from './company-dashboard/company-reports/company-reports.component';
@@ -27,18 +26,17 @@ import { ExploreNEBsComponent } from './user-dashboard/explore-nebs/explore-nebs
 import { CompanyGoalsComponent } from './company-dashboard/company-goals/company-goals.component';
 import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/facility-goals.component';
 import { AssessmentDashboardComponent } from './assessment-dashboard/assessment-dashboard.component';
-import { AssessmentSetupComponent } from './setup-wizard/assessment-setup/assessment-setup.component';
 import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessment-dashboard-home/assessment-dashboard-home.component';
 import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
 import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
-import { ProjectSetupListComponent } from './setup-wizard/project-setup/project-setup-list/project-setup-list.component';
-import { ProjectSetupFormComponent } from './setup-wizard/project-setup/project-setup-form/project-setup-form.component';
 import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
 import { CompanyKpiSetupComponent } from './setup-wizard/pre-visit/company-kpi-setup/company-kpi-setup.component';
 import { CompanyContactsSetupComponent } from './setup-wizard/pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.component';
 import { ReviewPreVisitSetupComponent } from './setup-wizard/pre-visit/review-pre-visit-setup/review-pre-visit-setup.component';
+import { OnSiteAssessmentComponent } from './setup-wizard/on-site/on-site-assessment/on-site-assessment.component';
+import { ReviewOnSiteComponent } from './setup-wizard/on-site/review-on-site/review-on-site.component';
 
 const routes: Routes = [
   {
@@ -84,10 +82,6 @@ const routes: Routes = [
         component: FacilityProcessEquipmentSetupComponent
       },
       {
-        path: 'assessment-setup',
-        component: AssessmentSetupComponent
-      },
-      {
         path: 'pre-assessment',
         component: PreAssessmentSetupComponent
       },
@@ -96,23 +90,12 @@ const routes: Routes = [
         component: ReviewPreVisitSetupComponent
       },
       {
-        path: 'project-setup',
-        component: ProjectSetupComponent,
-        children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: 'projects'
-          },
-          {
-            path: 'projects',
-            component: ProjectSetupListComponent
-          },
-          {
-            path: 'edit-project/:id',
-            component: ProjectSetupFormComponent,
-          }
-        ]
+        path: 'on-site-assessment/:id',
+        component: OnSiteAssessmentComponent
+      },
+      {
+        path: 'review-data-collection',
+        component: ReviewOnSiteComponent
       },
       {
         path: 'review-setup',

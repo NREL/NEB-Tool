@@ -33,7 +33,7 @@
             <div class="col-4">
                 <div class="input-group">
                     <input class="form-control" type="number" formControlName="electricityPrice"
-                        name="electricityPrice">
+                        name="electricityPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['electricityUnit'].value | unitsDisplay"></span>
                     </span>
@@ -62,7 +62,7 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="naturalGasPrice" name="naturalGasPrice">
+                    <input class="form-control" type="number" formControlName="naturalGasPrice" name="naturalGasPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['naturalGasUnit'].value | unitsDisplay"></span>
                     </span>
@@ -91,7 +91,7 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="otherFuelPrice" name="otherFuelPrice">
+                    <input class="form-control" type="number" formControlName="otherFuelPrice" name="otherFuelPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['otherFuelUnit'].value | unitsDisplay"></span></span>
                 </div>
@@ -119,7 +119,7 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="waterPrice" name="waterPrice">
+                    <input class="form-control" type="number" formControlName="waterPrice" name="waterPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['waterUnit'].value | unitsDisplay"></span></span>
                 </div>
@@ -147,7 +147,7 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="wasteWaterPrice" name="wasteWaterPrice">
+                    <input class="form-control" type="number" formControlName="wasteWaterPrice" name="wasteWaterPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['wasteWaterUnit'].value | unitsDisplay"></span></span>
                 </div>
@@ -176,7 +176,7 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="steamPrice" name="steamPrice">
+                    <input class="form-control" type="number" formControlName="steamPrice" name="steamPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['steamUnit'].value | unitsDisplay"></span>
                     </span>
@@ -207,7 +207,7 @@
             <div class="col-4">
                 <div class="input-group">
                     <input class="form-control" type="number" formControlName="compressedAirPrice"
-                        name="compressedAirPrice">
+                        name="compressedAirPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['compressedAirUnit'].value | unitsDisplay"></span>
                     </span>

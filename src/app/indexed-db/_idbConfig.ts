@@ -38,5 +38,11 @@ export const dbConfig: DBConfig = {
     storeConfig: { keyPath: 'id', autoIncrement: true },
     storeSchema: [
     ]
+  },
+  {
+    store: 'nonEnergyBenefit',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+    ]
   }]
 };

@@ -70,7 +70,7 @@ export class GettingStartedComponent {
     this.facilitiesSub.unsubscribe()
     this.assessmentsSub.unsubscribe();
   }
-  
+
   setSelectedCompany() {
     let selectedCompany: IdbCompany = this.companies.find(company => {
       return company.guid == this.selectedCompanyGuid;
@@ -114,9 +114,12 @@ export class GettingStartedComponent {
   confirmCreate() {
     let context: SetupWizardContext = this.setupWizardService.setupContext.getValue();
     if (context == 'full' || context == 'preVisit') {
+      this.setupWizardService.sidebarOpen.next(true);
       this.router.navigateByUrl('/setup-wizard/company-setup');
     } else if (context == 'onSite') {
-      this.router.navigateByUrl('/setup-wizard/assessment-setup');
+      this.setupWizardService.sidebarOpen.next(false);
+      let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
+      this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + assessments[0].guid);
     } else if (context == 'postVisit') {
       this.router.navigateByUrl('/setup-wizard/project-setup');
     }
@@ -127,9 +130,13 @@ export class GettingStartedComponent {
       return assessment.facilityId == this.selectedFacilityGuid;
     });
     let assessmentDates: Array<Date> = facilityAssessments.map(assessment => {
-      return assessment.visitDate;
+      return new Date(assessment.visitDate);
     });
-    this.visitDates = _.uniq(assessmentDates);
+    
+    this.visitDates = _.uniqBy(assessmentDates, (date: Date) => {
+      let dateStr = date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate()
+      return dateStr
+    });
     if (this.selectedVisit) {
       let checkExists = this.visitDates.find(date => {
         return date == this.selectedVisit;
@@ -148,6 +155,6 @@ export class GettingStartedComponent {
     let visitAssessments: Array<IdbAssessment> = facilityAssessments.filter(assessment => {
       return assessment.visitDate == this.selectedVisit;
     });
-    this.setupWizardService.assessments.next(visitAssessments);
+    this.setupWizardService.assessments.next(facilityAssessments);
   }
 }
