@@ -41,6 +41,7 @@ export class AssessmentProjectsFormComponent {
       return assessment.guid == this.assessmentId;
     })
     let newProject: IdbProject = getNewIdbProject(currentAssessment.userId, currentAssessment.companyId, currentAssessment.guid, currentAssessment.guid);
+    console.log(newProject);
     newProject.name = 'Project #' + (this.projects.length + 1);
     let allProjects: Array<IdbProject> = this.setupWizardService.projects.getValue();
     allProjects.push(newProject);

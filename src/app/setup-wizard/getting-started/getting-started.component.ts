@@ -119,7 +119,7 @@ export class GettingStartedComponent {
     } else if (context == 'onSite') {
       this.setupWizardService.sidebarOpen.next(false);
       let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
-      this.router.navigateByUrl('/setup-wizard/assessment-setup/' + assessments[0].guid);
+      this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + assessments[0].guid);
     } else if (context == 'postVisit') {
       this.router.navigateByUrl('/setup-wizard/project-setup');
     }
@@ -130,8 +130,9 @@ export class GettingStartedComponent {
       return assessment.facilityId == this.selectedFacilityGuid;
     });
     let assessmentDates: Array<Date> = facilityAssessments.map(assessment => {
-      return assessment.visitDate;
+      return new Date(assessment.visitDate);
     });
+    
     this.visitDates = _.uniqBy(assessmentDates, (date: Date) => {
       let dateStr = date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate()
       return dateStr
@@ -154,6 +155,6 @@ export class GettingStartedComponent {
     let visitAssessments: Array<IdbAssessment> = facilityAssessments.filter(assessment => {
       return assessment.visitDate == this.selectedVisit;
     });
-    this.setupWizardService.assessments.next(visitAssessments);
+    this.setupWizardService.assessments.next(facilityAssessments);
   }
 }

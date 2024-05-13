@@ -32,7 +32,7 @@ export class CompanyKpiSetupComponent {
     this.router.navigateByUrl('/setup-wizard/company-contacts');
   }
 
-  goToContacts() {
+  goToFacility() {
     this.router.navigateByUrl('/setup-wizard/facility-setup');
   }
 }

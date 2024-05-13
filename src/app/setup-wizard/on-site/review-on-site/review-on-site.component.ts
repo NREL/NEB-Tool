@@ -12,6 +12,10 @@ import { firstValueFrom } from 'rxjs';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbContact } from 'src/app/models/contact';
+import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { IdbProject } from 'src/app/models/project';
+import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 
 @Component({
   selector: 'app-review-on-site',
@@ -25,7 +29,7 @@ export class ReviewOnSiteComponent {
   faChevronLeft: IconDefinition = faChevronLeft;
   faCircleCheck: IconDefinition = faCircleCheck;
   faSave: IconDefinition = faSave;
-  
+
   faFilePdf: IconDefinition = faFilePdf;
 
   company: IdbCompany;
@@ -34,11 +38,15 @@ export class ReviewOnSiteComponent {
   contacts: Array<IdbContact>;
   displayConfirmModal: boolean = false;
   setupContext: SetupWizardContext;
+  projects: Array<IdbProject>;
+  nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
   constructor(private router: Router, private setupWizardService: SetupWizardService,
     private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
     private contactIdbService: ContactIdbService,
     private assessmentIdbService: AssessmentIdbService,
+    private projectsIdbService: ProjectIdbService,
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private loadingService: LoadingService
   ) {
   }
@@ -53,6 +61,8 @@ export class ReviewOnSiteComponent {
     this.facility = this.setupWizardService.facility.getValue();
     this.assessments = this.setupWizardService.assessments.getValue();
     this.contacts = this.setupWizardService.contacts.getValue();
+    this.nonEnergyBenefits = this.setupWizardService.nonEnergyBenefits.getValue();
+    this.projects = this.setupWizardService.projects.getValue();
     this.setupContext = this.setupWizardService.setupContext.getValue();
   }
 
@@ -105,6 +115,30 @@ export class ReviewOnSiteComponent {
       }
     }
     await this.assessmentIdbService.setAssessments();
+
+
+    for (let i = 0; i < this.projects.length; i++) {
+      let project: IdbProject = this.projects[i];
+      if (!project.id) {
+        //no id = new Add
+        await firstValueFrom(this.projectsIdbService.addWithObservable(project));
+      } else {
+        await firstValueFrom(this.projectsIdbService.updateWithObservable(project));
+      }
+    }
+    await this.projectsIdbService.setProjects();
+
+    for (let i = 0; i < this.nonEnergyBenefits.length; i++) {
+      let nonEnergyBenefit: IdbNonEnergyBenefit = this.nonEnergyBenefits[i];
+      if (!nonEnergyBenefit.id) {
+        //no id = new Add
+        await firstValueFrom(this.nonEnergyBenefitsIdbService.addWithObservable(nonEnergyBenefit));
+      } else {
+        await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
+      }
+    }
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+
 
     this.loadingService.setLoadingStatus(false);
     if (this.setupContext == 'preVisit') {
