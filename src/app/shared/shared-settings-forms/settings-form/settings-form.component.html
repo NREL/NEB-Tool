@@ -24,7 +24,7 @@
         <div id="collapseLocation" class="accordion-collapse collapse" data-bs-parent="#locationAccordion"
             [ngClass]="{'show': locationAccordionOpen}">
             <div class="accordion-body">
-                <app-location-form [inCompany]="inCompany" [inSetupWizard]="false"></app-location-form>
+                <app-location-form [inCompany]="inCompany"></app-location-form>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
         <div id="collapseUnits" class="accordion-collapse collapse" data-bs-parent="#unitsAccordion"
             [ngClass]="{'show': unitsAccordionOpen}">
             <div class="accordion-body">
-                <app-units-form [inCompany]="inCompany" [inSetupWizard]="false"></app-units-form>
+                <app-units-form [inCompany]="inCompany"></app-units-form>
             </div>
         </div>
     </div>
@@ -62,8 +62,7 @@
         <div id="collapseAdditionalInformation" class="accordion-collapse collapse"
             data-bs-parent="#addtionalInformationAccordion" [ngClass]="{'show': additionalDetailsAccordionOpen}">
             <div class="accordion-body">
-                <app-additional-details-form [inCompany]="inCompany"
-                    [inSetupWizard]="false"></app-additional-details-form>
+                <app-additional-details-form [inCompany]="inCompany"></app-additional-details-form>
             </div>
         </div>
     </div>

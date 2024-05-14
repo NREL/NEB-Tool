@@ -76,7 +76,7 @@
                         Equipment
                     </td>
                     <td>
-                        <ng-template [ngIf]="contact.kpiIds.length != 0" [ngIfElse]="equipmentMdash">
+                        <ng-template [ngIf]="contact.processEquipmentIds.length != 0" [ngIfElse]="equipmentMdash">
                             <div class="d-flex">
                                 <div class="pe-1">
                                     <span class="badge bg-dark"
@@ -95,7 +95,7 @@
                         Assessments
                     </td>
                     <td>
-                        <ng-template [ngIf]="contact.kpiIds.length != 0" [ngIfElse]="assessmentMdash">
+                        <ng-template [ngIf]="contact.assessmentIds.length != 0" [ngIfElse]="assessmentMdash">
                             <div class="d-flex">
                                 <div class="pe-1">
                                     <span class="badge bg-dark"

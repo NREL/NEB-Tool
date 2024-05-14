@@ -15,6 +15,8 @@ import { AssessmentNameDisplayPipe } from './assessment-name-display.pipe';
 import { ProcessEquipmentDisplayPipe } from './process-equipment-display.pipe';
 import { NebDisplayPipe } from './neb-display.pipe';
 import { ProjectDisplayPipe } from './project-display.pipe';
+import { OnSiteVisitListPipe } from './on-site-visit-list.pipe';
+import { AssessmentListOnSitePipe } from './assessment-list-on-site.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { ProjectDisplayPipe } from './project-display.pipe';
     AssessmentNameDisplayPipe,
     ProcessEquipmentDisplayPipe,
     NebDisplayPipe,
-    ProjectDisplayPipe
+    ProjectDisplayPipe,
+    OnSiteVisitListPipe,
+    AssessmentListOnSitePipe
   ],
   imports: [
     CommonModule
@@ -52,7 +56,9 @@ import { ProjectDisplayPipe } from './project-display.pipe';
     AssessmentNameDisplayPipe,
     ProcessEquipmentDisplayPipe,
     NebDisplayPipe,
-    ProjectDisplayPipe
+    ProjectDisplayPipe,
+    OnSiteVisitListPipe,
+    AssessmentListOnSitePipe
   ]
 })
 export class HelperPipesModule { }

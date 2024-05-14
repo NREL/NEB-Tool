@@ -4,6 +4,8 @@ import { IdbCompany } from 'src/app/models/company';
 import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { Subscription } from 'rxjs';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 @Component({
   selector: 'app-company-setup',
@@ -24,24 +26,13 @@ export class CompanySetupComponent {
   selectedCompanySub: Subscription;
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private companyIdbService: CompanyIdbService
+    private companyIdbService: CompanyIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService
   ) {
 
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      let companyGUID: string = params['id'];
-      let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
-      if (!selectedCompany || (selectedCompany.guid != companyGUID)) {
-        console.log('here...?')
-        let company: IdbCompany = this.companyIdbService.getByGUID(companyGUID);
-        console.log(company);
-        this.companyIdbService.selectedCompany.next(company);
-      }
-    });
-
     this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.selectedCompany = _company;
       if (this.selectedCompany) {
@@ -55,8 +46,8 @@ export class CompanySetupComponent {
   }
 
   goToContacts() {
-    let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
-    this.router.navigateByUrl('setup-wizard/company-contacts/' + selectedCompany.guid);
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-contacts');
   }
 
   async saveChanges() {

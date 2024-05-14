@@ -1,8 +1,8 @@
 <h5 class="bold w-100 text-center">
-    <fa-icon [icon]="faToolbox" class="me-2"></fa-icon> Pre-Assessments for {{visitDate | date}}
+    <fa-icon [icon]="faToolbox" class="me-2"></fa-icon> Pre-Assessments for {{onSiteVisit.visitDate| date}}
 </h5>
 <div class="row">
-    <div class="col-lg-6 col-md-12 pb-2" *ngFor="let assessment of assessments">
+    <div class="col-lg-6 col-md-12 pb-2" *ngFor="let assessment of (onSiteVisit.assessmentIds | assessmentListOnSite: assessments)">
         <div class="card">
             <div class="card-header">
                 <fa-icon [icon]="faScrewdriverWrench" class="pe-1"></fa-icon>

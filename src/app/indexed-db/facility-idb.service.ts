@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { IdbFacility } from '../models/facility';
+import { IdbFacility, getNewIdbFacility } from '../models/facility';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Injectable({
@@ -58,6 +58,13 @@ export class FacilityIdbService {
     let facilities: Array<IdbFacility> = this.facilities.getValue();
     let facility: IdbFacility = facilities.find(_facility => { return _facility.guid == guid });
     return facility;
+  }
 
+
+  async addNewFacility(userGuid: string, facilityGuid: string): Promise<string> {
+    let newFacility: IdbFacility = getNewIdbFacility(userGuid, facilityGuid);
+    newFacility = await firstValueFrom(this.addWithObservable(newFacility));
+    await this.setFacilities();
+    return newFacility.guid;
   }
 }

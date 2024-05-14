@@ -7,7 +7,7 @@ import { IdbProject } from 'src/app/models/project';
 import { SetupWizardService } from '../setup-wizard.service';
 import { IdbUser } from 'src/app/models/user';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
@@ -35,28 +35,33 @@ export class ReviewSetupComponent {
     private facilityIdbService: FacilityIdbService,
     private assessmentIdbService: AssessmentIdbService,
     private projectIdbService: ProjectIdbService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private activatedRoute: ActivatedRoute
   ) {
 
   }
 
   ngOnInit() {
-    let user: IdbUser = this.userIdbService.user.getValue();
-    let newIdbCompany: IdbCompany = this.setupWizardService.company.getValue();
-    //TODO: Temporary for dev.
-    if (!newIdbCompany) {
-      newIdbCompany = getNewIdbCompany(user.guid);
-      this.setupWizardService.company.next(newIdbCompany);
-    }
-    let newIdbFacility: IdbFacility = this.setupWizardService.facility.getValue();;
-    if (!newIdbFacility) {
-      newIdbFacility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
-      this.setupWizardService.facility.next(newIdbFacility);
-    }
-    //--
-    this.company = this.setupWizardService.company.getValue();
-    this.facility = this.setupWizardService.facility.getValue();
-    this.projects = this.setupWizardService.projects.getValue();
+    this.activatedRoute.params.subscribe(params => {
+      let visitGUID: string = params['id'];
+      console.log('VISIT_ID: ' + visitGUID);
+    });
+    // let user: IdbUser = this.userIdbService.user.getValue();
+    // let newIdbCompany: IdbCompany = this.setupWizardService.company.getValue();
+    // //TODO: Temporary for dev.
+    // if (!newIdbCompany) {
+    //   newIdbCompany = getNewIdbCompany(user.guid);
+    //   this.setupWizardService.company.next(newIdbCompany);
+    // }
+    // let newIdbFacility: IdbFacility = this.setupWizardService.facility.getValue();;
+    // if (!newIdbFacility) {
+    //   newIdbFacility = getNewIdbFacility(newIdbCompany.userId, newIdbCompany.guid);
+    //   this.setupWizardService.facility.next(newIdbFacility);
+    // }
+    // //--
+    // this.company = this.setupWizardService.company.getValue();
+    // this.facility = this.setupWizardService.facility.getValue();
+    // this.projects = this.setupWizardService.projects.getValue();
   }
 
   goBack() {

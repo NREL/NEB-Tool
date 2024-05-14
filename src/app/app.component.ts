@@ -3,12 +3,13 @@ import { UserIdbService } from './indexed-db/user-idb.service';
 import { CompanyIdbService } from './indexed-db/company-idb.service';
 import { FacilityIdbService } from './indexed-db/facility-idb.service';
 import { ProjectIdbService } from './indexed-db/project-idb.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { IdbUser } from './models/user';
 import { SharedDataService } from './shared/shared-services/shared-data.service';
 import { AssessmentIdbService } from './indexed-db/assessment-idb.service';
 import { ContactIdbService } from './indexed-db/contact-idb.service';
 import { NonEnergyBenefitsIdbService } from './indexed-db/non-energy-benefits-idb.service';
+import { OnSiteVisitIdbService } from './indexed-db/on-site-visit-idb.service';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,8 @@ export class AppComponent {
     private sharedDataService: SharedDataService,
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
-    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService) {
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService) {
   }
 
   async ngOnInit() {
@@ -57,6 +59,9 @@ export class AppComponent {
     //non energy benefits 
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
     console.log('NEBs init..');
+    //on site visist 
+    await this.onSiteVisitIdbService.setOnSiteVisits();
+    console.log('On Site Visit init..');
     this.dataInitialized = true;
   }
 

@@ -100,7 +100,6 @@ export class SetupWizardService {
 
     let contacts: Array<IdbContact> = this.contacts.getValue();
     let newContact: IdbContact = getNewIdbContact(company.userId, company.guid);
-    newContact.isPrimary = true;
     newContact.role = 'Primary Contact';
     newContact.name = 'Mark Root';
     newContact.email = 'rootrm@ornl.gov';

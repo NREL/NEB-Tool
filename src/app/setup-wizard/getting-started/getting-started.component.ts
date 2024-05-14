@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, firstValueFrom } from 'rxjs';
+import { Subscription, first, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { IdbFacility } from 'src/app/models/facility';
+import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { IconDefinition, fa1, fa2, fa3 } from '@fortawesome/free-solid-svg-icons';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
@@ -14,6 +14,8 @@ import { IdbContact } from 'src/app/models/contact';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbUser } from 'src/app/models/user';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 
 @Component({
   selector: 'app-getting-started',
@@ -31,30 +33,22 @@ export class GettingStartedComponent {
   companies: Array<IdbCompany>;
   companiesSub: Subscription;
 
-  assessments: Array<IdbAssessment>;
-  assessmentsSub: Subscription;
+  onSiteVisits: Array<IdbOnSiteVisit>;
+  onSiteVisitSub: Subscription;
 
   selectedCompanyGuid: string;
   selectedFacilityGuid: string;
+  selectedOnSiteVisitGuid: string;
+
   displayCreateNewModal: boolean = false;
-  selectedVisit: Date;
-  visitDates: Array<Date>;
+
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private router: Router, private setupWizardService: SetupWizardService,
-    private assessmentIdbService: AssessmentIdbService,
-    private contactIdbService: ContactIdbService,
-    private userIdbService: UserIdbService) {
+    private userIdbService: UserIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService) {
   }
 
   ngOnInit() {
-    let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
-    if (selectedCompany) {
-      this.selectedCompanyGuid = selectedCompany.guid;
-    }
-    let selectedFacility: IdbFacility = this.setupWizardService.facility.getValue();
-    if (selectedFacility) {
-      this.selectedFacilityGuid = selectedFacility.guid;
-    }
     this.companiesSub = this.companyIdbService.companies.subscribe(_companies => {
       this.companies = _companies;
     });
@@ -63,43 +57,17 @@ export class GettingStartedComponent {
       this.facilities = _facilities;
     });
 
-    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
-      this.assessments = _assessments;
-    });
+    this.onSiteVisitSub = this.onSiteVisitIdbService.onSiteVisits.subscribe(_onSiteVisits => {
+      this.onSiteVisits = _onSiteVisits;
+    })
   }
 
   ngOnDestroy() {
     this.companiesSub.unsubscribe();
-    this.facilitiesSub.unsubscribe()
-    this.assessmentsSub.unsubscribe();
+    this.facilitiesSub.unsubscribe();
+    this.onSiteVisitSub.unsubscribe();
   }
 
-  setSelectedCompany() {
-    let selectedCompany: IdbCompany = this.companies.find(company => {
-      return company.guid == this.selectedCompanyGuid;
-    });
-    this.setupWizardService.company.next(selectedCompany);
-    this.selectedFacilityGuid = undefined;
-    this.setCompanyContacts();
-    this.setSelectedFacility();
-  }
-
-  setCompanyContacts() {
-    let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
-    let companyContacts: Array<IdbContact> = contacts.filter(contact => {
-      return contact.companyId == this.selectedCompanyGuid;
-    });
-    this.setupWizardService.contacts.next(companyContacts);
-  }
-
-
-  setSelectedFacility() {
-    let selectedFacility: IdbFacility = this.facilities.find(facility => {
-      return facility.guid == this.selectedFacilityGuid;
-    })
-    this.setupWizardService.facility.next(selectedFacility);
-    this.setVisitDates();
-  }
 
   setSetupContext(context: SetupWizardContext) {
     this.setupWizardService.setupContext.next(context);
@@ -115,59 +83,34 @@ export class GettingStartedComponent {
   }
 
   async confirmCreate() {
-    if (this.selectedCompanyGuid) {
-      this.router.navigateByUrl('/setup-wizard/company-setup/' + this.selectedCompanyGuid);
-    } else {
-      console.log('add new..')
-      let user: IdbUser = this.userIdbService.user.getValue();
-      let newCompany: IdbCompany = getNewIdbCompany(user.guid);
-      await firstValueFrom(this.companyIdbService.addWithObservable(newCompany));
-      await this.companyIdbService.setCompanies();
-      this.router.navigateByUrl('/setup-wizard/company-setup/' + newCompany.guid);
-    }
-
-
-    // let context: SetupWizardContext = this.setupWizardService.setupContext.getValue();
-    // if (context == 'full' || context == 'preVisit') {
-    //   this.router.navigateByUrl('/setup-wizard/company-setup');
-    // } else if (context == 'onSite') {
-    //   let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
-    //   this.router.navigateByUrl('/setup-wizard/assessment-setup/' + assessments[0].guid);
-    // } else if (context == 'postVisit') {
-    //   this.router.navigateByUrl('/setup-wizard/project-setup');
-    // }
-  }
-
-  setVisitDates() {
-    let facilityAssessments: Array<IdbAssessment> = this.assessments.filter(assessment => {
-      return assessment.facilityId == this.selectedFacilityGuid;
-    });
-    let assessmentDates: Array<Date> = facilityAssessments.map(assessment => {
-      return new Date(assessment.visitDate);
-    });
-    
-    this.visitDates = _.uniqBy(assessmentDates, (date: Date) => {
-      let dateStr = date.getFullYear() + '_' + date.getMonth() + '_' + date.getDate()
-      return dateStr
-    });
-    if (this.selectedVisit) {
-      let checkExists = this.visitDates.find(date => {
-        return date == this.selectedVisit;
-      });
-      if (!checkExists) {
-        this.selectedVisit = undefined;
+    let user: IdbUser = this.userIdbService.user.getValue();
+    if (!this.selectedOnSiteVisitGuid) {
+      if (!this.selectedCompanyGuid) {
+        //create company
+        let newCompanyGuid: string = await this.companyIdbService.addNewCompany(user.guid);
+        //create facility
+        let newFacilityGuid: string = await this.facilityIdbService.addNewFacility(user.guid, newCompanyGuid);
+        //create visit
+        this.selectedOnSiteVisitGuid = await this.onSiteVisitIdbService.addNewOnSiteVisit(user.guid, newCompanyGuid, newFacilityGuid);
+      } else if (!this.selectedFacilityGuid) {
+        //create facility
+        let newFacilityGuid: string = await this.facilityIdbService.addNewFacility(user.guid, this.selectedCompanyGuid);
+        //create visit
+        this.selectedOnSiteVisitGuid = await this.onSiteVisitIdbService.addNewOnSiteVisit(user.guid, this.selectedCompanyGuid, newFacilityGuid);
+      } else {
+        //create visit
+        this.selectedOnSiteVisitGuid = await this.onSiteVisitIdbService.addNewOnSiteVisit(user.guid, this.selectedCompanyGuid, this.selectedFacilityGuid);
       }
     }
-    this.setSelectedVisit();
-  }
 
-  setSelectedVisit() {
-    let facilityAssessments: Array<IdbAssessment> = this.assessments.filter(assessment => {
-      return assessment.facilityId == this.selectedFacilityGuid;
-    });
-    let visitAssessments: Array<IdbAssessment> = facilityAssessments.filter(assessment => {
-      return assessment.visitDate == this.selectedVisit;
-    });
-    this.setupWizardService.assessments.next(facilityAssessments);
+    let context: SetupWizardContext = this.setupWizardService.setupContext.getValue();
+    if (context == 'full' || context == 'preVisit') {
+      this.router.navigateByUrl('/setup-wizard/pre-visit/' + this.selectedOnSiteVisitGuid);
+    } else if (context == 'onSite') {
+      // let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
+      // this.router.navigateByUrl('/setup-wizard/assessment-setup/' + assessments[0].guid);
+    } else if (context == 'postVisit') {
+      // this.router.navigateByUrl('/setup-wizard/project-setup');
+    }
   }
 }

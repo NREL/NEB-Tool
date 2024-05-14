@@ -4,8 +4,9 @@ import { IconDefinition, faMaximize, faMinimize, faRotateLeft } from '@fortaweso
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
-import { IdbCompany } from 'src/app/models/company';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 
 @Component({
   selector: 'app-setup-wizard-sidebar',
@@ -13,7 +14,6 @@ import { IdbCompany } from 'src/app/models/company';
   styleUrl: './setup-wizard-sidebar.component.css'
 })
 export class SetupWizardSidebarComponent {
-
 
   faRotateLeft: IconDefinition = faRotateLeft;
   faMinimize: IconDefinition = faMinimize;
@@ -26,14 +26,15 @@ export class SetupWizardSidebarComponent {
 
   assessmentsSub: Subscription;
   assessments: Array<IdbAssessment>;
-  open: boolean = false;
 
-  selectedCompany: IdbCompany;
-  selectedCompanySub: Subscription;
   sidebarOpenSub: Subscription;
   sidebarOpen: boolean = false;
+
+  onSiteVisit: IdbOnSiteVisit;
+  onSiteVisitSub: Subscription;
   constructor(private router: Router, private setupWizardService: SetupWizardService,
-    private companyIdbService: CompanyIdbService
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private assessmentIdbService: AssessmentIdbService
   ) {
 
   }
@@ -50,24 +51,24 @@ export class SetupWizardSidebarComponent {
       this.setupContext = val;
     });
 
-    this.assessmentsSub = this.setupWizardService.assessments.subscribe(val => {
+    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(val => {
       this.assessments = val;
-    });
-
-    this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(val => {
-      this.selectedCompany = val;
     });
 
     this.sidebarOpenSub = this.setupWizardService.sidebarOpen.subscribe(val => {
       this.sidebarOpen = val;
+    });
+
+    this.onSiteVisitSub = this.onSiteVisitIdbService.selectedVisit.subscribe(val => {
+      this.onSiteVisit = val;
     });
   }
 
   ngOnDestroy() {
     this.setupContextSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
-    this.selectedCompanySub.unsubscribe();
     this.sidebarOpenSub.unsubscribe();
+    this.onSiteVisitSub.unsubscribe();
   }
 
   setDisplaySidebar() {

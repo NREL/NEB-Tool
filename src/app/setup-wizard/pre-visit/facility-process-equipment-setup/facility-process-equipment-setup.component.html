@@ -30,7 +30,8 @@
                                 </button>
                             </h2>
                             <div [id]="processEquipment.guid" class="accordion-collapse collapse"
-                                data-bs-parent="#equipmentAccordion" [ngClass]="{'show': accordionIndex == equipmentIndex}">
+                                data-bs-parent="#equipmentAccordion"
+                                [ngClass]="{'show': accordionIndex == equipmentIndex}">
                                 <div class="accordion-body">
                                     <div class="row">
                                         <div class="col-12">
@@ -41,7 +42,7 @@
                                                     <div class="col-sm-7">
                                                         <input name="equipmentName" type="text" class="form-control"
                                                             [(ngModel)]="processEquipment.equipmentName"
-                                                            id="equipmentName">
+                                                            id="equipmentName" (input)="saveChanges()">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-1">
@@ -50,7 +51,8 @@
                                                     <div class="col-sm-7">
                                                         <select name="equipmentType" class="form-select"
                                                             id="equipmentType"
-                                                            [(ngModel)]="processEquipment.equipmentType">
+                                                            [(ngModel)]="processEquipment.equipmentType"
+                                                            (change)="saveChanges()">
                                                             <option *ngFor="let option of equipmentTypeOptions"
                                                                 [ngValue]="option">
                                                                 {{option}}
@@ -63,7 +65,8 @@
                                                         Type</label>
                                                     <div class="col-sm-7">
                                                         <select name="utilityType" class="form-select" id="utilityType"
-                                                            [(ngModel)]="processEquipment.utilityType">
+                                                            [(ngModel)]="processEquipment.utilityType"
+                                                            (change)="saveChanges()">
                                                             <option *ngFor="let option of utilityTypeOptions"
                                                                 [ngValue]="option">
                                                                 {{option}}

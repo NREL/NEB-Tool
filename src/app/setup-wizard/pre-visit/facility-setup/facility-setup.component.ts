@@ -4,6 +4,7 @@ import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen, faGear, faIndustry, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 
 @Component({
   selector: 'app-facility-setup',
@@ -24,24 +25,19 @@ export class FacilitySetupComponent {
   faIndustry: IconDefinition = faIndustry;
 
 
-  constructor(private setupWizardService: SetupWizardService, private router: Router) {
+  constructor(private facilityIdbService: FacilityIdbService, private router: Router) {
 
   }
 
   ngOnInit() {
-    //TODO: Temporary for dev.
-    let company: IdbCompany = this.setupWizardService.company.getValue();
-    if (!company) {
-      this.setupWizardService.initializeDataForDev();
-    }
-    let facility: IdbFacility = this.setupWizardService.facility.getValue();
+    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
     this.facilityName = facility.generalInformation.name;
   }
 
-  saveChanges() {
-    let facility: IdbFacility = this.setupWizardService.facility.getValue();
+  async saveChanges() {
+    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
     facility.generalInformation.name = this.facilityName;
-    this.setupWizardService.facility.next(facility);
+    await this.facilityIdbService.asyncUpdate(facility);
   }
 
   goBack() {

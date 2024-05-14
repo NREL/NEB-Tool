@@ -7,6 +7,12 @@ import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbContact } from 'src/app/models/contact';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { Subscription, firstValueFrom } from 'rxjs';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -24,40 +30,63 @@ export class PreAssessmentSetupComponent {
   faUser: IconDefinition = faUser;
 
   assessments: Array<IdbAssessment>;
+  assessmentsSub: Subscription;
+
   contacts: Array<IdbContact>;
+  contactsSub: Subscription;
+
   accordionIndex: number = 0;
   processEquipmentOptions: Array<ProcessEquipment>;
   displayDeleteModal: boolean = false;
   assessmentToDelete: IdbAssessment;
   displayContactModal: boolean = false;
   contactAssessmentIndex: number;
-  visitDate: Date;
   viewContact: IdbContact;
-  constructor(private router: Router, private setupWizardService: SetupWizardService) {
+
+  onSiteVisit: IdbOnSiteVisit;
+  onSiteVisitSub: Subscription;
+  isFormChange: boolean = false;
+  constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
+    private facilityIdbService: FacilityIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private contactIdbService: ContactIdbService
+  ) {
   }
 
   ngOnInit() {
-    //TODO: Temporary for dev.
-    let company: IdbCompany = this.setupWizardService.company.getValue();
-    if (!company) {
-      this.setupWizardService.initializeDataForDev();
-    }
-    this.assessments = this.setupWizardService.assessments.getValue();
-    let facility: IdbFacility = this.setupWizardService.facility.getValue();
-    this.processEquipmentOptions = facility.processEquipment;
-    this.contacts = this.setupWizardService.contacts.getValue();
+    this.onSiteVisitSub = this.onSiteVisitIdbService.selectedVisit.subscribe(_onSiteVisit => {
+      this.onSiteVisit = _onSiteVisit;
+    });
 
-    if (this.assessments.length > 0) {
-      this.visitDate = this.assessments[0].visitDate;
-    }
+    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
+      this.contacts = _contacts;
+    });
+
+    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
+      if (!this.isFormChange) {
+        this.assessments = _assessments;
+      } else {
+        this.isFormChange = false;
+      }
+    });
+
+    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
+    this.processEquipmentOptions = facility.processEquipment;
+  }
+
+  ngOnDestroy() {
+    this.onSiteVisitSub.unsubscribe();
+    this.contactsSub.unsubscribe();
+    this.assessmentsSub.unsubscribe();
   }
 
   goToProjects() {
     this.router.navigateByUrl('/setup-wizard/project-setup');
   }
 
-  saveChanges() {
-    this.setupWizardService.assessments.next(this.assessments);
+  async saveChanges(assessment: IdbAssessment) {
+    this.isFormChange = true;
+    this.assessmentIdbService.asyncUpdate(assessment);
   }
 
   setAccordionIndex(index: number) {
@@ -65,20 +94,22 @@ export class PreAssessmentSetupComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/process-equipment');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/process-equipment');
   }
 
   goToNext() {
-    this.router.navigateByUrl('/setup-wizard/review-pre-visit');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/review-pre-visit');
   }
 
-  addAssessment() {
-    let facility: IdbFacility = this.setupWizardService.facility.getValue();
-    let assessment: IdbAssessment = getNewIdbAssessment(facility.userId, facility.companyId, facility.guid);
-    assessment.visitDate = this.visitDate;
-    this.assessments.push(assessment);
+  async addAssessment() {
+    let assessment: IdbAssessment = getNewIdbAssessment(this.onSiteVisit.userId, this.onSiteVisit.companyId, this.onSiteVisit.facilityId);
+    await firstValueFrom(this.assessmentIdbService.addWithObservable(assessment));
+    await this.assessmentIdbService.setAssessments();
+    this.onSiteVisit.assessmentIds.push(assessment.guid);
+    await this.onSiteVisitIdbService.asyncUpdate(this.onSiteVisit);
     this.setAccordionIndex(this.assessments.length - 1);
-    this.saveChanges();
   }
 
   openDeleteModal(assessment: IdbAssessment) {
@@ -91,19 +122,34 @@ export class PreAssessmentSetupComponent {
     this.assessmentToDelete = undefined;
   }
 
-  removeAssessment() {
+  async removeAssessment() {
     this.assessments = this.assessments.filter(_assessment => {
       return _assessment.guid != this.assessmentToDelete.guid;
     });
-    this.contacts.forEach(contact => {
-      contact.assessmentIds = contact.assessmentIds.filter(aId => {
-        return aId != this.assessmentToDelete.guid;
-      });
+    //update contacts
+    let facilityContacts: Array<IdbContact> = this.contacts.filter(contact => {
+      return contact.facilityIds.includes(this.onSiteVisit.facilityId);
     });
-    this.setupWizardService.contacts.next(this.contacts);
+    let contactsNeedUpdate: boolean = false;
+    for (let i = 0; i < facilityContacts.length; i++) {
+      if (facilityContacts[i].assessmentIds.includes(this.assessmentToDelete.guid)) {
+        facilityContacts[i].assessmentIds = facilityContacts[i].assessmentIds.filter(guid => {
+          return guid != this.assessmentToDelete.guid;
+        });
+        await firstValueFrom(this.contactIdbService.updateWithObservable(facilityContacts[i]));
+        contactsNeedUpdate = true;
+      };
+    }
+    if (contactsNeedUpdate) {
+      await this.contactIdbService.setContacts()
+    }
+
+    this.onSiteVisit.assessmentIds = this.onSiteVisit.assessmentIds.filter(guid => {
+      return guid != this.assessmentToDelete.guid
+    });
+    await this.onSiteVisitIdbService.asyncUpdate(this.onSiteVisit);
     this.closeDeleteModal();
     this.setAccordionIndex(0);
-    this.saveChanges();
   }
 
   openContactModal(assessmentIndex: number, viewContact: IdbContact) {
@@ -116,17 +162,15 @@ export class PreAssessmentSetupComponent {
     this.displayContactModal = false;
     this.contactAssessmentIndex = undefined;
     this.viewContact = undefined;
-    this.setContacts();
   }
 
-  setVisitDate() {
-    this.assessments.forEach(assessment => {
-      assessment.visitDate = this.visitDate;
-    });
-    this.saveChanges();
-  }
-
-  setContacts() {
-    this.contacts = this.setupWizardService.contacts.getValue();
+  async setVisitDate() {
+    for (let i = 0; i < this.assessments.length; i++) {
+      if (this.onSiteVisit.assessmentIds.includes(this.assessments[i].guid)) {
+        this.assessments[i].visitDate = this.onSiteVisit.visitDate;
+        await this.saveChanges(this.assessments[i]);
+      }
+    }
+    await this.onSiteVisitIdbService.asyncUpdate(this.onSiteVisit);
   }
 }

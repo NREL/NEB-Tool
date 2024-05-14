@@ -11,8 +11,8 @@
                         <div class="row mb-1">
                             <label class="col-sm-5 col-form-label bold" for="visitDate">Visit Date</label>
                             <div class="col-sm-7">
-                                <input type="date" class="form-control" [(ngModel)]="visitDate" name="visitDate"
-                                    (change)="setVisitDate()">
+                                <input type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
+                                    name="visitDate" (change)="setVisitDate()">
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,8 @@
                 </div>
                 <ng-template [ngIf]="assessments.length != 0" [ngIfElse]="noAssessmentsBlock">
                     <div class="accordion" id="assessmentAccordion">
-                        <div class="accordion-item" *ngFor="let assessment of assessments; let assessmentIndex = index;">
+                        <div class="accordion-item"
+                            *ngFor="let assessment of (onSiteVisit.assessmentIds | assessmentListOnSite: assessments); let assessmentIndex = index;">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     [attr.data-bs-target]="'#'+assessment.guid" aria-expanded="true"
@@ -36,7 +37,8 @@
                                 </button>
                             </h2>
                             <div [id]="assessment.guid" class="accordion-collapse collapse"
-                                data-bs-parent="#assessmentAccordion" [ngClass]="{'show': accordionIndex == assessmentIndex}">
+                                data-bs-parent="#assessmentAccordion"
+                                [ngClass]="{'show': accordionIndex == assessmentIndex}">
                                 <div class="accordion-body">
                                     <div class="row">
                                         <div class="col-12">
@@ -46,8 +48,9 @@
                                                         for="assessmentName">Assessment Name</label>
                                                     <div class="col-sm-7">
                                                         <input name="assessmentName" type="text" class="form-control"
-                                                            [(ngModel)]="assessment.name" (input)="saveChanges()"
-                                                            minlength="1" maxlength="42" id="assessmentName">
+                                                            [(ngModel)]="assessment.name"
+                                                            (input)="saveChanges(assessment)" minlength="1"
+                                                            maxlength="42" id="assessmentName">
                                                     </div>
                                                 </div>
 
@@ -59,7 +62,7 @@
                                                             [ngIfElse]="noEquipmentBlock">
                                                             <select name="equipmentId" class="form-select"
                                                                 id="equipmentId" [(ngModel)]="assessment.equipmentId"
-                                                                (change)="saveChanges()">
+                                                                (change)="saveChanges(assessment)">
                                                                 <option
                                                                     *ngFor="let processEquipment of processEquipmentOptions"
                                                                     [ngValue]="processEquipment.guid">
@@ -82,7 +85,7 @@
                                                         <div class="input-group">
                                                             <input name="energy" type="number" class="form-control"
                                                                 [(ngModel)]="assessment.energyUse"
-                                                                (input)="saveChanges()" id="energyUse">
+                                                                (input)="saveChanges(assessment)" id="energyUse">
                                                             <span class="input-group-text">MMBtu/yr</span>
                                                         </div>
                                                     </div>
@@ -94,8 +97,8 @@
                                                     <div class="col-sm-7">
                                                         <div class="input-group">
                                                             <input name="cost" type="number" class="form-control"
-                                                                [(ngModel)]="assessment.cost" (input)="saveChanges()"
-                                                                id="cost">
+                                                                [(ngModel)]="assessment.cost"
+                                                                (input)="saveChanges(assessment)" id="cost">
                                                             <span class="input-group-text">&dollar;</span>
                                                         </div>
                                                     </div>

@@ -133,7 +133,7 @@
             <form>
                 <label for="selectedCompany" class="form-label">Select Company</label>
                 <select id="selectedCompany" name="selectedCompany" class="form-select"
-                    [(ngModel)]="selectedCompanyGuid" (change)="setSelectedCompany()">
+                    [(ngModel)]="selectedCompanyGuid">
                     <option [ngValue]="undefined">Setup New Company</option>
                     <optgroup label="Existing Companies">
                         <option *ngFor="let company of companies" [ngValue]="company.guid">
@@ -143,22 +143,23 @@
                 <ng-container *ngIf="selectedCompanyGuid">
                     <label for="selectedFacility" class="form-label">Select Facility</label>
                     <select id="selectedFacility" name="selectedFacility" class="form-select"
-                        [(ngModel)]="selectedFacilityGuid" (change)="setSelectedFacility()">
+                        [(ngModel)]="selectedFacilityGuid">
                         <option [ngValue]="undefined">Setup New Facility</option>
                         <optgroup label="Existing Facilities">
-                            <option *ngFor="let facility of selectedCompanyGuid | facilityList:facilities"
+                            <option *ngFor="let facility of (selectedCompanyGuid | facilityList:facilities)"
                                 [ngValue]="facility.guid">{{facility.generalInformation.name}}</option>
                         </optgroup>
                     </select>
                 </ng-container>
                 <ng-container *ngIf="selectedFacilityGuid">
                     <label for="selectedVisit" class="form-label">Select Visit</label>
-                    <select id="selectedVisit" name="selectedVisit" class="form-select" [(ngModel)]="selectedVisit"
-                        (change)="setSelectedVisit()">
+                    <select id="selectedVisit" name="selectedVisit" class="form-select"
+                        [(ngModel)]="selectedOnSiteVisitGuid">
                         <option [ngValue]="undefined">Setup New Visit</option>
                         <optgroup label="Existing Visits">
-                            <option *ngFor="let visitDateOption of visitDates" [ngValue]="visitDateOption">
-                                {{visitDateOption | date}}</option>
+                            <option *ngFor="let onSiteVisit of (selectedFacilityGuid | onSiteVisitList:onSiteVisits)"
+                                [ngValue]="onSiteVisit.guid">
+                                {{onSiteVisit.visitDate| date}}</option>
                         </optgroup>
                     </select>
                 </ng-container>

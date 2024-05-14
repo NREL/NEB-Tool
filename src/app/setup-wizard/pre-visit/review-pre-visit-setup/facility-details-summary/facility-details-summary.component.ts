@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faIndustry } from '@fortawesome/free-solid-svg-icons';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-facility-details-summary',
@@ -12,11 +12,11 @@ export class FacilityDetailsSummaryComponent {
 
   facility: IdbFacility;
   faIndustry: IconDefinition = faIndustry;
-  constructor(private setupWizardService: SetupWizardService){
+  constructor(private facilityIdbService: FacilityIdbService){
 
   }
 
   ngOnInit(){
-    this.facility = this.setupWizardService.facility.getValue();
+    this.facility = this.facilityIdbService.selectedFacility.getValue();
   }
 }

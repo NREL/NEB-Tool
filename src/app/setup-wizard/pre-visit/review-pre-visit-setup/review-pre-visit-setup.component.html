@@ -32,9 +32,9 @@
             Generate PDF
         </button>
         <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'preVisit'"><fa-icon
-                [icon]="faSave"></fa-icon> Submit Pre-Visit</button>
+                [icon]="faSave"></fa-icon> Finish Pre-Visit</button>
         <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'full'"><fa-icon
-                [icon]="faSave"></fa-icon> Submit and Continue<fa-icon [icon]="faChevronRight"></fa-icon></button>
+                [icon]="faSave"></fa-icon> Continue<fa-icon [icon]="faChevronRight"></fa-icon></button>
     </div>
 </nav>
 
@@ -42,7 +42,7 @@
 
 <div [ngClass]="{'window-overlay': displayConfirmModal}"></div>
 <div class="popup" [ngClass]="{'open': displayConfirmModal }">
-    <div class="popup-header">Submit Pre-Visit
+    <div class="popup-header">Finish Pre-Visit
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeConfirmModal()"></button>
     </div>
     <div class="popup-body">
@@ -53,9 +53,9 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
-        <button class="btn btn-success" (click)="submitPreVisit()" *ngIf="setupContext == 'preVisit'"><fa-icon
-                [icon]="faSave"></fa-icon> Submit Pre-Visit</button>
-        <button class="btn btn-success" (click)="submitPreVisit()" *ngIf="setupContext == 'full'"><fa-icon
-                [icon]="faSave"></fa-icon> Submit and Continue<fa-icon [icon]="faChevronRight"></fa-icon></button>
+        <button class="btn btn-success" (click)="goToFacility()" *ngIf="setupContext == 'preVisit'"><fa-icon
+                [icon]="faSave"></fa-icon> Finish Pre-Visit</button>
+        <button class="btn btn-success" (click)="continue()" *ngIf="setupContext == 'full'"><fa-icon
+                [icon]="faSave"></fa-icon> Continue<fa-icon [icon]="faChevronRight"></fa-icon></button>
     </div>
 </div>
