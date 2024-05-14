@@ -30,6 +30,8 @@ export class SetupWizardSidebarComponent {
 
   selectedCompany: IdbCompany;
   selectedCompanySub: Subscription;
+  sidebarOpenSub: Subscription;
+  sidebarOpen: boolean = false;
   constructor(private router: Router, private setupWizardService: SetupWizardService,
     private companyIdbService: CompanyIdbService
   ) {
@@ -56,12 +58,16 @@ export class SetupWizardSidebarComponent {
       this.selectedCompany = val;
     });
 
+    this.sidebarOpenSub = this.setupWizardService.sidebarOpen.subscribe(val => {
+      this.sidebarOpen = val;
+    });
   }
 
   ngOnDestroy() {
     this.setupContextSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
     this.selectedCompanySub.unsubscribe();
+    this.sidebarOpenSub.unsubscribe();
   }
 
   setDisplaySidebar() {
@@ -82,11 +88,13 @@ export class SetupWizardSidebarComponent {
       this.setupWizardService.facility.next(undefined);
       this.setupWizardService.assessments.next([]);
       this.setupWizardService.contacts.next([]);
+      this.setupWizardService.nonEnergyBenefits.next([]);
+      this.setupWizardService.projects.next([]);
       this.closeStartOverModal();
     });
   }
 
   toggleSidebar() {
-    this.open = !this.open;
+    this.setupWizardService.sidebarOpen.next(!this.sidebarOpen);
   }
 }

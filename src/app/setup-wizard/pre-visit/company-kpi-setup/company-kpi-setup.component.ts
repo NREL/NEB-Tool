@@ -35,7 +35,7 @@ export class CompanyKpiSetupComponent {
     this.router.navigateByUrl('setup-wizard/company-contacts/' + selectedCompany.guid);
   }
 
-  goToContacts() {
+  goToFacility() {
     this.router.navigateByUrl('/setup-wizard/facility-setup');
   }
 }

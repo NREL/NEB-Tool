@@ -16,7 +16,7 @@ export class AssessmentNebsFormComponent {
   faPlus: IconDefinition = faPlus;
   faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
 
-  nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
+  nonEnergyBenefits: Array<IdbNonEnergyBenefit> = [];
   nonEnergyBenefitsSub: Subscription;
   assessmentId: string;
   constructor(private setupWizardService: SetupWizardService, private activatedRoute: ActivatedRoute) {
@@ -31,6 +31,10 @@ export class AssessmentNebsFormComponent {
     this.nonEnergyBenefitsSub = this.setupWizardService.nonEnergyBenefits.subscribe(_nonEnergyBenefits => {
       this.setNEBs();
     });
+  }
+
+  ngOnDestroy(){
+    this.nonEnergyBenefitsSub.unsubscribe();
   }
 
   setNEBs() {
