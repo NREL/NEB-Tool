@@ -4,8 +4,11 @@ import { IdbProject } from 'src/app/models/project';
 import { IconDefinition, faCircleCheck, faFileLines, faPlus, faSave, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { FanProjects, ProjectType } from 'src/app/shared/constants/projectOptions';
 import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { SuggestedNEBs } from 'src/app/shared/constants/suggestedNEBs';
+import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 
 @Component({
   selector: 'app-project-setup-form',
@@ -37,11 +40,15 @@ export class ProjectSetupFormComponent {
   highlighProjectGuid: string;
   highlighProjectGuidSub: Subscription;
   constructor(
-    private setupWizardService: SetupWizardService) {
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
+    private projectIdbService: ProjectIdbService,
+    private dbChangesService: DbChangesService,
+    private setupWizardService: SetupWizardService
+  ) {
   }
 
   ngOnInit() {
-    this.nonEnergyBenefitsSub = this.setupWizardService.nonEnergyBenefits.subscribe(_nonEnergyBenefits => {
+    this.nonEnergyBenefitsSub = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.subscribe(_nonEnergyBenefits => {
       this.nonEnergyBenefits = _nonEnergyBenefits;
     });
     this.suggestedNEBs = JSON.parse(JSON.stringify(SuggestedNEBs));
@@ -60,27 +67,13 @@ export class ProjectSetupFormComponent {
     this.highlighProjectGuidSub.unsubscribe();
   }
 
-  deleteProject() {
-    this.nonEnergyBenefits.forEach(nonEnergyBenefit => {
-      nonEnergyBenefit.projectIds = nonEnergyBenefit.projectIds.filter(prjId => {
-        return prjId != this.project.guid
-      })
-    });
-    this.setupWizardService.nonEnergyBenefits.next(this.nonEnergyBenefits);
-
-    let projects: Array<IdbProject> = this.setupWizardService.projects.getValue();
-    projects = projects.filter(_project => {
-      return _project.guid != this.project.guid
-    });
-    this.setupWizardService.projects.next(projects);
+  async deleteProject() {
+    await this.dbChangesService.deleteProject(this.project)
     this.closeDeleteModal();
   }
 
-  saveProject() {
-    let projects: Array<IdbProject> = this.setupWizardService.projects.getValue();
-    let projectIndex: number = projects.findIndex(prj => { return prj.guid == this.project.guid });
-    projects[projectIndex] = this.project;
-    this.setupWizardService.projects.next(projects);
+  async saveProject() {
+    await this.projectIdbService.asyncUpdate(this.project);
   }
 
   showDeleteModal() {
@@ -103,11 +96,12 @@ export class ProjectSetupFormComponent {
     this.displaySuggestedNEBsModal = false;
   }
 
-  addSuggestedNEBs() {
-    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
-    this.suggestedNEBs.forEach(suggestedNEB => {
+  async addSuggestedNEBs() {
+    // let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
+    for (let i = 0; i < this.suggestedNEBs.length; i++) {
+      let suggestedNEB: IdbNonEnergyBenefit = this.suggestedNEBs[i];
       if (this.project.nonEnergyBenefitIds.includes(suggestedNEB.guid)) {
-        let existingIndex: number = nonEnergyBenefits.findIndex(neb => {
+        let existingIndex: number = this.nonEnergyBenefits.findIndex(neb => {
           return neb.assessmentId == this.project.assessmentId && suggestedNEB.guid == neb.guid;
         });
         if (existingIndex == -1) {
@@ -115,31 +109,37 @@ export class ProjectSetupFormComponent {
           newNonEnergyBenefit.name = suggestedNEB.name;
           newNonEnergyBenefit.kpiId = suggestedNEB.kpiId;
           newNonEnergyBenefit.projectIds.push(this.project.guid);
-          nonEnergyBenefits.push(newNonEnergyBenefit);
+          // nonEnergyBenefits.push(newNonEnergyBenefit);
+          await firstValueFrom(this.nonEnergyBenefitsIdbService.addWithObservable(newNonEnergyBenefit))
+
           this.project.nonEnergyBenefitIds = this.project.nonEnergyBenefitIds.filter(nebGuid => {
             return nebGuid != suggestedNEB.guid
           });
           this.project.nonEnergyBenefitIds.push(newNonEnergyBenefit.guid);
         } else {
-          if (!nonEnergyBenefits[existingIndex].projectIds.includes(this.project.guid)) {
-            nonEnergyBenefits[existingIndex].projectIds.push(this.project.guid);
+          if (!this.nonEnergyBenefits[existingIndex].projectIds.includes(this.project.guid)) {
+            this.nonEnergyBenefits[existingIndex].projectIds.push(this.project.guid);
+            await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(this.nonEnergyBenefits[existingIndex]));
           }
         }
       }
-    });
+    };
 
-    nonEnergyBenefits.forEach(neb => {
+
+    for (let i = 0; i < this.nonEnergyBenefits.length; i++) {
+      let neb: IdbNonEnergyBenefit = this.nonEnergyBenefits[i];
       if (neb.assessmentId == this.project.assessmentId) {
         if (neb.projectIds.includes(this.project.guid) && !this.project.nonEnergyBenefitIds.includes(neb.guid)) {
           neb.projectIds = neb.projectIds.filter(prjId => {
             return prjId != this.project.guid
           });
+          await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(neb));
         }
       }
-    });
-    this.setupWizardService.nonEnergyBenefits.next(nonEnergyBenefits);
+    }
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+    await this.saveProject();
     this.closeSuggestedNEBs();
-
   }
 
   toggleSuggestedNEB(nebGUID: string) {

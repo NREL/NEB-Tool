@@ -9,9 +9,9 @@
                 class="me-1"></fa-icon>Add NEB</button>
     </div>
 </div>
-<ng-template [ngIf]="nonEnergyBenefits.length > 0" [ngIfElse]="noNEBsBlock">
+<ng-template [ngIf]="(assessment.guid | nebList: 'assessment': nonEnergyBenefits).length > 0" [ngIfElse]="noNEBsBlock">
     <div class="row">
-        <div class="col-12 pb-2" *ngFor="let neb of nonEnergyBenefits">
+        <div class="col-12 pb-2" *ngFor="let neb of (assessment.guid | nebList: 'assessment': nonEnergyBenefits)">
             <app-neb-setup-form [nonEnergyBenefit]="neb"></app-neb-setup-form>
         </div>
     </div>

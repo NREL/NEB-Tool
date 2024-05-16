@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { IconDefinition, faCircle, faCircleCheck, faFileLines, faNoteSticky, faSave, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { IdbProject } from 'src/app/models/project';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
@@ -36,12 +40,16 @@ export class NebSetupFormComponent {
   highlighNebGuidSub: Subscription;
   highlighNebGuid: string;
   constructor(
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
+    private companyIdbService: CompanyIdbService,
+    private projectIdbService: ProjectIdbService,
+    private dbChangesService: DbChangesService,
     private setupWizardService: SetupWizardService) {
   }
 
   ngOnInit() {
-    this.keyPerformanceIndicators = this.setupWizardService.company.getValue().keyPerformanceIndicators;
-    this.projectsSub = this.setupWizardService.projects.subscribe(_projects => {
+    this.keyPerformanceIndicators = this.companyIdbService.selectedCompany.getValue().keyPerformanceIndicators;
+    this.projectsSub = this.projectIdbService.projects.subscribe(_projects => {
       this.projects = _projects;
     });
     this.setKPI()
@@ -61,28 +69,12 @@ export class NebSetupFormComponent {
     this.highlighNebGuidSub.unsubscribe();
   }
 
-  saveChanges() {
-    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
-    let findNebIndex: number = nonEnergyBenefits.findIndex(neb => {
-      return neb.guid == this.nonEnergyBenefit.guid
-    });
-    nonEnergyBenefits[findNebIndex] = this.nonEnergyBenefit;
-    this.setupWizardService.nonEnergyBenefits.next(nonEnergyBenefits);
+  async saveChanges() {
+    await this.nonEnergyBenefitsIdbService.asyncUpdate(this.nonEnergyBenefit);
   }
 
-  deleteNonEnergyBenefit() {
-    this.projects.forEach(prj => {
-      prj.nonEnergyBenefitIds = prj.nonEnergyBenefitIds.filter(guid => {
-        return guid != this.nonEnergyBenefit.guid
-      });
-    });
-    this.setupWizardService.projects.next(this.projects);
-
-    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.setupWizardService.nonEnergyBenefits.getValue();
-    nonEnergyBenefits = nonEnergyBenefits.filter(_nonEnergyBenefit => {
-      return _nonEnergyBenefit.guid != this.nonEnergyBenefit.guid
-    });
-    this.setupWizardService.nonEnergyBenefits.next(nonEnergyBenefits);
+  async deleteNonEnergyBenefit() {
+    await this.dbChangesService.deleteNonEnergyBenefit(this.nonEnergyBenefit);
   }
 
   showDeleteModal() {
@@ -120,8 +112,10 @@ export class NebSetupFormComponent {
     }
   }
 
-  saveProjects() {
-    this.projects.forEach(project => {
+  async saveProjects() {
+    for (let i = 0; i < this.projects.length; i++) {
+      let project: IdbProject = this.projects[i];
+      let needsUpdate: boolean = false
       let inNEB: boolean = this.nonEnergyBenefit.projectIds.findIndex(prjId => {
         return prjId == project.guid;
       }) != -1;
@@ -129,15 +123,17 @@ export class NebSetupFormComponent {
         return nebId == this.nonEnergyBenefit.guid;
       }) != -1;
       if (inNEB && !inProject) {
+        needsUpdate = true;
         project.nonEnergyBenefitIds.push(this.nonEnergyBenefit.guid);
       } else if (!inNEB && inProject) {
+        needsUpdate = true;
         project.nonEnergyBenefitIds = project.nonEnergyBenefitIds.filter(nebId => {
           return nebId != this.nonEnergyBenefit.guid;
-        })
+        });
+        await this.projectIdbService.asyncUpdate(project)
       }
-    });
-    this.setupWizardService.projects.next(this.projects);
-    this.saveChanges();
+    };
+    await this.saveChanges();
     this.closeProjectsModal();
   }
 

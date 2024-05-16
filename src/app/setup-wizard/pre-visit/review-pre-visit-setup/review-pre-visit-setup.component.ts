@@ -49,7 +49,8 @@ export class ReviewPreVisitSetupComponent {
   }
 
   goToFacility() {
-
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('facility/' + onSiteVisit.facilityId);
   }
 
   openConfirmModal() {

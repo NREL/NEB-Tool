@@ -121,6 +121,38 @@ export class DbChangesService {
     await this.assessmentIdbService.setAssessments();
   }
 
+  async deleteNonEnergyBenefit(nonEnergyBenefit: IdbNonEnergyBenefit) {
+    let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
+    for (let i = 0; i < projects.length; i++) {
+      let project: IdbProject = projects[i];
+      if (project.nonEnergyBenefitIds.includes(nonEnergyBenefit.guid)) {
+        project.nonEnergyBenefitIds = project.nonEnergyBenefitIds.filter(nebId => {
+          return nebId == nonEnergyBenefit.guid;
+        });
+        await firstValueFrom(this.projectIdbService.updateWithObservable(project));
+      }
+    }
+    await this.projectIdbService.setProjects();
+    await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+  }
+
+  async deleteProject(project: IdbProject) {
+    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
+    for (let i = 0; i < nonEnergyBenefits.length; i++) {
+      let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[i];
+      if (nonEnergyBenefit.projectIds.includes(project.guid)) {
+        nonEnergyBenefit.projectIds = nonEnergyBenefit.projectIds.filter(prjId => {
+          return prjId == project.guid;
+        });
+        await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
+      }
+    }
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+    await firstValueFrom(this.projectIdbService.deleteWithObservable(project.id));
+    await this.projectIdbService.setProjects();
+  }
+
   async deleteAssessments(assessments: Array<IdbAssessment>) {
     for (let i = 0; i < assessments.length; i++) {
       await firstValueFrom(this.assessmentIdbService.deleteWithObservable(assessments[i].id));
@@ -162,7 +194,6 @@ export class DbChangesService {
     }
     await this.onSiteVisitIdbService.setOnSiteVisits();
   }
-
 
   selectOnSiteVisit(onSiteGUID: string): boolean {
     let onSiteExists: boolean = this.onSiteVisitIdbService.setSelectedFromGUID(onSiteGUID);

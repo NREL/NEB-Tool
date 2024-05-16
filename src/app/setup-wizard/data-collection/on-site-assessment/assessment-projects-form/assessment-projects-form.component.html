@@ -9,9 +9,9 @@
                 class="me-1"></fa-icon>Add Project</button>
     </div>
 </div>
-<ng-template [ngIf]="projects.length > 0" [ngIfElse]="noProjectsBlock">
+<ng-template [ngIf]="(assessment.guid | projectsList: projects: 'assessment').length > 0" [ngIfElse]="noProjectsBlock">
     <div class="row">
-        <div class="col-12 pb-2" *ngFor="let project of projects">
+        <div class="col-12 pb-2" *ngFor="let project of (assessment.guid | projectsList: projects: 'assessment')">
             <app-project-setup-form [project]="project"></app-project-setup-form>
         </div>
     </div>

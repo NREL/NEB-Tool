@@ -18,22 +18,19 @@
                 Company Setup
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav"
-                    [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-setup'"
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-setup'"
                     [routerLinkActive]="['active']">
                     General Details
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav"
-                    [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-contacts'"
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-contacts'"
                     [routerLinkActive]="['active']">
                     Team Details
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav"
-                    [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi'"
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi'"
                     [routerLinkActive]="['active']">
                     KPI's
                 </a>
@@ -42,15 +39,13 @@
                 Facility Setup
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav"
-                    [routerLink]="'pre-visit/'+onSiteVisit.guid+'/facility-setup'"
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/facility-setup'"
                     [routerLinkActive]="['active']">
                     General Details
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav"
-                    [routerLink]="'pre-visit/'+onSiteVisit.guid+'/process-equipment'"
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/process-equipment'"
                     [routerLinkActive]="['active']">
                     Process Equipment
                 </a>
@@ -79,14 +74,16 @@
                 </div>
                 <ng-container *ngFor="let assessmentGuid of onSiteVisit.assessmentIds">
                     <div class="nav-item">
-                        <a class="nav-link" [routerLink]="'on-site-assessment/'+assessmentGuid"
+                        <a class="nav-link"
+                            [routerLink]="'data-collection/'+onSiteVisit.guid+'/assessment/'+assessmentGuid"
                             [routerLinkActive]="['active']">
                             {{assessmentGuid | assessmentNameDisplay: assessments}}
                         </a>
                     </div>
                 </ng-container>
                 <div class="nav-item">
-                    <a class="nav-link" routerLink="review-data-collection" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="'data-collection/'+onSiteVisit.guid+'/review-data-collection'"
+                        [routerLinkActive]="['active']">
                         Preliminary Results
                     </a>
                 </div>

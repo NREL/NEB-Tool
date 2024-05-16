@@ -9,6 +9,10 @@ import { Subscription } from 'rxjs';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 @Component({
   selector: 'app-on-site-assessment',
   templateUrl: './on-site-assessment.component.html',
@@ -28,36 +32,41 @@ export class OnSiteAssessmentComponent {
   faPlus: IconDefinition = faPlus;
 
   assessment: IdbAssessment;
+  assessmentSub: Subscription;
 
   assessments: Array<IdbAssessment>;
   assessmentsSub: Subscription;
   processEquipmentOptions: Array<ProcessEquipment>;
   contacts: Array<IdbContact>;
+  contactsSub: Subscription;
+
   displayContactModal: boolean = false;
   viewContact: IdbContact;
 
   assessmentIndex: number;
-  constructor(private router: Router, private setupWizardService: SetupWizardService, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, private assessmentIdbService: AssessmentIdbService, private activatedRoute: ActivatedRoute,
+    private contactIdbService: ContactIdbService
+  ) { }
 
   ngOnInit() {
-    let company: IdbCompany = this.setupWizardService.company.getValue();
-    if (!company) {
-      this.setupWizardService.initializeDataForDev();
-    }
-    let facility: IdbFacility = this.setupWizardService.facility.getValue();
-    this.processEquipmentOptions = facility.processEquipment;
-    this.contacts = this.setupWizardService.contacts.getValue();
+    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
+      this.contacts = _contacts;
+    })
 
-    this.assessmentsSub = this.setupWizardService.assessments.subscribe(_assessments => {
+    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
       this.assessments = _assessments;
     });
+
+    this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(_assessment => {
+      this.assessment = _assessment;
+    })
 
 
     this.activatedRoute.params.subscribe(params => {
       let assessmentGUID: string = params['id'];
       this.assessmentIndex = this.assessments.findIndex(_assessment => { return _assessment.guid == assessmentGUID });
       if (this.assessmentIndex != -1) {
-        this.assessment = this.assessments[this.assessmentIndex];
+        this.assessmentIdbService.selectedAssessment.next(this.assessments[this.assessmentIndex]);
       } else if (this.assessmentIndex == -1 && this.assessments.length > 0) {
         this.navigateToOnSiteAssessment(this.assessments[0].guid);
       } else if (!this.assessment) {
@@ -68,14 +77,8 @@ export class OnSiteAssessmentComponent {
 
   ngOnDestroy() {
     this.assessmentsSub.unsubscribe();
-  }
-
-  saveChanges() {
-    let assessmentIndex: number = this.assessments.findIndex(assessment => {
-      return assessment.guid == this.assessment.guid;
-    });
-    this.assessments[assessmentIndex] = this.assessment;
-    this.setupWizardService.assessments.next(this.assessments);
+    this.contactsSub.unsubscribe();
+    this.assessmentSub.unsubscribe();
   }
 
   openContactModal(viewContact: IdbContact) {
@@ -86,11 +89,6 @@ export class OnSiteAssessmentComponent {
   closeContactModal() {
     this.displayContactModal = false;
     this.viewContact = undefined;
-    this.setContacts();
-  }
-
-  setContacts() {
-    this.contacts = this.setupWizardService.contacts.getValue();
   }
 
   goToNextAssessment() {
@@ -102,7 +100,7 @@ export class OnSiteAssessmentComponent {
   }
 
   navigateToOnSiteAssessment(guid: string) {
-    this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + guid);
+    // this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + guid);
   }
 
   goToResults() {

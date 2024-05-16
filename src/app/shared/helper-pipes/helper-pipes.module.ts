@@ -17,6 +17,7 @@ import { NebDisplayPipe } from './neb-display.pipe';
 import { ProjectDisplayPipe } from './project-display.pipe';
 import { OnSiteVisitListPipe } from './on-site-visit-list.pipe';
 import { AssessmentListOnSitePipe } from './assessment-list-on-site.pipe';
+import { NebListPipe } from './neb-list.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AssessmentListOnSitePipe } from './assessment-list-on-site.pipe';
     NebDisplayPipe,
     ProjectDisplayPipe,
     OnSiteVisitListPipe,
-    AssessmentListOnSitePipe
+    AssessmentListOnSitePipe,
+    NebListPipe
   ],
   imports: [
     CommonModule
@@ -58,7 +60,8 @@ import { AssessmentListOnSitePipe } from './assessment-list-on-site.pipe';
     NebDisplayPipe,
     ProjectDisplayPipe,
     OnSiteVisitListPipe,
-    AssessmentListOnSitePipe
+    AssessmentListOnSitePipe,
+    NebListPipe
   ]
 })
 export class HelperPipesModule { }
