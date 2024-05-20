@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faPlus, faScrewdriverWrench, faToolbox, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
-import { SetupWizardService } from '../../setup-wizard.service';
-import { IdbCompany } from 'src/app/models/company';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbFacility } from 'src/app/models/facility';

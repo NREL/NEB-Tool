@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, first, firstValueFrom } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
+import { IdbCompany } from 'src/app/models/company';
+import { IdbFacility } from 'src/app/models/facility';
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { IconDefinition, fa1, fa2, fa3 } from '@fortawesome/free-solid-svg-icons';
-import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
-import { IdbAssessment } from 'src/app/models/assessment';
 import * as _ from 'lodash';
-import { IdbContact } from 'src/app/models/contact';
-import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbUser } from 'src/app/models/user';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
-import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 
 @Component({
@@ -108,8 +104,6 @@ export class GettingStartedComponent {
       this.router.navigateByUrl('/setup-wizard/pre-visit/' + this.selectedOnSiteVisitGuid);
     } else if (context == 'onSite') {
       let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.getByGuid(this.selectedOnSiteVisitGuid);
-      // let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
-      // let visitAssessment: IdbAssessment = assessments.find(assesssment => {return assesssment.})
       this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/assessment/' + onSiteVisit.assessmentIds[0]);
     } else if (context == 'postVisit') {
       // this.router.navigateByUrl('/setup-wizard/project-setup');

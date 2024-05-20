@@ -3,7 +3,6 @@ import { IconDefinition, faDiagramProject, faUser } from '@fortawesome/free-soli
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbContact } from 'src/app/models/contact';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faFileLines, faPlus, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -8,7 +8,6 @@ import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbProject } from 'src/app/models/project';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -34,8 +33,7 @@ export class ProjectsTableComponent {
   constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
     private projectIdbService: ProjectIdbService,
-    private router: Router,
-    private setupWizardService: SetupWizardService) {
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -66,7 +64,7 @@ export class ProjectsTableComponent {
   }
 
   confirmCreate() {
-    this.setupWizardService.company.next(this.company);
+    //TODO: Issue #75
     this.router.navigateByUrl('/setup-wizard');
   }
 }
