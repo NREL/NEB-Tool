@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AssessmentIdbService } from './indexed-db/assessment-idb.service';
 import { ContactIdbService } from './indexed-db/contact-idb.service';
 import { NonEnergyBenefitsIdbService } from './indexed-db/non-energy-benefits-idb.service';
+import { OnSiteVisitIdbService } from './indexed-db/on-site-visit-idb.service';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -25,7 +26,8 @@ describe('AppComponent', () => {
         { provide: ProjectIdbService, useValue: {} },
         { provide: AssessmentIdbService, useValue: {} },
         { provide: ContactIdbService, useValue: {} },
-        { provide: NonEnergyBenefitsIdbService, useValue: {} }
+        { provide: NonEnergyBenefitsIdbService, useValue: {} },
+        { provide: OnSiteVisitIdbService, useValue: {} }
       ]
     })
   });

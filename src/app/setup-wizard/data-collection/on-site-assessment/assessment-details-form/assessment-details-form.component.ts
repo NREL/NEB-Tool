@@ -12,7 +12,7 @@ import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service'
   styleUrl: './assessment-details-form.component.css'
 })
 export class AssessmentDetailsFormComponent {
-  
+
   assessment: IdbAssessment;
   assessmentSub: Subscription;
   processEquipmentOptions: Array<ProcessEquipment>;
@@ -26,9 +26,9 @@ export class AssessmentDetailsFormComponent {
     this.processEquipmentOptions = facility.processEquipment;
 
     this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(_assessment => {
-      if(!this.isFormChange){
+      if (!this.isFormChange) {
         this.assessment = _assessment;
-      }else{
+      } else {
         this.isFormChange = false;
       }
     });
@@ -39,6 +39,7 @@ export class AssessmentDetailsFormComponent {
   }
 
   async saveChanges() {
-    this.assessmentIdbService.asyncUpdate(this.assessment);
+    this.isFormChange = true;
+    await this.assessmentIdbService.asyncUpdate(this.assessment);
   }
 }

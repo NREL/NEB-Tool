@@ -22,10 +22,7 @@ describe('UnitsFormComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
-  let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
-    facility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
-  };
+  let setupWizardService: Partial<SetupWizardService> = {  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FontAwesomeModule, HelperPipesModule],

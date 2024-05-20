@@ -41,7 +41,8 @@ export class OnSiteAssessmentComponent {
   assessmentIndex: number;
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
-  constructor(private router: Router, private assessmentIdbService: AssessmentIdbService, private activatedRoute: ActivatedRoute,
+  constructor(private router: Router, private assessmentIdbService: AssessmentIdbService, 
+    private activatedRoute: ActivatedRoute,
     private contactIdbService: ContactIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService
   ) { }

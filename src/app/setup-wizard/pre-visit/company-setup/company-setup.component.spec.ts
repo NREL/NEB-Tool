@@ -8,11 +8,12 @@ import { BehaviorSubject } from 'rxjs';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { IdbProject } from 'src/app/models/project';
 import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/shared-settings-forms.module';
 import { FormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 describe('CompanySetupComponent', () => {
   let component: CompanySetupComponent;
@@ -21,9 +22,6 @@ describe('CompanySetupComponent', () => {
     user: new BehaviorSubject<IdbUser>(getNewIdbUser())
   }
   let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
-    facility: new BehaviorSubject<IdbFacility>(undefined),
-    projects: new BehaviorSubject<Array<IdbProject>>([]),
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
@@ -33,6 +31,10 @@ describe('CompanySetupComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    selectedVisit: new BehaviorSubject<IdbOnSiteVisit>(getNewIdbOnSiteVisit('', '', ''))
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
@@ -41,7 +43,8 @@ describe('CompanySetupComponent', () => {
         { provide: UserIdbService, useValue: userIdbService },
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: FacilityIdbService, useValue: facilityIdbService }
+        { provide: FacilityIdbService, useValue: facilityIdbService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
       ]
     })
       .compileComponents();

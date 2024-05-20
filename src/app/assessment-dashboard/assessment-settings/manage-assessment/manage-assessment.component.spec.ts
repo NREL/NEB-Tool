@@ -10,6 +10,7 @@ import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 
 describe('ManageAssessmentComponent', () => {
   let component: ManageAssessmentComponent;
@@ -23,6 +24,7 @@ describe('ManageAssessmentComponent', () => {
   let projectIdbService: Partial<ProjectIdbService> = {};
   let contactIdbService: Partial<ContactIdbService> = {};
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {}
+  let dbChangesService: Partial<DbChangesService> = {}
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule],
@@ -33,7 +35,8 @@ describe('ManageAssessmentComponent', () => {
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: ProjectIdbService, useValue: projectIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
-        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService }
+        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
+        { provide: DbChangesService, useValue: dbChangesService }
       ]
     })
       .compileComponents();

@@ -1,20 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SetupWizardService } from './setup-wizard.service';
-import { UserIdbService } from '../indexed-db/user-idb.service';
-import { IdbUser, getNewIdbUser } from '../models/user';
-import { BehaviorSubject } from 'rxjs';
+import { LocalStorageService } from 'ngx-webstorage';
 
 describe('SetupWizardService', () => {
   let service: SetupWizardService;
-
-  let userIdbService: Partial<UserIdbService> = {
-    user: new BehaviorSubject<IdbUser>(getNewIdbUser())
+  let localStorageService: Partial<LocalStorageService> = {
+    retrieve: () => { return undefined },
+    store: () => { return undefined },
   };
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: UserIdbService, useValue: userIdbService }
+        { provide: LocalStorageService, useValue: localStorageService }
       ]
     });
     service = TestBed.inject(SetupWizardService);

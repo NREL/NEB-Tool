@@ -1,43 +1,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssessmentDetailsFormComponent } from './assessment-details-form.component';
-import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
-import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { IdbProject } from 'src/app/models/project';
-import { IdbAssessment } from 'src/app/models/assessment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IdbContact } from 'src/app/models/contact';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 
 describe('AssessmentDetailsFormComponent', () => {
   let component: AssessmentDetailsFormComponent;
   let fixture: ComponentFixture<AssessmentDetailsFormComponent>;
 
-  let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
-    facility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', '')),
-    projects: new BehaviorSubject<Array<IdbProject>>([]),
-    assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
-    setupContext: new BehaviorSubject<SetupWizardContext>('full'),
-    sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlighNebGuid: new BehaviorSubject<string>(undefined),
-    nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]),
-    contacts: new BehaviorSubject<Array<IdbContact>>([])
+  let facilityIdbService: Partial<FacilityIdbService> = {
+    selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
+  let assessmentIdbService: Partial<AssessmentIdbService> = {
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+  }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule],
       declarations: [AssessmentDetailsFormComponent],
       providers: [
-        { provide: SetupWizardService, useValue: setupWizardService }
+        { provide: FacilityIdbService, useValue: facilityIdbService },
+        { provide: AssessmentIdbService, useValue: assessmentIdbService },
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AssessmentDetailsFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

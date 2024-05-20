@@ -5,9 +5,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { IdbProject } from 'src/app/models/project';
-import { IdbContact } from 'src/app/models/contact';
-import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
@@ -21,22 +18,19 @@ import { FacilityDetailsSummaryComponent } from './facility-details-summary/faci
 import { CompanyKpisSummaryComponent } from './company-kpis-summary/company-kpis-summary.component';
 import { CompanyDetailsSummaryComponent } from './company-details-summary/company-details-summary.component';
 import { TableEntriesModule } from 'src/app/shared/table-entries/table-entries.module';
-import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { IdbContact } from 'src/app/models/contact';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 describe('ReviewPreVisitSetupComponent', () => {
   let component: ReviewPreVisitSetupComponent;
   let fixture: ComponentFixture<ReviewPreVisitSetupComponent>;
 
   let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
-    facility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', '')),
-    projects: new BehaviorSubject<Array<IdbProject>>([]),
-    assessments: new BehaviorSubject<Array<IdbAssessment>>([getNewIdbAssessment('', '', '')]),
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlighNebGuid: new BehaviorSubject<string>(undefined),
-    nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]),
-    contacts: new BehaviorSubject<Array<IdbContact>>([])
+    highlighNebGuid: new BehaviorSubject<string>(undefined)
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
@@ -46,8 +40,16 @@ describe('ReviewPreVisitSetupComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
-  let contactIdbService: Partial<ContactIdbService> = {};
-  let assessmentIdbService: Partial<AssessmentIdbService> = {};
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    selectedVisit: new BehaviorSubject<IdbOnSiteVisit>(getNewIdbOnSiteVisit('', '', ''))
+  };
+
+  let contactIdbService: Partial<ContactIdbService> = {
+    contacts: new BehaviorSubject<Array<IdbContact>>([])
+  };
+  let assessmentIdbService: Partial<AssessmentIdbService> = {
+    assessments: new BehaviorSubject<Array<IdbAssessment>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, HelperPipesModule, TableEntriesModule],
@@ -57,7 +59,8 @@ describe('ReviewPreVisitSetupComponent', () => {
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
-        { provide: AssessmentIdbService, useValue: assessmentIdbService }
+        { provide: AssessmentIdbService, useValue: assessmentIdbService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService }
       ]
     })
       .compileComponents();

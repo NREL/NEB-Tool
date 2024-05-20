@@ -2,23 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddKpiSearchComponent } from './add-kpi-search.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { BehaviorSubject } from 'rxjs';
-import { IdbCompany } from 'src/app/models/company';
-import { IdbFacility } from 'src/app/models/facility';
-import { IdbProject } from 'src/app/models/project';
 import { KpiUnitOptionPipe } from '../kpi-unit-option.pipe';
 import { KpiCategoryClassPipe } from '../kpi-category-class.pipe';
 import { KpiListFilterPipe } from './kpi-list-filter.pipe';
 import { FormsModule } from '@angular/forms';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { BehaviorSubject } from 'rxjs';
+import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 
 describe('AddKpiSearchComponent', () => {
   let component: AddKpiSearchComponent;
   let fixture: ComponentFixture<AddKpiSearchComponent>;
-  let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(undefined),
-    facility: new BehaviorSubject<IdbFacility>(undefined),
-    projects: new BehaviorSubject<Array<IdbProject>>([])
+  let companyIdbService: Partial<CompanyIdbService> = {
+    selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany('',))
   };
 
   beforeEach(async () => {
@@ -26,11 +22,11 @@ describe('AddKpiSearchComponent', () => {
       imports: [FontAwesomeModule, FormsModule],
       declarations: [AddKpiSearchComponent, KpiListFilterPipe, KpiCategoryClassPipe, KpiUnitOptionPipe],
       providers: [
-        { provide: SetupWizardService, useValue: setupWizardService }
+        { provide: CompanyIdbService, useValue: companyIdbService }
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AddKpiSearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
