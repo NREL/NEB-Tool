@@ -23,10 +23,7 @@ describe('FacilitySetupComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     company: new BehaviorSubject<IdbCompany>(undefined),
     facility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', '')),
-    projects: new BehaviorSubject<Array<IdbProject>>([]),
-    initializeDataForDev: () => {
-
-    }
+    projects: new BehaviorSubject<Array<IdbProject>>([])
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),

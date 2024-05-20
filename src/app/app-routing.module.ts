@@ -64,6 +64,10 @@ const routes: Routes = [
         component: GettingStartedComponent
       },
       {
+        path: 'review-setup',
+        component: ReviewSetupComponent
+      },
+      {
         path: 'pre-visit/:id',
         component: PreVisitComponent,
         children: [
@@ -115,10 +119,6 @@ const routes: Routes = [
             component: ReviewOnSiteComponent
           },
         ]
-      },
-      {
-        path: 'review-setup',
-        component: ReviewSetupComponent
       }
     ]
   },

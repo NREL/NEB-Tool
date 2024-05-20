@@ -24,9 +24,6 @@ describe('CompanySetupComponent', () => {
     company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
     facility: new BehaviorSubject<IdbFacility>(undefined),
     projects: new BehaviorSubject<Array<IdbProject>>([]),
-    initializeDataForDev: () => {
-
-    }
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),

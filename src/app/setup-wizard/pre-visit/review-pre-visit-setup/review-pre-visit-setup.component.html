@@ -31,10 +31,10 @@
             <fa-icon [icon]="faFilePdf"></fa-icon>
             Generate PDF
         </button>
-        <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'preVisit'"><fa-icon
-                [icon]="faSave"></fa-icon> Finish Pre-Visit</button>
-        <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'full'"><fa-icon
-                [icon]="faSave"></fa-icon> Continue<fa-icon [icon]="faChevronRight"></fa-icon></button>
+        <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'preVisit'">Finish
+            Pre-Visit</button>
+        <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'full'">Continue<fa-icon
+                [icon]="faChevronRight"></fa-icon></button>
     </div>
 </nav>
 
@@ -53,9 +53,9 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
-        <button class="btn btn-success" (click)="goToFacility()" *ngIf="setupContext == 'preVisit'"><fa-icon
-                [icon]="faSave"></fa-icon> Finish Pre-Visit</button>
-        <button class="btn btn-success" (click)="continue()" *ngIf="setupContext == 'full'"><fa-icon
-                [icon]="faSave"></fa-icon> Continue<fa-icon [icon]="faChevronRight"></fa-icon></button>
+        <button class="btn btn-success" (click)="goToFacility()" *ngIf="setupContext == 'preVisit'"> Finish
+            Pre-Visit</button>
+        <button class="btn btn-success" (click)="continue()" *ngIf="setupContext == 'full'"> Continue<fa-icon
+                [icon]="faChevronRight"></fa-icon></button>
     </div>
 </div>

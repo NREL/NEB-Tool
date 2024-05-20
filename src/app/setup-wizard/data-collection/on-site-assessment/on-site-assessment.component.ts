@@ -2,17 +2,14 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faFilePen, faListCheck, faPeopleGroup, faPlus, faScrewdriverWrench, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { IdbFacility } from 'src/app/models/facility';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
 import { Subscription } from 'rxjs';
-import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
-import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+
 @Component({
   selector: 'app-on-site-assessment',
   templateUrl: './on-site-assessment.component.html',
@@ -34,9 +31,7 @@ export class OnSiteAssessmentComponent {
   assessment: IdbAssessment;
   assessmentSub: Subscription;
 
-  assessments: Array<IdbAssessment>;
-  assessmentsSub: Subscription;
-  processEquipmentOptions: Array<ProcessEquipment>;
+  onSiteAssessments: Array<IdbAssessment>;
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
 
@@ -44,31 +39,33 @@ export class OnSiteAssessmentComponent {
   viewContact: IdbContact;
 
   assessmentIndex: number;
+  onSiteVisit: IdbOnSiteVisit;
+  onSiteVisitSub: Subscription;
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService, private activatedRoute: ActivatedRoute,
-    private contactIdbService: ContactIdbService
+    private contactIdbService: ContactIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService
   ) { }
 
   ngOnInit() {
     this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
       this.contacts = _contacts;
-    })
+    });
 
-    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
-      this.assessments = _assessments;
+    this.onSiteVisitSub = this.onSiteVisitIdbService.selectedVisit.subscribe(_visit => {
+      this.onSiteVisit = _visit;
     });
 
     this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(_assessment => {
       this.assessment = _assessment;
-    })
-
+    });
 
     this.activatedRoute.params.subscribe(params => {
       let assessmentGUID: string = params['id'];
-      this.assessmentIndex = this.assessments.findIndex(_assessment => { return _assessment.guid == assessmentGUID });
+      this.assessmentIndex = this.onSiteVisit.assessmentIds.findIndex(_assessmentGuid => { return _assessmentGuid == assessmentGUID });
       if (this.assessmentIndex != -1) {
-        this.assessmentIdbService.selectedAssessment.next(this.assessments[this.assessmentIndex]);
-      } else if (this.assessmentIndex == -1 && this.assessments.length > 0) {
-        this.navigateToOnSiteAssessment(this.assessments[0].guid);
+        this.assessmentIdbService.setSelectedFromGUID(this.onSiteVisit.assessmentIds[this.assessmentIndex]);
+      } else if (this.assessmentIndex == -1 && this.onSiteVisit.assessmentIds.length > 0) {
+        this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[0]);
       } else if (!this.assessment) {
         this.router.navigateByUrl('/setup-wizard');
       }
@@ -76,9 +73,9 @@ export class OnSiteAssessmentComponent {
   }
 
   ngOnDestroy() {
-    this.assessmentsSub.unsubscribe();
     this.contactsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
+    this.onSiteVisitSub.unsubscribe();
   }
 
   openContactModal(viewContact: IdbContact) {
@@ -92,18 +89,18 @@ export class OnSiteAssessmentComponent {
   }
 
   goToNextAssessment() {
-    this.navigateToOnSiteAssessment(this.assessments[this.assessmentIndex + 1].guid);
+    this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[this.assessmentIndex + 1]);
   }
 
   goToPrevious() {
-    this.navigateToOnSiteAssessment(this.assessments[this.assessmentIndex - 1].guid);
+    this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[this.assessmentIndex - 1]);
   }
 
   navigateToOnSiteAssessment(guid: string) {
-    // this.router.navigateByUrl('/setup-wizard/on-site-assessment/' + guid);
+    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + guid);
   }
 
   goToResults() {
-    this.router.navigateByUrl('/setup-wizard/review-data-collection');
+    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');
   }
 }

@@ -5,6 +5,8 @@ import { IdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen, faGear, faIndustry, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 
 @Component({
   selector: 'app-facility-setup',
@@ -25,7 +27,9 @@ export class FacilitySetupComponent {
   faIndustry: IconDefinition = faIndustry;
 
 
-  constructor(private facilityIdbService: FacilityIdbService, private router: Router) {
+  constructor(private facilityIdbService: FacilityIdbService, private router: Router,
+    private onSiteVisitIdbService: OnSiteVisitIdbService
+  ) {
 
   }
 
@@ -41,10 +45,12 @@ export class FacilitySetupComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/company-contacts');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('/setup-wizard/pre-visit/' + onSiteVisit.guid + 'company-contacts');
   }
 
   goToProcessEquipment() {
-    this.router.navigateByUrl('/setup-wizard/process-equipment');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/process-equipment');
   }
 }

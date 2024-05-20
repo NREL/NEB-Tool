@@ -19,8 +19,6 @@ export class ReviewPreVisitSetupComponent {
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
   faCircleCheck: IconDefinition = faCircleCheck;
-  faSave: IconDefinition = faSave;
-
   faFilePdf: IconDefinition = faFilePdf;
 
   company: IdbCompany;

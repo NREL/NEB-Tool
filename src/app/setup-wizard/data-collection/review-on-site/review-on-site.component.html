@@ -30,8 +30,7 @@
         <div class="col-3">
             <div class="d-flex  justify-content-end">
                 <button class="btn btn-success" (click)="openConfirmModal()">
-                    <fa-icon [icon]="faSave"></fa-icon>
-                    Submit Data Collection
+                    Finish Data Collection
                 </button>
             </div>
         </div>
@@ -41,7 +40,7 @@
 
 <div [ngClass]="{'window-overlay': displayConfirmModal}"></div>
 <div class="popup" [ngClass]="{'open': displayConfirmModal }">
-    <div class="popup-header">Submit Data Collection
+    <div class="popup-header">Finish Data Collection
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeConfirmModal()"></button>
     </div>
     <div class="popup-body">
@@ -52,7 +51,6 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
-        <button class="btn btn-success" (click)="submitData()"><fa-icon
-                [icon]="faSave"></fa-icon> Submit Data Collection</button>
+        <button class="btn btn-success" (click)="finishDataCollection()">Finish Data Collection</button>
     </div>
 </div>
