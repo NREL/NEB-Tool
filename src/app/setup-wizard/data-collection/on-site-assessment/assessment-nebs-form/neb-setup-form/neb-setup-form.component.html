@@ -11,7 +11,7 @@
                 <label class="col-sm-5 col-form-label" for="projectName">NEB Name</label>
                 <div class="col-sm-7">
                     <input name="nebName" type="text" class="form-control" [(ngModel)]="nonEnergyBenefit.name"
-                        minlength="1" maxlength="42" id="nebName">
+                        minlength="1" maxlength="42" id="nebName" (input)="saveChanges()">
                 </div>
             </div>
             <div class="row mb-1">
@@ -41,7 +41,7 @@
                 <div class="col-sm-5 col-form-label">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
-                            [(ngModel)]="nonEnergyBenefit.includeNote" name="includeNote">
+                            [(ngModel)]="nonEnergyBenefit.includeNote" name="includeNote" (input)="saveChanges()">
                         <label class="form-check-label" for="includeNote">Notes</label>
                     </div>
                 </div>

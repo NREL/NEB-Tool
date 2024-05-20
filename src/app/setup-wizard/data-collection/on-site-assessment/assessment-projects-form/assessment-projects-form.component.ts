@@ -1,12 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { IconDefinition, faFileLines, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbProject, getNewIdbProject } from 'src/app/models/project';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-assessment-projects-form',
@@ -23,6 +21,8 @@ export class AssessmentProjectsFormComponent {
 
   assessment: IdbAssessment;
   assessmentSub: Subscription;
+
+  assessmentProjectGuids: Array<string> = [];
   constructor(
     private projectIdbService: ProjectIdbService,
     private assessmentIdbService: AssessmentIdbService
@@ -32,20 +32,45 @@ export class AssessmentProjectsFormComponent {
   ngOnInit() {
     this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(_assessment => {
       this.assessment = _assessment;
+      this.setAssessmentProjectGuids();
     });
 
     this.projectsSub = this.projectIdbService.projects.subscribe(_projects => {
       this.projects = _projects;
+      this.setAssessmentProjectGuids();
     })
   }
 
-  // setProjects() {
-  //   let allProjects: Array<IdbProject> = this.setupWizardService.projects.getValue();
-  //   this.projects = allProjects.filter(project => {
-  //     return project.assessmentId == this.assessmentId
-  //   });
-  // }
+  ngOnDestroy(){
+    this.projectsSub.unsubscribe();
+    this.assessmentSub.unsubscribe();
+  }
 
+  setAssessmentProjectGuids() {
+    //only want to update projet list if changes made
+    //otherwise forms get re-init when the list updates
+    if (this.assessment && this.projects) {
+      let assessmentProjects: Array<IdbProject> = this.projects.filter(prj => {
+        return prj.assessmentId == this.assessment.guid
+      });
+      let tmpAssessmentProjects: Array<string> = assessmentProjects.map(prj => {
+        return prj.guid
+      });
+      if (tmpAssessmentProjects.length != this.assessmentProjectGuids.length) {
+        this.assessmentProjectGuids = tmpAssessmentProjects;
+      } else {
+        let notEqual: boolean = false;
+        for(let i = 0; i < this.assessmentProjectGuids.length; i++){
+          if(tmpAssessmentProjects[i] != this.assessmentProjectGuids[i]){
+            notEqual = true;
+          }
+        }
+        this.assessmentProjectGuids = tmpAssessmentProjects;
+      }
+    } else {
+      this.assessmentProjectGuids = [];
+    }
+  }
 
   async addProject() {
     let newProject: IdbProject = getNewIdbProject(this.assessment.userId, this.assessment.companyId, this.assessment.guid, this.assessment.guid);

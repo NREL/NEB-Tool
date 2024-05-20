@@ -105,6 +105,7 @@ export class PreAssessmentSetupComponent {
 
   async addAssessment() {
     let assessment: IdbAssessment = getNewIdbAssessment(this.onSiteVisit.userId, this.onSiteVisit.companyId, this.onSiteVisit.facilityId);
+    assessment.visitDate = this.onSiteVisit.visitDate;
     await firstValueFrom(this.assessmentIdbService.addWithObservable(assessment));
     await this.assessmentIdbService.setAssessments();
     this.onSiteVisit.assessmentIds.push(assessment.guid);

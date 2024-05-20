@@ -39,7 +39,7 @@ export class ProjectIdbService {
   updateWithObservable(project: IdbProject): Observable<IdbProject> {
     project.modifiedDate = new Date();
     return this.dbService.update('project', project);
-  } 
+  }
 
   setSelectedFromGUID(guid: string): boolean {
     let projects: Array<IdbProject> = this.projects.getValue();
@@ -52,5 +52,12 @@ export class ProjectIdbService {
     project = await firstValueFrom(this.updateWithObservable(project));
     await this.setProjects();
     this.selectedProject.next(project);
+  }
+
+  getByGuid(guid: string): IdbProject {
+    let projects: Array<IdbProject> = this.projects.getValue();
+    return projects.find(prj => {
+      return prj.guid == guid;
+    });
   }
 }

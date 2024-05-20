@@ -17,8 +17,10 @@ import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 })
 export class ProjectSetupFormComponent {
   @Input({ required: true })
-  project: IdbProject;
+  projectGuid: string;
 
+
+  project: IdbProject;
 
   faFileLines: IconDefinition = faFileLines;
   faSave: IconDefinition = faSave;
@@ -48,6 +50,7 @@ export class ProjectSetupFormComponent {
   }
 
   ngOnInit() {
+    this.project = this.projectIdbService.getByGuid(this.projectGuid);
     this.nonEnergyBenefitsSub = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.subscribe(_nonEnergyBenefits => {
       this.nonEnergyBenefits = _nonEnergyBenefits;
     });

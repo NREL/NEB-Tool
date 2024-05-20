@@ -107,8 +107,10 @@ export class GettingStartedComponent {
     if (context == 'full' || context == 'preVisit') {
       this.router.navigateByUrl('/setup-wizard/pre-visit/' + this.selectedOnSiteVisitGuid);
     } else if (context == 'onSite') {
+      let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.getByGuid(this.selectedOnSiteVisitGuid);
       // let assessments: Array<IdbAssessment> = this.setupWizardService.assessments.getValue();
-      // this.router.navigateByUrl('/setup-wizard/assessment-setup/' + assessments[0].guid);
+      // let visitAssessment: IdbAssessment = assessments.find(assesssment => {return assesssment.})
+      this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/assessment/' + onSiteVisit.assessmentIds[0]);
     } else if (context == 'postVisit') {
       // this.router.navigateByUrl('/setup-wizard/project-setup');
     }

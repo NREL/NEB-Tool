@@ -17,6 +17,9 @@ import { KeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformance
 })
 export class NebSetupFormComponent {
   @Input({ required: true })
+  nebGuid: string;
+
+
   nonEnergyBenefit: IdbNonEnergyBenefit;
 
 
@@ -48,6 +51,8 @@ export class NebSetupFormComponent {
   }
 
   ngOnInit() {
+    this.nonEnergyBenefit = this.nonEnergyBenefitsIdbService.getByGuid(this.nebGuid);
+
     this.keyPerformanceIndicators = this.companyIdbService.selectedCompany.getValue().keyPerformanceIndicators;
     this.projectsSub = this.projectIdbService.projects.subscribe(_projects => {
       this.projects = _projects;

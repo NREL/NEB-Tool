@@ -10,13 +10,13 @@
                 <label class="col-sm-5 col-form-label" for="projectName">Project Name</label>
                 <div class="col-sm-7">
                     <input name="projectName" type="text" class="form-control" [(ngModel)]="project.name" minlength="1"
-                        maxlength="42" id="projectName">
+                        maxlength="42" id="projectName" (input)="saveProject()">
                 </div>
             </div>
             <div class="row mb-1">
                 <label class="col-sm-5 col-form-label" for="projectType">Project</label>
                 <div class="col-sm-7">
-                    <select name="projectType" class="form-select" id="projectType" [(ngModel)]="project.projectType">
+                    <select name="projectType" class="form-select" id="projectType" [(ngModel)]="project.projectType" (change)="saveProject()">
                         <option [ngValue]="undefined">
                             Other
                         </option>
@@ -31,7 +31,7 @@
                 <div class="col-sm-7">
                     <div class="input-group">
                         <input name="implementationCost" type="number" class="form-control"
-                            [(ngModel)]="project.implementationCost" id="implementationCost">
+                            [(ngModel)]="project.implementationCost" id="implementationCost" (input)="saveProject()">
                         <span class="input-group-text">&dollar;</span>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="col-12">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
-                            [(ngModel)]="project.includeSavings" name="includeSavings">
+                            [(ngModel)]="project.includeSavings" name="includeSavings" (input)="saveProject()">
                         <label class="form-check-label" for="includeSavings">Include Savings</label>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     <div class="col-sm-7">
                         <div class="input-group">
                             <input name="energySavings" type="number" class="form-control"
-                                [(ngModel)]="project.energySavings" id="energySavings">
+                                [(ngModel)]="project.energySavings" id="energySavings" (input)="saveProject()">
                             <span class="input-group-text">MMBtu/yr</span>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                     <div class="col-sm-7">
                         <div class="input-group">
                             <input name="costSavings" type="number" class="form-control"
-                                [(ngModel)]="project.costSavings" id="costSavings">
+                                [(ngModel)]="project.costSavings" id="costSavings" (input)="saveProject()">
                             <span class="input-group-text">&dollar;</span>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                 <div class="col-sm-5 col-form-label">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
-                            [(ngModel)]="project.includeNote" name="includeNote">
+                            [(ngModel)]="project.includeNote" name="includeNote" (input)="saveProject()">
                         <label class="form-check-label" for="includeNote">Notes</label>
                     </div>
                 </div>

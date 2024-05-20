@@ -61,4 +61,11 @@ export class OnSiteVisitIdbService {
     await this.setOnSiteVisits();
     return visit.guid;
   }
+
+  getByGuid(guid: string): IdbOnSiteVisit {
+    let onSiteVisits: Array<IdbOnSiteVisit> = this.onSiteVisits.getValue();
+    return onSiteVisits.find(visit => {
+      return visit.guid == guid
+    });
+  }
 }
