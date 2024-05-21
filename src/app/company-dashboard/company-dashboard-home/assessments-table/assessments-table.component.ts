@@ -5,10 +5,12 @@ import { Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 
 @Component({
   selector: 'app-assessments-table',
@@ -29,12 +31,11 @@ export class AssessmentsTableComponent {
   assessments: Array<IdbAssessment>;
   assessmentsSub: Subscription;
 
-  displayAddNewModal: boolean = false;
   constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
     private assessmentIdbService: AssessmentIdbService,
-    private router: Router,
-    private setupWizardService: SetupWizardService) {
+    private sharedDataService: SharedDataService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService) {
   }
 
   ngOnInit() {
@@ -57,15 +58,8 @@ export class AssessmentsTableComponent {
   }
 
   openAddNewModal() {
-    this.displayAddNewModal = true;
-  }
-
-  closeAddNewModal() {
-    this.displayAddNewModal = false;
-  }
-
-  confirmCreate() {
-    //TODO: Issue #75
-    this.router.navigateByUrl('/setup-wizard');
+    this.facilityIdbService.selectedFacility.next(undefined);
+    this.onSiteVisitIdbService.selectedVisit.next(undefined);
+    this.sharedDataService.createAssessmentModalOpen.next(true);
   }
 }

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
@@ -32,7 +33,8 @@ export class AssessmentsTableComponent {
   constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
     private assessmentIdbService: AssessmentIdbService,
-    private sharedDataService: SharedDataService) {
+    private sharedDataService: SharedDataService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService) {
   }
 
   ngOnInit() {
@@ -55,6 +57,9 @@ export class AssessmentsTableComponent {
   }
 
   openAddNewModal() {
+    this.companyIdbService.selectedCompany.next(undefined);
+    this.facilityIdbService.selectedFacility.next(undefined);
+    this.onSiteVisitIdbService.selectedVisit.next(undefined);
     this.sharedDataService.createAssessmentModalOpen.next(true);
   }
 }

@@ -52,21 +52,3 @@
         </ng-template>
     </div>
 </div>
-
-
-<div [ngClass]="{'window-overlay': displayAddNewModal}"></div>
-<div class="popup" [ngClass]="{'open': displayAddNewModal }">
-    <div class="popup-header">Create New Assessment?
-        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeAddNewModal()"></button>
-    </div>
-    <div class="popup-body">
-        <div class="alert alert-info">
-            Would you like to use the assessment wizard to create a new assessment for <b>{{company.generalInformation.name}}</b>?
-        </div>
-        <hr>
-    </div>
-    <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" (click)="closeAddNewModal()">Cancel</button>
-        <button class="btn btn-success" (click)="confirmCreate()">Create Assessment</button>
-    </div>
-</div>

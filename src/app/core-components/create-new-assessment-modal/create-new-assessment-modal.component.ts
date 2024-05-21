@@ -37,6 +37,8 @@ export class CreateNewAssessmentModalComponent {
   onSiteVisitSub: Subscription;
 
   selectedOnSiteVisitGuid: string;
+  selectedOnSiteVisitSub: Subscription;
+
   selectedFacilitySub: Subscription;
 
   displayCreateNewModal: boolean = false;
@@ -82,6 +84,14 @@ export class CreateNewAssessmentModalComponent {
     this.onSiteVisitSub = this.onSiteVisitIdbService.onSiteVisits.subscribe(_onSiteVisits => {
       this.onSiteVisits = _onSiteVisits;
     });
+
+    this.selectedOnSiteVisitSub = this.onSiteVisitIdbService.selectedVisit.subscribe(_onSiteVisit => {
+      if (_onSiteVisit) {
+        this.selectedOnSiteVisitGuid = _onSiteVisit.guid;
+      } else {
+        this.selectedOnSiteVisitGuid = undefined;
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -91,6 +101,7 @@ export class CreateNewAssessmentModalComponent {
     this.createAssessmentSub.unsubscribe();
     this.selectedFacilitySub.unsubscribe();
     this.selectedCompanySub.unsubscribe();
+    this.selectedOnSiteVisitSub.unsubscribe();
   }
 
   closeCreateNewModal() {
