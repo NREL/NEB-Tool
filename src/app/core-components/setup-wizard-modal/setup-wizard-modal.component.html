@@ -10,11 +10,12 @@
             </div>
             <hr>
             <form>
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <label for="selectedCompany" class="form-label">Select Company</label>
+                <div class="row mb-1">
+                    <label class="col-sm-5 col-form-label" for="selectedCompany">Select
+                        Company</label>
+                    <div class="col-7">
                         <select id="selectedCompany" name="selectedCompany" class="form-select"
-                            [(ngModel)]="selectedCompanyGuid">
+                            [(ngModel)]="selectedCompanyGuid" (change)="setSelectedCompany()">
                             <option [ngValue]="undefined">Setup New Company</option>
                             <optgroup label="Existing Companies">
                                 <option *ngFor="let company of companies" [ngValue]="company.guid">
@@ -23,11 +24,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="row mb-2" *ngIf="selectedCompanyGuid">
-                    <div class="col-12">
-                        <label for="selectedFacility" class="form-label">Select Facility</label>
+                <div class="row mb-1" *ngIf="selectedCompanyGuid">
+                    <label class="col-sm-5" for="selectedFacility">Select Facility</label>
+                    <div class="col-7">
                         <select id="selectedFacility" name="selectedFacility" class="form-select"
-                            [(ngModel)]="selectedFacilityGuid">
+                            [(ngModel)]="selectedFacilityGuid" (change)="setSelectedFacility()">
                             <option [ngValue]="undefined">Setup New Facility</option>
                             <optgroup label="Existing Facilities">
                                 <option *ngFor="let facility of (selectedCompanyGuid | facilityList:facilities)"
@@ -37,9 +38,9 @@
                     </div>
                 </div>
 
-                <div class="row mb-2" *ngIf="selectedFacilityGuid">
-                    <div class="col-12">
-                        <label for="selectedVisit" class="form-label">Select Visit</label>
+                <div class="row mb-1" *ngIf="selectedFacilityGuid && selectedCompanyGuid">
+                    <label class="col-sm-5" for="selectedVisit">Select Visit</label>
+                    <div class="col-7">
                         <select id="selectedVisit" name="selectedVisit" class="form-select"
                             [(ngModel)]="selectedOnSiteVisitGuid">
                             <option [ngValue]="undefined">Setup New Visit</option>
@@ -53,9 +54,9 @@
                     </div>
                 </div>
 
-                <div class="row mb-2" *ngIf="selectedOnSiteVisitGuid">
-                    <div class="col-12">
-                        <label for="visitStatus" class="form-label">Visit Status</label>
+                <div class="row mb-1" *ngIf="selectedOnSiteVisitGuid && selectedFacilityGuid && selectedCompanyGuid">
+                    <label class="col-sm-5" for="visitStatus">Visit Status</label>
+                    <div class="col-7">
                         <div class="form-check">
                             <input class="form-check-input" name="preVisit" type="radio" [value]="'preVisit'"
                                 id="preVisit" [(ngModel)]="setupContext">

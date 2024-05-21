@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
@@ -13,17 +13,13 @@ import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
 
 @Component({
-  selector: 'app-create-new-assessment-modal',
-  templateUrl: './create-new-assessment-modal.component.html',
-  styleUrl: './create-new-assessment-modal.component.css'
+  selector: 'app-setup-wizard-modal',
+  templateUrl: './setup-wizard-modal.component.html',
+  styleUrl: './setup-wizard-modal.component.css'
 })
-export class CreateNewAssessmentModalComponent {
-  @Input()
+export class SetupWizardModalComponent {
   selectedCompanyGuid: string;
-  @Input()
   selectedFacilityGuid: string;
-  @Output('emitClose')
-  emitClose: EventEmitter<boolean> = new EventEmitter();
 
   facilities: Array<IdbFacility>;
   facilitiesSub: Subscription;
@@ -106,6 +102,40 @@ export class CreateNewAssessmentModalComponent {
 
   closeCreateNewModal() {
     this.sharedDataService.createAssessmentModalOpen.next(false);
+  }
+
+  setSelectedFacility() {
+    if (this.selectedFacilityGuid) {
+      if (this.selectedOnSiteVisitGuid) {
+        let selectedVisit: IdbOnSiteVisit = this.onSiteVisits.find(onSiteVisit => {
+          return onSiteVisit.guid == this.selectedOnSiteVisitGuid;
+        });
+        if (selectedVisit.facilityId != this.selectedFacilityGuid) {
+          this.selectedOnSiteVisitGuid = undefined;
+        }
+      }
+    } else {
+      this.selectedOnSiteVisitGuid = undefined;
+    }
+  }
+
+  setSelectedCompany() {
+    if (this.selectedCompanyGuid) {
+      if (this.selectedFacilityGuid) {
+        let selectedFacility: IdbFacility = this.facilities.find(facility => {
+          return facility.guid == this.selectedFacilityGuid;
+        });
+        if (selectedFacility.companyId != this.selectedCompanyGuid) {
+          this.selectedFacilityGuid = undefined;
+          this.selectedOnSiteVisitGuid = undefined;
+        }
+      } else {
+        this.selectedOnSiteVisitGuid = undefined;
+      }
+    } else {
+      this.selectedFacilityGuid = undefined;
+      this.selectedOnSiteVisitGuid = undefined;
+    }
   }
 
   async confirmCreate() {

@@ -52,4 +52,11 @@ export class AssessmentsTableComponent {
     this.onSiteVisitIdbService.selectedVisit.next(undefined);
     this.sharedDataService.createAssessmentModalOpen.next(true);
   }
+  
+  goToVisit(assessment: IdbAssessment) {
+    this.companyIdbService.setSelectedFromGUID(assessment.companyId);
+    this.facilityIdbService.setSelectedFromGUID(assessment.facilityId);
+    this.onSiteVisitIdbService.setSelectedFromAssessmentGUID(assessment.guid);
+    this.sharedDataService.createAssessmentModalOpen.next(true);
+  }
 }
