@@ -4,6 +4,9 @@ import { IconDefinition, faMaximize, faMinimize, faRotateLeft } from '@fortaweso
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 
 @Component({
   selector: 'app-setup-wizard-sidebar',
@@ -11,7 +14,6 @@ import { IdbAssessment } from 'src/app/models/assessment';
   styleUrl: './setup-wizard-sidebar.component.css'
 })
 export class SetupWizardSidebarComponent {
-
 
   faRotateLeft: IconDefinition = faRotateLeft;
   faMinimize: IconDefinition = faMinimize;
@@ -24,9 +26,15 @@ export class SetupWizardSidebarComponent {
 
   assessmentsSub: Subscription;
   assessments: Array<IdbAssessment>;
+
   sidebarOpenSub: Subscription;
   sidebarOpen: boolean = false;
-  constructor(private router: Router, private setupWizardService: SetupWizardService
+
+  onSiteVisit: IdbOnSiteVisit;
+  onSiteVisitSub: Subscription;
+  constructor(private router: Router, private setupWizardService: SetupWizardService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private assessmentIdbService: AssessmentIdbService
   ) {
 
   }
@@ -43,12 +51,16 @@ export class SetupWizardSidebarComponent {
       this.setupContext = val;
     });
 
-    this.assessmentsSub = this.setupWizardService.assessments.subscribe(val => {
+    this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(val => {
       this.assessments = val;
     });
 
     this.sidebarOpenSub = this.setupWizardService.sidebarOpen.subscribe(val => {
       this.sidebarOpen = val;
+    });
+
+    this.onSiteVisitSub = this.onSiteVisitIdbService.selectedVisit.subscribe(val => {
+      this.onSiteVisit = val;
     });
   }
 
@@ -56,6 +68,7 @@ export class SetupWizardSidebarComponent {
     this.setupContextSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
     this.sidebarOpenSub.unsubscribe();
+    this.onSiteVisitSub.unsubscribe();
   }
 
   setDisplaySidebar() {
@@ -72,12 +85,6 @@ export class SetupWizardSidebarComponent {
 
   confirmStartOver() {
     this.router.navigateByUrl('/setup-wizard/getting-started').then(() => {
-      this.setupWizardService.company.next(undefined);
-      this.setupWizardService.facility.next(undefined);
-      this.setupWizardService.assessments.next([]);
-      this.setupWizardService.contacts.next([]);
-      this.setupWizardService.nonEnergyBenefits.next([]);
-      this.setupWizardService.projects.next([]);
       this.closeStartOverModal();
     });
   }

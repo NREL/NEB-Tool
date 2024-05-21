@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { IdbCompany } from '../models/company';
+import { IdbCompany, getNewIdbCompany } from '../models/company';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Injectable({
@@ -57,6 +57,13 @@ export class CompanyIdbService {
     let companies: Array<IdbCompany> = this.companies.getValue();
     let company: IdbCompany = companies.find(_company => { return _company.guid == guid });
     return company;
+  }
+
+  async addNewCompany(userGuid: string): Promise<string> {
+    let newCompany: IdbCompany = getNewIdbCompany(userGuid);
+    newCompany = await firstValueFrom(this.addWithObservable(newCompany));
+    await this.setCompanies();
+    return newCompany.guid;
   }
 
 }

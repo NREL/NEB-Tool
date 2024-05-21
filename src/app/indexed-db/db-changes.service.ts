@@ -12,6 +12,8 @@ import { ContactIdbService } from './contact-idb.service';
 import { IdbContact } from '../models/contact';
 import { NonEnergyBenefitsIdbService } from './non-energy-benefits-idb.service';
 import { IdbNonEnergyBenefit } from '../models/nonEnergyBenefit';
+import { OnSiteVisitIdbService } from './on-site-visit-idb.service';
+import { IdbOnSiteVisit } from '../models/onSiteVisit';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,8 @@ export class DbChangesService {
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private projectIdbService: ProjectIdbService, private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
-    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService) { }
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService) { }
 
 
   //TODO: loading service messaging and success toast notification
@@ -42,6 +45,10 @@ export class DbChangesService {
     let assessments: Array<IdbAssessment> = this.assessmentIdbService.assessments.getValue();
     let companyAssessments: Array<IdbAssessment> = assessments.filter(assessment => { return assessment.companyId == company.guid });
     await this.deleteAssessments(companyAssessments);
+    //delete on site visits
+    let onSiteVisits: Array<IdbOnSiteVisit> = this.onSiteVisitIdbService.onSiteVisits.getValue();
+    let companyOnSiteVisits: Array<IdbOnSiteVisit> = onSiteVisits.filter(onSiteVisit => { return onSiteVisit.companyId == company.guid });
+    await this.deleteOnSiteVisits(companyOnSiteVisits);
     //delete facilities
     let facilities: Array<IdbFacility> = this.facilityIdbService.facilities.getValue();
     let companyFacilities: Array<IdbFacility> = facilities.filter(facility => { return facility.companyId == company.guid });
@@ -69,6 +76,10 @@ export class DbChangesService {
     let assessments: Array<IdbAssessment> = this.assessmentIdbService.assessments.getValue();
     let facilityAssessments: Array<IdbAssessment> = assessments.filter(assessment => { return assessment.facilityId == facility.guid });
     await this.deleteAssessments(facilityAssessments);
+    //delete on site visits
+    let onSiteVisits: Array<IdbOnSiteVisit> = this.onSiteVisitIdbService.onSiteVisits.getValue();
+    let facilityOnSiteVisits: Array<IdbOnSiteVisit> = onSiteVisits.filter(onSiteVisit => { return onSiteVisit.companyId == facility.guid });
+    await this.deleteOnSiteVisits(facilityOnSiteVisits);
     //delete facility
     await firstValueFrom(this.facilityIdbService.deleteWithObservable(facility.id));
     await this.facilityIdbService.setFacilities();
@@ -83,9 +94,63 @@ export class DbChangesService {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
     let assessmentNonEnergyBenefits: Array<IdbNonEnergyBenefit> = nonEnergyBenefits.filter(neb => { return neb.assessmentId == assessment.guid; })
     await this.deleteNonEnergyBenefits(assessmentNonEnergyBenefits);
+    //update contacts
+    let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
+    let assessmentContacts: Array<IdbContact> = contacts.filter(contact => { return contact.assessmentIds.includes(assessment.guid) });
+    if (assessmentContacts.length > 0) {
+      for (let i = 0; i < assessmentContacts.length; i++) {
+        assessmentContacts[i].assessmentIds = assessmentContacts[i].assessmentIds.filter(assessmentId => { return assessmentId != assessment.guid });
+        await firstValueFrom(this.contactIdbService.updateWithObservable(assessmentContacts[i]));
+      }
+      await this.contactIdbService.setContacts();
+    }
+
+    //update on site visits
+    let onSiteVisits: Array<IdbOnSiteVisit> = this.onSiteVisitIdbService.onSiteVisits.getValue();
+    let assessmentOnSiteVisits: Array<IdbOnSiteVisit> = onSiteVisits.filter(onSiteVisit => { return onSiteVisit.assessmentIds.includes(assessment.guid) });
+    if (assessmentOnSiteVisits.length > 0) {
+      for (let i = 0; i < assessmentOnSiteVisits.length; i++) {
+        assessmentOnSiteVisits[i].assessmentIds = assessmentOnSiteVisits[i].assessmentIds.filter(assessmentId => { return assessmentId != assessment.guid });
+        await firstValueFrom(this.onSiteVisitIdbService.updateWithObservable(assessmentOnSiteVisits[i]));
+      }
+      await this.onSiteVisitIdbService.setOnSiteVisits();
+    }
+
     //delete assessment
     await firstValueFrom(this.assessmentIdbService.deleteWithObservable(assessment.id));
     await this.assessmentIdbService.setAssessments();
+  }
+
+  async deleteNonEnergyBenefit(nonEnergyBenefit: IdbNonEnergyBenefit) {
+    let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
+    for (let i = 0; i < projects.length; i++) {
+      let project: IdbProject = projects[i];
+      if (project.nonEnergyBenefitIds.includes(nonEnergyBenefit.guid)) {
+        project.nonEnergyBenefitIds = project.nonEnergyBenefitIds.filter(nebId => {
+          return nebId == nonEnergyBenefit.guid;
+        });
+        await firstValueFrom(this.projectIdbService.updateWithObservable(project));
+      }
+    }
+    await this.projectIdbService.setProjects();
+    await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+  }
+
+  async deleteProject(project: IdbProject) {
+    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
+    for (let i = 0; i < nonEnergyBenefits.length; i++) {
+      let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[i];
+      if (nonEnergyBenefit.projectIds.includes(project.guid)) {
+        nonEnergyBenefit.projectIds = nonEnergyBenefit.projectIds.filter(prjId => {
+          return prjId == project.guid;
+        });
+        await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
+      }
+    }
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+    await firstValueFrom(this.projectIdbService.deleteWithObservable(project.id));
+    await this.projectIdbService.setProjects();
   }
 
   async deleteAssessments(assessments: Array<IdbAssessment>) {
@@ -121,5 +186,24 @@ export class DbChangesService {
       await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefits[i].id));
     }
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+  }
+
+  async deleteOnSiteVisits(onSiteVisits: Array<IdbOnSiteVisit>) {
+    for (let i = 0; i < onSiteVisits.length; i++) {
+      await firstValueFrom(this.onSiteVisitIdbService.deleteWithObservable(onSiteVisits[i].id));
+    }
+    await this.onSiteVisitIdbService.setOnSiteVisits();
+  }
+
+  selectOnSiteVisit(onSiteGUID: string): boolean {
+    let onSiteExists: boolean = this.onSiteVisitIdbService.setSelectedFromGUID(onSiteGUID);
+    if (onSiteExists) {
+      let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+      this.companyIdbService.setSelectedFromGUID(onSiteVisit.companyId);
+      this.facilityIdbService.setSelectedFromGUID(onSiteVisit.facilityId);
+      return true;
+    } else {
+      return false;
+    }
   }
 }

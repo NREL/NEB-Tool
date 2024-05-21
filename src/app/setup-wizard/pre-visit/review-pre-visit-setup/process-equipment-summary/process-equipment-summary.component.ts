@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faDiagramProject, faUser } from '@fortawesome/free-solid-svg-icons';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbContact } from 'src/app/models/contact';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 
 @Component({
@@ -15,12 +16,12 @@ export class ProcessEquipmentSummaryComponent {
   processEquipment: Array<ProcessEquipment>;
   contacts: Array<IdbContact>;
   faUser: IconDefinition = faUser;
-  constructor(private setupWizardService: SetupWizardService){
+  constructor(private facilityIdbService: FacilityIdbService, private contactIdbService: ContactIdbService){
 
   }
 
   ngOnInit(){
-    this.processEquipment = this.setupWizardService.facility.getValue().processEquipment;
-    this.contacts = this.setupWizardService.contacts.getValue();
+    this.processEquipment = this.facilityIdbService.selectedFacility.getValue().processEquipment;
+    this.contacts = this.contactIdbService.contacts.getValue();
   }
 }

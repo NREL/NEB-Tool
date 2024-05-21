@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faBullseye, faChartBar, faUser } from '@fortawesome/free-solid-svg-icons';
-import { IdbCompany } from 'src/app/models/company';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { KeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
 
 @Component({
@@ -17,12 +17,12 @@ export class CompanyKpisSummaryComponent {
   faBullseye: IconDefinition = faBullseye;
   faUser: IconDefinition = faUser;
   contacts: Array<IdbContact>;
-  constructor(private setupWizardService: SetupWizardService){
+  constructor(private companyIdbService: CompanyIdbService, private contactsIdbService: ContactIdbService){
 
   }
 
   ngOnInit(){
-    this.keyPerformanceIndicators = this.setupWizardService.company.getValue().keyPerformanceIndicators;
-    this.contacts = this.setupWizardService.contacts.getValue();
+    this.keyPerformanceIndicators = this.companyIdbService.selectedCompany.getValue().keyPerformanceIndicators;
+    this.contacts = this.contactsIdbService.contacts.getValue();
   }
 }

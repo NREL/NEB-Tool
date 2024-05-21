@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-location-form',
@@ -19,8 +18,6 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 export class LocationFormComponent {
   @Input()
   inCompany: boolean;
-  @Input()
-  inSetupWizard: boolean;
 
   faLocationDot: IconDefinition = faLocationDot;
   form: FormGroup;
@@ -31,54 +28,32 @@ export class LocationFormComponent {
   countries: Array<Country> = Countries;
   states: Array<State> = States;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService,
-    private setupWizardService: SetupWizardService) {
+    private facilityIdbService: FacilityIdbService) {
   }
 
   ngOnInit() {
-    if (this.inSetupWizard) {
-      if (this.inCompany) {
-        this.companyOrFacilitySub = this.setupWizardService.company.subscribe(_company => {
-          if (!this.company || (this.company.guid != _company.guid)) {
-            //initialize form on company change
-            this.form = this.getGeneralInformationForm(_company.generalInformation);
-          }
-          this.company = _company;
-        });
-      } else {
-        this.companyOrFacilitySub = this.setupWizardService.facility.subscribe(_facility => {
-          if (!this.facility || (this.facility.guid != _facility.guid)) {
-            //initialize form on facility change
-            this.form = this.getGeneralInformationForm(_facility.generalInformation);
-          }
-          this.facility = _facility;
-        });
-      }
+    if (this.inCompany) {
+      this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+        if (!this.company || (this.company.guid != _company.guid)) {
+          //initialize form on company change
+          this.form = this.getGeneralInformationForm(_company.generalInformation);
+        }
+        this.company = _company;
+      });
     } else {
-      if (this.inCompany) {
-        this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
-          if (!this.company || (this.company.guid != _company.guid)) {
-            //initialize form on company change
-            this.form = this.getGeneralInformationForm(_company.generalInformation);
-          }
-          this.company = _company;
-        });
-      } else {
-        this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
-          if (!this.facility || (this.facility.guid != _facility.guid)) {
-            //initialize form on facility change
-            this.form = this.getGeneralInformationForm(_facility.generalInformation);
-          }
-          this.facility = _facility;
-        });
-      }
+      this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
+        if (!this.facility || (this.facility.guid != _facility.guid)) {
+          //initialize form on facility change
+          this.form = this.getGeneralInformationForm(_facility.generalInformation);
+        }
+        this.facility = _facility;
+      });
     }
   }
 
   ngOnDestroy() {
     this.companyOrFacilitySub.unsubscribe();
   }
-
 
   getGeneralInformationForm(generalInformation: GeneralInformation): FormGroup {
     let form: FormGroup = this.formBuilder.group({
@@ -92,22 +67,12 @@ export class LocationFormComponent {
   }
 
   async saveChanges() {
-    if(this.inSetupWizard){
-      if (this.inCompany) {
-        this.company.generalInformation = this.updateGeneralInformationFromForm(this.company.generalInformation);
-        this.setupWizardService.company.next(this.company);
-      } else {
-        this.facility.generalInformation = this.updateGeneralInformationFromForm(this.facility.generalInformation);
-        this.setupWizardService.facility.next(this.facility);
-      }
-    }else{
-      if (this.inCompany) {
-        this.company.generalInformation = this.updateGeneralInformationFromForm(this.company.generalInformation);
-        await this.companyIdbService.asyncUpdate(this.company);
-      } else {
-        this.facility.generalInformation = this.updateGeneralInformationFromForm(this.facility.generalInformation);
-        await this.facilityIdbService.asyncUpdate(this.facility);
-      }
+    if (this.inCompany) {
+      this.company.generalInformation = this.updateGeneralInformationFromForm(this.company.generalInformation);
+      await this.companyIdbService.asyncUpdate(this.company);
+    } else {
+      this.facility.generalInformation = this.updateGeneralInformationFromForm(this.facility.generalInformation);
+      await this.facilityIdbService.asyncUpdate(this.facility);
     }
   }
 

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IdbCompany } from 'src/app/models/company';
-import { SetupWizardService } from '../../setup-wizard.service';
 import { IconDefinition, faChartBar, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 
 @Component({
   selector: 'app-company-kpi-setup',
@@ -14,25 +14,20 @@ export class CompanyKpiSetupComponent {
   faChartBar: IconDefinition = faChartBar;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
-  company: IdbCompany;
-
-  constructor(private setupWizardService: SetupWizardService, private router: Router) {
-
-  }
+  constructor(private router: Router,
+    private onSiteVisitIdbService: OnSiteVisitIdbService
+  ) { }
 
   ngOnInit() {
-    this.company = this.setupWizardService.company.getValue();
-    if (!this.company) {
-      this.setupWizardService.initializeDataForDev();
-      this.company = this.setupWizardService.company.getValue();
-    }
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/company-contacts');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-contacts');
   }
 
   goToFacility() {
-    this.router.navigateByUrl('/setup-wizard/facility-setup');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/facility-setup');
   }
 }

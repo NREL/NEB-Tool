@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IdbCompany } from 'src/app/models/company';
-import { SetupWizardService } from '../../setup-wizard.service';
 import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { Subscription } from 'rxjs';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 @Component({
   selector: 'app-company-setup',
@@ -19,27 +22,37 @@ export class CompanySetupComponent {
   faBuilding: IconDefinition = faBuilding;
   faChevronRight: IconDefinition = faChevronRight;
 
-  constructor(private setupWizardService: SetupWizardService, private router: Router) {
+  selectedCompany: IdbCompany
+  selectedCompanySub: Subscription;
+
+  constructor(private router: Router,
+    private companyIdbService: CompanyIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService
+  ) {
 
   }
 
   ngOnInit() {
-    let newCompany: IdbCompany = this.setupWizardService.company.getValue();
-    if (!newCompany) {
-      this.setupWizardService.initializeDataForDev();
-      newCompany = this.setupWizardService.company.getValue();
-    }
-    this.companyName = newCompany.generalInformation.name;
-    this.setupWizardService.company.next(newCompany);
+    this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+      this.selectedCompany = _company;
+      if (this.selectedCompany) {
+        this.companyName = _company.generalInformation.name;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.selectedCompanySub.unsubscribe();
   }
 
   goToContacts() {
-    this.router.navigateByUrl('setup-wizard/company-contacts')
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-contacts');
   }
 
-  saveChanges() {
-    let selectedCompany: IdbCompany = this.setupWizardService.company.getValue();
+  async saveChanges() {
+    let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
     selectedCompany.generalInformation.name = this.companyName;
-    this.setupWizardService.company.next(selectedCompany);
+    await this.companyIdbService.asyncUpdate(selectedCompany);
   }
 }

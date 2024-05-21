@@ -163,4 +163,4 @@
 
 <app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
     [contextGuid]="company.keyPerformanceIndicators[contactIndex].kpiOptionValue" [contactContext]="'KPI'"
-    [selectedContact]="viewContact"></app-contact-modal>
+    [selectedContact]="viewContact" [companyGuid]="company.guid"></app-contact-modal>

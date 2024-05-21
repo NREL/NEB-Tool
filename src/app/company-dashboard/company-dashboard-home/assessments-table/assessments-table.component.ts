@@ -65,7 +65,7 @@ export class AssessmentsTableComponent {
   }
 
   confirmCreate() {
-    this.setupWizardService.company.next(this.company);
+    //TODO: Issue #75
     this.router.navigateByUrl('/setup-wizard');
   }
 }

@@ -3,23 +3,25 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faBuilding" class="me-2"></fa-icon>Company Details</h5>
+                    <fa-icon [icon]="faBuilding" class="me-2"></fa-icon>Company Details
+                </h5>
                 <hr>
-                <form>
-                    <label class="bold" for="companyName">Company Name</label>
-                    <input name="companyName" type="text" class="form-control" [(ngModel)]="companyName"
-                        (input)="saveChanges()" minlength="1" maxlength="42" id="companyName">
-                </form>
-                <hr>
-                <label class="bold">Location</label>
-                <app-location-form [inCompany]="true" [inSetupWizard]="true"></app-location-form>
-                <hr>
-                <label class="bold">Tracked Utilities</label>
-                <app-units-form [inCompany]="true" [inSetupWizard]="true"></app-units-form>
-                <hr>
-                <label class="bold">Additional Details</label>
-                <app-additional-details-form [inCompany]="true"
-                    [inSetupWizard]="true"></app-additional-details-form>
+                <ng-template [ngIf]="selectedCompany">
+                    <form>
+                        <label class="bold" for="companyName">Company Name</label>
+                        <input name="companyName" type="text" class="form-control" [(ngModel)]="companyName"
+                            (input)="saveChanges()" minlength="1" maxlength="42" id="companyName">
+                    </form>
+                    <hr>
+                    <label class="bold">Location</label>
+                    <app-location-form [inCompany]="true"></app-location-form>
+                    <hr>
+                    <label class="bold">Tracked Utilities</label>
+                    <app-units-form [inCompany]="true"></app-units-form>
+                    <hr>
+                    <label class="bold">Additional Details</label>
+                    <app-additional-details-form [inCompany]="true"></app-additional-details-form>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -27,7 +29,7 @@
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-end">
         <button class="btn btn-dark" (click)="goToContacts()">
-            Team Details
+            Enter Contacts
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>

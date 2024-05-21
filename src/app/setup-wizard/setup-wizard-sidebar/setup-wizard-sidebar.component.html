@@ -9,99 +9,110 @@
             </button>
         </div>
     </div>
-    <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
-        <div class="p-2 w-100 text-bg-dark">
-            Pre-Visit
-        </div>
-        <div class="nav-item ms-2">
-            Company Setup
-        </div>
-        <div class="nav-item">
-            <a class="nav-link secondary-nav" routerLink="company-setup" [routerLinkActive]="['active']">
-                General Details
-            </a>
-        </div>
-        <div class="nav-item">
-            <a class="nav-link secondary-nav" routerLink="company-contacts" [routerLinkActive]="['active']">
-                Team Details
-            </a>
-        </div>
-        <div class="nav-item">
-            <a class="nav-link secondary-nav" routerLink="company-kpi" [routerLinkActive]="['active']">
-                KPI's
-            </a>
-        </div>
-        <div class="nav-item ms-2">
-            Facility Setup
-        </div>
-        <div class="nav-item">
-            <a class="nav-link secondary-nav" routerLink="facility-setup" [routerLinkActive]="['active']">
-                General Details
-            </a>
-        </div>
-        <div class="nav-item">
-            <a class="nav-link secondary-nav" routerLink="process-equipment" [routerLinkActive]="['active']">
-                Process Equipment
-            </a>
-        </div>
-        <div class="nav-item">
-            <a class="nav-link" routerLink="pre-assessment" [routerLinkActive]="['active']">
-                Pre-Assessments
-            </a>
-        </div>
-        <div class="nav-item">
-            <a class="nav-link" routerLink="review-pre-visit" [routerLinkActive]="['active']">
-                Review Pre-Visit
-            </a>
-        </div>
-    </div>
-    <div class="p-2 w-100">
-        <hr class="my-1">
-    </div>
-    
-    <ng-container *ngIf="setupContext == 'onSite' || setupContext == 'full'">
+    <ng-container *ngIf="onSiteVisit">
         <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
             <div class="p-2 w-100 text-bg-dark">
-                Data Collection
+                Pre-Visit
             </div>
-            <ng-container *ngFor="let assessment of assessments">
+            <div class="nav-item ms-2">
+                Company Setup
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-setup'"
+                    [routerLinkActive]="['active']">
+                    General Details
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-contacts'"
+                    [routerLinkActive]="['active']">
+                    Team Details
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi'"
+                    [routerLinkActive]="['active']">
+                    KPI's
+                </a>
+            </div>
+            <div class="nav-item ms-2">
+                Facility Setup
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/facility-setup'"
+                    [routerLinkActive]="['active']">
+                    General Details
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/process-equipment'"
+                    [routerLinkActive]="['active']">
+                    Process Equipment
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/pre-assessment'"
+                    [routerLinkActive]="['active']">
+                    Pre-Assessments
+                </a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/review-pre-visit'"
+                    routerLink="review-pre-visit" [routerLinkActive]="['active']">
+                    Review Pre-Visit
+                </a>
+            </div>
+        </div>
+        <div class="p-2 w-100">
+            <hr class="my-1">
+        </div>
+
+        <ng-container *ngIf="setupContext == 'onSite' || setupContext == 'full'">
+            <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
+                <div class="p-2 w-100 text-bg-dark">
+                    Data Collection
+                </div>
+                <ng-container *ngFor="let assessmentGuid of onSiteVisit.assessmentIds">
+                    <div class="nav-item">
+                        <a class="nav-link"
+                            [routerLink]="'data-collection/'+onSiteVisit.guid+'/assessment/'+assessmentGuid"
+                            [routerLinkActive]="['active']">
+                            {{assessmentGuid | assessmentNameDisplay: assessments}}
+                        </a>
+                    </div>
+                </ng-container>
                 <div class="nav-item">
-                    <a class="nav-link" [routerLink]="'/setup-wizard/on-site-assessment/'+assessment.guid"
+                    <a class="nav-link" [routerLink]="'data-collection/'+onSiteVisit.guid+'/review-data-collection'"
                         [routerLinkActive]="['active']">
-                        {{assessment.name}}
+                        Preliminary Results
                     </a>
                 </div>
-            </ng-container>
-            <div class="nav-item">
-                <a class="nav-link" routerLink="review-data-collection" [routerLinkActive]="['active']">
-                    Preliminary Results
-                </a>
+                <div class="p-2 w-100">
+                    <hr class="my-1">
+                </div>
             </div>
-            <div class="p-2 w-100">
-                <hr class="my-1">
-            </div>
-        </div>
-    </ng-container>
+        </ng-container>
 
-    <ng-container *ngIf="setupContext == 'postVisit' || setupContext == 'full'">
-        <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
-            <div class="p-2 w-100 text-bg-dark">
-                Data Evaluation
+        <ng-container *ngIf="setupContext == 'postVisit' || setupContext == 'full'">
+            <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
+                <div class="p-2 w-100 text-bg-dark">
+                    Data Evaluation
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" [routerLinkActive]="['active']">
+                        Follow-up
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" [routerLinkActive]="['active']">
+                        Results
+                    </a>
+                </div>
+                <div class="p-2 w-100">
+                    <hr class="my-1">
+                </div>
             </div>
-            <div class="nav-item">
-                <a class="nav-link" [routerLinkActive]="['active']">
-                    Follow-up
-                </a>
-            </div>
-            <div class="nav-item">
-                <a class="nav-link" [routerLinkActive]="['active']">
-                    Results
-                </a>
-            </div>
-            <div class="p-2 w-100">
-                <hr class="my-1">
-            </div>
-        </div>
+        </ng-container>
     </ng-container>
     <div class="nav-item" [hidden]="!sidebarOpen">
         <a class="nav-link bold" (click)="openStartOverModal()">

@@ -44,5 +44,11 @@ export const dbConfig: DBConfig = {
     storeConfig: { keyPath: 'id', autoIncrement: true },
     storeSchema: [
     ]
+  },
+  {
+    store: 'onSiteVisit',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+    ]
   }]
 };

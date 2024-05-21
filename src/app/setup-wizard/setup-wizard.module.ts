@@ -22,7 +22,7 @@ import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-sea
 import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
 import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
 import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
-import { ReviewOnSiteComponent } from './on-site/review-on-site/review-on-site.component';
+import { ReviewOnSiteComponent } from './data-collection/review-on-site/review-on-site.component';
 import { CompanyDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/company-details-summary/company-details-summary.component';
 import { TeamDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/team-details-summary.component';
 import { ContactSummaryCardComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/contact-summary-card/contact-summary-card.component';
@@ -31,12 +31,14 @@ import { FacilityDetailsSummaryComponent } from './pre-visit/review-pre-visit-se
 import { ProcessEquipmentSummaryComponent } from './pre-visit/review-pre-visit-setup/process-equipment-summary/process-equipment-summary.component';
 import { PreAssessmentSummaryComponent } from './pre-visit/review-pre-visit-setup/pre-assessment-summary/pre-assessment-summary.component';
 import { TableEntriesModule } from '../shared/table-entries/table-entries.module';
-import { OnSiteAssessmentComponent } from './on-site/on-site-assessment/on-site-assessment.component';
-import { AssessmentDetailsFormComponent } from './on-site/on-site-assessment/assessment-details-form/assessment-details-form.component';
-import { AssessmentProjectsFormComponent } from './on-site/on-site-assessment/assessment-projects-form/assessment-projects-form.component';
-import { ProjectSetupFormComponent } from './on-site/on-site-assessment/assessment-projects-form/project-setup-form/project-setup-form.component';
-import { AssessmentNebsFormComponent } from './on-site/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
-import { NebSetupFormComponent } from './on-site/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
+import { OnSiteAssessmentComponent } from './data-collection/on-site-assessment/on-site-assessment.component';
+import { AssessmentDetailsFormComponent } from './data-collection/on-site-assessment/assessment-details-form/assessment-details-form.component';
+import { AssessmentProjectsFormComponent } from './data-collection/on-site-assessment/assessment-projects-form/assessment-projects-form.component';
+import { ProjectSetupFormComponent } from './data-collection/on-site-assessment/assessment-projects-form/project-setup-form/project-setup-form.component';
+import { AssessmentNebsFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
+import { NebSetupFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
+import { PreVisitComponent } from './pre-visit/pre-visit.component';
+import { DataCollectionComponent } from './data-collection/data-collection.component';
 
 
 
@@ -71,7 +73,9 @@ import { NebSetupFormComponent } from './on-site/on-site-assessment/assessment-n
     AssessmentDetailsFormComponent,
     AssessmentProjectsFormComponent,
     AssessmentNebsFormComponent,
-    NebSetupFormComponent
+    NebSetupFormComponent,
+    PreVisitComponent,
+    DataCollectionComponent
   ],
   imports: [
     CommonModule,

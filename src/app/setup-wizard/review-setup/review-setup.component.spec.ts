@@ -9,8 +9,6 @@ import { IdbCompany } from 'src/app/models/company';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { SetupWizardService } from '../setup-wizard.service';
-import { IdbAssessment } from 'src/app/models/assessment';
-import { IdbProject } from 'src/app/models/project';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
@@ -30,12 +28,7 @@ describe('ReviewSetupComponent', () => {
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {};
   let projectIdbService: Partial<ProjectIdbService> = {};
-  let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(undefined),
-    facility: new BehaviorSubject<IdbFacility>(undefined),
-    assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
-    projects: new BehaviorSubject<Array<IdbProject>>([])
-  };
+  let setupWizardService: Partial<SetupWizardService> = {  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule, FontAwesomeModule],

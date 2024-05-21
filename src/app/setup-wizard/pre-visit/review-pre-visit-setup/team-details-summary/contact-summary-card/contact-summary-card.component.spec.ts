@@ -1,34 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactSummaryCardComponent } from './contact-summary-card.component';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
-import { IdbContact, getNewIdbContact } from 'src/app/models/contact';
-import { IdbProject } from 'src/app/models/project';
-import { BehaviorSubject } from 'rxjs';
+import { getNewIdbContact } from 'src/app/models/contact';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { TableEntriesModule } from 'src/app/shared/table-entries/table-entries.module';
+import { BehaviorSubject } from 'rxjs';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 describe('ContactSummaryCardComponent', () => {
   let component: ContactSummaryCardComponent;
   let fixture: ComponentFixture<ContactSummaryCardComponent>;
 
-  let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
-    facility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', '')),
-    projects: new BehaviorSubject<Array<IdbProject>>([]),
-    contacts: new BehaviorSubject<Array<IdbContact>>([]),
-    assessments: new BehaviorSubject<Array<IdbAssessment>>([getNewIdbAssessment('', '', '')]),
+  let facilityIdbService: Partial<FacilityIdbService> = {
+    facilities: new BehaviorSubject<Array<IdbFacility>>([]),
+    selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
+  };
+  let assessmentIdbService: Partial<AssessmentIdbService> = {
+    assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, HelperPipesModule, TableEntriesModule],
       declarations: [ContactSummaryCardComponent],
       providers: [
-        { provide: SetupWizardService, useValue: setupWizardService }
+        { provide: AssessmentIdbService, useValue: assessmentIdbService },
+        { provide: FacilityIdbService, useValue: facilityIdbService }
       ]
     })
       .compileComponents();

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faBullseye, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { KPI_Category, KPI_categories, KeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
 
 @Component({
@@ -24,26 +25,40 @@ export class CompanyKpiListComponent {
 
   kpiToDelete: KeyPerformanceIndicator;
   displayDeleteModal: boolean = false;
-  contacts: Array<IdbContact>;
   displayContactModal: boolean = false;
   viewContact: IdbContact;
   contactIndex: number;
-  constructor(private setupWizardService: SetupWizardService) {
+
+  contacts: Array<IdbContact>;
+  contactsSub: Subscription;
+  isFormChange: boolean = false;
+  constructor(
+    private companyIdbService: CompanyIdbService,
+    private contactIdbService: ContactIdbService
+  ) {
   }
 
   ngOnInit() {
-    this.companySub = this.setupWizardService.company.subscribe(_company => {
-      this.company = _company;
+    this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+      if(!this.isFormChange){
+        this.company = _company;
+      }else{
+        this.isFormChange = false;
+      }
     });
-    this.contacts = this.setupWizardService.contacts.getValue();
+    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
+      this.contacts = _contacts;
+    });
   }
 
   ngOnDestroy() {
     this.companySub.unsubscribe();
+    this.contactsSub.unsubscribe();
   }
 
-  saveChanges() {
-    this.setupWizardService.company.next(this.company);
+  async saveChanges() {
+    this.isFormChange = true;
+    await this.companyIdbService.asyncUpdate(this.company);
   }
 
   setAccordionIndex(num: number) {
@@ -60,16 +75,23 @@ export class CompanyKpiListComponent {
     this.kpiToDelete = undefined;
   }
 
-  removeKPI() {
+  async removeKPI() {
     this.company.keyPerformanceIndicators = this.company.keyPerformanceIndicators.filter(_kpi => {
       return this.kpiToDelete.kpiOptionValue != _kpi.kpiOptionValue;
     });
     this.contacts.forEach(contact => {
-      contact.assessmentIds = contact.assessmentIds.filter(aId => {
+      contact.kpiIds = contact.assessmentIds.filter(aId => {
         return aId != this.kpiToDelete.kpiOptionValue;
       });
     });
-    this.setupWizardService.contacts.next(this.contacts);
+    for (let i = 0; i < this.contacts.length; i++) {
+      if (this.contacts[i].kpiIds.includes(this.kpiToDelete.kpiOptionValue)) {
+        this.contacts[i].kpiIds = this.contacts[i].kpiIds.filter(aId => {
+          return aId != this.kpiToDelete.kpiOptionValue;
+        });
+        await this.contactIdbService.asyncUpdate(this.contacts[i]);
+      }
+    }
     this.closeDeleteModal();
     this.setAccordionIndex(0);
     this.saveChanges();
@@ -85,10 +107,5 @@ export class CompanyKpiListComponent {
     this.displayContactModal = false;
     this.contactIndex = undefined;
     this.viewContact = undefined;
-    this.setContacts();
-  }
-
-  setContacts() {
-    this.contacts = this.setupWizardService.contacts.getValue();
   }
 }

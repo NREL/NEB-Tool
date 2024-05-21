@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faAddressBook, faChevronLeft, faChevronRight, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
-import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbContact, getNewIdbContact } from 'src/app/models/contact';
 import { IdbCompany } from 'src/app/models/company';
-import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { Subscription, firstValueFrom } from 'rxjs';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 
 @Component({
   selector: 'app-company-contacts-setup',
@@ -12,6 +15,13 @@ import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
   styleUrl: './company-contacts-setup.component.css'
 })
 export class CompanyContactsSetupComponent {
+
+  allContacts: Array<IdbContact>;
+  companyContacts: Array<IdbContact>;
+  contactsSub: Subscription
+
+  selectedCompany: IdbCompany;
+  selectedCompanySub: Subscription;
 
   accordionIndex: number = 0;
   faChevronRight: IconDefinition = faChevronRight;
@@ -21,44 +31,62 @@ export class CompanyContactsSetupComponent {
   faPlus: IconDefinition = faPlus;
   faUser: IconDefinition = faUser;
 
-  contacts: Array<IdbContact>;
   displayDeleteModal: boolean = false;
   contactToDelete: IdbContact;
-  constructor(private router: Router, private setupWizardService: SetupWizardService,
-    private userIdbService: UserIdbService
+  isFormChange: boolean = false;
+  constructor(private router: Router,
+    private companyIdbService: CompanyIdbService,
+    private contactIdbService: ContactIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService
   ) {
   }
 
   ngOnInit() {
-    //TODO: Temporary for dev.
-    let company: IdbCompany = this.setupWizardService.company.getValue();
-    if (!company) {
-      this.setupWizardService.initializeDataForDev();
-    }
-    this.contacts = this.setupWizardService.contacts.getValue();
-    if (this.contacts.length == 0) {
-      this.addPrimaryContact();
+    this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+      this.selectedCompany = _company;
+      this.setCompanyContacts();
+    });
+
+    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
+      this.allContacts = _contacts;
+      this.setCompanyContacts();
+    });
+  }
+
+  setCompanyContacts() {
+    if (this.selectedCompany && this.allContacts) {
+      if (!this.isFormChange) {
+        this.companyContacts = this.allContacts.filter(contact => {
+          return contact.companyId == this.selectedCompany.guid;
+        });
+      } else {
+        this.isFormChange = false;
+      }
     }
   }
 
+
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/company-setup');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-setup');
   }
 
   goToKPIs() {
-    this.router.navigateByUrl('/setup-wizard/company-kpi');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi');
   }
 
-  saveChanges() {
-    this.setupWizardService.contacts.next(this.contacts);
+  async saveChanges(contact: IdbContact) {
+    this.isFormChange = true;
+    await this.contactIdbService.asyncUpdate(contact);
   }
 
-  addContact() {
-    let company: IdbCompany = this.setupWizardService.company.getValue();
-    let newContact: IdbContact = getNewIdbContact(company.userId, company.guid);
-    this.contacts.push(newContact);
-    this.setAccordionIndex(this.contacts.length - 1)
-    this.saveChanges();
+  async addContact() {
+    let newContact: IdbContact = getNewIdbContact(this.selectedCompany.userId, this.selectedCompany.guid);
+    this.companyContacts.push(newContact)
+    this.setAccordionIndex(this.companyContacts.length - 1);
+    await firstValueFrom(this.contactIdbService.addWithObservable(newContact))
+    await this.contactIdbService.setContacts();
   }
 
   setAccordionIndex(index: number) {
@@ -75,22 +103,10 @@ export class CompanyContactsSetupComponent {
     this.contactToDelete = undefined;
   }
 
-  deleteContact() {
-    this.contacts = this.contacts.filter(_contact => {
-      return _contact.guid != this.contactToDelete.guid;
-    });
+  async deleteContact() {
+    await firstValueFrom(this.contactIdbService.deleteWithObservable(this.contactToDelete.id));
+    await this.contactIdbService.setContacts();
     this.closeDeleteModal();
     this.setAccordionIndex(0);
-    this.saveChanges();
-  }
-
-
-  addPrimaryContact() {
-    let company: IdbCompany = this.setupWizardService.company.getValue();
-    let newContact: IdbContact = getNewIdbContact(company.userId, company.guid);
-    newContact.isPrimary = true;
-    newContact.role = 'Primary Contact';
-    this.contacts.push(newContact);
-    this.saveChanges();
   }
 }

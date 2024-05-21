@@ -43,4 +43,11 @@ export class NonEnergyBenefitsIdbService {
     nonEnergyBenefit = await firstValueFrom(this.updateWithObservable(nonEnergyBenefit));
     await this.setNonEnergyBenefits();
   }
+
+  getByGuid(guid: string): IdbNonEnergyBenefit {
+    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefits.getValue();
+    return nonEnergyBenefits.find(neb => {
+      return neb.guid == guid;
+    })
+  }
 }

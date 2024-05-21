@@ -1,0 +1,26 @@
+<div class="d-flex w-100 justify-content-between pb-2">
+    <div class="p-0">
+        <h5>
+            <fa-icon [icon]="faFileLines"></fa-icon> Projects
+        </h5>
+    </div>
+    <div class="p-0">
+        <button class="btn btn-dark btn-sm add-project-btn" (click)="addProject()"><fa-icon [icon]="faPlus"
+                class="me-1"></fa-icon>Add Project</button>
+    </div>
+</div>
+<ng-template [ngIf]="assessmentProjectGuids.length > 0" [ngIfElse]="noProjectsBlock">
+    <div class="row">
+        <div class="col-12 pb-2" *ngFor="let projectGuid of assessmentProjectGuids">
+            <app-project-setup-form [projectGuid]="projectGuid"></app-project-setup-form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noProjectsBlock>
+    <div class="d-flex flex-column w-100 justify-content-center mt-3">
+        <div class="alert alert-info small text-center p-2">
+            No projects found for this assessment.
+        </div>
+    </div>
+</ng-template>

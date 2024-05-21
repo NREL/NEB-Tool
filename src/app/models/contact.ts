@@ -14,8 +14,7 @@ export interface IdbContact extends IdbEntry {
     kpiIds: Array<string>,
     userId: string,
     focusArea: string,
-    notes: string,
-    isPrimary: boolean
+    notes: string
 }
 
 export function getNewIdbContact(userId: string, companyId: string): IdbContact {
@@ -34,7 +33,6 @@ export function getNewIdbContact(userId: string, companyId: string): IdbContact 
         team: undefined,
         focusArea: undefined,
         notes: undefined,
-        isPrimary: false,
         kpiIds: [],
     }
 }

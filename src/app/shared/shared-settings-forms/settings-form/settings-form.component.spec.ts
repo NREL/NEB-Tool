@@ -26,10 +26,7 @@ describe('SettingsFormComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
-  let setupWizardService: Partial<SetupWizardService> = {
-    company: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
-    facility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
-  };
+  let setupWizardService: Partial<SetupWizardService> = {  };
   let localStorageDataService: Partial<LocalStorageDataService> = {
     additionalDetailsAccordionOpen: true,
     locationAccordionOpen: true,

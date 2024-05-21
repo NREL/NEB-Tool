@@ -7,6 +7,7 @@ import { FacilityIdbService } from './facility-idb.service';
 import { AssessmentIdbService } from './assessment-idb.service';
 import { ContactIdbService } from './contact-idb.service';
 import { NonEnergyBenefitsIdbService } from './non-energy-benefits-idb.service';
+import { OnSiteVisitIdbService } from './on-site-visit-idb.service';
 
 describe('DbChangesService', () => {
   let service: DbChangesService;
@@ -25,7 +26,8 @@ describe('DbChangesService', () => {
         { provide: ProjectIdbService, useValue: projectIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
-        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService }
+        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
+        { provide: OnSiteVisitIdbService, useValue: {} }
       ]
     });
     service = TestBed.inject(DbChangesService);

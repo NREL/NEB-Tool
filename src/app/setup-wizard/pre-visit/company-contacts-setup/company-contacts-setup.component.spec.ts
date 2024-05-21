@@ -10,6 +10,10 @@ import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { FormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { IdbContact } from 'src/app/models/contact';
 
 describe('CompanyContactsSetupComponent', () => {
   let component: CompanyContactsSetupComponent;
@@ -26,18 +30,27 @@ describe('CompanyContactsSetupComponent', () => {
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
 
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    selectedVisit: new BehaviorSubject<IdbOnSiteVisit>(getNewIdbOnSiteVisit('', '', ''))
+  };
+
+  let contactIdbService: Partial<ContactIdbService> = {
+    contacts: new BehaviorSubject<Array<IdbContact>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule],
       declarations: [CompanyContactsSetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
-        { provide: CompanyIdbService, useValue: companyIdbService },   
-        { provide: FacilityIdbService, useValue: facilityIdbService }
+        { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: FacilityIdbService, useValue: facilityIdbService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
+        { provide: ContactIdbService, useValue: contactIdbService }
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(CompanyContactsSetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

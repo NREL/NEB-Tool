@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faCube, faCubesStacked, faDiagramProject, faPlus, faScrewdriverWrench, faToolbox, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
-import { SetupWizardService } from '../../setup-wizard.service';
-import { IdbCompany } from 'src/app/models/company';
+import { IconDefinition, faChevronLeft, faChevronRight, faDiagramProject, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbFacility } from 'src/app/models/facility';
 import { ProcessEquipment, getNewProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbContact } from 'src/app/models/contact';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
 import { UtilityType, UtilityTypeOptions } from 'src/app/shared/constants/utilityTypes';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { Subscription, firstValueFrom } from 'rxjs';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 
 @Component({
   selector: 'app-facility-process-equipment-setup',
@@ -29,51 +32,72 @@ export class FacilityProcessEquipmentSetupComponent {
 
   equipmentToDelete: ProcessEquipment;
   displayDeleteModal: boolean = false;
-  contacts: Array<IdbContact>;
   displayContactModal: boolean = false;
   contactEquipmentIndex: number;
   viewContact: IdbContact;
-  constructor(private setupWizardService: SetupWizardService, private router: Router) {
+
+  contacts: Array<IdbContact>;
+  contactSub: Subscription;
+  constructor(private facilityIdbService: FacilityIdbService, private router: Router,
+    private contactIdbService: ContactIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService
+  ) {
 
   }
 
   ngOnInit() {
-    let company: IdbCompany = this.setupWizardService.company.getValue();
-    if (!company) {
-      this.setupWizardService.initializeDataForDev();
-    }
-    this.facility = this.setupWizardService.facility.getValue();
-    this.setContacts();
+    this.facility = this.facilityIdbService.selectedFacility.getValue();
+    this.contactSub = this.contactIdbService.contacts.subscribe(_contacts => {
+      this.contacts = _contacts;
+    });
   }
 
-  saveChanges() {
-    this.setupWizardService.facility.next(this.facility);
+  ngOnDestroy() {
+    this.contactSub.unsubscribe();
+  }
+
+  async saveChanges() {
+    await this.facilityIdbService.asyncUpdate(this.facility);
   }
 
   addEquipment() {
     let newEquipment: ProcessEquipment = getNewProcessEquipment();
     this.facility.processEquipment.push(newEquipment);
     this.setAccordionIndex(this.facility.processEquipment.length - 1);
+    this.saveChanges();
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/facility-setup');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/facility-setup');
   }
 
   goToNext() {
-    this.router.navigateByUrl('/setup-wizard/pre-assessment');
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/pre-assessment');
   }
 
-  removeEquipment() {
+  async removeEquipment() {
     this.facility.processEquipment = this.facility.processEquipment.filter(_equipment => {
       return _equipment.guid != this.equipmentToDelete.guid;
     });
-    this.contacts.forEach(contact => {
-      contact.processEquipmentIds = contact.processEquipmentIds.filter(aId => {
-        return aId != this.equipmentToDelete.guid;
-      });
+    //update contacts
+    let facilityContacts: Array<IdbContact> = this.contacts.filter(contact => {
+      return contact.facilityIds.includes(this.facility.guid);
     });
-    this.setupWizardService.contacts.next(this.contacts);
+    let contactsNeedUpdate: boolean = false;
+    for (let i = 0; i < facilityContacts.length; i++) {
+      if (facilityContacts[i].processEquipmentIds.includes(this.equipmentToDelete.guid)) {
+        facilityContacts[i].processEquipmentIds = facilityContacts[i].processEquipmentIds.filter(guid => {
+          return guid != this.equipmentToDelete.guid;
+        });
+        await firstValueFrom(this.contactIdbService.updateWithObservable(facilityContacts[i]));
+        contactsNeedUpdate = true;
+      };
+    }
+    if (contactsNeedUpdate) {
+      await this.contactIdbService.setContacts()
+    }
     this.closeDeleteModal();
     this.setAccordionIndex(0);
     this.saveChanges();
@@ -103,10 +127,5 @@ export class FacilityProcessEquipmentSetupComponent {
     this.displayContactModal = false;
     this.contactEquipmentIndex = undefined;
     this.viewContact = undefined;
-    this.setContacts();
-  }
-
-  setContacts() {
-    this.contacts = this.setupWizardService.contacts.getValue();
   }
 }

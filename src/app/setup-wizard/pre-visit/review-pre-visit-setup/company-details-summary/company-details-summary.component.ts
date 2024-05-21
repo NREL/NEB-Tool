@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-company-details-summary',
@@ -14,11 +15,12 @@ export class CompanyDetailsSummaryComponent {
   company: IdbCompany;
   contacts: Array<IdbContact>;
   faBuilding: IconDefinition = faBuilding;
-  constructor(private setupWizardService: SetupWizardService) {
+  constructor(private companyIdbService: CompanyIdbService, private contactsIdbService: ContactIdbService
+  ) {
   }
 
   ngOnInit() {
-    this.company = this.setupWizardService.company.getValue();
-    this.contacts = this.setupWizardService.contacts.getValue();
+    this.company = this.companyIdbService.selectedCompany.getValue();
+    this.contacts = this.contactsIdbService.contacts.getValue();
   }
 }

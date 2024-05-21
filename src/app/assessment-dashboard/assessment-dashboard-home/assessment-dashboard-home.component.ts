@@ -3,12 +3,8 @@ import { Router } from '@angular/router';
 import { IconDefinition, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
-import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { IdbCompany } from 'src/app/models/company';
-import { IdbFacility } from 'src/app/models/facility';
 import { IdbProject } from 'src/app/models/project';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
@@ -30,8 +26,6 @@ export class AssessmentDashboardHomeComponent {
   displayEditModal: boolean = false;
   constructor(private assessmentIdbService: AssessmentIdbService,
     private projectsIdbService: ProjectIdbService,
-    private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService,
     private setupWizardService: SetupWizardService,
     private router: Router
   ) {
@@ -62,21 +56,7 @@ export class AssessmentDashboardHomeComponent {
   }
 
   confirmEdit() {
-    let companies: Array<IdbCompany> = this.companyIdbService.companies.getValue();
-    let company: IdbCompany = companies.find(_company => {
-      return _company.guid == this.assessment.companyId;
-    });
-    this.setupWizardService.company.next(company);
-    let facilities: Array<IdbFacility> = this.facilityIdbService.facilities.getValue();
-    let facility: IdbFacility = facilities.find(_facility => {
-      return _facility.guid == this.assessment.facilityId;
-    });
-    this.setupWizardService.facility.next(facility);
-    this.setupWizardService.assessments.next([this.assessment]);
-    let assessmentProjects: Array<IdbProject> = this.projects.filter(_project => {
-      return _project.assessmentId == this.assessment.guid;
-    })
-    this.setupWizardService.projects.next(assessmentProjects);
+    //TODO: Issue #75
     this.setupWizardService.setupContext.next('onSite');
     this.router.navigateByUrl('/setup-wizard/assessment-setup/' + this.assessment.guid);
   }
