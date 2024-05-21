@@ -4,7 +4,7 @@
     overflow-y: auto;
 }
 
-.setup-wizard-content .form-paper{
+.form-paper{
     min-height: 100%;
     background-color: white;
     padding: 1rem;
