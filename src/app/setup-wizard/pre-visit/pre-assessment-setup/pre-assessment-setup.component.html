@@ -23,7 +23,7 @@
                         </button>
                     </div>
                 </div>
-                <ng-template [ngIf]="assessments.length != 0" [ngIfElse]="noAssessmentsBlock">
+                <ng-template [ngIf]="(onSiteVisit.assessmentIds | assessmentListOnSite: assessments).length != 0" [ngIfElse]="noAssessmentsBlock">
                     <div class="accordion" id="assessmentAccordion">
                         <div class="accordion-item"
                             *ngFor="let assessment of (onSiteVisit.assessmentIds | assessmentListOnSite: assessments); let assessmentIndex = index;">

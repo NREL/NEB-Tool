@@ -139,8 +139,6 @@ export class SetupWizardModalComponent {
   }
 
   async confirmCreate() {
-    this.companyIdbService.selectedCompany.next(undefined);
-    this.facilityIdbService.selectedFacility.next(undefined);
     let user: IdbUser = this.userIdbService.user.getValue();
     if (!this.selectedOnSiteVisitGuid) {
       this.setupContext = 'preVisit';
