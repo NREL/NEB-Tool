@@ -18,15 +18,13 @@
                             Name
                         </th>
                         <th class="w-25">
-                            <!-- <fa-icon [icon]="faLocationDot"></fa-icon> -->
                             Company
                         </th>
                         <th class="w-25">
-                            <!-- <fa-icon [icon]="faContactCard"></fa-icon> -->
                             Facility
                         </th>
                         <th class="w-25">
-                            Last Modified
+                            Visit Date
                         </th>
                     </tr>
                 </thead>
@@ -44,7 +42,9 @@
                             {{assessment.facilityId | facilityName:facilities}}
                         </td>
                         <td>
-                            {{assessment.modifiedDate |date:'short'}}
+                            <a class="click-link" (click)="goToVisit(assessment)">
+                                {{assessment.visitDate | date:'short'}}
+                            </a>
                         </td>
                     </tr>
 
