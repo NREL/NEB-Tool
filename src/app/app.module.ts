@@ -19,6 +19,7 @@ import { SetupWizardModule } from './setup-wizard/setup-wizard.module';
 import { SidebarComponent } from './core-components/sidebar/sidebar.component';
 import { HelperPipesModule } from './shared/helper-pipes/helper-pipes.module';
 import { AssessmentDashboardModule } from './assessment-dashboard/assessment-dashboard.module';
+import { CreateNewAssessmentModalComponent } from './core-components/create-new-assessment-modal/create-new-assessment-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AssessmentDashboardModule } from './assessment-dashboard/assessment-das
     WelcomeComponent,
     PageNotFoundComponent,
     LoadingComponent,
-    SidebarComponent
+    SidebarComponent,
+    CreateNewAssessmentModalComponent
   ],
   imports: [
     BrowserModule,

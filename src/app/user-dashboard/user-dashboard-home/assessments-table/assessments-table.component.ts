@@ -8,6 +8,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
+import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 
 @Component({
   selector: 'app-assessments-table',
@@ -28,11 +29,10 @@ export class AssessmentsTableComponent {
   assessments: Array<IdbAssessment>;
   assessmentsSub: Subscription;
 
-  displayAddNewModal: boolean = false;
   constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
     private assessmentIdbService: AssessmentIdbService,
-    private router: Router) {
+    private sharedDataService: SharedDataService) {
   }
 
   ngOnInit() {
@@ -55,14 +55,6 @@ export class AssessmentsTableComponent {
   }
 
   openAddNewModal() {
-    this.displayAddNewModal = true;
-  }
-
-  closeAddNewModal() {
-    this.displayAddNewModal = false;
-  }
-
-  confirmCreate() {
-    this.router.navigateByUrl('/setup-wizard');
+    this.sharedDataService.createAssessmentModalOpen.next(true);
   }
 }

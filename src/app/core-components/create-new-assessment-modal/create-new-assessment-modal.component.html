@@ -1,0 +1,88 @@
+<div [ngClass]="{'window-overlay': displayCreateNewModal}"></div>
+<div class="popup" [ngClass]="{'open': displayCreateNewModal }">
+    <div class="popup-header">How would you like to start?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeCreateNewModal()"></button>
+    </div>
+    <div class="popup-body">
+        <ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompaniesBlock">
+            <div class="alert alert-info">
+                Select a company and a facility to pre-populate your setup with existing data entered.
+            </div>
+            <hr>
+            <form>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <label for="selectedCompany" class="form-label">Select Company</label>
+                        <select id="selectedCompany" name="selectedCompany" class="form-select"
+                            [(ngModel)]="selectedCompanyGuid">
+                            <option [ngValue]="undefined">Setup New Company</option>
+                            <optgroup label="Existing Companies">
+                                <option *ngFor="let company of companies" [ngValue]="company.guid">
+                                    {{company.generalInformation.name}}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2" *ngIf="selectedCompanyGuid">
+                    <div class="col-12">
+                        <label for="selectedFacility" class="form-label">Select Facility</label>
+                        <select id="selectedFacility" name="selectedFacility" class="form-select"
+                            [(ngModel)]="selectedFacilityGuid">
+                            <option [ngValue]="undefined">Setup New Facility</option>
+                            <optgroup label="Existing Facilities">
+                                <option *ngFor="let facility of (selectedCompanyGuid | facilityList:facilities)"
+                                    [ngValue]="facility.guid">{{facility.generalInformation.name}}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-2" *ngIf="selectedFacilityGuid">
+                    <div class="col-12">
+                        <label for="selectedVisit" class="form-label">Select Visit</label>
+                        <select id="selectedVisit" name="selectedVisit" class="form-select"
+                            [(ngModel)]="selectedOnSiteVisitGuid">
+                            <option [ngValue]="undefined">Setup New Visit</option>
+                            <optgroup label="Existing Visits">
+                                <option
+                                    *ngFor="let onSiteVisit of (selectedFacilityGuid | onSiteVisitList:onSiteVisits)"
+                                    [ngValue]="onSiteVisit.guid">
+                                    {{onSiteVisit.visitDate| date}}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-2" *ngIf="selectedOnSiteVisitGuid">
+                    <div class="col-12">
+                        <label for="visitStatus" class="form-label">Visit Status</label>
+                        <div class="form-check">
+                            <input class="form-check-input" name="preVisit" type="radio" [value]="'preVisit'"
+                                id="preVisit" [(ngModel)]="setupContext">
+                            <label class="form-check-label" for="preVisit">
+                                Pre-Visit
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" name="onSite" type="radio" [value]="'onSite'" id="onSite"
+                                [(ngModel)]="setupContext">
+                            <label class="form-check-label" for="onSite">
+                                On-Site Data Collection
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+        <ng-template #noCompaniesBlock>
+            <div class="alert alert-info">
+                No companies found in your system. A new company will be created upon completion of the Pre-Visit.
+            </div>
+        </ng-template>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeCreateNewModal()">Cancel</button>
+        <button class="btn btn-success" (click)="confirmCreate()">Confirm</button>
+    </div>
+</div>
