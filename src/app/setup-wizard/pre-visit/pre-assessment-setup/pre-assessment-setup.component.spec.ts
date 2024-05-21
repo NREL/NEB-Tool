@@ -16,6 +16,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
+import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 
 describe('PreAssessmentSetupComponent', () => {
   let component: PreAssessmentSetupComponent;
@@ -43,7 +44,7 @@ describe('PreAssessmentSetupComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, FormsModule],
+      imports: [FontAwesomeModule, FormsModule, HelperPipesModule],
       declarations: [PreAssessmentSetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },

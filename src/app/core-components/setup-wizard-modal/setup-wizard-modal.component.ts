@@ -89,17 +89,7 @@ export class SetupWizardModalComponent {
       }
     });
   }
-
-  ngOnDestroy() {
-    this.companiesSub.unsubscribe();
-    this.facilitiesSub.unsubscribe();
-    this.onSiteVisitSub.unsubscribe();
-    this.createAssessmentSub.unsubscribe();
-    this.selectedFacilitySub.unsubscribe();
-    this.selectedCompanySub.unsubscribe();
-    this.selectedOnSiteVisitSub.unsubscribe();
-  }
-
+  
   closeCreateNewModal() {
     this.sharedDataService.createAssessmentModalOpen.next(false);
   }

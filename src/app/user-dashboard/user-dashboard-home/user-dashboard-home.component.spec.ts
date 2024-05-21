@@ -19,6 +19,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AssessmentsTableComponent } from './assessments-table/assessments-table.component';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 describe('UserDashboardHomeComponent', () => {
   let component: UserDashboardHomeComponent;
@@ -39,7 +41,10 @@ describe('UserDashboardHomeComponent', () => {
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     selectedAssessment: new BehaviorSubject<IdbAssessment>(undefined),
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
-  }
+  };
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    onSiteVisits: new BehaviorSubject<Array<IdbOnSiteVisit>>([])
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FormsModule, FontAwesomeModule],
@@ -50,6 +55,7 @@ describe('UserDashboardHomeComponent', () => {
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: ProjectIdbService, useValue: projectIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
       ]
     });
     fixture = TestBed.createComponent(UserDashboardHomeComponent);
