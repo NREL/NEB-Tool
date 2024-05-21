@@ -8,8 +8,6 @@ import { CompanyDashboardComponent } from './company-dashboard/company-dashboard
 import { CompanyDashboardHomeComponent } from './company-dashboard/company-dashboard-home/company-dashboard-home.component';
 import { FacilityDashboardComponent } from './facility-dashboard/facility-dashboard.component';
 import { FacilityDashboardHomeComponent } from './facility-dashboard/facility-dashboard-home/facility-dashboard-home.component';
-import { ProjectDashboardComponent } from './project-dashboard/project-dashboard.component';
-import { ProjectDashboardHomeComponent } from './project-dashboard/project-dashboard-home/project-dashboard-home.component';
 import { SetupWizardComponent } from './setup-wizard/setup-wizard.component';
 import { GettingStartedComponent } from './setup-wizard/getting-started/getting-started.component';
 import { CompanySetupComponent } from './setup-wizard/pre-visit/company-setup/company-setup.component';
@@ -19,8 +17,6 @@ import { CompanySettingsComponent } from './company-dashboard/company-settings/c
 import { CompanyReportsComponent } from './company-dashboard/company-reports/company-reports.component';
 import { FacilitySettingsComponent } from './facility-dashboard/facility-settings/facility-settings.component';
 import { FacilityReportsComponent } from './facility-dashboard/facility-reports/facility-reports.component';
-import { ProjectReportComponent } from './project-dashboard/project-report/project-report.component';
-import { ProjectSettingsComponent } from './project-dashboard/project-settings/project-settings.component';
 import { UserDashboardHelpComponent } from './user-dashboard/user-dashboard-help/user-dashboard-help.component';
 import { ExploreNEBsComponent } from './user-dashboard/explore-nebs/explore-nebs.component';
 import { CompanyGoalsComponent } from './company-dashboard/company-goals/company-goals.component';
@@ -201,29 +197,6 @@ const routes: Routes = [
         path: 'goals',
         component: FacilityGoalsComponent
       }
-    ]
-  },
-  {
-    path: 'project/:id',
-    component: ProjectDashboardComponent,
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'home'
-      },
-      {
-        path: 'home',
-        component: ProjectDashboardHomeComponent
-      },
-      {
-        path: 'settings',
-        component: ProjectSettingsComponent
-      },
-      {
-        path: 'reports',
-        component: ProjectReportComponent
-      },
     ]
   },
   {

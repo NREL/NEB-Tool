@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CompanySettingsComponent } from './company-settings.component';
 import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/shared-settings-forms.module';
-import { ManageCompanyComponent } from './manage-company/manage-company.component';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { BehaviorSubject } from 'rxjs';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
@@ -31,7 +30,7 @@ describe('CompanySettingsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SharedSettingsFormsModule, FontAwesomeModule, FormsModule, RouterTestingModule],
-      declarations: [CompanySettingsComponent, ManageCompanyComponent],
+      declarations: [CompanySettingsComponent],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
