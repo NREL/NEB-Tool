@@ -11,6 +11,8 @@ import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { BehaviorSubject } from 'rxjs';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 describe('AssessmentsTableComponent', () => {
   let component: AssessmentsTableComponent;
@@ -28,6 +30,9 @@ describe('AssessmentsTableComponent', () => {
     selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
   };
   let setupWizardService: Partial<SetupWizardService> = {};
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    onSiteVisits: new BehaviorSubject<Array<IdbOnSiteVisit>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, HelperPipesModule],
@@ -36,7 +41,8 @@ describe('AssessmentsTableComponent', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: SetupWizardService, useValue: setupWizardService }
+        { provide: SetupWizardService, useValue: setupWizardService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
       ]
     })
       .compileComponents();

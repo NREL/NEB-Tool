@@ -20,6 +20,8 @@ import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service'
 import { IdbAssessment } from 'src/app/models/assessment';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 describe('CompanyDashboardHomeComponent', () => {
   let component: CompanyDashboardHomeComponent;
@@ -42,6 +44,10 @@ describe('CompanyDashboardHomeComponent', () => {
   let contactIdbService: Partial<ContactIdbService> = {};
   let userIdbService: Partial<UserIdbService> = {};
 
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    onSiteVisits: new BehaviorSubject<Array<IdbOnSiteVisit>>([])
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FormsModule, FontAwesomeModule, HelperPipesModule],
@@ -53,7 +59,8 @@ describe('CompanyDashboardHomeComponent', () => {
         { provide: ProjectIdbService, useValue: projectDbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
-        { provide: UserIdbService, useValue: userIdbService }
+        { provide: UserIdbService, useValue: userIdbService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
       ]
     });
     fixture = TestBed.createComponent(CompanyDashboardHomeComponent);

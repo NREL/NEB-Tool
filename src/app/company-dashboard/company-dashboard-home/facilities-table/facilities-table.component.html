@@ -17,14 +17,10 @@
                             Name
                         </th>
                         <th class="w-25">
-                            <!-- <fa-icon [icon]="faLocationDot"></fa-icon> -->
                             Location
                         </th>
                         <th>
                             Assessments
-                        </th>
-                        <th class="w-25">
-                            Last Modified
                         </th>
                     </tr>
                 </thead>
@@ -40,9 +36,6 @@
                         </td>
                         <td>
                             {{(facility.guid | assessmentsList: assessments).length}}
-                        </td>
-                        <td>
-                            {{facility.modifiedDate | date:'short'}}
                         </td>
                     </tr>
 

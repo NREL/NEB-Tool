@@ -17,18 +17,13 @@
                             Name
                         </th>
                         <th class="w-25">
-                            <!-- <fa-icon [icon]="faLocationDot"></fa-icon> -->
                             Location
                         </th>
                         <th class="w-25">
-                            <!-- <fa-icon [icon]="faContactCard"></fa-icon> -->
                             Contact
                         </th>
                         <th>
                             Assessments
-                        </th>
-                        <th class="w-25">
-                            Last Modified
                         </th>
                     </tr>
                 </thead>
@@ -43,10 +38,10 @@
                             {{facility.generalInformation | addressDisplay}}
                         </td>
                         <td>
-                            {{(facility.guid | assessmentsList: assessments).length}}
+
                         </td>
                         <td>
-                            {{facility.modifiedDate | date:'short'}}
+                            {{(facility.guid | assessmentsList: assessments).length}}
                         </td>
                     </tr>
 

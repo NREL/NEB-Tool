@@ -18,6 +18,8 @@ import { AssessmentsTableComponent } from './assessments-table/assessments-table
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 describe('FacilityDashboardHomeComponent', () => {
   let component: FacilityDashboardHomeComponent;
@@ -37,6 +39,9 @@ describe('FacilityDashboardHomeComponent', () => {
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
   let userIdbService: Partial<UserIdbService> = {};
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    onSiteVisits: new BehaviorSubject<Array<IdbOnSiteVisit>>([])
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -49,6 +54,7 @@ describe('FacilityDashboardHomeComponent', () => {
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: UserIdbService, useValue: userIdbService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
       ]
     });
     fixture = TestBed.createComponent(FacilityDashboardHomeComponent);

@@ -108,7 +108,7 @@ export class PreAssessmentSetupComponent {
     await this.assessmentIdbService.setAssessments();
     this.onSiteVisit.assessmentIds.push(assessment.guid);
     await this.onSiteVisitIdbService.asyncUpdate(this.onSiteVisit);
-    this.setAccordionIndex(this.assessments.length - 1);
+    this.setAccordionIndex(this.onSiteVisit.assessmentIds.length - 1);
   }
 
   openDeleteModal(assessment: IdbAssessment) {

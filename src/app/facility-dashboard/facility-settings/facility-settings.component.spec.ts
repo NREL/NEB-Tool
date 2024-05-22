@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FacilitySettingsComponent } from './facility-settings.component';
-import { ManageFacilityComponent } from './manage-facility/manage-facility.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/shared-settings-forms.module';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +29,7 @@ describe('FacilitySettingsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
-      declarations: [FacilitySettingsComponent, ManageFacilityComponent],
+      declarations: [FacilitySettingsComponent],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },

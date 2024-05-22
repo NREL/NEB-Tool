@@ -5,9 +5,11 @@ import { Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
+import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 
 @Component({
   selector: 'app-assessments-table',
@@ -28,11 +30,11 @@ export class AssessmentsTableComponent {
   assessments: Array<IdbAssessment>;
   assessmentsSub: Subscription;
 
-  displayAddNewModal: boolean = false;
   constructor(private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
     private assessmentIdbService: AssessmentIdbService,
-    private router: Router) {
+    private sharedDataService: SharedDataService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService) {
   }
 
   ngOnInit() {
@@ -55,14 +57,16 @@ export class AssessmentsTableComponent {
   }
 
   openAddNewModal() {
-    this.displayAddNewModal = true;
+    this.companyIdbService.selectedCompany.next(undefined);
+    this.facilityIdbService.selectedFacility.next(undefined);
+    this.onSiteVisitIdbService.selectedVisit.next(undefined);
+    this.sharedDataService.createAssessmentModalOpen.next(true);
   }
 
-  closeAddNewModal() {
-    this.displayAddNewModal = false;
-  }
-
-  confirmCreate() {
-    this.router.navigateByUrl('/setup-wizard');
+  goToVisit(assessment: IdbAssessment) {
+    this.companyIdbService.setSelectedFromGUID(assessment.companyId);
+    this.facilityIdbService.setSelectedFromGUID(assessment.facilityId);
+    this.onSiteVisitIdbService.setSelectedFromAssessmentGUID(assessment.guid);
+    this.sharedDataService.createAssessmentModalOpen.next(true);
   }
 }

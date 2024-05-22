@@ -3,10 +3,14 @@ import { Router } from '@angular/router';
 import { IconDefinition, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbProject } from 'src/app/models/project';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 
 @Component({
   selector: 'app-assessment-dashboard-home',
@@ -22,12 +26,13 @@ export class AssessmentDashboardHomeComponent {
 
   projects: Array<IdbProject>;
   projectsSub: Subscription;
-
-  displayEditModal: boolean = false;
   constructor(private assessmentIdbService: AssessmentIdbService,
     private projectsIdbService: ProjectIdbService,
     private setupWizardService: SetupWizardService,
-    private router: Router
+    private facilityIdbService: FacilityIdbService,
+    private companyIdbService: CompanyIdbService,
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private sharedDataService: SharedDataService
   ) {
 
   }
@@ -48,16 +53,10 @@ export class AssessmentDashboardHomeComponent {
   }
 
   openEditModal() {
-    this.displayEditModal = true;
-  }
-
-  closeEditModal() {
-    this.displayEditModal = false;
-  }
-
-  confirmEdit() {
-    //TODO: Issue #75
+    this.facilityIdbService.setSelectedFromGUID(this.assessment.facilityId);
+    this.companyIdbService.setSelectedFromGUID(this.assessment.companyId);
+    this.onSiteVisitIdbService.setSelectedFromAssessmentGUID(this.assessment.guid);
     this.setupWizardService.setupContext.next('onSite');
-    this.router.navigateByUrl('/setup-wizard/assessment-setup/' + this.assessment.guid);
+    this.sharedDataService.createAssessmentModalOpen.next(true);
   }
 }

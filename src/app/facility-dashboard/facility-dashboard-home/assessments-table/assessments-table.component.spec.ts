@@ -10,6 +10,8 @@ import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 describe('AssessmentsTableComponent', () => {
   let component: AssessmentsTableComponent;
@@ -24,6 +26,9 @@ describe('AssessmentsTableComponent', () => {
   };
   let companyIdbService: Partial<CompanyIdbService> = {};
   let setupWizardService: Partial<SetupWizardService> = {};
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    onSiteVisits: new BehaviorSubject<Array<IdbOnSiteVisit>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, HelperPipesModule],
@@ -32,7 +37,8 @@ describe('AssessmentsTableComponent', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: SetupWizardService, useValue: setupWizardService }
+        { provide: SetupWizardService, useValue: setupWizardService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
       ]
     })
       .compileComponents();

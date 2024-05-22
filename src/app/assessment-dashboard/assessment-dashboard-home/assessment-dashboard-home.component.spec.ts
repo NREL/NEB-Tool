@@ -12,6 +12,8 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 
 describe('AssessmentDashboardHomeComponent', () => {
   let component: AssessmentDashboardHomeComponent;
@@ -27,6 +29,10 @@ describe('AssessmentDashboardHomeComponent', () => {
   let companyIdbService: Partial<CompanyIdbService> = {};
   let facilityIdbService: Partial<FacilityIdbService> = {};
   let setupWizardService: Partial<SetupWizardService> = {};
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
+    onSiteVisits: new BehaviorSubject<Array<IdbOnSiteVisit>>([])
+  };
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -37,7 +43,8 @@ describe('AssessmentDashboardHomeComponent', () => {
         { provide: ProjectIdbService, useValue: projectsIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: SetupWizardService, useValue: setupWizardService }
+        { provide: SetupWizardService, useValue: setupWizardService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
       ]
     })
       .compileComponents();

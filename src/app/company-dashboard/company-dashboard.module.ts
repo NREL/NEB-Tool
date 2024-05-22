@@ -13,7 +13,6 @@ import { CompanyReportsComponent } from './company-reports/company-reports.compo
 import { CompanySettingsComponent } from './company-settings/company-settings.component';
 import { ProjectsTableComponent } from './company-dashboard-home/projects-table/projects-table.component';
 import { FacilitiesTableComponent } from './company-dashboard-home/facilities-table/facilities-table.component';
-import { ManageCompanyComponent } from './company-settings/manage-company/manage-company.component';
 import { AssessmentsTableComponent } from './company-dashboard-home/assessments-table/assessments-table.component';
 
 @NgModule({
@@ -26,7 +25,6 @@ import { AssessmentsTableComponent } from './company-dashboard-home/assessments-
     CompanySettingsComponent,
     ProjectsTableComponent,
     FacilitiesTableComponent,
-    ManageCompanyComponent,
     AssessmentsTableComponent
   ],
   imports: [
