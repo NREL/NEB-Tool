@@ -37,6 +37,52 @@ export function getCustomKeyPerformanceIndicator(kpiName: string): KeyPerformanc
     }
 }
 
+export type KPI_Category_2 = 'Strategic Relationship Impact' | 'Operations' | 'Sustainability (Environmental Impact)' | 'Employee and Workplace Environment';
+export type Strategic_Relationship_Sub_Category = 'Strategic Relationship Impact';
+export type Operations_Sub_Category = 'Productivity' | 'Machine Utilization' | 'Quality' | 'Material Utilization' | 'Improve Space Utilization' | 'Reduce Expense Cost';
+export type Sustainability_Sub_Category = 'Energy Cost' | 'Waste Reduction: Hazardous' | 'Waste Reduction: Non-Hazardous' | 'Reduce Nonconforming and Product Waste' | 'Water Consumption' | 'Sewage Volume' | 'Dust Emissions'
+
+
+export interface KPI_Sub_Category {
+    kpi_category: KPI_Category_2,
+    sub_category: string
+};
+
+export const KPI_Categories: Array<KPI_Sub_Category> = [
+    {
+        kpi_category: 'Strategic Relationship Impact',
+        sub_category: 'Strategic Relationship Impact'
+    },
+    {
+        kpi_category: 'Operations',
+        sub_category: 'Productivity'
+    },
+    {
+        kpi_category: 'Operations',
+        sub_category: 'Machine Utilization'
+    },
+    {
+        kpi_category: 'Operations',
+        sub_category: 'Quality'
+    },
+    {
+        kpi_category: 'Operations',
+        sub_category: 'Material Utilization'
+    },
+    {
+        kpi_category: 'Operations',
+        sub_category: 'Improve Space Utilization'
+    },
+    {
+        kpi_category: 'Operations',
+        sub_category: 'Reduce Expense Cost'
+    },
+    {
+        kpi_category: 'Sustainability (Environmental Impact)',
+        sub_category: 'Energy Cost'
+    }
+]
+
 export type KPI_Category = 'Sustainability' | 'Safety' | 'Maintenance' | 'Quality' | 'Employee Retention' | 'Production';
 export const KPI_categories: Array<KPI_Category> = ['Sustainability', 'Safety', 'Maintenance', 'Quality', 'Employee Retention', 'Production'];
 export interface KPI_Option {
