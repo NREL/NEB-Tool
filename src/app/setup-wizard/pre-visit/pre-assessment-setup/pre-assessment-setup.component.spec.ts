@@ -17,6 +17,7 @@ import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 
 describe('PreAssessmentSetupComponent', () => {
   let component: PreAssessmentSetupComponent;
@@ -42,6 +43,8 @@ describe('PreAssessmentSetupComponent', () => {
   let contactIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
+
+  let dbChangesService: Partial<DbChangesService> = {}
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, HelperPipesModule],
@@ -52,7 +55,8 @@ describe('PreAssessmentSetupComponent', () => {
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
-        { provide: ContactIdbService, useValue: contactIdbService }
+        { provide: ContactIdbService, useValue: contactIdbService },
+        { provide: DbChangesService, useValue: dbChangesService }
       ]
     })
       .compileComponents();
