@@ -104,4 +104,8 @@ export class OnSiteAssessmentComponent {
   goToResults() {
     this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');
   }
+
+  goBack(){
+    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
+  }
 }

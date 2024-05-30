@@ -44,6 +44,10 @@
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-between">
         <div class="col-3">
+            <button class="btn btn-dark" (click)="goBack()"
+                *ngIf="assessmentIndex == 0">
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+            </button>
             <button class="btn btn-dark" (click)="goToPrevious()" *ngIf="assessmentIndex != 0">
                 <fa-icon [icon]="faChevronLeft"></fa-icon>
             </button>
@@ -72,6 +76,7 @@
         </div>
         <div class="col-3">
             <div class="d-flex  justify-content-end">
+
                 <button class="btn btn-dark" (click)="goToNextAssessment()"
                     *ngIf="assessmentIndex != onSiteVisit.assessmentIds.length-1">
                     <fa-icon [icon]="faChevronRight"></fa-icon>

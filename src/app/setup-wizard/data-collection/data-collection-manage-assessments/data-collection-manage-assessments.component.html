@@ -1,0 +1,89 @@
+<div class="setup-wizard-content">
+    <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow">
+                <h5>
+                    <fa-icon [icon]="faToolbox"></fa-icon> Manage Assessments
+                </h5>
+                <hr>
+                <div class="d-flex w-100 justify-content-between pb-2">
+                    <div class="p-0">
+                        <div class="row mb-1">
+                            <label class="col-sm-5 col-form-label bold" for="visitDate">Visit Date</label>
+                            <div class="col-sm-7">
+                                <input type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
+                                    name="visitDate" (change)="setVisitDate()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-0">
+                        <button class="btn btn-outline-success" (click)="addAssessment()">
+                            <fa-icon [icon]="faPlus"></fa-icon>
+                            Add Assessment
+                        </button>
+                    </div>
+                </div>
+
+                <ng-template [ngIf]="(onSiteVisit.assessmentIds | assessmentListOnSite: assessments).length != 0"
+                    [ngIfElse]="noAssessmentsBlock">
+                    <div class="list-group"
+                        *ngFor="let assessment of (onSiteVisit.assessmentIds | assessmentListOnSite: assessments); let assessmentIndex = index;">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <div class="p-0">
+                                    <fa-icon [icon]="faScrewdriverWrench" class="me-1"></fa-icon>
+                                    <a class="click-link" (click)="goToAssessment(assessment.guid)">{{assessment.name}}
+                                    </a>
+                                </div>
+                                <div class="p-0">
+                                    <button class="btn btn-sm btn-danger" (click)="openDeleteModal(assessment)">
+                                        <fa-icon [icon]="faTrash"></fa-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-template>
+                <ng-template #noAssessmentsBlock>
+                    <div class="alert alert-info text-center">
+                        No Assessments added. Click "Add Assessment" to add an assessment.
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-end">
+        <!-- <button class="btn btn-dark" (click)="goBack()">
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+            Go Back
+        </button> -->
+        <button class="btn btn-dark" (click)="goToNext()" [disabled]="onSiteVisit.assessmentIds.length == 0">
+            Go to Assessment
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+        </button>
+    </div>
+</nav>
+
+
+<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div class="popup" [ngClass]="{'open': displayDeleteModal }">
+    <div class="popup-header">Delete Assessment
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-danger">
+            Are you sure you want to delete this assessment? This cannot be undone.
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteAssessment()"><fa-icon [icon]="faTrash"></fa-icon> Delete
+            Assessment</button>
+    </div>
+</div>
