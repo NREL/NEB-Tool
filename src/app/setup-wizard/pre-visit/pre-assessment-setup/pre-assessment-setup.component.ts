@@ -69,7 +69,11 @@ export class PreAssessmentSetupComponent {
     });
 
     let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    this.processEquipmentOptions = facility.processEquipment;
+    if (facility) {
+      this.processEquipmentOptions = facility.processEquipment;
+    } else {
+      this.router.navigateByUrl('/setup-wizard');
+    }
   }
 
   ngOnDestroy() {
