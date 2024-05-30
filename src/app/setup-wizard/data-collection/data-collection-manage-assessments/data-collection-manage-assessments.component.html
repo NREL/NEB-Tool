@@ -58,10 +58,6 @@
 
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-end">
-        <!-- <button class="btn btn-dark" (click)="goBack()">
-            <fa-icon [icon]="faChevronLeft"></fa-icon>
-            Go Back
-        </button> -->
         <button class="btn btn-dark" (click)="goToNext()" [disabled]="onSiteVisit.assessmentIds.length == 0">
             Go to Assessment
             <fa-icon [icon]="faChevronRight"></fa-icon>
