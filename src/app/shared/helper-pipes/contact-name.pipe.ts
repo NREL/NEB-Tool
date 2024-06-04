@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ContactContext, IdbContact } from 'src/app/models/contact';
+import { IdbContact } from 'src/app/models/contact';
 
 @Pipe({
   name: 'contactName',
@@ -7,25 +7,14 @@ import { ContactContext, IdbContact } from 'src/app/models/contact';
 })
 export class ContactNamePipe implements PipeTransform {
 
-  transform(guid: string, context: ContactContext, contacts: Array<IdbContact>): Array<IdbContact> {
-    let _contacts: Array<IdbContact> = new Array();
-    contacts.forEach(_contact => {
-      if (context == 'processEquipment' && _contact.processEquipmentIds.includes(guid)) {
-        _contacts.push(_contact);
-      } else if (context == 'assessment' && _contact.assessmentIds.includes(guid)) {
-        _contacts.push(_contact);
-      } else if (context == 'facility' && _contact.facilityIds.includes(guid)) {
-        _contacts.push(_contact);
-      } else if (context == 'company' && _contact.companyId == guid) {
-        _contacts.push(_contact);
-      } else if (context == 'KPI' && _contact.kpiIds.includes(guid)) {
-        _contacts.push(_contact);
-      }
+  transform(contactGuid: string, contacts: Array<IdbContact>): string {
+    let contact: IdbContact = contacts.find(contact => {
+      return contact.guid == contactGuid;
     });
-    if (_contacts.length > 0) {
-      return _contacts;
+    if(contact){
+      return contact.name
     }
-    return [];
+    return '';
   }
 
 }

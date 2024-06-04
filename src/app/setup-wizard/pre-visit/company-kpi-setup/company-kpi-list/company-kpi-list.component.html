@@ -111,7 +111,7 @@
                             <div class="d-flex justify-content-between">
                                 <div class="col-6">
                                     <button class="btn btn-sm btn-primary me-1"
-                                        *ngFor="let contact of kpi.kpiOptionValue| contactName:'KPI': contacts;"
+                                        *ngFor="let contact of kpi.kpiOptionValue| associatedContacts:'KPI': contacts;"
                                         (click)="openContactModal(kpiIndex, contact)">
                                         <fa-icon [icon]="faUser"></fa-icon>
                                         {{contact.name}}

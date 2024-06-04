@@ -129,7 +129,7 @@
                                             <div class="d-flex justify-content-between">
                                                 <div class="col-6">
                                                     <button class="btn btn-sm btn-primary me-1"
-                                                        *ngFor="let contact of processEquipment.guid | contactName:'processEquipment': contacts;"
+                                                        *ngFor="let contact of processEquipment.guid | associatedContacts:'processEquipment': contacts;"
                                                         (click)="openContactModal(equipmentIndex, contact)">
                                                         <fa-icon [icon]="faUser"></fa-icon>
                                                         {{contact.name}}
