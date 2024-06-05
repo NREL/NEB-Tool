@@ -11,6 +11,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -47,7 +48,8 @@ export class PreAssessmentSetupComponent {
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private facilityIdbService: FacilityIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private contactIdbService: ContactIdbService
+    private contactIdbService: ContactIdbService,
+    private dbChangesService: DbChangesService
   ) {
   }
 
@@ -126,31 +128,7 @@ export class PreAssessmentSetupComponent {
   }
 
   async removeAssessment() {
-    this.assessments = this.assessments.filter(_assessment => {
-      return _assessment.guid != this.assessmentToDelete.guid;
-    });
-    //update contacts
-    let facilityContacts: Array<IdbContact> = this.contacts.filter(contact => {
-      return contact.facilityIds.includes(this.onSiteVisit.facilityId);
-    });
-    let contactsNeedUpdate: boolean = false;
-    for (let i = 0; i < facilityContacts.length; i++) {
-      if (facilityContacts[i].assessmentIds.includes(this.assessmentToDelete.guid)) {
-        facilityContacts[i].assessmentIds = facilityContacts[i].assessmentIds.filter(guid => {
-          return guid != this.assessmentToDelete.guid;
-        });
-        await firstValueFrom(this.contactIdbService.updateWithObservable(facilityContacts[i]));
-        contactsNeedUpdate = true;
-      };
-    }
-    if (contactsNeedUpdate) {
-      await this.contactIdbService.setContacts()
-    }
-
-    this.onSiteVisit.assessmentIds = this.onSiteVisit.assessmentIds.filter(guid => {
-      return guid != this.assessmentToDelete.guid
-    });
-    await this.onSiteVisitIdbService.asyncUpdate(this.onSiteVisit);
+    await this.dbChangesService.deleteAssessment(this.assessmentToDelete);
     this.closeDeleteModal();
     this.setAccordionIndex(0);
   }

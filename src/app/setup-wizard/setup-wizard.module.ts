@@ -39,6 +39,7 @@ import { AssessmentNebsFormComponent } from './data-collection/on-site-assessmen
 import { NebSetupFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
 import { PreVisitComponent } from './pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
+import { DataCollectionManageAssessmentsComponent } from './data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
 
 
 
@@ -75,7 +76,8 @@ import { DataCollectionComponent } from './data-collection/data-collection.compo
     AssessmentNebsFormComponent,
     NebSetupFormComponent,
     PreVisitComponent,
-    DataCollectionComponent
+    DataCollectionComponent,
+    DataCollectionManageAssessmentsComponent
   ],
   imports: [
     CommonModule,

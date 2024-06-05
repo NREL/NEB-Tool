@@ -41,7 +41,7 @@ export class OnSiteAssessmentComponent {
   assessmentIndex: number;
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
-  constructor(private router: Router, private assessmentIdbService: AssessmentIdbService, 
+  constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private activatedRoute: ActivatedRoute,
     private contactIdbService: ContactIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService
@@ -68,7 +68,7 @@ export class OnSiteAssessmentComponent {
       } else if (this.assessmentIndex == -1 && this.onSiteVisit.assessmentIds.length > 0) {
         this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[0]);
       } else if (!this.assessment) {
-        this.router.navigateByUrl('/setup-wizard');
+        this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
       }
     });
   }
@@ -103,5 +103,9 @@ export class OnSiteAssessmentComponent {
 
   goToResults() {
     this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
   }
 }
