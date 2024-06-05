@@ -83,11 +83,7 @@ export class PreAssessmentSetupComponent {
     this.contactsSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
   }
-
-  goToProjects() {
-    this.router.navigateByUrl('/setup-wizard/project-setup');
-  }
-
+  
   async saveChanges(assessment: IdbAssessment) {
     this.isFormChange = true;
     this.assessmentIdbService.asyncUpdate(assessment);

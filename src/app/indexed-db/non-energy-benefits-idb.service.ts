@@ -26,8 +26,8 @@ export class NonEnergyBenefitsIdbService {
     return this.dbService.getByKey('nonEnergyBenefit', id);
   }
 
-  addWithObservable(project: IdbNonEnergyBenefit): Observable<IdbNonEnergyBenefit> {
-    return this.dbService.add('nonEnergyBenefit', project);
+  addWithObservable(nonEnergyBenefit: IdbNonEnergyBenefit): Observable<IdbNonEnergyBenefit> {
+    return this.dbService.add('nonEnergyBenefit', nonEnergyBenefit);
   }
 
   deleteWithObservable(id: number): Observable<any> {

@@ -12,7 +12,7 @@ import { SetupWizardService } from '../setup-wizard.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 
 describe('ReviewSetupComponent', () => {
   let component: ReviewSetupComponent;
@@ -27,7 +27,7 @@ describe('ReviewSetupComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([])
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {};
-  let projectIdbService: Partial<ProjectIdbService> = {};
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {};
   let setupWizardService: Partial<SetupWizardService> = {  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -39,7 +39,7 @@ describe('ReviewSetupComponent', () => {
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
-        { provide: ProjectIdbService, useValue: projectIdbService },
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
       ]
     })
       .compileComponents();

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { CompanyNamePipe } from './company-name.pipe';
 import { FacilityNamePipe } from './facility-name.pipe';
 import { FacilityListPipe } from './facility-list.pipe';
-import { ProjectsListPipe } from './projects-list.pipe';
 import { AddressDisplayPipe } from './address-display.pipe';
 import { AssessmentsListPipe } from './assessments-list.pipe';
 import { KpiLabelPipe } from './kpi-label.pipe';
@@ -14,17 +13,17 @@ import { IncludesContactPipe } from './includes-contact.pipe';
 import { AssessmentNameDisplayPipe } from './assessment-name-display.pipe';
 import { ProcessEquipmentDisplayPipe } from './process-equipment-display.pipe';
 import { NebDisplayPipe } from './neb-display.pipe';
-import { ProjectDisplayPipe } from './project-display.pipe';
 import { OnSiteVisitListPipe } from './on-site-visit-list.pipe';
 import { AssessmentListOnSitePipe } from './assessment-list-on-site.pipe';
 import { NebListPipe } from './neb-list.pipe';
+import { EnergyOpportunityDisplayPipe } from './energy-opportunity-display.pipe';
+import { EnergyOpportunityListPipe } from './energy-opportunity-list.pipe';
 
 @NgModule({
   declarations: [
     CompanyNamePipe,
     FacilityNamePipe,
     FacilityListPipe,
-    ProjectsListPipe,
     AddressDisplayPipe,
     AssessmentsListPipe,
     KpiLabelPipe,
@@ -35,10 +34,11 @@ import { NebListPipe } from './neb-list.pipe';
     AssessmentNameDisplayPipe,
     ProcessEquipmentDisplayPipe,
     NebDisplayPipe,
-    ProjectDisplayPipe,
     OnSiteVisitListPipe,
     AssessmentListOnSitePipe,
-    NebListPipe
+    NebListPipe,
+    EnergyOpportunityDisplayPipe,
+    EnergyOpportunityListPipe
   ],
   imports: [
     CommonModule
@@ -47,7 +47,6 @@ import { NebListPipe } from './neb-list.pipe';
     CompanyNamePipe,
     FacilityNamePipe,
     FacilityListPipe,
-    ProjectsListPipe,
     AddressDisplayPipe,
     AssessmentsListPipe,
     KpiLabelPipe,
@@ -58,10 +57,11 @@ import { NebListPipe } from './neb-list.pipe';
     AssessmentNameDisplayPipe,
     ProcessEquipmentDisplayPipe,
     NebDisplayPipe,
-    ProjectDisplayPipe,
     OnSiteVisitListPipe,
     AssessmentListOnSitePipe,
-    NebListPipe
+    NebListPipe,
+    EnergyOpportunityDisplayPipe,
+    EnergyOpportunityListPipe
   ]
 })
 export class HelperPipesModule { }

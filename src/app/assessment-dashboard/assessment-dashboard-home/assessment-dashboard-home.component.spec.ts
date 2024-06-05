@@ -4,8 +4,6 @@ import { AssessmentDashboardHomeComponent } from './assessment-dashboard-home.co
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { BehaviorSubject } from 'rxjs';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
-import { IdbProject } from 'src/app/models/project';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
@@ -14,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 
 describe('AssessmentDashboardHomeComponent', () => {
   let component: AssessmentDashboardHomeComponent;
@@ -22,10 +21,6 @@ describe('AssessmentDashboardHomeComponent', () => {
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
   };
-  let projectsIdbService: Partial<ProjectIdbService> = {
-    projects: new BehaviorSubject<Array<IdbProject>>([])
-  }
-
   let companyIdbService: Partial<CompanyIdbService> = {};
   let facilityIdbService: Partial<FacilityIdbService> = {};
   let setupWizardService: Partial<SetupWizardService> = {};
@@ -40,7 +35,6 @@ describe('AssessmentDashboardHomeComponent', () => {
       declarations: [AssessmentDashboardHomeComponent],
       providers: [
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
-        { provide: ProjectIdbService, useValue: projectsIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: SetupWizardService, useValue: setupWizardService },

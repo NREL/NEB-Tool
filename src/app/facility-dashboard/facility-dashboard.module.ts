@@ -11,7 +11,6 @@ import { FacilityProductionDetailsComponent } from './facility-dashboard-home/fa
 import { FacilityDashboardTabsComponent } from './facility-dashboard-tabs/facility-dashboard-tabs.component';
 import { FacilitySettingsComponent } from './facility-settings/facility-settings.component';
 import { FacilityReportsComponent } from './facility-reports/facility-reports.component';
-import { ProjectsTableComponent } from './facility-dashboard-home/projects-table/projects-table.component';
 import { FacilityGoalsComponent } from './facility-goals/facility-goals.component';
 import { AssessmentsTableComponent } from './facility-dashboard-home/assessments-table/assessments-table.component';
 
@@ -25,7 +24,6 @@ import { AssessmentsTableComponent } from './facility-dashboard-home/assessments
     FacilityDashboardTabsComponent,
     FacilitySettingsComponent,
     FacilityReportsComponent,
-    ProjectsTableComponent,
     FacilityGoalsComponent,
     AssessmentsTableComponent
   ],

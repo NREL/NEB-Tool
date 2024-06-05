@@ -8,14 +8,14 @@ import { LocalStorageService } from 'ngx-webstorage';
 export class SetupWizardService {
 
   setupContext: BehaviorSubject<SetupWizardContext>;
-  highlighProjectGuid: BehaviorSubject<string>;
-  highlighNebGuid: BehaviorSubject<string>;
+  highlightOpportunityGuid: BehaviorSubject<string>;
+  highlightNebGuid: BehaviorSubject<string>;
   sidebarOpen: BehaviorSubject<boolean>;
   constructor(
     private localStorageService: LocalStorageService
   ) {
-    this.highlighNebGuid = new BehaviorSubject<string>(undefined);
-    this.highlighProjectGuid = new BehaviorSubject<string>(undefined);
+    this.highlightNebGuid = new BehaviorSubject<string>(undefined);
+    this.highlightOpportunityGuid = new BehaviorSubject<string>(undefined);
     this.sidebarOpen = new BehaviorSubject<boolean>(true);
 
     let setupContext: SetupWizardContext = this.localStorageService.retrieve("setupContext");
