@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { KPI_Option, KPI_Options, KeyPerformanceIndicator } from '../constants/keyPerformanceIndicators';
+import { KeyPerformanceIndicator, KeyPerformanceIndicators } from '../constants/keyPerformanceIndicators2';
 
 @Pipe({
   name: 'kpiLabel'
@@ -7,15 +7,15 @@ import { KPI_Option, KPI_Options, KeyPerformanceIndicator } from '../constants/k
 export class KpiLabelPipe implements PipeTransform {
 
   transform(kpi: KeyPerformanceIndicator): string {
-    if (kpi.isCustom) {
-      return kpi.customKPIName
-    } else {
-      let findOption: KPI_Option = KPI_Options.find(option => { return option.value == kpi.kpiOptionValue });
-      if (findOption) {
-        return findOption.label;
-      }
+    // if (kpi.isCustom) {
+    //   return kpi.customKPIName
+    // } else {
+    let findOption: KeyPerformanceIndicator = KeyPerformanceIndicators.find(option => { return option.value == kpi.value });
+    if (findOption) {
+      return findOption.label;
     }
-    return kpi.kpiOptionValue;
+    // }
+    return kpi.value;
   }
 
 }

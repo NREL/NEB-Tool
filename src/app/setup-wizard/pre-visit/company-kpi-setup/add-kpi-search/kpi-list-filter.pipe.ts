@@ -1,16 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { KPI_Category, KPI_Option } from 'src/app/shared/constants/keyPerformanceIndicators';
+import { KeyPerformanceIndicator, PrimaryKPI } from 'src/app/shared/constants/keyPerformanceIndicators2';
+import * as _ from 'lodash';
 
 @Pipe({
   name: 'kpiListFilter'
 })
 export class KpiListFilterPipe implements PipeTransform {
 
-  transform(kpi_Options: Array<KPI_Option>, searchStr: string, category: KPI_Category): Array<KPI_Option> {
-    let filteredOptions: Array<KPI_Option> = kpi_Options;
+  transform(keyPerformanceIndicators: Array<KeyPerformanceIndicator>, searchStr: string, category: PrimaryKPI): Array<KeyPerformanceIndicator> {
+    let filteredOptions: Array<KeyPerformanceIndicator> = keyPerformanceIndicators;
     if (category) {
       filteredOptions = filteredOptions.filter(option => {
-        return option.category == category
+        return option.primaryKPI == category
       });
     }
     if (searchStr) {
@@ -18,7 +19,9 @@ export class KpiListFilterPipe implements PipeTransform {
         return option.label.toLowerCase().includes(searchStr.toLowerCase());
       });
     }
-    return filteredOptions;
+    return _.orderBy(filteredOptions, (option: KeyPerformanceIndicator) => {
+      return option.label;
+    }, 'asc');
   }
 
 }

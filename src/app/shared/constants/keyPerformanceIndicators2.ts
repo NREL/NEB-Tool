@@ -1,5 +1,5 @@
 export type PrimaryKPI = 'Strategic Relationship Impact' | 'Operations' | 'Sustainability (Environmental Impact)' | 'Employee and Workplace Environment';
-
+export const PrimaryKPIs: Array<PrimaryKPI> = ['Strategic Relationship Impact', 'Operations', 'Sustainability (Environmental Impact)', 'Employee and Workplace Environment']
 export type KeyPerformanceIndicatorValue =
     'strategicRelationshipImpact' |
     'productivity' |

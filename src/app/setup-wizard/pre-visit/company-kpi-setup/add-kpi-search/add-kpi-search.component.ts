@@ -3,7 +3,8 @@ import { IconDefinition, faMagnifyingGlass, faMagnifyingGlassPlus, faPlus } from
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany } from 'src/app/models/company';
-import { KPI_Category, KPI_Option, KPI_Options, KPI_categories, KeyPerformanceIndicator, getCustomKeyPerformanceIndicator, getKeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
+import { KPI_Category, KPI_Option, KPI_Options, KPI_categories, getCustomKeyPerformanceIndicator, getKeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
+import { KeyPerformanceIndicator, KeyPerformanceIndicators, PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicators2';
 
 @Component({
   selector: 'app-add-kpi-search',
@@ -21,10 +22,15 @@ export class AddKpiSearchComponent {
   companySub: Subscription;
   kpi_categories: Array<KPI_Category> = KPI_categories;
 
+  primaryKPIs: Array<PrimaryKPI> = PrimaryKPIs;
+
   displayCustomKPIModal: boolean = false;
   customKPIName: string = '';
-  kpiCategorySearch: KPI_Category | undefined = undefined;
+  kpiCategorySearch: PrimaryKPI | undefined = undefined;
   kpiSearchStr: string = '';
+
+  keyPerformanceIndicators: Array<KeyPerformanceIndicator> = KeyPerformanceIndicators;
+
   constructor(private companyIdbService: CompanyIdbService) {
 
   }
@@ -62,15 +68,15 @@ export class AddKpiSearchComponent {
   }
 
   confirmCreate() {
-    let customKPI: KeyPerformanceIndicator = getCustomKeyPerformanceIndicator(this.customKPIName);
-    this.company.keyPerformanceIndicators.push(customKPI);
-    this.closeCustomKPIModal();
+    // let customKPI: KeyPerformanceIndicator = getCustomKeyPerformanceIndicator(this.customKPIName);
+    // this.company.keyPerformanceIndicators.push(customKPI);
+    // this.closeCustomKPIModal();
   }
 
 
-  async addKPI(option: KPI_Option) {
-    let newKPI: KeyPerformanceIndicator = getKeyPerformanceIndicator(option);
-    this.company.keyPerformanceIndicators.push(newKPI);
-    await this.saveChanges();
+  async addKPI(option: KeyPerformanceIndicator) {
+    // let newKPI: KeyPerformanceIndicator = getKeyPerformanceIndicator(option);
+    // this.company.keyPerformanceIndicators.push(newKPI);
+    // await this.saveChanges();
   }
 }

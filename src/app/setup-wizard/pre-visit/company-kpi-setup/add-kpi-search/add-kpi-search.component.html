@@ -23,7 +23,7 @@
                         <select name="kpiCategorySearch" class="form-select" id="kpiCategorySearch"
                             [(ngModel)]="kpiCategorySearch">
                             <option [ngValue]="undefined">All Categories</option>
-                            <option *ngFor="let category of kpi_categories" [ngValue]="category">
+                            <option *ngFor="let category of primaryKPIs" [ngValue]="category">
                                 {{category}}
                             </option>
                         </select>
@@ -37,15 +37,15 @@
                 </div>
                 <div class="list-group">
                     <div class="list-group-item list-group-item-action"
-                        *ngFor="let option of kpi_Options | kpiListFilter: kpiSearchStr: kpiCategorySearch"
+                        *ngFor="let option of keyPerformanceIndicators | kpiListFilter: kpiSearchStr: kpiCategorySearch"
                         (click)="addKPI(option)">
                         <div class="d-flex w-100 justify-content-between">
                             <div>
                                 <span [innerHTML]="option.label"></span>
                             </div>
                             <div>
-                                <span class="badge" [ngStyle]="{'background-color':option.category | kpiCategoryClass}">
-                                    {{option.category}}
+                                <span class="badge" [ngStyle]="{'background-color':option.primaryKPI | kpiCategoryClass}">
+                                    {{option.primaryKPI}}
                                 </span>
                             </div>
 

@@ -1,24 +1,20 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { KPI_Category, KPI_Option, KPI_Options } from 'src/app/shared/constants/keyPerformanceIndicators';
+import { PrimaryKPI } from 'src/app/shared/constants/keyPerformanceIndicators2';
 
 @Pipe({
   name: 'kpiCategoryClass'
 })
 export class KpiCategoryClassPipe implements PipeTransform {
 
-  transform(category: KPI_Category): string {
-    if (category == 'Employee Retention') {
+  transform(category: PrimaryKPI): string {
+    if (category == 'Strategic Relationship Impact') {
       return '#8E44AD';
-    } else if (category == 'Sustainability') {
+    } else if (category == 'Sustainability (Environmental Impact)') {
       return '#138D75';
-    } else if (category == 'Safety') {
+    } else if (category == 'Operations') {
       return '#D35400';
-    } else if (category == 'Maintenance') {
+    } else if (category == 'Employee and Workplace Environment') {
       return '#2C3E50';
-    } else if (category == 'Quality') {
-      return '#B7950B';
-    } else if (category == 'Production') {
-      return '#1F618D';
     }
     return null;
   }

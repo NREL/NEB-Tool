@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header">
                 <fa-icon [icon]="faBullseye" class="pe-1"></fa-icon>
-                <span [innerHTML]="kpi | kpiLabel"></span>
+                <!-- <span [innerHTML]="kpi | kpiLabel"></span> -->
             </div>
             <div class="card-body">
 
@@ -17,9 +17,9 @@
                                 KPI Category
                             </td>
                             <td>
-                                <span class="badge" [ngStyle]="{'background-color':kpi.category | kpiCategoryClass}">
+                                <!-- <span class="badge" [ngStyle]="{'background-color':kpi.category | kpiCategoryClass}"> -->
                                     {{kpi.category}}
-                                </span>
+                                <!-- </span> -->
                             </td>
                         </tr>
                         <ng-template [ngIf]="!kpi.isQualitative">
