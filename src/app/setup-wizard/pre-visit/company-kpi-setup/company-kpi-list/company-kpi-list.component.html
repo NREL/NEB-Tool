@@ -1,4 +1,4 @@
-<ng-template [ngIf]="company.keyPerformanceIndicators.length != 0" [ngIfElse]="noDataBlock">
+<ng-template [ngIf]="company && company.keyPerformanceIndicators.length != 0" [ngIfElse]="noDataBlock">
 
     <div class="accordion" id="kpiAccordion">
         <div class="accordion-item" *ngFor="let kpi of company.keyPerformanceIndicators; let kpiIndex = index;">

@@ -6,20 +6,22 @@
                     <fa-icon [icon]="faIndustry" class="me-2"></fa-icon>Facility Details
                 </h5>
                 <hr>
-                <form>
-                    <label class="bold" for="facilityName">Facility Name</label>
-                    <input name="facilityName" type="text" class="form-control" [(ngModel)]="facilityName"
-                        (input)="saveChanges()" id="facilityName">
-                </form>
-                <hr>
-                <label class="bold">Location</label>
-                <app-location-form [inCompany]="false"></app-location-form>
-                <hr>
-                <label class="bold">Tracked Utilities</label>
-                <app-units-form [inCompany]="false"></app-units-form>
-                <hr>
-                <label class="bold">Additional Details</label>
-                <app-additional-details-form [inCompany]="false"></app-additional-details-form>
+                <ng-container *ngIf="facility">
+                    <form>
+                        <label class="bold" for="facilityName">Facility Name</label>
+                        <input name="facilityName" type="text" class="form-control" [(ngModel)]="facilityName"
+                            (input)="saveChanges()" id="facilityName">
+                    </form>
+                    <hr>
+                    <label class="bold">Location</label>
+                    <app-location-form [inCompany]="false"></app-location-form>
+                    <hr>
+                    <label class="bold">Tracked Utilities</label>
+                    <app-units-form [inCompany]="false"></app-units-form>
+                    <hr>
+                    <label class="bold">Additional Details</label>
+                    <app-additional-details-form [inCompany]="false"></app-additional-details-form>
+                </ng-container>
             </div>
         </div>
     </div>

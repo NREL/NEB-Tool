@@ -8,6 +8,7 @@ import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbContact } from 'src/app/models/contact';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 
 @Component({
   selector: 'app-review-pre-visit-setup',
@@ -22,18 +23,20 @@ export class ReviewPreVisitSetupComponent {
   faFilePdf: IconDefinition = faFilePdf;
 
   company: IdbCompany;
-  facility: IdbFacility;
-  assessments: Array<IdbAssessment>;
-  contacts: Array<IdbContact>;
   displayConfirmModal: boolean = false;
   setupContext: SetupWizardContext;
   constructor(private router: Router, private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private setupWizardService: SetupWizardService
+    private setupWizardService: SetupWizardService,
+    private companyIdbService: CompanyIdbService
   ) {
   }
 
   ngOnInit() {
     this.setupContext = this.setupWizardService.setupContext.getValue();
+    this.company = this.companyIdbService.selectedCompany.getValue();
+    if(!this.company){
+      this.router.navigateByUrl('/setup-wizard');
+    }
   }
 
   goBack() {

@@ -46,10 +46,13 @@ export class FacilityProcessEquipmentSetupComponent {
   }
 
   ngOnInit() {
-    this.facility = this.facilityIdbService.selectedFacility.getValue();
     this.contactSub = this.contactIdbService.contacts.subscribe(_contacts => {
       this.contacts = _contacts;
     });
+    this.facility = this.facilityIdbService.selectedFacility.getValue();
+    if (!this.facility) {
+      this.router.navigateByUrl('/setup-wizard')
+    }
   }
 
   ngOnDestroy() {

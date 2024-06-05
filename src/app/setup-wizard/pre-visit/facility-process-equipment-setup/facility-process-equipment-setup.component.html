@@ -14,7 +14,7 @@
                         </button>
                     </div>
                 </div>
-                <ng-template [ngIf]="facility.processEquipment.length != 0" [ngIfElse]="noProcessEquipmentBlock">
+                <ng-template [ngIf]="facility && facility.processEquipment.length != 0" [ngIfElse]="noProcessEquipmentBlock">
                     <div class="accordion" id="equipmentAccordion">
                         <div class="accordion-item"
                             *ngFor="let processEquipment of facility.processEquipment; let equipmentIndex = index;">

@@ -24,7 +24,7 @@ export class FacilitySetupComponent {
   faLocationDot: IconDefinition = faLocationDot;
   faIndustry: IconDefinition = faIndustry;
 
-
+  facility: IdbFacility;
   constructor(private facilityIdbService: FacilityIdbService, private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService
   ) {
@@ -32,14 +32,18 @@ export class FacilitySetupComponent {
   }
 
   ngOnInit() {
-    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    this.facilityName = facility.generalInformation.name;
+    this.facility = this.facilityIdbService.selectedFacility.getValue();
+    if (this.facility) {
+      this.facilityName = this.facility.generalInformation.name;
+    } else {
+      this.router.navigateByUrl('/setup-wizard');
+    }
   }
 
   async saveChanges() {
-    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    facility.generalInformation.name = this.facilityName;
-    await this.facilityIdbService.asyncUpdate(facility);
+    this.facility = this.facilityIdbService.selectedFacility.getValue();
+    this.facility.generalInformation.name = this.facilityName;
+    await this.facilityIdbService.asyncUpdate(this.facility);
   }
 
   goBack() {
