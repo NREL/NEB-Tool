@@ -24,15 +24,19 @@
                         </div>
                     </div>
                     <!--TODO: follow pattern on remaining fields-->
-                    <!-- <div class="row mb-1">
-                        <label class="col-sm-5 col-form-label" for="phone">Phone
-                            Number</label>
+                    <div class="row mb-1">
+                        <label class="col-sm-5 col-form-label" for="phone">Phone Number</label>
                         <div class="col-sm-7">
                             <div class="input-group">
                                 <input type="tel" class="form-control"
-                                    [(ngModel)]="contact.phone"
-                                    (input)="saveChanges(contact)" minlength="1"
-                                    maxlength="10" id="phone" name="phone">
+                                    formControlName="phone"
+                                    (input)="saveChanges()"
+                                    minlength="1" maxlength="100"
+                                    id="phone" name="phone"
+                                    placeholder="US: (xxx)-xxx-xxxx or International: +xxx xxxxxxxxxx">
+                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['phone'].errors">
+                                    Invalid phone number
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -42,7 +46,7 @@
                             <div class="input-group">
                                 <input type="email" class="form-control"
                                     [(ngModel)]="contact.email"
-                                    (input)="saveChanges(contact)" minlength="1"
+                                    (input)="saveChanges()" minlength="1"
                                     maxlength="85" id="email" name="email">
                             </div>
                         </div>
@@ -53,7 +57,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control"
                                     [(ngModel)]="contact.role"
-                                    (input)="saveChanges(contact)" minlength="1"
+                                    (input)="saveChanges()" minlength="1"
                                     maxlength="85" id="role" name="role">
                             </div>
                         </div>
@@ -64,7 +68,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control"
                                     [(ngModel)]="contact.team"
-                                    (input)="saveChanges(contact)" minlength="1"
+                                    (input)="saveChanges()" minlength="1"
                                     maxlength="85" id="team" name="team">
                             </div>
                         </div>
@@ -76,7 +80,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control"
                                     [(ngModel)]="contact.focusArea"
-                                    (input)="saveChanges(contact)" minlength="1"
+                                    (input)="saveChanges()" minlength="1"
                                     maxlength="85" id="focusArea" name="focusArea">
                             </div>
                         </div>
@@ -86,9 +90,9 @@
                         <div class="col-sm-7">
                             <textarea class="form-control" name="notes"
                                 [(ngModel)]="contact.notes"
-                                (input)="saveChanges(contact)"></textarea>
+                                (input)="saveChanges()"></textarea>
                         </div>
-                    </div> -->
+                    </div>
                 </form>
             </div>
             <div class="col-12">
