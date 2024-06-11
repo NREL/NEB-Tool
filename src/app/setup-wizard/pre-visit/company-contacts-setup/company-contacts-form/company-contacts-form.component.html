@@ -2,7 +2,7 @@
     <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#'+contactGuid"
         aria-expanded="true" [attr.aria-controls]="contactGuid"
         [ngClass]="{'collapsed': accordionIndex != contactIndex}" (click)="setAccordionIndex(contactIndex)">
-        <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="contactForm.invalid"></fa-icon>
+        <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="contactForm.touched && contactForm.invalid"></fa-icon>
         <fa-icon [icon]="faUser" class="pe-1"></fa-icon>
         {{contact.name}}
     </button>
