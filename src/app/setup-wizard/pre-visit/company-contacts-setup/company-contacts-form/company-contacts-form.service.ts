@@ -14,7 +14,7 @@ export class CompanyContactsFormService {
       'name': [contact.name, [Validators.required]],
       //TODO: add form controls corresponding to form
       'phone': [contact.phone, [this.phoneNumberValidator()]],
-      'email': [contact.email, [Validators.email, Validators.minLength(1), Validators.maxLength(255)]],
+      'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
     });
   }
 
@@ -59,6 +59,8 @@ export class CompanyContactsFormService {
   // Custom validator for phone number
   phoneNumberValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      const value = (control.value || '').trim();
+      if (!value) return null;
       const phone = this.phoneNumberParser(control.value);
       if (phone) {
         return null;
