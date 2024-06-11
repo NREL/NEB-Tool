@@ -45,9 +45,9 @@
                         <div class="col-sm-7">
                             <div class="input-group">
                                 <input type="email" class="form-control"
-                                    [(ngModel)]="contact.email"
-                                    (input)="saveChanges()" minlength="1"
-                                    maxlength="85" id="email" name="email">
+                                    formControlName="email"
+                                    (input)="saveChanges()"
+                                    id="email" name="email">
                             </div>
                         </div>
                     </div>
@@ -59,6 +59,15 @@
                                     [(ngModel)]="contact.role"
                                     (input)="saveChanges()" minlength="1"
                                     maxlength="85" id="role" name="role">
+                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors && 
+                                    (contactForm.controls['email'].touched || contactForm.controls['email'].dirty)">
+                                    <div *ngIf="contactForm.controls['email'].errors['required']">
+                                        This field is required.
+                                      </div>
+                                      <div *ngIf="contactForm.controls['email'].errors['maxlength']">
+                                        Maximum length is 255 characters.
+                                      </div>
+                                </div>
                             </div>
                         </div>
                     </div>
