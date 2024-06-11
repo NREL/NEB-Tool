@@ -41,31 +41,34 @@
                     <div class="row mb-1">
                         <label class="col-sm-5 col-form-label" for="email">Email</label>
                         <div class="col-sm-7">
-                            <div class="input-group">
-                                <input type="email" class="form-control"
-                                    formControlName="email"
-                                    (input)="saveChanges()"
-                                    id="email" name="email">
+                            <input type="email" class="form-control"
+                                formControlName="email"
+                                ((keyup))="saveChanges()"
+                                id="email" name="email">
+                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['pattern'] && -->
+                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors &&
+                                (contactForm.controls['email'].touched || contactForm.controls['email'].dirty)">
+                                Invalid email.
+                            </div> -->
+                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['email']"> -->
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.get('email').errors">
+                                Invalid email.
+                            </div>
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">
+                                Maximum length is 255 characters.
                             </div>
                         </div>
                     </div>
                     <div class="row mb-1">
                         <label class="col-sm-5 col-form-label" for="role">Role</label>
                         <div class="col-sm-7">
-                            <div class="input-group">
-                                <input type="text" class="form-control"
-                                    [(ngModel)]="contact.role"
-                                    (input)="saveChanges()" minlength="1"
-                                    maxlength="85" id="role" name="role">
-                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors && 
-                                    (contactForm.controls['email'].touched || contactForm.controls['email'].dirty)">
-                                    <div *ngIf="contactForm.controls['email'].errors['required']">
-                                        This field is required.
-                                      </div>
-                                      <div *ngIf="contactForm.controls['email'].errors['maxlength']">
-                                        Maximum length is 255 characters.
-                                      </div>
-                                </div>
+                            <input type="text" class="form-control"
+                                [(ngModel)]="contact.role"
+                                ((keyup))="saveChanges()" minlength="1"
+                                maxlength="85" id="role" name="role">
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['role'].errors['maxlength'] && 
+                                (contactForm.controls['role'].touched || contactForm.controls['role'].dirty)">
+                                Maximum length is 255 characters.
                             </div>
                         </div>
                     </div>

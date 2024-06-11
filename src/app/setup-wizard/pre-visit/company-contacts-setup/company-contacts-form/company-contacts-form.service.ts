@@ -14,7 +14,9 @@ export class CompanyContactsFormService {
       'name': [contact.name, [Validators.required]],
       //TODO: add form controls corresponding to form
       'phone': [contact.phone, [this.phoneNumberValidator()]],
-      'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
+      // 'email': [contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.maxLength(255)]],
+      // 'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
+      'email': [contact.email, [Validators.email, Validators.maxLength(255)]]
     });
   }
 
