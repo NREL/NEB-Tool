@@ -17,7 +17,7 @@
                         <label class="col-sm-5 col-form-label" for="name">Name</label>
                         <div class="col-sm-7">
                             <input name="name" type="text" class="form-control" formControlName="name" id="name"
-                                (input)="saveChanges()">
+                                (keyup)="saveChanges()">
                             <div class="alert alert-danger form-error" *ngIf="contactForm.controls['name'].touched && contactForm.controls['name'].getError('required')">
                                 Name Required
                             </div>    
@@ -29,12 +29,12 @@
                         <div class="col-sm-7">
                             <input type="tel" class="form-control"
                                 formControlName="phone"
-                                (input)="saveChanges()"
-                                id="phone" name="phone"
-                                placeholder="US: (xxx)-xxx-xxxx or International: +xxx xxxxxxxxxx">
+                                (keyup)="saveChanges()"
+                                id="phone" name="phone">
+                                <!-- placeholder=""> -->
                             <div class="alert alert-danger form-error" *ngIf="contactForm.controls['phone'].errors && 
                                 (contactForm.controls['phone'].touched || contactForm.controls['phone'].dirty)">
-                                Invalid phone number
+                                Invalid phone number: for US (xxx)-xxx-xxxx / for international +xxx xxxxxxxxxx
                             </div>
                         </div>
                     </div>
@@ -44,6 +44,7 @@
                             <input type="email" class="form-control"
                                 formControlName="email"
                                 ((keyup))="saveChanges()"
+                                maxlength="255"
                                 id="email" name="email">
                             <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['pattern'] && -->
                             <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors &&
@@ -54,32 +55,32 @@
                             <div class="alert alert-danger form-error" *ngIf="contactForm.get('email').errors">
                                 Invalid email.
                             </div>
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">
+                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">
                                 Maximum length is 255 characters.
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="row mb-1">
                         <label class="col-sm-5 col-form-label" for="role">Role</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control"
-                                [(ngModel)]="contact.role"
-                                ((keyup))="saveChanges()" minlength="1"
-                                maxlength="85" id="role" name="role">
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['role'].errors['maxlength'] && 
-                                (contactForm.controls['role'].touched || contactForm.controls['role'].dirty)">
-                                Maximum length is 255 characters.
+                                formControlName="role"
+                                ((keyup))="saveChanges()"
+                                maxlength="100" id="role" name="role">
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['role'].errors">
+                                Invalid role
                             </div>
                         </div>
                     </div>
                     <div class="row mb-1">
                         <label class="col-sm-5 col-form-label" for="team">Team</label>
                         <div class="col-sm-7">
-                            <div class="input-group">
-                                <input type="text" class="form-control"
-                                    [(ngModel)]="contact.team"
-                                    (input)="saveChanges()" minlength="1"
-                                    maxlength="85" id="team" name="team">
+                            <input type="text" class="form-control"
+                                formControlName="team"
+                                (keyup)="saveChanges()"
+                                maxlength="100" id="team" name="team">
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['team'].errors">
+                                Invalid team
                             </div>
                         </div>
                     </div>
@@ -89,9 +90,12 @@
                         <div class="col-sm-7">
                             <div class="input-group">
                                 <input type="text" class="form-control"
-                                    [(ngModel)]="contact.focusArea"
-                                    (input)="saveChanges()" minlength="1"
+                                    formControlName="focusArea"
+                                    (keyup)="saveChanges()" minlength="1"
                                     maxlength="85" id="focusArea" name="focusArea">
+                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['focusArea'].errors">
+                                    Invalid focus area
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -99,8 +103,11 @@
                         <label class="col-sm-5 col-form-label" for="notes">Notes</label>
                         <div class="col-sm-7">
                             <textarea class="form-control" name="notes"
-                                [(ngModel)]="contact.notes"
-                                (input)="saveChanges()"></textarea>
+                                formControlName="notes"
+                                (keyup)="saveChanges()"></textarea>
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['notes'].errors">
+                                Invalid notes
+                            </div>
                         </div>
                     </div>
                 </form>

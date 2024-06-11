@@ -16,7 +16,11 @@ export class CompanyContactsFormService {
       'phone': [contact.phone, [this.phoneNumberValidator()]],
       // 'email': [contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.maxLength(255)]],
       // 'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
-      'email': [contact.email, [Validators.email, Validators.maxLength(255)]]
+      'email': [contact.email, [Validators.email]],
+      'role': [contact.role, []],
+      'team': [contact.team, []],
+      'focusArea': [contact.focusArea, []],
+      'notes': [contact.notes, []]
     });
   }
 
@@ -28,6 +32,10 @@ export class CompanyContactsFormService {
       contact.phone = phone;
     }
     contact.email = contactForm.controls['email'].value;
+    contact.role = contactForm.controls['role'].value;
+    contact.team = contactForm.controls['team'].value;
+    contact.focusArea = contactForm.controls['focusArea'].value;
+    contact.notes = contactForm.controls['notes'].value;
     return contact;
   }
 
