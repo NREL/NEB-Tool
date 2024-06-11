@@ -18,25 +18,23 @@
                         <div class="col-sm-7">
                             <input name="name" type="text" class="form-control" formControlName="name" id="name"
                                 (input)="saveChanges()">
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['name'].getError('required')">
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['name'].touched && contactForm.controls['name'].getError('required')">
                                 Name Required
-                            </div>
+                            </div>    
                         </div>
                     </div>
                     <!--TODO: follow pattern on remaining fields-->
                     <div class="row mb-1">
                         <label class="col-sm-5 col-form-label" for="phone">Phone Number</label>
                         <div class="col-sm-7">
-                            <div class="input-group">
-                                <input type="tel" class="form-control"
-                                    formControlName="phone"
-                                    (input)="saveChanges()"
-                                    minlength="1" maxlength="100"
-                                    id="phone" name="phone"
-                                    placeholder="US: (xxx)-xxx-xxxx or International: +xxx xxxxxxxxxx">
-                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['phone'].errors">
-                                    Invalid phone number
-                                </div>
+                            <input type="tel" class="form-control"
+                                formControlName="phone"
+                                (input)="saveChanges()"
+                                id="phone" name="phone"
+                                placeholder="US: (xxx)-xxx-xxxx or International: +xxx xxxxxxxxxx">
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['phone'].errors && 
+                                (contactForm.controls['phone'].touched || contactForm.controls['phone'].dirty)">
+                                Invalid phone number
                             </div>
                         </div>
                     </div>
