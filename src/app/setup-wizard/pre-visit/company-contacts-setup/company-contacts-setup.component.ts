@@ -104,18 +104,18 @@ export class CompanyContactsSetupComponent {
       let hasInvalidContacts: boolean = false;
       companyContacts.forEach(contact => {
         let contactForm: FormGroup = this.companyContactsFormService.getFormFromIdbContact(contact);
-        console.log(contactForm.invalid);
         if (contactForm.invalid) {
           hasInvalidContacts = true;
-          // Debugging invalid formcontrol
-          const invalidControls = [];
-          const controls = contactForm.controls;
-          for (const name in controls) {
-            if (controls[name].invalid) {
-              invalidControls.push({ name, errors: controls[name].errors });
-            }
-          }
-          console.log(invalidControls);
+          // // Debugging invalid form control
+          // const invalidControls = [];
+          // const controls = contactForm.controls;
+          // for (const name in controls) {
+          //   if (controls[name].invalid) {
+          //     invalidControls.push({ name, errors: controls[name].errors });
+          //   }
+          // }
+          // console.log(controls['phone']);
+          // console.log(invalidControls);
         }
       });
       this.hasInvalidContacts = hasInvalidContacts;
