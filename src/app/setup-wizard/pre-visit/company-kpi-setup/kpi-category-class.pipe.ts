@@ -15,6 +15,8 @@ export class KpiCategoryClassPipe implements PipeTransform {
       return '#D35400';
     } else if (category == 'Employee and Workplace Environment') {
       return '#2C3E50';
+    } else if (category == 'Other'){
+      return '#0027FF';
     }
     return null;
   }

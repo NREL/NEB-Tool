@@ -1,4 +1,4 @@
-import { KeyPerformanceIndicatorValue } from "./KeyPerformanceIndicatorOption";
+import { KeyPerformanceIndicatorValue } from "./keyPerformanceIndicatorOptions";
 
 export type KeyPerformanceMetricValue =
     'contributeCompanyVision' |
@@ -116,7 +116,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
     },
     {
         label: "Percent On time to due date",
-        htmlLabel: "&percent; On time to due date",
+        htmlLabel: "&#37; On time to due date",
         value: "percentOnTimeToDueDate",
         kpiValue: "productivity"
     },
@@ -152,7 +152,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
     },
     {
         label: "Percent Capacity utilization",
-        htmlLabel: "&percent; Capacity utilization",
+        htmlLabel: "&#37; Capacity utilization",
         value: "percentCapacityUtilization",
         kpiValue: "machineUtilization"
     },
@@ -200,31 +200,31 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
     },
     {
         label: "$ Customer Returns (quality)",
-        htmlLabel: "$dollar; Customer Returns (quality)",
+        htmlLabel: "&#36; Customer Returns (quality)",
         value: "qualityCustomerReturns",
         kpiValue: "quality"
     },
     {
         label: "Percent Production (manufacturing) yield",
-        htmlLabel: "&percent; Production (manufacturing) yield",
+        htmlLabel: "&#37; Production (manufacturing) yield",
         value: "percentProductionYield",
         kpiValue: "quality"
     },
     {
         label: "Percent Shrinkage",
-        htmlLabel: "&percent; Shrinkage",
+        htmlLabel: "&#37; Shrinkage",
         value: "percentShrinkage",
         kpiValue: "quality"
     },
     {
         label: "Dollar Consumables",
-        htmlLabel: "&dollar; Consumables",
+        htmlLabel: "&#36; Consumables",
         value: "dollarConsumables",
         kpiValue: "quality"
     },
     {
         label: "Percent Optimized space",
-        htmlLabel: "&percent; Optimized space",
+        htmlLabel: "&#37; Optimized space",
         value: "percentOptimizedSpace",
         kpiValue: "improveSpaceUtilization"
     },
@@ -236,7 +236,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
     },
     {
         label: "Engineering support (dollars or hours)",
-        htmlLabel: "Engineering support (&dollar; or hours)",
+        htmlLabel: "Engineering support (&#36; or hours)",
         value: "engineeringSupport",
         kpiValue: "reduceExpenseCost"
     },
@@ -260,7 +260,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
     },
     {
         label: "Percent Total or Costs",
-        htmlLabel: "&percent; Total or Costs",
+        htmlLabel: "&#37; Total or Costs",
         value: "percentTotalOrCost",
         kpiValue: "reduceNonconformingProductWaste"
     },

@@ -11,7 +11,7 @@ import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/
 import { FormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { CompanyKpiListComponent } from './company-kpi-list/company-kpi-list.component';
+import { CompanyKpiListComponent } from '../company-kpi-select/company-kpi-list/company-kpi-list.component';
 import { AddKpiSearchComponent } from './add-kpi-search/add-kpi-search.component';
 import { KpiListFilterPipe } from './add-kpi-search/kpi-list-filter.pipe';
 import { KpiCategoryClassPipe } from './kpi-category-class.pipe';

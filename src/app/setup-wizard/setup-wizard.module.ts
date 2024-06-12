@@ -18,9 +18,7 @@ import { CompanyContactsSetupComponent } from './pre-visit/company-contacts-setu
 import { FacilityProcessEquipmentSetupComponent } from './pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './pre-visit/pre-assessment-setup/pre-assessment-setup.component';
 import { ReviewPreVisitSetupComponent } from './pre-visit/review-pre-visit-setup/review-pre-visit-setup.component';
-import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-search/add-kpi-search.component';
-import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
-import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
+import { CompanyKpiListComponent } from './pre-visit/company-kpi-select/company-kpi-list/company-kpi-list.component';
 import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
 import { ReviewOnSiteComponent } from './data-collection/review-on-site/review-on-site.component';
 import { CompanyDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/company-details-summary/company-details-summary.component';
@@ -39,10 +37,14 @@ import { PreVisitComponent } from './pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import { CompanyKpiSelectComponent } from './pre-visit/company-kpi-select/company-kpi-select.component';
 import { CompanyKpiDetailsComponent } from './pre-visit/company-kpi-details/company-kpi-details.component';
-import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-setup/add-kpi-search/selected-kpi-option.pipe';
 import { DataCollectionManageAssessmentsComponent } from './data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
 import { AssessmentEnergyOpportunitiesFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
 import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/energy-opportunity-setup-form/energy-opportunity-setup-form.component';
+import { AddKpiSearchComponent } from './pre-visit/company-kpi-select/add-kpi-search/add-kpi-search.component';
+import { KpiListFilterPipe } from './pre-visit/company-kpi-select/add-kpi-search/kpi-list-filter.pipe';
+import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-search/selected-kpi-option.pipe';
+import { KpiDetailsFormComponent } from './pre-visit/company-kpi-details/kpi-details-form/kpi-details-form.component';
+import { KpiMetricsListPipe } from './pre-visit/company-kpi-details/kpi-details-form/kpi-metrics-list.pipe';
 
 
 
@@ -83,7 +85,9 @@ import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-a
     SelectedKpiOptionPipe,
     DataCollectionManageAssessmentsComponent,
     AssessmentEnergyOpportunitiesFormComponent,
-    EnergyOpportunitySetupFormComponent
+    EnergyOpportunitySetupFormComponent,
+    KpiDetailsFormComponent,
+    KpiMetricsListPipe
   ],
   imports: [
     CommonModule,

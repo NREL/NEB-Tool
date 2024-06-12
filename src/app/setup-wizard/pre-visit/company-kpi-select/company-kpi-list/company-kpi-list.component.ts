@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faBullseye, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faCircleQuestion, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
-import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { IdbCompany } from 'src/app/models/company';
-import { IdbContact } from 'src/app/models/contact';
 import { IdbKeyPerformanceIndicator, getNewKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { KeyPerformanceIndicatorOption, PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
 
@@ -20,6 +18,7 @@ export class CompanyKpiListComponent {
   faBullseye: IconDefinition = faBullseye;
   faUser: IconDefinition = faUser;
   faPlus: IconDefinition = faPlus;
+  faCircleQuestion: IconDefinition = faCircleQuestion;
 
   company: IdbCompany;
   companySub: Subscription;
@@ -27,12 +26,6 @@ export class CompanyKpiListComponent {
 
   kpiToDelete: IdbKeyPerformanceIndicator;
   displayDeleteModal: boolean = false;
-  displayContactModal: boolean = false;
-  viewContact: IdbContact;
-  contactIndex: number;
-
-  contacts: Array<IdbContact>;
-  contactsSub: Subscription;
 
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
   keyPerformanceIndicatorSub: Subscription;
@@ -43,7 +36,6 @@ export class CompanyKpiListComponent {
   kpiCategory: PrimaryKPI = 'Other';
   constructor(
     private companyIdbService: CompanyIdbService,
-    private contactIdbService: ContactIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService
   ) {
   }
@@ -52,10 +44,6 @@ export class CompanyKpiListComponent {
     this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.company = _company;
     });
-    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
-      this.contacts = _contacts;
-    });
-
     this.keyPerformanceIndicatorSub = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.subscribe(_keyPerformanceIndicators => {
       this.keyPerformanceIndicators = _keyPerformanceIndicators;
     });
@@ -63,12 +51,10 @@ export class CompanyKpiListComponent {
 
   ngOnDestroy() {
     this.companySub.unsubscribe();
-    this.contactsSub.unsubscribe();
     this.keyPerformanceIndicatorSub.unsubscribe();
   }
 
   openDeleteModal(kpi: IdbKeyPerformanceIndicator) {
-    console.log('open delete..')
     this.kpiToDelete = kpi;
     this.displayDeleteModal = true;
   }
@@ -82,18 +68,6 @@ export class CompanyKpiListComponent {
     await firstValueFrom(this.keyPerformanceIndicatorIdbService.deleteWithObservable(this.kpiToDelete.id));
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
     this.closeDeleteModal();
-  }
-
-  openContactModal(kpiIndex: number, viewContact: IdbContact) {
-    this.contactIndex = kpiIndex;
-    this.viewContact = viewContact;
-    this.displayContactModal = true;
-  }
-
-  closeContactModal() {
-    this.displayContactModal = false;
-    this.contactIndex = undefined;
-    this.viewContact = undefined;
   }
 
   openAddCustomModal() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faMagnifyingGlass, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faCircleQuestion, faMagnifyingGlass, faMagnifyingGlassPlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
@@ -16,6 +16,8 @@ export class AddKpiSearchComponent {
 
   faMagnifyingGlassPlus: IconDefinition = faMagnifyingGlassPlus;
   faMagnifyingGlass: IconDefinition = faMagnifyingGlass;
+  faPlus: IconDefinition = faPlus;
+  faCircleQuestion: IconDefinition = faCircleQuestion;
 
   company: IdbCompany;
   companySub: Subscription;

@@ -37,6 +37,7 @@ import { PreVisitComponent } from './setup-wizard/pre-visit/pre-visit.component'
 import { DataCollectionComponent } from './setup-wizard/data-collection/data-collection.component';
 import { CompanyKpiSelectComponent } from './setup-wizard/pre-visit/company-kpi-select/company-kpi-select.component';
 import { DataCollectionManageAssessmentsComponent } from './setup-wizard/data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
+import { CompanyKpiDetailsComponent } from './setup-wizard/pre-visit/company-kpi-details/company-kpi-details.component';
 
 const routes: Routes = [
   {
@@ -83,8 +84,8 @@ const routes: Routes = [
             component: CompanyKpiSelectComponent
           },
           {
-            path: 'company-kpi',
-            component: CompanyKpiSetupComponent
+            path: 'company-kpi-detail',
+            component: CompanyKpiDetailsComponent
           },
           {
             path: 'company-contacts',
