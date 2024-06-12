@@ -11,7 +11,6 @@ import { CompanyGoalsComponent } from './company-goals/company-goals.component';
 import { CompanyDashboardTabsComponent } from './company-dashboard-tabs/company-dashboard-tabs.component';
 import { CompanyReportsComponent } from './company-reports/company-reports.component';
 import { CompanySettingsComponent } from './company-settings/company-settings.component';
-import { ProjectsTableComponent } from './company-dashboard-home/projects-table/projects-table.component';
 import { FacilitiesTableComponent } from './company-dashboard-home/facilities-table/facilities-table.component';
 import { AssessmentsTableComponent } from './company-dashboard-home/assessments-table/assessments-table.component';
 
@@ -23,7 +22,6 @@ import { AssessmentsTableComponent } from './company-dashboard-home/assessments-
     CompanyDashboardTabsComponent,
     CompanyReportsComponent,
     CompanySettingsComponent,
-    ProjectsTableComponent,
     FacilitiesTableComponent,
     AssessmentsTableComponent
   ],

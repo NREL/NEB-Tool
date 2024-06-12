@@ -6,136 +6,142 @@
                     <fa-icon [icon]="faToolbox"></fa-icon> Pre-Assessments
                 </h5>
                 <hr>
-                <div class="d-flex w-100 justify-content-between pb-2">
-                    <div class="p-0">
-                        <div class="row mb-1">
-                            <label class="col-sm-5 col-form-label bold" for="visitDate">Visit Date</label>
-                            <div class="col-sm-7">
-                                <input type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
-                                    name="visitDate" (change)="setVisitDate()">
+                <ng-container *ngIf="onSiteVisit">
+                    <div class="d-flex w-100 justify-content-between pb-2">
+                        <div class="p-0">
+                            <div class="row mb-1">
+                                <label class="col-sm-5 col-form-label bold" for="visitDate">Visit Date</label>
+                                <div class="col-sm-7">
+                                    <input type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
+                                        name="visitDate" (change)="setVisitDate()">
+                                </div>
                             </div>
                         </div>
+                        <div class="p-0">
+                            <button class="btn btn-outline-success" (click)="addAssessment()">
+                                <fa-icon [icon]="faPlus"></fa-icon>
+                                Add Pre-Assessment
+                            </button>
+                        </div>
                     </div>
-                    <div class="p-0">
-                        <button class="btn btn-outline-success" (click)="addAssessment()">
-                            <fa-icon [icon]="faPlus"></fa-icon>
-                            Add Pre-Assessment
-                        </button>
-                    </div>
-                </div>
-                <ng-template [ngIf]="(onSiteVisit.assessmentIds | assessmentListOnSite: assessments).length != 0" [ngIfElse]="noAssessmentsBlock">
-                    <div class="accordion" id="assessmentAccordion">
-                        <div class="accordion-item"
-                            *ngFor="let assessment of (onSiteVisit.assessmentIds | assessmentListOnSite: assessments); let assessmentIndex = index;">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    [attr.data-bs-target]="'#'+assessment.guid" aria-expanded="true"
-                                    [attr.aria-controls]="assessment.guid"
-                                    [ngClass]="{'collapsed': accordionIndex != assessmentIndex}"
-                                    (click)="setAccordionIndex(assessmentIndex)">
-                                    <fa-icon [icon]="faScrewdriverWrench" class="me-1"></fa-icon> {{assessment.name}}
-                                </button>
-                            </h2>
-                            <div [id]="assessment.guid" class="accordion-collapse collapse"
-                                data-bs-parent="#assessmentAccordion"
-                                [ngClass]="{'show': accordionIndex == assessmentIndex}">
-                                <div class="accordion-body">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <form>
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label"
-                                                        for="assessmentName">Assessment Name</label>
-                                                    <div class="col-sm-7">
-                                                        <input name="assessmentName" type="text" class="form-control"
-                                                            [(ngModel)]="assessment.name"
-                                                            (input)="saveChanges(assessment)" minlength="1"
-                                                            maxlength="42" id="assessmentName">
+                    <ng-template [ngIf]="(onSiteVisit.assessmentIds | assessmentListOnSite: assessments).length != 0"
+                        [ngIfElse]="noAssessmentsBlock">
+                        <div class="accordion" id="assessmentAccordion">
+                            <div class="accordion-item"
+                                *ngFor="let assessment of (onSiteVisit.assessmentIds | assessmentListOnSite: assessments); let assessmentIndex = index;">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        [attr.data-bs-target]="'#'+assessment.guid" aria-expanded="true"
+                                        [attr.aria-controls]="assessment.guid"
+                                        [ngClass]="{'collapsed': accordionIndex != assessmentIndex}"
+                                        (click)="setAccordionIndex(assessmentIndex)">
+                                        <fa-icon [icon]="faScrewdriverWrench" class="me-1"></fa-icon>
+                                        {{assessment.name}}
+                                    </button>
+                                </h2>
+                                <div [id]="assessment.guid" class="accordion-collapse collapse"
+                                    data-bs-parent="#assessmentAccordion"
+                                    [ngClass]="{'show': accordionIndex == assessmentIndex}">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <form>
+                                                    <div class="row mb-1">
+                                                        <label class="col-sm-5 col-form-label"
+                                                            for="assessmentName">Assessment Name</label>
+                                                        <div class="col-sm-7">
+                                                            <input name="assessmentName" type="text"
+                                                                class="form-control" [(ngModel)]="assessment.name"
+                                                                (input)="saveChanges(assessment)" minlength="1"
+                                                                maxlength="42" id="assessmentName">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label" for="equipmentId">Process
-                                                        Equipment</label>
-                                                    <div class="col-sm-7">
-                                                        <ng-template [ngIf]="processEquipmentOptions.length != 0"
-                                                            [ngIfElse]="noEquipmentBlock">
-                                                            <select name="equipmentId" class="form-select"
-                                                                id="equipmentId" [(ngModel)]="assessment.equipmentId"
-                                                                (change)="saveChanges(assessment)">
-                                                                <option
-                                                                    *ngFor="let processEquipment of processEquipmentOptions"
-                                                                    [ngValue]="processEquipment.guid">
-                                                                    {{processEquipment.equipmentName}}
-                                                                </option>
-                                                            </select>
-                                                        </ng-template>
-                                                        <ng-template #noEquipmentBlock>
-                                                            <div class="alert alert-warning mb-0 p-1">
-                                                                No process equipment found.
+                                                    <div class="row mb-1">
+                                                        <label class="col-sm-5 col-form-label" for="equipmentId">Process
+                                                            Equipment</label>
+                                                        <div class="col-sm-7">
+                                                            <ng-template [ngIf]="processEquipmentOptions.length != 0"
+                                                                [ngIfElse]="noEquipmentBlock">
+                                                                <select name="equipmentId" class="form-select"
+                                                                    id="equipmentId"
+                                                                    [(ngModel)]="assessment.equipmentId"
+                                                                    (change)="saveChanges(assessment)">
+                                                                    <option
+                                                                        *ngFor="let processEquipment of processEquipmentOptions"
+                                                                        [ngValue]="processEquipment.guid">
+                                                                        {{processEquipment.equipmentName}}
+                                                                    </option>
+                                                                </select>
+                                                            </ng-template>
+                                                            <ng-template #noEquipmentBlock>
+                                                                <div class="alert alert-warning mb-0 p-1">
+                                                                    No process equipment found.
+                                                                </div>
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-1">
+                                                        <label class="col-sm-5 col-form-label" for="energyUse">Annual
+                                                            Energy
+                                                            Use</label>
+                                                        <div class="col-sm-7">
+                                                            <div class="input-group">
+                                                                <input name="energy" type="number" class="form-control"
+                                                                    [(ngModel)]="assessment.energyUse"
+                                                                    (input)="saveChanges(assessment)" id="energyUse">
+                                                                <span class="input-group-text">MMBtu/yr</span>
                                                             </div>
-                                                        </ng-template>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label" for="energyUse">Annual Energy
-                                                        Use</label>
-                                                    <div class="col-sm-7">
-                                                        <div class="input-group">
-                                                            <input name="energy" type="number" class="form-control"
-                                                                [(ngModel)]="assessment.energyUse"
-                                                                (input)="saveChanges(assessment)" id="energyUse">
-                                                            <span class="input-group-text">MMBtu/yr</span>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label" for="cost">Annual
-                                                        Costs</label>
-                                                    <div class="col-sm-7">
-                                                        <div class="input-group">
-                                                            <input name="cost" type="number" class="form-control"
-                                                                [(ngModel)]="assessment.cost"
-                                                                (input)="saveChanges(assessment)" id="cost">
-                                                            <span class="input-group-text">&dollar;</span>
+                                                    <div class="row mb-1">
+                                                        <label class="col-sm-5 col-form-label" for="cost">Annual
+                                                            Costs</label>
+                                                        <div class="col-sm-7">
+                                                            <div class="input-group">
+                                                                <input name="cost" type="number" class="form-control"
+                                                                    [(ngModel)]="assessment.cost"
+                                                                    (input)="saveChanges(assessment)" id="cost">
+                                                                <span class="input-group-text">&dollar;</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="row mb-1">
-                                                    <label class="col-sm-5 col-form-label" for="visitDate">Scheduled
-                                                        For</label>
-                                                    <div class="col-sm-7">
-                                                        {{assessment.visitDate | date}}
+                                                    <div class="row mb-1">
+                                                        <label class="col-sm-5 col-form-label" for="visitDate">Scheduled
+                                                            For</label>
+                                                        <div class="col-sm-7">
+                                                            {{assessment.visitDate | date}}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-12">
-                                            <hr>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="col-6">
-                                                    <button class="btn btn-sm btn-primary me-1"
-                                                        *ngFor="let contact of assessment.guid | contactName:'assessment': contacts;"
-                                                        (click)="openContactModal(assessmentIndex, contact)">
-                                                        <fa-icon [icon]="faUser"></fa-icon>
-                                                        {{contact.name}}
-                                                    </button>
-                                                    <button class="btn btn-sm btn-secondary"
-                                                        (click)="openContactModal(assessmentIndex, undefined)">
-                                                        <fa-icon [icon]="faUser"></fa-icon>
-                                                        Team Members
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                    <button class="btn btn-sm btn-danger"
-                                                        (click)="openDeleteModal(assessment)">
-                                                        <fa-icon [icon]="faTrash"></fa-icon> Delete
-                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="col-12">
+                                                <hr>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="col-6">
+                                                        <button class="btn btn-sm btn-primary me-1"
+                                                            *ngFor="let contact of assessment.guid | contactName:'assessment': contacts;"
+                                                            (click)="openContactModal(assessmentIndex, contact)">
+                                                            <fa-icon [icon]="faUser"></fa-icon>
+                                                            {{contact.name}}
+                                                        </button>
+                                                        <button class="btn btn-sm btn-secondary"
+                                                            (click)="openContactModal(assessmentIndex, undefined)">
+                                                            <fa-icon [icon]="faUser"></fa-icon>
+                                                            Team Members
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-danger"
+                                                            (click)="openDeleteModal(assessment)">
+                                                            <fa-icon [icon]="faTrash"></fa-icon> Delete
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -143,13 +149,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </ng-template>
-                <ng-template #noAssessmentsBlock>
-                    <div class="alert alert-info text-center">
-                        No Pre-Assessments added. Click "Add Pre-Assessment" to prepare a pre-assessment.
-                    </div>
-                </ng-template>
+                    </ng-template>
+                    <ng-template #noAssessmentsBlock>
+                        <div class="alert alert-info text-center">
+                            No Pre-Assessments added. Click "Add Pre-Assessment" to prepare a pre-assessment.
+                        </div>
+                    </ng-template>
+                </ng-container>
             </div>
         </div>
     </div>

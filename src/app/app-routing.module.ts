@@ -36,6 +36,7 @@ import { ReviewOnSiteComponent } from './setup-wizard/data-collection/review-on-
 import { PreVisitComponent } from './setup-wizard/pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './setup-wizard/data-collection/data-collection.component';
 import { CompanyKpiSelectComponent } from './setup-wizard/pre-visit/company-kpi-select/company-kpi-select.component';
+import { DataCollectionManageAssessmentsComponent } from './setup-wizard/data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
 
 const routes: Routes = [
   {
@@ -111,6 +112,10 @@ const routes: Routes = [
         path: 'data-collection/:id',
         component: DataCollectionComponent,
         children: [
+          {
+            path: 'manage-assessments',
+            component: DataCollectionManageAssessmentsComponent
+          },
           {
             path: 'assessment/:id',
             component: OnSiteAssessmentComponent

@@ -6,11 +6,11 @@ import { BehaviorSubject } from 'rxjs';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 
 describe('ManageAssessmentComponent', () => {
   let component: ManageAssessmentComponent;
@@ -21,7 +21,7 @@ describe('ManageAssessmentComponent', () => {
   };
   let companyIdbService: Partial<CompanyIdbService> = {};
   let facilityIdbService: Partial<FacilityIdbService> = {};
-  let projectIdbService: Partial<ProjectIdbService> = {};
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {};
   let contactIdbService: Partial<ContactIdbService> = {};
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {}
   let dbChangesService: Partial<DbChangesService> = {}
@@ -33,7 +33,7 @@ describe('ManageAssessmentComponent', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: ProjectIdbService, useValue: projectIdbService },
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: DbChangesService, useValue: dbChangesService }

@@ -9,7 +9,6 @@ export interface IdbFacility extends IdbEntry {
     userId: string,
     unitSettings: UnitSettings,
     generalInformation: GeneralInformation,
-    displayProjects: boolean,
     processEquipment: Array<ProcessEquipment>
 }
 
@@ -23,7 +22,6 @@ export function getNewIdbFacility(userId: string, companyId: string): IdbFacilit
         companyId: companyId,
         unitSettings: defaultSettings,
         generalInformation: generalInformation,
-        displayProjects: true,
         processEquipment: []
     }
 }

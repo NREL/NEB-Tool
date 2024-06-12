@@ -9,7 +9,7 @@ export interface IdbNonEnergyBenefit extends IdbEntry {
     kpiId: string,
     includeNote: boolean,
     notes: string,
-    projectIds: Array<string>,
+    energyOpportunityIds: Array<string>,
     annualKpiImpact: number
 }
 
@@ -24,7 +24,7 @@ export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, fac
         assessmentId: assessmentId,
         kpiId: undefined,
         notes: undefined,
-        projectIds: [],
+        energyOpportunityIds: [],
         includeNote: false,
         annualKpiImpact: undefined
     }

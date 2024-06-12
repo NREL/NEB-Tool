@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { IconDefinition, faWandMagicSparkles } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { IdbProject } from 'src/app/models/project';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 
@@ -24,10 +21,7 @@ export class AssessmentDashboardHomeComponent {
   assessment: IdbAssessment;
   assessmentSub: Subscription;
 
-  projects: Array<IdbProject>;
-  projectsSub: Subscription;
   constructor(private assessmentIdbService: AssessmentIdbService,
-    private projectsIdbService: ProjectIdbService,
     private setupWizardService: SetupWizardService,
     private facilityIdbService: FacilityIdbService,
     private companyIdbService: CompanyIdbService,
@@ -41,14 +35,9 @@ export class AssessmentDashboardHomeComponent {
     this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(_selectedAssessment => {
       this.assessment = _selectedAssessment;
     });
-
-    this.projectsSub = this.projectsIdbService.projects.subscribe(_projects => {
-      this.projects = _projects;
-    });
   }
 
   ngOnDestroy() {
-    this.projectsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
   }
 

@@ -78,6 +78,12 @@
                 <div class="p-2 w-100 text-bg-dark">
                     Data Collection
                 </div>
+                <div class="nav-item">
+                    <a class="nav-link" [routerLink]="'data-collection/'+onSiteVisit.guid+'/manage-assessments/'"
+                        [routerLinkActive]="['active']">
+                        Manage Assessments
+                    </a>
+                </div>
                 <ng-container *ngFor="let assessmentGuid of onSiteVisit.assessmentIds">
                     <div class="nav-item">
                         <a class="nav-link"

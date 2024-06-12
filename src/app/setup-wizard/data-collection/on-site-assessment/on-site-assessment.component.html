@@ -10,7 +10,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-12 col-lg-6">
-                        <app-assessment-projects-form></app-assessment-projects-form>
+                        <app-assessment-energy-opportunities-form></app-assessment-energy-opportunities-form>
                         <hr class="d-md-block d-lg-none">
                     </div>
                     <div class="col-md-12 col-lg-6">
@@ -44,6 +44,10 @@
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-between">
         <div class="col-3">
+            <button class="btn btn-dark" (click)="goBack()"
+                *ngIf="assessmentIndex == 0">
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+            </button>
             <button class="btn btn-dark" (click)="goToPrevious()" *ngIf="assessmentIndex != 0">
                 <fa-icon [icon]="faChevronLeft"></fa-icon>
             </button>
@@ -51,9 +55,9 @@
         <div class="col-6">
             <div class="d-flex justify-content-center">
                 <div class="pe-1">
-                    <button class="btn btn-dark add-project-btn" [disabled]="true">
+                    <button class="btn btn-dark add-opportunity-btn" [disabled]="true">
                         <fa-icon [icon]="faPlus"></fa-icon>
-                        Add Project
+                        Add Opportunity
                     </button>
                 </div>
                 <div class="pe-1">
@@ -72,6 +76,7 @@
         </div>
         <div class="col-3">
             <div class="d-flex  justify-content-end">
+
                 <button class="btn btn-dark" (click)="goToNextAssessment()"
                     *ngIf="assessmentIndex != onSiteVisit.assessmentIds.length-1">
                     <fa-icon [icon]="faChevronRight"></fa-icon>

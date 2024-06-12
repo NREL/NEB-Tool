@@ -3,11 +3,11 @@ import { IconDefinition, faCircle, faCircleCheck, faFileLines, faNoteSticky, faS
 import { Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
+import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
-import { IdbProject } from 'src/app/models/project';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
@@ -34,18 +34,23 @@ export class NebSetupFormComponent {
 
   displayDeleteModal: boolean = false;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
-  projects: Array<IdbProject>;
-  projectsSub: Subscription;
 
   displayProjectsModal: boolean = false;
   previousProjectIds: Array<string>;
   kpi: IdbKeyPerformanceIndicator;
   highlighNebGuidSub: Subscription;
   highlighNebGuid: string;
+  energyOpportunities: Array<IdbEnergyOpportunity>;
+  energyOpportunitiesSub: Subscription;
+
+  displayEnergyOpportunitiesModal: boolean = false;
+  previousEnergyOpportunitiesIds: Array<string>;
+  highlightNebGuidSub: Subscription;
+  highlightNebGuid: string;
   constructor(
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private companyIdbService: CompanyIdbService,
-    private projectIdbService: ProjectIdbService,
+    private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private dbChangesService: DbChangesService,
     private setupWizardService: SetupWizardService) {
   }
@@ -53,25 +58,24 @@ export class NebSetupFormComponent {
   ngOnInit() {
     this.nonEnergyBenefit = this.nonEnergyBenefitsIdbService.getByGuid(this.nebGuid);
 
-    // this.keyPerformanceIndicators = this.companyIdbService.selectedCompany.getValue().keyPerformanceIndicators;
-    this.projectsSub = this.projectIdbService.projects.subscribe(_projects => {
-      this.projects = _projects;
+    this.energyOpportunitiesSub = this.energyOpportunityIdbService.energyOpportunities.subscribe(_opportunities => {
+      this.energyOpportunities = _opportunities;
     });
     this.setKPI()
 
-    this.highlighNebGuidSub = this.setupWizardService.highlighNebGuid.subscribe(_highlighNebGuid => {
-      this.highlighNebGuid = _highlighNebGuid;
-      if (this.highlighNebGuid) {
+    this.highlightNebGuidSub = this.setupWizardService.highlightNebGuid.subscribe(_highlightNebGuid => {
+      this.highlightNebGuid = _highlightNebGuid;
+      if (this.highlightNebGuid) {
         setTimeout(() => {
-          this.setupWizardService.highlighNebGuid.next(undefined);
+          this.setupWizardService.highlightNebGuid.next(undefined);
         }, 5000)
       }
     });
   }
 
   ngOnDestroy() {
-    this.projectsSub.unsubscribe();
-    this.highlighNebGuidSub.unsubscribe();
+    this.energyOpportunitiesSub.unsubscribe();
+    this.highlightNebGuidSub.unsubscribe();
   }
 
   async saveChanges() {
@@ -90,56 +94,56 @@ export class NebSetupFormComponent {
     this.displayDeleteModal = false;
   }
 
-  highlightProject(projectGUID: string) {
-    document.getElementById('project_' + projectGUID).scrollIntoView({ behavior: "smooth" });
-    this.setupWizardService.highlighProjectGuid.next(projectGUID);
+  highlightOpportunity(opportunityGUID: string) {
+    document.getElementById('opportunity_' + opportunityGUID).scrollIntoView({ behavior: "smooth" });
+    this.setupWizardService.highlightOpportunityGuid.next(opportunityGUID);
   }
 
-  showProjectsModal() {
-    this.previousProjectIds = this.nonEnergyBenefit.projectIds;
-    this.displayProjectsModal = true;
+  showEnergyOpportunitiesModal() {
+    this.previousEnergyOpportunitiesIds = this.nonEnergyBenefit.energyOpportunityIds;
+    this.displayEnergyOpportunitiesModal = true;
   }
 
-  closeProjectsModal(cancel?: boolean) {
+  closeEnergyOpportunitiesModal(cancel?: boolean) {
     if (cancel) {
-      this.nonEnergyBenefit.projectIds = this.previousProjectIds;
+      this.nonEnergyBenefit.energyOpportunityIds = this.previousEnergyOpportunitiesIds;
     }
-    this.displayProjectsModal = false;
+    this.displayEnergyOpportunitiesModal = false;
   }
 
-  toggleProject(projectGUID: string) {
-    if (this.nonEnergyBenefit.projectIds.includes(projectGUID)) {
-      this.nonEnergyBenefit.projectIds = this.nonEnergyBenefit.projectIds.filter(selectedGUID => {
-        return selectedGUID != projectGUID;
+  toggleEnergyOpportunity(energyOpportunityGUID: string) {
+    if (this.nonEnergyBenefit.energyOpportunityIds.includes(energyOpportunityGUID)) {
+      this.nonEnergyBenefit.energyOpportunityIds = this.nonEnergyBenefit.energyOpportunityIds.filter(selectedGUID => {
+        return selectedGUID != energyOpportunityGUID;
       });
     } else {
-      this.nonEnergyBenefit.projectIds.push(projectGUID);
+      this.nonEnergyBenefit.energyOpportunityIds.push(energyOpportunityGUID);
     }
   }
 
-  async saveProjects() {
-    for (let i = 0; i < this.projects.length; i++) {
-      let project: IdbProject = this.projects[i];
+  async saveEnergyOpportunities() {
+    for (let i = 0; i < this.energyOpportunities.length; i++) {
+      let energyOpportunity: IdbEnergyOpportunity = this.energyOpportunities[i];
       let needsUpdate: boolean = false
-      let inNEB: boolean = this.nonEnergyBenefit.projectIds.findIndex(prjId => {
-        return prjId == project.guid;
+      let inNEB: boolean = this.nonEnergyBenefit.energyOpportunityIds.findIndex(oppId => {
+        return oppId == energyOpportunity.guid;
       }) != -1;
-      let inProject: boolean = project.nonEnergyBenefitIds.findIndex(nebId => {
+      let inOpportunity: boolean = energyOpportunity.nonEnergyBenefitIds.findIndex(nebId => {
         return nebId == this.nonEnergyBenefit.guid;
       }) != -1;
-      if (inNEB && !inProject) {
+      if (inNEB && !inOpportunity) {
         needsUpdate = true;
-        project.nonEnergyBenefitIds.push(this.nonEnergyBenefit.guid);
-      } else if (!inNEB && inProject) {
+        energyOpportunity.nonEnergyBenefitIds.push(this.nonEnergyBenefit.guid);
+      } else if (!inNEB && inOpportunity) {
         needsUpdate = true;
-        project.nonEnergyBenefitIds = project.nonEnergyBenefitIds.filter(nebId => {
+        energyOpportunity.nonEnergyBenefitIds = energyOpportunity.nonEnergyBenefitIds.filter(nebId => {
           return nebId != this.nonEnergyBenefit.guid;
         });
-        await this.projectIdbService.asyncUpdate(project)
+        await this.energyOpportunityIdbService.asyncUpdate(energyOpportunity)
       }
     };
     await this.saveChanges();
-    this.closeProjectsModal();
+    this.closeEnergyOpportunitiesModal();
   }
 
   toggleNote() {

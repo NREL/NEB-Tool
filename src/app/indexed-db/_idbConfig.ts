@@ -22,7 +22,7 @@ export const dbConfig: DBConfig = {
     ]
   },
   {
-    store: 'project',
+    store: 'energyOpportunity',
     storeConfig: { keyPath: 'id', autoIncrement: true },
     storeSchema: [
     ]

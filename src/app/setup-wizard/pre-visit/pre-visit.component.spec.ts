@@ -7,8 +7,8 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 
 describe('PreVisitComponent', () => {
   let component: PreVisitComponent;
@@ -19,7 +19,7 @@ describe('PreVisitComponent', () => {
   let assessmentIdbService: Partial<AssessmentIdbService> = {};
   let contactIdbService: Partial<ContactIdbService> = {};
   let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {};
-  let projectIdbService: Partial<ProjectIdbService> = {};
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {};
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
 
   beforeEach(async () => {
@@ -32,7 +32,7 @@ describe('PreVisitComponent', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
-        { provide: ProjectIdbService, useValue: projectIdbService },
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
     ]
     })
