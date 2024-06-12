@@ -1,4 +1,4 @@
-import { KeyPerformanceIndicatorValue } from "./keyPerformanceIndicators2";
+import { KeyPerformanceIndicatorValue } from "./KeyPerformanceIndicatorOption";
 
 export type KeyPerformanceMetricValue =
     'contributeCompanyVision' |

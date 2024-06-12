@@ -14,6 +14,8 @@ import { NonEnergyBenefitsIdbService } from './non-energy-benefits-idb.service';
 import { IdbNonEnergyBenefit } from '../models/nonEnergyBenefit';
 import { OnSiteVisitIdbService } from './on-site-visit-idb.service';
 import { IdbOnSiteVisit } from '../models/onSiteVisit';
+import { KeyPerformanceIndicatorsIdbService } from './key-performance-indicators-idb.service';
+import { IdbKeyPerformanceIndicator } from '../models/keyPerformanceIndicator';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,8 @@ export class DbChangesService {
     private projectIdbService: ProjectIdbService, private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
-    private onSiteVisitIdbService: OnSiteVisitIdbService) { }
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService) { }
 
 
   //TODO: loading service messaging and success toast notification
@@ -49,6 +52,10 @@ export class DbChangesService {
     let onSiteVisits: Array<IdbOnSiteVisit> = this.onSiteVisitIdbService.onSiteVisits.getValue();
     let companyOnSiteVisits: Array<IdbOnSiteVisit> = onSiteVisits.filter(onSiteVisit => { return onSiteVisit.companyId == company.guid });
     await this.deleteOnSiteVisits(companyOnSiteVisits);
+    //delete kpis
+    let keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator> = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.getValue();
+    let companyKeyPerformanceIndicators: Array<IdbKeyPerformanceIndicator> = keyPerformanceIndicators.filter(kpi => { return kpi.companyId == company.guid });
+    await this.deleteKPIs(companyKeyPerformanceIndicators);
     //delete facilities
     let facilities: Array<IdbFacility> = this.facilityIdbService.facilities.getValue();
     let companyFacilities: Array<IdbFacility> = facilities.filter(facility => { return facility.companyId == company.guid });
@@ -193,6 +200,13 @@ export class DbChangesService {
       await firstValueFrom(this.onSiteVisitIdbService.deleteWithObservable(onSiteVisits[i].id));
     }
     await this.onSiteVisitIdbService.setOnSiteVisits();
+  }
+
+  async deleteKPIs(keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>) {
+    for (let i = 0; i < keyPerformanceIndicators.length; i++) {
+      await firstValueFrom(this.keyPerformanceIndicatorIdbService.deleteWithObservable(keyPerformanceIndicators[i].id));
+    }
+    await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
   }
 
   selectOnSiteVisit(onSiteGUID: string): boolean {

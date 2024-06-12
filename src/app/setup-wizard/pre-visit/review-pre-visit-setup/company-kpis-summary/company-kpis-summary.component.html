@@ -2,11 +2,11 @@
     <fa-icon [icon]="faChartBar" class="me-2"></fa-icon> Key Performance Indicators
 </h5>
 <div class="row">
-    <div class="col-lg-6 col-md-12 pb-2" *ngFor="let kpi of keyPerformanceIndicators">
+    <div class="col-lg-6 col-md-12 pb-2" *ngFor="let kpi of (company.guid | companyKpiList:keyPerformanceIndicators)">
         <div class="card">
             <div class="card-header">
                 <fa-icon [icon]="faBullseye" class="pe-1"></fa-icon>
-                <!-- <span [innerHTML]="kpi | kpiLabel"></span> -->
+                <span [innerHTML]="kpi.htmlLabel"></span>
             </div>
             <div class="card-body">
 
@@ -17,12 +17,12 @@
                                 KPI Category
                             </td>
                             <td>
-                                <!-- <span class="badge" [ngStyle]="{'background-color':kpi.category | kpiCategoryClass}"> -->
-                                    {{kpi.category}}
-                                <!-- </span> -->
+                                <span class="badge" [ngStyle]="{'background-color':kpi.primaryKPI | kpiCategoryClass}">
+                                    {{kpi.primaryKPI}}
+                                </span>
                             </td>
                         </tr>
-                        <ng-template [ngIf]="!kpi.isQualitative">
+                        <!-- <ng-template [ngIf]="!kpi.isQualitative">
                             <tr>
                                 <td class="w-50">
                                     Units
@@ -80,7 +80,7 @@
                                     &mdash;
                                 </ng-template>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
 

@@ -1,0 +1,32 @@
+<div class="setup-wizard-content">
+    <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow">
+                <h5>
+                    <fa-icon [icon]="faChartBar" class="me-2"></fa-icon> Company Key Performance Indicators
+                </h5>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <app-company-kpi-list></app-company-kpi-list>
+                    </div>
+                    <div class="col-6">
+                        <app-add-kpi-search></app-add-kpi-search>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-between">
+        <button class="btn btn-dark" (click)="goBack()">
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+            Go Back
+        </button>
+        <button class="btn btn-dark" (click)="goToFacility()">
+            Detail KPIs
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+        </button>
+    </div>
+</nav>

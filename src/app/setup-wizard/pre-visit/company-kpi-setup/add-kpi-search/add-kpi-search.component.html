@@ -1,82 +1,45 @@
-<div class="accordion" id="kpiSearchAccordion">
-    <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#kpiSearch" aria-expanded="true" aria-controls="kpiSearch">
-                <fa-icon [icon]="faMagnifyingGlassPlus" class="me-2"></fa-icon>
-                Add KPI's
-            </button>
-        </h2>
-        <div id="kpiSearch" class="accordion-collapse collapse" data-bs-parent="#kpiSearchAccordion">
-            <div class="accordion-body">
-                <div class="row mb-2">
-                    <div class="col-4">
-                        <div class="input-group" role="search">
-                            <span class="input-group-text">
-                                <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
-                            </span>
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                                name="kpiSearchStr" [(ngModel)]="kpiSearchStr">
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <select name="kpiCategorySearch" class="form-select" id="kpiCategorySearch"
-                            [(ngModel)]="kpiCategorySearch">
-                            <option [ngValue]="undefined">All Categories</option>
-                            <option *ngFor="let category of primaryKPIs" [ngValue]="category">
-                                {{category}}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-secondary w-100" (click)="openAddCustomModal()">
-                            <fa-icon [icon]="faPlus"></fa-icon>
-                            Add Custom
-                        </button>
-                    </div>
-                </div>
-                <div class="list-group">
-                    <div class="list-group-item list-group-item-action"
-                        *ngFor="let option of keyPerformanceIndicators | kpiListFilter: kpiSearchStr: kpiCategorySearch"
-                        (click)="addKPI(option)">
-                        <div class="d-flex w-100 justify-content-between">
-                            <div>
-                                <span [innerHTML]="option.label"></span>
-                            </div>
-                            <div>
-                                <span class="badge" [ngStyle]="{'background-color':option.primaryKPI | kpiCategoryClass}">
-                                    {{option.primaryKPI}}
-                                </span>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-12">
+        <h6>
+            <fa-icon [icon]="faMagnifyingGlassPlus" class="me-2"></fa-icon>
+            Find Common KPI's
+        </h6>
     </div>
 </div>
-
-
-
-
-<div [ngClass]="{'window-overlay': displayCustomKPIModal}"></div>
-<div class="popup" [ngClass]="{'open': displayCustomKPIModal }">
-    <div class="popup-header">Create Custom KPI?
-        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeCustomKPIModal()"></button>
+<div class="row mb-2">
+    <div class="col-6">
+        <div class="input-group" role="search">
+            <span class="input-group-text">
+                <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+            </span>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="kpiSearchStr"
+                [(ngModel)]="kpiSearchStr">
+        </div>
     </div>
-    <div class="popup-body">
-        <form>
-            <label for="customKPIName">Custom KPI Name</label>
-            <input name="customKPIName" type="text" class="form-control" [(ngModel)]="customKPIName" id="customKPIName">
-            <div class="alert alert-danger small mt-1 p-1" *ngIf="!customKPIName">
-                Name Required
+    <div class="col-6">
+        <select name="kpiCategorySearch" class="form-select" id="kpiCategorySearch" [(ngModel)]="kpiCategorySearch">
+            <option [ngValue]="undefined">All Categories</option>
+            <option *ngFor="let category of primaryKPIs" [ngValue]="category">
+                {{category}}
+            </option>
+        </select>
+    </div>
+</div>
+<div class="list-group">
+    <div class="list-group-item list-group-item-action"
+        *ngFor="let option of keyPerformanceIndicatorOptions | kpiListFilter: kpiSearchStr: kpiCategorySearch"
+        (click)="addKPI(option)"
+        [ngClass]="{'hidden': option.optionValue | selectedKpiOption: keyPerformanceIndicators: company.guid }">
+        <div class="list-item-content d-flex w-100 justify-content-between">
+            <div>
+                <span [innerHTML]="option.label"></span>
             </div>
-        </form>
-        <hr>
-    </div>
-    <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" (click)="closeCustomKPIModal()">Cancel</button>
-        <button class="btn btn-success" [disabled]="!customKPIName" (click)="confirmCreate()">Create Custom KPI</button>
+            <div>
+                <span class="badge" [ngStyle]="{'background-color':option.primaryKPI | kpiCategoryClass}">
+                    {{option.primaryKPI}}
+                </span>
+            </div>
+
+        </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
-export type PrimaryKPI = 'Strategic Relationship Impact' | 'Operations' | 'Sustainability (Environmental Impact)' | 'Employee and Workplace Environment';
-export const PrimaryKPIs: Array<PrimaryKPI> = ['Strategic Relationship Impact', 'Operations', 'Sustainability (Environmental Impact)', 'Employee and Workplace Environment']
+export type PrimaryKPI = 'Strategic Relationship Impact' | 'Operations' | 'Sustainability (Environmental Impact)' | 'Employee and Workplace Environment' | 'Other';
+export const PrimaryKPIs: Array<PrimaryKPI> = ['Strategic Relationship Impact', 'Operations', 'Sustainability (Environmental Impact)', 'Employee and Workplace Environment', 'Other']
 export type KeyPerformanceIndicatorValue =
     'strategicRelationshipImpact' |
     'productivity' |
@@ -19,128 +19,129 @@ export type KeyPerformanceIndicatorValue =
     'reduceExpenseCost' |
     'improveSpaceUtilization' |
     'employeeEngagementWorkforceDevelopment' |
-    'employeeEngagementWorkingEnvironment';
+    'employeeEngagementWorkingEnvironment' | 
+    'other';
 
-export interface KeyPerformanceIndicator {
+export interface KeyPerformanceIndicatorOption {
     primaryKPI: PrimaryKPI,
     label: string,
     htmlLabel: string,
-    value: KeyPerformanceIndicatorValue
+    optionValue: KeyPerformanceIndicatorValue
 };
 
-export const KeyPerformanceIndicators: Array<KeyPerformanceIndicator> = [
+export const KeyPerformanceIndicatorOptions: Array<KeyPerformanceIndicatorOption> = [
     {
         primaryKPI: 'Strategic Relationship Impact',
         label: 'Strategic Relationship Impact',
         htmlLabel: 'Strategic Relationship Impact',
-        value: 'strategicRelationshipImpact'
+        optionValue: 'strategicRelationshipImpact'
     },
     {
         primaryKPI: 'Operations',
         label: 'Productivity',
         htmlLabel: 'Productivity',
-        value: 'productivity'
+        optionValue: 'productivity'
     },
     {
         primaryKPI: 'Operations',
         label: 'Machine Utilization',
         htmlLabel: 'Machine Utilization',
-        value: 'machineUtilization'
+        optionValue: 'machineUtilization'
     },
     {
         primaryKPI: 'Operations',
         label: 'Quality',
         htmlLabel: 'Quality',
-        value: 'quality'
+        optionValue: 'quality'
     },
     {
         primaryKPI: 'Operations',
         label: 'Material Utilization',
         htmlLabel: 'Material Utilization',
-        value: 'materialUtilization'
+        optionValue: 'materialUtilization'
     },
     {
         primaryKPI: 'Operations',
         label: 'Improve Space Utilization',
         htmlLabel: 'Improve Space Utilization',
-        value: 'improveSpaceUtilization'
+        optionValue: 'improveSpaceUtilization'
     },
     {
         primaryKPI: 'Operations',
         label: 'Reduce Expense Cost',
         htmlLabel: 'Reduce Expense Cost',
-        value: 'reduceExpenseCost'
+        optionValue: 'reduceExpenseCost'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'Energy Cost',
         htmlLabel: 'Energy Cost',
-        value: 'energyCost'
+        optionValue: 'energyCost'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'Waste Reduction: Hazardous',
         htmlLabel: 'Waste Reduction: Hazardous',
-        value: 'wasteReductionHazardous'
+        optionValue: 'wasteReductionHazardous'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'Waste Reduction: Non-Hazardous',
         htmlLabel: 'Waste Reduction: Non-Hazardous',
-        value: 'wasteReductionNonHazardous'
+        optionValue: 'wasteReductionNonHazardous'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'Reduce Nonconforming and Product Waste',
         htmlLabel: 'Reduce Nonconforming &amp; Product Waste',
-        value: 'reduceNonconformingProductWaste'
+        optionValue: 'reduceNonconformingProductWaste'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'Water Consumption',
         htmlLabel: 'Water Consumption',
-        value: 'waterConsumption'
+        optionValue: 'waterConsumption'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'Sewage Volume',
         htmlLabel: 'Sewage Volume',
-        value: 'sewageVolume'
+        optionValue: 'sewageVolume'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'Dust Emissions',
         htmlLabel: 'Dust Emissions',
-        value: 'dustEmissions'
+        optionValue: 'dustEmissions'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'CO, CO2, NOx, SOx emissions',
         htmlLabel: 'CO, CO<sub>2</sub>, NO<sub>x</sub>, SO<sub>x</sub> emissions',
-        value: 'chemicalEmissions'
+        optionValue: 'chemicalEmissions'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
         label: 'Reduce Refrigerant Gas Emissions',
         htmlLabel: 'Reduce Refrigerant Gas Emissions',
-        value: 'reduceRefrigerantGasEmissions'
+        optionValue: 'reduceRefrigerantGasEmissions'
     },
     {
         primaryKPI: 'Employee and Workplace Environment',
         label: 'Safety',
         htmlLabel: 'Safety',
-        value: 'safety'
+        optionValue: 'safety'
     },
     {
         primaryKPI: 'Employee and Workplace Environment',
         label: 'Employee Engagement - Working Environment',
         htmlLabel: 'Employee Engagement - Working Environment',
-        value: 'employeeEngagementWorkingEnvironment'
+        optionValue: 'employeeEngagementWorkingEnvironment'
     },
     {
         primaryKPI: 'Employee and Workplace Environment',
         label: 'Employee Engagement - Workforce Development',
         htmlLabel: 'Employee Engagement - Workforce Development',
-        value: 'employeeEngagementWorkforceDevelopment'
+        optionValue: 'employeeEngagementWorkforceDevelopment'
     },
 ]

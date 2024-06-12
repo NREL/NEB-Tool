@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { PrimaryKPI } from 'src/app/shared/constants/keyPerformanceIndicators2';
+import { PrimaryKPI } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
 
 @Pipe({
   name: 'kpiCategoryClass'

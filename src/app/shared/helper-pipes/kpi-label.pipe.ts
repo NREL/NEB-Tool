@@ -1,21 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { KeyPerformanceIndicator, KeyPerformanceIndicators } from '../constants/keyPerformanceIndicators2';
+import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 
 @Pipe({
   name: 'kpiLabel'
 })
 export class KpiLabelPipe implements PipeTransform {
 
-  transform(kpi: KeyPerformanceIndicator): string {
+  transform(kpiGuid: string, keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>): string {
     // if (kpi.isCustom) {
     //   return kpi.customKPIName
     // } else {
-    let findOption: KeyPerformanceIndicator = KeyPerformanceIndicators.find(option => { return option.value == kpi.value });
+    let findOption: IdbKeyPerformanceIndicator = keyPerformanceIndicators.find(option => { return option.guid == kpiGuid });
     if (findOption) {
       return findOption.label;
     }
     // }
-    return kpi.value;
+    return '';
   }
 
 }

@@ -35,6 +35,7 @@ import { OnSiteAssessmentComponent } from './setup-wizard/data-collection/on-sit
 import { ReviewOnSiteComponent } from './setup-wizard/data-collection/review-on-site/review-on-site.component';
 import { PreVisitComponent } from './setup-wizard/pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './setup-wizard/data-collection/data-collection.component';
+import { CompanyKpiSelectComponent } from './setup-wizard/pre-visit/company-kpi-select/company-kpi-select.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,10 @@ const routes: Routes = [
           {
             path: 'company-setup',
             component: CompanySetupComponent
+          },
+          {
+            path: 'company-kpi-select',
+            component: CompanyKpiSelectComponent
           },
           {
             path: 'company-kpi',

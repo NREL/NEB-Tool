@@ -14,12 +14,12 @@
                         minlength="1" maxlength="42" id="nebName" (input)="saveChanges()">
                 </div>
             </div>
-            <div class="row mb-1">
+            <!-- <div class="row mb-1">
                 <label class="col-sm-5 col-form-label" for="kpiId">Associated KPI</label>
                 <div class="col-sm-7">
                     <select class="form-select" name="kpiId" [(ngModel)]="nonEnergyBenefit.kpiId" (change)="setKPI()">
                         <option *ngFor="let kpi of keyPerformanceIndicators" [ngValue]="kpi.kpiOptionValue">
-                            <!-- <span [innerHTML]="kpi | kpiLabel"></span> -->
+                            <!-- <span [innerHTML]="kpi | kpiLabel"></span> --
                         </option>
                         <option [ngValue]="undefined">&mdash;</option>
                     </select>
@@ -34,7 +34,7 @@
                         <span class="input-group-text">{{kpi.units}}/yr</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <hr class="my-1">
             <div class="row mb-1">

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faMagnifyingGlass, faMagnifyingGlassPlus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Subscription } from 'rxjs';
+import { IconDefinition, faMagnifyingGlass, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { IdbCompany } from 'src/app/models/company';
-import { KPI_Category, KPI_Option, KPI_Options, KPI_categories, getCustomKeyPerformanceIndicator, getKeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
-import { KeyPerformanceIndicator, KeyPerformanceIndicators, PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicators2';
+import { IdbKeyPerformanceIndicator, getNewKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
+import { KeyPerformanceIndicatorOption, KeyPerformanceIndicatorOptions, PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
 
 @Component({
   selector: 'app-add-kpi-search',
@@ -15,68 +16,38 @@ export class AddKpiSearchComponent {
 
   faMagnifyingGlassPlus: IconDefinition = faMagnifyingGlassPlus;
   faMagnifyingGlass: IconDefinition = faMagnifyingGlass;
-  faPlus: IconDefinition = faPlus;
-  kpi_Options: Array<KPI_Option>;
 
   company: IdbCompany;
   companySub: Subscription;
-  kpi_categories: Array<KPI_Category> = KPI_categories;
 
   primaryKPIs: Array<PrimaryKPI> = PrimaryKPIs;
 
-  displayCustomKPIModal: boolean = false;
-  customKPIName: string = '';
   kpiCategorySearch: PrimaryKPI | undefined = undefined;
   kpiSearchStr: string = '';
 
-  keyPerformanceIndicators: Array<KeyPerformanceIndicator> = KeyPerformanceIndicators;
-
-  constructor(private companyIdbService: CompanyIdbService) {
-
+  keyPerformanceIndicatorOptions: Array<KeyPerformanceIndicatorOption> = KeyPerformanceIndicatorOptions;
+  keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
+  keyPerformanceIndicatorSub: Subscription;
+  constructor(private companyIdbService: CompanyIdbService, private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService) {
   }
 
   ngOnInit() {
     this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.company = _company;
-      this.setKpiOptions();
+    });
+    this.keyPerformanceIndicatorSub = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.subscribe(_keyPerformanceIndicators => {
+      this.keyPerformanceIndicators = _keyPerformanceIndicators;
     });
   }
 
   ngOnDestroy() {
     this.companySub.unsubscribe();
+    this.keyPerformanceIndicatorSub.unsubscribe();
   }
 
-  async saveChanges() {
-    await this.companyIdbService.asyncUpdate(this.company);
-  }
-
-  setKpiOptions() {
-    let currentSelections: Array<string> = this.company.keyPerformanceIndicators.map(kpi => {
-      return kpi.kpiOptionValue;
-    })
-    this.kpi_Options = KPI_Options.filter(option => {
-      return currentSelections.includes(option.value) == false;
-    });
-  }
-
-  openAddCustomModal() {
-    this.displayCustomKPIModal = true;
-  }
-
-  closeCustomKPIModal() {
-    this.displayCustomKPIModal = false;
-  }
-
-  confirmCreate() {
-    // let customKPI: KeyPerformanceIndicator = getCustomKeyPerformanceIndicator(this.customKPIName);
-    // this.company.keyPerformanceIndicators.push(customKPI);
-    // this.closeCustomKPIModal();
-  }
-
-
-  async addKPI(option: KeyPerformanceIndicator) {
-    // let newKPI: KeyPerformanceIndicator = getKeyPerformanceIndicator(option);
-    // this.company.keyPerformanceIndicators.push(newKPI);
-    // await this.saveChanges();
+  async addKPI(option: KeyPerformanceIndicatorOption) {
+    let newKPI: IdbKeyPerformanceIndicator = getNewKeyPerformanceIndicator(this.company.userId, this.company.guid, option);
+    await firstValueFrom(this.keyPerformanceIndicatorIdbService.addWithObservable(newKPI));
+    await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
   }
 }

@@ -39,6 +39,9 @@ import { AssessmentNebsFormComponent } from './data-collection/on-site-assessmen
 import { NebSetupFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
 import { PreVisitComponent } from './pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
+import { CompanyKpiSelectComponent } from './pre-visit/company-kpi-select/company-kpi-select.component';
+import { CompanyKpiDetailsComponent } from './pre-visit/company-kpi-details/company-kpi-details.component';
+import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-setup/add-kpi-search/selected-kpi-option.pipe';
 
 
 
@@ -75,7 +78,10 @@ import { DataCollectionComponent } from './data-collection/data-collection.compo
     AssessmentNebsFormComponent,
     NebSetupFormComponent,
     PreVisitComponent,
-    DataCollectionComponent
+    DataCollectionComponent,
+    CompanyKpiSelectComponent,
+    CompanyKpiDetailsComponent,
+    SelectedKpiOptionPipe
   ],
   imports: [
     CommonModule,

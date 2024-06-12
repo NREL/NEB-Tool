@@ -1,4 +1,4 @@
-import { KeyPerformanceIndicator } from "../shared/constants/keyPerformanceIndicators";
+// import { KeyPerformanceIndicator } from "../shared/constants/keyPerformanceIndicators";
 import { GeneralInformation, getGeneralInformation } from "./generalInformation";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 import { UnitSettings, getDefaultUnitSettings } from "./unitSettings";
@@ -8,7 +8,7 @@ export interface IdbCompany extends IdbEntry {
     unitSettings: UnitSettings,
     generalInformation: GeneralInformation,
     displayFacilities: boolean,
-    keyPerformanceIndicators: Array<KeyPerformanceIndicator>
+    // keyPerformanceIndicators: Array<KeyPerformanceIndicator>
 }
 
 export function getNewIdbCompany(userId: string): IdbCompany {
@@ -21,7 +21,7 @@ export function getNewIdbCompany(userId: string): IdbCompany {
         unitSettings: defaultSettings,
         generalInformation: generalInformation,
         displayFacilities: true,
-        keyPerformanceIndicators: []
+        // keyPerformanceIndicators: []
     }
 }
 

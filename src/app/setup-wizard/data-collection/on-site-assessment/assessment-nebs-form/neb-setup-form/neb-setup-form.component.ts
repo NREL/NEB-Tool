@@ -5,10 +5,10 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
+import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { IdbProject } from 'src/app/models/project';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { KeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
 
 @Component({
   selector: 'app-neb-setup-form',
@@ -33,13 +33,13 @@ export class NebSetupFormComponent {
   faNoteSticky: IconDefinition = faNoteSticky;
 
   displayDeleteModal: boolean = false;
-  keyPerformanceIndicators: Array<KeyPerformanceIndicator>;
+  keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
   projects: Array<IdbProject>;
   projectsSub: Subscription;
 
   displayProjectsModal: boolean = false;
   previousProjectIds: Array<string>;
-  kpi: KeyPerformanceIndicator;
+  kpi: IdbKeyPerformanceIndicator;
   highlighNebGuidSub: Subscription;
   highlighNebGuid: string;
   constructor(
@@ -53,7 +53,7 @@ export class NebSetupFormComponent {
   ngOnInit() {
     this.nonEnergyBenefit = this.nonEnergyBenefitsIdbService.getByGuid(this.nebGuid);
 
-    this.keyPerformanceIndicators = this.companyIdbService.selectedCompany.getValue().keyPerformanceIndicators;
+    // this.keyPerformanceIndicators = this.companyIdbService.selectedCompany.getValue().keyPerformanceIndicators;
     this.projectsSub = this.projectIdbService.projects.subscribe(_projects => {
       this.projects = _projects;
     });
@@ -148,9 +148,9 @@ export class NebSetupFormComponent {
   }
 
   setKPI() {
-    this.kpi = this.keyPerformanceIndicators.find(kpi => {
-      return kpi.kpiOptionValue == this.nonEnergyBenefit.kpiId;
-    });
+    // this.kpi = this.keyPerformanceIndicators.find(kpi => {
+    //   return kpi.kpiOptionValue == this.nonEnergyBenefit.kpiId;
+    // });
     this.saveChanges();
   }
 }
