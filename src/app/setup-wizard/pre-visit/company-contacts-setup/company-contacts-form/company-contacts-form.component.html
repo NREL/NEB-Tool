@@ -33,7 +33,7 @@
                                 id="phone" name="phone">
                                 <!-- placeholder=""> -->
                             <div class="alert alert-danger form-error" *ngIf="contactForm.controls['phone'].errors && 
-                                (contactForm.controls['phone'].touched || contactForm.controls['phone'].dirty)">
+                                (contactForm.controls['phone'].touched )">
                                 Invalid phone number: for US (xxx)-xxx-xxxx / for international +xxx xxxxxxxxxx
                             </div>
                         </div>
