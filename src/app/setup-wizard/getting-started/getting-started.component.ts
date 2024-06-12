@@ -110,7 +110,7 @@ export class GettingStartedComponent {
         this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/manage-assessments');
       }
     } else if (context == 'postVisit') {
-      // this.router.navigateByUrl('/setup-wizard/project-setup');
+      
     }
   }
 }

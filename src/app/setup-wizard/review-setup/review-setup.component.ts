@@ -18,7 +18,7 @@ export class ReviewSetupComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/project-setup/projects')
+    
   }
 
   async submit() {

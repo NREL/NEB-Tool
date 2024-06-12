@@ -8,10 +8,10 @@ import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from 'src/app/models/n
 import { FormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
-import { IdbProject } from 'src/app/models/project';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 
 describe('NebSetupFormComponent', () => {
   let component: NebSetupFormComponent;
@@ -20,14 +20,14 @@ describe('NebSetupFormComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlighNebGuid: new BehaviorSubject<string>(undefined),
+    highlightNebGuid: new BehaviorSubject<string>(undefined),
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
     selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
   };
-  let projectsIdbService: Partial<ProjectIdbService> = {
-    projects: new BehaviorSubject<Array<IdbProject>>([])
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {
+    energyOpportunities: new BehaviorSubject<Array<IdbEnergyOpportunity>>([])
   };
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]),
@@ -40,7 +40,7 @@ describe('NebSetupFormComponent', () => {
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: ProjectIdbService, useValue: projectsIdbService },
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: DbChangesService, useValue: {} },
       ]

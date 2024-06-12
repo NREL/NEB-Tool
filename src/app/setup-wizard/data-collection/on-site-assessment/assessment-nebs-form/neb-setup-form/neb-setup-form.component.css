@@ -14,11 +14,3 @@
 .btn-sm {
     font-size: small;
 }
-
-/* .card{
-    border: solid #186A3B;
-} */
-
-.list-group-item.project-item {
-    border: solid #D35400 !important;
-}

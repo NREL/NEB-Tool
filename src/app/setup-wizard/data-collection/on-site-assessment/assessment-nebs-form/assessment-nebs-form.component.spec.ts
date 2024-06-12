@@ -19,7 +19,7 @@ describe('AssessmentNebsFormComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlighNebGuid: new BehaviorSubject<string>(undefined),
+    highlightNebGuid: new BehaviorSubject<string>(undefined),
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     assessments: new BehaviorSubject<Array<IdbAssessment>>([]),

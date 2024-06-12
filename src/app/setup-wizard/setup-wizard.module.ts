@@ -33,13 +33,13 @@ import { PreAssessmentSummaryComponent } from './pre-visit/review-pre-visit-setu
 import { TableEntriesModule } from '../shared/table-entries/table-entries.module';
 import { OnSiteAssessmentComponent } from './data-collection/on-site-assessment/on-site-assessment.component';
 import { AssessmentDetailsFormComponent } from './data-collection/on-site-assessment/assessment-details-form/assessment-details-form.component';
-import { AssessmentProjectsFormComponent } from './data-collection/on-site-assessment/assessment-projects-form/assessment-projects-form.component';
-import { ProjectSetupFormComponent } from './data-collection/on-site-assessment/assessment-projects-form/project-setup-form/project-setup-form.component';
 import { AssessmentNebsFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
 import { NebSetupFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
 import { PreVisitComponent } from './pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import { DataCollectionManageAssessmentsComponent } from './data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
+import { AssessmentEnergyOpportunitiesFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
+import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/energy-opportunity-setup-form/energy-opportunity-setup-form.component';
 
 
 
@@ -49,7 +49,6 @@ import { DataCollectionManageAssessmentsComponent } from './data-collection/data
     GettingStartedComponent,
     CompanySetupComponent,
     FacilitySetupComponent,
-    ProjectSetupFormComponent,
     ReviewSetupComponent,
     CompanyKpiSetupComponent,
     KpiUnitOptionPipe,
@@ -72,12 +71,13 @@ import { DataCollectionManageAssessmentsComponent } from './data-collection/data
     PreAssessmentSummaryComponent,
     OnSiteAssessmentComponent,
     AssessmentDetailsFormComponent,
-    AssessmentProjectsFormComponent,
     AssessmentNebsFormComponent,
     NebSetupFormComponent,
     PreVisitComponent,
     DataCollectionComponent,
-    DataCollectionManageAssessmentsComponent
+    DataCollectionManageAssessmentsComponent,
+    AssessmentEnergyOpportunitiesFormComponent,
+    EnergyOpportunitySetupFormComponent
   ],
   imports: [
     CommonModule,

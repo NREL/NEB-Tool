@@ -1,6 +1,6 @@
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
-export interface IdbProject extends IdbEntry {
+export interface IdbEnergyOpportunity extends IdbEntry {
     name: string,
     userId: string,
     facilityId: string,
@@ -8,7 +8,7 @@ export interface IdbProject extends IdbEntry {
     assessmentId: string,
     energySavings: number,
     implementationCost: number,
-    projectType: string,
+    opportunityType: string,
     costSavings: number,
     notes: string,
     nonEnergyBenefitIds: Array<string>,
@@ -16,18 +16,18 @@ export interface IdbProject extends IdbEntry {
     includeNote: boolean
 }
 
-export function getNewIdbProject(userId: string, companyId: string, facilityId: string, assessmentId: string): IdbProject {
+export function getNewIdbEnergyOpportunity(userId: string, companyId: string, facilityId: string, assessmentId: string): IdbEnergyOpportunity {
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
-        name: 'New Project',
+        name: 'New Opportunity',
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
         assessmentId: assessmentId,
         energySavings: undefined,
         implementationCost: undefined,
-        projectType: undefined,
+        opportunityType: undefined,
         costSavings: undefined,
         notes: undefined,
         nonEnergyBenefitIds: [],

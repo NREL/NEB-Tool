@@ -28,8 +28,8 @@ export class OnSiteVisitIdbService {
     return this.dbService.getByKey('onSiteVisit', id);
   }
 
-  addWithObservable(project: IdbOnSiteVisit): Observable<IdbOnSiteVisit> {
-    return this.dbService.add('onSiteVisit', project);
+  addWithObservable(onSiteVisit: IdbOnSiteVisit): Observable<IdbOnSiteVisit> {
+    return this.dbService.add('onSiteVisit', onSiteVisit);
   }
 
   deleteWithObservable(id: number): Observable<any> {

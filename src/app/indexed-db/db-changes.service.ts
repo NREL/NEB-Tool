@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CompanyIdbService } from './company-idb.service';
 import { FacilityIdbService } from './facility-idb.service';
-import { ProjectIdbService } from './project-idb.service';
-import { IdbProject } from '../models/project';
 import { firstValueFrom } from 'rxjs';
 import { IdbFacility } from '../models/facility';
 import { IdbCompany } from '../models/company';
@@ -14,6 +12,8 @@ import { NonEnergyBenefitsIdbService } from './non-energy-benefits-idb.service';
 import { IdbNonEnergyBenefit } from '../models/nonEnergyBenefit';
 import { OnSiteVisitIdbService } from './on-site-visit-idb.service';
 import { IdbOnSiteVisit } from '../models/onSiteVisit';
+import { EnergyOpportunityIdbService } from './energy-opportunity-idb.service';
+import { IdbEnergyOpportunity } from '../models/energyOpportunity';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ import { IdbOnSiteVisit } from '../models/onSiteVisit';
 export class DbChangesService {
 
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
-    private projectIdbService: ProjectIdbService, private assessmentIdbService: AssessmentIdbService,
+    private energyOpportunityIdbService: EnergyOpportunityIdbService, private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService) { }
@@ -33,10 +33,10 @@ export class DbChangesService {
     let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
     let companyContacts: Array<IdbContact> = contacts.filter(contact => { return contact.companyId == company.guid });
     await this.deleteContacts(companyContacts);
-    //delete projects
-    let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
-    let companyProjects: Array<IdbProject> = projects.filter(project => { return project.companyId == company.guid });
-    await this.deleteProjects(companyProjects);
+    //delete energy opportunties
+    let energyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunityIdbService.energyOpportunities.getValue();
+    let companyEnergyOpportunities: Array<IdbEnergyOpportunity> = energyOpportunities.filter(energyOpportunity => { return energyOpportunity.companyId == company.guid });
+    await this.deleteEnergyOpportunities(companyEnergyOpportunities);
     //delete NEBs
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
     let companyNonEnergyBenefits: Array<IdbNonEnergyBenefit> = nonEnergyBenefits.filter(neb => { return neb.companyId == company.guid; })
@@ -64,10 +64,10 @@ export class DbChangesService {
     // let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
     // let facilityContacts: Array<IdbContact> = contacts.filter(contact => { return contact.facilityId == facility.guid });
     // await this.deleteContacts(facilityContacts);
-    //delete projects
-    let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
-    let facilityProjects: Array<IdbProject> = projects.filter(project => { return project.facilityId == facility.guid });
-    await this.deleteProjects(facilityProjects)
+    //delete energy opportunities
+    let energyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunityIdbService.energyOpportunities.getValue();
+    let facilityEnergyOpportunities: Array<IdbEnergyOpportunity> = energyOpportunities.filter(opportunity => { return opportunity.facilityId == facility.guid });
+    await this.deleteEnergyOpportunities(facilityEnergyOpportunities)
     //delete NEBs
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
     let facilityNonEnergyBenefits: Array<IdbNonEnergyBenefit> = nonEnergyBenefits.filter(neb => { return neb.facilityId == facility.guid; })
@@ -86,10 +86,10 @@ export class DbChangesService {
   }
 
   async deleteAssessment(assessment: IdbAssessment) {
-    //delete projects
-    let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
-    let assessmentProjects: Array<IdbProject> = projects.filter(project => { return project.assessmentId == assessment.guid });
-    await this.deleteProjects(assessmentProjects);
+    //delete energy opportunity
+    let energyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunityIdbService.energyOpportunities.getValue();
+    let assessmentEnergyOpportunities: Array<IdbEnergyOpportunity> = energyOpportunities.filter(opportunity => { return opportunity.assessmentId == assessment.guid });
+    await this.deleteEnergyOpportunities(assessmentEnergyOpportunities);
     //delete NEBs
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
     let assessmentNonEnergyBenefits: Array<IdbNonEnergyBenefit> = nonEnergyBenefits.filter(neb => { return neb.assessmentId == assessment.guid; })
@@ -122,35 +122,35 @@ export class DbChangesService {
   }
 
   async deleteNonEnergyBenefit(nonEnergyBenefit: IdbNonEnergyBenefit) {
-    let projects: Array<IdbProject> = this.projectIdbService.projects.getValue();
-    for (let i = 0; i < projects.length; i++) {
-      let project: IdbProject = projects[i];
-      if (project.nonEnergyBenefitIds.includes(nonEnergyBenefit.guid)) {
-        project.nonEnergyBenefitIds = project.nonEnergyBenefitIds.filter(nebId => {
-          return nebId == nonEnergyBenefit.guid;
+    let energyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunityIdbService.energyOpportunities.getValue();
+    for (let i = 0; i < energyOpportunities.length; i++) {
+      let energyOpportunity: IdbEnergyOpportunity = energyOpportunities[i];
+      if (energyOpportunity.nonEnergyBenefitIds.includes(nonEnergyBenefit.guid)) {
+        energyOpportunity.nonEnergyBenefitIds = energyOpportunity.nonEnergyBenefitIds.filter(nebId => {
+          return nebId != nonEnergyBenefit.guid;
         });
-        await firstValueFrom(this.projectIdbService.updateWithObservable(project));
+        await firstValueFrom(this.energyOpportunityIdbService.updateWithObservable(energyOpportunity));
       }
     }
-    await this.projectIdbService.setProjects();
+    await this.energyOpportunityIdbService.setEnergyOpportunities();
     await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
   }
 
-  async deleteProject(project: IdbProject) {
+  async deleteEnergyOpportunity(energyOpportunity: IdbEnergyOpportunity) {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
     for (let i = 0; i < nonEnergyBenefits.length; i++) {
       let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[i];
-      if (nonEnergyBenefit.projectIds.includes(project.guid)) {
-        nonEnergyBenefit.projectIds = nonEnergyBenefit.projectIds.filter(prjId => {
-          return prjId == project.guid;
+      if (nonEnergyBenefit.energyOpportunityIds.includes(energyOpportunity.guid)) {
+        nonEnergyBenefit.energyOpportunityIds = nonEnergyBenefit.energyOpportunityIds.filter(oppId => {
+          return oppId != energyOpportunity.guid;
         });
         await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
       }
     }
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
-    await firstValueFrom(this.projectIdbService.deleteWithObservable(project.id));
-    await this.projectIdbService.setProjects();
+    await firstValueFrom(this.energyOpportunityIdbService.deleteWithObservable(energyOpportunity.id));
+    await this.energyOpportunityIdbService.setEnergyOpportunities();
   }
 
   async deleteAssessments(assessments: Array<IdbAssessment>) {
@@ -160,11 +160,11 @@ export class DbChangesService {
     await this.assessmentIdbService.setAssessments();
   }
 
-  async deleteProjects(projects: Array<IdbProject>) {
-    for (let i = 0; i < projects.length; i++) {
-      await firstValueFrom(this.projectIdbService.deleteWithObservable(projects[i].id));
+  async deleteEnergyOpportunities(energyOpportunities: Array<IdbEnergyOpportunity>) {
+    for (let i = 0; i < energyOpportunities.length; i++) {
+      await firstValueFrom(this.energyOpportunityIdbService.deleteWithObservable(energyOpportunities[i].id));
     }
-    await this.projectIdbService.setProjects();
+    await this.energyOpportunityIdbService.setEnergyOpportunities();
   }
 
   async deleteFacilities(facilities: Array<IdbFacility>) {

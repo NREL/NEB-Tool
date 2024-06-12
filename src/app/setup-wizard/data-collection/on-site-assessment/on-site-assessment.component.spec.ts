@@ -13,14 +13,14 @@ import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { AssessmentDetailsFormComponent } from './assessment-details-form/assessment-details-form.component';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { AssessmentProjectsFormComponent } from './assessment-projects-form/assessment-projects-form.component';
 import { AssessmentNebsFormComponent } from './assessment-nebs-form/assessment-nebs-form.component';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
-import { IdbProject } from 'src/app/models/project';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
+import { AssessmentEnergyOpportunitiesFormComponent } from './assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
 
 describe('OnSiteAssessmentComponent', () => {
   let component: OnSiteAssessmentComponent;
@@ -37,8 +37,8 @@ describe('OnSiteAssessmentComponent', () => {
   let facilityIdbService: Partial<FacilityIdbService> = {
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
-  let projectIdbService: Partial<ProjectIdbService> = {
-    projects: new BehaviorSubject<Array<IdbProject>>([])
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {
+    energyOpportunities: new BehaviorSubject<Array<IdbEnergyOpportunity>>([])
   };
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
@@ -46,13 +46,13 @@ describe('OnSiteAssessmentComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule, HelperPipesModule],
-      declarations: [OnSiteAssessmentComponent, AssessmentDetailsFormComponent, AssessmentProjectsFormComponent, AssessmentNebsFormComponent],
+      declarations: [OnSiteAssessmentComponent, AssessmentDetailsFormComponent, AssessmentEnergyOpportunitiesFormComponent, AssessmentNebsFormComponent],
       providers: [
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: ProjectIdbService, useValue: projectIdbService },
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
       ]
     })

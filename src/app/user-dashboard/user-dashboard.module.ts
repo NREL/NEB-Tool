@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ProjectsTableComponent } from './user-dashboard-home/projects-table/projects-table.component';
 import { CompaniesTableComponent } from './user-dashboard-home/companies-table/companies-table.component';
 import { FacilitiesTableComponent } from './user-dashboard-home/facilities-table/facilities-table.component';
 import { UserDashboardTabsComponent } from './user-dashboard-tabs/user-dashboard-tabs.component';
@@ -19,7 +18,6 @@ import { AssessmentsTableComponent } from './user-dashboard-home/assessments-tab
   declarations: [
     UserDashboardComponent,
     UserDashboardHomeComponent,
-    ProjectsTableComponent,
     CompaniesTableComponent,
     FacilitiesTableComponent,
     UserDashboardTabsComponent,

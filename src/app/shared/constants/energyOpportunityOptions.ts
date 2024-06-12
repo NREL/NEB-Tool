@@ -1,10 +1,10 @@
-export interface ProjectType {
+export interface EnergyOpportunityType {
     value: string,
     label: string,
-    //todo: other project tracking properties
+    //todo: other opportunity tracking properties
 };
 
-export const FanProjects: Array<ProjectType> =  [
+export const FanOpportunities: Array<EnergyOpportunityType> =  [
     {
         value: 'installVFD',
         label: 'Install VFD'
@@ -35,4 +35,4 @@ export const FanProjects: Array<ProjectType> =  [
     }
 ];
 
-//TODO: add projects for other energy systems.
+//TODO: add opportunities for other energy systems.

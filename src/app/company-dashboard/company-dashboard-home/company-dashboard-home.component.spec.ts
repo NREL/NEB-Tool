@@ -9,9 +9,6 @@ import { BehaviorSubject } from 'rxjs';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { FormsModule } from '@angular/forms';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
-import { IdbProject } from 'src/app/models/project';
-import { ProjectsTableComponent } from './projects-table/projects-table.component';
 import { FacilitiesTableComponent } from './facilities-table/facilities-table.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
@@ -22,6 +19,8 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 
 describe('CompanyDashboardHomeComponent', () => {
   let component: CompanyDashboardHomeComponent;
@@ -34,8 +33,8 @@ describe('CompanyDashboardHomeComponent', () => {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),
     selectedFacility: new BehaviorSubject<IdbFacility>(undefined)
   }
-  let projectDbService: Partial<ProjectIdbService> = {
-    projects: new BehaviorSubject<Array<IdbProject>>([])
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {
+    energyOpportunities: new BehaviorSubject<Array<IdbEnergyOpportunity>>([])
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     selectedAssessment: new BehaviorSubject<IdbAssessment>(undefined),
@@ -51,12 +50,12 @@ describe('CompanyDashboardHomeComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FormsModule, FontAwesomeModule, HelperPipesModule],
-      declarations: [CompanyDashboardHomeComponent, ProjectsTableComponent, FacilitiesTableComponent, AssessmentsTableComponent],
+      declarations: [CompanyDashboardHomeComponent, FacilitiesTableComponent, AssessmentsTableComponent],
       providers: [
         { provide: CompanyIdbService, useValue: companyDbServiceStub },
         { provide: FacilityIdbService, useValue: facilityDbServiceStub },
         { provide: DbChangesService, useValue: {} },
-        { provide: ProjectIdbService, useValue: projectDbService },
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: UserIdbService, useValue: userIdbService },
