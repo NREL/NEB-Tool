@@ -52,8 +52,12 @@
                                 Invalid email.
                             </div> -->
                             <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['email']"> -->
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.get('email').errors">
+                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.get('email').errors">
                                 Invalid email.
+                            </div> -->
+                            <div *ngIf="contactForm.controls['email'].errors && (contactForm.controls['email'].touched || contactForm.controls['email'].dirty)">
+                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['email']">Invalid Email</div>
+                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">max length</div>
                             </div>
                             <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">
                                 Maximum length is 255 characters.
