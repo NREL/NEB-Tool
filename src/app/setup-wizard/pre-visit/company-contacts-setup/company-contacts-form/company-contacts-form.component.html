@@ -44,7 +44,6 @@
                             <input type="email" class="form-control"
                                 formControlName="email"
                                 ((blur))="saveChanges()"
-                                maxlength="255"
                                 id="email" name="email">
                             <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['pattern'] && -->
                             <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors &&
@@ -70,19 +69,31 @@
                             <input type="text" class="form-control"
                                 formControlName="role"
                                 ((blur))="saveChanges()"
-                                maxlength="100" id="role" name="role">
+                                id="role" name="role">
                             <div class="alert alert-danger form-error" *ngIf="contactForm.controls['role'].errors">
                                 Invalid role
                             </div>
                         </div>
                     </div>
+                    <!-- <div class="row mb-1">
+                        <label class="col-sm-5 col-form-label" for="team">Team</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control"
+                                formControlName="team"
+                                ((blur))="saveChanges()"
+                                id="team" name="team">
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['team'].errors">
+                                Invalid team
+                            </div>
+                        </div>
+                    </div> -->
                     <div class="row mb-1">
                         <label class="col-sm-5 col-form-label" for="team">Team</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control"
                                 formControlName="team"
                                 (blur)="saveChanges()"
-                                maxlength="100" id="team" name="team">
+                                id="team" name="team">
                             <div class="alert alert-danger form-error" *ngIf="contactForm.controls['team'].errors">
                                 Invalid team
                             </div>
@@ -96,7 +107,7 @@
                                 <input type="text" class="form-control"
                                     formControlName="focusArea"
                                     (blur)="saveChanges()" minlength="1"
-                                    maxlength="85" id="focusArea" name="focusArea">
+                                    id="focusArea" name="focusArea">
                                 <div class="alert alert-danger form-error" *ngIf="contactForm.controls['focusArea'].errors">
                                     Invalid focus area
                                 </div>

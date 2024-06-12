@@ -13,7 +13,7 @@ export class CompanyContactsFormService {
     return this.formBuilder.group({
       'name': [contact.name, [Validators.required]],
       //TODO: add form controls corresponding to form
-      'phone': [contact.phone, [this.phoneNumberValidator()]],
+    'phone': [contact.phone, [this.phoneNumberValidator(), Validators.pattern(/^(\+\d{1,3}\s+)?[\d\s\(\)\-]*$/)]],
       // 'email': [contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.maxLength(255)]],
       'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
       'role': [contact.role, []],
