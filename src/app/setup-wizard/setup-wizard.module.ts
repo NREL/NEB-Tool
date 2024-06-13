@@ -10,10 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { ReviewSetupComponent } from './review-setup/review-setup.component';
-import { CompanyKpiSetupComponent } from './pre-visit/company-kpi-setup/company-kpi-setup.component';
-import { KpiUnitOptionPipe } from './pre-visit/company-kpi-setup/kpi-unit-option.pipe';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
-import { KpiCategoryClassPipe } from './pre-visit/company-kpi-setup/kpi-category-class.pipe';
 import { CompanyContactsSetupComponent } from './pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './pre-visit/pre-assessment-setup/pre-assessment-setup.component';
@@ -55,10 +52,7 @@ import { KpiMetricsListPipe } from './pre-visit/company-kpi-details/kpi-details-
     CompanySetupComponent,
     FacilitySetupComponent,
     ReviewSetupComponent,
-    CompanyKpiSetupComponent,
-    KpiUnitOptionPipe,
     SetupWizardSidebarComponent,
-    KpiCategoryClassPipe,
     CompanyContactsSetupComponent,
     FacilityProcessEquipmentSetupComponent,
     PreAssessmentSetupComponent,

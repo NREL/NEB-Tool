@@ -26,7 +26,6 @@ import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessm
 import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
 import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
 import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
-import { CompanyKpiSetupComponent } from './setup-wizard/pre-visit/company-kpi-setup/company-kpi-setup.component';
 import { CompanyContactsSetupComponent } from './setup-wizard/pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.component';
