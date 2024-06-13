@@ -43,4 +43,11 @@ export class KeyPerformanceIndicatorsIdbService {
     keyPerformanceIndicator = await firstValueFrom(this.updateWithObservable(keyPerformanceIndicator));
     await this.setKeyPerformanceIndicators();
   }
+
+  getByGuid(guid: string): IdbKeyPerformanceIndicator {
+    let keyPerformanceInidcators: Array<IdbKeyPerformanceIndicator> = this.keyPerformanceIndicators.getValue();
+    return keyPerformanceInidcators.find(kpi => {
+      return kpi.guid == guid
+    });
+  }
 }

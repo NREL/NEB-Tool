@@ -6,12 +6,9 @@
                     <fa-icon [icon]="faChartBar" class="me-2"></fa-icon> Company Key Performance Indicators
                 </h5>
                 <hr>
-
-                <ng-template [ngIf]="(company.guid | companyKpiList:keyPerformanceIndicators).length != 0"
-                    [ngIfElse]="noDataBlock">
-                    <div class="d-flex flex-column"
-                        *ngFor="let kpi of (company.guid | companyKpiList:keyPerformanceIndicators)">
-                        <app-kpi-details-form [keyPerformanceIndicator]="kpi"></app-kpi-details-form>
+                <ng-template [ngIf]="companyKpiGuids.length != 0" [ngIfElse]="noDataBlock">
+                    <div class="d-flex flex-column" *ngFor="let kpiGuid of companyKpiGuids">
+                        <app-kpi-details-form [kpiGuid]="kpiGuid"></app-kpi-details-form>
                         <hr>
                     </div>
                 </ng-template>
@@ -20,8 +17,6 @@
                         No KPI's selected for this company. Add KPI's from the list provided.
                     </div>
                 </ng-template>
-
-
             </div>
         </div>
     </div>

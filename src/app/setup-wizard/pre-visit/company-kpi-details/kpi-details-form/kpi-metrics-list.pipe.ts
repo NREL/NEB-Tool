@@ -9,11 +9,13 @@ import * as _ from 'lodash';
 export class KpiMetricsListPipe implements PipeTransform {
 
   transform(optionValue: KeyPerformanceIndicatorValue): Array<KeyPerformanceMetric> {
-    let keyPerformanceMetrics: Array<KeyPerformanceMetric> = KeyPerformanceMetrics
+    let keyPerformanceMetrics: Array<KeyPerformanceMetric> = KeyPerformanceMetrics;
     if (optionValue != 'other') {
       keyPerformanceMetrics = keyPerformanceMetrics.filter(performanceMetric => {
         return performanceMetric.kpiValue == optionValue
       });
+    }else{
+      keyPerformanceMetrics = [];
     }
     return _.orderBy(keyPerformanceMetrics, (kpm: KeyPerformanceMetric) => {
       return kpm.label

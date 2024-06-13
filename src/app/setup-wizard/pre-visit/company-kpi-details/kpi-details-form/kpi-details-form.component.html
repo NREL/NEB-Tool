@@ -1,21 +1,23 @@
 <form>
     <div class="row mb-2">
-        <div class="col-6">
+        <div class="col-6 bold">
             <ng-template [ngIf]="keyPerformanceIndicator.optionValue == 'other'" [ngIfElse]="nonCustomBlock">
                 <input name="{{'kpiName_'+keyPerformanceIndicator.guid}}" type="text" class="form-control"
-                    [(ngModel)]="keyPerformanceIndicator.label" id="{{'kpiName_'+keyPerformanceIndicator.guid}}">
+                    [(ngModel)]="keyPerformanceIndicator.label" id="{{'kpiName_'+keyPerformanceIndicator.guid}}"
+                    (input)="saveChanges()">
             </ng-template>
             <ng-template #nonCustomBlock>
-                <span [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
+                <fa-icon [icon]="faBullseye"></fa-icon>
+                <span class="ps-1" [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
             </ng-template>
         </div>
         <div class="col-6">
             <ng-template [ngIf]="keyPerformanceIndicator.optionValue == 'other'" [ngIfElse]="nonCustomBlock2">
 
                 <select class="form-select" name="kpiCategory" id="kpiCategory"
-                    [(ngModel)]="keyPerformanceIndicator.primaryKPI">
+                    [(ngModel)]="keyPerformanceIndicator.primaryKPI" (change)="saveChanges()">
                     <option *ngFor="let primaryKPI of primaryKPIs" [ngValue]="primaryKPI">
-                            {{primaryKPI}}
+                        {{primaryKPI}}
                     </option>
                 </select>
             </ng-template>
@@ -27,16 +29,46 @@
             </ng-template>
         </div>
     </div>
+
     <div class="row">
+        <div class="col-sm-6">
+            <h6>Performance Metrics:</h6>
+        </div>
+    </div>
+
+    <div class="row" *ngFor="let keyPerformanceMetric of (keyPerformanceIndicator.optionValue | kpiMetricsList)">
+        <label class="col-sm-6 col-form-label" for="performanceMetric">
+            <!-- <a class="p-1">
+                <fa-icon class="small" [icon]="faCircleQuestion"></fa-icon>
+            </a> -->
+            <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span></label>
+        <div class="col-sm-6">
+            <!-- <select class="form-select" name="performanceMetric" id="performanceMetric"
+                [(ngModel)]="keyPerformanceIndicator.performanceMetricValue">
+                <option *ngFor="let keyPerformanceMetric of (keyPerformanceIndicator.optionValue | kpiMetricsList)"
+                    [ngValue]="keyPerformanceMetric.value" (change)="saveChanges()">
+                    <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
+                </option>
+            </select> -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <a class="click-link"><fa-icon [icon]="faPlus"></fa-icon> Add Custom Metric</a>
+        </div>
+    </div>
+
+    <!-- <div class="row">
         <label class="col-sm-6 col-form-label" for="performanceMetric">Performance Metric</label>
         <div class="col-sm-6">
             <select class="form-select" name="performanceMetric" id="performanceMetric"
                 [(ngModel)]="keyPerformanceIndicator.performanceMetricValue">
                 <option *ngFor="let keyPerformanceMetric of (keyPerformanceIndicator.optionValue | kpiMetricsList)"
-                    [ngValue]="keyPerformanceMetric.value">
+                    [ngValue]="keyPerformanceMetric.value" (change)="saveChanges()">
                     <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
                 </option>
             </select>
         </div>
-    </div>
+    </div> -->
 </form>

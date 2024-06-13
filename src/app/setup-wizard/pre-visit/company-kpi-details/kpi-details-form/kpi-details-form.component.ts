@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { IconDefinition, faBullseye, faCircleQuestion, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
 
@@ -8,16 +10,26 @@ import { PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformance
   styleUrl: './kpi-details-form.component.css'
 })
 export class KpiDetailsFormComponent {
-  @Input()
+  @Input({ required: true })
+  kpiGuid: string;
+
   keyPerformanceIndicator: IdbKeyPerformanceIndicator;
-
-
   primaryKPIs: Array<PrimaryKPI> = PrimaryKPIs;
-  constructor(){
+  faCircleQuestion: IconDefinition = faCircleQuestion;
+  faBullseye: IconDefinition = faBullseye;
+  faPlus: IconDefinition = faPlus;
+
+  constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    this.keyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getByGuid(this.kpiGuid);
+  }
 
+
+  async saveChanges() {
+    await this.keyPerformanceIndicatorIdbService.asyncUpdate(this.keyPerformanceIndicator);
+    await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
   }
 }
