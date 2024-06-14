@@ -105,7 +105,14 @@ export class CompanyContactsSetupComponent {
       companyContacts.forEach(contact => {
         let contactForm: FormGroup = this.companyContactsFormService.getFormFromIdbContact(contact);
         if (contactForm.invalid) {
-          hasInvalidContacts = true;
+          // console.log(contactForm);
+          for (const name of Object.keys(contactForm.controls)) {
+            const control = contactForm.get(name);
+            if (control?.errors?.['required']) {
+              hasInvalidContacts = true;
+              break;
+            }
+          }
           // // Debugging invalid form control
           // const invalidControls = [];
           // const controls = contactForm.controls;

@@ -90,6 +90,8 @@ export class CompanyContactsFormService {
       const isValidPhone = isValidPhoneNumber(phoneWithExt, 'US');
       // console.log(isValidPhone);
       if (!isValidPhone) {
+        // console.log(!phone, phone===null, typeof(phone));
+        // console.log(phoneWithExt, 'phone', phone, 'ext', ext);
         control.get('phone').setErrors({invalidPhoneNumber: true });
       } else {
         control.get('phone').setErrors(null);
