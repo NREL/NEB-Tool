@@ -2,7 +2,8 @@
     <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#'+contactGuid"
         aria-expanded="true" [attr.aria-controls]="contactGuid"
         [ngClass]="{'collapsed': accordionIndex != contactIndex}" (click)="setAccordionIndex(contactIndex)">
-        <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="contactForm.touched && contactForm.invalid"></fa-icon>
+        <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="contactForm.touched && contactForm.controls['firstname'].touched 
+            && contactForm.controls['lastname'].touched && contactForm.invalid"></fa-icon>
         <fa-icon [icon]="faUser" class="pe-1"></fa-icon>
         {{contact.name}}
     </button>
@@ -14,12 +15,20 @@
             <div class="col-12">
                 <form [formGroup]="contactForm">
                     <div class="row mb-1">
-                        <label class="col-sm-5 col-form-label" for="name">Name <span class="required-asterisk">*</span></label>
+                        <label class="col-sm-5 col-form-label" for="firstname">First Name <span class="required-asterisk">*</span></label>
                         <div class="col-sm-7">
-                            <input name="name" type="text" class="form-control" formControlName="name" id="name"
+                            <input name="firstname" type="text" class="form-control" formControlName="firstname" id="firstname"
                                 (blur)="saveChanges()">
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['name'].touched && contactForm.controls['name'].getError('required')">
-                                Name Required
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['firstname'].touched && contactForm.controls['firstname'].getError('required')">
+                                First Name Required
+                            </div>    
+                        </div>
+                        <label class="col-sm-5 col-form-label" for="lastname">Last Name <span class="required-asterisk">*</span></label>
+                        <div class="col-sm-7">
+                            <input name="lastname" type="text" class="form-control" formControlName="lastname" id="lastname"
+                                (blur)="saveChanges()">
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['lastname'].touched && contactForm.controls['lastname'].getError('required')">
+                                Last Name Required
                             </div>    
                         </div>
                     </div>

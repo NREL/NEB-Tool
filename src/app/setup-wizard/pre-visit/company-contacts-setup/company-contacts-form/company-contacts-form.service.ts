@@ -11,6 +11,19 @@ export class CompanyContactsFormService {
   constructor(private formBuilder: FormBuilder) { }
 
   getFormFromIdbContact(contact: IdbContact): FormGroup {
+    // Process name before saving
+    let firstname = '', lastname = '';
+    if (contact.name) {
+      let names = contact.name.split(',');
+      // console.log(contact.name);
+      if (names.length == 1) {
+        firstname = names[0].trim();
+      } else {
+        firstname = names[0].trim();
+        lastname = names[1].trim();
+      }
+    }
+    // Process phone number before saving
     let phone = '';
     let ext = '';
     if (contact.phone) {
@@ -23,7 +36,8 @@ export class CompanyContactsFormService {
       }
     }
     return this.formBuilder.group({
-      'name': [contact.name, [Validators.required]],
+      'firstname': [firstname, [Validators.required]],
+      'lastname' : [lastname, [Validators.required]],
       //TODO: add form controls corresponding to form
       // 'phone': [contact.phone, [Validators.pattern(/^(\+\d{1,3}\s+)?[\d\s\(\)\-]*$/), this.phoneNumberValidator()]],
       'phone': [phone, []],
@@ -38,7 +52,7 @@ export class CompanyContactsFormService {
   }
 
   updateIdbContactFromForm(contactForm: FormGroup, contact: IdbContact): IdbContact {
-    contact.name = contactForm.controls['name'].value;
+    contact.name = contactForm.controls['firstname'].value + ', ' + contactForm.controls['lastname'].value;
     //TODO: add all the properties that will get updated by the form
     let phone = contactForm.controls['phone'].value;
     let ext = contactForm.controls['ext'].value;
