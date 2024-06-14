@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, MinLengthValidator, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { IdbContact } from 'src/app/models/contact';
+import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,10 @@ export class CompanyContactsFormService {
   updateIdbContactFromForm(contactForm: FormGroup, contact: IdbContact): IdbContact {
     contact.name = contactForm.controls['name'].value;
     //TODO: add all the properties that will get updated by the form
-    const phone = this.phoneNumberParser(contactForm.controls['phone'].value);
+    let phone;
+    if (isValidPhoneNumber(contactForm.controls['phone'].value, 'US')) {
+      phone = parsePhoneNumber(contactForm.controls['phone'].value, 'US').formatInternational();
+    }
     // console.log('phone:', phone, contactForm.controls['phone'].value);
     contact.phone = phone || contactForm.controls['phone'].value;
     contact.email = contactForm.controls['email'].value;
@@ -39,6 +43,7 @@ export class CompanyContactsFormService {
   }
 
   // Parse phone number
+  // Not used/changed to libphonenumber-js
   phoneNumberParser(phoneInput: string): string {
     const value = (phoneInput || '').trim();
     if (!value) return '';
@@ -48,7 +53,7 @@ export class CompanyContactsFormService {
 
     if (isInternational) {
       // All digits should be [10, 18]
-      if (digits.length < 10 || digits.length > 18) {
+      if (digits.length < 9 || digits.length > 18) {
         return '';
       }
       // Match the country code
@@ -69,10 +74,11 @@ export class CompanyContactsFormService {
   // Custom validator for phone number
   phoneNumberValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const value = (control.value || '').trim();
+      const value = control.value;
       if (!value) return null;
-      const phone = this.phoneNumberParser(control.value);
-      if (phone) {
+      const isValidPhone = isValidPhoneNumber(control.value, 'US');
+      console.log(isValidPhone);
+      if (isValidPhone) {
         return null;
       } else {
         return {invalidPhoneNumber: true };
