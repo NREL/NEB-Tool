@@ -38,7 +38,7 @@
                                 id="ext" name="ext">
                         </div>
                         <div class="col-sm-7 offset-sm-5">
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['phone'].errors && 
+                            <div class="alert alert-warning form-error" *ngIf="contactForm.controls['phone'].errors && 
                                 (contactForm.controls['phone'].touched || contactForm.controls['ext'].touched)">
                                 Invalid phone number: for US xxx-xxx-xxxx / for international +xxx xxxxxxxxxx
                             </div>
@@ -61,8 +61,8 @@
                                 Invalid email.
                             </div> -->
                             <div *ngIf="contactForm.controls['email'].errors && (contactForm.controls['email'].touched || contactForm.controls['email'].dirty)">
-                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['email']">Invalid Email</div>
-                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">max length</div>
+                                <div class="alert alert-warning form-error" *ngIf="contactForm.controls['email'].errors['email']">Invalid Email</div>
+                                <div class="alert alert-warning form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">max length</div>
                             </div>
                             <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">
                                 Maximum length is 255 characters.
@@ -76,7 +76,7 @@
                                 formControlName="role"
                                 (blur)="saveChanges()"
                                 id="role" name="role">
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['role'].errors">
+                            <div class="alert alert-warning form-error" *ngIf="contactForm.controls['role'].errors">
                                 Invalid role
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                 formControlName="team"
                                 (blur)="saveChanges()"
                                 id="team" name="team">
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['team'].errors">
+                            <div class="alert alert-warning form-error" *ngIf="contactForm.controls['team'].errors">
                                 Invalid team
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                                     formControlName="focusArea"
                                     (blur)="saveChanges()" minlength="1"
                                     id="focusArea" name="focusArea">
-                                <div class="alert alert-danger form-error" *ngIf="contactForm.controls['focusArea'].errors">
+                                <div class="alert alert-warning form-error" *ngIf="contactForm.controls['focusArea'].errors">
                                     Invalid focus area
                                 </div>
                             </div>
@@ -126,7 +126,7 @@
                             <textarea class="form-control" name="notes"
                                 formControlName="notes"
                                 (blur)="saveChanges()"></textarea>
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['notes'].errors">
+                            <div class="alert alert-warning form-error" *ngIf="contactForm.controls['notes'].errors">
                                 Invalid notes
                             </div>
                         </div>

@@ -11,13 +11,15 @@ export class CompanyContactsFormService {
   constructor(private formBuilder: FormBuilder) { }
 
   getFormFromIdbContact(contact: IdbContact): FormGroup {
-    let phone = contact.phone;
+    let phone = '';
     let ext = '';
     if (contact.phone) {
       if (isValidPhoneNumber(contact.phone)) {
         const phoneWithExt = parsePhoneNumber(contact.phone, 'US');
         phone = phoneWithExt.number;
         ext = phoneWithExt.ext;
+      } else {
+        phone = contact.phone.trim();
       }
     }
     return this.formBuilder.group({
@@ -41,7 +43,14 @@ export class CompanyContactsFormService {
     let phone = contactForm.controls['phone'].value;
     let ext = contactForm.controls['ext'].value;
     const phoneWithExt = phone + (ext? ' ext. ' + ext : '');
-    // console.log('phone:', phone, contactForm.controls['phone'].value);
+    // console.log('phone:', phone, 'ext:', ext, 'phext:', phoneWithExt);
+    // if (isValidPhoneNumber(phoneWithExt, 'US')) {
+    //   contact.phone = parsePhoneNumber(phoneWithExt, 'US').formatInternational();
+    //   console.log('good:' + contact.phone);
+    // } else {
+    //   contact.phone = phone + ext;
+    //   console.log('bad:' + contact.phone);
+    // }
     contact.phone = isValidPhoneNumber(phoneWithExt, 'US')? parsePhoneNumber(phoneWithExt, 'US').formatInternational() : phone + ext;
     contact.email = contactForm.controls['email'].value;
     contact.role = contactForm.controls['role'].value;
@@ -85,12 +94,14 @@ export class CompanyContactsFormService {
     return (control: AbstractControl): ValidationErrors | null => {
       const phone = control.get('phone').value;
       const ext = control.get('ext').value;
-      if (!phone && !ext) return null;
+      if (!phone && !ext) {
+        control.get('phone').setErrors(null);
+        return null;
+      };
       const phoneWithExt = phone + (ext? ' ext. ' + ext : '');
       const isValidPhone = isValidPhoneNumber(phoneWithExt, 'US');
-      // console.log(isValidPhone);
       if (!isValidPhone) {
-        // console.log(!phone, phone===null, typeof(phone));
+        // console.log(phone, !phone, phone?.length, phone===null, typeof(phone));
         // console.log(phoneWithExt, 'phone', phone, 'ext', ext);
         control.get('phone').setErrors({invalidPhoneNumber: true });
       } else {
