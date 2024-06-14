@@ -11,29 +11,38 @@ export class CompanyContactsFormService {
   constructor(private formBuilder: FormBuilder) { }
 
   getFormFromIdbContact(contact: IdbContact): FormGroup {
+    let phone = contact.phone;
+    let ext = '';
+    if (contact.phone) {
+      if (isValidPhoneNumber(contact.phone)) {
+        const phoneWithExt = parsePhoneNumber(contact.phone, 'US');
+        phone = phoneWithExt.number;
+        ext = phoneWithExt.ext;
+      }
+    }
     return this.formBuilder.group({
       'name': [contact.name, [Validators.required]],
       //TODO: add form controls corresponding to form
       // 'phone': [contact.phone, [Validators.pattern(/^(\+\d{1,3}\s+)?[\d\s\(\)\-]*$/), this.phoneNumberValidator()]],
-      'phone': [contact.phone, [this.phoneNumberValidator()]],
+      'phone': [phone, []],
+      'ext': [ext, []],
       // 'email': [contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.maxLength(255)]],
       'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
       'role': [contact.role, []],
       'team': [contact.team, []],
       'focusArea': [contact.focusArea, []],
       'notes': [contact.notes, []]
-    });
+    }, {validator: this.phoneNumberValidator()});
   }
 
   updateIdbContactFromForm(contactForm: FormGroup, contact: IdbContact): IdbContact {
     contact.name = contactForm.controls['name'].value;
     //TODO: add all the properties that will get updated by the form
-    let phone;
-    if (isValidPhoneNumber(contactForm.controls['phone'].value, 'US')) {
-      phone = parsePhoneNumber(contactForm.controls['phone'].value, 'US').formatInternational();
-    }
+    let phone = contactForm.controls['phone'].value;
+    let ext = contactForm.controls['ext'].value;
+    const phoneWithExt = phone + (ext? ' ext. ' + ext : '');
     // console.log('phone:', phone, contactForm.controls['phone'].value);
-    contact.phone = phone || contactForm.controls['phone'].value;
+    contact.phone = isValidPhoneNumber(phoneWithExt, 'US')? parsePhoneNumber(phoneWithExt, 'US').formatInternational() : phone + ext;
     contact.email = contactForm.controls['email'].value;
     contact.role = contactForm.controls['role'].value;
     contact.team = contactForm.controls['team'].value;
@@ -74,15 +83,18 @@ export class CompanyContactsFormService {
   // Custom validator for phone number
   phoneNumberValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value;
-      if (!value) return null;
-      const isValidPhone = isValidPhoneNumber(control.value, 'US');
-      console.log(isValidPhone);
-      if (isValidPhone) {
-        return null;
+      const phone = control.get('phone').value;
+      const ext = control.get('ext').value;
+      if (!phone && !ext) return null;
+      const phoneWithExt = phone + (ext? ' ext. ' + ext : '');
+      const isValidPhone = isValidPhoneNumber(phoneWithExt, 'US');
+      // console.log(isValidPhone);
+      if (!isValidPhone) {
+        control.get('phone').setErrors({invalidPhoneNumber: true });
       } else {
-        return {invalidPhoneNumber: true };
+        control.get('phone').setErrors(null);
       }
+      return null;
     };
   }
 }

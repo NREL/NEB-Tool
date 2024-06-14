@@ -38,7 +38,8 @@
                                 id="ext" name="ext">
                         </div>
                         <div class="col-sm-7 offset-sm-5">
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['phone'].errors && contactForm.controls['phone'].touched">
+                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['phone'].errors && 
+                                (contactForm.controls['phone'].touched || contactForm.controls['ext'].touched)">
                                 Invalid phone number: for US xxx-xxx-xxxx / for international +xxx xxxxxxxxxx
                             </div>
                         </div>
