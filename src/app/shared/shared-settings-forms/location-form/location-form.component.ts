@@ -26,6 +26,7 @@ export class LocationFormComponent {
   facility: IdbFacility;
   company: IdbCompany;
   companyOrFacilitySub: Subscription;
+  zipCountrySub: Subscription;
   countries: Array<Country> = Countries;
   states: Array<State> = States;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
@@ -50,10 +51,14 @@ export class LocationFormComponent {
         this.facility = _facility;
       });
     }
+    this.zipCountrySub = this.form.get('country').valueChanges.subscribe(change => {
+      this.form.get('zip').updateValueAndValidity();
+    });
   }
 
   ngOnDestroy() {
     this.companyOrFacilitySub.unsubscribe();
+    this.zipCountrySub.unsubscribe();
   }
 
   async saveChanges() {

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { GeneralInformation } from 'src/app/models/generalInformation';
 import { UnitSettings } from 'src/app/models/unitSettings';
-import { valZip } from 'val-zip';
+import valZip from 'val-zip';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class SharedSettingsFormsService {
           country: [generalInformation.country],
           city: [generalInformation.city],
           state: [generalInformation.state],
-          zip: [generalInformation.zip, []],
+          zip: [generalInformation.zip, [this.zipCodeValidator()]],
           address: [generalInformation.address],
         });
         break;
@@ -135,6 +135,23 @@ export class SharedSettingsFormsService {
     unitSettings.wasteWaterUnit = form.controls['wasteWaterUnit'].value;
     unitSettings.wasteWaterPrice = form.controls['wasteWaterPrice'].value;
     return unitSettings;
+  }
+
+  /**
+   * Custom validators
+   */
+
+  zipCodeValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const countryCode = control.parent?.get('country').value;
+      const zipCode = control.value;
+      if (!zipCode) return null; // empty zip code
+      // console.log(zipCode, countryCode);
+      const isZipValid = valZip(zipCode.split('-')[0], countryCode || '');
+      // console.log(isZipValid);
+      if (isZipValid === false) return {invalidZipCode: true};
+      return null;
+    }
   }
 
 }
