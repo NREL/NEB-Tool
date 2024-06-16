@@ -38,7 +38,7 @@ export class AdditionalDetailsFormComponent {
       this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
         if (!this.company || (this.company.guid != _company.guid)) {
           //initialize form on company change
-          this.form = this.sharedSettingsFormsService.getGeneralInformationForm(_company.generalInformation, 'addtional-details');
+          this.form = this.sharedSettingsFormsService.getGeneralInformationForm(_company.generalInformation, 'additional-details');
         }
         this.company = _company;
       });
@@ -46,7 +46,7 @@ export class AdditionalDetailsFormComponent {
       this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
         if (!this.facility || (this.facility.guid != _facility.guid)) {
           //initialize form on facility change
-          this.form = this.sharedSettingsFormsService.getGeneralInformationForm(_facility.generalInformation, 'addtional-details');
+          this.form = this.sharedSettingsFormsService.getGeneralInformationForm(_facility.generalInformation, 'additional-details');
         }
         this.facility = _facility;
       });
@@ -60,11 +60,11 @@ export class AdditionalDetailsFormComponent {
   async saveChanges() {
     if (this.inCompany) {
       this.company.generalInformation = this.sharedSettingsFormsService
-        .updateGeneralInformationFromForm(this.form, this.company.generalInformation, 'addtional-details');
+        .updateGeneralInformationFromForm(this.form, this.company.generalInformation, 'additional-details');
       await this.companyIdbService.asyncUpdate(this.company);
     } else {
       this.facility.generalInformation = this.sharedSettingsFormsService
-        .updateGeneralInformationFromForm(this.form, this.facility.generalInformation, 'addtional-details');
+        .updateGeneralInformationFromForm(this.form, this.facility.generalInformation, 'additional-details');
       await this.facilityIdbService.asyncUpdate(this.facility);
     }
   }
