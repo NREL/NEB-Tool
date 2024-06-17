@@ -32,10 +32,13 @@ export type KeyPerformanceMetricValue =
     'maintenanceCost' |
     'engineeringSupport' |
     'energyCostPerUnit' |
-    'disposalCosts' |
+    'hazardousDisposalCosts' |
+    'nonHazardousDisposalCosts' |
     'percentTotalOrCost' |
-    'consumptionCost' |
-    'quantity' |
+    'consumptionCostWater' |
+    'consumptionCostSewage' |
+    'percentOrTotalChemicalEmissions' |
+    'percentOrTotalRefrigerantEmissions' |
     'TRIR' |
     'oshaRecordableIncidents' |
     'oshaNonRecordables' |
@@ -47,7 +50,8 @@ export type KeyPerformanceMetricValue =
     'absenteeism' |
     'employeeEngagementSatisfaction' |
     'employeeRetentionRate' |
-    'talentTurnoverRate';
+    'talentTurnoverRate' | 
+    'totalLbsDust';
 
 
 export interface KeyPerformanceMetric {
@@ -208,19 +212,19 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         label: "Percent Production (manufacturing) yield",
         htmlLabel: "&#37; Production (manufacturing) yield",
         value: "percentProductionYield",
-        kpiValue: "quality"
+        kpiValue: "materialUtilization"
     },
     {
         label: "Percent Shrinkage",
         htmlLabel: "&#37; Shrinkage",
         value: "percentShrinkage",
-        kpiValue: "quality"
+        kpiValue: "materialUtilization"
     },
     {
         label: "Dollar Consumables",
         htmlLabel: "&#36; Consumables",
         value: "dollarConsumables",
-        kpiValue: "quality"
+        kpiValue: "materialUtilization"
     },
     {
         label: "Percent Optimized space",
@@ -247,15 +251,15 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         kpiValue: "energyCost"
     },
     {
-        label: "Disposal Costs",
-        htmlLabel: "Disposal Costs",
-        value: "disposalCosts",
+        label: "Hazardous Disposal Costs",
+        htmlLabel: "Hazardous Disposal Costs",
+        value: "hazardousDisposalCosts",
         kpiValue: "wasteReductionHazardous"
     },
     {
-        label: "Disposal Costs",
-        htmlLabel: "Disposal Costs",
-        value: "disposalCosts",
+        label: "Non-Hazardous Disposal Costs",
+        htmlLabel: "Non-Hazardous Disposal Costs",
+        value: "nonHazardousDisposalCosts",
         kpiValue: "wasteReductionNonHazardous"
     },
     {
@@ -267,25 +271,31 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
     {
         label: "Consumption Cost",
         htmlLabel: "Consumption Cost",
-        value: "consumptionCost",
+        value: "consumptionCostWater",
         kpiValue: "waterConsumption"
     },
     {
         label: "Consumption Cost",
         htmlLabel: "Consumption Cost",
-        value: "consumptionCost",
+        value: "consumptionCostSewage",
         kpiValue: "sewageVolume"
+    },
+    {
+        label: "Percent Total lbs.",
+        htmlLabel: "Percent Total lbs.",
+        value: "totalLbsDust",
+        kpiValue: "dustEmissions"
     },
     {
         label: "Quantity",
         htmlLabel: "Quantity",
-        value: "quantity",
+        value: "percentOrTotalChemicalEmissions",
         kpiValue: "chemicalEmissions"
     },
     {
         label: "Quantity",
         htmlLabel: "Quantity",
-        value: "quantity",
+        value: "percentOrTotalRefrigerantEmissions",
         kpiValue: "reduceRefrigerantGasEmissions"
     },
     {

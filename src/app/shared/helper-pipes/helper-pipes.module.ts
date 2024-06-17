@@ -20,6 +20,9 @@ import { CompanyKpiListPipe } from './company-kpi-list.pipe';
 import { EnergyOpportunityDisplayPipe } from './energy-opportunity-display.pipe';
 import { EnergyOpportunityListPipe } from './energy-opportunity-list.pipe';
 import { KpiCategoryClassPipe } from './kpi-category-class.pipe';
+import { KpiMetricsListPipe } from './kpi-metrics-list.pipe';
+import { NebOptionsListPipe } from './neb-options-list.pipe';
+import { KpiListFilterPipe } from './kpi-list-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { KpiCategoryClassPipe } from './kpi-category-class.pipe';
     CompanyKpiListPipe,
     EnergyOpportunityDisplayPipe,
     EnergyOpportunityListPipe,
-    KpiCategoryClassPipe
+    KpiCategoryClassPipe,
+    KpiMetricsListPipe,
+    NebOptionsListPipe,
+    KpiListFilterPipe
   ],
   imports: [
     CommonModule
@@ -67,7 +73,10 @@ import { KpiCategoryClassPipe } from './kpi-category-class.pipe';
     CompanyKpiListPipe,
     EnergyOpportunityDisplayPipe,
     EnergyOpportunityListPipe,
-    KpiCategoryClassPipe
+    KpiCategoryClassPipe,
+    KpiMetricsListPipe,
+    NebOptionsListPipe,
+    KpiListFilterPipe
   ]
 })
 export class HelperPipesModule { }

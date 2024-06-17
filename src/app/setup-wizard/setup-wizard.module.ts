@@ -38,10 +38,8 @@ import { DataCollectionManageAssessmentsComponent } from './data-collection/data
 import { AssessmentEnergyOpportunitiesFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
 import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/energy-opportunity-setup-form/energy-opportunity-setup-form.component';
 import { AddKpiSearchComponent } from './pre-visit/company-kpi-select/add-kpi-search/add-kpi-search.component';
-import { KpiListFilterPipe } from './pre-visit/company-kpi-select/add-kpi-search/kpi-list-filter.pipe';
 import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-search/selected-kpi-option.pipe';
 import { KpiDetailsFormComponent } from './pre-visit/company-kpi-details/kpi-details-form/kpi-details-form.component';
-import { KpiMetricsListPipe } from './pre-visit/company-kpi-details/kpi-details-form/kpi-metrics-list.pipe';
 
 
 
@@ -59,7 +57,6 @@ import { KpiMetricsListPipe } from './pre-visit/company-kpi-details/kpi-details-
     ReviewPreVisitSetupComponent,
     AddKpiSearchComponent,
     CompanyKpiListComponent,
-    KpiListFilterPipe,
     ReviewOnSiteComponent,
     CompanyDetailsSummaryComponent,
     TeamDetailsSummaryComponent,
@@ -80,8 +77,7 @@ import { KpiMetricsListPipe } from './pre-visit/company-kpi-details/kpi-details-
     DataCollectionManageAssessmentsComponent,
     AssessmentEnergyOpportunitiesFormComponent,
     EnergyOpportunitySetupFormComponent,
-    KpiDetailsFormComponent,
-    KpiMetricsListPipe
+    KpiDetailsFormComponent
   ],
   imports: [
     CommonModule,
