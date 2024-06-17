@@ -6,6 +6,7 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { Subscription } from 'rxjs';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-company-setup',
@@ -22,8 +23,9 @@ export class CompanySetupComponent {
   faBuilding: IconDefinition = faBuilding;
   faChevronRight: IconDefinition = faChevronRight;
 
-  selectedCompany: IdbCompany
+  selectedCompany: IdbCompany;
   selectedCompanySub: Subscription;
+  name: FormControl;
 
   constructor(private router: Router,
     private companyIdbService: CompanyIdbService,
@@ -35,9 +37,10 @@ export class CompanySetupComponent {
   ngOnInit() {
     this.selectedCompanySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.selectedCompany = _company;
-      if (this.selectedCompany) {
-        this.companyName = _company.generalInformation.name;
-      }
+      // if (this.selectedCompany) {
+      //   this.companyName = _company.generalInformation.name;
+      // }
+      this.name = new FormControl(this.selectedCompany.generalInformation.name, [Validators.required]);
     });
   }
 
@@ -52,7 +55,7 @@ export class CompanySetupComponent {
 
   async saveChanges() {
     let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
-    selectedCompany.generalInformation.name = this.companyName;
+    selectedCompany.generalInformation.name = this.name.value;
     await this.companyIdbService.asyncUpdate(selectedCompany);
   }
 }

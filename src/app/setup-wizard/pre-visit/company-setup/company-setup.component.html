@@ -9,8 +9,11 @@
                 <ng-template [ngIf]="selectedCompany">
                     <form>
                         <label class="bold" for="companyName">Company Name</label>
-                        <input name="companyName" type="text" class="form-control" [(ngModel)]="companyName"
-                            (input)="saveChanges()" minlength="1" maxlength="42" id="companyName">
+                        <input name="companyName" type="text" class="form-control" [formControl]="name"
+                            (input)="saveChanges()" minlength="1" maxlength="100" id="companyName">
+                        <div class="alert alert-danger form-error" *ngIf="name.touched && name.getError('required')">
+                            Company Name Required
+                        </div>
                     </form>
                     <hr>
                     <label class="bold">Location</label>
@@ -28,7 +31,7 @@
 </div>
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-end">
-        <button class="btn btn-dark" (click)="goToContacts()">
+        <button class="btn btn-dark" (click)="goToContacts()" [disabled]="name.invalid">
             Enter Contacts
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
