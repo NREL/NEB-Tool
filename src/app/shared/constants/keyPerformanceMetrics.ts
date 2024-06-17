@@ -434,11 +434,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         htmlLabel: "(OSHA) Total recordable incident rate (TRIR)",
         value: "TRIR",
         kpiValue: "safety",
-        isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'incident',
-        baselineCost: undefined
+        isQuantitative: false,
     },
     {
         label: "OSHA Recordable Incidents",

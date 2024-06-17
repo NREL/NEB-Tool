@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { IconDefinition, faChartBar, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IconDefinition, faBullseye, faChartBar, faChevronLeft, faChevronRight, faCircleQuestion, faPlus, faScaleUnbalancedFlip } from '@fortawesome/free-solid-svg-icons';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
-import { IdbCompany } from 'src/app/models/company';
-import { Subscription } from 'rxjs';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import * as _ from 'lodash';
+import { PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
+import { Subscription } from 'rxjs';
+import { IdbCompany } from 'src/app/models/company';
 
 @Component({
   selector: 'app-company-kpi-details',
@@ -21,56 +22,103 @@ export class CompanyKpiDetailsComponent {
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
 
-  company: IdbCompany;
+  keyPerformanceIndicator: IdbKeyPerformanceIndicator;
+  primaryKPIs: Array<PrimaryKPI> = PrimaryKPIs;
+  faCircleQuestion: IconDefinition = faCircleQuestion;
+  faBullseye: IconDefinition = faBullseye;
+  faPlus: IconDefinition = faPlus;
+  faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
+
   companySub: Subscription;
+  company: IdbCompany;
 
-  keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
   keyPerformanceIndicatorSub: Subscription;
-  companyKpiGuids: Array<string> = [];
+  keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
 
+  indicatorIndex: number;
+  numCompanyKpis: number;
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private companyIdbService: CompanyIdbService,
-    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService
+    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
+    private activatedRoute: ActivatedRoute,
+    private companyIdbService: CompanyIdbService
   ) {
   }
 
   ngOnInit() {
     this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.company = _company;
-      this.setCompanyKpiGuids();
     });
     this.keyPerformanceIndicatorSub = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.subscribe(_keyPerformanceIndicators => {
       this.keyPerformanceIndicators = _keyPerformanceIndicators;
-      this.setCompanyKpiGuids();
+    });
+    this.activatedRoute.params.subscribe(params => {
+      let kpiGuid: string = params['id'];
+      this.keyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getByGuid(kpiGuid);
+      this.setIndexValues();
     });
   }
 
-  setCompanyKpiGuids() {
-    if (this.company && this.keyPerformanceIndicators) {
-      let companyKpis: Array<IdbKeyPerformanceIndicator> = this.keyPerformanceIndicators.filter(kpi => {
-        return kpi.companyId == this.company.guid
-      });
-      let _companyKpiGuids: Array<string> = companyKpis.map(kpi => {
-        return kpi.guid
-      });
-      //just want to update array of guids if it has changed otherwise template/forms 
-      //re-render on saveChanges call in form
-      let uniqGuids: Array<string> = _.xor(_companyKpiGuids, this.companyKpiGuids);
-      if (uniqGuids.length != 0) {
-        this.companyKpiGuids = _companyKpiGuids;
-      }
+  ngOnDestroy() {
+    this.companySub.unsubscribe();
+    this.keyPerformanceIndicatorSub.unsubscribe();
+  }
+
+  async saveChanges() {
+    if (this.keyPerformanceIndicator.optionValue == 'other') {
+      this.keyPerformanceIndicator.htmlLabel = this.keyPerformanceIndicator.label;
+    }
+    await this.keyPerformanceIndicatorIdbService.asyncUpdate(this.keyPerformanceIndicator);
+    await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
+  }
+
+  calculateCost() {
+    this.keyPerformanceIndicator.performanceMetrics.forEach(metric => {
+      metric.baselineCost = (metric.costPerValue * metric.baselineValue);
+    });
+    this.saveChanges();
+  }
+
+  goBack() {
+    if (this.indicatorIndex == 0) {
+      let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+      this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-select');
+    } else {
+      let companyKpis: Array<IdbKeyPerformanceIndicator> = this.getCompanyKPIs();
+      this.goToKPI(companyKpis[this.indicatorIndex - 1].guid);
     }
   }
 
+  goNext() {
+    if (this.numCompanyKpis - 1 == this.indicatorIndex) {
+      this.goToFacility();
+    } else {
+      let companyKpis: Array<IdbKeyPerformanceIndicator> = this.getCompanyKPIs();
+      this.goToKPI(companyKpis[this.indicatorIndex + 1].guid);
+    }
+  }
 
-  goBack() {
+  goToKPI(kpiGUID: string) {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-contacts');
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-detail/' + kpiGUID);
   }
 
   goToFacility() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/facility-setup');
+  }
+
+  setIndexValues() {
+    let companyKpis: Array<IdbKeyPerformanceIndicator> = this.getCompanyKPIs();
+    this.numCompanyKpis = companyKpis.length;
+    this.indicatorIndex = companyKpis.findIndex(kpi => {
+      return kpi.guid == this.keyPerformanceIndicator.guid
+    });
+  }
+
+  getCompanyKPIs(): Array<IdbKeyPerformanceIndicator> {
+    return this.keyPerformanceIndicators.filter(kpi => {
+      return kpi.companyId == this.company.guid
+    });
   }
 }

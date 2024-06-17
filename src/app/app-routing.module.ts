@@ -83,7 +83,7 @@ const routes: Routes = [
             component: CompanyKpiSelectComponent
           },
           {
-            path: 'company-kpi-detail',
+            path: 'company-kpi-detail/:id',
             component: CompanyKpiDetailsComponent
           },
           {

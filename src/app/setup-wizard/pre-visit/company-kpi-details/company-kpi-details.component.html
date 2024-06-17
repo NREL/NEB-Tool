@@ -3,20 +3,92 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faChartBar" class="me-2"></fa-icon> Company Key Performance Indicators
+                    <fa-icon [icon]="faBullseye"></fa-icon>
+                    <span class="ps-1" [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
                 </h5>
                 <hr>
-                <ng-template [ngIf]="companyKpiGuids.length != 0" [ngIfElse]="noDataBlock">
-                    <div class="d-flex flex-column" *ngFor="let kpiGuid of companyKpiGuids">
-                        <app-kpi-details-form [kpiGuid]="kpiGuid"></app-kpi-details-form>
-                        <hr>
+                <form>
+                    <div class="row mb-2" *ngIf="keyPerformanceIndicator.optionValue == 'other'">
+                        <div class="col-6 bold">
+                            <div class="input-group">
+                                <div class="input-group-text">
+                                    <fa-icon [icon]="faBullseye"></fa-icon>
+                                </div>
+                                <input name="{{'kpiName_'+keyPerformanceIndicator.guid}}" type="text"
+                                    class="form-control" [(ngModel)]="keyPerformanceIndicator.label"
+                                    id="{{'kpiName_'+keyPerformanceIndicator.guid}}" (input)="saveChanges()">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <select class="form-select" name="kpiCategory" id="kpiCategory"
+                                [(ngModel)]="keyPerformanceIndicator.primaryKPI" (change)="saveChanges()">
+                                <option *ngFor="let primaryKPI of primaryKPIs" [ngValue]="primaryKPI">
+                                    {{primaryKPI}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
-                </ng-template>
-                <ng-template #noDataBlock>
-                    <div class="alert alert-info text-center">
-                        No KPI's selected for this company. Add KPI's from the list provided.
+                    <div class="d-flex flex-column ps-2 pe-2"
+                        *ngFor="let keyPerformanceMetric of keyPerformanceIndicator.performanceMetrics">
+                        <label class="col-sm-12 col-form-label" for="performanceMetric">
+                            <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
+                            <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span></label>
+
+                        <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
+                            <div class="row mb-1">
+                                <label class="col-sm-6 col-form-label pm-label" for="baselineValue">
+                                    Baseline Amount
+                                </label>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="keyPerformanceMetric.baselineValue" name="baselineValue"
+                                            (input)="calculateCost()">
+                                        <span class="input-group-text">
+                                            <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1">
+                                <label class="col-sm-6 col-form-label pm-label" for="costPerValue">
+                                    Cost Per Unit
+                                </label>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="keyPerformanceMetric.costPerValue" name="costPerValue"
+                                            (input)="calculateCost()">
+                                        <span class="input-group-text">
+                                            &dollar; / <span
+                                                [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1">
+                                <label class="col-sm-6 col-form-label pm-label" for="costPerValue">
+                                    Baseline Cost
+                                </label>
+                                <div class="col-6">
+                                    <ng-template [ngIf]="keyPerformanceMetric.baselineCost" [ngIfElse]="noCostBlock">
+                                        {{keyPerformanceMetric.baselineCost | currency}}
+                                    </ng-template>
+                                    <ng-template #noCostBlock>
+                                        &mdash;
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #qualitativeMetricBlock>
+                            <div class="alert alert-info small">
+                                Quantitative results unavailable at this time.
+                            </div>
+                        </ng-template>
                     </div>
-                </ng-template>
+                </form>
             </div>
         </div>
     </div>
@@ -27,8 +99,13 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button class="btn btn-dark" (click)="goToFacility()">
-            Facility Details
+        <button class="btn btn-dark" (click)="goNext()">
+            <ng-template [ngIf]="indicatorIndex != (numCompanyKpis-1)" [ngIfElse]="facilityDetailsBlock">
+                Next KPI
+            </ng-template>
+            <ng-template #facilityDetailsBlock>
+                Facility Details
+            </ng-template>
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>

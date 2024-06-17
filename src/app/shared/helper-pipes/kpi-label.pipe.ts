@@ -7,14 +7,11 @@ import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicat
 export class KpiLabelPipe implements PipeTransform {
 
   transform(kpiGuid: string, keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>): string {
-    // if (kpi.isCustom) {
-    //   return kpi.customKPIName
-    // } else {
+
     let findOption: IdbKeyPerformanceIndicator = keyPerformanceIndicators.find(option => { return option.guid == kpiGuid });
     if (findOption) {
-      return findOption.label;
+      return findOption.htmlLabel;
     }
-    // }
     return '';
   }
 
