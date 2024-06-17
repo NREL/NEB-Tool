@@ -15,7 +15,6 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class CompanySetupComponent {
 
-  companyName: string;
   faFilePen: IconDefinition = faFilePen;
   faGear: IconDefinition = faGear;
   faContactCard: IconDefinition = faContactCard;

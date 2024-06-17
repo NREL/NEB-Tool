@@ -5,6 +5,7 @@ import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-facility-setup',
@@ -13,8 +14,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 })
 export class FacilitySetupComponent {
 
-  facilityName: string;
-
+  name: FormControl;
 
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
@@ -33,12 +33,12 @@ export class FacilitySetupComponent {
 
   ngOnInit() {
     let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    this.facilityName = facility.generalInformation.name;
+    this.name = new FormControl(facility.generalInformation.name, [Validators.required]);
   }
 
   async saveChanges() {
     let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    facility.generalInformation.name = this.facilityName;
+    facility.generalInformation.name = this.name.value;
     await this.facilityIdbService.asyncUpdate(facility);
   }
 

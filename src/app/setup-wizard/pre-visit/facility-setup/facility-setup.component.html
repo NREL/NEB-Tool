@@ -8,8 +8,11 @@
                 <hr>
                 <form>
                     <label class="bold" for="facilityName">Facility Name</label>
-                    <input name="facilityName" type="text" class="form-control" [(ngModel)]="facilityName"
+                    <input name="facilityName" type="text" class="form-control" [formControl]="name"
                         (input)="saveChanges()" id="facilityName">
+                    <div class="form-error alert alert-danger" *ngIf="name.touched && name.errors?.['required']">
+                        Facility name required.
+                    </div>
                 </form>
                 <hr>
                 <label class="bold">Location</label>
@@ -30,7 +33,7 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button class="btn btn-dark" (click)="goToProcessEquipment()">
+        <button class="btn btn-dark" (click)="goToProcessEquipment()" [disabled]="name?.invalid">
             Process Equipment
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
