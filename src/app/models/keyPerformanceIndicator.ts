@@ -1,11 +1,11 @@
 import { KeyPerformanceIndicatorOption } from "../shared/constants/keyPerformanceIndicatorOptions";
-import { KeyPerformanceMetricValue } from "../shared/constants/keyPerformanceMetrics";
+import { KeyPerformanceMetric, getPerformanceMetrics } from "../shared/constants/keyPerformanceMetrics";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
-export interface IdbKeyPerformanceIndicator extends IdbEntry, KeyPerformanceIndicatorOption{
+export interface IdbKeyPerformanceIndicator extends IdbEntry, KeyPerformanceIndicatorOption {
     userId: string,
     companyId: string,
-    performanceMetricValue: KeyPerformanceMetricValue
+    performanceMetrics: Array<KeyPerformanceMetric>
 }
 
 
@@ -16,6 +16,6 @@ export function getNewKeyPerformanceIndicator(userId: string, companyId: string,
         userId: userId,
         companyId: companyId,
         ...keyPerformanceIndicatorOption,
-        performanceMetricValue: undefined
+        performanceMetrics: getPerformanceMetrics(keyPerformanceIndicatorOption.optionValue)
     }
 }

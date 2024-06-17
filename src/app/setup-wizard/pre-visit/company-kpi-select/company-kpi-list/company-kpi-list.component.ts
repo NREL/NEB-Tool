@@ -83,7 +83,7 @@ export class CompanyKpiListComponent {
       primaryKPI: this.kpiCategory,
       label: this.customKPIName,
       htmlLabel: this.customKPIName,
-      optionValue: 'other'
+      optionValue: 'other',
     }
     let newKPI: IdbKeyPerformanceIndicator = getNewKeyPerformanceIndicator(this.company.userId, this.company.guid, option);
     await firstValueFrom(this.keyPerformanceIndicatorIdbService.addWithObservable(newKPI));

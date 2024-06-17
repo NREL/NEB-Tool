@@ -7,6 +7,7 @@ import { power } from "./definitions/power";
 import { energy } from "./definitions/energy";
 import { length } from './definitions/length';
 import * as _ from 'lodash';
+import { area } from "./definitions/area";
 
 export class ConvertValue {
     _measures = {
@@ -17,6 +18,7 @@ export class ConvertValue {
         pressure: pressure,
         power: power,
         energy: energy,
+        area: area
     };
 
     origin: any;
