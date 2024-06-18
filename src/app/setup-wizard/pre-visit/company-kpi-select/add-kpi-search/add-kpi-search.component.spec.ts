@@ -2,13 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddKpiSearchComponent } from './add-kpi-search.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { KpiUnitOptionPipe } from '../kpi-unit-option.pipe';
-import { KpiCategoryClassPipe } from '../kpi-category-class.pipe';
-import { KpiListFilterPipe } from './kpi-list-filter.pipe';
 import { FormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { BehaviorSubject } from 'rxjs';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
+import { SelectedKpiOptionPipe } from './selected-kpi-option.pipe';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
+import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
+import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 
 describe('AddKpiSearchComponent', () => {
   let component: AddKpiSearchComponent;
@@ -16,13 +17,17 @@ describe('AddKpiSearchComponent', () => {
   let companyIdbService: Partial<CompanyIdbService> = {
     selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany('',))
   };
+  let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {
+    keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, FormsModule],
-      declarations: [AddKpiSearchComponent, KpiListFilterPipe, KpiCategoryClassPipe, KpiUnitOptionPipe],
+      imports: [FontAwesomeModule, FormsModule, HelperPipesModule],
+      declarations: [AddKpiSearchComponent, SelectedKpiOptionPipe],
       providers: [
-        { provide: CompanyIdbService, useValue: companyIdbService }
+        { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService }
       ]
     })
       .compileComponents();
