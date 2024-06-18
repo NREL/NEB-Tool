@@ -41,7 +41,6 @@ export class NebSetupFormComponent {
 
   ngOnInit() {
     this.nonEnergyBenefit = this.nonEnergyBenefitsIdbService.getByGuid(this.nebGuid);
-
   }
 
   ngOnDestroy() {

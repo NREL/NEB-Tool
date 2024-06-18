@@ -8,9 +8,9 @@ import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benef
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
-import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { IdbNonEnergyBenefit, PerformanceMetricImpact, getNewIdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { KeyPerformanceMetricValue } from 'src/app/shared/constants/keyPerformanceMetrics';
+import { KeyPerformanceMetric, KeyPerformanceMetricValue } from 'src/app/shared/constants/keyPerformanceMetrics';
 import { NebOption, NebOptions } from 'src/app/shared/constants/nonEnergyBenefitOptions';
 
 @Component({
@@ -62,13 +62,15 @@ export class AddNebsModalComponent {
     let selectedNebs: Array<NebOption> = this.nebOptions.filter(option => {
       return option.selected
     });
+
     for (let i = 0; i < selectedNebs.length; i++) {
       let nebOption: NebOption = selectedNebs[i];
       let newIdbNonEnergyBenefit: IdbNonEnergyBenefit;
+      let companyPerformanceMetrics: Array<KeyPerformanceMetric> = this.keyPerformanceIndicatorIdbService.getCompanyKeyPerformanceMetrics(this.assessment.companyId);
       if (this.energyOpportunity) {
-        newIdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.assessmentId, this.energyOpportunity.guid, nebOption);
+        newIdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.assessmentId, this.energyOpportunity.guid, nebOption, companyPerformanceMetrics);
       } else {
-        newIdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, this.assessment.guid, undefined, nebOption);
+        newIdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, this.assessment.guid, undefined, nebOption, companyPerformanceMetrics);
       }
       await firstValueFrom(this.nonEnergyBenefitIdbService.addWithObservable(newIdbNonEnergyBenefit));
     }
@@ -101,16 +103,9 @@ export class AddNebsModalComponent {
 
   setNebOptions() {
     let nebOptionsList: Array<NebOption> = new Array();
-    let allSelectedMetricValues: Array<KeyPerformanceMetricValue> = new Array();
-    this.keyPerformanceIndicators.forEach(kpi => {
-      let kpiMetricValues: Array<KeyPerformanceMetricValue> = kpi.performanceMetrics.flatMap(metric => {
-        return metric.value
-      });
-      kpiMetricValues.forEach(value => {
-        if (allSelectedMetricValues.includes(value) == false) {
-          allSelectedMetricValues.push(value)
-        }
-      });
+    let companyPerformanceMetrics: Array<KeyPerformanceMetric> = this.keyPerformanceIndicatorIdbService.getCompanyKeyPerformanceMetrics(this.assessment.companyId);
+    let allSelectedMetricValues: Array<KeyPerformanceMetricValue> = companyPerformanceMetrics.flatMap(metric => {
+      return metric.value;
     });
     NebOptions.forEach(option => {
       if (allSelectedMetricValues.findIndex(value => { return option.KPM.includes(value) }) != -1) {
