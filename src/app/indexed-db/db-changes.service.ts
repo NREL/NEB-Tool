@@ -204,6 +204,16 @@ export class DbChangesService {
 
   async deleteKPIs(keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>) {
     for (let i = 0; i < keyPerformanceIndicators.length; i++) {
+      //update contacts
+      let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
+      let assessmentContacts: Array<IdbContact> = contacts.filter(contact => { return contact.kpiIds.includes(keyPerformanceIndicators[i].guid) });
+      if (assessmentContacts.length > 0) {
+        for (let i = 0; i < assessmentContacts.length; i++) {
+          assessmentContacts[i].kpiIds = assessmentContacts[i].kpiIds.filter(kpiId => { return kpiId != keyPerformanceIndicators[i].guid });
+          await firstValueFrom(this.contactIdbService.updateWithObservable(assessmentContacts[i]));
+        }
+        await this.contactIdbService.setContacts();
+      }
       await firstValueFrom(this.keyPerformanceIndicatorIdbService.deleteWithObservable(keyPerformanceIndicators[i].id));
     }
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();

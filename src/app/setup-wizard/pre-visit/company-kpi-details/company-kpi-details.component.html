@@ -3,8 +3,18 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faBullseye"></fa-icon>
-                    <span class="ps-1" [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>
+                            <fa-icon [icon]="faBullseye"></fa-icon>
+                            <span class="ps-1" [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
+                        </div>
+                        <div>
+                            <span class="badge"
+                                [ngStyle]="{'background-color':keyPerformanceIndicator.primaryKPI | kpiCategoryClass}">
+                                {{keyPerformanceIndicator.primaryKPI}}
+                            </span>
+                        </div>
+                    </div>
                 </h5>
                 <hr>
                 <form>
@@ -89,6 +99,17 @@
                         </ng-template>
                     </div>
                 </form>
+                <hr>
+                <button class="btn btn-sm btn-primary me-1"
+                    *ngFor="let contact of keyPerformanceIndicator.guid | contactName:'KPI': contacts;"
+                    (click)="openContactModal(contact)">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    {{contact.name}}
+                </button>
+                <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    Team Members
+                </button>
             </div>
         </div>
     </div>
@@ -110,3 +131,9 @@
         </button>
     </div>
 </nav>
+
+
+
+<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
+    [contextGuid]="keyPerformanceIndicator.guid" [contactContext]="'KPI'" [selectedContact]="viewContact"
+    [companyGuid]="company.guid"></app-contact-modal>

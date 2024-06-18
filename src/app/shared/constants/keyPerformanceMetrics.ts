@@ -195,7 +195,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         isQuantitative: true,
         baselineValue: undefined,
         costPerValue: undefined,
-        totalUnit: 'defects',
+        totalUnit: 'defect',
         baselineCost: undefined
     },
     {
@@ -206,7 +206,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         isQuantitative: true,
         baselineValue: undefined,
         costPerValue: undefined,
-        totalUnit: 'hrs',
+        totalUnit: 'hr',
         baselineCost: undefined
     },
     {
@@ -231,7 +231,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         isQuantitative: true,
         baselineValue: undefined,
         costPerValue: undefined,
-        totalUnit: 'hrs',
+        totalUnit: 'hr',
         baselineCost: undefined
     },
     {
@@ -328,7 +328,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         isQuantitative: true,
         baselineValue: undefined,
         costPerValue: undefined,
-        totalUnit: 'hrs',
+        totalUnit: 'hr',
         baselineCost: undefined
     },
     {
@@ -339,7 +339,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         isQuantitative: true,
         baselineValue: undefined,
         costPerValue: undefined,
-        totalUnit: 'hrs',
+        totalUnit: 'hr',
         baselineCost: undefined
     },
     {
@@ -412,7 +412,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         isQuantitative: true,
         baselineValue: undefined,
         costPerValue: undefined,
-        totalUnit: 'lbs',
+        totalUnit: 'lb',
         baselineCost: undefined
     },
     {

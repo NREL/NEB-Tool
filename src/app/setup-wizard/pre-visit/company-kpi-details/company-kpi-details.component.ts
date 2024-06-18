@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconDefinition, faBullseye, faChartBar, faChevronLeft, faChevronRight, faCircleQuestion, faPlus, faScaleUnbalancedFlip } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faChartBar, faChevronLeft, faChevronRight, faCircleQuestion, faPlus, faScaleUnbalancedFlip, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
@@ -10,6 +10,8 @@ import * as _ from 'lodash';
 import { PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
 import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
+import { IdbContact } from 'src/app/models/contact';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 
 @Component({
   selector: 'app-company-kpi-details',
@@ -21,6 +23,7 @@ export class CompanyKpiDetailsComponent {
   faChartBar: IconDefinition = faChartBar;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
+  faUser: IconDefinition = faUser;
 
   keyPerformanceIndicator: IdbKeyPerformanceIndicator;
   primaryKPIs: Array<PrimaryKPI> = PrimaryKPIs;
@@ -37,11 +40,18 @@ export class CompanyKpiDetailsComponent {
 
   indicatorIndex: number;
   numCompanyKpis: number;
+
+  displayContactModal: boolean = false;
+  viewContact: IdbContact;
+
+  contacts: Array<IdbContact>;
+  contactsSub: Subscription;
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private activatedRoute: ActivatedRoute,
-    private companyIdbService: CompanyIdbService
+    private companyIdbService: CompanyIdbService,
+    private contactIdbService: ContactIdbService
   ) {
   }
 
@@ -51,6 +61,9 @@ export class CompanyKpiDetailsComponent {
     });
     this.keyPerformanceIndicatorSub = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.subscribe(_keyPerformanceIndicators => {
       this.keyPerformanceIndicators = _keyPerformanceIndicators;
+    });
+    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
+      this.contacts = _contacts;
     });
     this.activatedRoute.params.subscribe(params => {
       let kpiGuid: string = params['id'];
@@ -62,6 +75,7 @@ export class CompanyKpiDetailsComponent {
   ngOnDestroy() {
     this.companySub.unsubscribe();
     this.keyPerformanceIndicatorSub.unsubscribe();
+    this.contactsSub.unsubscribe();
   }
 
   async saveChanges() {
@@ -120,5 +134,15 @@ export class CompanyKpiDetailsComponent {
     return this.keyPerformanceIndicators.filter(kpi => {
       return kpi.companyId == this.company.guid
     });
+  }
+
+  openContactModal(contact: IdbContact) {
+    this.viewContact = contact;
+    this.displayContactModal = true;
+  }
+
+  closeContactModal() {
+    this.displayContactModal = false;
+    this.viewContact = undefined;
   }
 }

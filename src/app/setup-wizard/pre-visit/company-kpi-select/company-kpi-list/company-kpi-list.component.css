@@ -15,3 +15,7 @@
 hr{
     margin: .25rem 0;
 }
+
+.click-link{
+    text-decoration: none;
+}

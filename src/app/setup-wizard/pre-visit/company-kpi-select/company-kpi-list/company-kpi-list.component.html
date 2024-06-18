@@ -21,7 +21,9 @@
         <div class="d-flex w-100 justify-content-between list-item">
             <div class="d-flex flex-column">
                 <div>
-                    <span class="ps-1" [innerHTML]="kpi.label"></span>
+                    <a class="click-link" (click)="goToKpiDetails(kpi)">
+                        <span class="ps-1" [innerHTML]="kpi.label"></span>
+                    </a>
                 </div>
                 <div>
                     <span class="badge" [ngStyle]="{'background-color':kpi.primaryKPI | kpiCategoryClass}">
@@ -30,9 +32,9 @@
                 </div>
             </div>
             <div>
-                <a class="p-1">
+                <!-- <a class="p-1">
                     <fa-icon class="small" [icon]="faCircleQuestion"></fa-icon>
-                </a>
+                </a> -->
                 <a class="p-1 click-link-danger" (click)="openDeleteModal(kpi)">
                     <fa-icon class="small" [icon]="faTrash"></fa-icon>
                 </a>
@@ -102,13 +104,3 @@
         <button class="btn btn-danger" (click)="removeKPI()"><fa-icon [icon]="faTrash"></fa-icon> Delete KPI</button>
     </div>
 </div>
-
-
-
-
-
-
-<!--
-<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
-    [contextGuid]="company.keyPerformanceIndicators[contactIndex].kpiOptionValue" [contactContext]="'KPI'"
-    [selectedContact]="viewContact" [companyGuid]="company.guid"></app-contact-modal> -->
