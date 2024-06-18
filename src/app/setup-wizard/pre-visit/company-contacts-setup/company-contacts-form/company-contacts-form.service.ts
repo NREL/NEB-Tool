@@ -16,7 +16,7 @@ export class CompanyContactsFormService {
     if (contact.name) {
       let names = contact.name.split(',');
       // console.log(contact.name);
-      if (names.length == 1) {
+      if (names.length < 1) {
         firstname = names[0].trim();
       } else {
         firstname = names[0].trim();
@@ -52,7 +52,12 @@ export class CompanyContactsFormService {
   }
 
   updateIdbContactFromForm(contactForm: FormGroup, contact: IdbContact): IdbContact {
-    contact.name = contactForm.controls['firstname'].value + ', ' + contactForm.controls['lastname'].value;
+    let firstname = contactForm.controls['firstname'].value;
+    let lastname = contactForm.controls['lastname'].value;
+    contact.name = '';
+    if (firstname || lastname) {
+      contact.name = firstname + ', ' + lastname;
+    }
     //TODO: add all the properties that will get updated by the form
     let phone = contactForm.controls['phone'].value;
     let ext = contactForm.controls['ext'].value;
