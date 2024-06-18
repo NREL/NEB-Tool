@@ -129,17 +129,6 @@ export class DbChangesService {
   }
 
   async deleteNonEnergyBenefit(nonEnergyBenefit: IdbNonEnergyBenefit) {
-    let energyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunityIdbService.energyOpportunities.getValue();
-    for (let i = 0; i < energyOpportunities.length; i++) {
-      let energyOpportunity: IdbEnergyOpportunity = energyOpportunities[i];
-      if (energyOpportunity.nonEnergyBenefitIds.includes(nonEnergyBenefit.guid)) {
-        energyOpportunity.nonEnergyBenefitIds = energyOpportunity.nonEnergyBenefitIds.filter(nebId => {
-          return nebId != nonEnergyBenefit.guid;
-        });
-        await firstValueFrom(this.energyOpportunityIdbService.updateWithObservable(energyOpportunity));
-      }
-    }
-    await this.energyOpportunityIdbService.setEnergyOpportunities();
     await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
   }
@@ -148,11 +137,8 @@ export class DbChangesService {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
     for (let i = 0; i < nonEnergyBenefits.length; i++) {
       let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[i];
-      if (nonEnergyBenefit.energyOpportunityIds.includes(energyOpportunity.guid)) {
-        nonEnergyBenefit.energyOpportunityIds = nonEnergyBenefit.energyOpportunityIds.filter(oppId => {
-          return oppId != energyOpportunity.guid;
-        });
-        await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
+      if (nonEnergyBenefit.energyOpportunityId == energyOpportunity.guid) {
+        await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
       }
     }
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();

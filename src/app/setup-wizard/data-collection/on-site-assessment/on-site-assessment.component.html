@@ -9,13 +9,13 @@
                 <app-assessment-details-form></app-assessment-details-form>
                 <hr>
                 <div class="row">
-                    <div class="col-md-12 col-lg-6">
+                    <div class="col-md-12">
                         <app-assessment-energy-opportunities-form></app-assessment-energy-opportunities-form>
-                        <hr class="d-md-block d-lg-none">
+                        <hr>
                     </div>
-                    <div class="col-md-12 col-lg-6">
+                    <div class="col-md-12">
                         <app-assessment-nebs-form></app-assessment-nebs-form>
-                        <hr class="d-md-block d-lg-none">
+                        <hr>
                     </div>
                 </div>
                 <hr class="d-md-none d-lg-block">
@@ -44,8 +44,7 @@
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-between">
         <div class="col-3">
-            <button class="btn btn-dark" (click)="goBack()"
-                *ngIf="assessmentIndex == 0">
+            <button class="btn btn-dark" (click)="goBack()" *ngIf="assessmentIndex == 0">
                 <fa-icon [icon]="faChevronLeft"></fa-icon>
             </button>
             <button class="btn btn-dark" (click)="goToPrevious()" *ngIf="assessmentIndex != 0">
@@ -61,7 +60,7 @@
                     </button>
                 </div>
                 <div class="pe-1">
-                    <button class="btn btn-dark add-neb-btn" [disabled]="true">
+                    <button class="btn btn-dark add-neb-btn" (click)="showSuggestedNebModal()">
                         <fa-icon [icon]="faPlus"></fa-icon>
                         Add NEB
                     </button>
@@ -96,3 +95,5 @@
 <app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()" [contextGuid]="assessment.guid"
     [contactContext]="'assessment'" [selectedContact]="viewContact"
     [companyGuid]="assessment.companyId"></app-contact-modal>
+
+<app-add-nebs-modal *ngIf="displayAddNebsModal" (emitCancelContact)="closeContactModal()"></app-add-nebs-modal>

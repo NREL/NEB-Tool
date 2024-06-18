@@ -9,7 +9,8 @@ export interface NebOption {
     // decreaseCosts: boolean,
     isQualitative: boolean,
     howToCalculate: string,
-    KPM: Array<KeyPerformanceMetricValue>
+    KPM: Array<KeyPerformanceMetricValue>,
+    selected?: boolean
 };
 
 export type NebOptionValue = 'improvedImageOrReputation' |

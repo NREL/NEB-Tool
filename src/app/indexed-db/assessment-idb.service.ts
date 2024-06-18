@@ -42,8 +42,7 @@ export class AssessmentIdbService {
   }
 
   setSelectedFromGUID(guid: string): boolean {
-    let assessments: Array<IdbAssessment> = this.assessments.getValue();
-    let assessment: IdbAssessment = assessments.find(_assessment => { return _assessment.guid == guid });
+    let assessment: IdbAssessment = this.getByGuid(guid);
     this.selectedAssessment.next(assessment);
     return assessment != undefined;
   }
@@ -52,5 +51,10 @@ export class AssessmentIdbService {
     assessment = await firstValueFrom(this.updateWithObservable(assessment));
     await this.setAssessments();
     this.selectedAssessment.next(assessment);
+  }
+
+  getByGuid(guid: string): IdbAssessment {
+    let assessments: Array<IdbAssessment> = this.assessments.getValue();
+    return assessments.find(_assessment => { return _assessment.guid == guid });
   }
 }

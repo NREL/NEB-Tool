@@ -20,7 +20,6 @@ describe('NebSetupFormComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlightNebGuid: new BehaviorSubject<string>(undefined),
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
@@ -31,7 +30,7 @@ describe('NebSetupFormComponent', () => {
   };
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]),
-    getByGuid: () => { return getNewIdbNonEnergyBenefit('', '', '', '') }
+    getByGuid: () => { return getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined) }
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -49,7 +48,7 @@ describe('NebSetupFormComponent', () => {
 
     fixture = TestBed.createComponent(NebSetupFormComponent);
     component = fixture.componentInstance;
-    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '');
+    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined);
     fixture.detectChanges();
   });
 

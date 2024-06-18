@@ -11,7 +11,7 @@ export interface IdbEnergyOpportunity extends IdbEntry {
     opportunityType: string,
     costSavings: number,
     notes: string,
-    nonEnergyBenefitIds: Array<string>,
+    // nonEnergyBenefitIds: Array<string>,
     includeSavings: boolean,
     includeNote: boolean
 }
@@ -30,7 +30,7 @@ export function getNewIdbEnergyOpportunity(userId: string, companyId: string, fa
         opportunityType: undefined,
         costSavings: undefined,
         notes: undefined,
-        nonEnergyBenefitIds: [],
+        // nonEnergyBenefitIds: [],
         includeSavings: false,
         includeNote: false
     }

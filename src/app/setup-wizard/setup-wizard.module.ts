@@ -39,6 +39,7 @@ import { AssessmentEnergyOpportunitiesFormComponent } from './data-collection/on
 import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/energy-opportunity-setup-form/energy-opportunity-setup-form.component';
 import { AddKpiSearchComponent } from './pre-visit/company-kpi-select/add-kpi-search/add-kpi-search.component';
 import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-search/selected-kpi-option.pipe';
+import { AddNebsModalComponent } from './data-collection/on-site-assessment/add-nebs-modal/add-nebs-modal.component';
 
 
 
@@ -75,7 +76,8 @@ import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-se
     SelectedKpiOptionPipe,
     DataCollectionManageAssessmentsComponent,
     AssessmentEnergyOpportunitiesFormComponent,
-    EnergyOpportunitySetupFormComponent
+    EnergyOpportunitySetupFormComponent,
+    AddNebsModalComponent
   ],
   imports: [
     CommonModule,

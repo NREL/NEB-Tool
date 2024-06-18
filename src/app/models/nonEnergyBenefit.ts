@@ -1,3 +1,4 @@
+import { NebOption, NebOptionValue } from "../shared/constants/nonEnergyBenefitOptions";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
 export interface IdbNonEnergyBenefit extends IdbEntry {
@@ -9,23 +10,31 @@ export interface IdbNonEnergyBenefit extends IdbEntry {
     kpiId: string,
     includeNote: boolean,
     notes: string,
-    energyOpportunityIds: Array<string>,
-    annualKpiImpact: number
+    energyOpportunityId: string,
+    annualKpiImpact: number,
+    nebOptionValue: NebOptionValue
 }
 
-export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, facilityId: string, assessmentId: string): IdbNonEnergyBenefit {
+export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, facilityId: string, assessmentId: string, energyOpportunityId: string, nebOption: NebOption): IdbNonEnergyBenefit {
+    let nebOptionValue: NebOptionValue;
+    let name: string = 'New NEB';
+    if(nebOption){
+        nebOptionValue = nebOption.optionValue;
+        name = nebOption.label;
+    }
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
-        name: 'New NEB',
+        name: name,
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
         assessmentId: assessmentId,
         kpiId: undefined,
         notes: undefined,
-        energyOpportunityIds: [],
+        energyOpportunityId: energyOpportunityId,
         includeNote: false,
-        annualKpiImpact: undefined
+        annualKpiImpact: undefined,
+        nebOptionValue: nebOptionValue
     }
 }

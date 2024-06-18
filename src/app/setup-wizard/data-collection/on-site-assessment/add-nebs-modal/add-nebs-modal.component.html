@@ -1,0 +1,103 @@
+<div [ngClass]="{'window-overlay': displayModal}"></div>
+<div class="popup neb-modal-popup" [ngClass]="{'open': displayModal }">
+    <div class="popup-header"><fa-icon [icon]="faWeightHanging"></fa-icon> Potential NEBs for
+        <ng-template [ngIf]="energyOpportunity" [ngIfElse]="assessmentBlock">
+            {{energyOpportunity.name}}
+        </ng-template>
+        <ng-template #assessmentBlock>
+            {{assessment.name}}
+        </ng-template>
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+    <div class="popup-body">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Suggested NEBs
+                    </th>
+                    <th>
+                        KPM Impacts
+                    </th>
+                    <th>
+                        KPI Impact
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let neb of nebOptions">
+                    <td class="text-center" (click)="selectNeb(neb)">
+                        <a class="click-link">
+                            <ng-template [ngIf]="!neb.selected" [ngIfElse]="selectedNebBlock">
+                                <fa-icon [icon]="faPlus"></fa-icon>
+                            </ng-template>
+                            <ng-template #selectedNebBlock>
+                                <fa-icon [icon]="faCheck"></fa-icon>
+                            </ng-template>
+                        </a>
+                    </td>
+                    <td>
+                        <span [innerHTML]="neb.htmlLabel"></span>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <div class="row mt-3 mb-3">
+            <div class="col-12" *ngFor="let kpi of (assessment.companyId | companyKpiList: keyPerformanceIndicators)">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex w-100 justify-content-between">
+                            <div>
+                                <fa-icon [icon]="faBullseye"></fa-icon>
+                                <span class="ps-1" [innerHTML]="kpi.htmlLabel"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-column"
+                            *ngFor="let keyPerformanceMetric of (kpi.performanceMetrics)">
+                            <div class="d-flex">
+                                <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
+                                <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
+                            </div>
+                            <div class="d-flex ps-4"
+                                *ngFor="let nebOption of (keyPerformanceMetric.value| nebOptionsList)">
+                                <fa-icon [icon]="faWeightHanging" class="me-2"></fa-icon>
+                                <span [innerHTML]="nebOption.htmlLabel"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex w-100 justify-content-end">
+                            <div>
+                                <span class="badge" [ngStyle]="{'background-color':kpi.primaryKPI | kpiCategoryClass}">
+                                    {{kpi.primaryKPI}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div> -->
+    </div>
+    <div class="popup-footer">
+        <div class="d-flex flex-column">
+            <div>
+                <hr>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-secondary me-2" (click)="closeModal()">Cancel</button>
+                <button class="btn btn-success" (click)="addNebs()" [disabled]="numberSelected == 0"><fa-icon
+                        [icon]="faPlus"></fa-icon> Add {{numberSelected}}
+                    NEBs</button>
+            </div>
+        </div>
+    </div>
+</div>

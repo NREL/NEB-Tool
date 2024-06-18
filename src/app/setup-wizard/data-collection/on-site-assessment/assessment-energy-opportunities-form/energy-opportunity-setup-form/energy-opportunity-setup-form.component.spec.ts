@@ -19,9 +19,7 @@ describe('EnergyOpportunitySetupFormComponent', () => {
 
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
-    sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlightNebGuid: new BehaviorSubject<string>(undefined),
-    highlightOpportunityGuid: new BehaviorSubject<string>(undefined),
+    sidebarOpen: new BehaviorSubject<boolean>(false)
   };
   let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {
     energyOpportunities: new BehaviorSubject<Array<IdbEnergyOpportunity>>([]),

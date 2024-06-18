@@ -9,6 +9,7 @@ import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service'
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { SetupWizardService } from '../../setup-wizard.service';
 
 @Component({
   selector: 'app-on-site-assessment',
@@ -41,10 +42,14 @@ export class OnSiteAssessmentComponent {
   assessmentIndex: number;
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
+
+  displayAddNebsModal: { energyOpportunityId: string, assessmentId: string };
+  displayAddNebsModalSub: Subscription;
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private activatedRoute: ActivatedRoute,
     private contactIdbService: ContactIdbService,
-    private onSiteVisitIdbService: OnSiteVisitIdbService
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private setupWizardService: SetupWizardService
   ) { }
 
   ngOnInit() {
@@ -58,6 +63,10 @@ export class OnSiteAssessmentComponent {
 
     this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(_assessment => {
       this.assessment = _assessment;
+    });
+
+    this.displayAddNebsModalSub = this.setupWizardService.displayAddNebsModal.subscribe(_displayAddNebsModal => {
+      this.displayAddNebsModal = _displayAddNebsModal;
     });
 
     this.activatedRoute.params.subscribe(params => {
@@ -77,6 +86,7 @@ export class OnSiteAssessmentComponent {
     this.contactsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
     this.onSiteVisitSub.unsubscribe();
+    this.displayAddNebsModalSub.unsubscribe();
   }
 
   openContactModal(viewContact: IdbContact) {
@@ -107,5 +117,9 @@ export class OnSiteAssessmentComponent {
 
   goBack() {
     this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
+  }
+
+  showSuggestedNebModal() {
+    this.setupWizardService.displayAddNebsModal.next({ assessmentId: this.assessment.guid, energyOpportunityId: undefined });
   }
 }
