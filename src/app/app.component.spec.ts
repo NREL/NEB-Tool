@@ -24,6 +24,8 @@ import { IdbNonEnergyBenefit } from './models/nonEnergyBenefit';
 import { IdbOnSiteVisit } from './models/onSiteVisit';
 import { EnergyOpportunityIdbService } from './indexed-db/energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from './models/energyOpportunity';
+import { KeyPerformanceIndicatorsIdbService } from './indexed-db/key-performance-indicators-idb.service';
+import { IdbKeyPerformanceIndicator } from './models/keyPerformanceIndicator';
 
 describe('AppComponent', () => {
 
@@ -64,6 +66,10 @@ describe('AppComponent', () => {
 
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('onSite')
+  };
+
+  let keyPerformanceIndicatorService: Partial<KeyPerformanceIndicatorsIdbService> = {
+    keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])
   }
 
   beforeEach(() => {
@@ -79,7 +85,8 @@ describe('AppComponent', () => {
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
-        { provide: SetupWizardService, useValue: setupWizardService }
+        { provide: SetupWizardService, useValue: setupWizardService },
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService }
       ]
     })
   });

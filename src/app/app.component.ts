@@ -9,6 +9,7 @@ import { AssessmentIdbService } from './indexed-db/assessment-idb.service';
 import { ContactIdbService } from './indexed-db/contact-idb.service';
 import { NonEnergyBenefitsIdbService } from './indexed-db/non-energy-benefits-idb.service';
 import { OnSiteVisitIdbService } from './indexed-db/on-site-visit-idb.service';
+import { KeyPerformanceIndicatorsIdbService } from './indexed-db/key-performance-indicators-idb.service';
 import { EnergyOpportunityIdbService } from './indexed-db/energy-opportunity-idb.service';
 
 @Component({
@@ -26,7 +27,8 @@ export class AppComponent {
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
-    private onSiteVisitIdbService: OnSiteVisitIdbService) {
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private keyPerformanceIndicatorsIdbService: KeyPerformanceIndicatorsIdbService) {
   }
 
   async ngOnInit() {
@@ -47,6 +49,9 @@ export class AppComponent {
     //companies
     await this.contactIdbService.setContacts();
     console.log('contacts init..');
+    //key performance indicators
+    await this.keyPerformanceIndicatorsIdbService.setKeyPerformanceIndicators();
+    console.log('key performance indicators init..');
     //facilities
     await this.facilityIdbService.setFacilities();
     console.log('facilities init..');

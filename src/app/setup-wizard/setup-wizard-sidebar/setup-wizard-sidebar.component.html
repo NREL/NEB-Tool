@@ -30,9 +30,17 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi'"
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi-select'"
                     [routerLinkActive]="['active']">
-                    KPI's
+                    Select KPI's
+                </a>
+            </div>
+
+            <div class="nav-item" *ngFor="let kpi of (company.guid | companyKpiList: keyPerformanceIndicators)">
+                <a class="nav-link third-nav"
+                    [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi-detail/' + kpi.guid"
+                    [routerLinkActive]="['active']">
+                    <span [innerHTML]="kpi.htmlLabel"></span>
                 </a>
             </div>
             <div class="nav-item ms-2">

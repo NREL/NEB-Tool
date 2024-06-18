@@ -26,7 +26,6 @@ import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessm
 import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
 import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
 import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
-import { CompanyKpiSetupComponent } from './setup-wizard/pre-visit/company-kpi-setup/company-kpi-setup.component';
 import { CompanyContactsSetupComponent } from './setup-wizard/pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.component';
@@ -35,7 +34,9 @@ import { OnSiteAssessmentComponent } from './setup-wizard/data-collection/on-sit
 import { ReviewOnSiteComponent } from './setup-wizard/data-collection/review-on-site/review-on-site.component';
 import { PreVisitComponent } from './setup-wizard/pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './setup-wizard/data-collection/data-collection.component';
+import { CompanyKpiSelectComponent } from './setup-wizard/pre-visit/company-kpi-select/company-kpi-select.component';
 import { DataCollectionManageAssessmentsComponent } from './setup-wizard/data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
+import { CompanyKpiDetailsComponent } from './setup-wizard/pre-visit/company-kpi-details/company-kpi-details.component';
 
 const routes: Routes = [
   {
@@ -78,8 +79,12 @@ const routes: Routes = [
             component: CompanySetupComponent
           },
           {
-            path: 'company-kpi',
-            component: CompanyKpiSetupComponent
+            path: 'company-kpi-select',
+            component: CompanyKpiSelectComponent
+          },
+          {
+            path: 'company-kpi-detail/:id',
+            component: CompanyKpiDetailsComponent
           },
           {
             path: 'company-contacts',

@@ -1,0 +1,139 @@
+<div class="setup-wizard-content">
+    <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow" *ngIf="keyPerformanceIndicator">
+                <h5>
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>
+                            <fa-icon [icon]="faBullseye"></fa-icon>
+                            <span class="ps-1" [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
+                        </div>
+                        <div>
+                            <span class="badge"
+                                [ngStyle]="{'background-color':keyPerformanceIndicator.primaryKPI | kpiCategoryClass}">
+                                {{keyPerformanceIndicator.primaryKPI}}
+                            </span>
+                        </div>
+                    </div>
+                </h5>
+                <hr>
+                <form>
+                    <div class="row mb-2" *ngIf="keyPerformanceIndicator.optionValue == 'other'">
+                        <div class="col-6 bold">
+                            <div class="input-group">
+                                <div class="input-group-text">
+                                    <fa-icon [icon]="faBullseye"></fa-icon>
+                                </div>
+                                <input name="{{'kpiName_'+keyPerformanceIndicator.guid}}" type="text"
+                                    class="form-control" [(ngModel)]="keyPerformanceIndicator.label"
+                                    id="{{'kpiName_'+keyPerformanceIndicator.guid}}" (input)="saveChanges()">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <select class="form-select" name="kpiCategory" id="kpiCategory"
+                                [(ngModel)]="keyPerformanceIndicator.primaryKPI" (change)="saveChanges()">
+                                <option *ngFor="let primaryKPI of primaryKPIs" [ngValue]="primaryKPI">
+                                    {{primaryKPI}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column ps-2 pe-2"
+                        *ngFor="let keyPerformanceMetric of keyPerformanceIndicator.performanceMetrics">
+                        <label class="col-sm-12 col-form-label" for="performanceMetric">
+                            <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
+                            <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span></label>
+
+                        <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
+                            <div class="row mb-1">
+                                <label class="col-sm-6 col-form-label pm-label" for="baselineValue">
+                                    Baseline Amount
+                                </label>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="keyPerformanceMetric.baselineValue" name="baselineValue"
+                                            (input)="calculateCost()">
+                                        <span class="input-group-text">
+                                            <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1">
+                                <label class="col-sm-6 col-form-label pm-label" for="costPerValue">
+                                    Cost Per Unit
+                                </label>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control"
+                                            [(ngModel)]="keyPerformanceMetric.costPerValue" name="costPerValue"
+                                            (input)="calculateCost()">
+                                        <span class="input-group-text">
+                                            &dollar; / <span
+                                                [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1">
+                                <label class="col-sm-6 col-form-label pm-label" for="costPerValue">
+                                    Baseline Cost
+                                </label>
+                                <div class="col-6">
+                                    <ng-template [ngIf]="keyPerformanceMetric.baselineCost" [ngIfElse]="noCostBlock">
+                                        {{keyPerformanceMetric.baselineCost | currency}}
+                                    </ng-template>
+                                    <ng-template #noCostBlock>
+                                        &mdash;
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #qualitativeMetricBlock>
+                            <div class="alert alert-info small">
+                                Quantitative results unavailable at this time.
+                            </div>
+                        </ng-template>
+                    </div>
+                </form>
+                <hr>
+                <button class="btn btn-sm btn-primary me-1"
+                    *ngFor="let contact of keyPerformanceIndicator.guid | contactName:'KPI': contacts;"
+                    (click)="openContactModal(contact)">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    {{contact.name}}
+                </button>
+                <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    Team Members
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-between">
+        <button class="btn btn-dark" (click)="goBack()">
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+            Go Back
+        </button>
+        <button class="btn btn-dark" (click)="goNext()">
+            <ng-template [ngIf]="indicatorIndex != (numCompanyKpis-1)" [ngIfElse]="facilityDetailsBlock">
+                Next KPI
+            </ng-template>
+            <ng-template #facilityDetailsBlock>
+                Facility Details
+            </ng-template>
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+        </button>
+    </div>
+</nav>
+
+
+
+<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
+    [contextGuid]="keyPerformanceIndicator.guid" [contactContext]="'KPI'" [selectedContact]="viewContact"
+    [companyGuid]="company.guid"></app-contact-modal>

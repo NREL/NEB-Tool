@@ -10,17 +10,12 @@ import { FormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { ReviewSetupComponent } from './review-setup/review-setup.component';
-import { CompanyKpiSetupComponent } from './pre-visit/company-kpi-setup/company-kpi-setup.component';
-import { KpiUnitOptionPipe } from './pre-visit/company-kpi-setup/kpi-unit-option.pipe';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
-import { KpiCategoryClassPipe } from './pre-visit/company-kpi-setup/kpi-category-class.pipe';
 import { CompanyContactsSetupComponent } from './pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './pre-visit/pre-assessment-setup/pre-assessment-setup.component';
 import { ReviewPreVisitSetupComponent } from './pre-visit/review-pre-visit-setup/review-pre-visit-setup.component';
-import { AddKpiSearchComponent } from './pre-visit/company-kpi-setup/add-kpi-search/add-kpi-search.component';
-import { CompanyKpiListComponent } from './pre-visit/company-kpi-setup/company-kpi-list/company-kpi-list.component';
-import { KpiListFilterPipe } from './pre-visit/company-kpi-setup/add-kpi-search/kpi-list-filter.pipe';
+import { CompanyKpiListComponent } from './pre-visit/company-kpi-select/company-kpi-list/company-kpi-list.component';
 import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
 import { ReviewOnSiteComponent } from './data-collection/review-on-site/review-on-site.component';
 import { CompanyDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/company-details-summary/company-details-summary.component';
@@ -37,9 +32,13 @@ import { AssessmentNebsFormComponent } from './data-collection/on-site-assessmen
 import { NebSetupFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
 import { PreVisitComponent } from './pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
+import { CompanyKpiSelectComponent } from './pre-visit/company-kpi-select/company-kpi-select.component';
+import { CompanyKpiDetailsComponent } from './pre-visit/company-kpi-details/company-kpi-details.component';
 import { DataCollectionManageAssessmentsComponent } from './data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
 import { AssessmentEnergyOpportunitiesFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
 import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/energy-opportunity-setup-form/energy-opportunity-setup-form.component';
+import { AddKpiSearchComponent } from './pre-visit/company-kpi-select/add-kpi-search/add-kpi-search.component';
+import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-search/selected-kpi-option.pipe';
 
 
 
@@ -50,17 +49,13 @@ import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-a
     CompanySetupComponent,
     FacilitySetupComponent,
     ReviewSetupComponent,
-    CompanyKpiSetupComponent,
-    KpiUnitOptionPipe,
     SetupWizardSidebarComponent,
-    KpiCategoryClassPipe,
     CompanyContactsSetupComponent,
     FacilityProcessEquipmentSetupComponent,
     PreAssessmentSetupComponent,
     ReviewPreVisitSetupComponent,
     AddKpiSearchComponent,
     CompanyKpiListComponent,
-    KpiListFilterPipe,
     ReviewOnSiteComponent,
     CompanyDetailsSummaryComponent,
     TeamDetailsSummaryComponent,
@@ -75,6 +70,9 @@ import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-a
     NebSetupFormComponent,
     PreVisitComponent,
     DataCollectionComponent,
+    CompanyKpiSelectComponent,
+    CompanyKpiDetailsComponent,
+    SelectedKpiOptionPipe,
     DataCollectionManageAssessmentsComponent,
     AssessmentEnergyOpportunitiesFormComponent,
     EnergyOpportunitySetupFormComponent

@@ -5,10 +5,10 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { KeyPerformanceIndicator } from 'src/app/shared/constants/keyPerformanceIndicators';
 
 @Component({
   selector: 'app-neb-setup-form',
@@ -33,13 +33,18 @@ export class NebSetupFormComponent {
   faNoteSticky: IconDefinition = faNoteSticky;
 
   displayDeleteModal: boolean = false;
-  keyPerformanceIndicators: Array<KeyPerformanceIndicator>;
+  keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
+
+  displayProjectsModal: boolean = false;
+  previousProjectIds: Array<string>;
+  kpi: IdbKeyPerformanceIndicator;
+  highlighNebGuidSub: Subscription;
+  highlighNebGuid: string;
   energyOpportunities: Array<IdbEnergyOpportunity>;
   energyOpportunitiesSub: Subscription;
 
   displayEnergyOpportunitiesModal: boolean = false;
   previousEnergyOpportunitiesIds: Array<string>;
-  kpi: KeyPerformanceIndicator;
   highlightNebGuidSub: Subscription;
   highlightNebGuid: string;
   constructor(
@@ -53,7 +58,6 @@ export class NebSetupFormComponent {
   ngOnInit() {
     this.nonEnergyBenefit = this.nonEnergyBenefitsIdbService.getByGuid(this.nebGuid);
 
-    this.keyPerformanceIndicators = this.companyIdbService.selectedCompany.getValue().keyPerformanceIndicators;
     this.energyOpportunitiesSub = this.energyOpportunityIdbService.energyOpportunities.subscribe(_opportunities => {
       this.energyOpportunities = _opportunities;
     });
@@ -148,9 +152,9 @@ export class NebSetupFormComponent {
   }
 
   setKPI() {
-    this.kpi = this.keyPerformanceIndicators.find(kpi => {
-      return kpi.kpiOptionValue == this.nonEnergyBenefit.kpiId;
-    });
+    // this.kpi = this.keyPerformanceIndicators.find(kpi => {
+    //   return kpi.kpiOptionValue == this.nonEnergyBenefit.kpiId;
+    // });
     this.saveChanges();
   }
 }

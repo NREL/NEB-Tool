@@ -8,6 +8,7 @@ import { ContactIdbService } from './contact-idb.service';
 import { NonEnergyBenefitsIdbService } from './non-energy-benefits-idb.service';
 import { OnSiteVisitIdbService } from './on-site-visit-idb.service';
 import { EnergyOpportunityIdbService } from './energy-opportunity-idb.service';
+import { KeyPerformanceIndicatorsIdbService } from './key-performance-indicators-idb.service';
 
 describe('DbChangesService', () => {
   let service: DbChangesService;
@@ -19,6 +20,8 @@ describe('DbChangesService', () => {
     let assessmentIdbService: Partial<AssessmentIdbService> = {};
     let contactIdbService: Partial<ContactIdbService> = {};
     let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
+    let keyPerformanceIndicatorService: Partial<KeyPerformanceIndicatorsIdbService> = {};
+    let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {}
     TestBed.configureTestingModule({
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
@@ -27,7 +30,8 @@ describe('DbChangesService', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
-        { provide: OnSiteVisitIdbService, useValue: {} }
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService }
       ]
     });
     service = TestBed.inject(DbChangesService);
