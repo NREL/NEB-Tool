@@ -8,7 +8,7 @@
                 <hr>
                 <ng-template [ngIf]="selectedCompany">
                     <form>
-                        <label class="bold" for="companyName">Company Name</label>
+                        <label class="bold" for="companyName">Company Name <span class="required-asterisk">*</span></label>
                         <input name="companyName" type="text" class="form-control" [formControl]="name"
                             (input)="saveChanges()" minlength="1" maxlength="100" id="companyName">
                         <div class="alert alert-danger form-error" *ngIf="name.touched && name.getError('required')">
