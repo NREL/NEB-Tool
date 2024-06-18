@@ -28,7 +28,7 @@
             <label for="zip">Zip</label>
             <input type="text" class="form-control" formControlName="zip" (input)="saveChanges()" minlength="1"
                 maxlength="12" id="zip" name="zip">
-            <div class="alert alert-danger form-error" *ngIf="form.controls['zip'].touched && form.controls['zip'].getError('invalidZipCode')">
+            <div class="alert alert-warning form-error" *ngIf="form.controls['zip'].touched && form.controls['zip'].getError('invalidZipCode')">
                 Invalid zip code.
             </div>
         </div>
