@@ -1,28 +1,4 @@
-<!-- <div class="row pt-4 justify-content-center">
-    <div class="col-lg-9 col-md-12">
-        <div class="alert alert-dark">
-            NEBs database goes here. View all possible NEBs.
-        </div>
-    </div>
-</div> -->
-
-
 <div class="row justify-content-center mt-3 mb-3">
-    <!-- <div class="col-4">
-        <h6>
-            <fa-icon [icon]="faMagnifyingGlassPlus" class="me-2"></fa-icon>
-            Find Common KPI's
-        </h6>
-    </div> -->
-    <!-- <div class="col-4">
-        <div class="input-group" role="search">
-            <span class="input-group-text">
-                <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
-            </span>
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="kpiSearchStr"
-                [(ngModel)]="kpiSearchStr">
-        </div>
-    </div> -->
     <div class="col-4">
         <select name="kpiCategorySearch" class="form-select" id="kpiCategorySearch" [(ngModel)]="kpiCategorySearch">
             <option [ngValue]="undefined">All Categories</option>
@@ -33,7 +9,7 @@
     </div>
 </div>
 <div class="row mt-3 mb-3">
-    <div class="col-4"
+    <div class="col-12"
         *ngFor="let keyPerformanceIndicatorOption of keyPerformanceIndicatorOptions | kpiListFilter: kpiSearchStr: kpiCategorySearch">
         <div class="card">
             <div class="card-header">
