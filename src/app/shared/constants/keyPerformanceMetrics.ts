@@ -18,7 +18,8 @@ export function getPerformanceMetrics(keyPerformanceIndicatorValue: KeyPerforman
                 costPerValue: undefined,
                 totalUnit: 'unit',
                 baselineCost: undefined,
-                isCustom: true
+                isCustom: true,
+                includeMetric: true
             }
         ]
     }
@@ -90,7 +91,8 @@ export interface KeyPerformanceMetric {
     costPerValue?: number,
     totalUnit?: string,
     baselineCost?: number,
-    isCustom?: boolean
+    isCustom?: boolean,
+    includeMetric: boolean
 };
 
 
@@ -101,91 +103,104 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         htmlLabel: "Contribution to company's vision or strategy",
         value: "contributeCompanyVision",
         kpiValue: "strategicRelationshipImpact",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Sales growth ($)",
         htmlLabel: "Sales growth (&dollar;)",
         value: "salesGrowth",
         kpiValue: "strategicRelationshipImpact",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Customer Satisfaction Ratings",
         htmlLabel: "Customer Satisfaction Ratings",
         value: "customerSatisfactionRatings",
         kpiValue: "strategicRelationshipImpact",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Lost Customer Sales ($)",
         htmlLabel: "Lost Customer Sales (&dollar;)",
         value: "lostCustomerSales",
         kpiValue: "strategicRelationshipImpact",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Customer Churn Rate",
         htmlLabel: "Customer Churn Rate",
         value: "customerChurnRate",
         kpiValue: "strategicRelationshipImpact",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Supplier Satisfaction Ratings",
         htmlLabel: "Supplier Satisfaction Ratings",
         value: "supplierSatisfactionRatings",
         kpiValue: "strategicRelationshipImpact",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Productivity rate: Throughput",
         htmlLabel: "Productivity rate: Throughput",
         value: "productivityRateThroughput",
         kpiValue: "productivity",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Production Costs",
         htmlLabel: "Production Costs",
         value: "productionCosts",
         kpiValue: "productivity",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Cycle Time - Time to make goods",
         htmlLabel: "Cycle Time - Time to make goods",
         value: "cycleTimeToMakeGoods",
         kpiValue: "productivity",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Percent On time to due date",
         htmlLabel: "&#37; On time to due date",
         value: "percentOnTimeToDueDate",
         kpiValue: "productivity",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Revenue ($) / employee",
         htmlLabel: "Revenue (&dollar;) / employee",
         value: "revenuePerEmployee",
         kpiValue: "productivity",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Per-unit product cost",
         htmlLabel: "Per-unit product cost",
         value: "perUnitProductCost",
         kpiValue: "productivity",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Work in process",
         htmlLabel: "Work in process",
         value: "workInProcess",
         kpiValue: "productivity",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Num. Equipment caused defects",
@@ -196,7 +211,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'defect',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Equipment Downtime",
@@ -207,21 +223,24 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'hr',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Percent Capacity utilization",
         htmlLabel: "&#37; Capacity utilization",
         value: "percentCapacityUtilization",
         kpiValue: "machineUtilization",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Overall Equipment Effectiveness (OEE)",
         htmlLabel: "Overall Equipment Effectiveness (OEE)",
         value: "overallEquipmentEffectiveness",
         kpiValue: "machineUtilization",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Fork truck (industrial trucks) breakdown downtime time",
@@ -232,21 +251,24 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'hr',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Useful equipment life extended (yrs)",
         htmlLabel: "Useful equipment life extended (yrs)",
         value: "usefulEquipmentLifeExtended",
         kpiValue: "machineUtilization",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Time to introduce new products or services",
         htmlLabel: "Time to introduce new products or services",
         value: "timeToIntroduceNewProducts",
         kpiValue: "machineUtilization",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "($) Defective Production",
@@ -257,21 +279,24 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'product',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Defect Rate-PPM or DPM",
         htmlLabel: "Defect Rate-PPM or DPM",
         value: "defectRatePPMorDPM",
         kpiValue: "quality",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "QTY Customer Complaints (quality)",
         htmlLabel: "QTY Customer Complaints (quality)",
         value: "qualityCustomerComplaints",
         kpiValue: "quality",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "$ Customer Returns (quality)",
@@ -282,21 +307,24 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'return',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Percent Production (manufacturing) yield",
         htmlLabel: "&#37; Production (manufacturing) yield",
         value: "percentProductionYield",
         kpiValue: "materialUtilization",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Percent Shrinkage",
         htmlLabel: "&#37; Shrinkage",
         value: "percentShrinkage",
         kpiValue: "materialUtilization",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Dollar Consumables",
@@ -307,7 +335,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'consumable',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Percent Optimized space",
@@ -318,7 +347,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'ft2',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Maintenance Cost",
@@ -329,7 +359,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'hr',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Engineering support (dollars or hours)",
@@ -340,7 +371,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'hr',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Energy Cost per Unit",
@@ -351,7 +383,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'MMBtu',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Hazardous Disposal Costs",
@@ -362,7 +395,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'gal',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Non-Hazardous Disposal Costs",
@@ -373,14 +407,16 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'gal',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Percent Total or Costs",
         htmlLabel: "&#37; Total or Costs",
         value: "percentTotalOrCost",
         kpiValue: "reduceNonconformingProductWaste",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Consumption Cost",
@@ -391,7 +427,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'gal',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Consumption Cost",
@@ -402,7 +439,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'gal',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Percent Total lbs.",
@@ -413,21 +451,24 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'lb',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Quantity",
         htmlLabel: "Quantity",
         value: "percentOrTotalChemicalEmissions",
         kpiValue: "chemicalEmissions",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Quantity",
         htmlLabel: "Quantity",
         value: "percentOrTotalRefrigerantEmissions",
         kpiValue: "reduceRefrigerantGasEmissions",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "(OSHA) Total recordable incident rate (TRIR)",
@@ -435,6 +476,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "TRIR",
         kpiValue: "safety",
         isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "OSHA Recordable Incidents",
@@ -445,7 +487,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'incident',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Total Safety Non-Recordables, Incidents, Near Misses",
@@ -456,7 +499,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'incident',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Days away from work",
@@ -467,7 +511,8 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'day',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Lost time inury rate (LTIFR)",
@@ -478,62 +523,71 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         baselineValue: undefined,
         costPerValue: undefined,
         totalUnit: 'day',
-        baselineCost: undefined
+        baselineCost: undefined,
+        includeMetric: true
     },
     {
         label: "Hearing Conservation Program Compliance - Reduce Occupational Exposure",
         htmlLabel: "Hearing Conservation Program Compliance - Reduce Occupational Exposure",
         value: "hearingConservationProgram",
         kpiValue: "safety",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
-        label: "Hearing Conservation Program Copmliance - Reduce Occupational Exposure",
-        htmlLabel: "Hearing Conservation Program Copmliance - Reduce Occupational Exposure",
+        label: "Hearing Conservation Program Compliance - Reduce Occupational Exposure",
+        htmlLabel: "Hearing Conservation Program Compliance - Reduce Occupational Exposure",
         value: "hearingConservationProgram",
         kpiValue: "employeeEngagementWorkingEnvironment",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Number of particles",
         htmlLabel: "Number of particles",
         value: "numberOfParticles",
         kpiValue: "employeeEngagementWorkingEnvironment",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Workspace or factory floor comfort",
         htmlLabel: "Workspace or factory floor comfort",
         value: "workspaceOrFactoryFloorComfort",
         kpiValue: "employeeEngagementWorkingEnvironment",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Absenteeism",
         htmlLabel: "Absenteeism",
         value: "absenteeism",
         kpiValue: "employeeEngagementWorkingEnvironment",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Employee Engagement/Satisfaction",
         htmlLabel: "Employee Engagement/Satisfaction",
         value: "employeeEngagementSatisfaction",
         kpiValue: "employeeEngagementWorkforceDevelopment",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Employee Retention Rate",
         htmlLabel: "Employee Retention Rate",
         value: "employeeRetentionRate",
         kpiValue: "employeeEngagementWorkforceDevelopment",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
     {
         label: "Talent Turnover Rate",
         htmlLabel: "Talent Turnover Rate",
         value: "talentTurnoverRate",
         kpiValue: "employeeEngagementWorkforceDevelopment",
-        isQuantitative: false
+        isQuantitative: false,
+        includeMetric: true
     },
 ]

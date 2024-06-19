@@ -59,11 +59,8 @@ export class KeyPerformanceIndicatorsIdbService {
     });
     let companyKPMs: Array<KeyPerformanceMetric> = new Array();
     companyKPIs.forEach(kpi => {
-      let kpiMetricValues: Array<KeyPerformanceMetric> = kpi.performanceMetrics.flatMap(metric => {
-        return metric
-      });
-      kpiMetricValues.forEach(kpiMetric => {
-        if (companyKPMs.findIndex(_kpiMetric => { return _kpiMetric.value == kpiMetric.value }) == -1) {
+      kpi.performanceMetrics.forEach(kpiMetric => {
+        if (kpiMetric.includeMetric && companyKPMs.findIndex(_kpiMetric => { return _kpiMetric.value == kpiMetric.value }) == -1) {
           companyKPMs.push(kpiMetric)
         }
       });
