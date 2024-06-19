@@ -176,6 +176,17 @@ export class DbChangesService {
 
   async deleteNonEnergyBenefits(nonEnergyBenefits: Array<IdbNonEnergyBenefit>) {
     for (let i = 0; i < nonEnergyBenefits.length; i++) {
+      let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[i];
+      //update contacts
+      let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
+      let nebContacts: Array<IdbContact> = contacts.filter(contact => { return contact.nonEnergyBenefitIds.includes(nonEnergyBenefit.guid) });
+      if (nebContacts.length > 0) {
+        for (let i = 0; i < nebContacts.length; i++) {
+          nebContacts[i].nonEnergyBenefitIds = nebContacts[i].nonEnergyBenefitIds.filter(nebId => { return nebId != nonEnergyBenefit.guid });
+          await firstValueFrom(this.contactIdbService.updateWithObservable(nebContacts[i]));
+        }
+        await this.contactIdbService.setContacts();
+      }
       await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefits[i].id));
     }
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();

@@ -16,6 +16,6 @@
     padding-left: 1.5rem;
 }
 
-.skipped-metric{
-    text-decoration: line-through;
+.click-link{
+    text-decoration: none;
 }

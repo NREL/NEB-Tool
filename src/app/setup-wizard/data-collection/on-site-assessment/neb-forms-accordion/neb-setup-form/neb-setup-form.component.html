@@ -1,3 +1,30 @@
+<div class="d-flex w-100 justify-content-end pb-2">
+    <!-- <button class="btn btn-dark btn-sm add-neb-btn me-2" (click)="showSuggestedNEBs()">
+        <fa-icon [icon]="faSearchPlus"></fa-icon> Find NEBs
+    </button> -->
+
+
+    <div class="pe-2">
+        <button class="btn btn-sm btn-primary me-1"
+            *ngFor="let contact of nonEnergyBenefit.guid | contactName:'nonEnergyBenefit': contacts;"
+            (click)="openContactModal(contact)">
+            <fa-icon [icon]="faUser"></fa-icon>
+            {{contact.name}}
+        </button>
+        <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
+            <fa-icon [icon]="faUser"></fa-icon>
+            Team Members
+        </button>
+    </div>
+
+
+    <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
+        <fa-icon [icon]="faTrash"></fa-icon> Delete
+    </button>
+</div>
+
+
+
 <form>
     <ng-template [ngIf]="includedMetrics.length > 0" [ngIfElse]="noIncludedMetricsBlock">
         <ng-container *ngFor="let performanceMetricImpact of includedMetrics">
