@@ -7,7 +7,7 @@
         <div class="accordion-item"
             *ngFor="let energyOpportunityGuid of assessmentEnergyOpportunityGuids; let index = index;">
             <h2 class="accordion-header">
-                <button class="accordion-button btn-dark" type="button" data-bs-toggle="collapse"
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     [attr.data-bs-target]="'#'+energyOpportunityGuid" aria-expanded="true"
                     [attr.aria-controls]="energyOpportunityGuid" [ngClass]="{'collapsed': accordionIndex != index}"
                     (click)="setAccordionIndex(index)">

@@ -2,7 +2,7 @@
     <div class="accordion" id="nebFormsAccordion">
         <div class="accordion-item" *ngFor="let nebGuid of nebGuids; let index = index;">
             <h2 class="accordion-header">
-                <button class="accordion-button btn-dark" type="button" data-bs-toggle="collapse"
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     [attr.data-bs-target]="'#'+nebGuid" aria-expanded="true" [attr.aria-controls]="nebGuid"
                     [ngClass]="{'collapsed': accordionIndex != index}" (click)="setAccordionIndex(index)">
                     <fa-icon class="pe-2" [icon]="faWeightHanging"></fa-icon> {{nebGuid |

@@ -5,12 +5,12 @@
     padding-left: .5rem;
     padding-right: .5rem;
 }
-
+/* 
 .accordion-button {
     background-color: #186A3B;
     color: white;
-}
+} */
 
-.accordion-button:hover{
+/* .accordion-button:hover{
     background-color: var(--bs-btn-hover-bg);
-}
+} */

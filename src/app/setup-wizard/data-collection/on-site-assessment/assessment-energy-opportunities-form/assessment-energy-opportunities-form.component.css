@@ -6,11 +6,11 @@
     padding-right: .5rem;
 }
 
-.accordion-button {
-    background-color: #D35400;
-    color: white;
-}
+/* .accordion-button {
+    background-color: #efefef;
+    /* color: white; 
+} */
 
-.accordion-button:hover{
+/* .accordion-button:hover{
     background-color: var(--bs-btn-hover-bg);
-}
+} */
