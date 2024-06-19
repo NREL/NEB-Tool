@@ -1,13 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { IconDefinition, faCircle, faCircleCheck, faFileLines, faNoteSticky, faSave, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
-import { Subscription } from 'rxjs';
-import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { Router } from '@angular/router';
+import { IconDefinition, faScaleUnbalancedFlip, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
-import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
-import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { IdbNonEnergyBenefit, PerformanceMetricImpact } from 'src/app/models/nonEnergyBenefit';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { KeyPerformanceMetric } from 'src/app/shared/constants/keyPerformanceMetrics';
 
 @Component({
   selector: 'app-neb-setup-form',
@@ -24,6 +25,7 @@ export class NebSetupFormComponent {
 
   faTrash: IconDefinition = faTrash;
   faWeightHanging: IconDefinition = faWeightHanging;
+  faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
 
   displayDeleteModal: boolean = false;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
@@ -31,16 +33,21 @@ export class NebSetupFormComponent {
   kpi: IdbKeyPerformanceIndicator;
 
   previousEnergyOpportunitiesIds: Array<string>;
+
+  includedMetrics: Array<PerformanceMetricImpact>;
+  excludedMetrics: Array<KeyPerformanceMetric>;
+
   constructor(
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
-    private companyIdbService: CompanyIdbService,
-    private energyOpportunityIdbService: EnergyOpportunityIdbService,
+    private router: Router,
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
     private dbChangesService: DbChangesService,
-    private setupWizardService: SetupWizardService) {
+    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService) {
   }
 
   ngOnInit() {
     this.nonEnergyBenefit = this.nonEnergyBenefitsIdbService.getByGuid(this.nebGuid);
+    this.setMetrics();
   }
 
   ngOnDestroy() {
@@ -65,5 +72,24 @@ export class NebSetupFormComponent {
   toggleNote() {
     this.nonEnergyBenefit.includeNote = !this.nonEnergyBenefit.includeNote;
     this.saveChanges();
+  }
+
+  setMetrics() {
+    this.includedMetrics = new Array();
+    this.excludedMetrics = new Array();
+    this.nonEnergyBenefit.performanceMetricImpacts.forEach(performanceMetricImpact => {
+      let keyPerformanceMetric: KeyPerformanceMetric = this.keyPerformanceIndicatorIdbService.getKeyPerformanceMetric(this.nonEnergyBenefit.companyId, performanceMetricImpact.kpmValue);
+      if (keyPerformanceMetric.includeMetric) {
+        this.includedMetrics.push(performanceMetricImpact);
+      } else {
+        this.excludedMetrics.push(keyPerformanceMetric);
+      }
+    });
+  }
+
+  goToMetric(metric: KeyPerformanceMetric) {
+    let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, metric.kpiValue);
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/'+onSiteVisit.guid+'/company-kpi-detail/' + keyPerformanceIndicator.guid)
   }
 }

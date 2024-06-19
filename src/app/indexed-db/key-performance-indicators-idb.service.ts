@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { IdbKeyPerformanceIndicator } from '../models/keyPerformanceIndicator';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { KeyPerformanceMetric, KeyPerformanceMetricValue } from '../shared/constants/keyPerformanceMetrics';
+import { KeyPerformanceIndicatorValue } from '../shared/constants/keyPerformanceIndicatorOptions';
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,7 @@ export class KeyPerformanceIndicatorsIdbService {
     let companyKPMs: Array<KeyPerformanceMetric> = new Array();
     companyKPIs.forEach(kpi => {
       kpi.performanceMetrics.forEach(kpiMetric => {
-        if (kpiMetric.includeMetric && companyKPMs.findIndex(_kpiMetric => { return _kpiMetric.value == kpiMetric.value }) == -1) {
+        if (companyKPMs.findIndex(_kpiMetric => { return _kpiMetric.value == kpiMetric.value }) == -1) {
           companyKPMs.push(kpiMetric)
         }
       });
@@ -72,6 +73,13 @@ export class KeyPerformanceIndicatorsIdbService {
     let companyKeyPerformanceMetrics: Array<KeyPerformanceMetric> = this.getCompanyKeyPerformanceMetrics(companyGuid);
     return companyKeyPerformanceMetrics.find(metric => {
       return metric.value == performanceMetricValue
+    });
+  }
+
+  getKpiFromKpm(companyGuid: string, performanceMetricValue: KeyPerformanceIndicatorValue): IdbKeyPerformanceIndicator {
+    let keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator> = this.keyPerformanceIndicators.getValue();
+    return keyPerformanceIndicators.find(kpi => {
+      return kpi.companyId == companyGuid && kpi.optionValue == performanceMetricValue;
     });
   }
 }

@@ -15,3 +15,7 @@
 .pm-label{
     padding-left: 1.5rem;
 }
+
+.skipped-metric{
+    text-decoration: line-through;
+}

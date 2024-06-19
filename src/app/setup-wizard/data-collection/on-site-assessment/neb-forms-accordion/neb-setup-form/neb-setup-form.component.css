@@ -14,3 +14,11 @@
 .btn-sm {
     font-size: small;
 }
+.alert-info{
+    padding: .25rem;
+}
+
+ul{
+    list-style: none;
+    padding-left: 0;
+}

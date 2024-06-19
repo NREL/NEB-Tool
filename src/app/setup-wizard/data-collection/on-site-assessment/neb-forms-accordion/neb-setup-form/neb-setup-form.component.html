@@ -1,16 +1,28 @@
-<!-- <div class="card" [id]="'neb_'+nonEnergyBenefit.guid">
-    <div class="card-header text-bg-dark">
-        <h5 class="card-title mb-0">
-            <fa-icon [icon]="faWeightHanging" class="me-2"></fa-icon> {{nonEnergyBenefit.name}}
-        </h5>
-    </div>
-    <div class="card-body"> -->
 <form>
-    <ng-container *ngFor="let performanceMetricImpact of nonEnergyBenefit.performanceMetricImpacts">
-        <app-performance-metric-impact-form [performanceMetricImpact]="performanceMetricImpact"
-            [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metric-impact-form>
-    </ng-container>
-    <!-- <hr class="my-1"> -->
+    <ng-template [ngIf]="includedMetrics.length > 0" [ngIfElse]="noIncludedMetricsBlock">
+        <ng-container *ngFor="let performanceMetricImpact of includedMetrics">
+            <app-performance-metric-impact-form [performanceMetricImpact]="performanceMetricImpact"
+                [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metric-impact-form>
+        </ng-container>
+    </ng-template>
+    <ng-template #noIncludedMetricsBlock>
+        <div class="alert alert-info">
+            No performance metrics tracked for this NEB.
+        </div>
+    </ng-template>
+    <ng-template [ngIf]="excludedMetrics.length > 0">
+        <label>Untracked Performance Metrics:</label>
+        <ul>
+            <ng-container *ngFor="let unusedPerformanceMetric of excludedMetrics">
+                <li>
+                    <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
+                    <a class="click-link" (click)="goToMetric(unusedPerformanceMetric)">
+                        <span [innerHTML]="unusedPerformanceMetric.htmlLabel"></span>
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+    </ng-template>
     <div class="row mb-1">
         <div class="col-sm-5 col-form-label">
             <div class="form-check form-switch">
@@ -25,15 +37,6 @@
         </div>
     </div>
 </form>
-<!-- </div>
-    <div class="card-footer"> -->
-<!-- <div class="d-flex w-100 justify-content-end">
-    <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
-        <fa-icon [icon]="faTrash"></fa-icon> Remove NEB
-    </button>
-</div> -->
-<!-- </div>
-</div> -->
 
 <div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">

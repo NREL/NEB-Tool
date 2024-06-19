@@ -81,7 +81,8 @@ import { NebFormsAccordionComponent } from './data-collection/on-site-assessment
     EnergyOpportunitySetupFormComponent,
     AddNebsModalComponent,
     PerformanceMetricImpactFormComponent,
-    NebFormsAccordionComponent  ],
+    NebFormsAccordionComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,

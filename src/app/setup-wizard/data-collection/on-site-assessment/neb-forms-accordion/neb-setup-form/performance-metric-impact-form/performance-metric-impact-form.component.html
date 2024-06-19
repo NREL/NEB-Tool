@@ -1,7 +1,10 @@
 <div class="row">
     <label class="col-sm-12 col-form-label" for="performanceMetric">
         <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
-        <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span></label>
+        <a class="click-link" (click)="goToMetric()">
+            <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
+        </a>
+    </label>
 </div>
 <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
 

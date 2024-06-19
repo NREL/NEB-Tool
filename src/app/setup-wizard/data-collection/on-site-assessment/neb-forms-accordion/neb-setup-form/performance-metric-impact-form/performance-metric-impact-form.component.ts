@@ -1,8 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { IconDefinition, faScaleUnbalancedFlip } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { IconDefinition, faPlus, faScaleUnbalancedFlip } from '@fortawesome/free-solid-svg-icons';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { IdbNonEnergyBenefit, PerformanceMetricImpact } from 'src/app/models/nonEnergyBenefit';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { KeyPerformanceMetric } from 'src/app/shared/constants/keyPerformanceMetrics';
 
 @Component({
@@ -17,10 +21,13 @@ export class PerformanceMetricImpactFormComponent {
   nonEnergyBenefit: IdbNonEnergyBenefit;
 
   faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
+  faPlus: IconDefinition = faPlus;
 
   keyPerformanceMetric: KeyPerformanceMetric;
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
-    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
+    private router: Router,
+    private onSiteVisitIdbService: OnSiteVisitIdbService
   ) {
 
   }
@@ -30,12 +37,17 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   async saveChanges() {
-
     await this.nonEnergyBenefitsIdbService.asyncUpdate(this.nonEnergyBenefit);
   }
 
   calculateCost() {
     this.performanceMetricImpact.costAdjustment = (this.performanceMetricImpact.modificationValue * this.keyPerformanceMetric.costPerValue);
     this.saveChanges();
+  }
+
+  goToMetric(){
+    let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.keyPerformanceMetric.kpiValue);
+    let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
+    this.router.navigateByUrl('setup-wizard/pre-visit/'+onSiteVisit.guid+'/company-kpi-detail/' + keyPerformanceIndicator.guid)
   }
 }
