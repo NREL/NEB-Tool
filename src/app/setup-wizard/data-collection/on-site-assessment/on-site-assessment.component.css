@@ -4,3 +4,11 @@
 .add-opportunity-btn{
     background-color: #D35400;
 }
+
+.navbar{
+    border-bottom: solid;
+    margin-bottom: .25rem
+}
+.nav-underline .nav-item .nav-link.active{
+    font-weight: normal;
+}

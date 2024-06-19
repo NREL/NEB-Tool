@@ -43,9 +43,9 @@
 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox"
-                                [(ngModel)]="keyPerformanceMetric.includeMetric" id="{{'includeMetric_'+keyPerformanceMetric.value}}"
-                                name="{{'includeMetric_'+keyPerformanceMetric.value}}"
-                                (change)="saveChanges()">
+                                [(ngModel)]="keyPerformanceMetric.includeMetric"
+                                id="{{'includeMetric_'+keyPerformanceMetric.value}}"
+                                name="{{'includeMetric_'+keyPerformanceMetric.value}}" (change)="saveChanges()">
 
                             <label class="form-check-label" for="{{'includeMetric_'+keyPerformanceMetric.value}}">
                                 <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
@@ -54,58 +54,67 @@
                         <ng-container *ngIf="keyPerformanceMetric.includeMetric">
                             <ng-template [ngIf]="keyPerformanceMetric.isQuantitative"
                                 [ngIfElse]="qualitativeMetricBlock">
-                                <div class="row mb-1">
-                                    <label class="col-sm-6 col-form-label pm-label" for="{{'baselineValue_'+keyPerformanceMetric.value}}">
-                                        Baseline Amount
-                                    </label>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control"
-                                                [(ngModel)]="keyPerformanceMetric.baselineValue" name="{{'baselineValue_'+keyPerformanceMetric.value}}"
-                                                (input)="calculateCost()">
-                                            <span class="input-group-text">
-                                                <span
-                                                    [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
-                                            </span>
+                                <div class="form-block">
+                                    <div class="row">
+                                        <label class="col-sm-6 col-form-label pm-label"
+                                            for="{{'baselineValue_'+keyPerformanceMetric.value}}">
+                                            Baseline Amount
+                                        </label>
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control"
+                                                    [(ngModel)]="keyPerformanceMetric.baselineValue"
+                                                    name="{{'baselineValue_'+keyPerformanceMetric.value}}"
+                                                    (input)="calculateCost()">
+                                                <span class="input-group-text">
+                                                    <span
+                                                        [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row mb-1">
-                                    <label class="col-sm-6 col-form-label pm-label" for="{{'costPerValue_'+keyPerformanceMetric.value}}">
-                                        Cost Per Unit
-                                    </label>
-                                    <div class="col-6">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control"
-                                                [(ngModel)]="keyPerformanceMetric.costPerValue" name="{{'costPerValue_'+keyPerformanceMetric.value}}"
-                                                (input)="calculateCost()">
-                                            <span class="input-group-text">
-                                                &dollar;/<span
-                                                    [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
-                                            </span>
+                                    <div class="row">
+                                        <label class="col-sm-6 col-form-label pm-label"
+                                            for="{{'costPerValue_'+keyPerformanceMetric.value}}">
+                                            Cost Per Unit
+                                        </label>
+                                        <div class="col-6">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control"
+                                                    [(ngModel)]="keyPerformanceMetric.costPerValue"
+                                                    name="{{'costPerValue_'+keyPerformanceMetric.value}}"
+                                                    (input)="calculateCost()">
+                                                <span class="input-group-text">
+                                                    &dollar;/<span
+                                                        [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row mb-1">
-                                    <label class="col-sm-6 col-form-label pm-label" for="{{'baselineCost_'+keyPerformanceMetric.value}}">
-                                        Baseline Cost
-                                    </label>
-                                    <div class="col-6">
-                                        <ng-template [ngIf]="keyPerformanceMetric.baselineCost"
-                                            [ngIfElse]="noCostBlock">
-                                            {{keyPerformanceMetric.baselineCost | currency}}/yr
-                                        </ng-template>
-                                        <ng-template #noCostBlock>
-                                            &mdash;
-                                        </ng-template>
+                                    <div class="row">
+                                        <label class="col-sm-6 col-form-label pm-label"
+                                            for="{{'baselineCost_'+keyPerformanceMetric.value}}">
+                                            Baseline Cost
+                                        </label>
+                                        <div class="col-6">
+                                            <ng-template [ngIf]="keyPerformanceMetric.baselineCost"
+                                                [ngIfElse]="noCostBlock">
+                                                {{keyPerformanceMetric.baselineCost | currency}}/yr
+                                            </ng-template>
+                                            <ng-template #noCostBlock>
+                                                &mdash;
+                                            </ng-template>
+                                        </div>
                                     </div>
                                 </div>
                             </ng-template>
                             <ng-template #qualitativeMetricBlock>
-                                <div class="alert alert-info small">
-                                    Quantitative results unavailable at this time.
+                                <div class="alert-block">
+                                    <div class="alert alert-info small">
+                                        Quantitative results unavailable at this time.
+                                    </div>
                                 </div>
                             </ng-template>
                         </ng-container>

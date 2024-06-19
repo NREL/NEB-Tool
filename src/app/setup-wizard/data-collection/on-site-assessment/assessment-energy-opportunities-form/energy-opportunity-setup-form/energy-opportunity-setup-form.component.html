@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
         <form>
-            <div class="row mb-1">
+            <div class="row">
                 <label class="col-sm-5 col-form-label" for="energyOpportunityName">Energy Opportunity Name</label>
                 <div class="col-sm-7">
                     <input name="energyOpportunityName" type="text" class="form-control"
@@ -14,7 +14,7 @@
                         (input)="saveEnergyOpportunity()">
                 </div>
             </div>
-            <div class="row mb-1">
+            <div class="row">
                 <label class="col-sm-5 col-form-label" for="energyOpportunityType">Opportunity Type</label>
                 <div class="col-sm-7">
                     <select name="opportunityType" class="form-select" id="opportunityType"
@@ -28,7 +28,7 @@
                     </select>
                 </div>
             </div>
-            <div class="row mb-1">
+            <div class="row">
                 <label class="col-sm-5 col-form-label" for="implementationCost">Implementation Cost</label>
                 <div class="col-sm-7">
                     <div class="input-group">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <hr class="my-1">
-            <div class="row mb-1">
+            <div class="row">
                 <div class="col-12">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
@@ -52,7 +52,7 @@
             </div>
 
             <ng-container *ngIf="energyOpportunity.includeSavings">
-                <div class="row mb-1">
+                <div class="row">
                     <label class="col-sm-5 col-form-label" for="energySavings">Energy Savings</label>
                     <div class="col-sm-7">
                         <div class="input-group">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row">
                     <label class="col-sm-5 col-form-label" for="costSavings">Cost Savings</label>
                     <div class="col-sm-7">
                         <div class="input-group">
@@ -76,7 +76,7 @@
                 </div>
             </ng-container>
             <hr class="my-1">
-            <div class="row mb-1">
+            <div class="row">
                 <div class="col-sm-5 col-form-label">
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
@@ -92,7 +92,7 @@
             </div>
             <hr class="my-1">
 
-            <div class="row mb-1">
+            <div class="row">
                 <label class="col-sm-5 col-form-label" for="nonEnergyBenefitIds">Non-Energy Benefits</label>
                 <div class="col-sm-7">
                     <button class="btn btn-dark btn-sm add-neb-btn w-100" (click)="showSuggestedNEBs()">

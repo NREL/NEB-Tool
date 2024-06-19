@@ -79,8 +79,7 @@ import { PerformanceMetricImpactFormComponent } from './data-collection/on-site-
     AssessmentEnergyOpportunitiesFormComponent,
     EnergyOpportunitySetupFormComponent,
     AddNebsModalComponent,
-    PerformanceMetricImpactFormComponent
-  ],
+    PerformanceMetricImpactFormComponent  ],
   imports: [
     CommonModule,
     RouterModule,

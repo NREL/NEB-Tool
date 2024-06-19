@@ -73,7 +73,7 @@ export class CompanyContactsSetupComponent {
 
   goToKPIs() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi');
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-select');
   }
 
   async saveChanges(contact: IdbContact) {

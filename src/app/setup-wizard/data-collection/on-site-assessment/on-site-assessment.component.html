@@ -2,41 +2,28 @@
     <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
-                <h5>
-                    <fa-icon [icon]="faScrewdriverWrench"></fa-icon> {{assessment.name}}
-                </h5>
-                <hr>
-                <app-assessment-details-form></app-assessment-details-form>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        <app-assessment-energy-opportunities-form></app-assessment-energy-opportunities-form>
-                        <hr>
+                <nav class="navbar">
+                    <div>
+                        <h5>
+                            <fa-icon [icon]="faScrewdriverWrench"></fa-icon> {{assessment.name}}
+                        </h5>
                     </div>
-                    <div class="col-md-12">
-                        <app-assessment-nebs-form></app-assessment-nebs-form>
-                        <hr>
-                    </div>
-                </div>
-                <hr class="d-md-none d-lg-block">
-                <h5>
-                    <fa-icon [icon]="faPeople"></fa-icon> Contacts
-                </h5>
-                <div class="row">
-                    <div class="col-12">
-                        <button class="btn btn-sm btn-primary me-1"
-                            *ngFor="let contact of assessment.guid | contactName:'assessment': contacts;"
-                            (click)="openContactModal(contact)">
-                            <fa-icon [icon]="faUser"></fa-icon>
-                            {{contact.name}}
-                        </button>
-                        <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
-                            <fa-icon [icon]="faUser"></fa-icon>
-                            Team Members
-                        </button>
-                    </div>
-                </div>
-                <hr>
+                    <ul class="nav nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link pt-0" [routerLink]="'details'"
+                            [routerLinkActive]="['active']">Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pt-0" [routerLink]="'energy-opportunities'"
+                            [routerLinkActive]="['active']">Energy Opportunities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pt-0" [routerLink]="'nebs'"
+                            [routerLinkActive]="['active']">NEBs</a>
+                        </li>
+                    </ul>
+                </nav>
+                <router-outlet></router-outlet>
             </div>
         </div>
     </div>
@@ -92,8 +79,8 @@
     </div>
 </nav>
 
-<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()" [contextGuid]="assessment.guid"
-    [contactContext]="'assessment'" [selectedContact]="viewContact"
+<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()" [contextGuid]="displayContactModal.contextGuid"
+    [contactContext]="displayContactModal.context" [selectedContact]="displayContactModal.viewContact"
     [companyGuid]="assessment.companyId"></app-contact-modal>
 
-<app-add-nebs-modal *ngIf="displayAddNebsModal" (emitCancelContact)="closeContactModal()"></app-add-nebs-modal>
+<app-add-nebs-modal *ngIf="displayAddNebsModal"></app-add-nebs-modal>

@@ -1,5 +1,5 @@
 <form *ngIf="assessment">
-    <div class="row mb-1">
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="assessmentName">Assessment Name</label>
         <div class="col-sm-7">
             <input name="assessmentName" type="text" class="form-control" [(ngModel)]="assessment.name"
@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="row mb-1">
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="equipmentId">Process
             Equipment</label>
         <div class="col-sm-7">
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div class="row mb-1">
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="energyUse">Annual Energy
             Use</label>
         <div class="col-sm-7">
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="row mb-1">
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="cost">Annual
             Costs</label>
         <div class="col-sm-7">
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="row mb-1">
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="visitDate">Scheduled
             For</label>
         <div class="col-sm-7">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <hr>
-    <div class="row mb-1">
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="energySavings">Annual Energy Savings</label>
         <div class="col-sm-7">
             <div class="input-group">
@@ -70,7 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-1">
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="costSavings">Annual Cost Savings</label>
         <div class="col-sm-7">
             <div class="input-group">
@@ -81,3 +81,21 @@
         </div>
     </div>
 </form>
+<hr class="d-md-none d-lg-block">
+<h5>
+    <fa-icon [icon]="faPeopleGroup"></fa-icon> Contacts
+</h5>
+<div class="row">
+    <div class="col-12">
+        <button class="btn btn-sm btn-primary me-1"
+            *ngFor="let contact of assessment.guid | contactName:'assessment': contacts;"
+            (click)="openContactModal(contact)">
+            <fa-icon [icon]="faUser"></fa-icon>
+            {{contact.name}}
+        </button>
+        <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
+            <fa-icon [icon]="faUser"></fa-icon>
+            Team Members
+        </button>
+    </div>
+</div>

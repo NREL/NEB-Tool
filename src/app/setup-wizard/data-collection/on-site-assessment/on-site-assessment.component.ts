@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faFilePen, faListCheck, faPeopleGroup, faPlus, faScrewdriverWrench, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faPlus, faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
 import { Subscription } from 'rxjs';
-import { IdbContact } from 'src/app/models/contact';
+import { ContactContext, IdbContact } from 'src/app/models/contact';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
-import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { SetupWizardService } from '../../setup-wizard.service';
 
@@ -18,25 +16,13 @@ import { SetupWizardService } from '../../setup-wizard.service';
 })
 export class OnSiteAssessmentComponent {
 
-  equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
-
-  faFilePen: IconDefinition = faFilePen;
-  faListCheck: IconDefinition = faListCheck;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
   faScrewdriverWrench: IconDefinition = faScrewdriverWrench;
-  faPeople: IconDefinition = faPeopleGroup;
-  faUser: IconDefinition = faUser;
   faPlus: IconDefinition = faPlus;
 
   assessment: IdbAssessment;
   assessmentSub: Subscription;
-
-  onSiteAssessments: Array<IdbAssessment>;
-  contacts: Array<IdbContact>;
-  contactsSub: Subscription;
-
-  displayContactModal: boolean = false;
   viewContact: IdbContact;
 
   assessmentIndex: number;
@@ -45,18 +31,16 @@ export class OnSiteAssessmentComponent {
 
   displayAddNebsModal: { energyOpportunityId: string, assessmentId: string };
   displayAddNebsModalSub: Subscription;
+
+  displayContactModal: { context: ContactContext, viewContact: IdbContact, contextGuid: string };
+  displayContactModalSub: Subscription;
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private activatedRoute: ActivatedRoute,
-    private contactIdbService: ContactIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private setupWizardService: SetupWizardService
   ) { }
 
   ngOnInit() {
-    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
-      this.contacts = _contacts;
-    });
-
     this.onSiteVisitSub = this.onSiteVisitIdbService.selectedVisit.subscribe(_visit => {
       this.onSiteVisit = _visit;
     });
@@ -67,6 +51,10 @@ export class OnSiteAssessmentComponent {
 
     this.displayAddNebsModalSub = this.setupWizardService.displayAddNebsModal.subscribe(_displayAddNebsModal => {
       this.displayAddNebsModal = _displayAddNebsModal;
+    });
+
+    this.displayContactModalSub = this.setupWizardService.displayContactModal.subscribe(_displayContactModal => {
+      this.displayContactModal = _displayContactModal;
     });
 
     this.activatedRoute.params.subscribe(params => {
@@ -83,20 +71,10 @@ export class OnSiteAssessmentComponent {
   }
 
   ngOnDestroy() {
-    this.contactsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
     this.onSiteVisitSub.unsubscribe();
     this.displayAddNebsModalSub.unsubscribe();
-  }
-
-  openContactModal(viewContact: IdbContact) {
-    this.viewContact = viewContact;
-    this.displayContactModal = true;
-  }
-
-  closeContactModal() {
-    this.displayContactModal = false;
-    this.viewContact = undefined;
+    this.displayContactModalSub.unsubscribe();
   }
 
   goToNextAssessment() {
@@ -121,5 +99,9 @@ export class OnSiteAssessmentComponent {
 
   showSuggestedNebModal() {
     this.setupWizardService.displayAddNebsModal.next({ assessmentId: this.assessment.guid, energyOpportunityId: undefined });
+  }
+
+  closeContactModal() {
+    this.setupWizardService.displayContactModal.next(undefined);
   }
 }

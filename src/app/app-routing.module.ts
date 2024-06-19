@@ -37,6 +37,9 @@ import { DataCollectionComponent } from './setup-wizard/data-collection/data-col
 import { CompanyKpiSelectComponent } from './setup-wizard/pre-visit/company-kpi-select/company-kpi-select.component';
 import { DataCollectionManageAssessmentsComponent } from './setup-wizard/data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
 import { CompanyKpiDetailsComponent } from './setup-wizard/pre-visit/company-kpi-details/company-kpi-details.component';
+import { AssessmentDetailsFormComponent } from './setup-wizard/data-collection/on-site-assessment/assessment-details-form/assessment-details-form.component';
+import { AssessmentEnergyOpportunitiesFormComponent } from './setup-wizard/data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
+import { AssessmentNebsFormComponent } from './setup-wizard/data-collection/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
 
 const routes: Routes = [
   {
@@ -118,7 +121,26 @@ const routes: Routes = [
           },
           {
             path: 'assessment/:id',
-            component: OnSiteAssessmentComponent
+            component: OnSiteAssessmentComponent,
+            children: [
+              {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'details'
+              },
+              {
+                path: 'details',
+                component: AssessmentDetailsFormComponent
+              },
+              {
+                path: 'energy-opportunities',
+                component: AssessmentEnergyOpportunitiesFormComponent
+              },
+              {
+                path: 'nebs',
+                component: AssessmentNebsFormComponent
+              }
+            ]
           },
           {
             path: 'review-data-collection',
