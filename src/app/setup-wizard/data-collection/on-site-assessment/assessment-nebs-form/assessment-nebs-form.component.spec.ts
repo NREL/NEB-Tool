@@ -5,7 +5,7 @@ import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/set
 import { BehaviorSubject } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
-import { NebSetupFormComponent } from './neb-setup-form/neb-setup-form.component';
+import { NebSetupFormComponent } from '../neb-forms-accordion/neb-setup-form/neb-setup-form.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';

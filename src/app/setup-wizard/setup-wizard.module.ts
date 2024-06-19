@@ -29,7 +29,7 @@ import { TableEntriesModule } from '../shared/table-entries/table-entries.module
 import { OnSiteAssessmentComponent } from './data-collection/on-site-assessment/on-site-assessment.component';
 import { AssessmentDetailsFormComponent } from './data-collection/on-site-assessment/assessment-details-form/assessment-details-form.component';
 import { AssessmentNebsFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
-import { NebSetupFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
+import { NebSetupFormComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/neb-setup-form.component';
 import { PreVisitComponent } from './pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import { CompanyKpiSelectComponent } from './pre-visit/company-kpi-select/company-kpi-select.component';
@@ -40,7 +40,8 @@ import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-a
 import { AddKpiSearchComponent } from './pre-visit/company-kpi-select/add-kpi-search/add-kpi-search.component';
 import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-search/selected-kpi-option.pipe';
 import { AddNebsModalComponent } from './data-collection/on-site-assessment/add-nebs-modal/add-nebs-modal.component';
-import { PerformanceMetricImpactFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/neb-setup-form/performance-metric-impact-form/performance-metric-impact-form.component';
+import { PerformanceMetricImpactFormComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metric-impact-form/performance-metric-impact-form.component';
+import { NebFormsAccordionComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-forms-accordion.component';
 
 
 
@@ -79,7 +80,8 @@ import { PerformanceMetricImpactFormComponent } from './data-collection/on-site-
     AssessmentEnergyOpportunitiesFormComponent,
     EnergyOpportunitySetupFormComponent,
     AddNebsModalComponent,
-    PerformanceMetricImpactFormComponent  ],
+    PerformanceMetricImpactFormComponent,
+    NebFormsAccordionComponent  ],
   imports: [
     CommonModule,
     RouterModule,

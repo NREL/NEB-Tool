@@ -1,0 +1,87 @@
+<div class="row">
+    <label class="col-sm-12 col-form-label" for="performanceMetric">
+        <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
+        <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span></label>
+</div>
+<ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
+
+    <div class="form-block">
+        <div class="row">
+            <label class="col-sm-6 col-form-label pm-label" for="baselineValue">
+                Baseline Amount
+            </label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.baselineValue"
+                        name="baselineValue" (input)="calculateCost()" [disabled]="true">
+                    <span class="input-group-text">
+                        <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-sm-6 col-form-label pm-label" for="costPerValue">
+                Cost Per Unit
+            </label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.costPerValue"
+                        name="costPerValue" (input)="calculateCost()" [disabled]="true">
+                    <span class="input-group-text">
+                        &dollar;/<span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-sm-6 col-form-label pm-label" for="costPerValue">
+                Baseline Cost
+            </label>
+            <div class="col-6">
+                <ng-template [ngIf]="keyPerformanceMetric.baselineCost" [ngIfElse]="noCostBlock">
+                    {{keyPerformanceMetric.baselineCost | currency}}/yr
+                </ng-template>
+                <ng-template #noCostBlock>
+                    &mdash;
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-sm-6 col-form-label pm-label" for="modificationValue">
+                NEB Impact
+            </label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="number" class="form-control" [(ngModel)]="performanceMetricImpact.modificationValue"
+                        name="modificationValue" (input)="calculateCost()">
+                    <span class="input-group-text">
+                        <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-sm-6 col-form-label pm-label" for="costPerValue">
+                NEB Cost Impact
+            </label>
+            <div class="col-6">
+                <ng-template [ngIf]="performanceMetricImpact.costAdjustment" [ngIfElse]="noCostAdjustmentBlock">
+                    {{performanceMetricImpact.costAdjustment | currency}}/yr
+                </ng-template>
+                <ng-template #noCostAdjustmentBlock>
+                    &mdash;
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #qualitativeMetricBlock>
+    <div class="alert alert-info small">
+        Quantitative results unavailable at this time.
+    </div>
+</ng-template>

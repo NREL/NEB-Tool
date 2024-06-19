@@ -1,0 +1,54 @@
+<!-- <div class="card" [id]="'neb_'+nonEnergyBenefit.guid">
+    <div class="card-header text-bg-dark">
+        <h5 class="card-title mb-0">
+            <fa-icon [icon]="faWeightHanging" class="me-2"></fa-icon> {{nonEnergyBenefit.name}}
+        </h5>
+    </div>
+    <div class="card-body"> -->
+<form>
+    <ng-container *ngFor="let performanceMetricImpact of nonEnergyBenefit.performanceMetricImpacts">
+        <app-performance-metric-impact-form [performanceMetricImpact]="performanceMetricImpact"
+            [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metric-impact-form>
+    </ng-container>
+    <!-- <hr class="my-1"> -->
+    <div class="row mb-1">
+        <div class="col-sm-5 col-form-label">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
+                    [(ngModel)]="nonEnergyBenefit.includeNote" name="includeNote" (input)="saveChanges()">
+                <label class="form-check-label" for="includeNote">Notes</label>
+            </div>
+        </div>
+        <div class="col-sm-7" *ngIf="nonEnergyBenefit.includeNote">
+            <textarea name="nebNotes" type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.notes"
+                id="nebNotes"></textarea>
+        </div>
+    </div>
+</form>
+<!-- </div>
+    <div class="card-footer"> -->
+<!-- <div class="d-flex w-100 justify-content-end">
+    <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
+        <fa-icon [icon]="faTrash"></fa-icon> Remove NEB
+    </button>
+</div> -->
+<!-- </div>
+</div> -->
+
+<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div class="popup" [ngClass]="{'open': displayDeleteModal }">
+    <div class="popup-header">Discard this NEB?
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
+    </div>
+    <div class="popup-body">
+        <div class="alert alert-info">
+            Are you sure you want to discard this NEB?
+        </div>
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteNonEnergyBenefit()"><fa-icon [icon]="faTrash"
+                class="me-1"></fa-icon>Discard NEB</button>
+    </div>
+</div>
