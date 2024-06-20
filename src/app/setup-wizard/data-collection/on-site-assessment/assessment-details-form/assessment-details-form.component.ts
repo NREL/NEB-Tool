@@ -6,7 +6,7 @@ import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbContact } from 'src/app/models/contact';
-import { IconDefinition, faPeopleGroup, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faContactBook, faPeopleGroup, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
@@ -19,6 +19,7 @@ export class AssessmentDetailsFormComponent {
 
   faPeopleGroup: IconDefinition = faPeopleGroup;
   faUser: IconDefinition = faUser;
+  faContactBook: IconDefinition = faContactBook;
 
   assessment: IdbAssessment;
   assessmentSub: Subscription;

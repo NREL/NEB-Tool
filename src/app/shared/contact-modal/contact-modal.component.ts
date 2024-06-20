@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconDefinition, faChevronLeft, faCircleCheck, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { ContactContext, IdbContact } from 'src/app/models/contact';
@@ -28,6 +28,7 @@ export class ContactModalComponent {
   faCircleCheck: IconDefinition = faCircleCheck;
   faChevronLeft: IconDefinition = faChevronLeft;
   faUser: IconDefinition = faUser;
+  faContactBook: IconDefinition = faContactBook;
   constructor(
     private contactIdbService: ContactIdbService
   ) {

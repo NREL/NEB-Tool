@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faScaleUnbalancedFlip, faTrash, faUser, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faContactBook, faScaleUnbalancedFlip, faTrash, faUser, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
@@ -31,6 +31,7 @@ export class NebSetupFormComponent {
   faWeightHanging: IconDefinition = faWeightHanging;
   faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
   faUser: IconDefinition = faUser;
+  faContactBook: IconDefinition = faContactBook;
 
   displayDeleteModal: boolean = false;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
