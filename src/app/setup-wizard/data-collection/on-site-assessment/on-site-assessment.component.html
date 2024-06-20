@@ -2,7 +2,7 @@
     <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
-                <nav class="navbar">
+                <nav class="navbar top-nav">
                     <div>
                         <h5>
                             <fa-icon [icon]="faScrewdriverWrench"></fa-icon> {{assessment.name}}
@@ -31,26 +31,26 @@
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-between">
         <div class="col-3">
-            <button class="btn btn-dark" (click)="goBack()">
+            <button class="btn btn-dark btn-sm" (click)="goBack()">
                 <fa-icon [icon]="faChevronLeft"></fa-icon>
             </button>
         </div>
         <div class="col-6">
             <div class="d-flex justify-content-center">
                 <div class="pe-1">
-                    <button class="btn btn-dark add-opportunity-btn" [disabled]="true">
+                    <button class="btn btn-dark add-opportunity-btn btn-sm" [disabled]="true">
                         <fa-icon [icon]="faPlus"></fa-icon>
                         Add Opportunity
                     </button>
                 </div>
                 <div class="pe-1">
-                    <button class="btn btn-dark add-neb-btn" (click)="showSuggestedNebModal()">
+                    <button class="btn btn-dark add-neb-btn btn-sm" (click)="showSuggestedNebModal()">
                         <fa-icon [icon]="faPlus"></fa-icon>
                         Add NEB
                     </button>
                 </div>
                 <div class="pe-1">
-                    <button class="btn btn-secondary" [disabled]="true">
+                    <button class="btn btn-secondary btn-sm" [disabled]="true">
                         <fa-icon [icon]="faPlus"></fa-icon>
                         Add Contact
                     </button>
@@ -59,7 +59,7 @@
         </div>
         <div class="col-3">
             <div class="d-flex  justify-content-end">
-                <button class="btn btn-dark" (click)="goToNext()">
+                <button class="btn btn-dark btn-sm" (click)="goToNext()">
                     <fa-icon [icon]="faChevronRight"></fa-icon>
                 </button>
             </div>

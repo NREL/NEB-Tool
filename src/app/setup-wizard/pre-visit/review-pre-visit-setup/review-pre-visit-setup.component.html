@@ -25,17 +25,17 @@
 </div>
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-between">
-        <button class="btn btn-dark" (click)="goBack()">
+        <button class="btn btn-dark btn-sm" (click)="goBack()">
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button class="btn btn-secondary" [disabled]="true">
+        <button class="btn btn-secondary btn-sm" [disabled]="true">
             <fa-icon [icon]="faFilePdf"></fa-icon>
             Generate PDF
         </button>
-        <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'preVisit'">Finish
+        <button class="btn btn-success btn-sm" (click)="openConfirmModal()" *ngIf="setupContext == 'preVisit'">Finish
             Pre-Visit</button>
-        <button class="btn btn-success" (click)="openConfirmModal()" *ngIf="setupContext == 'full' || setupContext == 'onSite'">Continue<fa-icon
+        <button class="btn btn-success btn-sm" (click)="openConfirmModal()" *ngIf="setupContext == 'full' || setupContext == 'onSite'">Continue<fa-icon
                 [icon]="faChevronRight"></fa-icon></button>
     </div>
 </nav>

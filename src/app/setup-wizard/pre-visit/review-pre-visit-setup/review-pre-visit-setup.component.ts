@@ -56,7 +56,7 @@ export class ReviewPreVisitSetupComponent {
   }
 
   openConfirmModal() {
-    if(this.setupContext != 'onSite'){
+    if(this.setupContext == 'onSite'){
       this.continue();
     }else{
       this.displayConfirmModal = true;
