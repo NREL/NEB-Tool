@@ -18,7 +18,7 @@
                                 </ng-template>
                                 {{contact.name}}
                             </div>
-                            <button class="btn btn-sm btn-primary" (click)="viewContact(contact)">
+                            <button class="btn btn-sm btn-primary btn-sm" (click)="viewContact(contact)">
                                 View
                             </button>
                         </div>
@@ -105,7 +105,7 @@
         <hr>
     </div>
     <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" (click)="closeModal()">Cancel</button>
-        <button class="btn btn-success" (click)="saveChanges()"><fa-icon [icon]="faSave"></fa-icon> Set Contact</button>
+        <button class="btn btn-secondary me-2 btn-sm" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-success btn-sm" (click)="saveChanges()"><fa-icon [icon]="faSave"></fa-icon> Set Contacts</button>
     </div>
 </div>

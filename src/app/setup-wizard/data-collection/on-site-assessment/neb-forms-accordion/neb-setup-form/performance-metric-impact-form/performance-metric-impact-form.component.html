@@ -16,7 +16,7 @@
             <div class="col-6">
                 <div class="input-group">
                     <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.baselineValue"
-                        name="baselineValue" (input)="calculateCost()" [disabled]="true">
+                        name="baselineValue" (input)="calculateCost()" [disabled]="disabledBaseline">
                     <span class="input-group-text">
                         <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
                     </span>
@@ -31,7 +31,7 @@
             <div class="col-6">
                 <div class="input-group">
                     <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.costPerValue"
-                        name="costPerValue" (input)="calculateCost()" [disabled]="true">
+                        name="costPerValue" (input)="calculateCost()" [disabled]="disabledBaseline">
                     <span class="input-group-text">
                         &dollar;/<span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
                     </span>

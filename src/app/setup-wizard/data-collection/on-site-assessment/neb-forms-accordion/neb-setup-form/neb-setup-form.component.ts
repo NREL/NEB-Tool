@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faContactBook, faScaleUnbalancedFlip, faTrash, faUser, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
-import { Subscription } from 'rxjs';
+import { IconDefinition, faChevronDown, faChevronRight, faContactBook, faPlus, faScaleUnbalancedFlip, faTrash, faUser, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
@@ -32,6 +32,9 @@ export class NebSetupFormComponent {
   faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
   faUser: IconDefinition = faUser;
   faContactBook: IconDefinition = faContactBook;
+  faChevronRight: IconDefinition = faChevronRight;
+  faChevronDown: IconDefinition = faChevronDown;
+  faPlus: IconDefinition = faPlus;
 
   displayDeleteModal: boolean = false;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
@@ -45,6 +48,10 @@ export class NebSetupFormComponent {
 
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
+
+  hideUntrackedMetrics: boolean = true;
+  performanceMetricToAdd: KeyPerformanceMetric;
+  displayAddPerformanceMetricModal: boolean = false;
   constructor(
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private router: Router,
@@ -108,8 +115,34 @@ export class NebSetupFormComponent {
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-detail/' + keyPerformanceIndicator.guid)
   }
 
+  async addMetric() {
+    let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.performanceMetricToAdd.kpiValue);
+    keyPerformanceIndicator.performanceMetrics.forEach(_metric => {
+      if (_metric.value == this.performanceMetricToAdd.value) {
+        _metric.includeMetric = true
+      }
+    });
+    await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
+    this.closeAddMetricModal();
+    this.setMetrics();
+  }
 
   openContactModal(viewContact: IdbContact) {
     this.setupWizardService.displayContactModal.next({ context: 'nonEnergyBenefit', viewContact: viewContact, contextGuid: this.nonEnergyBenefit.guid });
+  }
+
+  toggleUntrackedNebs() {
+    this.hideUntrackedMetrics = !this.hideUntrackedMetrics;
+  }
+
+  openAddMetricModal(metric: KeyPerformanceMetric) {
+    this.performanceMetricToAdd = metric;
+    this.displayAddPerformanceMetricModal = true;
+  }
+
+  closeAddMetricModal() {
+    this.displayAddPerformanceMetricModal = false;
+    this.performanceMetricToAdd = undefined;
+
   }
 }

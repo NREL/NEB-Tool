@@ -8,6 +8,6 @@
     line-height: 1;
 }
 
-.btn, .badge, .alert, .list-group-item, .list-group-item:first-child, .list-group-item:last-child{
+.btn, .alert, .list-group-item, .list-group-item:first-child, .list-group-item:last-child{
     border-radius: 0;
 }

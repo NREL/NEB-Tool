@@ -24,6 +24,7 @@ export class PerformanceMetricImpactFormComponent {
   faPlus: IconDefinition = faPlus;
 
   keyPerformanceMetric: KeyPerformanceMetric;
+  disabledBaseline: boolean = false;
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private router: Router,
@@ -34,6 +35,7 @@ export class PerformanceMetricImpactFormComponent {
 
   ngOnInit() {
     this.keyPerformanceMetric = this.keyPerformanceIndicatorIdbService.getKeyPerformanceMetric(this.nonEnergyBenefit.companyId, this.performanceMetricImpact.kpmValue);
+
   }
 
   async saveChanges() {
@@ -49,5 +51,15 @@ export class PerformanceMetricImpactFormComponent {
     let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.keyPerformanceMetric.kpiValue);
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
     this.router.navigateByUrl('setup-wizard/pre-visit/'+onSiteVisit.guid+'/company-kpi-detail/' + keyPerformanceIndicator.guid)
+  }
+
+  async savePerformanceMetric(){    
+    let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.keyPerformanceMetric.kpiValue);
+    keyPerformanceIndicator.performanceMetrics.forEach(_metric => {
+      if (_metric.value == this.keyPerformanceMetric.value) {
+        _metric.includeMetric = true
+      }
+    });
+    await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
   }
 }
