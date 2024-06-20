@@ -14,3 +14,7 @@
 .accordion{
     --bs-accordion-border-radius: 0;
 }
+
+.accordion-button{
+    padding: .25rem;
+}

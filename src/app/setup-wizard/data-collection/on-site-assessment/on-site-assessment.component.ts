@@ -63,7 +63,7 @@ export class OnSiteAssessmentComponent {
       if (this.assessmentIndex != -1) {
         this.assessmentIdbService.setSelectedFromGUID(this.onSiteVisit.assessmentIds[this.assessmentIndex]);
       } else if (this.assessmentIndex == -1 && this.onSiteVisit.assessmentIds.length > 0) {
-        this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[0]);
+        this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[0], 'details');
       } else if (!this.assessment) {
         this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
       }
@@ -78,30 +78,46 @@ export class OnSiteAssessmentComponent {
   }
 
   goToNextAssessment() {
-    this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[this.assessmentIndex + 1]);
-  }
-
-  goToPrevious() {
-    this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[this.assessmentIndex - 1]);
-  }
-
-  navigateToOnSiteAssessment(guid: string) {
-    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + guid);
-  }
-
-  goToResults() {
-    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');
+    this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[this.assessmentIndex + 1], 'details');
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
+    if (this.router.url.includes('details')) {
+      if(this.assessmentIndex != 0){
+        this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[this.assessmentIndex - 1], 'nebs');
+      }else{
+        this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
+      }
+    } else if (this.router.url.includes('energy-opportunities')) {
+      this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + this.assessment.guid + '/details');
+    } else if (this.router.url.includes('nebs')) {
+      this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + this.assessment.guid + '/energy-opportunities');
+    }
   }
 
+  navigateToOnSiteAssessment(guid: string, subUrl: string) {
+    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + guid + '/' +subUrl);
+  }
+  
   showSuggestedNebModal() {
     this.setupWizardService.displayAddNebsModal.next({ assessmentId: this.assessment.guid, energyOpportunityId: undefined });
   }
 
   closeContactModal() {
     this.setupWizardService.displayContactModal.next(undefined);
+  }
+
+  goToNext() {
+    if (this.router.url.includes('details')) {
+      this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + this.assessment.guid + '/energy-opportunities');
+    } else if (this.router.url.includes('energy-opportunities')) {
+      this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + this.assessment.guid + '/nebs');
+    } else if (this.router.url.includes('nebs')) {
+      if(this.assessmentIndex != this.onSiteVisit.assessmentIds.length - 1){
+        this.goToNextAssessment();
+      }else{
+        this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');        
+      }
+    }
   }
 }
