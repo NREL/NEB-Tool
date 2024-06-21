@@ -54,12 +54,26 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   async savePerformanceMetric(){    
+    console.log('update...')
     let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.keyPerformanceMetric.kpiValue);
     keyPerformanceIndicator.performanceMetrics.forEach(_metric => {
       if (_metric.value == this.keyPerformanceMetric.value) {
-        _metric.includeMetric = true
+        _metric.baselineCost = this.keyPerformanceMetric.baselineCost;
+        _metric.baselineValue = this.keyPerformanceMetric.baselineValue;
+        _metric.costPerValue = this.keyPerformanceMetric.costPerValue;
       }
     });
+    await this.nonEnergyBenefitsIdbService.updatePerformanceMetricBaseline(keyPerformanceIndicator, this.keyPerformanceMetric);
     await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
+  }
+
+  setDisabledBaseline(){
+
+  }
+
+  async calculateBaseline(){
+    this.keyPerformanceMetric.baselineCost = (this.keyPerformanceMetric.baselineValue * this.keyPerformanceMetric.costPerValue);
+    await this.savePerformanceMetric();
+    await this.calculateCost();
   }
 }
