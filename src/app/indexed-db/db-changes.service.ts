@@ -16,6 +16,7 @@ import { KeyPerformanceIndicatorsIdbService } from './key-performance-indicators
 import { IdbKeyPerformanceIndicator } from '../models/keyPerformanceIndicator';
 import { EnergyOpportunityIdbService } from './energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from '../models/energyOpportunity';
+import { KeyPerformanceMetricValue } from '../shared/constants/keyPerformanceMetrics';
 
 @Injectable({
   providedIn: 'root'
@@ -205,11 +206,27 @@ export class DbChangesService {
       let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
       let assessmentContacts: Array<IdbContact> = contacts.filter(contact => { return contact.kpiIds.includes(keyPerformanceIndicators[i].guid) });
       if (assessmentContacts.length > 0) {
-        for (let i = 0; i < assessmentContacts.length; i++) {
-          assessmentContacts[i].kpiIds = assessmentContacts[i].kpiIds.filter(kpiId => { return kpiId != keyPerformanceIndicators[i].guid });
-          await firstValueFrom(this.contactIdbService.updateWithObservable(assessmentContacts[i]));
+        for (let a = 0; a < assessmentContacts.length; a++) {
+          assessmentContacts[a].kpiIds = assessmentContacts[a].kpiIds.filter(kpiId => { return kpiId != keyPerformanceIndicators[i].guid });
+          await firstValueFrom(this.contactIdbService.updateWithObservable(assessmentContacts[a]));
         }
         await this.contactIdbService.setContacts();
+      }
+      //update NEBs
+      let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.getCompanyNonEnergyBenefits(keyPerformanceIndicators[i].companyId);
+      if (nonEnergyBenefits.length > 0) {
+        for (let b = 0; b < nonEnergyBenefits.length; b++) {
+          let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[b];
+          let kpiMetricValues: Array<KeyPerformanceMetricValue> = keyPerformanceIndicators[i].performanceMetrics.flatMap(metric => {
+            return metric.value;
+          });
+          //remove metrics from this kpi
+          nonEnergyBenefit.performanceMetricImpacts = nonEnergyBenefit.performanceMetricImpacts.filter(pmi => {
+            return !kpiMetricValues.includes(pmi.kpmValue);
+          });
+          await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
+        }
+        await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
       }
       await firstValueFrom(this.keyPerformanceIndicatorIdbService.deleteWithObservable(keyPerformanceIndicators[i].id));
     }
