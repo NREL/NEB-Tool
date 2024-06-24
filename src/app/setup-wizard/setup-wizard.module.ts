@@ -42,6 +42,11 @@ import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-se
 import { AddNebsModalComponent } from './data-collection/on-site-assessment/add-nebs-modal/add-nebs-modal.component';
 import { PerformanceMetricImpactFormComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metric-impact-form/performance-metric-impact-form.component';
 import { NebFormsAccordionComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-forms-accordion.component';
+import { DataEvaluationComponent } from './data-evaluation/data-evaluation.component';
+import { DataFollowUpComponent } from './data-evaluation/data-follow-up/data-follow-up.component';
+import { VisitReportComponent } from './data-evaluation/visit-report/visit-report.component';
+import { ReportsModule } from '../shared/reports/reports.module';
+import { AssessmentEvaluationComponent } from './data-evaluation/assessment-evaluation/assessment-evaluation.component';
 
 
 
@@ -81,7 +86,11 @@ import { NebFormsAccordionComponent } from './data-collection/on-site-assessment
     EnergyOpportunitySetupFormComponent,
     AddNebsModalComponent,
     PerformanceMetricImpactFormComponent,
-    NebFormsAccordionComponent
+    NebFormsAccordionComponent,
+    DataEvaluationComponent,
+    DataFollowUpComponent,
+    VisitReportComponent,
+    AssessmentEvaluationComponent
   ],
   imports: [
     CommonModule,
@@ -91,7 +100,8 @@ import { NebFormsAccordionComponent } from './data-collection/on-site-assessment
     SharedSettingsFormsModule,
     HelperPipesModule,
     ContactModalModule,
-    TableEntriesModule
+    TableEntriesModule,
+    ReportsModule
   ]
 })
 export class SetupWizardModule { }

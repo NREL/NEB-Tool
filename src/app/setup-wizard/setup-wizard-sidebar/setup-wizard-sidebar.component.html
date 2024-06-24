@@ -75,7 +75,7 @@
             <hr class="my-1">
         </div>
 
-        <ng-container *ngIf="setupContext == 'onSite' || setupContext == 'full'">
+        <ng-container *ngIf="setupContext != 'preVisit'">
             <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
                 <div class="p-2 w-100 text-bg-dark">
                     Data Collection
@@ -134,13 +134,24 @@
                     Data Evaluation
                 </div>
                 <div class="nav-item">
-                    <a class="nav-link" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="'data-evaluation/'+onSiteVisit.guid+'/follow-up'"
+                        [routerLinkActive]="['active']">
                         Follow-up
                     </a>
                 </div>
+                <ng-container *ngFor="let assessmentGuid of onSiteVisit.assessmentIds">
+                    <div class="nav-item">
+                        <a class="nav-link"
+                            [routerLink]="'data-evaluation/'+onSiteVisit.guid+'/assessment-report/'+assessmentGuid"
+                            [routerLinkActive]="['active']">
+                            {{assessmentGuid | assessmentNameDisplay: assessments}}
+                        </a>
+                    </div>
+                </ng-container>
                 <div class="nav-item">
-                    <a class="nav-link" [routerLinkActive]="['active']">
-                        Results
+                    <a class="nav-link" [routerLink]="'data-evaluation/'+onSiteVisit.guid+'/visit-report'"
+                        [routerLinkActive]="['active']">
+                        Rollup Report
                     </a>
                 </div>
                 <div class="p-2 w-100">
