@@ -69,6 +69,8 @@ export class LocationFormComponent {
       this.facility.generalInformation = this.sharedSettingsFormService.updateGeneralInformationFromForm(this.form, this.facility.generalInformation, 'location');
       await this.facilityIdbService.asyncUpdate(this.facility);
     }
+    // // Debug country value
+    // console.log(this.inCompany? this.company?.generalInformation.country : this.facility?.generalInformation.country)
   }
 
 
