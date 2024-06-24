@@ -32,11 +32,14 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="electricityPrice"
+                    <input class="form-control" type="number" step="any" min="0" formControlName="electricityPrice"
                         name="electricityPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['electricityUnit'].value | unitsDisplay"></span>
                     </span>
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['electricityPrice'].touched && form.controls['electricityPrice'].getError('min')">
+                    Value can not be negative.
                 </div>
             </div>
         </ng-container>
@@ -62,10 +65,13 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="naturalGasPrice" name="naturalGasPrice" (change)="saveChanges()">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="naturalGasPrice" name="naturalGasPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['naturalGasUnit'].value | unitsDisplay"></span>
                     </span>
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['naturalGasPrice'].touched && form.controls['naturalGasPrice'].getError('min')">
+                    Value can not be negative.
                 </div>
             </div>
         </ng-container>
@@ -91,9 +97,12 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="otherFuelPrice" name="otherFuelPrice" (change)="saveChanges()">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="otherFuelPrice" name="otherFuelPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['otherFuelUnit'].value | unitsDisplay"></span></span>
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['otherFuelPrice'].touched && form.controls['otherFuelPrice'].getError('min')">
+                    Value can not be negative.
                 </div>
             </div>
         </ng-container>
@@ -119,9 +128,12 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="waterPrice" name="waterPrice" (change)="saveChanges()">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="waterPrice" name="waterPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['waterUnit'].value | unitsDisplay"></span></span>
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['waterPrice'].touched && form.controls['waterPrice'].getError('min')">
+                    Value can not be negative.
                 </div>
             </div>
         </ng-container>
@@ -147,9 +159,12 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="wasteWaterPrice" name="wasteWaterPrice" (change)="saveChanges()">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="wasteWaterPrice" name="wasteWaterPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['wasteWaterUnit'].value | unitsDisplay"></span></span>
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['wasteWaterPrice'].touched && form.controls['wasteWaterPrice'].getError('min')">
+                    Value can not be negative.
                 </div>
             </div>
         </ng-container>
@@ -176,10 +191,13 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="steamPrice" name="steamPrice" (change)="saveChanges()">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="steamPrice" name="steamPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['steamUnit'].value | unitsDisplay"></span>
                     </span>
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['steamPrice'].touched && form.controls['steamPrice'].getError('min')">
+                    Value can not be negative.
                 </div>
             </div>
         </ng-container>
@@ -206,11 +224,14 @@
             </div>
             <div class="col-4">
                 <div class="input-group">
-                    <input class="form-control" type="number" formControlName="compressedAirPrice"
+                    <input class="form-control" type="number" step="any" min="0" formControlName="compressedAirPrice"
                         name="compressedAirPrice" (change)="saveChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['compressedAirUnit'].value | unitsDisplay"></span>
                     </span>
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['compressedAirPrice'].touched && form.controls['compressedAirPrice'].getError('min')">
+                    Value can not be negative.
                 </div>
             </div>
         </ng-container>
