@@ -22,7 +22,7 @@ export const dbConfig: DBConfig = {
     ]
   },
   {
-    store: 'project',
+    store: 'energyOpportunity',
     storeConfig: { keyPath: 'id', autoIncrement: true },
     storeSchema: [
     ]
@@ -47,6 +47,12 @@ export const dbConfig: DBConfig = {
   },
   {
     store: 'onSiteVisit',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+    ]
+  },
+  {
+    store: 'keyPerformanceIndicator',
     storeConfig: { keyPath: 'id', autoIncrement: true },
     storeSchema: [
     ]

@@ -30,9 +30,17 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi'"
+                <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi-select'"
                     [routerLinkActive]="['active']">
-                    KPI's
+                    Select KPI's
+                </a>
+            </div>
+
+            <div class="nav-item" *ngFor="let kpi of (company.guid | companyKpiList: keyPerformanceIndicators)">
+                <a class="nav-link third-nav"
+                    [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-kpi-detail/' + kpi.guid"
+                    [routerLinkActive]="['active']">
+                    <span [innerHTML]="kpi.htmlLabel"></span>
                 </a>
             </div>
             <div class="nav-item ms-2">
@@ -71,6 +79,12 @@
             <div class="ps-1 pe-1 w-100" [hidden]="!sidebarOpen">
                 <div class="p-2 w-100 text-bg-dark">
                     Data Collection
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" [routerLink]="'data-collection/'+onSiteVisit.guid+'/manage-assessments/'"
+                        [routerLinkActive]="['active']">
+                        Manage Assessments
+                    </a>
                 </div>
                 <ng-container *ngFor="let assessmentGuid of onSiteVisit.assessmentIds">
                     <div class="nav-item">

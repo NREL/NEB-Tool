@@ -10,7 +10,7 @@
     </div>
     <div class="card-body">
 
-        <ng-template [ngIf]="(company.guid | assessmentsList:assessments:true).length > 0" [ngIfElse]="noProjectBlock">
+        <ng-template [ngIf]="(company.guid | assessmentsList:assessments:true).length > 0" [ngIfElse]="noAssessmentsBlock">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -46,7 +46,7 @@
             </table>
         </ng-template>
 
-        <ng-template #noProjectBlock>
+        <ng-template #noAssessmentsBlock>
             <div class="alert alert-info">
                 No assessments found. Please click "Add New" to get started.
             </div>

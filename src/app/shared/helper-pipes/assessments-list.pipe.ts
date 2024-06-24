@@ -8,9 +8,9 @@ export class AssessmentsListPipe implements PipeTransform {
 
   transform(facilityOrCompanyGUID: string, allAssessments: Array<IdbAssessment>, isCompany?: boolean): Array<IdbAssessment> {
     if (!isCompany) {
-      return allAssessments.filter(project => { return project.facilityId == facilityOrCompanyGUID });
+      return allAssessments.filter(assessment => { return assessment.facilityId == facilityOrCompanyGUID });
     } else {
-      return allAssessments.filter(project => { return project.companyId == facilityOrCompanyGUID });
+      return allAssessments.filter(assessment => { return assessment.companyId == facilityOrCompanyGUID });
     }
   }
 

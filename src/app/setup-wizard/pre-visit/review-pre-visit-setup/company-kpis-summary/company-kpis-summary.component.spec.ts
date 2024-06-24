@@ -8,6 +8,8 @@ import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { BehaviorSubject } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
+import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 
 describe('CompanyKpisSummaryComponent', () => {
   let component: CompanyKpisSummaryComponent;
@@ -20,14 +22,18 @@ describe('CompanyKpisSummaryComponent', () => {
   };
   let contactIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
-  }
+  };
+  let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {
+    keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ FontAwesomeModule, HelperPipesModule],
       declarations: [CompanyKpisSummaryComponent],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: ContactIdbService, useValue: contactIdbService }
+        { provide: ContactIdbService, useValue: contactIdbService },
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService }
       ]
     })
     .compileComponents();

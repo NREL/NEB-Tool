@@ -7,6 +7,10 @@ import { IdbAssessment } from 'src/app/models/assessment';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
+import { IdbCompany } from 'src/app/models/company';
+import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 
 @Component({
   selector: 'app-setup-wizard-sidebar',
@@ -32,9 +36,16 @@ export class SetupWizardSidebarComponent {
 
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
+
+  companySub: Subscription;
+  company: IdbCompany;
+  keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
+  keyPerformanceIndicatorsSub: Subscription;
   constructor(private router: Router, private setupWizardService: SetupWizardService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private assessmentIdbService: AssessmentIdbService
+    private assessmentIdbService: AssessmentIdbService,
+    private companyIdbService: CompanyIdbService,
+    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService
   ) {
 
   }
@@ -62,6 +73,14 @@ export class SetupWizardSidebarComponent {
     this.onSiteVisitSub = this.onSiteVisitIdbService.selectedVisit.subscribe(val => {
       this.onSiteVisit = val;
     });
+
+    this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+      this.company = _company;
+    });
+
+    this.keyPerformanceIndicatorsSub = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.subscribe(_keyPerformanceIndicators => {
+      this.keyPerformanceIndicators = _keyPerformanceIndicators;
+    });
   }
 
   ngOnDestroy() {
@@ -69,6 +88,8 @@ export class SetupWizardSidebarComponent {
     this.assessmentsSub.unsubscribe();
     this.sidebarOpenSub.unsubscribe();
     this.onSiteVisitSub.unsubscribe();
+    this.companySub.unsubscribe();
+    this.keyPerformanceIndicatorsSub.unsubscribe();
   }
 
   setDisplaySidebar() {

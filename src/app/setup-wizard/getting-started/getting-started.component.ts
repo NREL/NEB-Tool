@@ -104,9 +104,13 @@ export class GettingStartedComponent {
       this.router.navigateByUrl('/setup-wizard/pre-visit/' + this.selectedOnSiteVisitGuid);
     } else if (context == 'onSite') {
       let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.getByGuid(this.selectedOnSiteVisitGuid);
-      this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/assessment/' + onSiteVisit.assessmentIds[0]);
+      if (onSiteVisit.assessmentIds.length > 0) {
+        this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/assessment/' + onSiteVisit.assessmentIds[0]);
+      } else {
+        this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/manage-assessments');
+      }
     } else if (context == 'postVisit') {
-      // this.router.navigateByUrl('/setup-wizard/project-setup');
+      
     }
   }
 }

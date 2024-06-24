@@ -24,7 +24,7 @@ export class FacilitySetupComponent {
   faLocationDot: IconDefinition = faLocationDot;
   faIndustry: IconDefinition = faIndustry;
 
-
+  facility: IdbFacility;
   constructor(private facilityIdbService: FacilityIdbService, private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService
   ) {
@@ -44,7 +44,7 @@ export class FacilitySetupComponent {
 
   goBack() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-    this.router.navigateByUrl('/setup-wizard/pre-visit/' + onSiteVisit.guid + 'company-contacts');
+    this.router.navigateByUrl('/setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-select');
   }
 
   goToProcessEquipment() {

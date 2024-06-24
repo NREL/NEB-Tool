@@ -22,6 +22,8 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { IdbContact } from 'src/app/models/contact';
 import { IdbAssessment } from 'src/app/models/assessment';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
+import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 
 describe('ReviewPreVisitSetupComponent', () => {
   let component: ReviewPreVisitSetupComponent;
@@ -30,7 +32,7 @@ describe('ReviewPreVisitSetupComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlighNebGuid: new BehaviorSubject<string>(undefined)
+    highlightNebGuid: new BehaviorSubject<string>(undefined)
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
@@ -50,6 +52,9 @@ describe('ReviewPreVisitSetupComponent', () => {
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
+  let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {
+    keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, HelperPipesModule, TableEntriesModule],
@@ -60,7 +65,8 @@ describe('ReviewPreVisitSetupComponent', () => {
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
-        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService }
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService }
       ]
     })
       .compileComponents();

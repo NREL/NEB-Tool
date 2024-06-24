@@ -6,17 +6,19 @@
                     <fa-icon [icon]="faCircleCheck"></fa-icon> Review Pre-Visit
                 </h5>
                 <hr>
-                <app-company-details-summary></app-company-details-summary>
-                <hr>
-                <app-team-details-summary></app-team-details-summary>
-                <hr>
-                <app-company-kpis-summary></app-company-kpis-summary>
-                <hr class="solid-hr">
-                <app-facility-details-summary></app-facility-details-summary>
-                <hr>
-                <app-process-equipment-summary></app-process-equipment-summary>
-                <hr class="solid-hr">
-                <app-pre-assessment-summary></app-pre-assessment-summary>
+                <ng-container *ngIf="company">
+                    <app-company-details-summary></app-company-details-summary>
+                    <hr>
+                    <app-team-details-summary></app-team-details-summary>
+                    <hr>
+                    <app-company-kpis-summary></app-company-kpis-summary>
+                    <hr class="solid-hr">
+                    <app-facility-details-summary></app-facility-details-summary>
+                    <hr>
+                    <app-process-equipment-summary></app-process-equipment-summary>
+                    <hr class="solid-hr">
+                    <app-pre-assessment-summary></app-pre-assessment-summary>
+                </ng-container>
             </div>
         </div>
     </div>

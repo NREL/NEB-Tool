@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { UserIdbService } from './indexed-db/user-idb.service';
 import { CompanyIdbService } from './indexed-db/company-idb.service';
 import { FacilityIdbService } from './indexed-db/facility-idb.service';
-import { ProjectIdbService } from './indexed-db/project-idb.service';
 import { Router } from '@angular/router';
 import { IdbUser } from './models/user';
 import { SharedDataService } from './shared/shared-services/shared-data.service';
@@ -10,6 +9,8 @@ import { AssessmentIdbService } from './indexed-db/assessment-idb.service';
 import { ContactIdbService } from './indexed-db/contact-idb.service';
 import { NonEnergyBenefitsIdbService } from './indexed-db/non-energy-benefits-idb.service';
 import { OnSiteVisitIdbService } from './indexed-db/on-site-visit-idb.service';
+import { KeyPerformanceIndicatorsIdbService } from './indexed-db/key-performance-indicators-idb.service';
+import { EnergyOpportunityIdbService } from './indexed-db/energy-opportunity-idb.service';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +21,14 @@ export class AppComponent {
 
   dataInitialized: boolean = false;
   constructor(private userIdbService: UserIdbService, private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService, private projectIdbService: ProjectIdbService,
+    private facilityIdbService: FacilityIdbService, private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private router: Router,
     private sharedDataService: SharedDataService,
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
-    private onSiteVisitIdbService: OnSiteVisitIdbService) {
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private keyPerformanceIndicatorsIdbService: KeyPerformanceIndicatorsIdbService) {
   }
 
   async ngOnInit() {
@@ -47,15 +49,18 @@ export class AppComponent {
     //companies
     await this.contactIdbService.setContacts();
     console.log('contacts init..');
+    //key performance indicators
+    await this.keyPerformanceIndicatorsIdbService.setKeyPerformanceIndicators();
+    console.log('key performance indicators init..');
     //facilities
     await this.facilityIdbService.setFacilities();
     console.log('facilities init..');
     //assessments 
     await this.assessmentIdbService.setAssessments();
     console.log('assessments init..');
-    //projects 
-    await this.projectIdbService.setProjects();
-    console.log('projects init..');
+    //energy opportunities 
+    await this.energyOpportunityIdbService.setEnergyOpportunities();
+    console.log('energy opportunities init..');
     //non energy benefits 
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
     console.log('NEBs init..');

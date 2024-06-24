@@ -7,8 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { ProjectIdbService } from 'src/app/indexed-db/project-idb.service';
-import { IdbProject } from 'src/app/models/project';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
@@ -23,9 +21,6 @@ describe('AssessmentSettingsComponent', () => {
   };
   let companyIdbService: Partial<CompanyIdbService> = {};
   let facilityIdbService: Partial<FacilityIdbService> = {};
-  let projectsIdbService: Partial<ProjectIdbService> = {
-    projects: new BehaviorSubject<Array<IdbProject>>([])
-  };
   let contactIdbService: Partial<ContactIdbService> = {};
   let dbChangesService: Partial<DbChangesService> = {};
   beforeEach(async () => {
@@ -36,7 +31,6 @@ describe('AssessmentSettingsComponent', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: ProjectIdbService, useValue: projectsIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: DbChangesService, useValue: dbChangesService },
       ]
