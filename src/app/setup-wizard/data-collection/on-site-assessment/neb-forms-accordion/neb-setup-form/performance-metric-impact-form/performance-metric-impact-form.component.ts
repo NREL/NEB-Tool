@@ -24,7 +24,7 @@ export class PerformanceMetricImpactFormComponent {
   faPlus: IconDefinition = faPlus;
 
   keyPerformanceMetric: KeyPerformanceMetric;
-  disabledBaseline: boolean = false;
+  disabledBaseline: boolean = true;
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private router: Router,

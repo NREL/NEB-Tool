@@ -10,6 +10,7 @@ import { SelectedKpiOptionPipe } from './selected-kpi-option.pipe';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 
 describe('AddKpiSearchComponent', () => {
   let component: AddKpiSearchComponent;
@@ -20,6 +21,7 @@ describe('AddKpiSearchComponent', () => {
   let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {
     keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])
   };
+  let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -27,7 +29,8 @@ describe('AddKpiSearchComponent', () => {
       declarations: [AddKpiSearchComponent, SelectedKpiOptionPipe],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService }
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService },
+        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService }
       ]
     })
       .compileComponents();

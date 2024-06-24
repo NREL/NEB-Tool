@@ -11,6 +11,7 @@ import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service'
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { NebFormsAccordionComponent } from '../neb-forms-accordion/neb-forms-accordion.component';
 
 describe('AssessmentNebsFormComponent', () => {
   let component: AssessmentNebsFormComponent;
@@ -19,7 +20,6 @@ describe('AssessmentNebsFormComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlightNebGuid: new BehaviorSubject<string>(undefined),
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
@@ -31,7 +31,7 @@ describe('AssessmentNebsFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule],
-      declarations: [AssessmentNebsFormComponent, NebSetupFormComponent],
+      declarations: [AssessmentNebsFormComponent, NebSetupFormComponent, NebFormsAccordionComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },

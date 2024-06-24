@@ -11,6 +11,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { IdbEnergyOpportunity, getNewIdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
+import { NebFormsAccordionComponent } from '../../neb-forms-accordion/neb-forms-accordion.component';
 
 describe('EnergyOpportunitySetupFormComponent', () => {
   let component: EnergyOpportunitySetupFormComponent;
@@ -32,7 +33,7 @@ describe('EnergyOpportunitySetupFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule, FormsModule],
-      declarations: [EnergyOpportunitySetupFormComponent],
+      declarations: [EnergyOpportunitySetupFormComponent, NebFormsAccordionComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
