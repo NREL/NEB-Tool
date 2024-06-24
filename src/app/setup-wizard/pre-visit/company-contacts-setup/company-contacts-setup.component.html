@@ -8,7 +8,7 @@
                 <hr>
                 <div class="d-flex w-100 justify-content-end pb-2">
                     <div class="p-0">
-                        <button class="btn btn-outline-success" (click)="addContact()">
+                        <button class="btn btn-outline-success btn-sm" (click)="addContact()">
                             <fa-icon [icon]="faPlus"></fa-icon>
                             Add Team Member
                         </button>
@@ -33,7 +33,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <form>
-                                                <div class="row mb-1">
+                                                <div class="row">
                                                     <label class="col-sm-5 col-form-label" for="name">Name</label>
                                                     <div class="col-sm-7">
                                                         <input name="name" type="text" class="form-control"
@@ -41,7 +41,7 @@
                                                             (input)="saveChanges(contact)">
                                                     </div>
                                                 </div>
-                                                <div class="row mb-1">
+                                                <div class="row">
                                                     <label class="col-sm-5 col-form-label" for="phone">Phone
                                                         Number</label>
                                                     <div class="col-sm-7">
@@ -53,7 +53,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-1">
+                                                <div class="row">
                                                     <label class="col-sm-5 col-form-label" for="email">Email</label>
                                                     <div class="col-sm-7">
                                                         <div class="input-group">
@@ -64,7 +64,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-1">
+                                                <div class="row">
                                                     <label class="col-sm-5 col-form-label" for="role">Role</label>
                                                     <div class="col-sm-7">
                                                         <div class="input-group">
@@ -75,7 +75,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-1">
+                                                <div class="row">
                                                     <label class="col-sm-5 col-form-label" for="team">Team</label>
                                                     <div class="col-sm-7">
                                                         <div class="input-group">
@@ -86,7 +86,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-1">
+                                                <div class="row">
                                                     <label class="col-sm-5 col-form-label" for="focusArea">Focus
                                                         Area</label>
                                                     <div class="col-sm-7">
@@ -98,7 +98,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-1">
+                                                <div class="row">
                                                     <label class="col-sm-5 col-form-label" for="notes">Notes</label>
                                                     <div class="col-sm-7">
                                                         <textarea class="form-control" name="notes"
@@ -134,11 +134,11 @@
 </div>
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-between">
-        <button class="btn btn-dark" (click)="goBack()">
+        <button class="btn btn-dark btn-sm" (click)="goBack()">
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button class="btn btn-dark" (click)="goToKPIs()">
+        <button class="btn btn-dark btn-sm" (click)="goToKPIs()">
             Company KPI's
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>

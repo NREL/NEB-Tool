@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
+import { ContactContext, IdbContact } from '../models/contact';
 
 @Injectable({
   providedIn: 'root'
@@ -8,16 +9,23 @@ import { LocalStorageService } from 'ngx-webstorage';
 export class SetupWizardService {
 
   setupContext: BehaviorSubject<SetupWizardContext>;
-  highlightOpportunityGuid: BehaviorSubject<string>;
-  highlightNebGuid: BehaviorSubject<string>;
   sidebarOpen: BehaviorSubject<boolean>;
+  displayAddNebsModal: BehaviorSubject<{
+    assessmentId: string,
+    energyOpportunityId: string
+  }>;
+
+  displayContactModal: BehaviorSubject<{
+    context: ContactContext,
+    viewContact: IdbContact,
+    contextGuid: string
+  }>;
   constructor(
     private localStorageService: LocalStorageService
   ) {
-    this.highlightNebGuid = new BehaviorSubject<string>(undefined);
-    this.highlightOpportunityGuid = new BehaviorSubject<string>(undefined);
     this.sidebarOpen = new BehaviorSubject<boolean>(true);
-
+    this.displayAddNebsModal = new BehaviorSubject<{ assessmentId: string, energyOpportunityId: string }>(undefined);
+    this.displayContactModal = new BehaviorSubject<{ context: ContactContext, viewContact: IdbContact, contextGuid: string }>(undefined);
     let setupContext: SetupWizardContext = this.localStorageService.retrieve("setupContext");
     if (setupContext) {
       this.setupContext = new BehaviorSubject<SetupWizardContext>(setupContext);

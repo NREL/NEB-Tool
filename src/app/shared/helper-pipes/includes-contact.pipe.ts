@@ -18,6 +18,8 @@ export class IncludesContactPipe implements PipeTransform {
       return true;
     } else if (context == 'KPI' && contact.kpiIds.includes(guid)) {
       return true;
+    } else if (context == 'nonEnergyBenefit' && contact.nonEnergyBenefitIds.includes(guid)) {
+      return true;
     }
     return null;
   }

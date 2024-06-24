@@ -94,6 +94,27 @@
                             {{assessmentGuid | assessmentNameDisplay: assessments}}
                         </a>
                     </div>
+                    <div class="nav-item">
+                        <a class="nav-link secondary-nav"
+                            [routerLink]="'data-collection/'+onSiteVisit.guid+'/assessment/'+assessmentGuid+'/details'"
+                            [routerLinkActive]="['active']">
+                            Details
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link secondary-nav"
+                            [routerLink]="'data-collection/'+onSiteVisit.guid+'/assessment/'+assessmentGuid+'/energy-opportunities'"
+                            [routerLinkActive]="['active']">
+                            Energy Opportunities
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link secondary-nav"
+                            [routerLink]="'data-collection/'+onSiteVisit.guid+'/assessment/'+assessmentGuid+'/nebs'"
+                            [routerLinkActive]="['active']">
+                            NEBs
+                        </a>
+                    </div>
                 </ng-container>
                 <div class="nav-item">
                     <a class="nav-link" [routerLink]="'data-collection/'+onSiteVisit.guid+'/review-data-collection'"

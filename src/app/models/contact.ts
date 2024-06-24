@@ -11,6 +11,7 @@ export interface IdbContact extends IdbEntry {
     facilityIds: Array<string>,
     assessmentIds: Array<string>,
     processEquipmentIds: Array<string>,
+    nonEnergyBenefitIds: Array<string>,
     kpiIds: Array<string>,
     userId: string,
     focusArea: string,
@@ -27,6 +28,7 @@ export function getNewIdbContact(userId: string, companyId: string): IdbContact 
         facilityIds: [],
         assessmentIds: [],
         processEquipmentIds: [],
+        nonEnergyBenefitIds: [],
         phone: undefined,
         email: undefined,
         role: undefined,
@@ -37,4 +39,4 @@ export function getNewIdbContact(userId: string, companyId: string): IdbContact 
     }
 }
 
-export type ContactContext = 'processEquipment' | 'assessment' | 'facility' | 'company' | 'KPI';
+export type ContactContext = 'processEquipment' | 'assessment' | 'facility' | 'company' | 'KPI' | 'nonEnergyBenefit';

@@ -8,7 +8,7 @@ import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service'
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { BehaviorSubject } from 'rxjs';
-import { IdbContact } from 'src/app/models/contact';
+import { ContactContext, IdbContact } from 'src/app/models/contact';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { AssessmentDetailsFormComponent } from './assessment-details-form/assessment-details-form.component';
@@ -21,6 +21,7 @@ import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { AssessmentEnergyOpportunitiesFormComponent } from './assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
+import { SetupWizardContext, SetupWizardService } from '../../setup-wizard.service';
 
 describe('OnSiteAssessmentComponent', () => {
   let component: OnSiteAssessmentComponent;
@@ -43,6 +44,20 @@ describe('OnSiteAssessmentComponent', () => {
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
   };
+  let setupWizardService: Partial<SetupWizardService> = {
+    setupContext: new BehaviorSubject<SetupWizardContext>('onSite'),
+    sidebarOpen: new BehaviorSubject<boolean>(false),
+    displayAddNebsModal: new BehaviorSubject<{
+      assessmentId: string,
+      energyOpportunityId: string
+    }>(undefined),
+
+    displayContactModal: new BehaviorSubject<{
+      context: ContactContext,
+      viewContact: IdbContact,
+      contextGuid: string
+    }>(undefined)
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule, HelperPipesModule],
@@ -54,6 +69,7 @@ describe('OnSiteAssessmentComponent', () => {
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
+        { provide: SetupWizardService, useValue: setupWizardService },
       ]
     })
       .compileComponents();

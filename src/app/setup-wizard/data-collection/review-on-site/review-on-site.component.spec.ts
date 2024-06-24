@@ -21,7 +21,6 @@ describe('ReviewOnSiteComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlightNebGuid: new BehaviorSubject<string>(undefined),
   };
 
   let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {

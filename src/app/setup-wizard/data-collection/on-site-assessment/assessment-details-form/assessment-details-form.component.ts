@@ -5,6 +5,10 @@ import { Subscription } from 'rxjs';
 import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { IdbContact } from 'src/app/models/contact';
+import { IconDefinition, faContactBook, faPeopleGroup, faUser } from '@fortawesome/free-solid-svg-icons';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-assessment-details-form',
@@ -13,12 +17,21 @@ import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service'
 })
 export class AssessmentDetailsFormComponent {
 
+  faPeopleGroup: IconDefinition = faPeopleGroup;
+  faUser: IconDefinition = faUser;
+  faContactBook: IconDefinition = faContactBook;
+
   assessment: IdbAssessment;
   assessmentSub: Subscription;
   processEquipmentOptions: Array<ProcessEquipment>;
   isFormChange: boolean = false;
+
+  contacts: Array<IdbContact>;
+  contactsSub: Subscription;
   constructor(private facilityIdbService: FacilityIdbService,
-    private assessmentIdbService: AssessmentIdbService
+    private assessmentIdbService: AssessmentIdbService,
+    private contactIdbService: ContactIdbService,
+    private setupWizardService: SetupWizardService
   ) { }
 
   ngOnInit() {
@@ -32,14 +45,24 @@ export class AssessmentDetailsFormComponent {
         this.isFormChange = false;
       }
     });
+
+    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
+      this.contacts = _contacts;
+    });
   }
 
   ngOnDestroy() {
+    this.contactsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
   }
 
   async saveChanges() {
     this.isFormChange = true;
     await this.assessmentIdbService.asyncUpdate(this.assessment);
+  }
+
+  openContactModal(viewContact: IdbContact) {
+    this.setupWizardService.displayContactModal.next({ context: 'assessment', viewContact: viewContact, contextGuid: this.assessment.guid });
+
   }
 }

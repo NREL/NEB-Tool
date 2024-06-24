@@ -16,6 +16,7 @@ import { KeyPerformanceIndicatorsIdbService } from './key-performance-indicators
 import { IdbKeyPerformanceIndicator } from '../models/keyPerformanceIndicator';
 import { EnergyOpportunityIdbService } from './energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from '../models/energyOpportunity';
+import { KeyPerformanceMetricValue } from '../shared/constants/keyPerformanceMetrics';
 
 @Injectable({
   providedIn: 'root'
@@ -129,17 +130,6 @@ export class DbChangesService {
   }
 
   async deleteNonEnergyBenefit(nonEnergyBenefit: IdbNonEnergyBenefit) {
-    let energyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunityIdbService.energyOpportunities.getValue();
-    for (let i = 0; i < energyOpportunities.length; i++) {
-      let energyOpportunity: IdbEnergyOpportunity = energyOpportunities[i];
-      if (energyOpportunity.nonEnergyBenefitIds.includes(nonEnergyBenefit.guid)) {
-        energyOpportunity.nonEnergyBenefitIds = energyOpportunity.nonEnergyBenefitIds.filter(nebId => {
-          return nebId != nonEnergyBenefit.guid;
-        });
-        await firstValueFrom(this.energyOpportunityIdbService.updateWithObservable(energyOpportunity));
-      }
-    }
-    await this.energyOpportunityIdbService.setEnergyOpportunities();
     await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
   }
@@ -148,11 +138,8 @@ export class DbChangesService {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
     for (let i = 0; i < nonEnergyBenefits.length; i++) {
       let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[i];
-      if (nonEnergyBenefit.energyOpportunityIds.includes(energyOpportunity.guid)) {
-        nonEnergyBenefit.energyOpportunityIds = nonEnergyBenefit.energyOpportunityIds.filter(oppId => {
-          return oppId != energyOpportunity.guid;
-        });
-        await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
+      if (nonEnergyBenefit.energyOpportunityId == energyOpportunity.guid) {
+        await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
       }
     }
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
@@ -190,6 +177,17 @@ export class DbChangesService {
 
   async deleteNonEnergyBenefits(nonEnergyBenefits: Array<IdbNonEnergyBenefit>) {
     for (let i = 0; i < nonEnergyBenefits.length; i++) {
+      let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[i];
+      //update contacts
+      let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
+      let nebContacts: Array<IdbContact> = contacts.filter(contact => { return contact.nonEnergyBenefitIds.includes(nonEnergyBenefit.guid) });
+      if (nebContacts.length > 0) {
+        for (let i = 0; i < nebContacts.length; i++) {
+          nebContacts[i].nonEnergyBenefitIds = nebContacts[i].nonEnergyBenefitIds.filter(nebId => { return nebId != nonEnergyBenefit.guid });
+          await firstValueFrom(this.contactIdbService.updateWithObservable(nebContacts[i]));
+        }
+        await this.contactIdbService.setContacts();
+      }
       await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefits[i].id));
     }
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
@@ -208,11 +206,27 @@ export class DbChangesService {
       let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
       let assessmentContacts: Array<IdbContact> = contacts.filter(contact => { return contact.kpiIds.includes(keyPerformanceIndicators[i].guid) });
       if (assessmentContacts.length > 0) {
-        for (let i = 0; i < assessmentContacts.length; i++) {
-          assessmentContacts[i].kpiIds = assessmentContacts[i].kpiIds.filter(kpiId => { return kpiId != keyPerformanceIndicators[i].guid });
-          await firstValueFrom(this.contactIdbService.updateWithObservable(assessmentContacts[i]));
+        for (let a = 0; a < assessmentContacts.length; a++) {
+          assessmentContacts[a].kpiIds = assessmentContacts[a].kpiIds.filter(kpiId => { return kpiId != keyPerformanceIndicators[i].guid });
+          await firstValueFrom(this.contactIdbService.updateWithObservable(assessmentContacts[a]));
         }
         await this.contactIdbService.setContacts();
+      }
+      //update NEBs
+      let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.getCompanyNonEnergyBenefits(keyPerformanceIndicators[i].companyId);
+      if (nonEnergyBenefits.length > 0) {
+        for (let b = 0; b < nonEnergyBenefits.length; b++) {
+          let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[b];
+          let kpiMetricValues: Array<KeyPerformanceMetricValue> = keyPerformanceIndicators[i].performanceMetrics.flatMap(metric => {
+            return metric.value;
+          });
+          //remove metrics from this kpi
+          nonEnergyBenefit.performanceMetricImpacts = nonEnergyBenefit.performanceMetricImpacts.filter(pmi => {
+            return !kpiMetricValues.includes(pmi.kpmValue);
+          });
+          await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
+        }
+        await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
       }
       await firstValueFrom(this.keyPerformanceIndicatorIdbService.deleteWithObservable(keyPerformanceIndicators[i].id));
     }

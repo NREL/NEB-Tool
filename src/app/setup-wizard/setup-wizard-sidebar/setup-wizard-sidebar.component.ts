@@ -60,6 +60,7 @@ export class SetupWizardSidebarComponent {
 
     this.setupContextSub = this.setupWizardService.setupContext.subscribe(val => {
       this.setupContext = val;
+      console.log(this.setupContext);
     });
 
     this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(val => {

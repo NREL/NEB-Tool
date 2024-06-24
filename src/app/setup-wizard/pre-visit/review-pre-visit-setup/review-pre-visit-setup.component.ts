@@ -3,9 +3,6 @@ import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faCircleCheck, faFilePdf, faSave } from '@fortawesome/free-solid-svg-icons';
 import { IdbCompany } from 'src/app/models/company';
 import { SetupWizardContext, SetupWizardService } from '../../setup-wizard.service';
-import { IdbFacility } from 'src/app/models/facility';
-import { IdbAssessment } from 'src/app/models/assessment';
-import { IdbContact } from 'src/app/models/contact';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
@@ -46,7 +43,11 @@ export class ReviewPreVisitSetupComponent {
 
   continue() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-    this.router.navigateByUrl('setup-wizard/data-collection/' + onSiteVisit.guid + '/assessment/' + onSiteVisit.assessmentIds[0]);
+    if(onSiteVisit.assessmentIds.length > 0){
+      this.router.navigateByUrl('setup-wizard/data-collection/' + onSiteVisit.guid + '/assessment/' + onSiteVisit.assessmentIds[0]);
+    }else{
+      this.router.navigateByUrl('setup-wizard/data-collection/' + onSiteVisit.guid + '/manage-assessments');
+    }
   }
 
   goToFacility() {
@@ -55,7 +56,11 @@ export class ReviewPreVisitSetupComponent {
   }
 
   openConfirmModal() {
-    this.displayConfirmModal = true;
+    if(this.setupContext == 'onSite'){
+      this.continue();
+    }else{
+      this.displayConfirmModal = true;
+    }
   }
 
   closeConfirmModal() {
