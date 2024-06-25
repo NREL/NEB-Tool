@@ -27,7 +27,8 @@ import { AssessmentSavingsTableComponent } from './assessment-report/assessment-
   ],
   exports: [
     AssessmentReportComponent,
-    RollupReportComponent
+    RollupReportComponent,
+    AssessmentSavingsTableComponent
   ]
 })
 export class ReportsModule { }

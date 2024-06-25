@@ -47,6 +47,7 @@ import { DataFollowUpComponent } from './data-evaluation/data-follow-up/data-fol
 import { VisitReportComponent } from './data-evaluation/visit-report/visit-report.component';
 import { ReportsModule } from '../shared/reports/reports.module';
 import { AssessmentEvaluationComponent } from './data-evaluation/assessment-evaluation/assessment-evaluation.component';
+import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
 
 
 
@@ -90,7 +91,8 @@ import { AssessmentEvaluationComponent } from './data-evaluation/assessment-eval
     DataEvaluationComponent,
     DataFollowUpComponent,
     VisitReportComponent,
-    AssessmentEvaluationComponent
+    AssessmentEvaluationComponent,
+    OnSiteAssessmentResultsComponent
   ],
   imports: [
     CommonModule,
