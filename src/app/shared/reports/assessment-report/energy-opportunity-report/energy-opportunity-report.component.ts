@@ -4,7 +4,7 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
-import { NebReport, getNebReport } from 'src/app/models/reports';
+import { EnergyOpportunityReport, NebReport, getNebReport } from 'src/app/models/reports';
 import { KeyPerformanceMetric } from 'src/app/shared/constants/keyPerformanceMetrics';
 
 @Component({
@@ -14,11 +14,11 @@ import { KeyPerformanceMetric } from 'src/app/shared/constants/keyPerformanceMet
 })
 export class EnergyOpportunityReportComponent {
   @Input({ required: true })
-  energyOpportunity: IdbEnergyOpportunity;
+  energyOpportunityReport: EnergyOpportunityReport;
 
   faFileLines: IconDefinition = faFileLines;
 
-  nebReports: Array<NebReport>
+  // nebReports: Array<NebReport>
   constructor(private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService
   ) {
@@ -26,19 +26,19 @@ export class EnergyOpportunityReportComponent {
   }
 
   ngOnInit() {
-    this.setNebReports();
+    // this.setNebReports();
   }
 
-  setNebReports(){
-    this.nebReports = new Array();
-    let allNonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitIdbService.nonEnergyBenefits.getValue();
-    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = allNonEnergyBenefits.filter(neb => {
-      return neb.energyOpportunityId == this.energyOpportunity.guid
-    });
-    let companyPerformanceMetrics: Array<KeyPerformanceMetric> = this.keyPerformanceIndicatorIdbService.getCompanyKeyPerformanceMetrics(this.energyOpportunity.companyId);
-    nonEnergyBenefits.forEach(neb => {
-      let nebReport: NebReport = getNebReport(neb, companyPerformanceMetrics);
-      this.nebReports.push(nebReport);
-    });
-  }
+  // setNebReports(){
+  //   this.nebReports = new Array();
+  //   let allNonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitIdbService.nonEnergyBenefits.getValue();
+  //   let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = allNonEnergyBenefits.filter(neb => {
+  //     return neb.energyOpportunityId == this.energyOpportunity.guid
+  //   });
+  //   let companyPerformanceMetrics: Array<KeyPerformanceMetric> = this.keyPerformanceIndicatorIdbService.getCompanyKeyPerformanceMetrics(this.energyOpportunity.companyId);
+  //   nonEnergyBenefits.forEach(neb => {
+  //     let nebReport: NebReport = getNebReport(neb, companyPerformanceMetrics);
+  //     this.nebReports.push(nebReport);
+  //   });
+  // }
 }

@@ -1,10 +1,9 @@
-
 <table class="table table-bordered">
     <thead>
         <tr>
             <th colspan="2">
                 <fa-icon class="pe-2" [icon]="faFileLines"></fa-icon>
-                {{energyOpportunity.name}}
+                {{energyOpportunityReport.energyOpportunity.name}}
             </th>
         </tr>
     </thead>
@@ -14,31 +13,32 @@
                 Implementation Cost
             </td>
             <td>
-                <app-single-cell-item [value]="energyOpportunity.implementationCost"
+                <app-single-cell-item [value]="energyOpportunityReport.energyOpportunity.implementationCost"
                     [isCurrency]="true"></app-single-cell-item>
             </td>
         </tr>
         <tr>
             <td>
-               Annual Energy Savings
+                Annual Energy Savings
             </td>
             <td>
-                <app-single-cell-item [value]="energyOpportunity.energySavings" [isCurrency]="false"
-                    [units]="'MMBtu'" [per]="'yr'"></app-single-cell-item>
+                <app-single-cell-item [value]="energyOpportunityReport.energyOpportunity.energySavings"
+                    [isCurrency]="false" [units]="'MMBtu'" [per]="'yr'"></app-single-cell-item>
             </td>
         </tr>
         <tr>
             <td>
-               Annual Cost Savings
+                Annual Cost Savings
             </td>
             <td>
-                <app-single-cell-item [value]="energyOpportunity.costSavings" [isCurrency]="true"
-                    [per]="'yr'"></app-single-cell-item>
+                <app-single-cell-item [value]="energyOpportunityReport.energyOpportunity.costSavings"
+                    [isCurrency]="true" [per]="'yr'"></app-single-cell-item>
             </td>
         </tr>
     </tbody>
 </table>
 
 <div class="ps-3">
-    <app-non-energy-benefit-report *ngFor="let nebReport of nebReports" [nebReport]="nebReport"></app-non-energy-benefit-report>
+    <app-non-energy-benefit-report *ngFor="let nebReport of energyOpportunityReport.nebReports"
+        [nebReport]="nebReport"></app-non-energy-benefit-report>
 </div>

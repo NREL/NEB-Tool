@@ -9,7 +9,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>
+                <td class="w-50">
                     Company
                 </td>
                 <td>
@@ -33,30 +33,94 @@
                         [value]="assessment.equipmentId | processEquipmentDisplay: facility.processEquipment"></app-single-cell-item>
                 </td>
             </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-bordered savings-table">
+        <thead>
             <tr>
-                <td>
-                    Baseline Energy Use
+                <th>
+
+                </th>
+                <th>
+                    Cost (&dollar;/yr)
+                </th>
+                <th>
+                    Energy (MMBtu/yr)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="w-50">
+                    Baseline
                 </td>
-                <td>
-                    {{assessment.energyUse | number}} MMBtu/yr
+                <td class="text-right">
+                    {{assessment.cost | currency}}
+                </td>
+                <td class="text-right">
+                    {{assessment.energyUse | number}}
+                </td>
+            </tr>
+            <ng-container *ngFor="let energyOpportunityReport of assessmentReport.energyOpportunityReports">
+                <tr>
+                    <td colspan="3" class="ps-2">
+                        {{energyOpportunityReport.energyOpportunity.name}}
+                    </td>
+                </tr>
+                <tr *ngFor="let nebReport of energyOpportunityReport.nebReports">
+                    <td class="ps-3">
+                        {{nebReport.nebName}}
+                    </td>
+                    <td class="text-right">
+                        {{nebReport.totalCostSavings | currency}} 
+                    </td>
+                    <td class="text-right">
+                        &mdash;
+                    </td>
+                </tr>               
+                <tr>
+                    <td class="ps-2">
+                        {{energyOpportunityReport.energyOpportunity.name}} Other Savings
+                    </td>
+                    <td class="text-right">
+                        {{energyOpportunityReport.energyOpportunity.costSavings | currency}}
+                    </td>
+                    <td class="text-right">
+                        {{energyOpportunityReport.energyOpportunity.energySavings | number}}
+                    </td>
+                </tr>
+            </ng-container>
+            <tr>
+                <td class="w-50">
+                    Total Savings
+                </td>
+                <td class="text-right w-25">
+                    {{assessmentReport.totalCostSavings | currency}}
+                </td>
+                <td class="text-right">
+                    {{assessmentReport.totalEnergySavings | number}}
                 </td>
             </tr>
             <tr>
-                <td>
-                    Baseline Energy Use
+                <td class="w-50">
+                    Adjusted Results
                 </td>
-                <td>
-                    {{assessment.cost | currency}} /yr
+                <td class="text-right">
+                    {{assessmentReport.adjustedCost | currency}}
+                </td>
+                <td class="text-right">
+                    {{assessmentReport.adjustedEnergyUse | number}}
                 </td>
             </tr>
         </tbody>
     </table>
-    <div class="ps-3">
-        <app-non-energy-benefit-report *ngFor="let nebReport of nebReports"
+    <!-- <div class="ps-3">
+        <app-non-energy-benefit-report *ngFor="let nebReport of assessmentReport.assessmentNebReports"
             [nebReport]="nebReport"></app-non-energy-benefit-report>
     </div>
     <div class="ps-3">
-        <app-energy-opportunity-report *ngFor="let energyOpportunity of energyOpportunities"
-            [energyOpportunity]="energyOpportunity"></app-energy-opportunity-report>
-    </div>
+        <app-energy-opportunity-report *ngFor="let energyOpportunityReport of assessmentReport.energyOpportunityReports"
+            [energyOpportunityReport]="energyOpportunityReport"></app-energy-opportunity-report>
+    </div> -->
 </div>
