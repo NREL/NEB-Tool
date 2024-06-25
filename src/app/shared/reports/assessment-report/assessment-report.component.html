@@ -1,5 +1,5 @@
 <div class="report">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th colspan="2">
@@ -36,7 +36,7 @@
 
         </tbody>
     </table>
-    <table class="table table-bordered savings-table">
+    <table class="table table-bordered savings-table table-hover">
         <thead>
             <tr>
                 <th>
@@ -66,6 +66,23 @@
                 </td>
                 <td class="text-right">
                     <app-single-cell-item [numValue]="assessment.energyUse"
+                        [isCurrency]="false"></app-single-cell-item>
+                </td>
+            </tr>
+            <tr>
+                <td class="bold" colspan="3">
+                    {{assessment.name}}
+                </td>
+            </tr>
+            <tr>
+                <td class="w-50 ps-3">
+                     Energy Savings
+                </td>
+                <td class="text-right bold">
+                    <app-single-cell-item [numValue]="assessment.costSavings" [isCurrency]="true"></app-single-cell-item>
+                </td>
+                <td class="text-right bold">
+                    <app-single-cell-item [numValue]="assessment.energySavings"
                         [isCurrency]="false"></app-single-cell-item>
                 </td>
             </tr>
@@ -100,29 +117,42 @@
                             [isCurrency]="false"></app-single-cell-item>
                     </td>
                 </tr>
+                <tr>
+                    <td class="ps-3 bold">
+                        {{energyOpportunityReport.energyOpportunity.name}} Total Savings
+                    </td>
+                    <td class="text-right bold">
+                        <app-single-cell-item [numValue]="energyOpportunityReport.totalCostSavings"
+                            [isCurrency]="true"></app-single-cell-item>
+                    </td>
+                    <td class="text-right bold">
+                        <app-single-cell-item [numValue]="energyOpportunityReport.energyOpportunity.energySavings"
+                            [isCurrency]="false"></app-single-cell-item>
+                    </td>
+                </tr>
             </ng-container>
             <tr>
-                <td class="w-50">
+                <td class="w-50 bold">
                     Total Savings
                 </td>
-                <td class="text-right w-25">
+                <td class="text-right bold w-25">
                     <app-single-cell-item [numValue]="assessmentReport.totalCostSavings"
                         [isCurrency]="true"></app-single-cell-item>
                 </td>
-                <td class="text-right">
+                <td class="text-right bold">
                     <app-single-cell-item [numValue]="assessmentReport.totalEnergySavings"
                         [isCurrency]="false"></app-single-cell-item>
                 </td>
             </tr>
             <tr>
-                <td class="w-50">
+                <td class="w-50 bold">
                     Adjusted Results
                 </td>
-                <td class="text-right">
+                <td class="text-right bold">
                     <app-single-cell-item [numValue]="assessmentReport.adjustedCost"
                         [isCurrency]="true"></app-single-cell-item>
                 </td>
-                <td class="text-right">
+                <td class="text-right bold">
                     <app-single-cell-item [numValue]="assessmentReport.adjustedEnergyUse"
                         [isCurrency]="false"></app-single-cell-item>
                 </td>

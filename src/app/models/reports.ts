@@ -72,7 +72,7 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
 
     let totalEnergySavings: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
         return report.energyOpportunity.energySavings
-    });
+    }) + assessment.energySavings;
 
 
     return {
