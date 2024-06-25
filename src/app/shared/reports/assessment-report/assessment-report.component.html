@@ -1,1 +1,93 @@
-<p>assessment-report for {{assessment.name}} works!</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th colspan="2">
+                Assessment Basics
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Company
+            </td>
+            <td>
+                {{company.generalInformation.name}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Facility
+            </td>
+            <td>
+                {{facility.generalInformation.name}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Process Equipment
+            </td>
+            <td>
+                <app-single-cell-item
+                    [value]="assessment.equipmentId | processEquipmentDisplay: facility.processEquipment"></app-single-cell-item>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Baseline Energy Use
+            </td>
+            <td>
+                {{assessment.energyUse | number}} MMBtu/yr
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Baseline Energy Use
+            </td>
+            <td>
+                {{assessment.cost | currency}} /yr
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="pb-3 pt-3" *ngFor="let energyOpportunity of energyOpportunities">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    {{energyOpportunity.name}}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Implementation Cost
+                </td>
+                <td>
+                    <app-single-cell-item [value]="energyOpportunity.implementationCost"
+                        [isCurrency]="true"></app-single-cell-item>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Energy Savings
+                </td>
+                <td>
+                    <app-single-cell-item [value]="energyOpportunity.energySavings" [isCurrency]="false"
+                        [units]="'MMBtu'" [per]="'yr'"></app-single-cell-item>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cost Savings
+                </td>
+                <td>
+                    <app-single-cell-item [value]="energyOpportunity.costSavings" [isCurrency]="true"
+                        [per]="'yr'"></app-single-cell-item>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -6,10 +6,12 @@ import { Component, Input } from '@angular/core';
   styleUrl: './single-cell-item.component.css'
 })
 export class SingleCellItemComponent {
-  @Input({required: true})
+  @Input({ required: true })
   value: string | number;
   @Input()
   units: string;
   @Input()
   per: string;
+  @Input()
+  isCurrency: boolean;
 }
