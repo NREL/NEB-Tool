@@ -1,3 +1,7 @@
 .report .table td, .report .table th{
     padding: .25rem;
 }
+
+.report .savings-table .text-right{
+    text-align: right;
+}

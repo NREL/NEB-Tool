@@ -7,6 +7,7 @@ import { TableEntriesModule } from '../table-entries/table-entries.module';
 import { EnergyOpportunityReportComponent } from './assessment-report/energy-opportunity-report/energy-opportunity-report.component';
 import { NonEnergyBenefitReportComponent } from './assessment-report/non-energy-benefit-report/non-energy-benefit-report.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AssessmentSavingsTableComponent } from './assessment-report/assessment-savings-table/assessment-savings-table.component';
 
 
 
@@ -15,7 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AssessmentReportComponent,
     RollupReportComponent,
     EnergyOpportunityReportComponent,
-    NonEnergyBenefitReportComponent
+    NonEnergyBenefitReportComponent,
+    AssessmentSavingsTableComponent
   ],
   imports: [
     CommonModule,

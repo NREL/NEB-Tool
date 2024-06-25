@@ -34,6 +34,7 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
     let includedNebOptionValues: Array<{ nebName: string, nebValue: NebOptionValue }> = allNebReports.map(report => {
         return { nebName: report.nebName, nebValue: report.nebValue }
     });
+
     let uniqNebs: Array<{ nebName: string, nebValue: NebOptionValue }> = _.uniqBy(includedNebOptionValues, (val: { nebName: string, nebValue: NebOptionValue }) => {
         return val.nebValue
     });
@@ -49,14 +50,20 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
     //         totalCostSavings: number
     //     })
     // });
+
+    let totalNonOpportunitySavings: number = _.sumBy(assessmentNebReports, (report: NebReport) => {
+        return report.totalCostSavings
+    });
+    if (assessment.costSavings) {
+        totalNonOpportunitySavings += assessment.costSavings;
+    }
+
     let energyOpportunityCostSavings: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
         return report.totalEnergyCostSavings
     });
     let totalEnergyCostSavings: number = 0;
-    if(assessment.costSavings){
-        totalEnergyCostSavings += assessment.costSavings;
-    }
-    if(energyOpportunityCostSavings){
+
+    if (energyOpportunityCostSavings) {
         totalEnergyCostSavings += energyOpportunityCostSavings;
     };
 
@@ -84,10 +91,11 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         totalAssessmentNebSavings: totalAssessmentNebSavings,
         totalNebSavings: totalNebSavings,
         totalCostSavings: totalCostSavings,
-        adjustedCost: assessment.cost + totalCostSavings,
+        adjustedCost: assessment.cost - totalCostSavings,
         //TODO: math implementation needed
-        adjustedEnergyUse: assessment.energyUse + totalEnergySavings,
-        totalEnergySavings: totalEnergySavings
+        adjustedEnergyUse: assessment.energyUse - totalEnergySavings,
+        totalEnergySavings: totalEnergySavings,
+        totalNonOpportunitySavings: totalNonOpportunitySavings
     }
 }
 
@@ -102,7 +110,8 @@ export interface AssessmentReport {
     totalCostSavings: number,
     adjustedCost: number,
     adjustedEnergyUse: number,
-    totalEnergySavings: number
+    totalEnergySavings: number,
+    totalNonOpportunitySavings: number
 }
 
 ///ENERGY REPORT
@@ -162,7 +171,7 @@ export function getNebReport(nonEnergyBenefit: IdbNonEnergyBenefit, companyPerfo
         reportPerformanceMetrics: reportPerformanceMetrics,
         //todo: update to handle cost adjustment +/- as good
         totalCostSavings: _.sumBy(reportPerformanceMetrics, (reportPerformanceMetric: ReportPerformanceMetric) => {
-            if(reportPerformanceMetric.performanceMetricImpact.costAdjustment){
+            if (reportPerformanceMetric.performanceMetricImpact.costAdjustment) {
                 return reportPerformanceMetric.performanceMetricImpact.costAdjustment;
             }
             return 0;
