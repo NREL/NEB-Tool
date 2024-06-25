@@ -1,0 +1,67 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th colspan="2">
+                <fa-icon class="pe-2" [icon]="faWeightHanging"></fa-icon> 
+                {{nebReport.nebName}}
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <ng-template [ngIf]="nebReport.reportPerformanceMetrics.length > 0" [ngIfElse]="noIncludedMetricsBlock">
+            <ng-container *ngFor="let reportPerformanceMetric of nebReport.reportPerformanceMetrics">
+                <tr>
+                    <td>
+                        Performance Metric
+                    </td>
+                    <td>
+                        <span [innerHTML]="reportPerformanceMetric.keyPerformanceMetric.htmlLabel"></span>
+                    </td>
+                </tr>
+                <ng-template [ngIf]="reportPerformanceMetric.keyPerformanceMetric.isQuantitative"
+                    [ngIfElse]="qualitativeBlock">
+                    <tr>
+                        <td>
+                            Quantitative Impact
+                        </td>
+                        <td>
+                            <app-single-cell-item
+                                [value]="reportPerformanceMetric.performanceMetricImpact.modificationValue"
+                                [isCurrency]="false" [units]="reportPerformanceMetric.keyPerformanceMetric.totalUnit"
+                                [per]="'yr'"></app-single-cell-item>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Annual Cost Impact
+                        </td>
+                        <td>
+                            <app-single-cell-item
+                                [value]="reportPerformanceMetric.performanceMetricImpact.costAdjustment"
+                                [isCurrency]="true" [per]="'yr'"></app-single-cell-item>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template #qualitativeBlock>
+                    <tr>
+                        <td colspan="2">
+                            <div class="alert alert-info">
+                                This metric is qualitative.
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </ng-container>
+        </ng-template>
+        <ng-template #noIncludedMetricsBlock>
+            <tr>
+                <td colspan="2">
+                    <div class="alert alert-info">
+                        No performance metrics tracked for this NEB.
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>

@@ -1,93 +1,62 @@
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th colspan="2">
-                Assessment Basics
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                Company
-            </td>
-            <td>
-                {{company.generalInformation.name}}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Facility
-            </td>
-            <td>
-                {{facility.generalInformation.name}}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Process Equipment
-            </td>
-            <td>
-                <app-single-cell-item
-                    [value]="assessment.equipmentId | processEquipmentDisplay: facility.processEquipment"></app-single-cell-item>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Baseline Energy Use
-            </td>
-            <td>
-                {{assessment.energyUse | number}} MMBtu/yr
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Baseline Energy Use
-            </td>
-            <td>
-                {{assessment.cost | currency}} /yr
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<div class="pb-3 pt-3" *ngFor="let energyOpportunity of energyOpportunities">
+<div class="report">
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th colspan="2">
-                    {{energyOpportunity.name}}
+                    Assessment Basics
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>
-                    Implementation Cost
+                    Company
                 </td>
                 <td>
-                    <app-single-cell-item [value]="energyOpportunity.implementationCost"
-                        [isCurrency]="true"></app-single-cell-item>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Energy Savings
-                </td>
-                <td>
-                    <app-single-cell-item [value]="energyOpportunity.energySavings" [isCurrency]="false"
-                        [units]="'MMBtu'" [per]="'yr'"></app-single-cell-item>
+                    {{company.generalInformation.name}}
                 </td>
             </tr>
             <tr>
                 <td>
-                    Cost Savings
+                    Facility
                 </td>
                 <td>
-                    <app-single-cell-item [value]="energyOpportunity.costSavings" [isCurrency]="true"
-                        [per]="'yr'"></app-single-cell-item>
+                    {{facility.generalInformation.name}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Process Equipment
+                </td>
+                <td>
+                    <app-single-cell-item
+                        [value]="assessment.equipmentId | processEquipmentDisplay: facility.processEquipment"></app-single-cell-item>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Baseline Energy Use
+                </td>
+                <td>
+                    {{assessment.energyUse | number}} MMBtu/yr
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Baseline Energy Use
+                </td>
+                <td>
+                    {{assessment.cost | currency}} /yr
                 </td>
             </tr>
         </tbody>
     </table>
+    <div class="ps-3">
+        <app-non-energy-benefit-report *ngFor="let nebReport of nebReports"
+            [nebReport]="nebReport"></app-non-energy-benefit-report>
+    </div>
+    <div class="ps-3">
+        <app-energy-opportunity-report *ngFor="let energyOpportunity of energyOpportunities"
+            [energyOpportunity]="energyOpportunity"></app-energy-opportunity-report>
+    </div>
 </div>

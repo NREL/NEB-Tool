@@ -8,6 +8,9 @@ import { IdbCompany } from 'src/app/models/company';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { NebReport, getNebReport } from 'src/app/models/reports';
+import { KeyPerformanceMetric } from '../../constants/keyPerformanceMetrics';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 
 @Component({
   selector: 'app-assessment-report',
@@ -22,10 +25,11 @@ export class AssessmentReportComponent {
   facility: IdbFacility;
 
   energyOpportunities: Array<IdbEnergyOpportunity>;
-  nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
+  nebReports: Array<NebReport>;
   constructor(private facilityIdbService: FacilityIdbService, private companyIdbService: CompanyIdbService,
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
-    private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService
+    private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService,
+    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService
   ) {
 
   }
@@ -37,9 +41,20 @@ export class AssessmentReportComponent {
     this.energyOpportunities = allEnergyOpportunities.filter(energyOpportunity => {
       return energyOpportunity.assessmentId == this.assessment.guid
     });
+    this.setNebReports();
+  }
+
+
+  setNebReports(){
+    this.nebReports = new Array();
     let allNonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitIdbService.nonEnergyBenefits.getValue();
-    this.nonEnergyBenefits = allNonEnergyBenefits.filter(neb => {
-      return neb.assessmentId == this.assessment.guid
+    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = allNonEnergyBenefits.filter(neb => {
+      return neb.assessmentId == this.assessment.guid && !neb.energyOpportunityId;
+    });
+    let companyPerformanceMetrics: Array<KeyPerformanceMetric> = this.keyPerformanceIndicatorIdbService.getCompanyKeyPerformanceMetrics(this.assessment.companyId);
+    nonEnergyBenefits.forEach(neb => {
+      let nebReport: NebReport = getNebReport(neb, companyPerformanceMetrics);
+      this.nebReports.push(nebReport);
     });
   }
 }
