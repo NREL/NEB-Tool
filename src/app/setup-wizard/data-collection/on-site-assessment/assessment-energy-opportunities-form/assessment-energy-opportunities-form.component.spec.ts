@@ -11,6 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { EnergyOpportunitySetupFormComponent } from './energy-opportunity-setup-form/energy-opportunity-setup-form.component';
+import { NebFormsAccordionComponent } from '../neb-forms-accordion/neb-forms-accordion.component';
 
 describe('AssessmentEnergyOpportunitiesFormComponent', () => {
   let component: AssessmentEnergyOpportunitiesFormComponent;
@@ -20,8 +21,6 @@ describe('AssessmentEnergyOpportunitiesFormComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlightNebGuid: new BehaviorSubject<string>(undefined),
-    highlightOpportunityGuid: new BehaviorSubject<string>(undefined),
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
@@ -33,7 +32,7 @@ describe('AssessmentEnergyOpportunitiesFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule, FormsModule],
-      declarations: [AssessmentEnergyOpportunitiesFormComponent, EnergyOpportunitySetupFormComponent],
+      declarations: [AssessmentEnergyOpportunitiesFormComponent, EnergyOpportunitySetupFormComponent, NebFormsAccordionComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },

@@ -6,3 +6,17 @@
 .accordion-header .fa-error{
     color: red;
 }
+
+.form-control, .form-select, .input-group-text{
+    line-height: 1;
+    padding: .25rem;
+    border-radius: 0;
+}
+
+.col-form-label{
+    line-height: 1;
+}
+
+.btn, .alert, .list-group-item, .list-group-item:first-child, .list-group-item:last-child{
+    border-radius: 0;
+}

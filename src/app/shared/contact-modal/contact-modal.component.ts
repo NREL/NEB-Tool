@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconDefinition, faChevronLeft, faCircleCheck, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { ContactContext, IdbContact } from 'src/app/models/contact';
@@ -28,6 +28,7 @@ export class ContactModalComponent {
   faCircleCheck: IconDefinition = faCircleCheck;
   faChevronLeft: IconDefinition = faChevronLeft;
   faUser: IconDefinition = faUser;
+  faContactBook: IconDefinition = faContactBook;
   constructor(
     private contactIdbService: ContactIdbService
   ) {
@@ -91,6 +92,14 @@ export class ContactModalComponent {
         });
       } else {
         this.contacts[contactIndex].kpiIds.push(this.contextGuid);
+      }
+    } else if (this.contactContext == 'nonEnergyBenefit') {
+      if (this.contacts[contactIndex].nonEnergyBenefitIds.includes(this.contextGuid)) {
+        this.contacts[contactIndex].nonEnergyBenefitIds = this.contacts[contactIndex].nonEnergyBenefitIds.filter(id => {
+          return id != this.contextGuid;
+        });
+      } else {
+        this.contacts[contactIndex].nonEnergyBenefitIds.push(this.contextGuid);
       }
     }
   }

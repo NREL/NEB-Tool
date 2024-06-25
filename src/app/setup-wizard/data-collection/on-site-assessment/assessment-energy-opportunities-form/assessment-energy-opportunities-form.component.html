@@ -1,18 +1,27 @@
-<div class="d-flex w-100 justify-content-between pb-2">
-    <div class="p-0">
-        <h5>
-            <fa-icon [icon]="faFileLines"></fa-icon> Energy Opportunities
-        </h5>
-    </div>
-    <div class="p-0">
-        <button class="btn btn-dark btn-sm add-opportunity-btn" (click)="addEnergyOpportunity()"><fa-icon [icon]="faPlus"
-                class="me-1"></fa-icon>Add Energy Opportunities</button>
-    </div>
+<div class="d-flex w-100 justify-content-end pt-2 pb-2">
+    <button class="btn btn-dark btn-sm add-opportunity-btn" (click)="addEnergyOpportunity()"><fa-icon [icon]="faPlus"
+            class="me-1"></fa-icon>Add Energy Opportunity</button>
 </div>
 <ng-template [ngIf]="assessmentEnergyOpportunityGuids.length > 0" [ngIfElse]="noOpportunitiesBlock">
-    <div class="row">
-        <div class="col-12 pb-2" *ngFor="let energyOpportunityGuid of assessmentEnergyOpportunityGuids">
-            <app-energy-opportunity-setup-form [energyOpportunityGuid]="energyOpportunityGuid"></app-energy-opportunity-setup-form>
+    <div class="accordion" id="energyOpportunityAccordion">
+        <div class="accordion-item"
+            *ngFor="let energyOpportunityGuid of assessmentEnergyOpportunityGuids; let index = index;">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#'+energyOpportunityGuid" aria-expanded="true"
+                    [attr.aria-controls]="energyOpportunityGuid" [ngClass]="{'collapsed': accordionIndex != index}"
+                    (click)="setAccordionIndex(index)">
+                    <fa-icon class="pe-2" [icon]="faFileLines"></fa-icon> {{energyOpportunityGuid |
+                    energyOpportunityDisplay:energyOpportunities}}
+                </button>
+            </h2>
+            <div [id]="energyOpportunityGuid" class="accordion-collapse collapse"
+                data-bs-parent="#energyOpportunityAccordion" [ngClass]="{'show': accordionIndex == index}">
+                <div class="accordion-body">
+                    <app-energy-opportunity-setup-form
+                        [energyOpportunityGuid]="energyOpportunityGuid"></app-energy-opportunity-setup-form>
+                </div>
+            </div>
         </div>
     </div>
 </ng-template>

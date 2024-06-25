@@ -22,6 +22,8 @@ export class AssessmentEnergyOpportunitiesFormComponent {
   assessmentSub: Subscription;
 
   assessmentEnergyOpportunityGuids: Array<string> = [];
+
+  accordionIndex: number = 0;
   constructor(
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private assessmentIdbService: AssessmentIdbService
@@ -37,7 +39,7 @@ export class AssessmentEnergyOpportunitiesFormComponent {
     this.energyOpportuntiesSub = this.energyOpportunityIdbService.energyOpportunities.subscribe(_energyOpportunities => {
       this.energyOpportunities = _energyOpportunities;
       this.setAssessmentEnergyOpportunityGuids();
-    })
+    });
   }
 
   ngOnDestroy(){
@@ -76,9 +78,12 @@ export class AssessmentEnergyOpportunitiesFormComponent {
     let assessmentEnergyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunities.filter(prj => {
       return prj.assessmentId == this.assessment.guid;
     });
-    
     newOpportunity.name = 'Energy Opportunity #' + (assessmentEnergyOpportunities.length + 1);
     await firstValueFrom(this.energyOpportunityIdbService.addWithObservable(newOpportunity));
     await this.energyOpportunityIdbService.setEnergyOpportunities();
+  }
+
+  setAccordionIndex(num: number){
+    this.accordionIndex = num;
   }
 }

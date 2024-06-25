@@ -1,7 +1,10 @@
 .navbar{
     width: 20rem;
     background-color: #ffffff;
-    overflow-y: auto;
+    overflow-y: scroll;
+    /* height: 100%; */
+    /* max-height: 100%; */
+    flex-wrap: nowrap;
 }
 
 .navbar.collapsed{
@@ -26,7 +29,7 @@
 }
 
 .nav-link.third-nav{
-    padding-left: 2rem;
+    padding-left: 3rem;
 }
 
 .nav-link.active{
