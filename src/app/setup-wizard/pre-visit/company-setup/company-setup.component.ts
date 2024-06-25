@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdbCompany } from 'src/app/models/company';
-import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { Subscription } from 'rxjs';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
@@ -21,6 +21,7 @@ export class CompanySetupComponent {
   faLocationDot: IconDefinition = faLocationDot;
   faBuilding: IconDefinition = faBuilding;
   faChevronRight: IconDefinition = faChevronRight;
+  faCircleExclamation: IconDefinition = faCircleExclamation;
 
   selectedCompany: IdbCompany;
   selectedCompanySub: Subscription;
