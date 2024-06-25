@@ -27,7 +27,7 @@
                         </td>
                         <td>
                             <app-single-cell-item
-                                [value]="reportPerformanceMetric.performanceMetricImpact.modificationValue"
+                                [numValue]="reportPerformanceMetric.performanceMetricImpact.modificationValue"
                                 [isCurrency]="false" [units]="reportPerformanceMetric.keyPerformanceMetric.totalUnit"
                                 [per]="'yr'"></app-single-cell-item>
                         </td>
@@ -38,7 +38,7 @@
                         </td>
                         <td>
                             <app-single-cell-item
-                                [value]="reportPerformanceMetric.performanceMetricImpact.costAdjustment"
+                                [numValue]="reportPerformanceMetric.performanceMetricImpact.costAdjustment"
                                 [isCurrency]="true" [per]="'yr'"></app-single-cell-item>
                         </td>
                     </tr>

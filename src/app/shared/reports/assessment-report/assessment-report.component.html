@@ -30,7 +30,7 @@
                 </td>
                 <td>
                     <app-single-cell-item
-                        [value]="assessment.equipmentId | processEquipmentDisplay: facility.processEquipment"></app-single-cell-item>
+                        [strValue]="assessment.equipmentId | processEquipmentDisplay: facility.processEquipment"></app-single-cell-item>
                 </td>
             </tr>
 
@@ -52,19 +52,26 @@
         </thead>
         <tbody>
             <tr>
-                <td class="w-50">
+                <td class="bold" colspan="3">
                     Baseline
                 </td>
-                <td class="text-right">
-                    {{assessment.cost | currency}}
+            </tr>
+            <tr>
+                <td class="w-50 ps-3">
+                    <!-- Baseline -->
+                     Energy Use
                 </td>
                 <td class="text-right">
-                    {{assessment.energyUse | number}}
+                    <app-single-cell-item [numValue]="assessment.cost" [isCurrency]="true"></app-single-cell-item>
+                </td>
+                <td class="text-right">
+                    <app-single-cell-item [numValue]="assessment.energyUse"
+                        [isCurrency]="false"></app-single-cell-item>
                 </td>
             </tr>
             <ng-container *ngFor="let energyOpportunityReport of assessmentReport.energyOpportunityReports">
                 <tr>
-                    <td colspan="3" class="ps-2">
+                    <td colspan="3" class="bold">
                         {{energyOpportunityReport.energyOpportunity.name}}
                     </td>
                 </tr>
@@ -73,21 +80,24 @@
                         {{nebReport.nebName}}
                     </td>
                     <td class="text-right">
-                        {{nebReport.totalCostSavings | currency}} 
+                        <app-single-cell-item [numValue]="nebReport.totalCostSavings"
+                            [isCurrency]="true"></app-single-cell-item>
                     </td>
                     <td class="text-right">
                         &mdash;
                     </td>
-                </tr>               
+                </tr>
                 <tr>
-                    <td class="ps-2">
+                    <td class="ps-3">
                         {{energyOpportunityReport.energyOpportunity.name}} Other Savings
                     </td>
                     <td class="text-right">
-                        {{energyOpportunityReport.energyOpportunity.costSavings | currency}}
+                        <app-single-cell-item [numValue]="energyOpportunityReport.energyOpportunity.costSavings"
+                            [isCurrency]="true"></app-single-cell-item>
                     </td>
                     <td class="text-right">
-                        {{energyOpportunityReport.energyOpportunity.energySavings | number}}
+                        <app-single-cell-item [numValue]="energyOpportunityReport.energyOpportunity.energySavings"
+                            [isCurrency]="false"></app-single-cell-item>
                     </td>
                 </tr>
             </ng-container>
@@ -96,10 +106,12 @@
                     Total Savings
                 </td>
                 <td class="text-right w-25">
-                    {{assessmentReport.totalCostSavings | currency}}
+                    <app-single-cell-item [numValue]="assessmentReport.totalCostSavings"
+                        [isCurrency]="true"></app-single-cell-item>
                 </td>
                 <td class="text-right">
-                    {{assessmentReport.totalEnergySavings | number}}
+                    <app-single-cell-item [numValue]="assessmentReport.totalEnergySavings"
+                        [isCurrency]="false"></app-single-cell-item>
                 </td>
             </tr>
             <tr>
@@ -107,10 +119,12 @@
                     Adjusted Results
                 </td>
                 <td class="text-right">
-                    {{assessmentReport.adjustedCost | currency}}
+                    <app-single-cell-item [numValue]="assessmentReport.adjustedCost"
+                        [isCurrency]="true"></app-single-cell-item>
                 </td>
                 <td class="text-right">
-                    {{assessmentReport.adjustedEnergyUse | number}}
+                    <app-single-cell-item [numValue]="assessmentReport.adjustedEnergyUse"
+                        [isCurrency]="false"></app-single-cell-item>
                 </td>
             </tr>
         </tbody>

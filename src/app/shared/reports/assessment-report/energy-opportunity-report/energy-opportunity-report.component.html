@@ -13,7 +13,7 @@
                 Implementation Cost
             </td>
             <td>
-                <app-single-cell-item [value]="energyOpportunityReport.energyOpportunity.implementationCost"
+                <app-single-cell-item [numValue]="energyOpportunityReport.energyOpportunity.implementationCost"
                     [isCurrency]="true"></app-single-cell-item>
             </td>
         </tr>
@@ -22,7 +22,7 @@
                 Annual Energy Savings
             </td>
             <td>
-                <app-single-cell-item [value]="energyOpportunityReport.energyOpportunity.energySavings"
+                <app-single-cell-item [numValue]="energyOpportunityReport.energyOpportunity.energySavings"
                     [isCurrency]="false" [units]="'MMBtu'" [per]="'yr'"></app-single-cell-item>
             </td>
         </tr>
@@ -31,7 +31,7 @@
                 Annual Cost Savings
             </td>
             <td>
-                <app-single-cell-item [value]="energyOpportunityReport.energyOpportunity.costSavings"
+                <app-single-cell-item [numValue]="energyOpportunityReport.energyOpportunity.costSavings"
                     [isCurrency]="true" [per]="'yr'"></app-single-cell-item>
             </td>
         </tr>
