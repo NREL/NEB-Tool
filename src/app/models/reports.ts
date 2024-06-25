@@ -53,10 +53,10 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         return report.totalEnergyCostSavings
     });
     let totalEnergyCostSavings: number = 0;
-    if(assessment.costSavings){
+    if (assessment.costSavings) {
         totalEnergyCostSavings += assessment.costSavings;
     }
-    if(energyOpportunityCostSavings){
+    if (energyOpportunityCostSavings) {
         totalEnergyCostSavings += energyOpportunityCostSavings;
     };
 
@@ -74,6 +74,12 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         return report.energyOpportunity.energySavings
     }) + assessment.energySavings;
 
+    let energySavings: SavingsItem = {
+        label: 'Energy Cost',
+        baselineValue: assessment.cost,
+        savingsValue: totalCostSavings,
+        savingsPercent: ((-1 * totalCostSavings) / assessment.cost) * 100
+    }
 
     return {
         assessment: assessment,
@@ -87,7 +93,8 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         adjustedCost: assessment.cost + totalCostSavings,
         //TODO: math implementation needed
         adjustedEnergyUse: assessment.energyUse + totalEnergySavings,
-        totalEnergySavings: totalEnergySavings
+        totalEnergySavings: totalEnergySavings,
+        energySavings: energySavings
     }
 }
 
@@ -102,7 +109,16 @@ export interface AssessmentReport {
     totalCostSavings: number,
     adjustedCost: number,
     adjustedEnergyUse: number,
-    totalEnergySavings: number
+    totalEnergySavings: number,
+    energySavings: SavingsItem
+
+}
+
+export interface SavingsItem {
+    label: string,
+    baselineValue: number,
+    savingsValue: number,
+    savingsPercent: number
 }
 
 ///ENERGY REPORT
@@ -162,7 +178,7 @@ export function getNebReport(nonEnergyBenefit: IdbNonEnergyBenefit, companyPerfo
         reportPerformanceMetrics: reportPerformanceMetrics,
         //todo: update to handle cost adjustment +/- as good
         totalCostSavings: _.sumBy(reportPerformanceMetrics, (reportPerformanceMetric: ReportPerformanceMetric) => {
-            if(reportPerformanceMetric.performanceMetricImpact.costAdjustment){
+            if (reportPerformanceMetric.performanceMetricImpact.costAdjustment) {
                 return reportPerformanceMetric.performanceMetricImpact.costAdjustment;
             }
             return 0;

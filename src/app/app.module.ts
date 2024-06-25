@@ -19,6 +19,7 @@ import { SidebarComponent } from './core-components/sidebar/sidebar.component';
 import { HelperPipesModule } from './shared/helper-pipes/helper-pipes.module';
 import { AssessmentDashboardModule } from './assessment-dashboard/assessment-dashboard.module';
 import { SetupWizardModalComponent } from './core-components/setup-wizard-modal/setup-wizard-modal.component';
+import { PlotlyViaWindowModule } from 'angular-plotly.js';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SetupWizardModalComponent } from './core-components/setup-wizard-modal/
     FormsModule,
     SetupWizardModule,
     HelperPipesModule,
-    AssessmentDashboardModule
+    AssessmentDashboardModule,
+    PlotlyViaWindowModule
   ],
   providers: [],
   bootstrap: [AppComponent]
