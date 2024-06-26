@@ -40,6 +40,7 @@ import { CompanyKpiDetailsComponent } from './setup-wizard/pre-visit/company-kpi
 import { AssessmentDetailsFormComponent } from './setup-wizard/data-collection/on-site-assessment/assessment-details-form/assessment-details-form.component';
 import { AssessmentEnergyOpportunitiesFormComponent } from './setup-wizard/data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
 import { AssessmentNebsFormComponent } from './setup-wizard/data-collection/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
+import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 
 const routes: Routes = [
   {
@@ -79,7 +80,8 @@ const routes: Routes = [
           },
           {
             path: 'company-setup',
-            component: CompanySetupComponent
+            component: CompanySetupComponent,
+            canDeactivate: [CanDeactivateGuard]
           },
           {
             path: 'company-kpi-select',

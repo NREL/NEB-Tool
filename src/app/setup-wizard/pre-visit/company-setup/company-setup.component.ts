@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IdbCompany } from 'src/app/models/company';
 import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { FormControl, Validators } from '@angular/forms';
@@ -42,9 +42,20 @@ export class CompanySetupComponent {
       // if (this.selectedCompany) {
       //   this.companyName = _company.generalInformation.name;
       // }
+    });
+    if (this.selectedCompany) {
       this.name = new FormControl(this.selectedCompany.generalInformation.name, [Validators.required]);
       this.companySetupService.setControl(this.name);
-    });
+    }
+  }
+
+  canDeactivate(): Observable<boolean> {
+    if (this.name && this.name.getError('required')) {
+      this.name.markAsTouched();
+      alert('Please fill the required fields.');
+      return of(false);
+    }
+    return of(true);
   }
 
   ngOnDestroy() {
@@ -57,8 +68,8 @@ export class CompanySetupComponent {
   }
 
   async saveChanges() {
-    let selectedCompany: IdbCompany = this.companyIdbService.selectedCompany.getValue();
-    selectedCompany.generalInformation.name = this.name.value;
-    await this.companyIdbService.asyncUpdate(selectedCompany);
+    this.selectedCompany = this.companyIdbService.selectedCompany.getValue();
+    this.selectedCompany.generalInformation.name = this.name.value;
+    await this.companyIdbService.asyncUpdate(this.selectedCompany);
   }
 }
