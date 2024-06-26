@@ -35,7 +35,8 @@
               "src/assets/styles/tabs.css",
               "src/assets/styles/setup-wizard.css",
               "src/assets/styles/accordion.css",
-              "src/assets/styles/forms.css"
+              "src/assets/styles/forms.css",
+              "src/assets/styles/sidebar.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
