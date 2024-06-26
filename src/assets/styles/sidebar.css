@@ -2,8 +2,8 @@
     color: red;
 }
 
-.nav-link .disabled {
-    color: grey;
+.nav-link .nav-link.active .disabled {
+    background-color: rgb(212, 212, 212);
     pointer-events: none;
     cursor: not-allowed;
 }
