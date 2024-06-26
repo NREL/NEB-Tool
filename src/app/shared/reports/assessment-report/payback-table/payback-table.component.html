@@ -1,0 +1,103 @@
+<table class="table table-bordered savings-table table-hover">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Implementation Cost<br> (&dollar;)
+            </th>
+            <th>
+                Annual Energy Savings<br> (&dollar;/yr)
+            </th>
+            <th>
+                Annual Savings W/ NEBs<br> (&dollar;/yr)
+            </th>
+            <th>
+                Simple Payback<br> (yrs)
+            </th>
+            <th>
+                Simple Payback With NEBs<br> (yrs)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {{assessmentReport.assessment.name}}
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="assessmentReport.assessment.implementationCost"></app-single-cell-item>
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="assessmentReport.assessment.energySavings"></app-single-cell-item>
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="assessmentReport.totalNonOpportunityAssessmentSavings"></app-single-cell-item>
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="false"
+                    [numValue]="assessmentReport.nonOpportunityPaybackWithoutNebs"></app-single-cell-item>
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="false"
+                    [numValue]="assessmentReport.nonOpportunityPaybackWithNebs"></app-single-cell-item>
+            </td>
+        </tr>
+        <tr *ngFor="let energyOpportunityReport of assessmentReport.energyOpportunityReports">
+            <td>
+                {{energyOpportunityReport.energyOpportunity.name}}
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="energyOpportunityReport.energyOpportunity.implementationCost"></app-single-cell-item>
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="energyOpportunityReport.totalEnergyCostSavings"></app-single-cell-item>
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="energyOpportunityReport.totalCostSavings"></app-single-cell-item>
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="false"
+                    [numValue]="energyOpportunityReport.paybackWithoutNebs"></app-single-cell-item>
+            </td>
+            <td>
+                <app-single-cell-item [isCurrency]="false"
+                    [numValue]="energyOpportunityReport.paybackWithNebs"></app-single-cell-item>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>
+                Assessment Total
+            </th>
+            <th>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="assessmentReport.totalImplementationCost"></app-single-cell-item>
+            </th>
+            <th>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="assessmentReport.totalEnergySavings"></app-single-cell-item>
+            </th>
+            <th>
+                <app-single-cell-item [isCurrency]="true"
+                    [numValue]="assessmentReport.totalCostSavings"></app-single-cell-item>
+            </th>
+            <th>
+                <app-single-cell-item [isCurrency]="false"
+                    [numValue]="assessmentReport.totalPaybackWithoutNebs"></app-single-cell-item>
+            </th>
+            <th>
+                <app-single-cell-item [isCurrency]="false"
+                    [numValue]="assessmentReport.totalPaybackWithNebs"></app-single-cell-item>
+            </th>
+        </tr>
+    </tfoot>
+</table>

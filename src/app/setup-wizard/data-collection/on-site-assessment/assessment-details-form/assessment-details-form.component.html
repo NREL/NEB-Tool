@@ -61,6 +61,16 @@
     </div>
     <hr>
     <div class="row">
+        <label class="col-sm-5 col-form-label" for="implementationCost">Implementation Cost</label>
+        <div class="col-sm-7">
+            <div class="input-group">
+                <input name="implementationCost" type="number" class="form-control"
+                    [(ngModel)]="assessment.implementationCost" (input)="saveChanges()" id="implementationCost">
+                <span class="input-group-text">&dollar;</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="energySavings">Annual Energy Savings</label>
         <div class="col-sm-7">
             <div class="input-group">

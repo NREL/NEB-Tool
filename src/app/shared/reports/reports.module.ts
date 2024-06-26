@@ -8,6 +8,7 @@ import { EnergyOpportunityReportComponent } from './assessment-report/energy-opp
 import { NonEnergyBenefitReportComponent } from './assessment-report/non-energy-benefit-report/non-energy-benefit-report.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AssessmentSavingsTableComponent } from './assessment-report/assessment-savings-table/assessment-savings-table.component';
+import { PaybackTableComponent } from './assessment-report/payback-table/payback-table.component';
 
 
 
@@ -17,7 +18,8 @@ import { AssessmentSavingsTableComponent } from './assessment-report/assessment-
     RollupReportComponent,
     EnergyOpportunityReportComponent,
     NonEnergyBenefitReportComponent,
-    AssessmentSavingsTableComponent
+    AssessmentSavingsTableComponent,
+    PaybackTableComponent
   ],
   imports: [
     CommonModule,

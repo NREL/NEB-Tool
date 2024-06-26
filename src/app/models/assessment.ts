@@ -11,7 +11,8 @@ export interface IdbAssessment extends IdbEntry {
     energySavings: number,
     costSavings: number,
     visitDate: Date
-    notes: string
+    notes: string,
+    implementationCost: number
 }
 
 export function getNewIdbAssessment(userId: string, companyId: string, facilityId: string): IdbAssessment {
@@ -28,6 +29,7 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         energySavings: undefined,
         costSavings: undefined,
         notes: undefined,
-        visitDate: undefined
+        visitDate: undefined,
+        implementationCost: undefined
     }
 }

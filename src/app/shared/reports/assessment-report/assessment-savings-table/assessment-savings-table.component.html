@@ -24,15 +24,15 @@
                 Energy Use
             </td>
             <td class="text-right">
-                <app-single-cell-item [numValue]="assessment.cost" [isCurrency]="true"></app-single-cell-item>
+                <app-single-cell-item [numValue]="assessmentReport.assessment.cost" [isCurrency]="true"></app-single-cell-item>
             </td>
             <td class="text-right">
-                <app-single-cell-item [numValue]="assessment.energyUse" [isCurrency]="false"></app-single-cell-item>
+                <app-single-cell-item [numValue]="assessmentReport.assessment.energyUse" [isCurrency]="false"></app-single-cell-item>
             </td>
         </tr>
         <tr class="section-border">
             <td class="bold" colspan="3">
-                {{assessment.name}}
+                {{assessmentReport.assessment.name}}
             </td>
         </tr>
         <tr *ngFor="let nebReport of assessmentReport.assessmentNebReports">
@@ -53,14 +53,14 @@
                 Non-opportunity Energy Savings
             </td>
             <td class="text-right">
-                <app-single-cell-item [numValue]="assessment.costSavings" [isCurrency]="true"></app-single-cell-item>
+                <app-single-cell-item [numValue]="assessmentReport.assessment.costSavings" [isCurrency]="true"></app-single-cell-item>
             </td>
             <td class="text-right">
-                <app-single-cell-item [numValue]="assessment.energySavings" [isCurrency]="false"></app-single-cell-item>
+                <app-single-cell-item [numValue]="assessmentReport.assessment.energySavings" [isCurrency]="false"></app-single-cell-item>
             </td>
         </tr>
         <tr>
-            <td class="w-50 ps-3 bold">
+            <td class="w-50 bold">
                 Total Non-opportunity Savings
             </td>
             <td class="text-right bold">
@@ -68,17 +68,17 @@
                     [isCurrency]="true"></app-single-cell-item>
             </td>
             <td class="text-right bold">
-                <app-single-cell-item [numValue]="assessment.energySavings" [isCurrency]="false"></app-single-cell-item>
+                <app-single-cell-item [numValue]="assessmentReport.assessment.energySavings" [isCurrency]="false"></app-single-cell-item>
             </td>
         </tr>
         <ng-container *ngFor="let energyOpportunityReport of assessmentReport.energyOpportunityReports">
             <tr class="section-border">
-                <td colspan="3" class="bold">
+                <td colspan="3" class="bold ps-3">
                     {{energyOpportunityReport.energyOpportunity.name}}
                 </td>
             </tr>
             <tr *ngFor="let nebReport of energyOpportunityReport.nebReports">
-                <td class="ps-3">
+                <td class="ps-5">
                     <fa-icon class="pe-1" [icon]="faWeightHanging"></fa-icon>
                     {{nebReport.nebName}}
                 </td>
@@ -91,7 +91,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="ps-3">
+                <td class="ps-5">
                     {{energyOpportunityReport.energyOpportunity.name}} Energy Savings
                 </td>
                 <td class="text-right">

@@ -11,8 +11,6 @@ import { AssessmentReport } from 'src/app/models/reports';
 export class AssessmentSavingsTableComponent {
   @Input({required: true})
   assessmentReport: AssessmentReport;
-  @Input({required: true})
-  assessment: IdbAssessment;
 
 
   faWeightHanging: IconDefinition = faWeightHanging;

@@ -73,15 +73,21 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
     let energyOpportunityNebSavings: number = _.sumBy(energyOpportunityNebReports, (report: NebReport) => {
         return report.totalCostSavings
     });
-    let totalNebSavings: number = totalAssessmentNebSavings + energyOpportunityNebSavings;
+    let totalNebSavings: number = totalNonOpportunitySavings + energyOpportunityNebSavings;
 
     let totalCostSavings: number = totalEnergyCostSavings + totalNebSavings;
 
-    let totalEnergySavings: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
-        return report.energyOpportunity.energySavings
-    }) + assessment.energySavings;
+    let totalEnergySavings: number = totalEnergyCostSavings + assessment.energySavings;
+    let implementationCost: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
+        return report.energyOpportunity.implementationCost
+    }) + assessment.implementationCost
 
+    let totalPaybackWithNebs: number = (implementationCost / totalCostSavings);
+    let totalPaybackWithoutNebs: number = (implementationCost / totalEnergyCostSavings);
 
+    let nonOpportunityPaybackWithoutNebs: number = (assessment.implementationCost / assessment.costSavings);
+    let nonOpportunityPaybackWithNebs: number = (assessment.implementationCost / totalNonOpportunitySavings);
+    let totalNonOpportunityAssessmentSavings: number = totalAssessmentNebSavings + assessment.energySavings;
     return {
         assessment: assessment,
         energyOpportunityReports: energyOpportunityReports,
@@ -95,7 +101,13 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         //TODO: math implementation needed
         adjustedEnergyUse: assessment.energyUse - totalEnergySavings,
         totalEnergySavings: totalEnergySavings,
-        totalNonOpportunitySavings: totalNonOpportunitySavings
+        totalNonOpportunitySavings: totalNonOpportunitySavings,
+        totalPaybackWithNebs: totalPaybackWithNebs,
+        totalPaybackWithoutNebs: totalPaybackWithoutNebs,
+        totalImplementationCost: implementationCost,
+        nonOpportunityPaybackWithoutNebs: nonOpportunityPaybackWithoutNebs,
+        nonOpportunityPaybackWithNebs: nonOpportunityPaybackWithNebs,
+        totalNonOpportunityAssessmentSavings: totalNonOpportunityAssessmentSavings
     }
 }
 
@@ -111,7 +123,13 @@ export interface AssessmentReport {
     adjustedCost: number,
     adjustedEnergyUse: number,
     totalEnergySavings: number,
-    totalNonOpportunitySavings: number
+    totalNonOpportunitySavings: number,
+    totalPaybackWithNebs: number,
+    totalPaybackWithoutNebs: number,
+    totalImplementationCost: number,
+    nonOpportunityPaybackWithoutNebs: number,
+    nonOpportunityPaybackWithNebs: number,
+    totalNonOpportunityAssessmentSavings: number
 }
 
 ///ENERGY REPORT
@@ -133,12 +151,19 @@ export function getEnergyOpportunityReport(energyOpportunity: IdbEnergyOpportuni
         return nebReport.totalCostSavings
     });
     let totalCostSavings: number = totalEnergyCostSavings + totalNebSavings;
+    let paybackWithNebs: number = (energyOpportunity.implementationCost / totalCostSavings);
+    let paybackWithoutNebs: number = (energyOpportunity.implementationCost / totalEnergyCostSavings);
+
+
+
     return {
         energyOpportunity: energyOpportunity,
         nebReports: nebReports,
         totalEnergyCostSavings: totalEnergyCostSavings,
         totalNebSavings: totalNebSavings,
-        totalCostSavings: totalCostSavings
+        totalCostSavings: totalCostSavings,
+        paybackWithNebs: paybackWithNebs,
+        paybackWithoutNebs: paybackWithoutNebs
     }
 }
 
@@ -148,7 +173,9 @@ export interface EnergyOpportunityReport {
     nebReports: Array<NebReport>,
     totalEnergyCostSavings: number,
     totalNebSavings: number,
-    totalCostSavings: number
+    totalCostSavings: number,
+    paybackWithNebs: number,
+    paybackWithoutNebs: number
 }
 
 ///NEB REPORT

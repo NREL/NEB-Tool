@@ -37,8 +37,9 @@
         </tbody>
     </table>
     <hr>
-    <app-assessment-savings-table [assessment]="assessment"
-        [assessmentReport]="assessmentReport"></app-assessment-savings-table>
+    <app-payback-table [assessmentReport]="assessmentReport"></app-payback-table>
+    <hr>
+    <app-assessment-savings-table [assessmentReport]="assessmentReport"></app-assessment-savings-table>
     <!-- <div class="ps-3">
         <app-non-energy-benefit-report *ngFor="let nebReport of assessmentReport.assessmentNebReports"
             [nebReport]="nebReport"></app-non-energy-benefit-report>
