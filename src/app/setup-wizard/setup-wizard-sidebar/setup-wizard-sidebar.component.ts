@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { IconDefinition, faMaximize, faMinimize, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faMaximize, faMinimize, faRotateLeft, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
@@ -11,6 +11,10 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
+import { CompanySetupComponent } from '../pre-visit/company-setup/company-setup.component'; 
+import { CompanyContactsSetupComponent } from '../pre-visit/company-contacts-setup/company-contacts-setup.component';
+import { CompanySetupService } from '../pre-visit/company-setup/company-setup.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-setup-wizard-sidebar',
@@ -22,6 +26,7 @@ export class SetupWizardSidebarComponent {
   faRotateLeft: IconDefinition = faRotateLeft;
   faMinimize: IconDefinition = faMinimize;
   faMaximize: IconDefinition = faMaximize;
+  faCircleExclamation: IconDefinition = faCircleExclamation;
 
   displaySidebar: boolean = true;
   setupContext: SetupWizardContext;
@@ -41,11 +46,15 @@ export class SetupWizardSidebarComponent {
   company: IdbCompany;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
   keyPerformanceIndicatorsSub: Subscription;
+  companyNameFormControl: FormControl;
+  companyNameFormControlSub: Subscription;
+
   constructor(private router: Router, private setupWizardService: SetupWizardService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private assessmentIdbService: AssessmentIdbService,
     private companyIdbService: CompanyIdbService,
-    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService
+    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
+    private companySetupService: CompanySetupService
   ) {
 
   }
@@ -81,6 +90,10 @@ export class SetupWizardSidebarComponent {
     this.keyPerformanceIndicatorsSub = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.subscribe(_keyPerformanceIndicators => {
       this.keyPerformanceIndicators = _keyPerformanceIndicators;
     });
+
+    this.companyNameFormControlSub = this.companySetupService.companyNameFormControl.subscribe(_companyNameFormControl => {
+      this.companyNameFormControl = _companyNameFormControl;
+    });
   }
 
   ngOnDestroy() {
@@ -90,6 +103,7 @@ export class SetupWizardSidebarComponent {
     this.onSiteVisitSub.unsubscribe();
     this.companySub.unsubscribe();
     this.keyPerformanceIndicatorsSub.unsubscribe();
+    this.companyNameFormControlSub.unsubscribe();
   }
 
   setDisplaySidebar() {

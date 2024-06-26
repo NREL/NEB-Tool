@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { FormControl, Validators } from '@angular/forms';
+import { CompanySetupService } from './company-setup.service';
 
 @Component({
   selector: 'app-company-setup',
@@ -29,7 +30,8 @@ export class CompanySetupComponent {
 
   constructor(private router: Router,
     private companyIdbService: CompanyIdbService,
-    private onSiteVisitIdbService: OnSiteVisitIdbService
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private companySetupService: CompanySetupService
   ) {
 
   }
@@ -41,6 +43,7 @@ export class CompanySetupComponent {
       //   this.companyName = _company.generalInformation.name;
       // }
       this.name = new FormControl(this.selectedCompany.generalInformation.name, [Validators.required]);
+      this.companySetupService.setControl(this.name);
     });
   }
 
