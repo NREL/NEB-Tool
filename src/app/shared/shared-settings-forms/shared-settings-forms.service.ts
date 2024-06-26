@@ -147,7 +147,15 @@ export class SharedSettingsFormsService {
       const zipCode = control.value;
       if (!zipCode) return null; // empty zip code
       // console.log(zipCode, countryCode);
-      const isZipValid = valZip(zipCode.split('-')[0], countryCode || '');
+      const currentConsoleError = console.error;
+      let isZipValid;
+      try {
+        console.error = () => {};
+        isZipValid = valZip(zipCode.split('-')[0], countryCode || '');
+      } finally {
+        console.error = currentConsoleError;
+      }
+      
       // console.log(isZipValid);
       if (isZipValid === false) return {invalidZipCode: true};
       return null;
