@@ -1,6 +1,20 @@
 
 
-.accordion-button:not(.collapsed){
+.contact.accordion-button:not(.collapsed){
     background-color: #0079c2;
     color: white;
+}
+
+
+.accordion-button:not(.collapsed){
+    background-color: white;
+    /* color: white; */
+}
+
+.accordion{
+    --bs-accordion-border-radius: 0;
+}
+
+.accordion-button{
+    padding: .25rem;
 }

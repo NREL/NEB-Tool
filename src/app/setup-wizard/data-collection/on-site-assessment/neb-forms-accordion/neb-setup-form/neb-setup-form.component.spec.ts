@@ -12,6 +12,11 @@ import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benef
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
+import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { IdbContact } from 'src/app/models/contact';
 
 describe('NebSetupFormComponent', () => {
   let component: NebSetupFormComponent;
@@ -20,7 +25,6 @@ describe('NebSetupFormComponent', () => {
   let setupWizardService: Partial<SetupWizardService> = {
     setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
-    highlightNebGuid: new BehaviorSubject<string>(undefined),
   };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
@@ -31,11 +35,16 @@ describe('NebSetupFormComponent', () => {
   };
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]),
-    getByGuid: () => { return getNewIdbNonEnergyBenefit('', '', '', '') }
+    getByGuid: () => { return getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, []) }
+  };
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {};
+  let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {};
+  let contactsIdbService: Partial<ContactIdbService> = {
+    contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, FormsModule],
+      imports: [FontAwesomeModule, FormsModule, HelperPipesModule],
       declarations: [NebSetupFormComponent],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
@@ -43,13 +52,16 @@ describe('NebSetupFormComponent', () => {
         { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: DbChangesService, useValue: {} },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService },
+        { provide: ContactIdbService, useValue: contactsIdbService },
       ]
     })
       .compileComponents();
 
     fixture = TestBed.createComponent(NebSetupFormComponent);
     component = fixture.componentInstance;
-    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '');
+    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, []);
     fixture.detectChanges();
   });
 

@@ -29,7 +29,7 @@ import { TableEntriesModule } from '../shared/table-entries/table-entries.module
 import { OnSiteAssessmentComponent } from './data-collection/on-site-assessment/on-site-assessment.component';
 import { AssessmentDetailsFormComponent } from './data-collection/on-site-assessment/assessment-details-form/assessment-details-form.component';
 import { AssessmentNebsFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
-import { NebSetupFormComponent } from './data-collection/on-site-assessment/assessment-nebs-form/neb-setup-form/neb-setup-form.component';
+import { NebSetupFormComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/neb-setup-form.component';
 import { PreVisitComponent } from './pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import { CompanyContactsFormComponent } from './pre-visit/company-contacts-setup/company-contacts-form/company-contacts-form.component';
@@ -40,6 +40,9 @@ import { AssessmentEnergyOpportunitiesFormComponent } from './data-collection/on
 import { EnergyOpportunitySetupFormComponent } from './data-collection/on-site-assessment/assessment-energy-opportunities-form/energy-opportunity-setup-form/energy-opportunity-setup-form.component';
 import { AddKpiSearchComponent } from './pre-visit/company-kpi-select/add-kpi-search/add-kpi-search.component';
 import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-search/selected-kpi-option.pipe';
+import { AddNebsModalComponent } from './data-collection/on-site-assessment/add-nebs-modal/add-nebs-modal.component';
+import { PerformanceMetricImpactFormComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metric-impact-form/performance-metric-impact-form.component';
+import { NebFormsAccordionComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-forms-accordion.component';
 
 
 
@@ -77,7 +80,10 @@ import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-se
     SelectedKpiOptionPipe,
     DataCollectionManageAssessmentsComponent,
     AssessmentEnergyOpportunitiesFormComponent,
-    EnergyOpportunitySetupFormComponent
+    EnergyOpportunitySetupFormComponent,
+    AddNebsModalComponent,
+    PerformanceMetricImpactFormComponent,
+    NebFormsAccordionComponent
   ],
   imports: [
     CommonModule,

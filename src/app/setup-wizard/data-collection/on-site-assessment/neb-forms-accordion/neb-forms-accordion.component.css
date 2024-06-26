@@ -1,0 +1,16 @@
+.accordion-button, .accordion-item:first-of-type>.accordion-header .accordion-button, .accordion-item:last-of-type>.accordion-header .accordion-button.collapsed  {
+    border-radius: 0;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
+/* 
+.accordion-button {
+    background-color: #186A3B;
+    color: white;
+} */
+
+/* .accordion-button:hover{
+    background-color: var(--bs-btn-hover-bg);
+} */

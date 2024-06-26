@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faDiagramProject, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faContactBook, faDiagramProject, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbFacility } from 'src/app/models/facility';
 import { ProcessEquipment, getNewProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbContact } from 'src/app/models/contact';
@@ -28,6 +28,7 @@ export class FacilityProcessEquipmentSetupComponent {
   faTrash: IconDefinition = faTrash;
   faPlus: IconDefinition = faPlus;
   faUser: IconDefinition = faUser;
+  faContactBook: IconDefinition = faContactBook;
   facility: IdbFacility;
 
   equipmentToDelete: ProcessEquipment;

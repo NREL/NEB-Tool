@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconDefinition, faBullseye, faChartBar, faChevronLeft, faChevronRight, faCircleQuestion, faPlus, faScaleUnbalancedFlip, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faChartBar, faChevronLeft, faChevronRight, faCircleQuestion, faContactBook, faPlus, faScaleUnbalancedFlip, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
@@ -24,6 +24,7 @@ export class CompanyKpiDetailsComponent {
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
   faUser: IconDefinition = faUser;
+  faContactBook: IconDefinition = faContactBook;
 
   keyPerformanceIndicator: IdbKeyPerformanceIndicator;
   primaryKPIs: Array<PrimaryKPI> = PrimaryKPIs;

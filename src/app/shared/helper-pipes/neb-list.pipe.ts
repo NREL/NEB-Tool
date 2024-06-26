@@ -13,7 +13,7 @@ export class NebListPipe implements PipeTransform {
       });
     } else if (context == 'energyOpportunity') {
       return nonEnergyBenefits.filter(neb => {
-        return neb.energyOpportunityIds.includes(contextGUID)
+        return neb.energyOpportunityId == contextGUID;
       });
     }
     return [];

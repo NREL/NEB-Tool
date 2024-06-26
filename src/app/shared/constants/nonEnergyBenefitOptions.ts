@@ -9,7 +9,8 @@ export interface NebOption {
     // decreaseCosts: boolean,
     isQualitative: boolean,
     howToCalculate: string,
-    KPM: Array<KeyPerformanceMetricValue>
+    KPM: Array<KeyPerformanceMetricValue>,
+    selected?: boolean
 };
 
 export type NebOptionValue = 'improvedImageOrReputation' |
@@ -35,7 +36,6 @@ export type NebOptionValue = 'improvedImageOrReputation' |
     'reducedLaborServiceAgreementAndOtherExpenses' |
     'reducedWearAndTear' |
     'reducedLaborCostsForProblemSolvingAndRepair' |
-    'reduceEnergy' |
     'reduceHazardousWaste' |
     'reduceNonhazardousWaste' |
     'reduceProductWaste' |
@@ -298,17 +298,6 @@ export const NebOptions: Array<NebOption> = [
         isQualitative: true,
         howToCalculate: "N/A",
         KPM: ["productivityRateThroughput", "maintenanceCost", "engineeringSupport"],
-    },
-    {
-        label: "Reduce energy",
-        htmlLabel: "Reduce energy",
-        optionValue: "reduceEnergy",
-        // riskReduction: true,
-        // valuePropositionIncrease: true,
-        // decreaseCosts: true,
-        isQualitative: true,
-        howToCalculate: "N/A",
-        KPM: ["numberEquipmentCausedDefects", "equipmentDowntime", "percentCapacityUtilization", "overallEquipmentEffectiveness", "forkTruckBreakdownTime", "energyCostPerUnit"],
     },
     {
         label: "Reduce hazardous waste",

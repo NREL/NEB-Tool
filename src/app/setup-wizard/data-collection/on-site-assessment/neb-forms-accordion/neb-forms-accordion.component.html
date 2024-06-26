@@ -1,0 +1,32 @@
+<ng-template [ngIf]="nebGuids.length > 0" [ngIfElse]="noNEBsBlock">
+    <div class="accordion" id="nebFormsAccordion">
+        <div class="accordion-item" *ngFor="let nebGuid of nebGuids; let index = index;">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#'+nebGuid" aria-expanded="true" [attr.aria-controls]="nebGuid"
+                    [ngClass]="{'collapsed': accordionIndex != index}" (click)="setAccordionIndex(index)">
+                    <fa-icon class="pe-2" [icon]="faWeightHanging"></fa-icon> {{nebGuid |
+                    nebDisplay:nonEnergyBenefits}}
+                </button>
+            </h2>
+            <div [id]="nebGuid" class="accordion-collapse collapse" data-bs-parent="#nebFormsAccordion"
+                [ngClass]="{'show': accordionIndex == index}">
+                <div class="accordion-body">
+                    <app-neb-setup-form [nebGuid]="nebGuid"></app-neb-setup-form>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #noNEBsBlock>
+    <div class="d-flex flex-column w-100 justify-content-center mt-3">
+        <div class="alert alert-info small text-center p-2">
+            No NEBs found for this
+            @if(assessment){
+            assessment.
+            }@else {
+            opportunity.
+            }
+        </div>
+    </div>
+</ng-template>

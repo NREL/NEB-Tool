@@ -1,172 +1,109 @@
-<div class="card" [id]="'energyOpportunity_'+energyOpportunity.guid"
-    [ngClass]="{'shadow-lg': energyOpportunity.guid == highlightOpportunityGuid  }">
-    <div class="card-header text-bg-dark">
-        <h5 class="card-title mb-0">
-            <fa-icon [icon]="faFileLines" class="me-2"></fa-icon>{{energyOpportunity.name}}
-        </h5>
-    </div>
-    <div class="card-body">
-        <form>
-            <div class="row mb-1">
-                <label class="col-sm-5 col-form-label" for="energyOpportunityName">Energy Opportunity Name</label>
-                <div class="col-sm-7">
-                    <input name="energyOpportunityName" type="text" class="form-control"
-                        [(ngModel)]="energyOpportunity.name" minlength="1" maxlength="42" id="energyOpportunityName"
-                        (input)="saveEnergyOpportunity()">
-                </div>
-            </div>
-            <div class="row mb-1">
-                <label class="col-sm-5 col-form-label" for="energyOpportunityType">Opportunity Type</label>
-                <div class="col-sm-7">
-                    <select name="opportunityType" class="form-select" id="opportunityType" [(ngModel)]="energyOpportunity.opportunityType"
-                        (change)="saveEnergyOpportunity()">
-                        <option [ngValue]="undefined">
-                            Other
-                        </option>
-                        <option *ngFor="let opportunityType of opportunityTypes" [ngValue]="opportunityType.value">
-                            {{opportunityType.label}}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="row mb-1">
-                <label class="col-sm-5 col-form-label" for="implementationCost">Implementation Cost</label>
-                <div class="col-sm-7">
-                    <div class="input-group">
-                        <input name="implementationCost" type="number" class="form-control"
-                            [(ngModel)]="energyOpportunity.implementationCost" id="implementationCost" (input)="saveEnergyOpportunity()">
-                        <span class="input-group-text">&dollar;</span>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-1">
-            <div class="row mb-1">
-                <div class="col-12">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
-                            [(ngModel)]="energyOpportunity.includeSavings" name="includeSavings" (input)="saveEnergyOpportunity()">
-                        <label class="form-check-label" for="includeSavings">Include Savings</label>
-                    </div>
-                </div>
-            </div>
-
-            <ng-container *ngIf="energyOpportunity.includeSavings">
-                <div class="row mb-1">
-                    <label class="col-sm-5 col-form-label" for="energySavings">Energy Savings</label>
-                    <div class="col-sm-7">
-                        <div class="input-group">
-                            <input name="energySavings" type="number" class="form-control"
-                                [(ngModel)]="energyOpportunity.energySavings" id="energySavings" (input)="saveEnergyOpportunity()">
-                            <span class="input-group-text">MMBtu/yr</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-1">
-                    <label class="col-sm-5 col-form-label" for="costSavings">Cost Savings</label>
-                    <div class="col-sm-7">
-                        <div class="input-group">
-                            <input name="costSavings" type="number" class="form-control"
-                                [(ngModel)]="energyOpportunity.costSavings" id="costSavings" (input)="saveEnergyOpportunity()">
-                            <span class="input-group-text">&dollar;</span>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
-            <hr class="my-1">
-            <div class="row mb-1">
-                <div class="col-sm-5 col-form-label">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
-                            [(ngModel)]="energyOpportunity.includeNote" name="includeNote" (input)="saveEnergyOpportunity()">
-                        <label class="form-check-label" for="includeNote">Notes</label>
-                    </div>
-                </div>
-                <div class="col-sm-7" *ngIf="energyOpportunity.includeNote">
-                    <textarea name="nebNotes" type="number" class="form-control" [(ngModel)]="energyOpportunity.notes"
-                        id="nebNotes"></textarea>
-                </div>
-            </div>
-            <hr class="my-1">
-
-            <div class="row mb-1">
-                <label class="col-sm-5 col-form-label" for="nonEnergyBenefitIds">Non-Energy Benefits</label>
-                <div class="col-sm-7">
-                    <ng-template [ngIf]="energyOpportunity.nonEnergyBenefitIds.length != 0" [ngIfElse]="nonNebsBlock">
-                        <button class="btn  btn-dark btn-sm add-neb-btn m-1"
-                            *ngFor="let nebGUID of energyOpportunity.nonEnergyBenefitIds" (click)="highlightNEB(nebGUID)">
-                            <fa-icon [icon]="faWeightHanging"></fa-icon>
-                            {{nebGUID | nebDisplay: nonEnergyBenefits}}
-                        </button>
-                        <button class="btn btn-dark btn-sm add-neb-btn m-1" (click)="showSuggestedNEBs()">
-                            <fa-icon [icon]="faSearchPlus"></fa-icon> Suggested NEBs
-                        </button>
-                    </ng-template>
-                    <ng-template #nonNebsBlock>
-                        <button class="btn btn-dark btn-sm add-neb-btn w-100" (click)="showSuggestedNEBs()">
-                            <fa-icon [icon]="faSearchPlus"></fa-icon> Suggested NEBs
-                        </button>
-                    </ng-template>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="card-footer">
-        <div class="d-flex w-100 justify-content-between">
-            <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
-                <fa-icon [icon]="faTrash"></fa-icon>
-            </button>
-        </div>
-    </div>
+<div class="d-flex w-100 justify-content-end pb-2">
+    <button class="btn btn-dark btn-sm add-neb-btn me-2" (click)="showSuggestedNEBs()">
+        <fa-icon [icon]="faSearchPlus"></fa-icon> Find NEBs
+    </button>
+    <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
+        <fa-icon [icon]="faTrash"></fa-icon> Delete
+    </button>
 </div>
 
+<form>
+    <div class="row">
+        <label class="col-sm-5 col-form-label" for="energyOpportunityName">Energy Opportunity Name</label>
+        <div class="col-sm-7">
+            <input name="energyOpportunityName" type="text" class="form-control" [(ngModel)]="energyOpportunity.name"
+                minlength="1" maxlength="42" id="energyOpportunityName" (input)="saveEnergyOpportunity()">
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-sm-5 col-form-label" for="energyOpportunityType">Opportunity Type</label>
+        <div class="col-sm-7">
+            <select name="opportunityType" class="form-select" id="opportunityType"
+                [(ngModel)]="energyOpportunity.opportunityType" (change)="saveEnergyOpportunity()">
+                <option [ngValue]="undefined">
+                    Other
+                </option>
+                <option *ngFor="let opportunityType of opportunityTypes" [ngValue]="opportunityType.value">
+                    {{opportunityType.label}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-sm-5 col-form-label" for="implementationCost">Implementation Cost</label>
+        <div class="col-sm-7">
+            <div class="input-group">
+                <input name="implementationCost" type="number" class="form-control"
+                    [(ngModel)]="energyOpportunity.implementationCost" id="implementationCost"
+                    (input)="saveEnergyOpportunity()">
+                <span class="input-group-text">&dollar;</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
+                    [(ngModel)]="energyOpportunity.includeSavings" name="includeSavings"
+                    (input)="saveEnergyOpportunity()">
+                <label class="form-check-label" for="includeSavings">Include Savings</label>
+            </div>
+        </div>
+    </div>
 
-<div [ngClass]="{'window-overlay': displayDeleteModal || displaySuggestedNEBsModal}"></div>
+    <ng-container *ngIf="energyOpportunity.includeSavings">
+        <div class="row">
+            <label class="col-sm-5 col-form-label" for="energySavings">Energy Savings</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input name="energySavings" type="number" class="form-control"
+                        [(ngModel)]="energyOpportunity.energySavings" id="energySavings"
+                        (input)="saveEnergyOpportunity()">
+                    <span class="input-group-text">MMBtu/yr</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-5 col-form-label" for="costSavings">Cost Savings</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input name="costSavings" type="number" class="form-control"
+                        [(ngModel)]="energyOpportunity.costSavings" id="costSavings" (input)="saveEnergyOpportunity()">
+                    <span class="input-group-text">&dollar;</span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="row">
+        <div class="col-sm-5 col-form-label">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
+                    [(ngModel)]="energyOpportunity.includeNote" name="includeNote" (input)="saveEnergyOpportunity()">
+                <label class="form-check-label" for="includeNote">Notes</label>
+            </div>
+        </div>
+        <div class="col-sm-7" *ngIf="energyOpportunity.includeNote">
+            <textarea name="opportunityNotes" type="number" class="form-control" [(ngModel)]="energyOpportunity.notes"
+                id="opportunityNotes"></textarea>
+        </div>
+    </div>
+    <app-neb-forms-accordion [energyOpportunity]="energyOpportunity"></app-neb-forms-accordion>
+</form>
+
+<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">
-    <div class="popup-header">Discard this energy opportunity?
+    <div class="popup-header">Delete this energy opportunity?
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
     </div>
     <div class="popup-body">
         <div class="alert alert-info">
-            Are you sure you want to discard this energy opportunity?
+            Are you sure you want to delete this energy opportunity?
         </div>
         <hr>
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
         <button class="btn btn-danger" (click)="deleteEnergyOpportunity()"><fa-icon [icon]="faTrash"
-                class="me-1"></fa-icon>Discard Opportunity</button>
-    </div>
-</div>
-
-
-<div class="popup" [ngClass]="{'open': displaySuggestedNEBsModal }">
-    <div class="popup-header">Suggest NEBs for {{energyOpportunity.name}}
-        <button type="button" class="btn-close float-end" aria-label="Close"
-            (click)="closeSuggestedNEBs(true)"></button>
-    </div>
-    <div class="popup-body">
-        <p>
-            These NEBs were commonly found associated with this type of energy opportunity.
-        </p>
-        <div class="list-group">
-            <div class="list-group-item list-group-item-action"
-                *ngFor="let suggestedNEB of suggestedNEBs; let index = index;"
-                (click)="toggleSuggestedNEB(suggestedNEB.guid)">
-                <div class="d-flex justify-content-between w-100">
-                    <div class="p-0">
-                        <ng-template [ngIf]="energyOpportunity.nonEnergyBenefitIds.includes(suggestedNEB.guid)">
-                            <fa-icon [icon]="faCircleCheck"></fa-icon>
-                        </ng-template>
-                        {{suggestedNEB.name}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-    </div>
-    <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" (click)="closeSuggestedNEBs(true)">Cancel</button>
-        <button class="btn btn-dark add-neb-btn" (click)="addSuggestedNEBs()"><fa-icon [icon]="faSave"
-                class="me-1"></fa-icon>Save NEBs</button>
+                class="me-1"></fa-icon>Delete Opportunity</button>
     </div>
 </div>
