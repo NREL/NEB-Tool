@@ -18,7 +18,8 @@ export interface IdbNonEnergyBenefit extends IdbEntry {
 export interface PerformanceMetricImpact {
     kpmValue: KeyPerformanceMetricValue,
     modificationValue: number,
-    costAdjustment: number
+    costAdjustment: number,
+    percentSavings?: number
 }
 
 export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, facilityId: string, assessmentId: string, energyOpportunityId: string, nebOption: NebOption, performanceMetrics: Array<KeyPerformanceMetric>): IdbNonEnergyBenefit {

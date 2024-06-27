@@ -1,4 +1,5 @@
-import { KeyPerformanceMetric } from "../shared/constants/keyPerformanceMetrics";
+import { KeyPerformanceIndicatorValue } from "../shared/constants/keyPerformanceIndicatorOptions";
+import { KeyPerformanceMetric, KeyPerformanceMetricValue } from "../shared/constants/keyPerformanceMetrics";
 import { NebOptionValue } from "../shared/constants/nonEnergyBenefitOptions";
 import { IdbAssessment } from "./assessment";
 import { IdbEnergyOpportunity } from "./energyOpportunity";
@@ -31,25 +32,7 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
     });
 
     let allNebReports: Array<NebReport> = _.concat(energyOpportunityNebReports, assessmentNebReports);
-    let includedNebOptionValues: Array<{ nebName: string, nebValue: NebOptionValue }> = allNebReports.map(report => {
-        return { nebName: report.nebName, nebValue: report.nebValue }
-    });
 
-    let uniqNebs: Array<{ nebName: string, nebValue: NebOptionValue }> = _.uniqBy(includedNebOptionValues, (val: { nebName: string, nebValue: NebOptionValue }) => {
-        return val.nebValue
-    });
-    let totalNebReports: Array<NebReport> = new Array();
-    // uniqNebs.forEach(uniqNeb => {
-    //     let correspondingNebs: Array<NebReport> = allNebReports.filter(nebReport => {
-    //         return nebReport.nebValue == uniqNeb.nebValue
-    //     });
-    //     totalNebReports.push({
-    //         nebName: string,
-    //         nebValue: NebOptionValue,
-    //         reportPerformanceMetrics: Array<ReportPerformanceMetric>
-    //         totalCostSavings: number
-    //     })
-    // });
 
     let totalNonOpportunitySavings: number = _.sumBy(assessmentNebReports, (report: NebReport) => {
         return report.totalCostSavings
@@ -92,7 +75,7 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         assessment: assessment,
         energyOpportunityReports: energyOpportunityReports,
         assessmentNebReports: assessmentNebReports,
-        totalNebReports: totalNebReports,
+        // totalNebReports: totalNebReports,
         totalEnergyCostSavings: totalEnergyCostSavings,
         totalAssessmentNebSavings: totalAssessmentNebSavings,
         totalNebSavings: totalNebSavings,
@@ -107,7 +90,8 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         totalImplementationCost: implementationCost,
         nonOpportunityPaybackWithoutNebs: nonOpportunityPaybackWithoutNebs,
         nonOpportunityPaybackWithNebs: nonOpportunityPaybackWithNebs,
-        totalNonOpportunityAssessmentSavings: totalNonOpportunityAssessmentSavings
+        totalNonOpportunityAssessmentSavings: totalNonOpportunityAssessmentSavings,
+        keyPerformanceIndicatorReport: getKeyPerfomanceIndicatorReport(allNebReports)
     }
 }
 
@@ -115,7 +99,7 @@ export interface AssessmentReport {
     assessment: IdbAssessment,
     energyOpportunityReports: Array<EnergyOpportunityReport>,
     assessmentNebReports: Array<NebReport>,
-    totalNebReports: Array<NebReport>,
+    // totalNebReports: Array<NebReport>,
     totalEnergyCostSavings: number,
     totalAssessmentNebSavings: number,
     totalNebSavings: number,
@@ -129,7 +113,8 @@ export interface AssessmentReport {
     totalImplementationCost: number,
     nonOpportunityPaybackWithoutNebs: number,
     nonOpportunityPaybackWithNebs: number,
-    totalNonOpportunityAssessmentSavings: number
+    totalNonOpportunityAssessmentSavings: number,
+    keyPerformanceIndicatorReport: KeyPerformanceIndicatorReport
 }
 
 ///ENERGY REPORT
@@ -181,20 +166,19 @@ export interface EnergyOpportunityReport {
 ///NEB REPORT
 export function getNebReport(nonEnergyBenefit: IdbNonEnergyBenefit, companyPerformanceMetrics: Array<KeyPerformanceMetric>): NebReport {
     let reportPerformanceMetrics: Array<ReportPerformanceMetric> = new Array();
-    nonEnergyBenefit.performanceMetricImpacts.forEach(metric => {
+    nonEnergyBenefit.performanceMetricImpacts.forEach(performanceMetricImpact => {
         let keyPerformanceMetric: KeyPerformanceMetric = companyPerformanceMetrics.find(companyKPM => {
-            return companyKPM.value == metric.kpmValue
+            return companyKPM.value == performanceMetricImpact.kpmValue
         });
         if (keyPerformanceMetric.includeMetric) {
             reportPerformanceMetrics.push({
-                performanceMetricImpact: metric,
+                performanceMetricImpact: performanceMetricImpact,
                 keyPerformanceMetric: keyPerformanceMetric
             })
         }
     });
     return {
-        nebName: nonEnergyBenefit.name,
-        nebValue: nonEnergyBenefit.nebOptionValue,
+        nonEnergyBenefit: nonEnergyBenefit,
         reportPerformanceMetrics: reportPerformanceMetrics,
         //todo: update to handle cost adjustment +/- as good
         totalCostSavings: _.sumBy(reportPerformanceMetrics, (reportPerformanceMetric: ReportPerformanceMetric) => {
@@ -207,8 +191,7 @@ export function getNebReport(nonEnergyBenefit: IdbNonEnergyBenefit, companyPerfo
 }
 
 export interface NebReport {
-    nebName: string,
-    nebValue: NebOptionValue,
+    nonEnergyBenefit: IdbNonEnergyBenefit,
     reportPerformanceMetrics: Array<ReportPerformanceMetric>
     totalCostSavings: number
 }
@@ -218,3 +201,80 @@ export interface ReportPerformanceMetric {
     performanceMetricImpact: PerformanceMetricImpact
 }
 
+export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): KeyPerformanceIndicatorReport {
+    let kpiReportItems: Array<KeyPerformanceIndicatorReportItem> = new Array();
+    nebReports.forEach(nebReport => {
+        nebReport.reportPerformanceMetrics.forEach(performanceMetric => {
+            let itemExistIndex: number = kpiReportItems.findIndex(reportItem => {
+                return reportItem.keyPerformanceMetric.value == performanceMetric.keyPerformanceMetric.value;
+            });
+            if (itemExistIndex != -1) {
+                kpiReportItems[itemExistIndex].performanceMetricImpact.costAdjustment += performanceMetric.performanceMetricImpact.costAdjustment;
+                kpiReportItems[itemExistIndex].performanceMetricImpact.modificationValue += performanceMetric.performanceMetricImpact.modificationValue;
+                kpiReportItems[itemExistIndex].performanceMetricImpact.percentSavings = (kpiReportItems[itemExistIndex].performanceMetricImpact.costAdjustment / kpiReportItems[itemExistIndex].keyPerformanceMetric.baselineCost) * 100;
+            } else {
+                kpiReportItems.push({
+                    keyPerformanceMetric: performanceMetric.keyPerformanceMetric,
+                    performanceMetricImpact: {
+                        ...performanceMetric.performanceMetricImpact,
+                        percentSavings: (performanceMetric.performanceMetricImpact.costAdjustment / performanceMetric.keyPerformanceMetric.baselineCost) * 100
+                    },
+                    // nebsImpacts: [{
+                    //     nebName: string,
+                    //     nebValue: NebOptionValue,
+                    //     performanceMetricImpact: PerformanceMetricImpact
+                    // }]
+
+                })
+            }
+        })
+    })
+
+    let baselineCost: number = _.sumBy(kpiReportItems, (reportItem: KeyPerformanceIndicatorReportItem) => {
+        if (reportItem.keyPerformanceMetric.isQuantitative) {
+            return reportItem.keyPerformanceMetric.baselineCost;
+        }
+        return 0
+    });
+    let annualSavings: number = _.sumBy(kpiReportItems, (reportItem: KeyPerformanceIndicatorReportItem) => {
+        if (reportItem.keyPerformanceMetric.isQuantitative) {
+            return reportItem.performanceMetricImpact.costAdjustment;
+        }
+        return 0
+    });
+    let modifiedCost: number = baselineCost - annualSavings;
+    console.log(annualSavings);
+    let percentSavings: number = (annualSavings / baselineCost) * 100
+    return {
+        kpiReportItems: kpiReportItems,
+        total: {
+            baselineCost: baselineCost,
+            annualSavings: annualSavings,
+            modifiedCost: modifiedCost,
+            percentSavings: percentSavings
+        }
+    }
+}
+
+
+
+
+export interface KeyPerformanceIndicatorReport {
+    kpiReportItems: Array<KeyPerformanceIndicatorReportItem>,
+    total: {
+        baselineCost: number,
+        annualSavings: number,
+        modifiedCost: number,
+        percentSavings: number
+    }
+}
+
+export interface KeyPerformanceIndicatorReportItem {
+    keyPerformanceMetric: KeyPerformanceMetric,
+    performanceMetricImpact: PerformanceMetricImpact,
+    // nebsImpacts: Array<{
+    //     nebName: string,
+    //     nebValue: NebOptionValue,
+    //     performanceMetricImpact: PerformanceMetricImpact
+    // }>
+}

@@ -38,7 +38,7 @@
         <tr *ngFor="let nebReport of assessmentReport.assessmentNebReports">
             <td class="ps-3">
                 <fa-icon class="pe-1" [icon]="faWeightHanging"></fa-icon>
-                {{nebReport.nebName}}
+                {{nebReport.nonEnergyBenefit.name}}
             </td>
             <td class="text-right">
                 <app-single-cell-item [numValue]="nebReport.totalCostSavings"
@@ -80,7 +80,7 @@
             <tr *ngFor="let nebReport of energyOpportunityReport.nebReports">
                 <td class="ps-5">
                     <fa-icon class="pe-1" [icon]="faWeightHanging"></fa-icon>
-                    {{nebReport.nebName}}
+                    {{nebReport.nonEnergyBenefit.name}}
                 </td>
                 <td class="text-right">
                     <app-single-cell-item [numValue]="nebReport.totalCostSavings"
