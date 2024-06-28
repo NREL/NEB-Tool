@@ -61,7 +61,10 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
 
     let totalCostSavings: number = totalEnergyCostSavings + totalNebSavings;
 
-    let totalEnergySavings: number = totalEnergyCostSavings + assessment.energySavings;
+    let totalEnergySavings: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
+        return report.energyOpportunity.energySavings
+    }) + assessment.energySavings;
+
     let implementationCost: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
         return report.energyOpportunity.implementationCost
     }) + assessment.implementationCost
