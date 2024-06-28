@@ -58,4 +58,13 @@ export class CompanyContactsFormComponent {
     await this.contactIdbService.setContacts();
     this.closeDeleteModal();
   }
+
+  setRequiredInvalidControlsTouched() {
+      Object.keys(this.contactForm.controls).forEach(key => {
+        const control = this.contactForm.get(key);
+        if (control.errors && control.errors['required']) {
+          control.markAsTouched();
+        }
+  });
+  }
 }

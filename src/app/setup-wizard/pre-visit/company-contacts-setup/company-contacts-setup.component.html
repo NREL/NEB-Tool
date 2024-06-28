@@ -44,3 +44,14 @@
         </button>
     </div>
 </nav>
+<div [ngClass]="{'window-overlay': routeGuardWarningModal}"></div>
+<div class="popup" [ngClass]="{'open': routeGuardWarningModal }">
+    <div class="popup-body">
+        <div class="alert alert-danger">
+            Please fill the required fields.
+        </div>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeWarningModal()">OK</button>
+    </div>
+</div>

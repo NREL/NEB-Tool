@@ -27,6 +27,7 @@ export class CompanySetupComponent {
   selectedCompany: IdbCompany;
   selectedCompanySub: Subscription;
   name: FormControl;
+  routeGuardWarningModal: boolean = false;
 
   constructor(private router: Router,
     private companyIdbService: CompanyIdbService,
@@ -52,7 +53,7 @@ export class CompanySetupComponent {
   canDeactivate(): Observable<boolean> {
     if (this.name && this.name.getError('required')) {
       this.name.markAsTouched();
-      alert('Please fill the required fields.');
+      this.dislayWarningModal();
       return of(false);
     }
     return of(true);
@@ -71,5 +72,12 @@ export class CompanySetupComponent {
     this.selectedCompany = this.companyIdbService.selectedCompany.getValue();
     this.selectedCompany.generalInformation.name = this.name.value;
     await this.companyIdbService.asyncUpdate(this.selectedCompany);
+  }
+
+  dislayWarningModal() {
+    this.routeGuardWarningModal = true;
+  }
+  closeWarningModal() {
+    this.routeGuardWarningModal = false;
   }
 }

@@ -93,7 +93,8 @@ const routes: Routes = [
           },
           {
             path: 'company-contacts',
-            component: CompanyContactsSetupComponent
+            component: CompanyContactsSetupComponent,
+            canDeactivate: [CanDeactivateGuard]
           },
           {
             path: 'facility-setup',

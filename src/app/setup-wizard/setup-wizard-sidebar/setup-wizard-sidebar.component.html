@@ -21,7 +21,7 @@
                 <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/company-setup'"
                     [routerLinkActive]="['active']">
                     General Details
-                    <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="companyNameFormControl.touched && companyNameFormControl.getError('required')"></fa-icon>
+                    <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="companyNameFormControl?.touched && companyNameFormControl?.getError('required')"></fa-icon>
                 </a>
             </div>
             <div class="nav-item">

@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faAddressBook, faChevronLeft, faChevronRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { IdbContact, getNewIdbContact } from 'src/app/models/contact';
 import { IdbCompany } from 'src/app/models/company';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
-import { Subscription, firstValueFrom } from 'rxjs';
+import { Observable, Subscription, firstValueFrom, of } from 'rxjs';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import * as _ from 'lodash';
 import { CompanyContactsFormService } from './company-contacts-form/company-contacts-form.service';
 import { FormGroup } from '@angular/forms';
+import { setAlternateWeakRefImpl } from '@angular/core/primitives/signals';
+import { CompanyContactsFormComponent } from './company-contacts-form/company-contacts-form.component';
 
 @Component({
   selector: 'app-company-contacts-setup',
@@ -22,6 +24,9 @@ export class CompanyContactsSetupComponent {
   allContacts: Array<IdbContact>;
   companyContactGuids: Array<string>;
   contactsSub: Subscription
+  companyContacts: Array<IdbContact>;
+  @ViewChildren(CompanyContactsFormComponent)contactForms: QueryList<CompanyContactsFormComponent>;
+  routeGuardWarningModal: boolean = false;
 
   selectedCompany: IdbCompany;
   selectedCompanySub: Subscription;
@@ -55,6 +60,15 @@ export class CompanyContactsSetupComponent {
     });
   }
 
+  canDeactivate(): Observable<boolean> {
+    if (this.hasInvalidContacts) {
+      this.contactForms.forEach(form => form.setRequiredInvalidControlsTouched());
+      this.dislayWarningModal();
+      return of(false);
+    }
+    return of(true);
+  }
+
   setCompanyContacts() {
     if (this.selectedCompany && this.allContacts) {
       let tmpCompanyContacts: Array<IdbContact> = this.allContacts.filter(contact => {
@@ -72,7 +86,13 @@ export class CompanyContactsSetupComponent {
           this.companyContactGuids = tmpContactIds;
         }
       }
+      // console.log(this.companyContactGuids)
     }
+  }
+
+  ngOnDestroy() {
+    this.selectedCompanySub.unsubscribe();
+    this.contactsSub.unsubscribe();
   }
 
   goBack() {
@@ -98,17 +118,19 @@ export class CompanyContactsSetupComponent {
 
   setHasInvalidContacts() {
     if (this.selectedCompany && this.allContacts) {
-      let companyContacts: Array<IdbContact> = this.allContacts.filter(contact => {
+      this.companyContacts = this.allContacts.filter(contact => {
         return contact.companyId == this.selectedCompany.guid;
       });
       let hasInvalidContacts: boolean = false;
-      companyContacts.forEach(contact => {
+      let contactForms: Array<FormGroup> = [];
+      this.companyContacts.forEach(contact => {
         let contactForm: FormGroup = this.companyContactsFormService.getFormFromIdbContact(contact);
+        contactForms.push(contactForm);
         if (contactForm.invalid) {
           // console.log(contactForm);
           for (const name of Object.keys(contactForm.controls)) {
             const control = contactForm.get(name);
-            if (control?.errors?.['required']) {
+            if (control && control.errors?.['required']) {
               hasInvalidContacts = true;
               break;
             }
@@ -127,5 +149,11 @@ export class CompanyContactsSetupComponent {
       });
       this.hasInvalidContacts = hasInvalidContacts;
     }
+  }
+  dislayWarningModal() {
+    this.routeGuardWarningModal = true;
+  }
+  closeWarningModal() {
+    this.routeGuardWarningModal = false;
   }
 }
