@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AssessmentReport } from 'src/app/models/reports';
+import { AssessmentReport } from '../../calculations/assessmentReport';
 
 @Component({
   selector: 'app-payback-table',

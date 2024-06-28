@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IconDefinition, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
-import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
-import { NebReport } from 'src/app/models/reports';
+import { NebReport } from '../../calculations/nebReport';
 
 @Component({
   selector: 'app-non-energy-benefit-report',

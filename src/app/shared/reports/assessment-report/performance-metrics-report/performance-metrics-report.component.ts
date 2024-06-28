@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
-import { KeyPerformanceIndicatorReport } from 'src/app/models/reports';
+import { KeyPerformanceIndicatorReport } from '../../calculations/keyPerformanceIndicatorReport';
 
 @Component({
   selector: 'app-performance-metrics-report',

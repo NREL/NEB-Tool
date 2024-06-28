@@ -8,9 +8,9 @@ import { IdbCompany } from 'src/app/models/company';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
-import { AssessmentReport, NebReport, getAssessmentReport, getNebReport } from 'src/app/models/reports';
 import { KeyPerformanceMetric } from '../../constants/keyPerformanceMetrics';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
+import { AssessmentReport, getAssessmentReport } from '../calculations/assessmentReport';
 
 @Component({
   selector: 'app-assessment-report',
