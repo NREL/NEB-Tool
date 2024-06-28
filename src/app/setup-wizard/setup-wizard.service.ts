@@ -24,6 +24,3 @@ export class SetupWizardService {
     this.displayContactModal = new BehaviorSubject<{ context: ContactContext, viewContact: IdbContact, contextGuid: string }>(undefined);
   }
 }
-
-
-export type SetupWizardContext = 'preVisit' | 'postVisit' | 'onSite' | 'full';

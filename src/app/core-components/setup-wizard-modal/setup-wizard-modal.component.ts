@@ -7,7 +7,6 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { SharedDataService } from '../../shared/shared-services/shared-data.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
@@ -37,11 +36,13 @@ export class SetupWizardModalComponent {
 
   selectedFacilitySub: Subscription;
 
+  setupWizardSection: 'dataCollection' | 'dataEvaluation' = 'dataCollection';
+
   displayCreateNewModal: boolean = false;
 
   createAssessmentSub: Subscription;
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
-    private router: Router, private setupWizardService: SetupWizardService,
+    private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private sharedDataService: SharedDataService,
     private userIdbService: UserIdbService) {
@@ -154,7 +155,15 @@ export class SetupWizardModalComponent {
       this.router.navigateByUrl('/setup-wizard/pre-visit/' + this.selectedOnSiteVisitGuid);
     } else {
       let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.getByGuid(this.selectedOnSiteVisitGuid);
-      this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/assessment/' + onSiteVisit.assessmentIds[0]);
+      if (this.setupWizardSection == 'dataEvaluation') {
+        this.router.navigateByUrl('/setup-wizard/data-evaluation/' + this.selectedOnSiteVisitGuid);
+      } else {
+        if (onSiteVisit.assessmentIds.length > 0) {
+          this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/assessment/' + onSiteVisit.assessmentIds[0]);
+        } else {
+          this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/manage-assessments');
+        }
+      }
     }
     this.closeCreateNewModal();
   }
