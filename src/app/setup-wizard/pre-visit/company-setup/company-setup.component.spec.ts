@@ -9,7 +9,7 @@ import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/shared-settings-forms.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
@@ -37,7 +37,7 @@ describe('CompanySetupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
+      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule, ReactiveFormsModule],
       declarations: [CompanySetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },

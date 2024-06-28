@@ -43,4 +43,9 @@ export class ContactIdbService {
     contact = await firstValueFrom(this.updateWithObservable(contact));
     await this.setContacts();
   }
+
+  getContactByGuid(guid: string): IdbContact {
+    let contacts: Array<IdbContact> = this.contacts.getValue();
+    return contacts.find(contact => { return contact.guid == guid });
+  }
 }

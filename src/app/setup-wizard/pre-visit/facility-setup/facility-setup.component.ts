@@ -5,6 +5,7 @@ import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-facility-setup',
@@ -13,8 +14,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 })
 export class FacilitySetupComponent {
 
-  facilityName: string;
-
+  name: FormControl;
 
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
@@ -32,18 +32,14 @@ export class FacilitySetupComponent {
   }
 
   ngOnInit() {
-    this.facility = this.facilityIdbService.selectedFacility.getValue();
-    if (this.facility) {
-      this.facilityName = this.facility.generalInformation.name;
-    } else {
-      this.router.navigateByUrl('/setup-wizard');
-    }
+    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
+    this.name = new FormControl(facility.generalInformation.name, [Validators.required]);
   }
 
   async saveChanges() {
-    this.facility = this.facilityIdbService.selectedFacility.getValue();
-    this.facility.generalInformation.name = this.facilityName;
-    await this.facilityIdbService.asyncUpdate(this.facility);
+    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
+    facility.generalInformation.name = this.name.value;
+    await this.facilityIdbService.asyncUpdate(facility);
   }
 
   goBack() {

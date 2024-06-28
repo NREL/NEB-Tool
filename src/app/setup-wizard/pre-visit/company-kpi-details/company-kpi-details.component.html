@@ -122,7 +122,7 @@
                 </form>
                 <hr>
                 <button class="btn btn-sm btn-primary me-1"
-                    *ngFor="let contact of keyPerformanceIndicator.guid | contactName:'KPI': contacts;"
+                    *ngFor="let contact of keyPerformanceIndicator.guid | associatedContacts:'KPI': contacts;"
                     (click)="openContactModal(contact)">
                     <fa-icon [icon]="faUser"></fa-icon>
                     {{contact.name}}

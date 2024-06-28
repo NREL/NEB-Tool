@@ -6,7 +6,7 @@
 
     <div class="pe-2">
         <button class="btn btn-sm btn-primary me-1"
-            *ngFor="let contact of nonEnergyBenefit.guid | contactName:'nonEnergyBenefit': contacts;"
+            *ngFor="let contact of nonEnergyBenefit.guid | associatedContacts:'nonEnergyBenefit': contacts;"
             (click)="openContactModal(contact)">
             <fa-icon [icon]="faUser"></fa-icon>
             {{contact.name}}

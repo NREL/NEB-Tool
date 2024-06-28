@@ -39,6 +39,7 @@ export class ContactModalComponent {
     //Use copy to not modify without hitting save
     let allContacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
     this.contacts = new Array();
+    console.log(this.companyGuid);
     allContacts.forEach(contact => {
       if (contact.companyId == this.companyGuid) {
         this.contacts.push(JSON.parse(JSON.stringify(contact)));

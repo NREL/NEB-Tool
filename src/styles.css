@@ -17,3 +17,10 @@
 a.click-link:hover{
     cursor: pointer;
 }
+
+.required-asterisk {
+    color: red;
+    margin-left: 1px;
+    font-size: 1em;
+    font-weight: bold;
+}

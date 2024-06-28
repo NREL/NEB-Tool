@@ -16,6 +16,7 @@ import { NebDisplayPipe } from './neb-display.pipe';
 import { OnSiteVisitListPipe } from './on-site-visit-list.pipe';
 import { AssessmentListOnSitePipe } from './assessment-list-on-site.pipe';
 import { NebListPipe } from './neb-list.pipe';
+import { AssociatedContactsPipe } from './associated-contacts.pipe';
 import { CompanyKpiListPipe } from './company-kpi-list.pipe';
 import { EnergyOpportunityDisplayPipe } from './energy-opportunity-display.pipe';
 import { EnergyOpportunityListPipe } from './energy-opportunity-list.pipe';
@@ -42,6 +43,7 @@ import { KpiListFilterPipe } from './kpi-list-filter.pipe';
     OnSiteVisitListPipe,
     AssessmentListOnSitePipe,
     NebListPipe,
+    AssociatedContactsPipe,
     CompanyKpiListPipe,
     EnergyOpportunityDisplayPipe,
     EnergyOpportunityListPipe,
@@ -70,6 +72,7 @@ import { KpiListFilterPipe } from './kpi-list-filter.pipe';
     OnSiteVisitListPipe,
     AssessmentListOnSitePipe,
     NebListPipe,
+    AssociatedContactsPipe,
     CompanyKpiListPipe,
     EnergyOpportunityDisplayPipe,
     EnergyOpportunityListPipe,
