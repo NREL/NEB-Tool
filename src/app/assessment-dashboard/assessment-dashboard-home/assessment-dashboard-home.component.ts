@@ -22,7 +22,6 @@ export class AssessmentDashboardHomeComponent {
   assessmentSub: Subscription;
 
   constructor(private assessmentIdbService: AssessmentIdbService,
-    private setupWizardService: SetupWizardService,
     private facilityIdbService: FacilityIdbService,
     private companyIdbService: CompanyIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -45,7 +44,6 @@ export class AssessmentDashboardHomeComponent {
     this.facilityIdbService.setSelectedFromGUID(this.assessment.facilityId);
     this.companyIdbService.setSelectedFromGUID(this.assessment.companyId);
     this.onSiteVisitIdbService.setSelectedFromAssessmentGUID(this.assessment.guid);
-    this.setupWizardService.setupContext.next('onSite');
     this.sharedDataService.createAssessmentModalOpen.next(true);
   }
 }

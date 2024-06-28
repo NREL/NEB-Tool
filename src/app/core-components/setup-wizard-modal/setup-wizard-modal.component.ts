@@ -7,7 +7,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
-import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { SharedDataService } from '../../shared/shared-services/shared-data.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
@@ -40,7 +40,6 @@ export class SetupWizardModalComponent {
   displayCreateNewModal: boolean = false;
 
   createAssessmentSub: Subscription;
-  setupContext: SetupWizardContext = 'onSite';
   constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private router: Router, private setupWizardService: SetupWizardService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -89,7 +88,7 @@ export class SetupWizardModalComponent {
       }
     });
   }
-  
+
   closeCreateNewModal() {
     this.sharedDataService.createAssessmentModalOpen.next(false);
   }
@@ -130,8 +129,9 @@ export class SetupWizardModalComponent {
 
   async confirmCreate() {
     let user: IdbUser = this.userIdbService.user.getValue();
+    let isNew: boolean = false;
     if (!this.selectedOnSiteVisitGuid) {
-      this.setupContext = 'preVisit';
+      isNew = true;
       if (!this.selectedCompanyGuid) {
         //create company
         let newCompanyGuid: string = await this.companyIdbService.addNewCompany(user.guid);
@@ -150,14 +150,11 @@ export class SetupWizardModalComponent {
       }
     }
 
-    this.setupWizardService.setupContext.next(this.setupContext)
-    if (this.setupContext == 'full' || this.setupContext == 'preVisit') {
+    if (isNew) {
       this.router.navigateByUrl('/setup-wizard/pre-visit/' + this.selectedOnSiteVisitGuid);
-    } else if (this.setupContext == 'onSite') {
+    } else {
       let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.getByGuid(this.selectedOnSiteVisitGuid);
       this.router.navigateByUrl('/setup-wizard/data-collection/' + this.selectedOnSiteVisitGuid + '/assessment/' + onSiteVisit.assessmentIds[0]);
-    } else if (this.setupContext == 'postVisit') {
-      
     }
     this.closeCreateNewModal();
   }

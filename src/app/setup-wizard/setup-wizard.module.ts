@@ -2,14 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SetupWizardComponent } from './setup-wizard.component';
 import { RouterModule } from '@angular/router';
-import { GettingStartedComponent } from './getting-started/getting-started.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanySetupComponent } from './pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './pre-visit/facility-setup/facility-setup.component';
 import { FormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
-import { ReviewSetupComponent } from './review-setup/review-setup.component';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
 import { CompanyContactsSetupComponent } from './pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
@@ -54,10 +52,8 @@ import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-asse
 @NgModule({
   declarations: [
     SetupWizardComponent,
-    GettingStartedComponent,
     CompanySetupComponent,
     FacilitySetupComponent,
-    ReviewSetupComponent,
     SetupWizardSidebarComponent,
     CompanyContactsSetupComponent,
     FacilityProcessEquipmentSetupComponent,

@@ -29,28 +29,11 @@
         </div>
         <div class="col-3">
             <div class="d-flex  justify-content-end">
-                <button class="btn btn-success btn-sm" (click)="openConfirmModal()">
-                    Finish Data Collection
+                <button class="btn btn-dark btn-sm" (click)="continue()">
+                    Data Evaluation
+                    <fa-icon [icon]="faChevronRight"></fa-icon>
                 </button>
             </div>
         </div>
     </div>
 </nav>
-
-
-<div [ngClass]="{'window-overlay': displayConfirmModal}"></div>
-<div class="popup" [ngClass]="{'open': displayConfirmModal }">
-    <div class="popup-header">Finish Data Collection
-        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeConfirmModal()"></button>
-    </div>
-    <div class="popup-body">
-        <div class="alert alert-success">
-            Are you done with your data collection?
-        </div>
-        <hr>
-    </div>
-    <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
-        <button class="btn btn-success" (click)="finishDataCollection()">Finish Data Collection</button>
-    </div>
-</div>

@@ -19,7 +19,6 @@ describe('ReviewOnSiteComponent', () => {
   let component: ReviewOnSiteComponent;
   let fixture: ComponentFixture<ReviewOnSiteComponent>;
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
   };
 

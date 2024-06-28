@@ -21,7 +21,6 @@ describe('AddNebsModalComponent', () => {
 
 
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('onSite'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
     displayAddNebsModal: new BehaviorSubject<{
       assessmentId: string,

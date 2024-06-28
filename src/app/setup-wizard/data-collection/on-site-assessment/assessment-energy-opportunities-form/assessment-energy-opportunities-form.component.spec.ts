@@ -19,7 +19,6 @@ describe('AssessmentEnergyOpportunitiesFormComponent', () => {
 
 
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {

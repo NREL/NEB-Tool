@@ -52,7 +52,7 @@ export class FacilityProcessEquipmentSetupComponent {
     });
     this.facility = this.facilityIdbService.selectedFacility.getValue();
     if (!this.facility) {
-      this.router.navigateByUrl('/setup-wizard')
+      this.router.navigateByUrl('/welcome')
     }
   }
 

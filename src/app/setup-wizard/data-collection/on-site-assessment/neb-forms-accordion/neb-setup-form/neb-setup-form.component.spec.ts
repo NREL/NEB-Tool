@@ -23,7 +23,6 @@ describe('NebSetupFormComponent', () => {
   let fixture: ComponentFixture<NebSetupFormComponent>;
 
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
   };
   let companyIdbService: Partial<CompanyIdbService> = {

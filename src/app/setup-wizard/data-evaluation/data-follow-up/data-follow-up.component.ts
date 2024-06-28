@@ -30,6 +30,6 @@ export class DataFollowUpComponent {
   }
 
   goBack() {
-
+    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');
   }
 }

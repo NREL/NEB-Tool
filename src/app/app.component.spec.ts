@@ -64,9 +64,7 @@ describe('AppComponent', () => {
     onSiteVisits: new BehaviorSubject<Array<IdbOnSiteVisit>>([])
   };
 
-  let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('onSite')
-  };
+  let setupWizardService: Partial<SetupWizardService> = {};
 
   let keyPerformanceIndicatorService: Partial<KeyPerformanceIndicatorsIdbService> = {
     keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])

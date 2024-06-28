@@ -18,7 +18,6 @@ describe('AssessmentNebsFormComponent', () => {
   let fixture: ComponentFixture<AssessmentNebsFormComponent>;
 
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {

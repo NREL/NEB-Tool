@@ -9,7 +9,6 @@ import { CompanyDashboardHomeComponent } from './company-dashboard/company-dashb
 import { FacilityDashboardComponent } from './facility-dashboard/facility-dashboard.component';
 import { FacilityDashboardHomeComponent } from './facility-dashboard/facility-dashboard-home/facility-dashboard-home.component';
 import { SetupWizardComponent } from './setup-wizard/setup-wizard.component';
-import { GettingStartedComponent } from './setup-wizard/getting-started/getting-started.component';
 import { CompanySetupComponent } from './setup-wizard/pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './setup-wizard/pre-visit/facility-setup/facility-setup.component';
 import { UserSettingsComponent } from './user-dashboard/user-settings/user-settings.component';
@@ -24,7 +23,6 @@ import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/faci
 import { AssessmentDashboardComponent } from './assessment-dashboard/assessment-dashboard.component';
 import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessment-dashboard-home/assessment-dashboard-home.component';
 import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
-import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
 import { CompanyContactsSetupComponent } from './setup-wizard/pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.component';
@@ -59,19 +57,6 @@ const routes: Routes = [
     path: 'setup-wizard',
     component: SetupWizardComponent,
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'getting-started'
-      },
-      {
-        path: 'getting-started',
-        component: GettingStartedComponent
-      },
-      {
-        path: 'review-setup',
-        component: ReviewSetupComponent
-      },
       {
         path: 'pre-visit/:id',
         component: PreVisitComponent,

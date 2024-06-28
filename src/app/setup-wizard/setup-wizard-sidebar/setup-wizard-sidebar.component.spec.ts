@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
+import { SetupWizardService } from '../setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
@@ -20,7 +20,6 @@ describe('SetupWizardSidebarComponent', () => {
   let fixture: ComponentFixture<SetupWizardSidebarComponent>;
 
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>(undefined),
     sidebarOpen: new BehaviorSubject<boolean>(false)
   };
   let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
