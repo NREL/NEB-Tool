@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { LoadingService } from '../loading/loading.service';
-import { IconDefinition, faHome } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faHome, faDownload, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 import { environment } from 'src/environments/environment';
+import { BackupDataService } from 'src/app/shared/shared-services/backup-data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,15 +14,24 @@ import { environment } from 'src/environments/environment';
 export class NavbarComponent {
 
   faHome: IconDefinition = faHome;
+  faDownload: IconDefinition =faDownload;
+  faUpload: IconDefinition = faUpload;
 
 
   version: string = environment.version;
   showResetModal: boolean = false;
   constructor(private userIdbService: UserIdbService,
     private loadingService: LoadingService,
-    private sharedDataService: SharedDataService) {
+    private sharedDataService: SharedDataService,
+    private backupDataService: BackupDataService) {
 
   }
+
+  backupData() {
+
+  }
+
+  importData() {}
 
   resetDatabase() {
     this.closeResetDatabaseModal();
