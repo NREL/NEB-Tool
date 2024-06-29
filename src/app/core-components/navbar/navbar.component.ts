@@ -28,7 +28,9 @@ export class NavbarComponent {
   }
 
   backupData() {
-
+    this.backupDataService.backupData();
+    // to do: add lastBackup for selectedUser
+    // let selectedUser = this.userIdbService.user.getValue();
   }
 
   importData() {}
