@@ -17,13 +17,15 @@ import { IdbKeyPerformanceIndicator } from '../models/keyPerformanceIndicator';
 import { EnergyOpportunityIdbService } from './energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from '../models/energyOpportunity';
 import { KeyPerformanceMetricValue } from '../shared/constants/keyPerformanceMetrics';
+import { IdbUser } from '../models/user';
+import { UserIdbService } from './user-idb.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbChangesService {
 
-  constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
+  constructor(private userIdbService: UserIdbService, private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private energyOpportunityIdbService: EnergyOpportunityIdbService, private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
@@ -243,5 +245,54 @@ export class DbChangesService {
     } else {
       return false;
     }
+  }
+
+  async updateUser(user: IdbUser) {
+    let updatedUser: IdbUser = await firstValueFrom(this.userIdbService.updateWithObservable(user));
+    let users: Array<IdbUser> = await firstValueFrom(this.userIdbService.getAll());
+    this.userIdbService.user.next(users[0]);
+    this.userIdbService.user.next(updatedUser);
+  }
+
+  async selectUser(user: IdbUser, skipUpdates: boolean) {
+    // update user
+    if (!skipUpdates) {
+      if (this.userChanged(user)) {
+        await this.updateUser(user);
+      }
+    }
+    // update companies
+    let userCompanies: Array<IdbCompany> = await firstValueFrom(this.companyIdbService.getAll()); // SINGLE USER
+    if (!skipUpdates) {
+      for (let i = 0; i < userCompanies.length; i++) {
+        let updatedCompany = userCompanies[i];
+        if (this.companyChanged(updatedCompany)) {
+          await firstValueFrom(this.companyIdbService.updateWithObservable(updatedCompany));
+        }
+      }
+    }
+    this.companyIdbService.companies.next(userCompanies);
+    // TO DO: link reports/assessments
+
+    this.userIdbService.user.next(user);
+  }
+
+  // Detect DB Entry changes for updates (update-db-entry.service)
+
+  userChanged(user: IdbUser): boolean {
+    let isChanged: boolean = false;
+    if (user.skipSplashScreen = true) {
+      isChanged = true;
+    }
+    return isChanged;
+  }
+
+  companyChanged(company: IdbCompany): boolean {
+    let isChanged: boolean = false;
+    // TO DO: Check/reset settings
+    if (!company.unitSettings.electricityUnit) {
+      company.unitSettings.electricityUnit = 'KWh';
+    }
+    return isChanged;
   }
 }

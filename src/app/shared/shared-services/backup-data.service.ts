@@ -8,7 +8,7 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
-import { IdbUser } from 'src/app/models/user';
+import { IdbUser, getNewIdbUser } from 'src/app/models/user';
 import { getGUID } from '../helpFunctions';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
@@ -18,6 +18,7 @@ import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +71,11 @@ export class BackupDataService {
       dataBackupId: getGUID()
     }
     return backupFile;
+  }
+
+  async importUserBackupFile(backupfile: BackupFile): Promise<IdbUser> {
+    let user: IdbUser = getNewIdbUser();
+    return user;
   }
 }
 
