@@ -1,0 +1,48 @@
+<div class="report">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    Assessment Basics
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="w-50">
+                    Company
+                </td>
+                <td>
+                    {{company.generalInformation.name}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Facility
+                </td>
+                <td>
+                    {{facility.generalInformation.name}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Process Equipment
+                </td>
+                <td>
+                    <app-single-cell-item
+                        [strValue]="assessment.equipmentId | processEquipmentDisplay: facility.processEquipment"></app-single-cell-item>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <ng-container *ngIf="assessmentReport">
+        <hr>
+        <app-performance-metrics-report
+            [keyPerformanceIndicatorReport]="assessmentReport.keyPerformanceIndicatorReport"></app-performance-metrics-report>
+        <hr>
+        <app-payback-table [assessmentReport]="assessmentReport"></app-payback-table>
+        <hr>
+        <app-assessment-savings-table [assessmentReport]="assessmentReport"></app-assessment-savings-table>
+    </ng-container>
+</div>

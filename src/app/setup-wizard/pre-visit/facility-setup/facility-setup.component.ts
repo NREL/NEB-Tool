@@ -36,7 +36,7 @@ export class FacilitySetupComponent {
     if (this.facility) {
       this.facilityName = this.facility.generalInformation.name;
     } else {
-      this.router.navigateByUrl('/setup-wizard');
+      this.router.navigateByUrl('/welcome');
     }
   }
 

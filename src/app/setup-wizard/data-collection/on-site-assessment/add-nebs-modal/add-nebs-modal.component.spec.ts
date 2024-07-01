@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddNebsModalComponent } from './add-nebs-modal.component';
-import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
@@ -21,7 +21,6 @@ describe('AddNebsModalComponent', () => {
 
 
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('onSite'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
     displayAddNebsModal: new BehaviorSubject<{
       assessmentId: string,

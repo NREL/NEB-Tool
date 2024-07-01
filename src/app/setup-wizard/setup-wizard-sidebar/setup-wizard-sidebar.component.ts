@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { IconDefinition, faMaximize, faMinimize, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
-import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
+import { IconDefinition, faChevronDown, faChevronUp, faFolderOpen, faMaximize, faMinimize, faMinus, faPlus, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
@@ -19,13 +19,13 @@ import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicat
 })
 export class SetupWizardSidebarComponent {
 
-  faRotateLeft: IconDefinition = faRotateLeft;
+  faFolderOpen: IconDefinition = faFolderOpen;
   faMinimize: IconDefinition = faMinimize;
   faMaximize: IconDefinition = faMaximize;
+  faChevronDown: IconDefinition = faChevronDown;
+  faChevronUp: IconDefinition = faChevronUp;
 
   displaySidebar: boolean = true;
-  setupContext: SetupWizardContext;
-  setupContextSub: Subscription;
   displayStartOverModal: boolean;
 
   assessmentsSub: Subscription;
@@ -41,6 +41,10 @@ export class SetupWizardSidebarComponent {
   company: IdbCompany;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
   keyPerformanceIndicatorsSub: Subscription;
+
+  collapsePreVisit: boolean = true;
+  collapseDataCollection: boolean = true;
+  collapseDataEvaluation: boolean = true;
   constructor(private router: Router, private setupWizardService: SetupWizardService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private assessmentIdbService: AssessmentIdbService,
@@ -57,11 +61,6 @@ export class SetupWizardSidebarComponent {
       }
     });
     this.setDisplaySidebar();
-
-    this.setupContextSub = this.setupWizardService.setupContext.subscribe(val => {
-      this.setupContext = val;
-      console.log(this.setupContext);
-    });
 
     this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(val => {
       this.assessments = val;
@@ -85,7 +84,6 @@ export class SetupWizardSidebarComponent {
   }
 
   ngOnDestroy() {
-    this.setupContextSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
     this.sidebarOpenSub.unsubscribe();
     this.onSiteVisitSub.unsubscribe();
@@ -94,7 +92,9 @@ export class SetupWizardSidebarComponent {
   }
 
   setDisplaySidebar() {
-    this.displaySidebar = (this.router.url.includes('getting-started') == false);
+    this.checkCollapsePrevisit();
+    this.checkCollapseDataCollection();
+    this.checkCollapseDataEvaluation();
   }
 
   openStartOverModal() {
@@ -106,12 +106,49 @@ export class SetupWizardSidebarComponent {
   }
 
   confirmStartOver() {
-    this.router.navigateByUrl('/setup-wizard/getting-started').then(() => {
-      this.closeStartOverModal();
-    });
+    this.router.navigateByUrl('/user/home');
   }
 
   toggleSidebar() {
     this.setupWizardService.sidebarOpen.next(!this.sidebarOpen);
+  }
+
+  toggleCollapsePrevisit(){
+    this.collapsePreVisit = !this.collapsePreVisit;
+  }
+
+  checkCollapsePrevisit(){
+    if(this.collapsePreVisit){
+      let isInPrevisit: boolean = (this.router.url.includes('pre-visit') == true);
+      if(isInPrevisit){
+        this.toggleCollapsePrevisit();
+      }
+    }
+  }
+
+  toggleCollapseDataCollection(){
+    this.collapseDataCollection = !this.collapseDataCollection;
+  }
+
+  checkCollapseDataCollection(){
+    if(this.collapseDataCollection){
+      let isInDataCollection: boolean = (this.router.url.includes('data-collection') == true);
+      if(isInDataCollection){
+        this.toggleCollapseDataCollection();
+      }
+    }
+  }
+
+  toggleCollapseDataEvaluation(){
+    this.collapseDataEvaluation = !this.collapseDataEvaluation;
+  }
+
+  checkCollapseDataEvaluation(){
+    if(this.collapseDataEvaluation){
+      let isInDataEvaluation: boolean = (this.router.url.includes('data-evaluation') == true);
+      if(isInDataEvaluation){
+        this.toggleCollapseDataEvaluation();
+      }
+    }
   }
 }

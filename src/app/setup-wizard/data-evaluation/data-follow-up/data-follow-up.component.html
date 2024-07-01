@@ -1,0 +1,40 @@
+<div class="setup-wizard-content">
+    <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow">
+                <h5>
+                    Review and Follow-up
+                </h5>
+                <hr>
+                <div class="row pt-4 justify-content-center">
+                    <div class="col-lg-9 col-md-12">
+                        <div class="alert alert-dark">
+                            Content related to items flagged for review and follup up.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-between">
+        <div class="col-3">
+            <button class="btn btn-dark btn-sm" (click)="goBack()">
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+                <span class="d-md-none">
+                    Back
+                </span>
+            </button>
+        </div>
+        <div class="col-3">
+            <div class="d-flex  justify-content-end">
+                <button class="btn btn-dark btn-sm" (click)="goNext()"
+                    [disabled]="onSiteVisit.assessmentIds.length == 0">
+                    Assessment Report
+                    <fa-icon [icon]="faChevronRight"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
