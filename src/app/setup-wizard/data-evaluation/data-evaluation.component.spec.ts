@@ -10,6 +10,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 
 describe('DataEvaluationComponent', () => {
   let component: DataEvaluationComponent;
@@ -23,6 +24,7 @@ describe('DataEvaluationComponent', () => {
   let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {};
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
   let keyPerformanceIndicatorService: Partial<KeyPerformanceIndicatorsIdbService> = {};
+  let dbChangesService: Partial<DbChangesService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
@@ -36,6 +38,7 @@ describe('DataEvaluationComponent', () => {
         { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
+        { provide: DbChangesService, useValue: dbChangesService}
       ]
     })
     .compileComponents();
