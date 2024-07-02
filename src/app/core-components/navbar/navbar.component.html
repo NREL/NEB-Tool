@@ -50,24 +50,24 @@
         <button type="button" class="btn-close float-end" aria-label="Close"
         (click)="cancelImportBackup()"></button>
     </div>
-    <div class="popup-body" *ngIf="showImportModal">
+    <div class="popup-body">
         <p>Select backup .json file you previously exported from JUSTIFI application.</p>
-        <input type="file" #importFile id="importFile" (input)="setImportFile($event.target)" accept=".json">
+        <input type="file" #selectImportFile id="selectImportFile" (input)="setImportFile($event.target)" accept=".json">
         <p class="alert alert-danger" *ngIf="importFileError">
             {{importFileError}}
         </p>
 
         <div class="d-flex flex-column pt-3"
-            *ngIf="importFile != undefined && importFileError == undefined && importForUser">
+            *ngIf="importFile !== undefined && importFileError === undefined && importForUser">
             <div class="input-group">
                 <label class="w-50 ps-0 bold">
-                    Import Account ID:
+                    Import User ID:
                 </label>
                 <div class="w-50">
                     {{importName}}
                 </div>
             </div>
-            <div class="input-group pt-2" *ngIf="currentUser">
+            <!-- <div class="input-group pt-2" *ngIf="currentUser">
                 <label class="w-50 ps-0 bold">Overwrite current account? </label>
                 <select class="form-select" [(ngModel)]="overwriteData" name="overwriteData">
                     <option [ngValue]="true">Overwrite Account</option>
@@ -76,7 +76,7 @@
             </div>
             <p class="alert alert-warning mt-3" *ngIf="overwriteData">
                 Existing user id: ({{currentUser.id}}) data will be overwritten. This cannot be undone.
-            </p>
+            </p> -->
         </div>
 
         <!-- TO DO OVERWIRTE FACILITIES -->
@@ -109,10 +109,10 @@
             </p>
         </div> -->
     </div>
+    <hr>
     <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary" (click)="cancelImportBackup()">Cancel</button>
+        <button class="btn btn-secondary me-2" (click)="cancelImportBackup()">Cancel</button>
         <button class="btn btn-primary" (click)="importBackupFile()"
-            [disabled]="importFile == undefined || importFileError != undefined">Import Backup
-            {{importType}}</button>
+            [disabled]="importFile == undefined || importFileError != undefined">Import</button>
     </div>
 </div>

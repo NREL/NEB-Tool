@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { LoadingService } from '../loading/loading.service';
 import { IconDefinition, faHome, faDownload, faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,7 @@ import { BackupDataService, BackupFile } from 'src/app/shared/shared-services/ba
 import { IdbUser } from 'src/app/models/user';
 import { firstValueFrom } from 'rxjs';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,7 @@ import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
+  @ViewChild('selectImportFile') fileInput: ElementRef;
 
   faHome: IconDefinition = faHome;
   faDownload: IconDefinition =faDownload;
@@ -36,7 +38,9 @@ export class NavbarComponent implements OnInit{
     private loadingService: LoadingService,
     private sharedDataService: SharedDataService,
     private backupDataService: BackupDataService,
-    private dbChangesService: DbChangesService) {
+    private dbChangesService: DbChangesService,
+    private router: Router,
+  ) {
 
   }
 
@@ -63,6 +67,9 @@ export class NavbarComponent implements OnInit{
 
   cancelImportBackup() {
     this.showImportModal = false;
+    this.importFile = undefined;
+    this.importFileError = undefined;
+    this.fileInput.nativeElement.value = '';
   }
 
   setImportFile(event: EventTarget) {
@@ -121,7 +128,7 @@ export class NavbarComponent implements OnInit{
   }
 
   async importBackupFile() {
-    this.cancelImportBackup();
+    this.showImportModal = false;
     this.loadingService.setLoadingStatus(true);
     this.loadingService.setLoadingMessage("Importing backup file...")
     try {
@@ -140,7 +147,8 @@ export class NavbarComponent implements OnInit{
       //   }
       }
       this.loadingService.setLoadingStatus(false);
-      // this.router.navigateByUrl('account');
+      this.cancelImportBackup();
+      this.router.navigateByUrl('user');
     } catch (err) {
       console.log(err);
       alert('Error importing backup');
@@ -149,9 +157,10 @@ export class NavbarComponent implements OnInit{
     }
   }
 
-  async importNewAccount(backupFile: BackupFile) {
+  async importNewAccount(importFile: BackupFile) {
     // this.deleteDataService.pauseDelete.next(true);
-    let newUser: IdbUser = await this.backupDataService.importUserBackupFile(backupFile);
+    console.log(this.overwriteData, 'is NOT overwiting');
+    let newUser: IdbUser = await this.backupDataService.importUserBackupFile(importFile);
     await this.dbChangesService.updateUser(newUser);
     await this.dbChangesService.selectUser(newUser, false);
     // this.deleteDataService.pauseDelete.next(false);
@@ -159,14 +168,16 @@ export class NavbarComponent implements OnInit{
   }
 
   async importExistingAccount(importFile: BackupFile) {
-    //delete existing account and data
+    // //delete existing account and data
     // this.deleteDataService.pauseDelete.next(true);
     // this.selectedAccount.deleteAccount = true;
-    await firstValueFrom(this.userIdbService.updateWithObservable(this.currentUser));
-    let accounts: Array<IdbUser> = await firstValueFrom(this.userIdbService.getAll());
-    // One user for now
-    this.userIdbService.user.next(accounts[0]);
-    // this.userIdbService.allAccounts.next(accounts);
+    // await firstValueFrom(this.accountDbService.updateWithObservable(this.selectedAccount));
+    // let accounts: Array<IdbAccount> = await firstValueFrom(this.accountDbService.getAll());
+    // this.accountDbService.allAccounts.next(accounts);
+    // single user for now
+    // delete existing user
+    console.log(this.overwriteData, 'is overwiting');
+    await this.dbChangesService.deleteCurrentUser(this.currentUser);
     await this.importNewAccount(importFile);
     // this.deleteDataService.pauseDelete.next(false);
     // this.deleteDataService.gatherAndDelete();
