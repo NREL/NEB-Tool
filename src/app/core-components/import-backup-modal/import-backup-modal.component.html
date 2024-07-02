@@ -1,0 +1,72 @@
+<div [ngClass]="{'windowOverlay': showImportModal}"></div>
+<div class="popup" [ngClass]="{'open': showImportModal}">
+    <div class="popup-header">Import Backup File
+        <button type="button" class="btn-close float-end" aria-label="Close"
+        (click)="cancelImportBackup()"></button>
+    </div>
+    <div class="popup-body">
+        <p>Select backup .json file you previously exported from JUSTIFI application.</p>
+        <input type="file" #selectImportFile id="selectImportFile" (input)="setImportFile($event.target)" accept=".json">
+        <p class="alert alert-danger" *ngIf="importFileError">
+            {{importFileError}}
+        </p>
+
+        <div class="d-flex flex-column pt-3"
+            *ngIf="importFile !== undefined && importFileError === undefined && importForUser">
+            <div class="input-group">
+                <label class="w-50 ps-0 bold">
+                    Import User ID:
+                </label>
+                <div class="w-50">
+                    {{importName}}
+                </div>
+            </div>
+            <!-- <div class="input-group pt-2" *ngIf="currentUser">
+                <label class="w-50 ps-0 bold">Overwrite current account? </label>
+                <select class="form-select" [(ngModel)]="overwriteData" name="overwriteData">
+                    <option [ngValue]="true">Overwrite Account</option>
+                    <option [ngValue]="false">Create New Account</option>
+                </select>
+            </div>
+            <p class="alert alert-warning mt-3" *ngIf="overwriteData">
+                Existing user id: ({{currentUser.id}}) data will be overwritten. This cannot be undone.
+            </p> -->
+        </div>
+
+        <!-- TO DO OVERWIRTE FACILITIES -->
+        <!-- <div class="d-flex flex-column pt-3"
+            *ngIf="importFile != undefined && importFileError == undefined && !importIsAccount && accountFacilities.length != 0">
+            <div class="input-group">
+                <label class="w-50 ps-0 bold">
+                    Import Facility Name
+                </label>
+                <div class="w-50">
+                    {{backupName}}
+                </div>
+            </div>
+            <div class="input-group pt-2">
+                <label class="w-50 ps-0 bold">Overwrite existing facility? </label>
+                <select class="form-select" [(ngModel)]="overwriteData" name="overwriteData">
+                    <option [ngValue]="true">Overwrite Facility</option>
+                    <option [ngValue]="false">Create New Facilty</option>
+                </select>
+            </div>
+            <div class="input-group pt-2" *ngIf="overwriteData">
+                <label class="w-50 ps-0 bold">Facility to overwrite</label>
+                <select class="form-select" [(ngModel)]="overwriteFacility" name="overwriteFacility">
+                    <option *ngFor="let facility of accountFacilities" [ngValue]="facility">{{facility.name}}</option>
+                </select>
+            </div>
+
+            <p class="alert alert-warning mt-3" *ngIf="overwriteData">
+                Existing facility ({{overwriteFacility.name}}) data will be overwritten. This cannot be undone.
+            </p>
+        </div> -->
+    </div>
+    <hr>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="cancelImportBackup()">Cancel</button>
+        <button class="btn btn-primary" (click)="importBackupFile()"
+            [disabled]="importFile == undefined || importFileError != undefined">Import</button>
+    </div>
+</div>
