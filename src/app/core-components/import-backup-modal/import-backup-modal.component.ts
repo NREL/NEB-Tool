@@ -1,27 +1,23 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
-import { LoadingService } from '../loading/loading.service';
-import { IconDefinition, faHome, faDownload, faUpload } from '@fortawesome/free-solid-svg-icons';
-import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
-import { environment } from 'src/environments/environment';
-import { BackupDataService, BackupFile } from 'src/app/shared/shared-services/backup-data.service';
-import { IdbUser } from 'src/app/models/user';
-import { firstValueFrom } from 'rxjs';
-import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { BackupDataService, BackupFile } from 'src/app/shared/shared-services/backup-data.service';
+import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
+import { LoadingService } from '../loading/loading.service';
+import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { IdbUser } from 'src/app/models/user';
+import { Subscription } from 'rxjs';
+import { ImportBackupModalService } from './import-backup-modal.service';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-import-backup-modal',
+  templateUrl: './import-backup-modal.component.html',
+  styleUrl: './import-backup-modal.component.css'
 })
-export class NavbarComponent implements OnInit{
-  @ViewChild('selectImportFile') fileInput: ElementRef;
+export class ImportBackupModalComponent implements OnInit{
+  
 
-  faHome: IconDefinition = faHome;
-  faDownload: IconDefinition =faDownload;
-  faUpload: IconDefinition = faUpload;
-
+  showImportModalSub: Subscription;
   showImportModal: boolean = false;
   importFile: any;
   importType: string;
@@ -31,35 +27,34 @@ export class NavbarComponent implements OnInit{
   importName: string;
   overwriteData: boolean = true;
 
-
-  version: string = environment.version;
-  showResetModal: boolean = false;
   constructor(private userIdbService: UserIdbService,
     private loadingService: LoadingService,
     private sharedDataService: SharedDataService,
     private backupDataService: BackupDataService,
     private dbChangesService: DbChangesService,
     private router: Router,
+    private importBackupModalService: ImportBackupModalService
   ) {
 
   }
 
   ngOnInit(): void {
-    // Load current user
-    this.importFile = undefined;
-    this.importFileError = undefined;
-    this.importName = undefined;
-    this.currentUser = this.userIdbService.user.getValue();
-    if (!this.currentUser) {
-      this.overwriteData = false;
-    }
+    this.showImportModalSub = this.importBackupModalService.showImportModal.subscribe(value => {
+      this.showImportModal = value;
+      if (this.showImportModal) {
+        // Load current user
+        this.importFile = undefined;
+        this.importFileError = undefined;
+        this.importName = undefined;
+        this.currentUser = this.userIdbService.user.getValue();
+        if (!this.currentUser) {
+          this.overwriteData = false;
+        }
+      }
+    })
   }
 
-  backupData() {
-    this.backupDataService.backupData();
-    // to do: update lastBackup property for selectedUser
-    // let selectedUser = this.userIdbService.user.getValue();
-  }
+  
 
   importData() {
     this.showImportModal = true;
@@ -69,9 +64,9 @@ export class NavbarComponent implements OnInit{
     this.showImportModal = false;
     this.importFile = undefined;
     this.importFileError = undefined;
-    this.fileInput.nativeElement.value = '';
   }
 
+  
   setImportFile(event: EventTarget) {
     let files: FileList = (event as HTMLInputElement).files;
     if (files) {
@@ -183,22 +178,4 @@ export class NavbarComponent implements OnInit{
     // this.deleteDataService.gatherAndDelete();
   }
 
-  resetDatabase() {
-    this.closeResetDatabaseModal();
-    this.loadingService.setLoadingMessage('Resetting Database... This may take a moment. The page will refresh after the database is reset. If this takes more than a minute, refresh the page.');
-    this.loadingService.setLoadingStatus(true);
-    this.userIdbService.deleteDatabase();
-  }
-
-  openResetDatabaseModal() {
-    this.showResetModal = true;
-  }
-
-  closeResetDatabaseModal() {
-    this.showResetModal = false;
-  }
-
-  openSidebar(){
-    this.sharedDataService.sidebarOpen.next(true);
-  }
 }
