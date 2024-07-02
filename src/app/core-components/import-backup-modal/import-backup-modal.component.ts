@@ -141,7 +141,8 @@ export class ImportBackupModalComponent implements OnInit{
       }
       this.loadingService.setLoadingStatus(false);
       this.cancelImportBackup();
-      this.router.navigateByUrl('user').then(() => location.reload());
+      // this.router.navigateByUrl('user').then(() => location.reload()); // manual refresh
+      this.router.navigateByUrl('user');
     } catch (err) {
       console.log(err);
       alert('Error importing backup');
