@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssessmentEnergyOpportunitiesFormComponent } from './assessment-energy-opportunities-form.component';
-import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
@@ -19,7 +19,6 @@ describe('AssessmentEnergyOpportunitiesFormComponent', () => {
 
 
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {

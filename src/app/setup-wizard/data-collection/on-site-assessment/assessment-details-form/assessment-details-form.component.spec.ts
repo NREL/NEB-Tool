@@ -9,7 +9,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
-import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { ContactContext, IdbContact } from 'src/app/models/contact';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
@@ -25,7 +25,6 @@ describe('AssessmentDetailsFormComponent', () => {
     selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
   };
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('onSite'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
     displayAddNebsModal: new BehaviorSubject<{
       assessmentId: string,

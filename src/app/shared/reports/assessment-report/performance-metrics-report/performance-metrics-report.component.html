@@ -1,0 +1,85 @@
+<table class="table table-bordered savings-table table-hover">
+    <thead>
+        <tr>
+            <th>
+                KPI
+            </th>
+            <th>
+                KPM
+            </th>
+            <th class="text-right">
+                Baseline Cost (&dollar;/yr)
+            </th>
+            <th class="text-right">
+                Annual Savings (&dollar;/yr)
+            </th>
+            <th class="text-right">
+                Modified Cost (&dollar;/yr)
+            </th>
+            <th class="text-right">
+                Savings (%)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let kpiReportItem of keyPerformanceIndicatorReport.kpiReportItems">
+            <td class="">
+                {{kpiReportItem.keyPerformanceMetric.kpiValue | kpiValueDisplay: keyPerformanceIndicators}}
+            </td>
+            <td class="">
+                <span [innerHTML]="kpiReportItem.keyPerformanceMetric.htmlLabel"></span>
+            </td>
+            <ng-template [ngIf]="kpiReportItem.keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeBlock">
+
+                <td class="text-right">
+                    <app-single-cell-item [numValue]="kpiReportItem.keyPerformanceMetric.baselineCost"
+                        [isCurrency]="true"></app-single-cell-item>
+                </td>
+                <td class="text-right">
+                    <app-single-cell-item [numValue]="kpiReportItem.performanceMetricImpact.costAdjustment"
+                        [isCurrency]="true"></app-single-cell-item>
+                </td>
+                <td class="text-right">
+                    <app-single-cell-item
+                        [numValue]="kpiReportItem.keyPerformanceMetric.baselineCost - kpiReportItem.performanceMetricImpact.costAdjustment"
+                        [isCurrency]="true"></app-single-cell-item>
+                </td>
+                <td class="text-right">
+                    <app-single-cell-item
+                        [numValue]="kpiReportItem.performanceMetricImpact.percentSavings"
+                        [isCurrency]="false" [units]="'%'"></app-single-cell-item>
+                </td>
+            </ng-template>
+            <ng-template #qualitativeBlock>
+                <td colspan="4">
+                    Qualitative Metric
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="2">
+                Totals
+            </th>
+            <td class="text-right">
+                <app-single-cell-item [numValue]="keyPerformanceIndicatorReport.total.baselineCost"
+                    [isCurrency]="true"></app-single-cell-item>
+            </td>
+            <td class="text-right">
+                <app-single-cell-item
+                    [numValue]="keyPerformanceIndicatorReport.total.annualSavings"
+                    [isCurrency]="true"></app-single-cell-item>
+            </td>
+            <td class="text-right">
+                <app-single-cell-item [numValue]="keyPerformanceIndicatorReport.total.modifiedCost"
+                    [isCurrency]="true"></app-single-cell-item>
+            </td>
+            <td class="text-right">
+                <app-single-cell-item
+                    [numValue]="keyPerformanceIndicatorReport.total.percentSavings"
+                    [isCurrency]="false" [units]="'%'"></app-single-cell-item>
+            </td>
+        </tr>
+    </tfoot>
+</table>

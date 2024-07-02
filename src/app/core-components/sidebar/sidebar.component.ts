@@ -80,4 +80,8 @@ export class SidebarComponent {
   hideSidebar() {
     this.sharedDataService.sidebarOpen.next(false);
   }
+
+  openSetupWizardModal(){
+    this.sharedDataService.createAssessmentModalOpen.next(true);
+  }
 }

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AssessmentNebsFormComponent } from './assessment-nebs-form.component';
-import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +18,6 @@ describe('AssessmentNebsFormComponent', () => {
   let fixture: ComponentFixture<AssessmentNebsFormComponent>;
 
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('full'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {

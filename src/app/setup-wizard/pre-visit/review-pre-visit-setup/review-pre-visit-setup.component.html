@@ -33,31 +33,7 @@
             <fa-icon [icon]="faFilePdf"></fa-icon>
             Generate PDF
         </button>
-        <button class="btn btn-success btn-sm" (click)="openConfirmModal()" *ngIf="setupContext == 'preVisit'">Finish
-            Pre-Visit</button>
-        <button class="btn btn-success btn-sm" (click)="openConfirmModal()" *ngIf="setupContext == 'full' || setupContext == 'onSite'">Continue<fa-icon
-                [icon]="faChevronRight"></fa-icon></button>
+        <button class="btn btn-dark btn-sm" (click)="continue()">Data Collection
+            <fa-icon [icon]="faChevronRight"></fa-icon></button>
     </div>
 </nav>
-
-
-
-<div [ngClass]="{'window-overlay': displayConfirmModal}"></div>
-<div class="popup" [ngClass]="{'open': displayConfirmModal }">
-    <div class="popup-header">Finish Pre-Visit
-        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeConfirmModal()"></button>
-    </div>
-    <div class="popup-body">
-        <div class="alert alert-success">
-            Are you done with your Pre-Visit?
-        </div>
-        <hr>
-    </div>
-    <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
-        <button class="btn btn-success" (click)="goToFacility()" *ngIf="setupContext == 'preVisit'"> Finish
-            Pre-Visit</button>
-        <button class="btn btn-success" (click)="continue()" *ngIf="setupContext == 'full'"> Continue<fa-icon
-                [icon]="faChevronRight"></fa-icon></button>
-    </div>
-</div>

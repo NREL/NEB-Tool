@@ -75,7 +75,7 @@ export class PreAssessmentSetupComponent {
     if (facility) {
       this.processEquipmentOptions = facility.processEquipment;
     } else {
-      this.router.navigateByUrl('/setup-wizard');
+      this.router.navigateByUrl('/welcome');
     }
   }
 
