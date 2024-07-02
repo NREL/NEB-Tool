@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { BackupDataService, BackupFile } from 'src/app/shared/shared-services/backup-data.service';
@@ -18,7 +18,7 @@ export class ImportBackupModalComponent implements OnInit{
   
 
   showImportModalSub: Subscription;
-  showImportModal: boolean = false;
+  showImportModal: boolean;
   importFile: any;
   importType: string;
   importFileError: string;
@@ -54,14 +54,12 @@ export class ImportBackupModalComponent implements OnInit{
     })
   }
 
-  
-
-  importData() {
-    this.showImportModal = true;
+  ngOnDestroy() {
+    this.showImportModalSub.unsubscribe();
   }
 
   cancelImportBackup() {
-    this.showImportModal = false;
+    this.importBackupModalService.showImportModal.next(false);
     this.importFile = undefined;
     this.importFileError = undefined;
   }
@@ -143,7 +141,7 @@ export class ImportBackupModalComponent implements OnInit{
       }
       this.loadingService.setLoadingStatus(false);
       this.cancelImportBackup();
-      this.router.navigateByUrl('user');
+      this.router.navigateByUrl('user').then(() => location.reload());
     } catch (err) {
       console.log(err);
       alert('Error importing backup');
@@ -154,7 +152,6 @@ export class ImportBackupModalComponent implements OnInit{
 
   async importNewAccount(importFile: BackupFile) {
     // this.deleteDataService.pauseDelete.next(true);
-    console.log(this.overwriteData, 'is NOT overwiting');
     let newUser: IdbUser = await this.backupDataService.importUserBackupFile(importFile);
     await this.dbChangesService.updateUser(newUser);
     await this.dbChangesService.selectUser(newUser, false);
@@ -171,7 +168,6 @@ export class ImportBackupModalComponent implements OnInit{
     // this.accountDbService.allAccounts.next(accounts);
     // single user for now
     // delete existing user
-    console.log(this.overwriteData, 'is overwiting');
     await this.dbChangesService.deleteCurrentUser(this.currentUser);
     await this.importNewAccount(importFile);
     // this.deleteDataService.pauseDelete.next(false);

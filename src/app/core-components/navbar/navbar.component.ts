@@ -36,7 +36,9 @@ export class NavbarComponent{
   }
 
   openImportDataModel() {
+    console.log('button clicked')
     this.importBackupModalService.showImportModal.next(true);
+    console.log(this.importBackupModalService.showImportModal.getValue());
   }
 
   resetDatabase() {
