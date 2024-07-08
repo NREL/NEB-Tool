@@ -284,50 +284,15 @@ export class DbChangesService {
     
     // flush out the assessments
     
-    await this.setFacilities();
-    await this.setContacts();
-    await this.setEnergyOpportunities();
-    await this.setAssessments();
-    await this.setKeyPerformanceIndicators();
-    await this.setNonEnergyBenefits();
-    await this.setOnSiteVisits();
+    await this.facilityIdbService.setFacilities();
+    await this.contactIdbService.setContacts();
+    await this.energyOpportunityIdbService.setEnergyOpportunities();
+    await this.assessmentIdbService.setAssessments();
+    await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+    await this.onSiteVisitIdbService.setOnSiteVisits();
 
     this.userIdbService.user.next(user);
-  }
-
-  async setFacilities() {
-    let facilities: Array<IdbFacility> = await firstValueFrom(this.facilityIdbService.getAll());
-    this.facilityIdbService.facilities.next(facilities);
-  }
-
-  async setContacts() {
-    let contacts: Array<IdbContact> = await firstValueFrom(this.contactIdbService.getAll());
-    this.contactIdbService.contacts.next(contacts);
-  }
-
-  async setEnergyOpportunities() {
-    let energyOpportunities: Array<IdbEnergyOpportunity> = await firstValueFrom(this.energyOpportunityIdbService.getAll());
-    this.energyOpportunityIdbService.energyOpportunities.next(energyOpportunities);
-  }
-
-  async setAssessments() {
-    let assessments: Array<IdbAssessment> = await firstValueFrom(this.assessmentIdbService.getAll());
-    this.assessmentIdbService.assessments.next(assessments);
-  }
-
-  async setKeyPerformanceIndicators() {
-    let keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator> = await firstValueFrom(this.keyPerformanceIndicatorIdbService.getAll());
-    this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.next(keyPerformanceIndicators);
-  }
-
-  async setNonEnergyBenefits() {
-    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = await firstValueFrom(this.nonEnergyBenefitsIdbService.getAll());
-    this.nonEnergyBenefitsIdbService.nonEnergyBenefits.next(nonEnergyBenefits);
-  }
-
-  async setOnSiteVisits() {
-    let onsitevisits: Array<IdbOnSiteVisit> = await firstValueFrom(this.onSiteVisitIdbService.getAll());
-    this.onSiteVisitIdbService.onSiteVisits.next(onsitevisits);
   }
 
   // Detect DB Entry changes for updates (update-db-entry.service)
