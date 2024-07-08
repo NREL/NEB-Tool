@@ -63,6 +63,7 @@ export class ImportBackupModalComponent implements OnInit{
     this.importBackupModalService.showImportModal.next(false);
     this.importFile = undefined;
     this.importFileError = undefined;
+    (document.getElementById('selectImportFile') as HTMLInputElement).value = '';
   }
 
   

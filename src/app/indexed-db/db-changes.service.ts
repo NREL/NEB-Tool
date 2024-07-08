@@ -312,7 +312,6 @@ export class DbChangesService {
 
   async setAssessments() {
     let assessments: Array<IdbAssessment> = await firstValueFrom(this.assessmentIdbService.getAll());
-    console.log(assessments);
     this.assessmentIdbService.assessments.next(assessments);
   }
 
