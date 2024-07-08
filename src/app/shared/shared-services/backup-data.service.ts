@@ -80,7 +80,6 @@ export class BackupDataService {
 
   async importUserBackupFile(backupFile: BackupFile): Promise<IdbUser> {
     // Overwirte existing user with new GUIDs for all dbEntries
-    // Avoid problem with importing the same file twice
     
     // this.analyticsService.sendEvent('import_backup_file');
     this.loadingService.setLoadingMessage('Adding Account...');
@@ -138,6 +137,7 @@ export class BackupDataService {
         newId: newGUID,
         oldId: contact.guid
       });
+      contact.guid = newGUID;
       delete contact.id;
       contact.userId = userGUIDs.newId;
       contact.companyId = getNewId(contact.companyId, companyGUIDs);
@@ -177,9 +177,11 @@ export class BackupDataService {
         newId: newGUID,
         oldId: assessment.guid
       });
+      assessment.guid = newGUID;
       delete assessment.id;
       assessment.userId = userGUIDs.newId;
       assessment.companyId = getNewId(assessment.companyId, companyGUIDs);
+      assessment.facilityId = getNewId(assessment.facilityId, facilityGUIDs);
       // assessment.equipmentId = getNewId(assessment.equipmentId, equipmentGUIDs);
       await firstValueFrom(this.assessmentIdbService.addWithObservable(assessment));
     }
@@ -196,9 +198,11 @@ export class BackupDataService {
         newId: newGUID,
         oldId: energyOpportunity.guid
       });
+      energyOpportunity.guid = newGUID;
       delete energyOpportunity.id;
       energyOpportunity.userId = userGUIDs.newId;
       energyOpportunity.companyId = getNewId(energyOpportunity.companyId, companyGUIDs);
+      energyOpportunity.facilityId = getNewId(energyOpportunity.facilityId, facilityGUIDs);
       energyOpportunity.assessmentId = getNewId(energyOpportunity.assessmentId, assessmentGUIDs);
       await firstValueFrom(this.energyOpportunityIdbService.addWithObservable(energyOpportunity));
     }
@@ -214,6 +218,7 @@ export class BackupDataService {
         newId: newGUID,
         oldId: keyPerformanceIndicator.guid
       });
+      keyPerformanceIndicator.guid = newGUID;
       delete keyPerformanceIndicator.id;
       keyPerformanceIndicator.userId = userGUIDs.newId;
       keyPerformanceIndicator.companyId = getNewId(keyPerformanceIndicator.companyId, companyGUIDs);
@@ -232,6 +237,7 @@ export class BackupDataService {
         newId: newGUID,
         oldId: nonEnergyBenefit.guid
       });
+      nonEnergyBenefit.guid = newGUID;
       delete nonEnergyBenefit.id;
       nonEnergyBenefit.userId = userGUIDs.newId;
       nonEnergyBenefit.companyId = getNewId(nonEnergyBenefit.companyId, companyGUIDs);
@@ -253,6 +259,7 @@ export class BackupDataService {
         newId: newGUID,
         oldId: onsitevisit.guid
       });
+      onsitevisit.guid = newGUID;
       delete onsitevisit.id;
       onsitevisit.userId = userGUIDs.newId;
       onsitevisit.companyId = getNewId(onsitevisit.companyId, companyGUIDs);
