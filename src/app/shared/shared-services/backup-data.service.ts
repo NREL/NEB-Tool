@@ -269,17 +269,22 @@ export class BackupDataService {
   backupFileVersionCheck(fileVersion: string, appVersion: string): boolean {
     const parsedFileVersion = semver.parse(fileVersion);
     const parsedAppVersion = semver.parse(appVersion);
+    // console.log(parsedFileVersion, parsedAppVersion, parsedFileVersion.prerelease.join('.') === parsedAppVersion.prerelease.join('.'));
 
     if (!parsedFileVersion || !parsedAppVersion) {
         return false;
     }
+
+    // avoid build metadata, for example, 0.0.1-alpha-06c66911e vs. 0.0.1-alpha
+    // use the shorter length to match
+    const lengthNoBuildMeta = Math.min(parsedFileVersion.prerelease.length, parsedAppVersion.prerelease.length);
 
     // Compare major, minor, patch, and pre-release parts
     return (
       parsedFileVersion.major === parsedAppVersion.major &&
       parsedFileVersion.minor === parsedAppVersion.minor &&
       parsedFileVersion.patch === parsedAppVersion.patch &&
-      parsedFileVersion.prerelease.join('.') === parsedAppVersion.prerelease.join('.')
+      parsedFileVersion.prerelease.join('.').slice(0, lengthNoBuildMeta) === parsedAppVersion.prerelease.join('.').slice(0, lengthNoBuildMeta)
     );
   }
 }
