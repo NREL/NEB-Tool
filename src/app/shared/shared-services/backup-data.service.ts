@@ -21,6 +21,7 @@ import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { Observable, firstValueFrom } from 'rxjs';
 import { LoadingService } from 'src/app/core-components/loading/loading.service';
 import { environment } from 'src/environments/environment';
+import * as semver from 'semver';
 
 @Injectable({
   providedIn: 'root'
@@ -263,6 +264,23 @@ export class BackupDataService {
     }
 
     return newUser;
+  }
+
+  backupFileVersionCheck(fileVersion: string, appVersion: string): boolean {
+    const parsedFileVersion = semver.parse(fileVersion);
+    const parsedAppVersion = semver.parse(appVersion);
+
+    if (!parsedFileVersion || !parsedAppVersion) {
+        return false;
+    }
+
+    // Compare major, minor, patch, and pre-release parts
+    return (
+      parsedFileVersion.major === parsedAppVersion.major &&
+      parsedFileVersion.minor === parsedAppVersion.minor &&
+      parsedFileVersion.patch === parsedAppVersion.patch &&
+      parsedFileVersion.prerelease.join('.') === parsedAppVersion.prerelease.join('.')
+    );
   }
 }
 
