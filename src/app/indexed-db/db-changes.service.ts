@@ -335,7 +335,7 @@ export class DbChangesService {
 
   userChanged(user: IdbUser): boolean {
     let isChanged: boolean = false;
-    if (user.skipSplashScreen = true) {
+    if (user.skipSplashScreen == true) {
       isChanged = true;
     }
     return isChanged;
