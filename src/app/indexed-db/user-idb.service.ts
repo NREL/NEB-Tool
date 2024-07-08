@@ -26,6 +26,12 @@ export class UserIdbService {
     this.user.next(_user)
   }
 
+  // async setUser() {
+  //   let _user: IdbUser = await firstValueFrom(this.getById(1));
+  //   console.log(_user);
+  //   this.user.next(_user);
+  // }
+
 
   getAll(): Observable<Array<IdbUser>> {
     return this.dbService.getAll('user');

@@ -248,11 +248,13 @@ export class DbChangesService {
   }
 
   async deleteCurrentUser(user: IdbUser) {
-    await this.userIdbService.deleteUserWithObservable(user.id);
     let companies: Array<IdbCompany> = await firstValueFrom(this.companyIdbService.getAll());
-    companies.forEach((company) => {
-      this.deleteCompany(company);
-    });
+    let userCompanies: Array<IdbCompany> = companies.filter(company => {return company.userId === user.guid});
+    for (let i = 0; i < userCompanies.length; i++) {
+      this.deleteCompany(userCompanies[i]);
+    }
+    await this.userIdbService.deleteUserWithObservable(user.id).subscribe(u => console.log('all users', u));
+    // await this.userIdbService.setUser();
   }
 
   async updateUser(user: IdbUser) {
