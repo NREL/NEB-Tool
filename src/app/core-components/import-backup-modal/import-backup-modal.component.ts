@@ -78,7 +78,7 @@ export class ImportBackupModalComponent implements OnInit{
             let testBackup = JSON.parse(this.importFile)
             if (!testBackup.origin || testBackup.origin != "JUSTIFI") {
               this.importFileError = "Selected file does not come from JUSTIFI and cannot be imported."
-            } else if (!testBackup.version || testBackup.version != environment.version) {
+            } else if (!testBackup.version || !this.backupDataService.backupFileVersionCheck(testBackup.version, environment.version)) {
               this.importFileError = "Selected file does not match with the current version and cannot be imported."
             } else {
               this.importForUser = (testBackup.backupFileType == "User");
