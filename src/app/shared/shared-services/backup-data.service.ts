@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Version } from '@angular/core';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
@@ -20,6 +20,7 @@ import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { Observable, firstValueFrom } from 'rxjs';
 import { LoadingService } from 'src/app/core-components/loading/loading.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,7 @@ export class BackupDataService {
       nonEnergyBenefits: this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue(),
       onSiteVisits: this.onSiteVisitIdbService.onSiteVisits.getValue(),
       origin: "JUSTIFI",
+      version: environment.version,
       backupFileType: "User",
       timeStamp: new Date(),
       dataBackupId: getGUID()
@@ -275,6 +277,7 @@ export interface BackupFile {
   nonEnergyBenefits: Array<IdbNonEnergyBenefit>,
   onSiteVisits: Array<IdbOnSiteVisit>,
   origin: "JUSTIFI",
+  version: string,
   backupFileType: "User" | "Company" | "Facility",
   timeStamp: Date,
   dataBackupId: string
