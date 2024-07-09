@@ -74,7 +74,7 @@ export class AssessmentEnergyOpportunitiesFormComponent {
   }
 
   async addEnergyOpportunity() {
-    let newOpportunity: IdbEnergyOpportunity = getNewIdbEnergyOpportunity(this.assessment.userId, this.assessment.companyId, this.assessment.guid, this.assessment.guid);
+    let newOpportunity: IdbEnergyOpportunity = getNewIdbEnergyOpportunity(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, this.assessment.guid);
     let assessmentEnergyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunities.filter(prj => {
       return prj.assessmentId == this.assessment.guid;
     });
