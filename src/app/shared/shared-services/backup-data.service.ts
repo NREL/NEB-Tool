@@ -96,7 +96,6 @@ export class BackupDataService {
     let companyGUIDs: Array<{ oldId: string, newId: string }> = new Array();
     for (let i = 0; i < backupFile.companies.length; i++) {
       let company: IdbCompany = backupFile.companies[i];
-      if (!company) {break;}
       let newGUID: string = getGUID();
       companyGUIDs.push({
         newId: newGUID,
@@ -113,7 +112,6 @@ export class BackupDataService {
     let facilityGUIDs: Array<{ oldId: string, newId: string }> = new Array();
     for (let i = 0; i < backupFile.facilities.length; i++) {
       let facility: IdbFacility = backupFile.facilities[i];
-      if (!facility) {break;}
       let newGUID: string = getGUID();
       facilityGUIDs.push({
         oldId: facility.guid,
@@ -122,30 +120,10 @@ export class BackupDataService {
       facility.guid = newGUID;
       delete facility.id;
       facility.userId = userGUIDs.newId;
-      facility.companyId = getNewId(facility.companyId, companyGUIDs); // avoid same random GUIDs?
+      facility.companyId = getNewId(facility.companyId, companyGUIDs);
       await firstValueFrom(this.facilityIdbService.addWithObservable(facility));
     }
 
-    // Adding contacts
-    this.loadingService.setLoadingMessage('Adding contacts...');
-    let contactGUIDs: Array<{ oldId: string, newId: string }> = new Array();
-    for (let i = 0; i < backupFile.contacts.length; i++) {
-      let contact: IdbContact = backupFile.contacts[i];
-      if (!contact) {break;}
-      let newGUID: string = getGUID();
-      contactGUIDs.push({
-        newId: newGUID,
-        oldId: contact.guid
-      });
-      contact.guid = newGUID;
-      delete contact.id;
-      contact.userId = userGUIDs.newId;
-      contact.companyId = getNewId(contact.companyId, companyGUIDs);
-      contact.facilityIds.forEach((facilityId, idx) => {
-        contact.facilityIds[idx] = getNewId(facilityId, facilityGUIDs);
-      });
-      await firstValueFrom(this.contactIdbService.addWithObservable(contact));
-    }
 
     // // Adding equipments
     // this.loadingService.setLoadingMessage('Adding equipments...');
@@ -169,9 +147,6 @@ export class BackupDataService {
     let assessmentGUIDs: Array<{ oldId: string, newId: string }> = new Array();
     for (let i = 0; i < backupFile.assessments.length; i++) {
       let assessment: IdbAssessment = backupFile.assessments[i];
-      if (!assessment) {
-        console.log(assessment);
-        break;}
       let newGUID: string = getGUID();
       assessmentGUIDs.push({
         newId: newGUID,
@@ -192,7 +167,6 @@ export class BackupDataService {
     let energyOpportunityGUIDs: Array<{ oldId: string, newId: string }> = new Array();
     for (let i = 0; i < backupFile.energyOpportunities.length; i++) {
       let energyOpportunity: IdbEnergyOpportunity = backupFile.energyOpportunities[i];
-      if (!energyOpportunity) {break;}
       let newGUID: string = getGUID();
       energyOpportunityGUIDs.push({
         newId: newGUID,
@@ -202,8 +176,10 @@ export class BackupDataService {
       delete energyOpportunity.id;
       energyOpportunity.userId = userGUIDs.newId;
       energyOpportunity.companyId = getNewId(energyOpportunity.companyId, companyGUIDs);
+      console.log(energyOpportunity.facilityId, facilityGUIDs)
       energyOpportunity.facilityId = getNewId(energyOpportunity.facilityId, facilityGUIDs);
       energyOpportunity.assessmentId = getNewId(energyOpportunity.assessmentId, assessmentGUIDs);
+      console.log(energyOpportunity);
       await firstValueFrom(this.energyOpportunityIdbService.addWithObservable(energyOpportunity));
     }
 
@@ -212,7 +188,6 @@ export class BackupDataService {
     let keyPerformanceIndicatorGUIDs: Array<{ oldId: string, newId: string }> = new Array();
     for (let i = 0; i < backupFile.keyPerformanceIndicators.length; i++) {
       let keyPerformanceIndicator: IdbKeyPerformanceIndicator = backupFile.keyPerformanceIndicators[i];
-      if (!keyPerformanceIndicator) {break;}
       let newGUID: string = getGUID();
       keyPerformanceIndicatorGUIDs.push({
         newId: newGUID,
@@ -229,9 +204,8 @@ export class BackupDataService {
     // nonEnergyBenefits: Array<IdbNonEnergyBenefit>,
     this.loadingService.setLoadingMessage('Adding NEBs...');
     let nonEnergyBenefitGUIDs: Array<{ oldId: string, newId: string }> = new Array();
-    for (let i = 0; i < backupFile.keyPerformanceIndicators.length; i++) {
+    for (let i = 0; i < backupFile.nonEnergyBenefits.length; i++) {
       let nonEnergyBenefit: IdbNonEnergyBenefit = backupFile.nonEnergyBenefits[i];
-      if (!nonEnergyBenefit) {break;}
       let newGUID: string = getGUID();
       nonEnergyBenefitGUIDs.push({
         newId: newGUID,
@@ -247,13 +221,32 @@ export class BackupDataService {
       await firstValueFrom(this.nonEnergyBenefitsIdbService.addWithObservable(nonEnergyBenefit));
     }
 
+    // Adding contacts
+    this.loadingService.setLoadingMessage('Adding contacts...');
+    let contactGUIDs: Array<{ oldId: string, newId: string }> = new Array();
+    for (let i = 0; i < backupFile.contacts.length; i++) {
+      let contact: IdbContact = backupFile.contacts[i];
+      let newGUID: string = getGUID();
+      contactGUIDs.push({
+        newId: newGUID,
+        oldId: contact.guid
+      });
+      contact.guid = newGUID;
+      delete contact.id;
+      contact.userId = userGUIDs.newId;
+      contact.companyId = getNewId(contact.companyId, companyGUIDs);
+      contact.facilityIds.forEach((facilityId, idx) => {
+        contact.facilityIds[idx] = getNewId(facilityId, facilityGUIDs);
+      });
+      await firstValueFrom(this.contactIdbService.addWithObservable(contact));
+    }
+
     // Adding onsitevisit
     // onSiteVisits: Array<IdbOnSiteVisit>,
     this.loadingService.setLoadingMessage('Adding Onsite Visits...');
     let onSiteVisitGUIDs: Array<{ oldId: string, newId: string }> = new Array();
     for (let i = 0; i < backupFile.onSiteVisits.length; i++) {
       let onsitevisit: IdbOnSiteVisit = backupFile.onSiteVisits[i];
-      if (!onsitevisit) {break;}
       let newGUID: string = getGUID();
       onSiteVisitGUIDs.push({
         newId: newGUID,
