@@ -1,11 +1,14 @@
 <ng-template [ngIf]="keyPerformanceMetric" [ngIfElse]="missingMetricBlock">
-    <div class="row">
-        <label class="col-sm-12 col-form-label" for="performanceMetric">
-            <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
-            <a class="click-link" (click)="goToMetric()">
-                <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
-            </a>
-        </label>
+    <div class="pb-2 d-flex w-100 justify-content-between">
+        <div>
+            <label for="performanceMetric">
+                <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
+                <a class="click-link" (click)="goToMetric()">
+                    <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
+                </a>
+            </label>
+        </div>
+        <app-primary-kpi-badge [kpiValue]="keyPerformanceMetric.kpiValue"></app-primary-kpi-badge>
     </div>
     <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
 

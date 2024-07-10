@@ -36,9 +36,7 @@
                 <span class="ps-1" [innerHTML]="option.label"></span>
             </div>
             <div>
-                <span class="badge" [ngStyle]="{'background-color':option.primaryKPI | kpiCategoryClass}">
-                    {{option.primaryKPI}}
-                </span>
+                <app-primary-kpi-badge [kpiValue]="option.optionValue"></app-primary-kpi-badge>
             </div>
         </div>
         <div>

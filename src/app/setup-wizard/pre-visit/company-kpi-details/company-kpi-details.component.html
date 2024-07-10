@@ -9,10 +9,8 @@
                             <span class="ps-1" [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
                         </div>
                         <div>
-                            <span class="badge"
-                                [ngStyle]="{'background-color':keyPerformanceIndicator.primaryKPI | kpiCategoryClass}">
-                                {{keyPerformanceIndicator.primaryKPI}}
-                            </span>
+                            <app-primary-kpi-badge
+                                [kpiValue]="keyPerformanceIndicator.optionValue"></app-primary-kpi-badge>
                         </div>
                     </div>
                 </h5>

@@ -46,6 +46,7 @@ import { VisitReportComponent } from './data-evaluation/visit-report/visit-repor
 import { ReportsModule } from '../shared/reports/reports.module';
 import { AssessmentEvaluationComponent } from './data-evaluation/assessment-evaluation/assessment-evaluation.component';
 import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
+import { PrimaryKpiBadgeModule } from "../shared/primary-kpi-badge/primary-kpi-badge.module";
 
 
 
@@ -99,7 +100,8 @@ import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-asse
     HelperPipesModule,
     ContactModalModule,
     TableEntriesModule,
-    ReportsModule
-  ]
+    ReportsModule,
+    PrimaryKpiBadgeModule
+]
 })
 export class SetupWizardModule { }

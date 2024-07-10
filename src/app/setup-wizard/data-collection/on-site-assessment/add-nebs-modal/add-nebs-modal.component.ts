@@ -36,6 +36,7 @@ export class AddNebsModalComponent {
 
   nebOptions: Array<NebOption>;
   numberSelected: number = 0;
+  displayAllNebs: boolean = true;
   constructor(private setupWizardService: SetupWizardService, private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService,
     private assessmentIdbService: AssessmentIdbService,
@@ -107,11 +108,17 @@ export class AddNebsModalComponent {
     let allSelectedMetricValues: Array<KeyPerformanceMetricValue> = companyPerformanceMetrics.flatMap(metric => {
       return metric.value;
     });
-    NebOptions.forEach(option => {
-      if (allSelectedMetricValues.findIndex(value => { return option.KPM.includes(value) }) != -1) {
+    if (!this.displayAllNebs) {
+      NebOptions.forEach(option => {
+        if (allSelectedMetricValues.findIndex(value => { return option.KPM.includes(value) }) != -1) {
+          nebOptionsList.push(option);
+        }
+      });
+    } else {
+      NebOptions.forEach(option => {
         nebOptionsList.push(option);
-      }
-    });
+      });
+    }
     this.nebOptions = nebOptionsList;
   }
 
