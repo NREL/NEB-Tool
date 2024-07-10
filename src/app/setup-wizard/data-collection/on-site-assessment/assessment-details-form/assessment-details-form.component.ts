@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { IdbFacility } from 'src/app/models/facility';
 import { Subscription } from 'rxjs';
-import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { IconDefinition, faContactBook, faPeopleGroup, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -23,21 +20,17 @@ export class AssessmentDetailsFormComponent {
 
   assessment: IdbAssessment;
   assessmentSub: Subscription;
-  processEquipmentOptions: Array<ProcessEquipment>;
   isFormChange: boolean = false;
 
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
-  constructor(private facilityIdbService: FacilityIdbService,
+  constructor(
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
     private setupWizardService: SetupWizardService
   ) { }
 
   ngOnInit() {
-    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    this.processEquipmentOptions = facility.processEquipment;
-
     this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(_assessment => {
       if (!this.isFormChange) {
         this.assessment = _assessment;

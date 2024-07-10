@@ -17,6 +17,10 @@ import { IdbKeyPerformanceIndicator } from '../models/keyPerformanceIndicator';
 import { EnergyOpportunityIdbService } from './energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from '../models/energyOpportunity';
 import { KeyPerformanceMetricValue } from '../shared/constants/keyPerformanceMetrics';
+import { EnergyEquipmentIdbService } from './energy-equipment-idb.service';
+import { ProcessEquipmentIdbService } from './process-equipment-idb.service';
+import { IdbEnergyEquipment } from '../models/energyEquipment';
+import { IdbProcessEquipment } from '../models/processEquipment';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +32,9 @@ export class DbChangesService {
     private contactIdbService: ContactIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService) { }
+    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
+    private energyEquipmentIdbService: EnergyEquipmentIdbService,
+    private processEquipmentIdbService: ProcessEquipmentIdbService) { }
 
 
   //TODO: loading service messaging and success toast notification
@@ -49,6 +55,14 @@ export class DbChangesService {
     let assessments: Array<IdbAssessment> = this.assessmentIdbService.assessments.getValue();
     let companyAssessments: Array<IdbAssessment> = assessments.filter(assessment => { return assessment.companyId == company.guid });
     await this.deleteAssessments(companyAssessments);
+    //delete energy equipment
+    let energyEquipments: Array<IdbEnergyEquipment> = this.energyEquipmentIdbService.energyEquipments.getValue();
+    let companyEnergyEquipments: Array<IdbEnergyEquipment> = energyEquipments.filter(energyEquipment => { return energyEquipment.companyId == company.guid });
+    await this.deleteEnergyEquipments(companyEnergyEquipments);
+    //delete process equipment
+    let processEquipments: Array<IdbProcessEquipment> = this.processEquipmentIdbService.processEquipments.getValue();
+    let companyProcessEquipment: Array<IdbProcessEquipment> = processEquipments.filter(processEquipment => { return processEquipment.companyId == company.guid });
+    await this.deleteProcessEquipments(companyProcessEquipment);
     //delete on site visits
     let onSiteVisits: Array<IdbOnSiteVisit> = this.onSiteVisitIdbService.onSiteVisits.getValue();
     let companyOnSiteVisits: Array<IdbOnSiteVisit> = onSiteVisits.filter(onSiteVisit => { return onSiteVisit.companyId == company.guid });
@@ -84,6 +98,14 @@ export class DbChangesService {
     let assessments: Array<IdbAssessment> = this.assessmentIdbService.assessments.getValue();
     let facilityAssessments: Array<IdbAssessment> = assessments.filter(assessment => { return assessment.facilityId == facility.guid });
     await this.deleteAssessments(facilityAssessments);
+    //delete energy equipment
+    let energyEquipments: Array<IdbEnergyEquipment> = this.energyEquipmentIdbService.energyEquipments.getValue();
+    let facilityEnergyEquipments: Array<IdbEnergyEquipment> = energyEquipments.filter(energyEquipment => { return energyEquipment.facilityId == facility.guid });
+    await this.deleteEnergyEquipments(facilityEnergyEquipments);
+    //delete process equipment
+    let processEquipments: Array<IdbProcessEquipment> = this.processEquipmentIdbService.processEquipments.getValue();
+    let facilityProcessEquipment: Array<IdbProcessEquipment> = processEquipments.filter(processEquipment => { return processEquipment.facilityId == facility.guid });
+    await this.deleteProcessEquipments(facilityProcessEquipment);
     //delete on site visits
     let onSiteVisits: Array<IdbOnSiteVisit> = this.onSiteVisitIdbService.onSiteVisits.getValue();
     let facilityOnSiteVisits: Array<IdbOnSiteVisit> = onSiteVisits.filter(onSiteVisit => { return onSiteVisit.companyId == facility.guid });
@@ -173,6 +195,20 @@ export class DbChangesService {
       await firstValueFrom(this.contactIdbService.deleteWithObservable(contacts[i].id));
     }
     await this.contactIdbService.setContacts();
+  }
+
+  async deleteEnergyEquipments(energyEquipments: Array<IdbEnergyEquipment>) {
+    for (let i = 0; i < energyEquipments.length; i++) {
+      await firstValueFrom(this.energyEquipmentIdbService.deleteWithObservable(energyEquipments[i].id))
+    }
+    await this.energyEquipmentIdbService.setEnergyEquipments();
+  }
+
+  async deleteProcessEquipments(processEquipments: Array<IdbProcessEquipment>) {
+    for (let i = 0; i < processEquipments.length; i++) {
+      await firstValueFrom(this.processEquipmentIdbService.deleteWithObservable(processEquipments[i].id))
+    }
+    await this.processEquipmentIdbService.setProcessEquipments();
   }
 
   async deleteNonEnergyBenefits(nonEnergyBenefits: Array<IdbNonEnergyBenefit>) {

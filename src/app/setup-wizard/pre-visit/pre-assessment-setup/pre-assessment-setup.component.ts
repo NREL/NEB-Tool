@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faContactBook, faPlus, faScrewdriverWrench, faToolbox, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
-import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbContact } from 'src/app/models/contact';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
@@ -36,7 +35,7 @@ export class PreAssessmentSetupComponent {
   contactsSub: Subscription;
 
   accordionIndex: number = 0;
-  processEquipmentOptions: Array<ProcessEquipment>;
+  // processEquipmentOptions: Array<ProcessEquipment>;
   displayDeleteModal: boolean = false;
   assessmentToDelete: IdbAssessment;
   displayContactModal: boolean = false;
@@ -71,12 +70,12 @@ export class PreAssessmentSetupComponent {
       }
     });
 
-    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    if (facility) {
-      this.processEquipmentOptions = facility.processEquipment;
-    } else {
-      this.router.navigateByUrl('/welcome');
-    }
+    // let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
+    // if (facility) {
+    //   this.processEquipmentOptions = facility.processEquipment;
+    // } else {
+    //   this.router.navigateByUrl('/welcome');
+    // }
   }
 
   ngOnDestroy() {
