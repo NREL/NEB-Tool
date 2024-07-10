@@ -15,7 +15,6 @@ export class CompanyContactsFormService {
     let firstname = '', lastname = '';
     if (contact.name) {
       let names = contact.name.split(',');
-      // console.log(contact.name);
       if (names.length < 1) {
         firstname = names[0].trim();
       } else {
@@ -38,11 +37,8 @@ export class CompanyContactsFormService {
     return this.formBuilder.group({
       'firstname': [firstname, [Validators.required]],
       'lastname' : [lastname, [Validators.required]],
-      //TODO: add form controls corresponding to form
-      // 'phone': [contact.phone, [Validators.pattern(/^(\+\d{1,3}\s+)?[\d\s\(\)\-]*$/), this.phoneNumberValidator()]],
       'phone': [phone, []],
       'ext': [ext, []],
-      // 'email': [contact.email, [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$"), Validators.maxLength(255)]],
       'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
       'role': [contact.role, []],
       'team': [contact.team, []],
@@ -58,18 +54,9 @@ export class CompanyContactsFormService {
     if (firstname || lastname) {
       contact.name = firstname + ', ' + lastname;
     }
-    //TODO: add all the properties that will get updated by the form
     let phone = contactForm.controls['phone'].value;
     let ext = contactForm.controls['ext'].value;
     const phoneWithExt = phone + (ext? ' ext. ' + ext : '');
-    // console.log('phone:', phone, 'ext:', ext, 'phext:', phoneWithExt);
-    // if (isValidPhoneNumber(phoneWithExt, 'US')) {
-    //   contact.phone = parsePhoneNumber(phoneWithExt, 'US').formatInternational();
-    //   console.log('good:' + contact.phone);
-    // } else {
-    //   contact.phone = phone + ext;
-    //   console.log('bad:' + contact.phone);
-    // }
     contact.phone = isValidPhoneNumber(phoneWithExt, 'US')? parsePhoneNumber(phoneWithExt, 'US').formatInternational() : phone + ext;
     contact.email = contactForm.controls['email'].value;
     contact.role = contactForm.controls['role'].value;
@@ -120,8 +107,6 @@ export class CompanyContactsFormService {
       const phoneWithExt = phone + (ext? ' ext. ' + ext : '');
       const isValidPhone = isValidPhoneNumber(phoneWithExt, 'US');
       if (!isValidPhone) {
-        // console.log(phone, !phone, phone?.length, phone===null, typeof(phone));
-        // console.log(phoneWithExt, 'phone', phone, 'ext', ext);
         control.get('phone').setErrors({invalidPhoneNumber: true });
       } else {
         control.get('phone').setErrors(null);
