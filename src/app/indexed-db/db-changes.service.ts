@@ -269,6 +269,23 @@ export class DbChangesService {
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
   }
 
+  async deleteProcessEquipment(processEquipments: Array<IdbProcessEquipment>) {
+    for (let i = 0; i < processEquipments.length; i++) {
+      //update contacts
+      let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
+      let equipmentContacts: Array<IdbContact> = contacts.filter(contact => { return contact.processEquipmentIds.includes(processEquipments[i].guid) });
+      if (equipmentContacts.length > 0) {
+        for (let a = 0; a < equipmentContacts.length; a++) {
+          equipmentContacts[a].processEquipmentIds = equipmentContacts[a].processEquipmentIds.filter(pId => { return pId != processEquipments[i].guid });
+          await firstValueFrom(this.contactIdbService.updateWithObservable(equipmentContacts[a]));
+        }
+        await this.contactIdbService.setContacts();
+      }
+      await firstValueFrom(this.processEquipmentIdbService.deleteWithObservable(processEquipments[i].id));
+    }
+    await this.processEquipmentIdbService.setProcessEquipments();
+  }
+
   selectOnSiteVisit(onSiteGUID: string): boolean {
     let onSiteExists: boolean = this.onSiteVisitIdbService.setSelectedFromGUID(onSiteGUID);
     if (onSiteExists) {

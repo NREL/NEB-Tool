@@ -57,4 +57,9 @@ export class ProcessEquipmentIdbService {
     let processEquipments: Array<IdbProcessEquipment> = this.processEquipments.getValue();
     return processEquipments.find(_processEquipments => { return _processEquipments.guid == guid });
   }
+
+  getFacilityProcessEquipment(facilityId: string): Array<IdbProcessEquipment> {
+    let processEquipments: Array<IdbProcessEquipment> = this.processEquipments.getValue();
+    return processEquipments.filter(_processEquipments => { return _processEquipments.facilityId == facilityId });
+  }
 }

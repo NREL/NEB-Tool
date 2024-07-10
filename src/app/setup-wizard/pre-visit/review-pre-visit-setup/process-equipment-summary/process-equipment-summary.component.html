@@ -3,7 +3,7 @@
     <div class="col-lg-6 col-md-12 pb-2" *ngFor="let equipment of processEquipment">
         <div class="card">
             <div class="card-header">
-                <fa-icon [icon]="equipment.equipmentType | equipmentTypeIcon" class="pe-1"></fa-icon>
+                <fa-icon [icon]="equipment.guid | equipmentTypeIcon: processEquipment" class="pe-1"></fa-icon>
                 {{equipment.equipmentName}}
             </div>
             <div class="card-body">
@@ -64,7 +64,8 @@
                                 Contacts
                             </td>
                             <td>
-                                <ng-template [ngIf]="(equipment.guid| contactName:'processEquipment': contacts).length != 0"
+                                <ng-template
+                                    [ngIf]="(equipment.guid| contactName:'processEquipment': contacts).length != 0"
                                     [ngIfElse]="contactMdash">
                                     <div class="d-flex">
                                         <div class="pe-1"

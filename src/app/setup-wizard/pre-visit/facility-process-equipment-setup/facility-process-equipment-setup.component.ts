@@ -10,6 +10,9 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { getNewIdbProcessEquipment, IdbProcessEquipment } from 'src/app/models/processEquipment';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-facility-process-equipment-setup',
@@ -19,55 +22,42 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 export class FacilityProcessEquipmentSetupComponent {
 
   accordionIndex: number = 0;
-  equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
-  utilityTypeOptions: Array<UtilityType> = UtilityTypeOptions;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
   faDiagramProject: IconDefinition = faDiagramProject;
-  faTrash: IconDefinition = faTrash;
   faPlus: IconDefinition = faPlus;
-  faUser: IconDefinition = faUser;
-  faContactBook: IconDefinition = faContactBook;
   facility: IdbFacility;
-
-  // equipmentToDelete: ProcessEquipment;
-  displayDeleteModal: boolean = false;
-  displayContactModal: boolean = false;
-  contactEquipmentIndex: number;
-  viewContact: IdbContact;
-
-  contacts: Array<IdbContact>;
-  contactSub: Subscription;
+  
+  processEquipmentsSub: Subscription
+  processEquipments: Array<IdbProcessEquipment>;
+  processEquipmentGuids: Array<string> = [];
   constructor(private facilityIdbService: FacilityIdbService, private router: Router,
-    private contactIdbService: ContactIdbService,
-    private onSiteVisitIdbService: OnSiteVisitIdbService
+    private onSiteVisitIdbService: OnSiteVisitIdbService,
+    private processEquipmentIdbService: ProcessEquipmentIdbService
   ) {
 
   }
 
   ngOnInit() {
-    this.contactSub = this.contactIdbService.contacts.subscribe(_contacts => {
-      this.contacts = _contacts;
-    });
     this.facility = this.facilityIdbService.selectedFacility.getValue();
     if (!this.facility) {
       this.router.navigateByUrl('/welcome')
     }
+
+    this.processEquipmentsSub = this.processEquipmentIdbService.processEquipments.subscribe(_processEquipments => {
+      this.processEquipments = _processEquipments;
+      this.setProcessEquipmentGuids();
+    });
   }
 
   ngOnDestroy() {
-    this.contactSub.unsubscribe();
+    this.processEquipmentsSub.unsubscribe();
   }
 
-  async saveChanges() {
-    await this.facilityIdbService.asyncUpdate(this.facility);
-  }
-
-  addEquipment() {
-    // let newEquipment: ProcessEquipment = getNewProcessEquipment();
-    // this.facility.processEquipment.push(newEquipment);
-    // this.setAccordionIndex(this.facility.processEquipment.length - 1);
-    // this.saveChanges();
+  async addEquipment() {
+    let newProcessEquipment: IdbProcessEquipment = getNewIdbProcessEquipment(this.facility.userId, this.facility.companyId, this.facility.guid);
+    await firstValueFrom(this.processEquipmentIdbService.addWithObservable(newProcessEquipment));
+    await this.processEquipmentIdbService.setProcessEquipments();
   }
 
   goBack() {
@@ -80,55 +70,31 @@ export class FacilityProcessEquipmentSetupComponent {
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/pre-assessment');
   }
 
-  async removeEquipment() {
-    // this.facility.processEquipment = this.facility.processEquipment.filter(_equipment => {
-    //   return _equipment.guid != this.equipmentToDelete.guid;
-    // });
-    // //update contacts
-    // let facilityContacts: Array<IdbContact> = this.contacts.filter(contact => {
-    //   return contact.facilityIds.includes(this.facility.guid);
-    // });
-    // let contactsNeedUpdate: boolean = false;
-    // for (let i = 0; i < facilityContacts.length; i++) {
-    //   if (facilityContacts[i].processEquipmentIds.includes(this.equipmentToDelete.guid)) {
-    //     facilityContacts[i].processEquipmentIds = facilityContacts[i].processEquipmentIds.filter(guid => {
-    //       return guid != this.equipmentToDelete.guid;
-    //     });
-    //     await firstValueFrom(this.contactIdbService.updateWithObservable(facilityContacts[i]));
-    //     contactsNeedUpdate = true;
-    //   };
-    // }
-    // if (contactsNeedUpdate) {
-    //   await this.contactIdbService.setContacts()
-    // }
-    // this.closeDeleteModal();
-    // this.setAccordionIndex(0);
-    // this.saveChanges();
-  }
-
   setAccordionIndex(index: number) {
     this.accordionIndex = index;
   }
 
-  // openDeleteModal(equipment: ProcessEquipment) {
-  //   this.equipmentToDelete = equipment;
-  //   this.displayDeleteModal = true;
-  // }
+  setProcessEquipmentGuids() {
+    // only want to update neb list if changes made
+    // otherwise forms get re-init when the list updates
+    if (this.facility && this.processEquipments) {
+      let facilityProcessEquipments: Array<IdbProcessEquipment> = this.processEquipments.filter(processEquipment => {
+        return processEquipment.facilityId == this.facility.guid
+      });
+      let tmpEquipmentGuids: Array<string> = facilityProcessEquipments.map(neb => {
+        return neb.guid
+      });
+      if (tmpEquipmentGuids.length != this.processEquipmentGuids.length) {
+        this.processEquipmentGuids = tmpEquipmentGuids;
+      } else {
+        let xor: Array<string> = _.xor(this.processEquipmentGuids, tmpEquipmentGuids)
+        if (xor.length != 0) {
+          this.processEquipmentGuids = tmpEquipmentGuids;
+        }
+      }
+    } else {
+      this.processEquipmentGuids = [];
+    }
 
-  // closeDeleteModal() {
-  //   this.displayDeleteModal = false;
-  //   this.equipmentToDelete = undefined;
-  // }
-
-  openContactModal(assessmentIndex: number, viewContact: IdbContact) {
-    this.contactEquipmentIndex = assessmentIndex;
-    this.viewContact = viewContact;
-    this.displayContactModal = true;
-  }
-
-  closeContactModal() {
-    this.displayContactModal = false;
-    this.contactEquipmentIndex = undefined;
-    this.viewContact = undefined;
   }
 }
