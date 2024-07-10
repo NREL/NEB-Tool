@@ -59,6 +59,7 @@
                     <div class="col-7">
                         <select id="setupWizardSection" name="setupWizardSection" class="form-select"
                             [(ngModel)]="setupWizardSection">
+                            <option [ngValue]="'preVisit'">Pre-Visit</option>
                             <option [ngValue]="'dataCollection'">Data Collection</option>
                             <option [ngValue]="'dataEvaluation'">Data Evaluation</option>
                         </select>
