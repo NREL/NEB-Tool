@@ -47,6 +47,8 @@ import { ReportsModule } from '../shared/reports/reports.module';
 import { AssessmentEvaluationComponent } from './data-evaluation/assessment-evaluation/assessment-evaluation.component';
 import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
 import { ProcessEquipmentFormComponent } from './pre-visit/facility-process-equipment-setup/process-equipment-form/process-equipment-form.component';
+import { FacilityEnergyEquipmentSetupComponent } from './pre-visit/facility-energy-equipment-setup/facility-energy-equipment-setup.component';
+import { EnergyEquipmentFormComponent } from './pre-visit/facility-energy-equipment-setup/energy-equipment-form/energy-equipment-form.component';
 
 
 
@@ -90,7 +92,9 @@ import { ProcessEquipmentFormComponent } from './pre-visit/facility-process-equi
     VisitReportComponent,
     AssessmentEvaluationComponent,
     OnSiteAssessmentResultsComponent,
-    ProcessEquipmentFormComponent
+    ProcessEquipmentFormComponent,
+    FacilityEnergyEquipmentSetupComponent,
+    EnergyEquipmentFormComponent
   ],
   imports: [
     CommonModule,

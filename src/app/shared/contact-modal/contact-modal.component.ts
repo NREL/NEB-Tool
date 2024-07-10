@@ -99,6 +99,14 @@ export class ContactModalComponent {
       } else {
         this.contacts[contactIndex].nonEnergyBenefitIds.push(this.contextGuid);
       }
+    } else if (this.contactContext == 'energyEquipment') {
+      if (this.contacts[contactIndex].energyEquipmentIds.includes(this.contextGuid)) {
+        this.contacts[contactIndex].energyEquipmentIds = this.contacts[contactIndex].energyEquipmentIds.filter(id => {
+          return id != this.contextGuid;
+        });
+      } else {
+        this.contacts[contactIndex].energyEquipmentIds.push(this.contextGuid);
+      }
     }
   }
 }

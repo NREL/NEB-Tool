@@ -62,7 +62,7 @@ export class FacilityProcessEquipmentSetupComponent {
 
   goBack() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/facility-setup');
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/energy-equipment');
   }
 
   goToNext() {

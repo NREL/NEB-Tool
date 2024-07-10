@@ -3,40 +3,36 @@ import { faContactBook, faTrash, faUser, IconDefinition } from '@fortawesome/fre
 import { Subscription } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
-import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { IdbContact } from 'src/app/models/contact';
-import { IdbProcessEquipment } from 'src/app/models/processEquipment';
-import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
-import { UtilityType, UtilityTypeOptions } from 'src/app/shared/constants/utilityTypes';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
 @Component({
-  selector: 'app-process-equipment-form',
-  templateUrl: './process-equipment-form.component.html',
-  styleUrl: './process-equipment-form.component.css'
+  selector: 'app-energy-equipment-form',
+  templateUrl: './energy-equipment-form.component.html',
+  styleUrl: './energy-equipment-form.component.css'
 })
-export class ProcessEquipmentFormComponent {
-  @Input({required: true})
-  processEquipmentGuid: string;
+export class EnergyEquipmentFormComponent {
+  @Input({ required: true })
+  energyEquipmentGuid: string;
 
   faTrash: IconDefinition = faTrash;
   faUser: IconDefinition = faUser;
   faContactBook: IconDefinition = faContactBook;
 
-  equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
-  utilityTypeOptions: Array<UtilityType> = UtilityTypeOptions;
-  processEquipment: IdbProcessEquipment;
+  energyEquipment: IdbEnergyEquipment
   displayDeleteModal: boolean = false;
   contacts: Array<IdbContact>;
   contactSub: Subscription;
   viewContact: IdbContact;
   displayContactModal: boolean = false;
-  constructor(private processEquipmentIdbService: ProcessEquipmentIdbService,
+  constructor(private energyEquipmentIdbService: EnergyEquipmentIdbService,
     private dbChangesService: DbChangesService,
     private contactIdbService: ContactIdbService
   ) { }
 
   ngOnInit() {
-    this.processEquipment = this.processEquipmentIdbService.getByGuid(this.processEquipmentGuid);
+    this.energyEquipment = this.energyEquipmentIdbService.getByGuid(this.energyEquipmentGuid);
     this.contactSub = this.contactIdbService.contacts.subscribe(_contacts => {
       this.contacts = _contacts;
     });
@@ -47,7 +43,7 @@ export class ProcessEquipmentFormComponent {
   }
 
   async saveChanges() {
-    await this.processEquipmentIdbService.asyncUpdate(this.processEquipment);
+    await this.energyEquipmentIdbService.asyncUpdate(this.energyEquipment);
   }
 
   openDeleteModal() {
@@ -59,7 +55,7 @@ export class ProcessEquipmentFormComponent {
   }
 
   async deleteEquipment() {
-    await this.dbChangesService.deleteProcessEquipment(this.processEquipment);
+    await this.dbChangesService.deleteEnergyEquipment(this.energyEquipment);
   }
 
   openContactModal(viewContact: IdbContact) {

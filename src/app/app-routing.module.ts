@@ -42,6 +42,7 @@ import { DataFollowUpComponent } from './setup-wizard/data-evaluation/data-follo
 import { VisitReportComponent } from './setup-wizard/data-evaluation/visit-report/visit-report.component';
 import { AssessmentEvaluationComponent } from './setup-wizard/data-evaluation/assessment-evaluation/assessment-evaluation.component';
 import { OnSiteAssessmentResultsComponent } from './setup-wizard/data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
+import { FacilityEnergyEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-energy-equipment-setup/facility-energy-equipment-setup.component';
 
 const routes: Routes = [
   {
@@ -85,6 +86,10 @@ const routes: Routes = [
           {
             path: 'facility-setup',
             component: FacilitySetupComponent
+          },
+          {
+            path: 'energy-equipment',
+            component: FacilityEnergyEquipmentSetupComponent
           },
           {
             path: 'process-equipment',
