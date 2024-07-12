@@ -43,7 +43,7 @@ export class BackupDataService {
 
   backupData() {
     let backupFile: BackupFile = this.getBackupFile();
-    let backupFileName: string = 'userid_' + backupFile.user.guid + '_backup_';
+    let backupFileName: string = 'JUSTIFI_' + backupFile.companies[0]?.generalInformation.name + '_backup_';
     this.downloadBackup(backupFile, backupFileName);
   }
 
@@ -53,7 +53,8 @@ export class BackupDataService {
     let dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(jsonData);
     dlLink.setAttribute("href", dataStr);
     const date = backupFile.timeStamp;
-    const filename = backupFileName + (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
+    const filename = backupFileName + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + '-' + date.getFullYear() + '_'
+      + date.getHours().toString().padStart(2, '0') + '-' + date.getMinutes().toString().padStart(2, '0') + '-' + date.getSeconds().toString().padStart(2, '0');
     dlLink.setAttribute('download', filename + '.json');
     dlLink.click();
   }
