@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './import-backup-modal.component.html',
   styleUrl: './import-backup-modal.component.css'
 })
-export class ImportBackupModalComponent implements OnInit{
+export class ImportBackupModalComponent implements OnInit, OnDestroy {
   
 
   showImportModalSub: Subscription;
@@ -53,8 +53,10 @@ export class ImportBackupModalComponent implements OnInit{
     })
   }
 
-  OnDestroy() {
-    this.showImportModalSub.unsubscribe();
+  ngOnDestroy() {
+    if (this.showImportModalSub) {
+      this.showImportModalSub.unsubscribe();
+    }
   }
 
   cancelImportBackup() {
