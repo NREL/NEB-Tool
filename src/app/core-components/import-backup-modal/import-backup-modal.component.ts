@@ -53,7 +53,7 @@ export class ImportBackupModalComponent implements OnInit{
     })
   }
 
-  OnDestroy() {
+  ngOnDestroy() {
     this.showImportModalSub.unsubscribe();
   }
 

@@ -252,7 +252,7 @@ export class DbChangesService {
     let companies: Array<IdbCompany> = await firstValueFrom(this.companyIdbService.getAll());
     let userCompanies: Array<IdbCompany> = companies.filter(company => {return company.userId === user.guid});
     for (let i = 0; i < userCompanies.length; i++) {
-      this.deleteCompany(userCompanies[i]);
+      await this.deleteCompany(userCompanies[i]);
     }
     await this.userIdbService.deleteUserWithObservable(user.id);
     // await this.userIdbService.setUser();
