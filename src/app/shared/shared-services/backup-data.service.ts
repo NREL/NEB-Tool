@@ -124,8 +124,7 @@ export class BackupDataService {
       await firstValueFrom(this.facilityIdbService.addWithObservable(facility));
     }
 
-
-    // // Adding equipments
+    // // TODO: Adding equipments
     // this.loadingService.setLoadingMessage('Adding equipments...');
     // let equipmentGUIDs: Array<{ oldId: string, newId: string }> = new Array();
     // for (let i = 0; i < backupFile.equipments.length; i++) {
@@ -176,10 +175,8 @@ export class BackupDataService {
       delete energyOpportunity.id;
       energyOpportunity.userId = userGUIDs.newId;
       energyOpportunity.companyId = getNewId(energyOpportunity.companyId, companyGUIDs);
-      console.log(energyOpportunity.facilityId, facilityGUIDs)
       energyOpportunity.facilityId = getNewId(energyOpportunity.facilityId, facilityGUIDs);
       energyOpportunity.assessmentId = getNewId(energyOpportunity.assessmentId, assessmentGUIDs);
-      console.log(energyOpportunity);
       await firstValueFrom(this.energyOpportunityIdbService.addWithObservable(energyOpportunity));
     }
 
@@ -269,7 +266,6 @@ export class BackupDataService {
   backupFileVersionCheck(fileVersion: string, appVersion: string): boolean {
     const parsedFileVersion = semver.parse(fileVersion);
     const parsedAppVersion = semver.parse(appVersion);
-    // console.log(parsedFileVersion, parsedAppVersion, parsedFileVersion.prerelease.join('.') === parsedAppVersion.prerelease.join('.'));
 
     if (!parsedFileVersion || !parsedAppVersion) {
         return false;
