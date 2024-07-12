@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-<<<<<<< HEAD
-import { IconDefinition, faMaximize, faMinimize, faRotateLeft, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { SetupWizardContext, SetupWizardService } from '../setup-wizard.service';
-=======
-import { IconDefinition, faChevronDown, faChevronUp, faFolderOpen, faMaximize, faMinimize, faMinus, faPlus, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronDown, faChevronUp, faFolderOpen, faMaximize, faMinimize, faMinus, faPlus, faRotateLeft, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardService } from '../setup-wizard.service';
->>>>>>> develop
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
@@ -31,12 +26,9 @@ export class SetupWizardSidebarComponent {
   faFolderOpen: IconDefinition = faFolderOpen;
   faMinimize: IconDefinition = faMinimize;
   faMaximize: IconDefinition = faMaximize;
-<<<<<<< HEAD
   faCircleExclamation: IconDefinition = faCircleExclamation;
-=======
   faChevronDown: IconDefinition = faChevronDown;
   faChevronUp: IconDefinition = faChevronUp;
->>>>>>> develop
 
   displaySidebar: boolean = true;
   displayStartOverModal: boolean;
@@ -54,16 +46,13 @@ export class SetupWizardSidebarComponent {
   company: IdbCompany;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
   keyPerformanceIndicatorsSub: Subscription;
-<<<<<<< HEAD
   companyNameFormControl: FormControl;
   companyNameFormControlSub: Subscription;
-
-=======
 
   collapsePreVisit: boolean = true;
   collapseDataCollection: boolean = true;
   collapseDataEvaluation: boolean = true;
->>>>>>> develop
+
   constructor(private router: Router, private setupWizardService: SetupWizardService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private assessmentIdbService: AssessmentIdbService,
@@ -82,14 +71,6 @@ export class SetupWizardSidebarComponent {
     });
     this.setDisplaySidebar();
 
-<<<<<<< HEAD
-    this.setupContextSub = this.setupWizardService.setupContext.subscribe(val => {
-      this.setupContext = val;
-      // console.log(this.setupContext);
-    });
-
-=======
->>>>>>> develop
     this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(val => {
       this.assessments = val;
     });

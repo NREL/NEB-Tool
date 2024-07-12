@@ -36,7 +36,7 @@ export class SetupWizardModalComponent {
 
   selectedFacilitySub: Subscription;
 
-  setupWizardSection: 'dataCollection' | 'dataEvaluation' = 'dataCollection';
+  setupWizardSection: 'dataCollection' | 'dataEvaluation' | 'preVisit' = 'dataCollection';
 
   displayCreateNewModal: boolean = false;
 
@@ -155,7 +155,9 @@ export class SetupWizardModalComponent {
       this.router.navigateByUrl('/setup-wizard/pre-visit/' + this.selectedOnSiteVisitGuid);
     } else {
       let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.getByGuid(this.selectedOnSiteVisitGuid);
-      if (this.setupWizardSection == 'dataEvaluation') {
+      if (this.setupWizardSection == 'preVisit') {
+        this.router.navigateByUrl('/setup-wizard/pre-visit/' + this.selectedOnSiteVisitGuid);
+      } else if (this.setupWizardSection == 'dataEvaluation') {
         this.router.navigateByUrl('/setup-wizard/data-evaluation/' + this.selectedOnSiteVisitGuid);
       } else {
         if (onSiteVisit.assessmentIds.length > 0) {
