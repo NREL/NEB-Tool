@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faAddressBook, faChevronLeft, faChevronRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { IdbContact, getNewIdbContact } from 'src/app/models/contact';
@@ -19,7 +19,7 @@ import { CompanyContactsFormComponent } from './company-contacts-form/company-co
   templateUrl: './company-contacts-setup.component.html',
   styleUrl: './company-contacts-setup.component.css'
 })
-export class CompanyContactsSetupComponent {
+export class CompanyContactsSetupComponent implements OnInit, OnDestroy{
 
   allContacts: Array<IdbContact>;
   companyContactGuids: Array<string>;
@@ -86,13 +86,16 @@ export class CompanyContactsSetupComponent {
           this.companyContactGuids = tmpContactIds;
         }
       }
-      // console.log(this.companyContactGuids)
     }
   }
 
   ngOnDestroy() {
-    this.selectedCompanySub.unsubscribe();
-    this.contactsSub.unsubscribe();
+    if (this.selectedCompanySub) {
+      this.selectedCompanySub.unsubscribe();
+    }
+    if (this.contactsSub) {
+      this.contactsSub.unsubscribe();
+    }
   }
 
   goBack() {
@@ -127,7 +130,6 @@ export class CompanyContactsSetupComponent {
         let contactForm: FormGroup = this.companyContactsFormService.getFormFromIdbContact(contact);
         contactForms.push(contactForm);
         if (contactForm.invalid) {
-          // console.log(contactForm);
           for (const name of Object.keys(contactForm.controls)) {
             const control = contactForm.get(name);
             if (control && control.errors?.['required']) {
@@ -135,16 +137,6 @@ export class CompanyContactsSetupComponent {
               break;
             }
           }
-          // // Debugging invalid form control
-          // const invalidControls = [];
-          // const controls = contactForm.controls;
-          // for (const name in controls) {
-          //   if (controls[name].invalid) {
-          //     invalidControls.push({ name, errors: controls[name].errors });
-          //   }
-          // }
-          // console.log(controls['phone']);
-          // console.log(invalidControls);
         }
       });
       this.hasInvalidContacts = hasInvalidContacts;
