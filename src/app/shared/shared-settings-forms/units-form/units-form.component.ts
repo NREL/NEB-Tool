@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EnergyUnitOptions, MassUnitOptions, UnitOption, VolumeGasOptions, VolumeLiquidOptions } from './unitOptions';
 import { IdbCompany } from 'src/app/models/company';
@@ -15,7 +15,7 @@ import { SharedSettingsFormsService } from '../shared-settings-forms.service';
   templateUrl: './units-form.component.html',
   styleUrls: ['./units-form.component.css']
 })
-export class UnitsFormComponent {
+export class UnitsFormComponent implements OnInit, OnDestroy{
   @Input()
   inCompany: boolean;
 
@@ -55,7 +55,9 @@ export class UnitsFormComponent {
   }
 
   ngOnDestroy() {
-    this.companyOrFacilitySub.unsubscribe();
+    if (this.companyOrFacilitySub) {
+      this.companyOrFacilitySub.unsubscribe();
+    }
   }
 
   async saveChanges() {

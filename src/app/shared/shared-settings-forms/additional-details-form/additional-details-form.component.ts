@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { GeneralInformation } from 'src/app/models/generalInformation';
 import { FirstNaicsList, NAICS, SecondNaicsList, ThirdNaicsList } from '../form-data-options/naics-data';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -15,7 +15,7 @@ import { SharedSettingsFormsService } from '../shared-settings-forms.service';
   templateUrl: './additional-details-form.component.html',
   styleUrls: ['./additional-details-form.component.css']
 })
-export class AdditionalDetailsFormComponent {
+export class AdditionalDetailsFormComponent implements OnInit, OnDestroy{
   @Input()
   inCompany: boolean;
 
@@ -54,7 +54,9 @@ export class AdditionalDetailsFormComponent {
   }
 
   ngOnDestroy() {
-    this.companyOrFacilitySub.unsubscribe();
+    if (this.companyOrFacilitySub) {
+      this.companyOrFacilitySub.unsubscribe();
+    }
   }
 
   async saveChanges() {

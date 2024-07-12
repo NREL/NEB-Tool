@@ -22,65 +22,6 @@
                                 </span>
                             </td>
                         </tr>
-                        <!-- <ng-template [ngIf]="!kpi.isQualitative">
-                            <tr>
-                                <td class="w-50">
-                                    Units
-                                </td>
-                                <td>
-                                    <span [innerHTML]="kpi.units | unitsDisplay"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="w-50">
-                                    Baseline Use Per Year
-                                </td>
-                                <td>
-                                    <ng-template [ngIf]="kpi.baselineUsePerYear" [ngIfElse]="useMdash">
-                                        {{kpi.baselineUsePerYear}}
-                                        <span [innerHTML]="(kpi.units | unitsDisplay) + '/yr'"></span>
-                                    </ng-template>
-                                    <ng-template #useMdash>
-                                        &mdash;
-                                    </ng-template>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="w-50">
-                                    Cost Per Unit
-                                </td>
-                                <td>
-                                    <ng-template [ngIf]="kpi.costPerUnit" [ngIfElse]="costMdash">
-                                        {{kpi.costPerUnit}} &dollar;
-                                    </ng-template>
-                                    <ng-template #costMdash>
-                                        &mdash;
-                                    </ng-template>
-                                </td>
-                            </tr>
-                        </ng-template>
-                        <tr>
-                            <td>
-                                Contacts
-                            </td>
-                            <td>
-                                <ng-template [ngIf]="(kpi.kpiOptionValue| associatedContacts:'KPI': contacts).length != 0"
-                                    [ngIfElse]="contactMdash">
-                                    <div class="d-flex">
-                                        <div class="pe-1"
-                                            *ngFor="let contact of kpi.kpiOptionValue| associatedContacts:'KPI': contacts;">
-                                            <span class="badge bg-primary">
-                                                <fa-icon [icon]="faUser"></fa-icon>
-                                                {{contact.name}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                                <ng-template #contactMdash>
-                                    &mdash;
-                                </ng-template>
-                            </td>
-                        </tr> -->
                     </tbody>
                 </table>
 

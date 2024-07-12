@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { IconDefinition, faChevronDown, faChevronUp, faFolderOpen, faMaximize, faMinimize, faMinus, faPlus, faRotateLeft, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardService } from '../setup-wizard.service';
@@ -21,7 +21,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './setup-wizard-sidebar.component.html',
   styleUrl: './setup-wizard-sidebar.component.css'
 })
-export class SetupWizardSidebarComponent {
+export class SetupWizardSidebarComponent implements OnInit, OnDestroy {
 
   faFolderOpen: IconDefinition = faFolderOpen;
   faMinimize: IconDefinition = faMinimize;

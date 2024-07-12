@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdbCompany } from 'src/app/models/company';
 import { IconDefinition, faBuilding, faChevronRight, faContactCard, faFilePen, faGear, faLocationDot, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,7 @@ import { CompanySetupService } from './company-setup.service';
   templateUrl: './company-setup.component.html',
   styleUrl: './company-setup.component.css'
 })
-export class CompanySetupComponent {
+export class CompanySetupComponent implements OnInit, OnDestroy {
 
   faFilePen: IconDefinition = faFilePen;
   faGear: IconDefinition = faGear;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen, faGear, faIndustry, faLocationDot } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
   templateUrl: './facility-setup.component.html',
   styleUrl: './facility-setup.component.css'
 })
-export class FacilitySetupComponent {
+export class FacilitySetupComponent implements OnInit {
 
   name: FormControl;
   facilityName: string;

@@ -15,15 +15,9 @@ export class SharedSettingsFormsService {
    * Extract form info for updating Idb
    * 1. Location Form (General Information)
    * 2. Units form (Utilities)
-   * 3. Additional details form (NAICS code)
-   * @param formBuilder 
-   * @param companyIdbService 
-   * @param facilityIdbService 
    */
 
-  constructor(private formBuilder: FormBuilder,
-    private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   getGeneralInformationForm(generalInformation: GeneralInformation, formType: string): FormGroup {
     let form: FormGroup;
@@ -73,7 +67,6 @@ export class SharedSettingsFormsService {
   }
 
   getUnitsForm(unitSettings: UnitSettings): FormGroup {
-    //TODO: Add validation logic (issue-65)
     let form: FormGroup = this.formBuilder.group({
       includeElectricity: [unitSettings.includeElectricity],
       electricityUnit: [unitSettings.electricityUnit],
@@ -146,7 +139,6 @@ export class SharedSettingsFormsService {
       const countryCode = control.parent?.get('country').value;
       const zipCode = control.value;
       if (!zipCode) return null; // empty zip code
-      // console.log(zipCode, countryCode);
       const currentConsoleError = console.error;
       let isZipValid;
       try {
@@ -156,7 +148,6 @@ export class SharedSettingsFormsService {
         console.error = currentConsoleError;
       }
       
-      // console.log(isZipValid);
       if (isZipValid === false) return {invalidZipCode: true};
       return null;
     }

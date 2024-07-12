@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
@@ -10,7 +10,7 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
   templateUrl: './contact-modal.component.html',
   styleUrl: './contact-modal.component.css'
 })
-export class ContactModalComponent {
+export class ContactModalComponent implements OnInit {
   @Input({ required: true })
   contextGuid: string;
   @Input({ required: true })
@@ -39,7 +39,6 @@ export class ContactModalComponent {
     //Use copy to not modify without hitting save
     let allContacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
     this.contacts = new Array();
-    console.log(this.companyGuid);
     allContacts.forEach(contact => {
       if (contact.companyId == this.companyGuid) {
         this.contacts.push(JSON.parse(JSON.stringify(contact)));

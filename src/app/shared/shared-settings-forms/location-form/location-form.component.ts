@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -16,7 +16,7 @@ import { SharedSettingsFormsService } from '../shared-settings-forms.service';
   templateUrl: './location-form.component.html',
   styleUrls: ['./location-form.component.css']
 })
-export class LocationFormComponent {
+export class LocationFormComponent implements OnInit, OnDestroy{
   @Input()
   inCompany: boolean;
 
@@ -57,8 +57,12 @@ export class LocationFormComponent {
   }
 
   ngOnDestroy() {
-    this.companyOrFacilitySub.unsubscribe();
-    this.zipCountrySub.unsubscribe();
+    if (this.companyOrFacilitySub) {
+      this.companyOrFacilitySub.unsubscribe();
+    }
+    if (this.zipCountrySub) {
+      this.zipCountrySub.unsubscribe();
+    }
   }
 
   async saveChanges() {
@@ -69,8 +73,6 @@ export class LocationFormComponent {
       this.facility.generalInformation = this.sharedSettingsFormService.updateGeneralInformationFromForm(this.form, this.facility.generalInformation, 'location');
       await this.facilityIdbService.asyncUpdate(this.facility);
     }
-    // // Debug country value
-    // console.log(this.inCompany? this.company?.generalInformation.country : this.facility?.generalInformation.country)
   }
 
 
