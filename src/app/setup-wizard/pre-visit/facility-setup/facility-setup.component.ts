@@ -15,6 +15,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class FacilitySetupComponent {
 
   name: FormControl;
+  facilityName: string;
 
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
@@ -32,8 +33,13 @@ export class FacilitySetupComponent {
   }
 
   ngOnInit() {
-    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    this.name = new FormControl(facility.generalInformation.name, [Validators.required]);
+    this.facility = this.facilityIdbService.selectedFacility.getValue();
+
+    if (this.facility) {
+      this.name = new FormControl(this.facility.generalInformation.name, [Validators.required]);
+    } else {
+      this.router.navigateByUrl('/welcome');
+    }
   }
 
   async saveChanges() {

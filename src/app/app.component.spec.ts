@@ -13,7 +13,7 @@ import { ContactIdbService } from './indexed-db/contact-idb.service';
 import { NonEnergyBenefitsIdbService } from './indexed-db/non-energy-benefits-idb.service';
 import { OnSiteVisitIdbService } from './indexed-db/on-site-visit-idb.service';
 import { SetupWizardModalComponent } from './core-components/setup-wizard-modal/setup-wizard-modal.component';
-import { SetupWizardContext, SetupWizardService } from './setup-wizard/setup-wizard.service';
+import { SetupWizardService } from './setup-wizard/setup-wizard.service';
 import { BehaviorSubject } from 'rxjs';
 import { IdbCompany } from './models/company';
 import { IdbFacility } from './models/facility';
@@ -64,9 +64,7 @@ describe('AppComponent', () => {
     onSiteVisits: new BehaviorSubject<Array<IdbOnSiteVisit>>([])
   };
 
-  let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('onSite')
-  };
+  let setupWizardService: Partial<SetupWizardService> = {};
 
   let keyPerformanceIndicatorService: Partial<KeyPerformanceIndicatorsIdbService> = {
     keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])

@@ -21,7 +21,7 @@ import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { AssessmentEnergyOpportunitiesFormComponent } from './assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
-import { SetupWizardContext, SetupWizardService } from '../../setup-wizard.service';
+import { SetupWizardService } from '../../setup-wizard.service';
 
 describe('OnSiteAssessmentComponent', () => {
   let component: OnSiteAssessmentComponent;
@@ -45,7 +45,6 @@ describe('OnSiteAssessmentComponent', () => {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
   };
   let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('onSite'),
     sidebarOpen: new BehaviorSubject<boolean>(false),
     displayAddNebsModal: new BehaviorSubject<{
       assessmentId: string,

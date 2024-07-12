@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { IconDefinition, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 
@@ -12,38 +11,23 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 })
 export class ReviewOnSiteComponent {
 
-  faChevronLeft: IconDefinition = faChevronLeft;  
-  displayConfirmModal: boolean = false;
-  setupContext: SetupWizardContext;
+  faChevronLeft: IconDefinition = faChevronLeft;
+  faChevronRight: IconDefinition = faChevronRight;
   onSiteVisit: IdbOnSiteVisit;
   constructor(private router: Router,
-    private setupWizardService: SetupWizardService,
     private onSiteVisitIdbService: OnSiteVisitIdbService
   ) {
   }
 
   ngOnInit() {
-    this.setupContext = this.setupWizardService.setupContext.getValue();
     this.onSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + this.onSiteVisit.assessmentIds[this.onSiteVisit.assessmentIds.length - 1]);
+    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/assessment/' + this.onSiteVisit.assessmentIds[this.onSiteVisit.assessmentIds.length - 1] + '/results');
   }
 
-  finishDataCollection() {
-    if (this.setupContext == 'onSite') {
-      this.router.navigateByUrl('/facility/' + this.onSiteVisit.facilityId);
-    } else if (this.setupContext == 'full') {
-      this.router.navigateByUrl('/setup-wizard/review-setup/');
-    }
-  }
-
-  openConfirmModal() {
-    this.displayConfirmModal = true;
-  }
-
-  closeConfirmModal() {
-    this.displayConfirmModal = false;
+  continue() {
+    this.router.navigateByUrl('/setup-wizard/data-evaluation/' + this.onSiteVisit.guid);
   }
 }

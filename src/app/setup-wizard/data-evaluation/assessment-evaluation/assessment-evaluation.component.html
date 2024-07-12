@@ -1,0 +1,30 @@
+<div class="setup-wizard-content" *ngIf="assessment">
+    <div class="row g-0 justify-content-center h-100 w-100 overflow-scroll">
+        <div class="col-10 pt-4 pb-4">
+            <div class="form-paper shadow">
+                <nav class="navbar top-nav">
+                    <h5>
+                        <fa-icon [icon]="faScrewdriverWrench"></fa-icon> {{assessment.name}} Report
+                    </h5>
+                </nav>
+                <app-assessment-report [assessment]="assessment"></app-assessment-report>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="setup-wizard-footer navbar shadow">
+    <div class="container-fluid justify-content-between">
+        <div class="col-3">
+            <button class="btn btn-dark btn-sm" (click)="goBack()">
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+            </button>
+        </div>
+        <div class="col-3">
+            <div class="d-flex  justify-content-end">
+                <button class="btn btn-dark btn-sm" (click)="goToNext()">
+                    <fa-icon [icon]="faChevronRight"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

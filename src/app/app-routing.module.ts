@@ -9,7 +9,6 @@ import { CompanyDashboardHomeComponent } from './company-dashboard/company-dashb
 import { FacilityDashboardComponent } from './facility-dashboard/facility-dashboard.component';
 import { FacilityDashboardHomeComponent } from './facility-dashboard/facility-dashboard-home/facility-dashboard-home.component';
 import { SetupWizardComponent } from './setup-wizard/setup-wizard.component';
-import { GettingStartedComponent } from './setup-wizard/getting-started/getting-started.component';
 import { CompanySetupComponent } from './setup-wizard/pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './setup-wizard/pre-visit/facility-setup/facility-setup.component';
 import { UserSettingsComponent } from './user-dashboard/user-settings/user-settings.component';
@@ -24,8 +23,6 @@ import { FacilityGoalsComponent } from './facility-dashboard/facility-goals/faci
 import { AssessmentDashboardComponent } from './assessment-dashboard/assessment-dashboard.component';
 import { AssessmentDashboardHomeComponent } from './assessment-dashboard/assessment-dashboard-home/assessment-dashboard-home.component';
 import { AssessmentSettingsComponent } from './assessment-dashboard/assessment-settings/assessment-settings.component';
-import { AssessmentReportComponent } from './assessment-dashboard/assessment-report/assessment-report.component';
-import { ReviewSetupComponent } from './setup-wizard/review-setup/review-setup.component';
 import { CompanyContactsSetupComponent } from './setup-wizard/pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
 import { PreAssessmentSetupComponent } from './setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.component';
@@ -41,6 +38,11 @@ import { AssessmentDetailsFormComponent } from './setup-wizard/data-collection/o
 import { AssessmentEnergyOpportunitiesFormComponent } from './setup-wizard/data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
 import { AssessmentNebsFormComponent } from './setup-wizard/data-collection/on-site-assessment/assessment-nebs-form/assessment-nebs-form.component';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
+import { DataEvaluationComponent } from './setup-wizard/data-evaluation/data-evaluation.component';
+import { DataFollowUpComponent } from './setup-wizard/data-evaluation/data-follow-up/data-follow-up.component';
+import { VisitReportComponent } from './setup-wizard/data-evaluation/visit-report/visit-report.component';
+import { AssessmentEvaluationComponent } from './setup-wizard/data-evaluation/assessment-evaluation/assessment-evaluation.component';
+import { OnSiteAssessmentResultsComponent } from './setup-wizard/data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
 
 const routes: Routes = [
   {
@@ -56,19 +58,6 @@ const routes: Routes = [
     path: 'setup-wizard',
     component: SetupWizardComponent,
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'getting-started'
-      },
-      {
-        path: 'getting-started',
-        component: GettingStartedComponent
-      },
-      {
-        path: 'review-setup',
-        component: ReviewSetupComponent
-      },
       {
         path: 'pre-visit/:id',
         component: PreVisitComponent,
@@ -142,6 +131,10 @@ const routes: Routes = [
               {
                 path: 'nebs',
                 component: AssessmentNebsFormComponent
+              },
+              {
+                path: 'results',
+                component: OnSiteAssessmentResultsComponent
               }
             ]
           },
@@ -149,6 +142,29 @@ const routes: Routes = [
             path: 'review-data-collection',
             component: ReviewOnSiteComponent
           },
+        ]
+      },
+      {
+        path: 'data-evaluation/:id',
+        component: DataEvaluationComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'follow-up'
+          },
+          {
+            path: 'follow-up',
+            component: DataFollowUpComponent
+          },
+          {
+            path: 'assessment-report/:id',
+            component: AssessmentEvaluationComponent,
+          },
+          {
+            path: 'visit-report',
+            component: VisitReportComponent,
+          }
         ]
       }
     ]
@@ -250,11 +266,7 @@ const routes: Routes = [
       {
         path: 'settings',
         component: AssessmentSettingsComponent
-      },
-      {
-        path: 'reports',
-        component: AssessmentReportComponent
-      },
+      }
     ]
   },
   //wildcard/page not found needs to be last route

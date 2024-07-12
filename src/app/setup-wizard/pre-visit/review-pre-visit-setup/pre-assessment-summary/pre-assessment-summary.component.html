@@ -30,7 +30,7 @@
                                 Annual Energy Use
                             </td>
                             <td>
-                                <app-single-cell-item [value]="assessment.energyUse"></app-single-cell-item>
+                                <app-single-cell-item [numValue]="assessment.energyUse"></app-single-cell-item>
                             </td>
                         </tr>
                         <tr>
@@ -38,7 +38,7 @@
                                 Annual Costs
                             </td>
                             <td>
-                                <app-single-cell-item [value]="assessment.cost"></app-single-cell-item>
+                                <app-single-cell-item [numValue]="assessment.cost" [isCurrency]="true"></app-single-cell-item>
                             </td>
                         </tr>
                         <tr>

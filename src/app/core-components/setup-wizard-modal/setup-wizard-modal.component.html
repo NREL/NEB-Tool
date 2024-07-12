@@ -5,8 +5,8 @@
     </div>
     <div class="popup-body">
         <ng-template [ngIf]="companies.length > 0" [ngIfElse]="noCompaniesBlock">
-            <div class="alert alert-info">
-                Select a company and a facility to pre-populate your setup with existing data entered.
+            <div class="alert alert-info p-1">
+                Select a company, facility and visit to modify or create new items to add to your portfolio.
             </div>
             <hr>
             <form>
@@ -54,23 +54,14 @@
                     </div>
                 </div>
 
-                <div class="row mb-1" *ngIf="selectedOnSiteVisitGuid && selectedFacilityGuid && selectedCompanyGuid">
-                    <label class="col-sm-5" for="visitStatus">Visit Status</label>
+                <div class="row mb-1" *ngIf="selectedFacilityGuid && selectedCompanyGuid && selectedOnSiteVisitGuid">
+                    <label class="col-sm-5" for="setupWizardSection">Select Wizard Step</label>
                     <div class="col-7">
-                        <div class="form-check">
-                            <input class="form-check-input" name="preVisit" type="radio" [value]="'preVisit'"
-                                id="preVisit" [(ngModel)]="setupContext">
-                            <label class="form-check-label" for="preVisit">
-                                Pre-Visit
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" name="onSite" type="radio" [value]="'onSite'" id="onSite"
-                                [(ngModel)]="setupContext">
-                            <label class="form-check-label" for="onSite">
-                                On-Site Data Collection
-                            </label>
-                        </div>
+                        <select id="setupWizardSection" name="setupWizardSection" class="form-select"
+                            [(ngModel)]="setupWizardSection">
+                            <option [ngValue]="'dataCollection'">Data Collection</option>
+                            <option [ngValue]="'dataEvaluation'">Data Evaluation</option>
+                        </select>
                     </div>
                 </div>
             </form>

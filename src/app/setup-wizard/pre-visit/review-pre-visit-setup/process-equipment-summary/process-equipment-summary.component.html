@@ -14,7 +14,7 @@
                                 Equipment Type
                             </td>
                             <td>
-                                <app-single-cell-item [value]="equipment.equipmentType"></app-single-cell-item>
+                                <app-single-cell-item [strValue]="equipment.equipmentType"></app-single-cell-item>
                             </td>
                         </tr>
                         <tr>
@@ -22,7 +22,7 @@
                                 Utility Type
                             </td>
                             <td>
-                                <app-single-cell-item [value]="equipment.utilityType"></app-single-cell-item>
+                                <app-single-cell-item [strValue]="equipment.utilityType"></app-single-cell-item>
                             </td>
                         </tr>
                         <tr>
@@ -30,7 +30,7 @@
                                 Total Size
                             </td>
                             <td>
-                                <app-single-cell-item [value]="equipment.size"></app-single-cell-item>
+                                <app-single-cell-item [numValue]="equipment.size"></app-single-cell-item>
                             </td>
                         </tr>
                         <tr>
@@ -38,7 +38,7 @@
                                 Operating Hours
                             </td>
                             <td>
-                                <app-single-cell-item [value]="equipment.operatingHours" [units]="'Hrs'"
+                                <app-single-cell-item [numValue]="equipment.operatingHours" [units]="'Hrs'"
                                     [per]="'yr'"></app-single-cell-item>
                             </td>
                         </tr>
@@ -47,7 +47,7 @@
                                 Load Factor
                             </td>
                             <td>
-                                <app-single-cell-item [value]="equipment.loadFactor"
+                                <app-single-cell-item [numValue]="equipment.loadFactor"
                                     [units]="'%'"></app-single-cell-item>
                             </td>
                         </tr>
@@ -56,7 +56,7 @@
                                 Notes
                             </td>
                             <td>
-                                <app-single-cell-item [value]="equipment.notes"></app-single-cell-item>
+                                <app-single-cell-item [strValue]="equipment.notes"></app-single-cell-item>
                             </td>
                         </tr>
                         <tr>

@@ -12,7 +12,7 @@ import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service'
 import { IdbAssessment } from 'src/app/models/assessment';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
-import { SetupWizardContext, SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { FormsModule } from '@angular/forms';
 
 describe('SetupWizardModalComponent', () => {
@@ -42,10 +42,7 @@ describe('SetupWizardModalComponent', () => {
     selectedVisit: new BehaviorSubject<IdbOnSiteVisit>(undefined)
   };
 
-  let setupWizardService: Partial<SetupWizardService> = {
-    setupContext: new BehaviorSubject<SetupWizardContext>('onSite')
-  }
-
+  let setupWizardService: Partial<SetupWizardService> = {}
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule],

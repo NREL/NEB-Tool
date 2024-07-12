@@ -55,3 +55,11 @@
     cursor: pointer;
     border: so;
 }
+
+.btn.text-left{
+    text-align: left;
+}
+
+.nav-link:hover{
+    cursor: pointer;
+}

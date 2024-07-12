@@ -2,14 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SetupWizardComponent } from './setup-wizard.component';
 import { RouterModule } from '@angular/router';
-import { GettingStartedComponent } from './getting-started/getting-started.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanySetupComponent } from './pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './pre-visit/facility-setup/facility-setup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
-import { ReviewSetupComponent } from './review-setup/review-setup.component';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
 import { CompanyContactsSetupComponent } from './pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { FacilityProcessEquipmentSetupComponent } from './pre-visit/facility-process-equipment-setup/facility-process-equipment-setup.component';
@@ -43,16 +41,20 @@ import { SelectedKpiOptionPipe } from './pre-visit/company-kpi-select/add-kpi-se
 import { AddNebsModalComponent } from './data-collection/on-site-assessment/add-nebs-modal/add-nebs-modal.component';
 import { PerformanceMetricImpactFormComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metric-impact-form/performance-metric-impact-form.component';
 import { NebFormsAccordionComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-forms-accordion.component';
+import { DataEvaluationComponent } from './data-evaluation/data-evaluation.component';
+import { DataFollowUpComponent } from './data-evaluation/data-follow-up/data-follow-up.component';
+import { VisitReportComponent } from './data-evaluation/visit-report/visit-report.component';
+import { ReportsModule } from '../shared/reports/reports.module';
+import { AssessmentEvaluationComponent } from './data-evaluation/assessment-evaluation/assessment-evaluation.component';
+import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
 
 
 
 @NgModule({
   declarations: [
     SetupWizardComponent,
-    GettingStartedComponent,
     CompanySetupComponent,
     FacilitySetupComponent,
-    ReviewSetupComponent,
     SetupWizardSidebarComponent,
     CompanyContactsSetupComponent,
     FacilityProcessEquipmentSetupComponent,
@@ -83,7 +85,12 @@ import { NebFormsAccordionComponent } from './data-collection/on-site-assessment
     EnergyOpportunitySetupFormComponent,
     AddNebsModalComponent,
     PerformanceMetricImpactFormComponent,
-    NebFormsAccordionComponent
+    NebFormsAccordionComponent,
+    DataEvaluationComponent,
+    DataFollowUpComponent,
+    VisitReportComponent,
+    AssessmentEvaluationComponent,
+    OnSiteAssessmentResultsComponent
   ],
   imports: [
     CommonModule,
@@ -94,7 +101,8 @@ import { NebFormsAccordionComponent } from './data-collection/on-site-assessment
     HelperPipesModule,
     ContactModalModule,
     TableEntriesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ReportsModule
   ]
 })
 export class SetupWizardModule { }

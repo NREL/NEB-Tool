@@ -21,7 +21,7 @@ export class PreVisitComponent {
       let visitExists: boolean = this.dbChangesService.selectOnSiteVisit(visitGUID);
       if (!visitExists) {
         console.log('visit does not exist. Nav back to getting started..');
-        this.router.navigateByUrl('/setup-wizard/getting-started');
+        this.router.navigateByUrl('/welcome');
       }
     });
   }
