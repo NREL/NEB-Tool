@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { BackupDataService, BackupFile } from 'src/app/shared/shared-services/backup-data.service';
-import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 import { LoadingService } from '../loading/loading.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { IdbUser } from 'src/app/models/user';
@@ -30,7 +29,6 @@ export class ImportBackupModalComponent implements OnInit{
 
   constructor(private userIdbService: UserIdbService,
     private loadingService: LoadingService,
-    private sharedDataService: SharedDataService,
     private backupDataService: BackupDataService,
     private dbChangesService: DbChangesService,
     private router: Router,
@@ -83,37 +81,11 @@ export class ImportBackupModalComponent implements OnInit{
               this.importFileError = "Selected file does not match with the current version and cannot be imported."
             } else {
               this.importForUser = (testBackup.backupFileType == "User");
-              // TO DO SAVE AS FACILITY
-              //facility
-              if (!this.importForUser) {
-              //   this.importType = "Facility";
-              //   if (this.selectedAccount) {
-              //     this.backupName = testBackup.facility.name;
-              //     if (this.accountFacilities.length != 0) {
-              //       let testFacility: IdbFacility = this.accountFacilities.find(facility => { return this.backupName == facility.name });
-              //       if (testFacility) {
-              //         this.overwriteFacility = testFacility;
-              //       } else {
-              //         this.overwriteFacility = this.accountFacilities[0];
-              //       }
-              //     }
-              //     this.backupFileError = undefined;
-              //   } else {
-              //     this.backupFileError = "You are trying to import a facility without an account created or selected. Select an account to import this facility into."
-              //   }
-              }
-              //account
-              else if (this.importForUser) {
+              if (this.importForUser) {
+                // Import user backup file
                 this.importType = "User"
                 this.importName = testBackup.user.guid;
                 this.importFileError = undefined;
-                // if (!this.inFacility) {
-                //   this.backupType = "Account"
-                //   this.backupName = testBackup.account.name;
-                //   this.backupFileError = undefined;
-                // } else {
-                //   this.backupFileError = "You are trying to import an account in the facility management page. Please use the account management section to import accounts.";
-                // }
               }
             }
           } catch (err) {
@@ -136,47 +108,27 @@ export class ImportBackupModalComponent implements OnInit{
         } else {
           await this.importNewAccount(tmpBackupFile);
         }
-      // } else {
-      //   if (this.overwriteData) {
-      //     await this.importExistingFacility(tmpBackupFile);
-      //   } else {
-      //     await this.importNewFacility(tmpBackupFile)
-      //   }
       }
       this.loadingService.setLoadingStatus(false);
       this.cancelImportBackup();
-      // this.router.navigateByUrl('user').then(() => location.reload()); // manual refresh
       this.router.navigateByUrl('user');
     } catch (err) {
       console.log(err);
-      alert('Error importing backup');
-      // this.toastNotificationService.showToast('Error importing backup', 'There was an error importing this data file.', 15000, false, 'alert-danger');
+      alert('Error importing backup'); // TODO: implement a toast service
       this.loadingService.setLoadingStatus(false);
     }
   }
 
   async importNewAccount(importFile: BackupFile) {
-    // this.deleteDataService.pauseDelete.next(true);
     let newUser: IdbUser = await this.backupDataService.importUserBackupFile(importFile);
-    await this.dbChangesService.updateUser(newUser);
     await this.dbChangesService.selectUser(newUser, false);
-    // this.deleteDataService.pauseDelete.next(false);
-    // this.deleteDataService.gatherAndDelete();
   }
 
   async importExistingAccount(importFile: BackupFile) {
-    // //delete existing account and data
-    // this.deleteDataService.pauseDelete.next(true);
-    // this.selectedAccount.deleteAccount = true;
-    // await firstValueFrom(this.accountDbService.updateWithObservable(this.selectedAccount));
-    // let accounts: Array<IdbAccount> = await firstValueFrom(this.accountDbService.getAll());
-    // this.accountDbService.allAccounts.next(accounts);
-    // single user for now
-    // delete existing user
+    // Overwrite current user with backup file content
+    // Delete current user and related data
     await this.dbChangesService.deleteCurrentUser(this.currentUser);
     await this.importNewAccount(importFile);
-    // this.deleteDataService.pauseDelete.next(false);
-    // this.deleteDataService.gatherAndDelete();
   }
 
 }
