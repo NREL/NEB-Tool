@@ -33,7 +33,6 @@
                             </div>    
                         </div>
                     </div>
-                    <!--TODO: follow pattern on remaining fields-->
                     <div class="row mb-1">
                         <label class="col-sm-5 col-form-label" for="phone">Phone Number</label>
                         <div class="col-sm-7 d-flex">
@@ -61,22 +60,10 @@
                                 formControlName="email"
                                 (blur)="saveChanges()"
                                 id="email" name="email">
-                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['pattern'] && -->
-                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors &&
-                                (contactForm.controls['email'].touched || contactForm.controls['email'].dirty)">
-                                Invalid email.
-                            </div> -->
-                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['email']"> -->
-                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.get('email').errors">
-                                Invalid email.
-                            </div> -->
                             <div *ngIf="contactForm.controls['email'].errors && (contactForm.controls['email'].touched || contactForm.controls['email'].dirty)">
                                 <div class="alert alert-warning form-error" *ngIf="contactForm.controls['email'].errors['email']">Invalid Email</div>
                                 <div class="alert alert-warning form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">max length</div>
                             </div>
-                            <!-- <div class="alert alert-danger form-error" *ngIf="contactForm.controls['email'].errors['maxlength']">
-                                Maximum length is 255 characters.
-                            </div> -->
                         </div>
                     </div>
                     <div class="row mb-1">
@@ -91,18 +78,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row mb-1">
-                        <label class="col-sm-5 col-form-label" for="team">Team</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control"
-                                formControlName="team"
-                                ((blur))="saveChanges()"
-                                id="team" name="team">
-                            <div class="alert alert-danger form-error" *ngIf="contactForm.controls['team'].errors">
-                                Invalid team
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="row mb-1">
                         <label class="col-sm-5 col-form-label" for="team">Team</label>
                         <div class="col-sm-7">
