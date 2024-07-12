@@ -66,35 +66,6 @@ export class CompanyContactsFormService {
     return contact;
   }
 
-  // Parse phone number
-  // Not used/changed to libphonenumber-js
-  phoneNumberParser(phoneInput: string): string {
-    const value = (phoneInput || '').trim();
-    if (!value) return '';
-    if (!(/^(\+\d{1,3}\s+)?[\d\s\(\)\-]*$/.test(phoneInput))) return '';
-    const isInternational: boolean = value.startsWith('+'); // Check if international number
-    const digits = value.replace(/\D/g, ''); // Remove all non-digit characters
-
-    if (isInternational) {
-      // All digits should be [10, 18]
-      if (digits.length < 9 || digits.length > 18) {
-        return '';
-      }
-      // Match the country code
-      const pattern: RegExp = /^\+(\d{1,3})\s*[\d()-]+/;
-      const match = value.match(pattern);
-      if (!match) return '';
-      const countryCode = match[1];
-      return '+' + countryCode + ' ' + digits.substring(countryCode.length - 1);
-    } else {
-      // Without country code, digits must be 10
-      if (digits.length !== 10) {
-        return '';
-      }
-      return "+1" + ' ' + digits;
-    }
-  }
-
   // Custom validator for phone number
   phoneNumberValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
