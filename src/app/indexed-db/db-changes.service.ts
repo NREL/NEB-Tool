@@ -247,45 +247,21 @@ export class DbChangesService {
     }
   }
 
+  // TODO: Multiple users, to set a new when the current is deleted
   async deleteCurrentUser(user: IdbUser) {
     let companies: Array<IdbCompany> = await firstValueFrom(this.companyIdbService.getAll());
     let userCompanies: Array<IdbCompany> = companies.filter(company => {return company.userId === user.guid});
     for (let i = 0; i < userCompanies.length; i++) {
       this.deleteCompany(userCompanies[i]);
     }
-    await this.userIdbService.deleteUserWithObservable(user.id).subscribe(u => console.log('all users', u));
+    await this.userIdbService.deleteUserWithObservable(user.id);
     // await this.userIdbService.setUser();
-  }
-
-  async updateUser(user: IdbUser) {
-    let updatedUser: IdbUser = await firstValueFrom(this.userIdbService.updateWithObservable(user));
-    // let users: Array<IdbUser> = await firstValueFrom(this.userIdbService.getAll());
-    // this.userIdbService.user.next(users[0]);
-    // this.userIdbService.user.next(updatedUser);
   }
 
   async selectUser(user: IdbUser, skipUpdates: boolean) {
     // update user
-    if (!skipUpdates) {
-      if (this.userChanged(user)) {
-        await this.updateUser(user);
-      }
-    }
-    // update companies
-    let userCompanies: Array<IdbCompany> = await firstValueFrom(this.companyIdbService.getAll()); // SINGLE USER
-    if (!skipUpdates) {
-      for (let i = 0; i < userCompanies.length; i++) {
-        let updatedCompany = userCompanies[i];
-        if (this.companyChanged(updatedCompany)) {
-          await firstValueFrom(this.companyIdbService.updateWithObservable(updatedCompany));
-        }
-      }
-    }
-    this.companyIdbService.companies.next(userCompanies);
-    // TO DO: link reports/assessments
-    
-    // flush out the assessments
-    
+    let updatedUser: IdbUser = await firstValueFrom(this.userIdbService.updateWithObservable(user));
+    await this.companyIdbService.setCompanies();
     await this.facilityIdbService.setFacilities();
     await this.contactIdbService.setContacts();
     await this.energyOpportunityIdbService.setEnergyOpportunities();
@@ -297,22 +273,4 @@ export class DbChangesService {
     this.userIdbService.user.next(user);
   }
 
-  // Detect DB Entry changes for updates (update-db-entry.service)
-
-  userChanged(user: IdbUser): boolean {
-    let isChanged: boolean = false;
-    if (user.skipSplashScreen == true) {
-      isChanged = true;
-    }
-    return isChanged;
-  }
-
-  companyChanged(company: IdbCompany): boolean {
-    let isChanged: boolean = false;
-    // TO DO: Check/reset settings
-    if (!company.unitSettings.electricityUnit) {
-      company.unitSettings.electricityUnit = 'KWh';
-    }
-    return isChanged;
-  }
 }
