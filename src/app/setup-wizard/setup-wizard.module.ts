@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CompanySetupComponent } from './pre-visit/company-setup/company-setup.component';
 import { FacilitySetupComponent } from './pre-visit/facility-setup/facility-setup.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedSettingsFormsModule } from '../shared/shared-settings-forms/shared-settings-forms.module';
 import { HelperPipesModule } from '../shared/helper-pipes/helper-pipes.module';
 import { SetupWizardSidebarComponent } from './setup-wizard-sidebar/setup-wizard-sidebar.component';
@@ -29,6 +29,7 @@ import { AssessmentNebsFormComponent } from './data-collection/on-site-assessmen
 import { NebSetupFormComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/neb-setup-form.component';
 import { PreVisitComponent } from './pre-visit/pre-visit.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
+import { CompanyContactsFormComponent } from './pre-visit/company-contacts-setup/company-contacts-form/company-contacts-form.component';
 import { CompanyKpiSelectComponent } from './pre-visit/company-kpi-select/company-kpi-select.component';
 import { CompanyKpiDetailsComponent } from './pre-visit/company-kpi-details/company-kpi-details.component';
 import { DataCollectionManageAssessmentsComponent } from './data-collection/data-collection-manage-assessments/data-collection-manage-assessments.component';
@@ -75,6 +76,7 @@ import { TeamMembersModule } from '../shared/team-members/team-members.module';
     NebSetupFormComponent,
     PreVisitComponent,
     DataCollectionComponent,
+    CompanyContactsFormComponent,
     CompanyKpiSelectComponent,
     CompanyKpiDetailsComponent,
     SelectedKpiOptionPipe,
@@ -99,6 +101,7 @@ import { TeamMembersModule } from '../shared/team-members/team-members.module';
     HelperPipesModule,
     TeamMembersModule,
     TableEntriesModule,
+    ReactiveFormsModule,
     ReportsModule
   ]
 })

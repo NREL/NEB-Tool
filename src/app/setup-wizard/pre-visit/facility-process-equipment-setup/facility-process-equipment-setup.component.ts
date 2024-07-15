@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faDiagramProject, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IdbFacility } from 'src/app/models/facility';
@@ -14,7 +14,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
   templateUrl: './facility-process-equipment-setup.component.html',
   styleUrl: './facility-process-equipment-setup.component.css'
 })
-export class FacilityProcessEquipmentSetupComponent {
+export class FacilityProcessEquipmentSetupComponent implements OnInit {
 
   accordionIndex: number = 0;
   equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;

@@ -1,3 +1,16 @@
+.form-error{
+    padding: .25rem;
+    margin-top: .1rem;
+}
+
+.accordion-header .fa-error{
+    color: red;
+}
+
+.form-paper .fa-error{
+    color: red;
+}
+
 .form-control, .form-select, .input-group-text{
     line-height: 1;
     padding: .25rem;

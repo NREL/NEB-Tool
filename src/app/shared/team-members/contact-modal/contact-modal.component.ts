@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { ContactContext, IdbContact } from 'src/app/models/contact';
@@ -9,7 +9,7 @@ import { ContactContext, IdbContact } from 'src/app/models/contact';
   templateUrl: './contact-modal.component.html',
   styleUrl: './contact-modal.component.css'
 })
-export class ContactModalComponent {
+export class ContactModalComponent implements OnInit {
   @Input({ required: true })
   contextGuid: string;
   @Input({ required: true })

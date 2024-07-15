@@ -1,0 +1,9 @@
+.nav-link .fa-error {
+    color: red;
+}
+
+.nav-link .nav-link.active .disabled {
+    background-color: rgb(212, 212, 212);
+    pointer-events: none;
+    cursor: not-allowed;
+}
