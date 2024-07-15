@@ -118,8 +118,10 @@ export class NebSetupFormComponent {
     });
     KeyPerformanceMetrics.forEach(metric => {
       let nebOption: NebOption = NebOptions.find(option => { return option.optionValue == this.nonEnergyBenefit.nebOptionValue });
-      if (metricIds.includes(metric.value) == false && nebOption.KPM.includes(metric.value)) {
-        this.untrackedMetrics.push(metric);
+      if (nebOption) {
+        if (metricIds.includes(metric.value) == false && nebOption.KPM.includes(metric.value)) {
+          this.untrackedMetrics.push(metric);
+        }
       }
     });
   }
