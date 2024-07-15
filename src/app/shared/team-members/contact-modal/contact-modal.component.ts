@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { ContactContext, IdbContact } from 'src/app/models/contact';
