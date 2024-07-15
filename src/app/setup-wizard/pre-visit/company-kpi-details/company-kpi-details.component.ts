@@ -23,8 +23,8 @@ export class CompanyKpiDetailsComponent {
   faChartBar: IconDefinition = faChartBar;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
-  faUser: IconDefinition = faUser;
-  faContactBook: IconDefinition = faContactBook;
+  // faUser: IconDefinition = faUser;
+  // faContactBook: IconDefinition = faContactBook;
 
   keyPerformanceIndicator: IdbKeyPerformanceIndicator;
   primaryKPIs: Array<PrimaryKPI> = PrimaryKPIs;
@@ -42,17 +42,14 @@ export class CompanyKpiDetailsComponent {
   indicatorIndex: number;
   numCompanyKpis: number;
 
-  displayContactModal: boolean = false;
-  viewContact: IdbContact;
-
-  contacts: Array<IdbContact>;
-  contactsSub: Subscription;
+  // contacts: Array<IdbContact>;
+  // contactsSub: Subscription;
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private activatedRoute: ActivatedRoute,
     private companyIdbService: CompanyIdbService,
-    private contactIdbService: ContactIdbService
+    // private contactIdbService: ContactIdbService
   ) {
   }
 
@@ -63,9 +60,9 @@ export class CompanyKpiDetailsComponent {
     this.keyPerformanceIndicatorSub = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.subscribe(_keyPerformanceIndicators => {
       this.keyPerformanceIndicators = _keyPerformanceIndicators;
     });
-    this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
-      this.contacts = _contacts;
-    });
+    // this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
+    //   this.contacts = _contacts;
+    // });
     this.activatedRoute.params.subscribe(params => {
       let kpiGuid: string = params['id'];
       this.keyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getByGuid(kpiGuid);
@@ -76,7 +73,7 @@ export class CompanyKpiDetailsComponent {
   ngOnDestroy() {
     this.companySub.unsubscribe();
     this.keyPerformanceIndicatorSub.unsubscribe();
-    this.contactsSub.unsubscribe();
+    // this.contactsSub.unsubscribe();
   }
 
   async saveChanges() {
@@ -137,13 +134,4 @@ export class CompanyKpiDetailsComponent {
     });
   }
 
-  openContactModal(contact: IdbContact) {
-    this.viewContact = contact;
-    this.displayContactModal = true;
-  }
-
-  closeContactModal() {
-    this.displayContactModal = false;
-    this.viewContact = undefined;
-  }
 }

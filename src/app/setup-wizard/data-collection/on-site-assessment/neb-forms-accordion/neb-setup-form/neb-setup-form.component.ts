@@ -58,8 +58,7 @@ export class NebSetupFormComponent {
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private dbChangesService: DbChangesService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
-    private contactIdbService: ContactIdbService,
-    private setupWizardService: SetupWizardService) {
+    private contactIdbService: ContactIdbService) {
   }
 
   ngOnInit() {
@@ -125,10 +124,6 @@ export class NebSetupFormComponent {
     await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
     this.closeAddMetricModal();
     this.setMetrics();
-  }
-
-  openContactModal(viewContact: IdbContact) {
-    this.setupWizardService.displayContactModal.next({ context: 'nonEnergyBenefit', viewContact: viewContact, contextGuid: this.nonEnergyBenefit.guid });
   }
 
   toggleUntrackedNebs() {

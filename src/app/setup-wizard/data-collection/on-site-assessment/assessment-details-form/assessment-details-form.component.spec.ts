@@ -10,7 +10,7 @@ import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { ContactContext, IdbContact } from 'src/app/models/contact';
+import { IdbContact } from 'src/app/models/contact';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 
@@ -29,12 +29,6 @@ describe('AssessmentDetailsFormComponent', () => {
     displayAddNebsModal: new BehaviorSubject<{
       assessmentId: string,
       energyOpportunityId: string
-    }>(undefined),
-
-    displayContactModal: new BehaviorSubject<{
-      context: ContactContext,
-      viewContact: IdbContact,
-      contextGuid: string
     }>(undefined)
   };
   let contactIdbService: Partial<ContactIdbService> = {

@@ -3,7 +3,6 @@ import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, fa
 import { firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { ContactContext, IdbContact } from 'src/app/models/contact';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-contact-modal',

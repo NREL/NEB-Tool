@@ -13,14 +13,14 @@ export class SetupWizardService {
     energyOpportunityId: string
   }>;
 
-  displayContactModal: BehaviorSubject<{
-    context: ContactContext,
-    viewContact: IdbContact,
-    contextGuid: string
-  }>;
+  // displayContactModal: BehaviorSubject<{
+  //   context: ContactContext,
+  //   viewContact: IdbContact,
+  //   contextGuid: string
+  // }>;
   constructor(  ) {
     this.sidebarOpen = new BehaviorSubject<boolean>(true);
     this.displayAddNebsModal = new BehaviorSubject<{ assessmentId: string, energyOpportunityId: string }>(undefined);
-    this.displayContactModal = new BehaviorSubject<{ context: ContactContext, viewContact: IdbContact, contextGuid: string }>(undefined);
+    // this.displayContactModal = new BehaviorSubject<{ context: ContactContext, viewContact: IdbContact, contextGuid: string }>(undefined);
   }
 }

@@ -124,17 +124,10 @@
                                             <div class="col-12">
                                                 <div class="d-flex justify-content-between">
                                                     <div class="col-6">
-                                                        <button class="btn btn-sm btn-primary me-1"
-                                                            *ngFor="let contact of assessment.guid | contactName:'assessment': contacts;"
-                                                            (click)="openContactModal(assessmentIndex, contact)">
-                                                            <fa-icon [icon]="faUser"></fa-icon>
-                                                            {{contact.name}}
-                                                        </button>
-                                                        <button class="btn btn-sm btn-secondary"
-                                                            (click)="openContactModal(assessmentIndex, undefined)">
-                                                            <fa-icon [icon]="faContactBook"></fa-icon>
-                                                            Team Members
-                                                        </button>
+                                                        <app-team-members
+                                                            [contextGuid]="assessment.guid"
+                                                            [contactContext]="'assessment'"
+                                                            [companyGuid]="assessment.companyId"></app-team-members>
                                                     </div>
                                                     <div>
                                                         <button class="btn btn-sm btn-danger"
@@ -191,8 +184,3 @@
             Assessment</button>
     </div>
 </div>
-
-
-<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
-    [contextGuid]="assessments[contactAssessmentIndex].guid" [contactContext]="'assessment'"
-    [selectedContact]="viewContact" [companyGuid]="assessments[contactAssessmentIndex].companyId"></app-contact-modal>

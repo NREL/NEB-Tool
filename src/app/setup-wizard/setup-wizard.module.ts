@@ -14,7 +14,6 @@ import { FacilityProcessEquipmentSetupComponent } from './pre-visit/facility-pro
 import { PreAssessmentSetupComponent } from './pre-visit/pre-assessment-setup/pre-assessment-setup.component';
 import { ReviewPreVisitSetupComponent } from './pre-visit/review-pre-visit-setup/review-pre-visit-setup.component';
 import { CompanyKpiListComponent } from './pre-visit/company-kpi-select/company-kpi-list/company-kpi-list.component';
-import { ContactModalModule } from '../shared/contact-modal/contact-modal.module';
 import { ReviewOnSiteComponent } from './data-collection/review-on-site/review-on-site.component';
 import { CompanyDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/company-details-summary/company-details-summary.component';
 import { TeamDetailsSummaryComponent } from './pre-visit/review-pre-visit-setup/team-details-summary/team-details-summary.component';
@@ -46,6 +45,7 @@ import { VisitReportComponent } from './data-evaluation/visit-report/visit-repor
 import { ReportsModule } from '../shared/reports/reports.module';
 import { AssessmentEvaluationComponent } from './data-evaluation/assessment-evaluation/assessment-evaluation.component';
 import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
+import { TeamMembersModule } from '../shared/team-members/team-members.module';
 
 
 
@@ -97,7 +97,7 @@ import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-asse
     FormsModule,
     SharedSettingsFormsModule,
     HelperPipesModule,
-    ContactModalModule,
+    TeamMembersModule,
     TableEntriesModule,
     ReportsModule
   ]

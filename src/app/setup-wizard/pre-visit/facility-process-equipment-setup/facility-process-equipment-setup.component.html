@@ -14,7 +14,8 @@
                         </button>
                     </div>
                 </div>
-                <ng-template [ngIf]="facility && facility.processEquipment.length != 0" [ngIfElse]="noProcessEquipmentBlock">
+                <ng-template [ngIf]="facility && facility.processEquipment.length != 0"
+                    [ngIfElse]="noProcessEquipmentBlock">
                     <div class="accordion" id="equipmentAccordion">
                         <div class="accordion-item"
                             *ngFor="let processEquipment of facility.processEquipment; let equipmentIndex = index;">
@@ -128,17 +129,11 @@
                                         <div class="col-12">
                                             <div class="d-flex justify-content-between">
                                                 <div class="col-6">
-                                                    <button class="btn btn-sm btn-primary me-1"
-                                                        *ngFor="let contact of processEquipment.guid | contactName:'processEquipment': contacts;"
-                                                        (click)="openContactModal(equipmentIndex, contact)">
-                                                        <fa-icon [icon]="faUser"></fa-icon>
-                                                        {{contact.name}}
-                                                    </button>
-                                                    <button class="btn btn-sm btn-secondary"
-                                                        (click)="openContactModal(equipmentIndex, undefined)">
-                                                        <fa-icon [icon]="faContactBook"></fa-icon>
-                                                        Team Members
-                                                    </button>
+                                                    <!--TODO: this will be updated in the equipment issue 87-->
+                                                    <!-- <app-team-members
+                                                        [contextGuid]="facility.processEquipment[contactEquipmentIndex].guid"
+                                                        [contactContext]="'processEquipment'"
+                                                        [companyGuid]="facility.companyId"></app-team-members> -->
                                                 </div>
                                                 <div>
                                                     <button class="btn btn-sm btn-danger"
@@ -195,7 +190,3 @@
             Equipment</button>
     </div>
 </div>
-
-<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
-    [contextGuid]="facility.processEquipment[contactEquipmentIndex].guid" [contactContext]="'processEquipment'"
-    [selectedContact]="viewContact" [companyGuid]="facility.companyId"></app-contact-modal>

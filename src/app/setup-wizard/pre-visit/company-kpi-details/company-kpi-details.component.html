@@ -121,16 +121,8 @@
                     </div>
                 </form>
                 <hr>
-                <button class="btn btn-sm btn-primary me-1"
-                    *ngFor="let contact of keyPerformanceIndicator.guid | contactName:'KPI': contacts;"
-                    (click)="openContactModal(contact)">
-                    <fa-icon [icon]="faUser"></fa-icon>
-                    {{contact.name}}
-                </button>
-                <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
-                    <fa-icon [icon]="faContactBook"></fa-icon>
-                    Team Members
-                </button>
+                <app-team-members [contextGuid]="keyPerformanceIndicator.guid" [contactContext]="'KPI'"
+                    [companyGuid]="company.guid"></app-team-members>
             </div>
         </div>
     </div>
@@ -152,9 +144,3 @@
         </button>
     </div>
 </nav>
-
-
-
-<app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()"
-    [contextGuid]="keyPerformanceIndicator.guid" [contactContext]="'KPI'" [selectedContact]="viewContact"
-    [companyGuid]="company.guid"></app-contact-modal>

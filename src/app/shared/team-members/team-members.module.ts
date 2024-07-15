@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContactModalComponent } from './contact-modal.component';
+import { TeamMembersComponent } from './team-members.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../helper-pipes/helper-pipes.module';
+import { ContactModalComponent } from './contact-modal/contact-modal.component';
 
 
 
 @NgModule({
   declarations: [
+    TeamMembersComponent,
     ContactModalComponent
   ],
   imports: [
@@ -17,6 +19,8 @@ import { HelperPipesModule } from '../helper-pipes/helper-pipes.module';
     FormsModule,
     HelperPipesModule
   ],
-  exports: [ContactModalComponent]
+  exports: [
+    TeamMembersComponent
+  ]
 })
-export class ContactModalModule { }
+export class TeamMembersModule { }

@@ -49,12 +49,6 @@ describe('OnSiteAssessmentComponent', () => {
     displayAddNebsModal: new BehaviorSubject<{
       assessmentId: string,
       energyOpportunityId: string
-    }>(undefined),
-
-    displayContactModal: new BehaviorSubject<{
-      context: ContactContext,
-      viewContact: IdbContact,
-      contextGuid: string
     }>(undefined)
   };
   beforeEach(async () => {

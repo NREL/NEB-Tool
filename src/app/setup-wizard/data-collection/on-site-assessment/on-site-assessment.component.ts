@@ -32,8 +32,8 @@ export class OnSiteAssessmentComponent {
   displayAddNebsModal: { energyOpportunityId: string, assessmentId: string };
   displayAddNebsModalSub: Subscription;
 
-  displayContactModal: { context: ContactContext, viewContact: IdbContact, contextGuid: string };
-  displayContactModalSub: Subscription;
+  // displayContactModal: { context: ContactContext, viewContact: IdbContact, contextGuid: string };
+  // displayContactModalSub: Subscription;
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private activatedRoute: ActivatedRoute,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -53,9 +53,9 @@ export class OnSiteAssessmentComponent {
       this.displayAddNebsModal = _displayAddNebsModal;
     });
 
-    this.displayContactModalSub = this.setupWizardService.displayContactModal.subscribe(_displayContactModal => {
-      this.displayContactModal = _displayContactModal;
-    });
+    // this.displayContactModalSub = this.setupWizardService.displayContactModal.subscribe(_displayContactModal => {
+    //   this.displayContactModal = _displayContactModal;
+    // });
 
     this.activatedRoute.params.subscribe(params => {
       let assessmentGUID: string = params['id'];
@@ -74,7 +74,7 @@ export class OnSiteAssessmentComponent {
     this.assessmentSub.unsubscribe();
     this.onSiteVisitSub.unsubscribe();
     this.displayAddNebsModalSub.unsubscribe();
-    this.displayContactModalSub.unsubscribe();
+    // this.displayContactModalSub.unsubscribe();
   }
 
   goToNextAssessment() {
@@ -105,9 +105,9 @@ export class OnSiteAssessmentComponent {
     this.setupWizardService.displayAddNebsModal.next({ assessmentId: this.assessment.guid, energyOpportunityId: undefined });
   }
 
-  closeContactModal() {
-    this.setupWizardService.displayContactModal.next(undefined);
-  }
+  // closeContactModal() {
+  //   this.setupWizardService.displayContactModal.next(undefined);
+  // }
 
   goToNext() {
     if (this.router.url.includes('details')) {

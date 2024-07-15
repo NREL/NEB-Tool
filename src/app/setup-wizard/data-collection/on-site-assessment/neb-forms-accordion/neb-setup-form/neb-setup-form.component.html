@@ -5,16 +5,8 @@
 
 
     <div class="pe-2">
-        <button class="btn btn-sm btn-primary me-1"
-            *ngFor="let contact of nonEnergyBenefit.guid | contactName:'nonEnergyBenefit': contacts;"
-            (click)="openContactModal(contact)">
-            <fa-icon [icon]="faUser"></fa-icon>
-            {{contact.name}}
-        </button>
-        <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
-            <fa-icon [icon]="faContactBook"></fa-icon>
-            Team Members
-        </button>
+        <app-team-members [companyGuid]="nonEnergyBenefit.companyId" [contactContext]="'nonEnergyBenefit'"
+            [contextGuid]="nonEnergyBenefit.guid"></app-team-members>
     </div>
 
 
@@ -98,13 +90,14 @@
     </div>
     <div class="popup-body">
         <div class="alert alert-info">
-            Would you like to add this performance metric: <span class="bold" [innerHTML]="performanceMetricToAdd?.htmlLabel"></span>?
+            Would you like to add this performance metric: <span class="bold"
+                [innerHTML]="performanceMetricToAdd?.htmlLabel"></span>?
         </div>
         <hr>
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary btn-sm me-2" (click)="closeAddMetricModal()">Cancel</button>
-        <button class="btn btn-success btn-sm" (click)="addMetric()"><fa-icon [icon]="faPlus"
-                class="me-1"></fa-icon>Add Metric</button>
+        <button class="btn btn-success btn-sm" (click)="addMetric()"><fa-icon [icon]="faPlus" class="me-1"></fa-icon>Add
+            Metric</button>
     </div>
 </div>
