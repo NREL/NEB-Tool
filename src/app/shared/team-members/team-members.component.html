@@ -1,4 +1,19 @@
+<button class="btn btn-sm btn-secondary me-1" (click)="openContactModal(undefined)">
+    <fa-icon [icon]="faContactBook"></fa-icon>
+    <ng-template [ngIf]="(contextGuid | contactName: contactContext: contacts).length > 0">
+        Team Members
+    </ng-template>
+</button>
 <button class="btn btn-sm btn-primary me-1" *ngFor="let contact of contextGuid | contactName: contactContext: contacts;"
+    (click)="openContactModal(contact)">
+    <fa-icon [icon]="faUser"></fa-icon>
+    {{contact.name}}
+</button>
+<!--  -->
+
+
+
+<!-- <button class="btn btn-sm btn-primary me-1" *ngFor="let contact of contextGuid | contactName: contactContext: contacts;"
     (click)="openContactModal(contact)">
     <fa-icon [icon]="faUser"></fa-icon>
     {{contact.name}}
@@ -6,7 +21,7 @@
 <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
     <fa-icon [icon]="faContactBook"></fa-icon>
     Team Members
-</button>
+</button> -->
 
 <app-contact-modal *ngIf="displayContactModal" (emitCancelContact)="closeContactModal()" [contextGuid]="contextGuid"
     [contactContext]="contactContext" [selectedContact]="viewContact" [companyGuid]="companyGuid"></app-contact-modal>

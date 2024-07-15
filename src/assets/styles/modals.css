@@ -45,3 +45,17 @@
     padding-left: 10px;
     padding-bottom: 10px;
 }
+
+.popup.lg-modal-popup{
+    width: 98%;
+    left: 1%;
+    bottom: 1%;
+    height: 98vh;
+    top: 1%
+}
+
+
+.popup.lg-modal-popup .popup-body{
+    height: calc(98vh - 125px);
+    overflow-y: auto;
+}

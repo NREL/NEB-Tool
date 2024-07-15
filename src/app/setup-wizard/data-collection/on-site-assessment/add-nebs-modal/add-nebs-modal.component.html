@@ -1,5 +1,5 @@
 <div [ngClass]="{'window-overlay': displayModal}"></div>
-<div class="popup neb-modal-popup" [ngClass]="{'open': displayModal }">
+<div class="popup lg-modal-popup" [ngClass]="{'open': displayModal }">
     <div class="popup-header"><fa-icon [icon]="faWeightHanging"></fa-icon> Potential NEBs for
         <ng-template [ngIf]="energyOpportunity" [ngIfElse]="assessmentBlock">
             {{energyOpportunity.name}}
