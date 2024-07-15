@@ -26,6 +26,7 @@ import { EnergyOpportunityIdbService } from './indexed-db/energy-opportunity-idb
 import { IdbEnergyOpportunity } from './models/energyOpportunity';
 import { KeyPerformanceIndicatorsIdbService } from './indexed-db/key-performance-indicators-idb.service';
 import { IdbKeyPerformanceIndicator } from './models/keyPerformanceIndicator';
+import { ImportBackupModalComponent } from './core-components/import-backup-modal/import-backup-modal.component';
 
 describe('AppComponent', () => {
 
@@ -73,7 +74,7 @@ describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FontAwesomeModule],
-      declarations: [AppComponent, NavbarComponent, WelcomeComponent, LoadingComponent, SetupWizardModalComponent],
+      declarations: [AppComponent, NavbarComponent, WelcomeComponent, LoadingComponent, SetupWizardModalComponent, ImportBackupModalComponent],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },

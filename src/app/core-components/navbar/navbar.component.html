@@ -10,6 +10,14 @@
             <span class="badge bg-secondary">v{{version}}</span>
         </div>
         <div>
+            <button class="btn btn-primary btn-sm me-2" (click)="openImportDataModel()">
+                <fa-icon [icon]="faUpload"></fa-icon>
+                Import Data
+            </button>
+            <button class="btn btn-primary btn-sm me-2" (click)="backupData()">
+                <fa-icon [icon]="faDownload"></fa-icon>
+                Download Data
+            </button>
             <button class="btn btn-danger btn-sm" (click)="openResetDatabaseModal()">
                 Reset Database
             </button>
@@ -35,3 +43,5 @@
         <button class="btn btn-danger" (click)="resetDatabase()">Reset Database</button>
     </div>
 </div>
+
+<app-import-backup-modal></app-import-backup-modal>
