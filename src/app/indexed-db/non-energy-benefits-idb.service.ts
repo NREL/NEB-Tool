@@ -95,4 +95,18 @@ export class NonEnergyBenefitsIdbService {
     }
     await this.setNonEnergyBenefits();
   }
+
+  getEnergyOpportunityNonEnergyBenefits(energyOpportunityGuid: string): Array<IdbNonEnergyBenefit> {
+    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefits.getValue();
+    return nonEnergyBenefits.filter(neb => {
+      return neb.energyOpportunityId == energyOpportunityGuid;
+    });
+  }
+
+  getAssessmentNonEnergyBenefits(assessmentId: string): Array<IdbNonEnergyBenefit> {
+    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefits.getValue();
+    return nonEnergyBenefits.filter(neb => {
+      return neb.assessmentId == assessmentId && neb.energyOpportunityId == undefined;
+    });
+  }
 }

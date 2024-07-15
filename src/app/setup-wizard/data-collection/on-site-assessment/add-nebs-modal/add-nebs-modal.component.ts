@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faBullseye, faCheck, faPlus, faScaleUnbalancedFlip, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faCheck, faChevronDown, faChevronUp, faMagnifyingGlass, faPlus, faScaleUnbalancedFlip, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
@@ -25,8 +25,11 @@ export class AddNebsModalComponent {
   faBullseye: IconDefinition = faBullseye;
   faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
   faCheck: IconDefinition = faCheck;
-
+  faMagnifyingGlass: IconDefinition = faMagnifyingGlass;
   faPlus: IconDefinition = faPlus;
+
+  faChevronUp: IconDefinition = faChevronUp;
+  faChevronDown: IconDefinition = faChevronDown;
 
   displayModal: boolean = false;
 
@@ -37,6 +40,10 @@ export class AddNebsModalComponent {
   nebOptions: Array<NebOption>;
   numberSelected: number = 0;
   displayAllNebs: boolean = true;
+  selectedNebs: Array<IdbNonEnergyBenefit>;
+  nebSearchStr: string = '';
+  orderByDir: 'asc' | 'desc' = 'desc';
+
   constructor(private setupWizardService: SetupWizardService, private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService,
     private assessmentIdbService: AssessmentIdbService,
@@ -49,6 +56,9 @@ export class AddNebsModalComponent {
     this.assessment = this.assessmentIdbService.getByGuid(modalData.assessmentId);
     if (modalData.energyOpportunityId) {
       this.energyOpportunity = this.energyOpportunityIdbService.getByGuid(modalData.energyOpportunityId);
+      this.selectedNebs = this.nonEnergyBenefitIdbService.getEnergyOpportunityNonEnergyBenefits(modalData.energyOpportunityId);
+    } else {
+      this.selectedNebs = this.nonEnergyBenefitIdbService.getAssessmentNonEnergyBenefits(this.assessment.guid);
     }
 
     this.keyPerformanceIndicators = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.getValue();
@@ -115,11 +125,24 @@ export class AddNebsModalComponent {
         }
       });
     } else {
+      let selectedOptionValues = this.selectedNebs.map(option => {
+        return option.nebOptionValue;
+      })
       NebOptions.forEach(option => {
-        nebOptionsList.push(option);
+        if (!selectedOptionValues.includes(option.optionValue)) {
+          nebOptionsList.push(option);
+        }
       });
     }
     this.nebOptions = nebOptionsList;
+  }
+
+  toggleOrderBy() {
+    if (this.orderByDir == 'asc') {
+      this.orderByDir = 'desc';
+    } else {
+      this.orderByDir = 'asc';
+    }
   }
 
 }
