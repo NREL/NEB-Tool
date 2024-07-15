@@ -46,11 +46,11 @@
                                 Contacts
                             </td>
                             <td>
-                                <ng-template [ngIf]="(assessment.guid| contactName:'assessment': contacts).length != 0"
+                                <ng-template [ngIf]="(assessment.guid| associatedContacts:'assessment': contacts).length != 0"
                                     [ngIfElse]="contactMdash">
                                     <div class="d-flex">
                                         <div class="pe-1"
-                                            *ngFor="let contact of assessment.guid| contactName:'assessment': contacts;">
+                                            *ngFor="let contact of assessment.guid| associatedContacts:'assessment': contacts;">
                                             <span class="badge bg-primary">
                                                 <fa-icon [icon]="faUser"></fa-icon>
                                                 {{contact.name}}

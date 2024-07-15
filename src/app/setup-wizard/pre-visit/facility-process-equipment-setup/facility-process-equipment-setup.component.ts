@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faContactBook, faDiagramProject, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbFacility } from 'src/app/models/facility';
@@ -17,7 +17,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
   templateUrl: './facility-process-equipment-setup.component.html',
   styleUrl: './facility-process-equipment-setup.component.css'
 })
-export class FacilityProcessEquipmentSetupComponent {
+export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy {
 
   accordionIndex: number = 0;
   equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
@@ -57,7 +57,9 @@ export class FacilityProcessEquipmentSetupComponent {
   }
 
   ngOnDestroy() {
-    this.contactSub.unsubscribe();
+    if (this.contactSub) {
+      this.contactSub.unsubscribe();
+    }
   }
 
   async saveChanges() {

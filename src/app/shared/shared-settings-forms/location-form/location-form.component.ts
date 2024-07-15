@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -9,13 +9,14 @@ import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { SharedSettingsFormsService } from '../shared-settings-forms.service';
 
 @Component({
   selector: 'app-location-form',
   templateUrl: './location-form.component.html',
   styleUrls: ['./location-form.component.css']
 })
-export class LocationFormComponent {
+export class LocationFormComponent implements OnInit, OnDestroy{
   @Input()
   inCompany: boolean;
 
@@ -25,10 +26,11 @@ export class LocationFormComponent {
   facility: IdbFacility;
   company: IdbCompany;
   companyOrFacilitySub: Subscription;
+  zipCountrySub: Subscription;
   countries: Array<Country> = Countries;
   states: Array<State> = States;
   constructor(private formBuilder: FormBuilder, private companyIdbService: CompanyIdbService,
-    private facilityIdbService: FacilityIdbService) {
+    private facilityIdbService: FacilityIdbService, private sharedSettingsFormService: SharedSettingsFormsService) {
   }
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class LocationFormComponent {
       this.companyOrFacilitySub = this.companyIdbService.selectedCompany.subscribe(_company => {
         if (!this.company || (this.company.guid != _company.guid)) {
           //initialize form on company change
-          this.form = this.getGeneralInformationForm(_company.generalInformation);
+          this.form = this.sharedSettingsFormService.getGeneralInformationForm(_company.generalInformation, 'location');
         }
         this.company = _company;
       });
@@ -44,44 +46,34 @@ export class LocationFormComponent {
       this.companyOrFacilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
         if (!this.facility || (this.facility.guid != _facility.guid)) {
           //initialize form on facility change
-          this.form = this.getGeneralInformationForm(_facility.generalInformation);
+          this.form = this.sharedSettingsFormService.getGeneralInformationForm(_facility.generalInformation, 'location');
         }
         this.facility = _facility;
       });
     }
+    this.zipCountrySub = this.form.get('country').valueChanges.subscribe(change => {
+      this.form.get('zip').updateValueAndValidity();
+    });
   }
 
   ngOnDestroy() {
-    this.companyOrFacilitySub.unsubscribe();
-  }
-
-  getGeneralInformationForm(generalInformation: GeneralInformation): FormGroup {
-    let form: FormGroup = this.formBuilder.group({
-      country: [generalInformation.country],
-      city: [generalInformation.city],
-      state: [generalInformation.state],
-      zip: [generalInformation.zip],
-      address: [generalInformation.address],
-    });
-    return form;
+    if (this.companyOrFacilitySub) {
+      this.companyOrFacilitySub.unsubscribe();
+    }
+    if (this.zipCountrySub) {
+      this.zipCountrySub.unsubscribe();
+    }
   }
 
   async saveChanges() {
     if (this.inCompany) {
-      this.company.generalInformation = this.updateGeneralInformationFromForm(this.company.generalInformation);
+      this.company.generalInformation = this.sharedSettingsFormService.updateGeneralInformationFromForm(this.form, this.company.generalInformation, 'location');
       await this.companyIdbService.asyncUpdate(this.company);
     } else {
-      this.facility.generalInformation = this.updateGeneralInformationFromForm(this.facility.generalInformation);
+      this.facility.generalInformation = this.sharedSettingsFormService.updateGeneralInformationFromForm(this.form, this.facility.generalInformation, 'location');
       await this.facilityIdbService.asyncUpdate(this.facility);
     }
   }
 
-  updateGeneralInformationFromForm(generalInformation: GeneralInformation): GeneralInformation {
-    generalInformation.country = this.form.controls['country'].value;
-    generalInformation.city = this.form.controls['city'].value;
-    generalInformation.state = this.form.controls['state'].value;
-    generalInformation.zip = this.form.controls['zip'].value;
-    generalInformation.address = this.form.controls['address'].value;
-    return generalInformation;
-  }
+
 }
