@@ -47,6 +47,8 @@ import { VisitReportComponent } from './data-evaluation/visit-report/visit-repor
 import { ReportsModule } from '../shared/reports/reports.module';
 import { AssessmentEvaluationComponent } from './data-evaluation/assessment-evaluation/assessment-evaluation.component';
 import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
+import { PrimaryKpiBadgeModule } from "../shared/primary-kpi-badge/primary-kpi-badge.module";
+import { NebOptionsModalListPipe } from './data-collection/on-site-assessment/add-nebs-modal/neb-options-modal-list.pipe';
 
 
 
@@ -90,7 +92,8 @@ import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-asse
     DataFollowUpComponent,
     VisitReportComponent,
     AssessmentEvaluationComponent,
-    OnSiteAssessmentResultsComponent
+    OnSiteAssessmentResultsComponent,
+    NebOptionsModalListPipe
   ],
   imports: [
     CommonModule,
@@ -101,6 +104,8 @@ import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-asse
     HelperPipesModule,
     ContactModalModule,
     TableEntriesModule,
+    ReportsModule,
+    PrimaryKpiBadgeModule,
     ReactiveFormsModule,
     ReportsModule
   ]

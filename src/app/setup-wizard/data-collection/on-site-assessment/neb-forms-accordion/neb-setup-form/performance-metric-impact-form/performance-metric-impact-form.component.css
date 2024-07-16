@@ -4,7 +4,7 @@
 
 .alert-block, .form-block{
     margin-left: 2rem;
-    margin-right: 2rem;
+    /* margin-right: 2rem; */
 }
 
 .alert-info{
