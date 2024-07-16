@@ -24,6 +24,8 @@ import { IdbContact } from 'src/app/models/contact';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 
 describe('ReviewPreVisitSetupComponent', () => {
   let component: ReviewPreVisitSetupComponent;
@@ -53,6 +55,9 @@ describe('ReviewPreVisitSetupComponent', () => {
   let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {
     keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])
   };
+  let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {
+    processEquipments: new BehaviorSubject<Array<IdbProcessEquipment>>([])
+  }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, HelperPipesModule, TableEntriesModule],
@@ -64,7 +69,8 @@ describe('ReviewPreVisitSetupComponent', () => {
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
-        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService }
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService },
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
       ]
     })
       .compileComponents();

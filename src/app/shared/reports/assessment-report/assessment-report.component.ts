@@ -13,6 +13,8 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { AssessmentReport, getAssessmentReport } from '../calculations/assessmentReport';
 import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 import { IdbProcessEquipment } from 'src/app/models/processEquipment';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 
 @Component({
   selector: 'app-assessment-report',
@@ -26,19 +28,19 @@ export class AssessmentReportComponent {
   company: IdbCompany;
   facility: IdbFacility;
   assessmentReport: AssessmentReport;
-  processEquipment: Array<IdbProcessEquipment>;
+  energyEquipments: Array<IdbEnergyEquipment>;
   constructor(private facilityIdbService: FacilityIdbService, private companyIdbService: CompanyIdbService,
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
-    private processEquipmentIdbService: ProcessEquipmentIdbService
+    private energyEquipmentIdbService: EnergyEquipmentIdbService
   ) {
   }
 
   ngOnInit() {
     this.company = this.companyIdbService.getByGUID(this.assessment.companyId);
     this.facility = this.facilityIdbService.getByGUID(this.assessment.facilityId);
-    this.processEquipment = this.processEquipmentIdbService.processEquipments.getValue();
+    this.energyEquipments = this.energyEquipmentIdbService.energyEquipments.getValue();
   }
 
   ngOnChanges() {

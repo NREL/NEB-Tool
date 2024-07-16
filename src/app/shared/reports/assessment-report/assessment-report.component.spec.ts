@@ -24,6 +24,8 @@ import { HelperPipesModule } from '../../helper-pipes/helper-pipes.module';
 import { PerformanceMetricsReportComponent } from './performance-metrics-report/performance-metrics-report.component';
 import { AssessmentSavingsTableComponent } from './assessment-savings-table/assessment-savings-table.component';
 import { PaybackTableComponent } from './payback-table/payback-table.component';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
 describe('AssessmentReportComponent', () => {
   let component: AssessmentReportComponent;
@@ -55,6 +57,13 @@ describe('AssessmentReportComponent', () => {
     keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([]),
     getCompanyKeyPerformanceMetrics: () => { return [] }
   };
+
+
+  let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {
+    energyEquipments: new BehaviorSubject<Array<IdbEnergyEquipment>>([])
+  };
+
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule, TableEntriesModule, HelperPipesModule],
@@ -68,6 +77,7 @@ describe('AssessmentReportComponent', () => {
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
         { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
       ]
     })
       .compileComponents();

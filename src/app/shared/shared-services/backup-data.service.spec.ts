@@ -11,23 +11,27 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { LoadingService } from 'src/app/core-components/loading/loading.service';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 
 describe('BackupDataService', () => {
   let service: BackupDataService;
 
   
+  let userIdbService: Partial<UserIdbService> = {};
+  let companyIdbService: Partial<CompanyIdbService> = {};
+  let facilityIdbService: Partial<FacilityIdbService> = {};
+  let contactIdbService: Partial<ContactIdbService> = {};
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {};
+  let assessmentIdbService: Partial<AssessmentIdbService> = {};
+  let keyPerformanceIndicatorsIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {};
+  let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService>;
+  let loadingService: Partial<LoadingService> = {};
+  let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {};
+  let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {};
 
   beforeEach(() => {
-    let userIdbService: Partial<UserIdbService> = {};
-    let companyIdbService: Partial<CompanyIdbService> = {};
-    let facilityIdbService: Partial<FacilityIdbService> = {};
-    let contactIdbService: Partial<ContactIdbService> = {};
-    let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {};
-    let assessmentIdbService: Partial<AssessmentIdbService> = {};
-    let keyPerformanceIndicatorsIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {};
-    let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
-    let onSiteVisitIdbService: Partial<OnSiteVisitIdbService>;
-    let loadingService: Partial<LoadingService> = {};
     TestBed.configureTestingModule({
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
@@ -39,7 +43,9 @@ describe('BackupDataService', () => {
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorsIdbService },
         { provide: UserIdbService, useValue: userIdbService},
-        { provide: LoadingService, useValue: loadingService}
+        { provide: LoadingService, useValue: loadingService},
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
       ]
 
     });

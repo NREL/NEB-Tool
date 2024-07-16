@@ -27,6 +27,10 @@ import { IdbEnergyOpportunity } from './models/energyOpportunity';
 import { KeyPerformanceIndicatorsIdbService } from './indexed-db/key-performance-indicators-idb.service';
 import { IdbKeyPerformanceIndicator } from './models/keyPerformanceIndicator';
 import { ImportBackupModalComponent } from './core-components/import-backup-modal/import-backup-modal.component';
+import { EnergyEquipmentIdbService } from './indexed-db/energy-equipment-idb.service';
+import { IdbEnergyEquipment } from './models/energyEquipment';
+import { ProcessEquipmentIdbService } from './indexed-db/process-equipment-idb.service';
+import { IdbProcessEquipment } from './models/processEquipment';
 
 describe('AppComponent', () => {
 
@@ -71,6 +75,14 @@ describe('AppComponent', () => {
     keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([])
   }
 
+  let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {
+    energyEquipments: new BehaviorSubject<Array<IdbEnergyEquipment>>([])
+  };
+
+  let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {
+    processEquipments: new BehaviorSubject<Array<IdbProcessEquipment>>([])
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FontAwesomeModule],
@@ -85,7 +97,9 @@ describe('AppComponent', () => {
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: SetupWizardService, useValue: setupWizardService },
-        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService }
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
       ]
     })
   });

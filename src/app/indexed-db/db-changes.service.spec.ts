@@ -10,6 +10,8 @@ import { OnSiteVisitIdbService } from './on-site-visit-idb.service';
 import { EnergyOpportunityIdbService } from './energy-opportunity-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from './key-performance-indicators-idb.service';
 import { UserIdbService } from './user-idb.service';
+import { ProcessEquipmentIdbService } from './process-equipment-idb.service';
+import { EnergyEquipmentIdbService } from './energy-equipment-idb.service';
 
 describe('DbChangesService', () => {
   let service: DbChangesService;
@@ -24,6 +26,9 @@ describe('DbChangesService', () => {
     let keyPerformanceIndicatorService: Partial<KeyPerformanceIndicatorsIdbService> = {};
     let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {};
     let userIdbService: Partial<UserIdbService> = {}
+    let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {};
+    let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {};
+    
     TestBed.configureTestingModule({
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
@@ -34,7 +39,9 @@ describe('DbChangesService', () => {
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
-        { provide: UserIdbService, useValue: userIdbService}
+        { provide: UserIdbService, useValue: userIdbService },
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
       ]
     });
     service = TestBed.inject(DbChangesService);
