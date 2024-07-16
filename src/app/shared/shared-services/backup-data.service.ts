@@ -22,6 +22,10 @@ import { Observable, firstValueFrom } from 'rxjs';
 import { LoadingService } from 'src/app/core-components/loading/loading.service';
 import { environment } from 'src/environments/environment';
 import * as semver from 'semver';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { IdbProcessEquipment } from 'src/app/models/processEquipment';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +43,8 @@ export class BackupDataService {
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private loadingService: LoadingService,
+    private processEquipmentIdbService: ProcessEquipmentIdbService,
+    private energyEquipmentIdbService: EnergyEquipmentIdbService
   ) { }
 
   backupData() {
@@ -70,6 +76,8 @@ export class BackupDataService {
       keyPerformanceIndicators: this.keyPerformanceIndicatorsIdbService.keyPerformanceIndicators.getValue(),
       nonEnergyBenefits: this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue(),
       onSiteVisits: this.onSiteVisitIdbService.onSiteVisits.getValue(),
+      energyEquipment: this.energyEquipmentIdbService.energyEquipments.getValue(),
+      processEquipment: this.processEquipmentIdbService.processEquipments.getValue(),
       origin: "JUSTIFI",
       version: environment.version,
       backupFileType: "User",
@@ -81,7 +89,7 @@ export class BackupDataService {
 
   async importUserBackupFile(backupFile: BackupFile): Promise<IdbUser> {
     // Overwirte existing user with new GUIDs for all dbEntries
-    
+
     // this.analyticsService.sendEvent('import_backup_file');
     this.loadingService.setLoadingMessage('Adding Account...');
     let userGUIDs: { oldId: string, newId: string } = {
@@ -125,22 +133,39 @@ export class BackupDataService {
       await firstValueFrom(this.facilityIdbService.addWithObservable(facility));
     }
 
-    // // TODO: Adding equipments
-    // this.loadingService.setLoadingMessage('Adding equipments...');
-    // let equipmentGUIDs: Array<{ oldId: string, newId: string }> = new Array();
-    // for (let i = 0; i < backupFile.equipments.length; i++) {
-    //   let equipment: IdbEquipment = backupFile.equipments[i];
-    //   let newGUID: string = getGUID();
-    //   contactGUIDs.push({
-    //     newId: newGUID,
-    //     oldId: equipment.guid
-    //   });
-    //   delete equipment.id;
-    //   equipment.userId = userGUIDs.newId;
-    //   equipment.companyId = getNewId(equipment.companyId, companyGUIDs);
-    //   equipment.facilityId = getNewId(equipment.facilityId, facilityGUIDs);
-    //   await firstValueFrom(this.contactIdbService.addWithObservable(contact));
-    // }
+    //Adding Energy Equipment
+    this.loadingService.setLoadingMessage('Adding energy equipments...');
+    let energyEquipmentGUIDs: Array<{ oldId: string, newId: string }> = new Array();
+    for (let i = 0; i < backupFile.energyEquipment.length; i++) {
+      let energyEquipment: IdbEnergyEquipment = backupFile.energyEquipment[i];
+      let newGUID: string = getGUID();
+      energyEquipmentGUIDs.push({
+        newId: newGUID,
+        oldId: energyEquipment.guid
+      });
+      delete energyEquipment.id;
+      energyEquipment.userId = userGUIDs.newId;
+      energyEquipment.companyId = getNewId(energyEquipment.companyId, companyGUIDs);
+      energyEquipment.facilityId = getNewId(energyEquipment.facilityId, facilityGUIDs);
+      await firstValueFrom(this.energyEquipmentIdbService.addWithObservable(energyEquipment));
+    }
+
+    //Adding Process Equipment
+    this.loadingService.setLoadingMessage('Adding process equipments...');
+    let processEquipmentGUIDs: Array<{ oldId: string, newId: string }> = new Array();
+    for (let i = 0; i < backupFile.processEquipment.length; i++) {
+      let processEquipment: IdbProcessEquipment = backupFile.processEquipment[i];
+      let newGUID: string = getGUID();
+      processEquipmentGUIDs.push({
+        newId: newGUID,
+        oldId: processEquipment.guid
+      });
+      delete processEquipment.id;
+      processEquipment.userId = userGUIDs.newId;
+      processEquipment.companyId = getNewId(processEquipment.companyId, companyGUIDs);
+      processEquipment.facilityId = getNewId(processEquipment.facilityId, facilityGUIDs);
+      await firstValueFrom(this.processEquipmentIdbService.addWithObservable(processEquipment));
+    }
 
     // adding assessments
     this.loadingService.setLoadingMessage('Adding Assessments...');
@@ -157,7 +182,7 @@ export class BackupDataService {
       assessment.userId = userGUIDs.newId;
       assessment.companyId = getNewId(assessment.companyId, companyGUIDs);
       assessment.facilityId = getNewId(assessment.facilityId, facilityGUIDs);
-      // assessment.equipmentId = getNewId(assessment.equipmentId, equipmentGUIDs);
+      assessment.equipmentId = getNewId(assessment.equipmentId, energyEquipmentGUIDs);
       await firstValueFrom(this.assessmentIdbService.addWithObservable(assessment));
     }
 
@@ -236,6 +261,12 @@ export class BackupDataService {
       contact.facilityIds.forEach((facilityId, idx) => {
         contact.facilityIds[idx] = getNewId(facilityId, facilityGUIDs);
       });
+      contact.processEquipmentIds.forEach((processEquipmentId, idx) => {
+        contact.processEquipmentIds[idx] = getNewId(processEquipmentId, processEquipmentGUIDs);
+      });
+      contact.energyEquipmentIds.forEach((energyEquipmentId, idx) => {
+        contact.energyEquipmentIds[idx] = getNewId(energyEquipmentId, energyEquipmentGUIDs);
+      });
       await firstValueFrom(this.contactIdbService.addWithObservable(contact));
     }
 
@@ -269,7 +300,7 @@ export class BackupDataService {
     const parsedAppVersion = semver.parse(appVersion);
 
     if (!parsedFileVersion || !parsedAppVersion) {
-        return false;
+      return false;
     }
 
     // avoid build metadata, for example, 0.0.1-alpha-06c66911e vs. 0.0.1-alpha
@@ -296,6 +327,8 @@ export interface BackupFile {
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>,
   nonEnergyBenefits: Array<IdbNonEnergyBenefit>,
   onSiteVisits: Array<IdbOnSiteVisit>,
+  energyEquipment: Array<IdbEnergyEquipment>,
+  processEquipment: Array<IdbProcessEquipment>,
   origin: "JUSTIFI",
   version: string,
   backupFileType: "User" | "Company" | "Facility",
