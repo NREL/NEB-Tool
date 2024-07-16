@@ -106,7 +106,7 @@
         <div class="d-flex justify-content-between">
             <div class="col-6">
                 <button class="btn btn-sm btn-primary me-1"
-                    *ngFor="let contact of energyEquipment.guid | contactName:'energyEquipment': contacts;"
+                    *ngFor="let contact of energyEquipment.guid | associatedContacts:'energyEquipment': contacts;"
                     (click)="openContactModal(contact)">
                     <fa-icon [icon]="faUser"></fa-icon>
                     {{contact.name}}
