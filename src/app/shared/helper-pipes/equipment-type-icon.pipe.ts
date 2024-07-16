@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IconDefinition, faArrowUpFromWaterPump, faBarsStaggered, faCar, faCube, faFan, faFireFlameSimple, faLightbulb, faWind } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faArrowUpFromWaterPump, faBarsStaggered, faCar, faCube, faFan, faFireFlameSimple, faLightbulb, faWater, faWind } from '@fortawesome/free-solid-svg-icons';
 import { EquipmentType } from '../constants/equipmentTypes';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
@@ -29,6 +29,8 @@ export class EquipmentTypeIconPipe implements PipeTransform {
       return faCar;
     } else if(equipmentType == 'Lighting'){
       return faLightbulb;
+    } else if(equipmentType == 'Process Cooling'){
+      return faWater;
     }
     return faCube;
   }

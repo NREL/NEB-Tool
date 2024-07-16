@@ -11,6 +11,8 @@ import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -35,7 +37,11 @@ export class PreAssessmentSetupComponent {
   contactsSub: Subscription;
 
   accordionIndex: number = 0;
-  // processEquipmentOptions: Array<ProcessEquipment>;
+
+  energyEquipmentSub: Subscription;
+  energyEquipmentOptions: Array<IdbEnergyEquipment>;
+  
+  
   displayDeleteModal: boolean = false;
   assessmentToDelete: IdbAssessment;
   displayContactModal: boolean = false;
@@ -49,7 +55,8 @@ export class PreAssessmentSetupComponent {
     private facilityIdbService: FacilityIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private contactIdbService: ContactIdbService,
-    private dbChangesService: DbChangesService
+    private dbChangesService: DbChangesService,
+    private energyEquipmentIdbService: EnergyEquipmentIdbService
   ) {
   }
 
@@ -70,18 +77,16 @@ export class PreAssessmentSetupComponent {
       }
     });
 
-    // let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    // if (facility) {
-    //   this.processEquipmentOptions = facility.processEquipment;
-    // } else {
-    //   this.router.navigateByUrl('/welcome');
-    // }
+    this.energyEquipmentSub = this.energyEquipmentIdbService.energyEquipments.subscribe(equipments => {
+      this.energyEquipmentOptions = equipments;
+    })
   }
 
   ngOnDestroy() {
     this.onSiteVisitSub.unsubscribe();
     this.contactsSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
+    this.energyEquipmentSub.unsubscribe();
   }
   
   async saveChanges(assessment: IdbAssessment) {

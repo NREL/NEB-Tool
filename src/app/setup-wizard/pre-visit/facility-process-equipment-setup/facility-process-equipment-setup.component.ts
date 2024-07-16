@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faDiagramProject, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faDiagramProject, faPlus, faSplotch } from '@fortawesome/free-solid-svg-icons';
 import { IdbFacility } from 'src/app/models/facility';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { Subscription, firstValueFrom } from 'rxjs';
@@ -22,6 +22,7 @@ export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy
   faChevronLeft: IconDefinition = faChevronLeft;
   faDiagramProject: IconDefinition = faDiagramProject;
   faPlus: IconDefinition = faPlus;
+  faSplotch: IconDefinition = faSplotch;
   facility: IdbFacility;
   
   processEquipmentsSub: Subscription

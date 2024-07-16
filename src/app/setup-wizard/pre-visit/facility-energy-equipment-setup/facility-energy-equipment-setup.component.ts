@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { faChevronLeft, faChevronRight, faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faList, faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -22,6 +22,7 @@ export class FacilityEnergyEquipmentSetupComponent {
   faChevronLeft: IconDefinition = faChevronLeft;
   // faDiagramProject: IconDefinition = faDiagramProject;
   faPlus: IconDefinition = faPlus;
+  faList: IconDefinition = faList;
   facility: IdbFacility;
   
   energyEquipmentsSub: Subscription

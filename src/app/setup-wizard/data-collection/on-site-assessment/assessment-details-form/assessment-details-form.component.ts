@@ -6,6 +6,8 @@ import { IdbContact } from 'src/app/models/contact';
 import { IconDefinition, faContactBook, faPeopleGroup, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 
 @Component({
   selector: 'app-assessment-details-form',
@@ -24,10 +26,14 @@ export class AssessmentDetailsFormComponent {
 
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
+
+  energyEquipmentOptions: Array<IdbEnergyEquipment>;
+  energyEquipmentSub: Subscription;
   constructor(
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
-    private setupWizardService: SetupWizardService
+    private setupWizardService: SetupWizardService,
+    private energyEquipmentIdbService: EnergyEquipmentIdbService
   ) { }
 
   ngOnInit() {
@@ -42,11 +48,16 @@ export class AssessmentDetailsFormComponent {
     this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
       this.contacts = _contacts;
     });
+
+    this.energyEquipmentSub = this.energyEquipmentIdbService.energyEquipments.subscribe(_energyEquipment => {
+      this.energyEquipmentOptions = _energyEquipment;
+    })
   }
 
   ngOnDestroy() {
     this.contactsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
+    this.energyEquipmentSub.unsubscribe();
   }
 
   async saveChanges() {
