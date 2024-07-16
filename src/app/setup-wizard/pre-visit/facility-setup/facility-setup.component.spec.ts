@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FacilitySetupComponent } from './facility-setup.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedSettingsFormsModule } from 'src/app/shared/shared-settings-forms/shared-settings-forms.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
 import { SetupWizardService } from '../../setup-wizard.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
@@ -38,7 +38,7 @@ describe('FacilitySetupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule],
+      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule, ReactiveFormsModule],
       declarations: [FacilitySetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },

@@ -3,14 +3,18 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
+                    <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="name.touched && name.invalid"></fa-icon>
                     <fa-icon [icon]="faBuilding" class="me-2"></fa-icon>Company Details
                 </h5>
                 <hr>
                 <ng-template [ngIf]="selectedCompany">
                     <form>
-                        <label class="bold" for="companyName">Company Name</label>
-                        <input name="companyName" type="text" class="form-control" [(ngModel)]="companyName"
-                            (input)="saveChanges()" minlength="1" maxlength="42" id="companyName">
+                        <label class="bold" for="companyName">Company Name <span class="required-asterisk">*</span></label>
+                        <input name="companyName" type="text" class="form-control" [formControl]="name"
+                            (input)="saveChanges()" minlength="1" maxlength="100" id="companyName">
+                        <div class="alert alert-danger form-error" *ngIf="name.touched && name.getError('required')">
+                            Company Name Required
+                        </div>
                     </form>
                     <hr>
                     <label class="bold">Location</label>
@@ -28,9 +32,20 @@
 </div>
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-end">
-        <button class="btn btn-dark btn-sm" (click)="goToContacts()">
+        <button class="btn btn-dark" (click)="goToContacts()" [disabled]="name?.invalid">
             Enter Contacts
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>
 </nav>
+<div [ngClass]="{'window-overlay': routeGuardWarningModal}"></div>
+<div class="popup" [ngClass]="{'open': routeGuardWarningModal }">
+    <div class="popup-body">
+        <div class="alert alert-danger">
+            Please fill the required fields.
+        </div>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="closeWarningModal()">OK</button>
+    </div>
+</div>
