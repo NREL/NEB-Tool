@@ -1,0 +1,113 @@
+<div class="d-flex flex-column contact-card">
+    <!-- <div class="contact-header">
+        <fa-icon [icon]="faUser"></fa-icon>
+        {{contact.name}}
+    </div> -->
+    <div class="contact-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <fa-icon [icon]="faUser"></fa-icon>
+                        {{contact.name}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Phone Number
+                    </td>
+                    <td>
+                        <app-single-cell-item [strValue]="contact.phone"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Email
+                    </td>
+                    <td>
+                        <app-single-cell-item [strValue]="contact.email"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Role
+                    </td>
+                    <td>
+                        <app-single-cell-item [strValue]="contact.role"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Team
+                    </td>
+                    <td>
+                        <app-single-cell-item [strValue]="contact.team"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Focus Area
+                    </td>
+                    <td>
+                        <app-single-cell-item [strValue]="contact.focusArea"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Notes
+                    </td>
+                    <td>
+                        <app-single-cell-item [strValue]="contact.notes"></app-single-cell-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Facilities
+                    </td>
+                    <td>
+                        <ng-template [ngIf]="contact.facilityIds.length > 0" [ngIfElse]="noContentBlock">
+                            <span *ngFor="let facilityGuid of contact.facilityIds">{{facilityGuid}}</span>
+                        </ng-template>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Assessments
+                    </td>
+                    <td>
+                        <ng-template [ngIf]="contact.assessmentIds.length > 0" [ngIfElse]="noContentBlock">
+                            <span *ngFor="let assessmentGuid of contact.assessmentIds">{{assessmentGuid}}</span>
+                        </ng-template>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Equipment
+                    </td>
+                    <td>
+                        <ng-template [ngIf]="contact.processEquipmentIds.length > 0" [ngIfElse]="noContentBlock">
+                            <span
+                                *ngFor="let processEquipmentGuid of contact.processEquipmentIds">{{processEquipmentGuid}}</span>
+                        </ng-template>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        NEBs
+                    </td>
+                    <td>
+                        <ng-template [ngIf]="contact.nonEnergyBenefitIds.length > 0" [ngIfElse]="noContentBlock">
+                            <span *ngFor="let nebGuid of contact.nonEnergyBenefitIds">{{nebGuid}}</span>
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #noContentBlock>
+    &mdash;
+</ng-template>

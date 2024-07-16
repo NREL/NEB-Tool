@@ -4,7 +4,21 @@
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeModal()"></button>
     </div>
     <div class="popup-body">
-        <ng-template [ngIf]="!selectedContact" [ngIfElse]="contactCard">
+        <ng-template [ngIf]="contacts.length != 0" [ngIfElse]="noContactsBlock">
+            <div class="row">
+                <div class="col-4" *ngFor="let contact of contacts">
+                    <app-contact-card [contact]="contact"></app-contact-card>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #noContactsBlock>
+            <div class="alert alert-warning">
+                No Contacts Found.
+            </div>
+        </ng-template>
+
+
+        <!-- <ng-template [ngIf]="!selectedContact" [ngIfElse]="contactCard">
             <ng-template [ngIf]="contacts.length != 0" [ngIfElse]="noContactsBlock">
                 <div class="list-group">
                     <div class="list-group-item list-group-item-action"
@@ -98,7 +112,7 @@
                     </tr>
                 </tbody>
             </table>
-        </ng-template>
+        </ng-template> -->
     </div>
     <div class="popup-footer">
         <div class="d-flex flex-column">

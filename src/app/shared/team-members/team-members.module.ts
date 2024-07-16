@@ -5,19 +5,23 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { HelperPipesModule } from '../helper-pipes/helper-pipes.module';
 import { ContactModalComponent } from './contact-modal/contact-modal.component';
+import { ContactCardComponent } from './contact-card/contact-card.component';
+import { TableEntriesModule } from '../table-entries/table-entries.module';
 
 
 
 @NgModule({
   declarations: [
     TeamMembersComponent,
-    ContactModalComponent
+    ContactModalComponent,
+    ContactCardComponent
   ],
   imports: [
     CommonModule,
     FontAwesomeModule,
     FormsModule,
-    HelperPipesModule
+    HelperPipesModule,
+    TableEntriesModule
   ],
   exports: [
     TeamMembersComponent
