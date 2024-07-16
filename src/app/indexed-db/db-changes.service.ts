@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CompanyIdbService } from './company-idb.service';
 import { FacilityIdbService } from './facility-idb.service';
-import { firstValueFrom } from 'rxjs';
+import { first, firstValueFrom } from 'rxjs';
 import { IdbFacility } from '../models/facility';
 import { IdbCompany } from '../models/company';
 import { IdbAssessment } from '../models/assessment';
@@ -297,6 +297,17 @@ export class DbChangesService {
         await firstValueFrom(this.contactIdbService.updateWithObservable(equipmentContacts[a]));
       }
       await this.contactIdbService.setContacts();
+    }
+    let assessments: Array<IdbAssessment> = this.assessmentIdbService.assessments.getValue();
+    let equipmentAssessments: Array<IdbAssessment> = assessments.filter(assessment => {
+      return assessment.equipmentId == energyEquipment.guid;
+    });
+    if(equipmentAssessments.length > 0){
+      for(let i = 0; i < equipmentAssessments.length; i++){
+        equipmentAssessments[i].equipmentId = undefined;
+        await firstValueFrom(this.assessmentIdbService.updateWithObservable(equipmentAssessments[i]));
+      }
+      await this.assessmentIdbService.setAssessments();
     }
     await firstValueFrom(this.energyEquipmentIdbService.deleteWithObservable(energyEquipment.id));
     await this.energyEquipmentIdbService.setEnergyEquipments();
