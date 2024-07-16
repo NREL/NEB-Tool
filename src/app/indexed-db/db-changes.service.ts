@@ -21,13 +21,15 @@ import { EnergyEquipmentIdbService } from './energy-equipment-idb.service';
 import { ProcessEquipmentIdbService } from './process-equipment-idb.service';
 import { IdbEnergyEquipment } from '../models/energyEquipment';
 import { IdbProcessEquipment } from '../models/processEquipment';
+import { IdbUser } from '../models/user';
+import { UserIdbService } from './user-idb.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbChangesService {
 
-  constructor(private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
+  constructor(private userIdbService: UserIdbService, private companyIdbService: CompanyIdbService, private facilityIdbService: FacilityIdbService,
     private energyOpportunityIdbService: EnergyOpportunityIdbService, private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
@@ -312,4 +314,31 @@ export class DbChangesService {
       return false;
     }
   }
+
+  // TODO: Multiple users, to set a new when the current is deleted
+  async deleteCurrentUser(user: IdbUser) {
+    let companies: Array<IdbCompany> = await firstValueFrom(this.companyIdbService.getAll());
+    let userCompanies: Array<IdbCompany> = companies.filter(company => {return company.userId === user.guid});
+    for (let i = 0; i < userCompanies.length; i++) {
+      await this.deleteCompany(userCompanies[i]);
+    }
+    await this.userIdbService.deleteUserWithObservable(user.id);
+    // await this.userIdbService.setUser();
+  }
+
+  async selectUser(user: IdbUser, skipUpdates: boolean) {
+    // update user
+    let updatedUser: IdbUser = await firstValueFrom(this.userIdbService.updateWithObservable(user));
+    await this.companyIdbService.setCompanies();
+    await this.facilityIdbService.setFacilities();
+    await this.contactIdbService.setContacts();
+    await this.energyOpportunityIdbService.setEnergyOpportunities();
+    await this.assessmentIdbService.setAssessments();
+    await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+    await this.onSiteVisitIdbService.setOnSiteVisits();
+
+    this.userIdbService.user.next(user);
+  }
+
 }

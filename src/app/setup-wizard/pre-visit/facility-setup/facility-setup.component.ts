@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen, faGear, faIndustry, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-facility-setup',
   templateUrl: './facility-setup.component.html',
   styleUrl: './facility-setup.component.css'
 })
-export class FacilitySetupComponent {
+export class FacilitySetupComponent implements OnInit {
 
+  name: FormControl;
   facilityName: string;
-
 
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
@@ -33,17 +34,18 @@ export class FacilitySetupComponent {
 
   ngOnInit() {
     this.facility = this.facilityIdbService.selectedFacility.getValue();
+
     if (this.facility) {
-      this.facilityName = this.facility.generalInformation.name;
+      this.name = new FormControl(this.facility.generalInformation.name, [Validators.required]);
     } else {
       this.router.navigateByUrl('/welcome');
     }
   }
 
   async saveChanges() {
-    this.facility = this.facilityIdbService.selectedFacility.getValue();
-    this.facility.generalInformation.name = this.facilityName;
-    await this.facilityIdbService.asyncUpdate(this.facility);
+    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
+    facility.generalInformation.name = this.name.value;
+    await this.facilityIdbService.asyncUpdate(facility);
   }
 
   goBack() {

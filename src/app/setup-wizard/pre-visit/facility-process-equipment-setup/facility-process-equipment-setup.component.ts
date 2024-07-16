@@ -1,12 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faContactBook, faDiagramProject, faPlus, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faDiagramProject, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { IdbFacility } from 'src/app/models/facility';
-import { IdbContact } from 'src/app/models/contact';
-import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
-import { UtilityType, UtilityTypeOptions } from 'src/app/shared/constants/utilityTypes';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
@@ -19,7 +15,7 @@ import * as _ from 'lodash';
   templateUrl: './facility-process-equipment-setup.component.html',
   styleUrl: './facility-process-equipment-setup.component.css'
 })
-export class FacilityProcessEquipmentSetupComponent {
+export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy {
 
   accordionIndex: number = 0;
   faChevronRight: IconDefinition = faChevronRight;
