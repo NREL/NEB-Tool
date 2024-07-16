@@ -11,10 +11,14 @@
         <label class="col-sm-5 col-form-label" for="equipmentId">Energy
             Equipment</label>
         <div class="col-sm-7">
-            <ng-template [ngIf]="energyEquipmentOptions.length != 0" [ngIfElse]="noEquipmentBlock">
+            <ng-template
+                [ngIf]="(assessment.facilityId | energyEquipmentList:'facility':energyEquipmentOptions).length != 0"
+                [ngIfElse]="noEquipmentBlock">
                 <select name="equipmentId" class="form-select" id="equipmentId" [(ngModel)]="assessment.equipmentId"
                     (change)="saveChanges()">
-                    <option *ngFor="let energyEquipment of energyEquipmentOptions" [ngValue]="energyEquipment.guid">
+                    <option
+                        *ngFor="let energyEquipment of (assessment.facilityId | energyEquipmentList:'facility':energyEquipmentOptions)"
+                        [ngValue]="energyEquipment.guid">
                         {{energyEquipment.equipmentName}}
                     </option>
                 </select>

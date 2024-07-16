@@ -26,6 +26,7 @@ import { NebOptionsListPipe } from './neb-options-list.pipe';
 import { KpiListFilterPipe } from './kpi-list-filter.pipe';
 import { KpiValueDisplayPipe } from './kpi-value-display.pipe';
 import { EnergyEquipmentDisplayPipe } from './energy-equipment-display.pipe';
+import { EnergyEquipmentListPipe } from './energy-equipment-list.pipe';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { EnergyEquipmentDisplayPipe } from './energy-equipment-display.pipe';
     NebOptionsListPipe,
     KpiListFilterPipe,
     KpiValueDisplayPipe,
-    EnergyEquipmentDisplayPipe
+    EnergyEquipmentDisplayPipe,
+    EnergyEquipmentListPipe
   ],
   imports: [
     CommonModule
@@ -85,7 +87,8 @@ import { EnergyEquipmentDisplayPipe } from './energy-equipment-display.pipe';
     NebOptionsListPipe,
     KpiListFilterPipe,
     KpiValueDisplayPipe,
-    EnergyEquipmentDisplayPipe
+    EnergyEquipmentDisplayPipe,
+    EnergyEquipmentListPipe
   ]
 })
 export class HelperPipesModule { }
