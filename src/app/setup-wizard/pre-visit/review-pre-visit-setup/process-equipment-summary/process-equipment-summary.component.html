@@ -3,13 +3,13 @@
     <div class="col-lg-6 col-md-12 pb-2" *ngFor="let equipment of processEquipment">
         <div class="card">
             <div class="card-header">
-                <fa-icon [icon]="equipment.guid | equipmentTypeIcon: processEquipment" class="pe-1"></fa-icon>
+                <!-- <fa-icon [icon]="equipment.guid | equipmentTypeIcon: processEquipment" class="pe-1"></fa-icon> -->
                 {{equipment.equipmentName}}
             </div>
             <div class="card-body">
                 <table class="table table-sm">
                     <tbody>
-                        <tr>
+                        <!-- <tr>
                             <td>
                                 Equipment Type
                             </td>
@@ -50,7 +50,7 @@
                                 <app-single-cell-item [numValue]="equipment.loadFactor"
                                     [units]="'%'"></app-single-cell-item>
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td>
                                 Notes

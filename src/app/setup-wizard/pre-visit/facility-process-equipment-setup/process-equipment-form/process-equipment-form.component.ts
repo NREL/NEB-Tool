@@ -22,8 +22,6 @@ export class ProcessEquipmentFormComponent {
   faUser: IconDefinition = faUser;
   faContactBook: IconDefinition = faContactBook;
 
-  equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
-  utilityTypeOptions: Array<UtilityType> = UtilityTypeOptions;
   processEquipment: IdbProcessEquipment;
   displayDeleteModal: boolean = false;
   contacts: Array<IdbContact>;

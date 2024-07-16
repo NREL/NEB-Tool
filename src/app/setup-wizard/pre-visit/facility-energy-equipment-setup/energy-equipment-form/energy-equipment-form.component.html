@@ -11,6 +11,85 @@
                 </div>
             </div>
             <div class="row">
+                <label class="col-sm-5 col-form-label" for="equipmentType">Equipment
+                    Type</label>
+                <div class="col-sm-7">
+                    <select name="equipmentType" class="form-select"
+                        id="equipmentType"
+                        [(ngModel)]="energyEquipment.equipmentType"
+                        (change)="saveChanges()">
+                        <option *ngFor="let option of equipmentTypeOptions"
+                            [ngValue]="option">
+                            {{option}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-5 col-form-label" for="utilityType">Utility
+                    Type</label>
+                <div class="col-sm-7">
+                    <select name="utilityType" class="form-select" id="utilityType"
+                        [(ngModel)]="energyEquipment.utilityType"
+                        (change)="saveChanges()">
+                        <option *ngFor="let option of utilityTypeOptions"
+                            [ngValue]="option">
+                            {{option}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-5 col-form-label" for="size">Total Size</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="size"
+                            [(ngModel)]="energyEquipment.size"
+                            (input)="saveChanges()">
+                        <!-- <span class="input-group-text">?</span> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-5 col-form-label"
+                    for="operatingHours">Operating
+                    Hours</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input type="number" class="form-control"
+                            name="operatingHours"
+                            [(ngModel)]="energyEquipment.operatingHours"
+                            (input)="saveChanges()">
+                        <span class="input-group-text">Hrs/yr</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-5 col-form-label" for="loadFactor">Load
+                    Factor</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="loadFactor"
+                            [(ngModel)]="energyEquipment.loadFactor"
+                            (input)="saveChanges()">
+                        <span class="input-group-text">&percnt;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-5 col-form-label"
+                    for="efficiency">Efficiency</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input type="number" class="form-control"
+                            name="efficiency"
+                            [(ngModel)]="energyEquipment.efficiency"
+                            (input)="saveChanges()">
+                        <span class="input-group-text">&percnt;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <label class="col-sm-5 col-form-label" for="notes">Notes</label>
                 <div class="col-sm-7">
                     <textarea class="form-control" name="notes"

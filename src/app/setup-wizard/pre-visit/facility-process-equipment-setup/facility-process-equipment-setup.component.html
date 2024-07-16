@@ -24,8 +24,7 @@
                                     [attr.aria-controls]="processEquipmentGuid"
                                     [ngClass]="{'collapsed': accordionIndex != equipmentIndex}"
                                     (click)="setAccordionIndex(equipmentIndex)">
-                                    <fa-icon [icon]="processEquipmentGuid | equipmentTypeIcon: processEquipments"
-                                        class="pe-1"></fa-icon>
+                                    
                                     {{processEquipmentGuid | processEquipmentDisplay: processEquipments}}
                                 </button>
                             </h2>

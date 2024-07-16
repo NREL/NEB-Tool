@@ -7,27 +7,27 @@ export interface IdbProcessEquipment extends IdbEntry {
     facilityId: string,
     companyId: string,
     equipmentName: string,
-    size: number,
-    operatingHours: number,
-    loadFactor: number,
+    // size: number,
+    // operatingHours: number,
+    // loadFactor: number,
     notes: string,
-    equipmentType: EquipmentType,
-    utilityType: UtilityType
+    // equipmentType: EquipmentType,
+    // utilityType: UtilityType
 }
 
 export function getNewIdbProcessEquipment(userId: string, companyId: string, facilityId: string): IdbProcessEquipment {
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
-        equipmentName: 'New Equipment',
+        equipmentName: 'New Process Equipment',
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
-        size: undefined,
-        operatingHours: undefined,
-        loadFactor: undefined,
+        // size: undefined,
+        // operatingHours: undefined,
+        // loadFactor: undefined,
         notes: undefined,
-        equipmentType: undefined,
-        utilityType: undefined
+        // equipmentType: undefined,
+        // utilityType: undefined
     }
 }

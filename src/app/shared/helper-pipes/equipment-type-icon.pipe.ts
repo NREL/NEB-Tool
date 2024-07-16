@@ -1,21 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IconDefinition, faArrowUpFromWaterPump, faBarsStaggered, faCube, faFan, faFireFlameSimple, faWind } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faArrowUpFromWaterPump, faBarsStaggered, faCar, faCube, faFan, faFireFlameSimple, faLightbulb, faWind } from '@fortawesome/free-solid-svg-icons';
 import { EquipmentType } from '../constants/equipmentTypes';
-import { IdbProcessEquipment } from 'src/app/models/processEquipment';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
 @Pipe({
   name: 'equipmentTypeIcon'
 })
 export class EquipmentTypeIconPipe implements PipeTransform {
 
-  transform(processEquipmentGuid: string, processEquipments: Array<IdbProcessEquipment>): IconDefinition {
-    let processEquipment: IdbProcessEquipment = processEquipments.find(equipment => {
-      return equipment.guid == processEquipmentGuid;
+  transform(energyEquipmentGuid: string, energyEquipments: Array<IdbEnergyEquipment>): IconDefinition {
+    let energyEquipment: IdbEnergyEquipment = energyEquipments.find(equipment => {
+      return equipment.guid == energyEquipmentGuid;
     });
-    let equipmentType: EquipmentType = processEquipment?.equipmentType;
+    let equipmentType: EquipmentType = energyEquipment?.equipmentType;
     if (!equipmentType) {
       return faCube;
-    } else if (equipmentType == 'Compressed Air') {
+    } else if (equipmentType == 'HVAC') {
       return faWind;
     } else if (equipmentType == 'Fan') {
       return faFan;
@@ -25,8 +25,12 @@ export class EquipmentTypeIconPipe implements PipeTransform {
       return faArrowUpFromWaterPump;
     } else if (equipmentType == 'Steam') {
       return faBarsStaggered;
+    } else if(equipmentType == 'Mobile'){
+      return faCar;
+    } else if(equipmentType == 'Lighting'){
+      return faLightbulb;
     }
-    return null;
+    return faCube;
   }
 
 }
