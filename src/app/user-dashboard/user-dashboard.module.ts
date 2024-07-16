@@ -13,6 +13,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { UserDashboardHelpComponent } from './user-dashboard-help/user-dashboard-help.component';
 import { ExploreNEBsComponent } from './explore-nebs/explore-nebs.component';
 import { AssessmentsTableComponent } from './user-dashboard-home/assessments-table/assessments-table.component';
+import { PrimaryKpiBadgeModule } from '../shared/primary-kpi-badge/primary-kpi-badge.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AssessmentsTableComponent } from './user-dashboard-home/assessments-tab
     RouterModule,
     FormsModule,
     HelperPipesModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PrimaryKpiBadgeModule
   ]
 })
 export class UserDashboardModule { }

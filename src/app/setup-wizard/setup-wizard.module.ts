@@ -50,8 +50,8 @@ import { OnSiteAssessmentResultsComponent } from './data-collection/on-site-asse
 import { ProcessEquipmentFormComponent } from './pre-visit/facility-process-equipment-setup/process-equipment-form/process-equipment-form.component';
 import { FacilityEnergyEquipmentSetupComponent } from './pre-visit/facility-energy-equipment-setup/facility-energy-equipment-setup.component';
 import { EnergyEquipmentFormComponent } from './pre-visit/facility-energy-equipment-setup/energy-equipment-form/energy-equipment-form.component';
-
-
+import { PrimaryKpiBadgeModule } from "../shared/primary-kpi-badge/primary-kpi-badge.module";
+import { NebOptionsModalListPipe } from './data-collection/on-site-assessment/add-nebs-modal/neb-options-modal-list.pipe';
 
 @NgModule({
   declarations: [
@@ -96,7 +96,8 @@ import { EnergyEquipmentFormComponent } from './pre-visit/facility-energy-equipm
     OnSiteAssessmentResultsComponent,
     ProcessEquipmentFormComponent,
     FacilityEnergyEquipmentSetupComponent,
-    EnergyEquipmentFormComponent
+    EnergyEquipmentFormComponent,
+    NebOptionsModalListPipe
   ],
   imports: [
     CommonModule,
@@ -107,6 +108,8 @@ import { EnergyEquipmentFormComponent } from './pre-visit/facility-energy-equipm
     HelperPipesModule,
     ContactModalModule,
     TableEntriesModule,
+    ReportsModule,
+    PrimaryKpiBadgeModule,
     ReactiveFormsModule,
     ReportsModule
   ]
