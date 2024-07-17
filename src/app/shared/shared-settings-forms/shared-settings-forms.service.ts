@@ -70,31 +70,31 @@ export class SharedSettingsFormsService {
     let form: FormGroup = this.formBuilder.group({
       includeElectricity: [unitSettings.includeElectricity],
       electricityUnit: [unitSettings.electricityUnit],
-      electricityPrice: [unitSettings.electricityPrice, [Validators.min(0)]],
+      electricityPrice: [unitSettings.electricityPrice, [Validators.required, Validators.min(0)]],
 
       includeNaturalGas: [unitSettings.includeNaturalGas],
       naturalGasUnit: [unitSettings.naturalGasUnit],
-      naturalGasPrice: [unitSettings.naturalGasPrice, [Validators.min(0)]],
+      naturalGasPrice: [unitSettings.naturalGasPrice, [Validators.required, Validators.min(0)]],
 
       includeSteam: [unitSettings.includeSteam],
       steamUnit: [unitSettings.steamUnit],
-      steamPrice: [unitSettings.steamPrice, [Validators.min(0)]],
+      steamPrice: [unitSettings.steamPrice, [Validators.required, Validators.min(0)]],
 
       includeOtherFuel: [unitSettings.includeOtherFuel],
       otherFuelUnit: [unitSettings.otherFuelUnit],
-      otherFuelPrice: [unitSettings.otherFuelPrice, [Validators.min(0)]],
+      otherFuelPrice: [unitSettings.otherFuelPrice, [Validators.required, Validators.min(0)]],
 
       includeCompressedAir: [unitSettings.includeCompressedAir],
       compressedAirUnit: [unitSettings.compressedAirUnit],
-      compressedAirPrice: [unitSettings.compressedAirPrice, [Validators.min(0)]],
+      compressedAirPrice: [unitSettings.compressedAirPrice, [Validators.required, Validators.min(0)]],
 
       includeWater: [unitSettings.includeWater],
       waterUnit: [unitSettings.waterUnit],
-      waterPrice: [unitSettings.waterPrice, [Validators.min(0)]],
+      waterPrice: [unitSettings.waterPrice, [Validators.required, Validators.min(0)]],
 
       includeWasteWater: [unitSettings.includeWasteWater],
       wasteWaterUnit: [unitSettings.wasteWaterUnit],
-      wasteWaterPrice: [unitSettings.wasteWaterPrice, [Validators.min(0)]],
+      wasteWaterPrice: [unitSettings.wasteWaterPrice, [Validators.required, Validators.min(0)]],
     });
     return form;
   }
