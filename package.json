@@ -1,5 +1,5 @@
 {
-  "name": "neb-tool",
+  "name": "justifi",
   "version": "0.0.1-alpha",
   "main": "main.js",
   "author": "National Renewable Energy Laboratory",
@@ -23,9 +23,9 @@
   "build": {
     "appId": "gov.nrel.neb-tool",
     "copyright": "Copyright 2023 NREL. All rights reserved.",
-    "productName": "NEB-Tool",
+    "productName": "JUSTIFI",
     "directories": {
-      "output": "./output/neb-tool/"
+      "output": "./output/justifi/"
     },
     "win": {
       "target": "nsis",
@@ -43,7 +43,7 @@
         "tar.gz"
       ],
       "icon": "src/assets/electron-icons/",
-      "executableName": "NEB-Tool",
+      "executableName": "JUSTIFI",
       "maintainer": "National Renewable Energy Laboratory",
       "artifactName": "${productName}-${version}.${ext}",
       "category": "Science"
