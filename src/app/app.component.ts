@@ -11,6 +11,8 @@ import { NonEnergyBenefitsIdbService } from './indexed-db/non-energy-benefits-id
 import { OnSiteVisitIdbService } from './indexed-db/on-site-visit-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from './indexed-db/key-performance-indicators-idb.service';
 import { EnergyOpportunityIdbService } from './indexed-db/energy-opportunity-idb.service';
+import { EnergyEquipmentIdbService } from './indexed-db/energy-equipment-idb.service';
+import { ProcessEquipmentIdbService } from './indexed-db/process-equipment-idb.service';
 
 @Component({
   selector: 'app-root',
@@ -28,13 +30,14 @@ export class AppComponent {
     private contactIdbService: ContactIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private keyPerformanceIndicatorsIdbService: KeyPerformanceIndicatorsIdbService) {
+    private keyPerformanceIndicatorsIdbService: KeyPerformanceIndicatorsIdbService,
+    private energyEquipmentIdbService: EnergyEquipmentIdbService,
+    private processEquipmentIdbService: ProcessEquipmentIdbService) {
   }
 
   async ngOnInit() {
     await this.initializeData();
     this.checkRouter();
-
   }
 
   async initializeData() {
@@ -58,6 +61,12 @@ export class AppComponent {
     //assessments 
     await this.assessmentIdbService.setAssessments();
     console.log('assessments init..');
+    //process equipment 
+    await this.processEquipmentIdbService.setProcessEquipments();
+    console.log('process equipment init..');
+    //energy equipment 
+    await this.energyEquipmentIdbService.setEnergyEquipments();
+    console.log('energy equipment init..');
     //energy opportunities 
     await this.energyOpportunityIdbService.setEnergyOpportunities();
     console.log('energy opportunities init..');

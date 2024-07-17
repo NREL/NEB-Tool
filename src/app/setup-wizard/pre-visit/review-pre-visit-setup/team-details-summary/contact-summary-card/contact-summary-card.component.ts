@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { IconDefinition, faUser } from '@fortawesome/free-solid-svg-icons';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbContact } from 'src/app/models/contact';
-import { IdbFacility } from 'src/app/models/facility';
-import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
+import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 
 @Component({
   selector: 'app-contact-summary-card',
@@ -17,15 +16,15 @@ export class ContactSummaryCardComponent {
   contact: IdbContact;
 
   assessments: Array<IdbAssessment>;
-  processEquipment: Array<ProcessEquipment>;
+  processEquipment: Array<IdbProcessEquipment>;
   faUser: IconDefinition = faUser;
-  constructor(private assessmentIdbService: AssessmentIdbService, private facilityIdbService: FacilityIdbService
+  constructor(private assessmentIdbService: AssessmentIdbService,
+    private processEquipmentIdbService: ProcessEquipmentIdbService
   ) {
   }
 
   ngOnInit() {
     this.assessments = this.assessmentIdbService.assessments.getValue();
-    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    this.processEquipment = facility.processEquipment;
+    this.processEquipment = this.processEquipmentIdbService.processEquipments.getValue();
   }
 }

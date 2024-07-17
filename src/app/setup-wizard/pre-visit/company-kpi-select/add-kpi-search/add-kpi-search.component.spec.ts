@@ -11,6 +11,7 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { PrimaryKpiBadgeModule } from 'src/app/shared/primary-kpi-badge/primary-kpi-badge.module';
 
 describe('AddKpiSearchComponent', () => {
   let component: AddKpiSearchComponent;
@@ -25,7 +26,7 @@ describe('AddKpiSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, FormsModule, HelperPipesModule],
+      imports: [FontAwesomeModule, FormsModule, HelperPipesModule, PrimaryKpiBadgeModule],
       declarations: [AddKpiSearchComponent, SelectedKpiOptionPipe],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },

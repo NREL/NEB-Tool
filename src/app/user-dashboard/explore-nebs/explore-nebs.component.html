@@ -36,10 +36,7 @@
             <div class="card-footer">
                 <div class="d-flex w-100 justify-content-end">
                     <div>
-                        <span class="badge"
-                            [ngStyle]="{'background-color':keyPerformanceIndicatorOption.primaryKPI | kpiCategoryClass}">
-                            {{keyPerformanceIndicatorOption.primaryKPI}}
-                        </span>
+                        <app-primary-kpi-badge [kpiValue]="keyPerformanceIndicatorOption.optionValue"></app-primary-kpi-badge>
                     </div>
 
                 </div>

@@ -14,15 +14,32 @@
 .btn-sm {
     font-size: small;
 }
-.alert-info{
+
+.alert-info {
     padding: .25rem;
 }
 
-ul{
+ul {
     list-style: none;
     /* padding-left: 0; */
 }
 
-.click-link{
+.click-link {
     text-decoration: none;
+}
+
+.popup.metric-popup {
+    left: 4px;
+    right: 4px;
+    top: 4px;
+    width: auto;
+}
+
+.popup.metric-popup .popup-body {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.clickable:hover{
+    cursor: pointer;
 }

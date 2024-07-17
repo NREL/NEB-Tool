@@ -20,6 +20,9 @@ import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
 describe('AssessmentEvaluationComponent', () => {
   let component: AssessmentEvaluationComponent;
@@ -53,6 +56,10 @@ describe('AssessmentEvaluationComponent', () => {
     getCompanyKeyPerformanceMetrics: () => { return [] }
   };
 
+  let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {
+    energyEquipments: new BehaviorSubject<Array<IdbEnergyEquipment>>([])
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule, ReportsModule],
@@ -66,6 +73,7 @@ describe('AssessmentEvaluationComponent', () => {
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
         { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
       ]
     })
       .compileComponents();

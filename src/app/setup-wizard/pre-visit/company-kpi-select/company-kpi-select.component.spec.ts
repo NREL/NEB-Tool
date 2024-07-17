@@ -22,6 +22,7 @@ import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportuni
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { SelectedKpiOptionPipe } from './add-kpi-search/selected-kpi-option.pipe';
+import { PrimaryKpiBadgeModule } from 'src/app/shared/primary-kpi-badge/primary-kpi-badge.module';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 
 describe('CompanyKpiSelectComponent', () => {
@@ -51,7 +52,7 @@ describe('CompanyKpiSelectComponent', () => {
   let dbChangesService: Partial<DbChangesService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, FormsModule, RouterTestingModule, HelperPipesModule],
+      imports: [FontAwesomeModule, FormsModule, RouterTestingModule, HelperPipesModule, PrimaryKpiBadgeModule],
       declarations: [CompanyKpiSelectComponent, AddKpiSearchComponent, CompanyKpiListComponent, SelectedKpiOptionPipe],
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },

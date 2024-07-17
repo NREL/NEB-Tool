@@ -1,9 +1,5 @@
-<div class="d-flex w-100 justify-content-end pb-2">
-    <!-- <button class="btn btn-dark btn-sm add-neb-btn me-2" (click)="showSuggestedNEBs()">
-        <fa-icon [icon]="faSearchPlus"></fa-icon> Find NEBs
-    </button> -->
-
-
+<!--ACTIONS-->
+<div class="d-flex w-100 justify-content-between pb-3">
     <div class="pe-2">
         <button class="btn btn-sm btn-primary me-1"
             *ngFor="let contact of nonEnergyBenefit.guid | associatedContacts:'nonEnergyBenefit': contacts;"
@@ -16,15 +12,20 @@
             Team Members
         </button>
     </div>
-
-
-    <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
-        <fa-icon [icon]="faTrash"></fa-icon> Delete
-    </button>
+    <div>
+        <ng-template [ngIf]="(excludedMetrics.length + untrackedMetrics.length) > 0">
+            <button class="me-2 btn btn-sm btn-info" (click)="showUntrackedMetricsModal()">
+                <fa-icon [icon]="faSearchPlus"></fa-icon>
+                Untracked Performance Metrics
+                <span class="badge bg-dark">{{(excludedMetrics.length + untrackedMetrics.length)}}</span>
+            </button>
+        </ng-template>
+        <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
+            <fa-icon [icon]="faTrash"></fa-icon> Delete
+        </button>
+    </div>
 </div>
-
-
-
+<!--FORM-->
 <form>
     <ng-template [ngIf]="includedMetrics.length > 0" [ngIfElse]="noIncludedMetricsBlock">
         <ng-container *ngFor="let performanceMetricImpact of includedMetrics">
@@ -37,43 +38,23 @@
             No performance metrics tracked for this NEB.
         </div>
     </ng-template>
-    <ng-template [ngIf]="excludedMetrics.length > 0">
-        <button class="btn btn-sm" (click)="toggleUntrackedNebs()">
-            <fa-icon *ngIf="hideUntrackedMetrics" [icon]="faChevronRight"></fa-icon>
-            <fa-icon *ngIf="!hideUntrackedMetrics" [icon]="faChevronDown"></fa-icon>
-            Untracked Performance Metrics
-            <span class="badge bg-dark">{{excludedMetrics.length}}</span>
-        </button>
-        <div [ngClass]="{'collapse': hideUntrackedMetrics}">
-            <ul>
-                <ng-container *ngFor="let unusedPerformanceMetric of excludedMetrics">
-                    <li>
-                        <button class="btn btn-sm" (click)="openAddMetricModal(unusedPerformanceMetric)">
-                            <fa-icon [icon]="faPlus"></fa-icon>
-                            <fa-icon [icon]="faScaleUnbalancedFlip" class="ms-2 me-2"></fa-icon>
-                            <span [innerHTML]="unusedPerformanceMetric.htmlLabel"></span>
-                        </button>
-
-                    </li>
-                </ng-container>
-            </ul>
-        </div>
-    </ng-template>
     <div class="row mb-1">
-        <div class="col-sm-5 col-form-label">
+        <div class="col-sm-12 col-form-label">
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
                     [(ngModel)]="nonEnergyBenefit.includeNote" name="includeNote" (input)="saveChanges()">
-                <label class="form-check-label" for="includeNote">Notes</label>
+                <label class="form-check-label" for="includeNote">Non-Energy Benefit Notes</label>
             </div>
         </div>
-        <div class="col-sm-7" *ngIf="nonEnergyBenefit.includeNote">
+        <div class="col-sm-12" *ngIf="nonEnergyBenefit.includeNote">
             <textarea name="nebNotes" type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.notes"
                 id="nebNotes"></textarea>
         </div>
     </div>
 </form>
+<!--END FORM-->
 
+<!--DELETE MODAL-->
 <div [ngClass]="{'window-overlay': displayDeleteModal || displayAddPerformanceMetricModal}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">
     <div class="popup-header">Discard this NEB?
@@ -92,19 +73,72 @@
     </div>
 </div>
 
-<div class="popup" [ngClass]="{'open': displayAddPerformanceMetricModal }">
+<!--METRICS MODAL-->
+<div class="popup metric-popup" [ngClass]="{'open': displayAddPerformanceMetricModal }">
     <div class="popup-header">Add Performance Metric?
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeAddMetricModal()"></button>
     </div>
     <div class="popup-body">
-        <div class="alert alert-info">
-            Would you like to add this performance metric: <span class="bold" [innerHTML]="performanceMetricToAdd?.htmlLabel"></span>?
-        </div>
-        <hr>
+        <ng-template [ngIf]="!performanceMetricToAdd" [ngIfElse]="selectedMetricBlock">
+            <table class="table table-bordered table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Metric
+                        </th>
+                        <th>
+                            KPI
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="clickable" *ngFor="let unusedPerformanceMetric of excludedMetrics"
+                        (click)="selectMetricToAdd(unusedPerformanceMetric)">
+                        <td>
+                            <fa-icon [icon]="faPlus"></fa-icon>
+                            <fa-icon [icon]="faScaleUnbalancedFlip" class="ms-2 me-2"></fa-icon>
+                            <span [innerHTML]="unusedPerformanceMetric.htmlLabel"></span>
+                        </td>
+                        <td>
+                            <span [innerHTML]=" unusedPerformanceMetric.kpiValue | kpiValueDisplay"></span>
+                        </td>
+                        <td>
+                            <app-primary-kpi-badge
+                                [kpiValue]="unusedPerformanceMetric.kpiValue"></app-primary-kpi-badge>
+                        </td>
+                    </tr>
+                    <tr class="clickable" *ngFor="let unusedPerformanceMetric of untrackedMetrics"
+                        (click)="selectMetricToAdd(unusedPerformanceMetric)">
+                        <td>
+                            <fa-icon [icon]="faPlus"></fa-icon>
+                            <fa-icon [icon]="faScaleUnbalancedFlip" class="ms-2 me-2"></fa-icon>
+                            <span [innerHTML]="unusedPerformanceMetric.htmlLabel"></span>
+                        </td>
+                        <td>
+                            <span [innerHTML]=" unusedPerformanceMetric.kpiValue | kpiValueDisplay"></span>
+                        </td>
+                        <td>
+                            <app-primary-kpi-badge
+                                [kpiValue]="unusedPerformanceMetric.kpiValue"></app-primary-kpi-badge>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+        <ng-template #selectedMetricBlock>
+            <div class="alert alert-info text-center">
+                Would you like to add this performance metric: <span class="bold"
+                    [innerHTML]="performanceMetricToAdd?.htmlLabel"></span>?
+            </div>
+        </ng-template>
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary btn-sm me-2" (click)="closeAddMetricModal()">Cancel</button>
-        <button class="btn btn-success btn-sm" (click)="addMetric()"><fa-icon [icon]="faPlus"
-                class="me-1"></fa-icon>Add Metric</button>
+        <button class="btn btn-success btn-sm" (click)="addMetric()" [disabled]="!performanceMetricToAdd"><fa-icon
+                [icon]="faPlus" class="me-1"></fa-icon>Add
+            Metric</button>
     </div>
 </div>

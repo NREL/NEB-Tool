@@ -4,33 +4,33 @@ import { ProcessEquipmentSummaryComponent } from './process-equipment-summary.co
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
-import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { BehaviorSubject } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 
 describe('ProcessEquipmentSummaryComponent', () => {
   let component: ProcessEquipmentSummaryComponent;
   let fixture: ComponentFixture<ProcessEquipmentSummaryComponent>;
 
-  let facilityIdbService: Partial<FacilityIdbService> = {
-    facilities: new BehaviorSubject<Array<IdbFacility>>([]),
-    selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
-  };
   let contactIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
+  let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {
+    processEquipments: new BehaviorSubject<Array<IdbProcessEquipment>>([])
+  }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ FontAwesomeModule, HelperPipesModule],
+      imports: [FontAwesomeModule, HelperPipesModule],
       declarations: [ProcessEquipmentSummaryComponent],
       providers: [
-        { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: ContactIdbService, useValue: contactIdbService }
+        { provide: ContactIdbService, useValue: contactIdbService },
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(ProcessEquipmentSummaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

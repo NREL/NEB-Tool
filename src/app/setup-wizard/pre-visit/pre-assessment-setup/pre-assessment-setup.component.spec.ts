@@ -18,6 +18,8 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
 describe('PreAssessmentSetupComponent', () => {
   let component: PreAssessmentSetupComponent;
@@ -44,6 +46,9 @@ describe('PreAssessmentSetupComponent', () => {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
 
+  let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {
+    energyEquipments: new BehaviorSubject<Array<IdbEnergyEquipment>>([])
+  };
   let dbChangesService: Partial<DbChangesService> = {}
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -56,7 +61,8 @@ describe('PreAssessmentSetupComponent', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
-        { provide: DbChangesService, useValue: dbChangesService }
+        { provide: DbChangesService, useValue: dbChangesService },
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService }
       ]
     })
       .compileComponents();
