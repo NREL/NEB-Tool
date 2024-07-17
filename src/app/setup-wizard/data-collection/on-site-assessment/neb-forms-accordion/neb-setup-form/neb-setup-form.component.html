@@ -27,6 +27,27 @@
 </div>
 <!--FORM-->
 <form>
+    <ng-template [ngIf]="nonEnergyBenefit.isCustom">
+        <div class="row mb-2">
+            <label class="col-sm-5 col-form-label" for="nebName">NEB Name</label>
+            <div class="col-sm-7">
+                <input name="nebName" type="text" class="form-control" [(ngModel)]="nonEnergyBenefit.name" minlength="1"
+                    maxlength="42" id="nebName" (input)="saveChanges()">
+            </div>
+        </div>
+    </ng-template>
+    <div class="row mb-2">
+        <label class="col-sm-5 col-form-label" for="costImpact">Direct Cost Impact</label>
+        <div class="col-sm-7">
+            <div class="input-group">
+                <input type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.costImpact"
+                    name="baselineValue" (input)="saveChanges()">
+                <span class="input-group-text">
+                    &dollar;/yr
+                </span>
+            </div>
+        </div>
+    </div>
     <ng-template [ngIf]="includedMetrics.length > 0" [ngIfElse]="noIncludedMetricsBlock">
         <ng-container *ngFor="let performanceMetricImpact of includedMetrics">
             <app-performance-metric-impact-form [performanceMetricImpact]="performanceMetricImpact"

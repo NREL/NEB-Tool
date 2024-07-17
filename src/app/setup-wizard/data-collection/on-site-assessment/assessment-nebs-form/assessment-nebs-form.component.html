@@ -1,5 +1,9 @@
 <div class="d-flex w-100 justify-content-end pt-2 pb-2">
-    <button class="btn btn-secondary btn-sm add-neb-btn" (click)="addNEB()"><fa-icon [icon]="faPlus"
-            class="me-1"></fa-icon>Add Assessment NEB</button>
+    <button class="me-2 btn btn-secondary btn-sm add-neb-btn" (click)="addNEB()">
+        <fa-icon [icon]="faPlus"></fa-icon> Add NEB
+    </button>
+    <button class="btn btn-secondary btn-sm add-neb-btn" (click)="openNebModal()">
+        <fa-icon [icon]="faSearchPlus"></fa-icon> Search NEBs
+    </button>
 </div>
 <app-neb-forms-accordion [assessment]="assessment"></app-neb-forms-accordion>
