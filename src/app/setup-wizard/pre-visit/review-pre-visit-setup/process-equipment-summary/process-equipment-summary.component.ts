@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IconDefinition, faDiagramProject, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 import { IdbContact } from 'src/app/models/contact';
-import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
+import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 
 @Component({
   selector: 'app-process-equipment-summary',
@@ -13,15 +13,15 @@ import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
 export class ProcessEquipmentSummaryComponent {
 
   faDiagramProject: IconDefinition = faDiagramProject;
-  processEquipment: Array<ProcessEquipment>;
+  processEquipment: Array<IdbProcessEquipment>;
   contacts: Array<IdbContact>;
   faUser: IconDefinition = faUser;
-  constructor(private facilityIdbService: FacilityIdbService, private contactIdbService: ContactIdbService){
+  constructor(private processEquipmentIdbService: ProcessEquipmentIdbService, private contactIdbService: ContactIdbService){
 
   }
 
   ngOnInit(){
-    this.processEquipment = this.facilityIdbService.selectedFacility.getValue().processEquipment;
+    this.processEquipment = this.processEquipmentIdbService.processEquipments.getValue();
     this.contacts = this.contactIdbService.contacts.getValue();
   }
 }

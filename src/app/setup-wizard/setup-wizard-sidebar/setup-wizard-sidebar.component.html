@@ -56,9 +56,15 @@
                     </a>
                 </div>
                 <div class="nav-item">
+                    <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/energy-equipment'"
+                        [routerLinkActive]="['active']">
+                        Energy Equipment
+                    </a>
+                </div>
+                <div class="nav-item">
                     <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/process-equipment'"
                         [routerLinkActive]="['active']">
-                        Process Equipment
+                        Process Equipment - End Uses
                     </a>
                 </div>
                 <div class="nav-item">

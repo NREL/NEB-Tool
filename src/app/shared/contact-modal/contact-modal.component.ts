@@ -3,7 +3,6 @@ import { IconDefinition, faChevronLeft, faCircleCheck, faContactBook, faSave, fa
 import { firstValueFrom } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { ContactContext, IdbContact } from 'src/app/models/contact';
-import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 
 @Component({
   selector: 'app-contact-modal',
@@ -99,6 +98,14 @@ export class ContactModalComponent implements OnInit {
         });
       } else {
         this.contacts[contactIndex].nonEnergyBenefitIds.push(this.contextGuid);
+      }
+    } else if (this.contactContext == 'energyEquipment') {
+      if (this.contacts[contactIndex].energyEquipmentIds.includes(this.contextGuid)) {
+        this.contacts[contactIndex].energyEquipmentIds = this.contacts[contactIndex].energyEquipmentIds.filter(id => {
+          return id != this.contextGuid;
+        });
+      } else {
+        this.contacts[contactIndex].energyEquipmentIds.push(this.contextGuid);
       }
     }
   }

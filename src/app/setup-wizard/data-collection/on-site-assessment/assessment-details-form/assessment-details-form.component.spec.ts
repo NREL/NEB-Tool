@@ -13,6 +13,8 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { ContactContext, IdbContact } from 'src/app/models/contact';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
 describe('AssessmentDetailsFormComponent', () => {
   let component: AssessmentDetailsFormComponent;
@@ -40,6 +42,10 @@ describe('AssessmentDetailsFormComponent', () => {
   let contactIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
+
+  let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {
+    energyEquipments: new BehaviorSubject<Array<IdbEnergyEquipment>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule, HelperPipesModule],
@@ -49,6 +55,7 @@ describe('AssessmentDetailsFormComponent', () => {
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: ContactIdbService, useValue: contactIdbService },
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
       ]
     })
       .compileComponents();

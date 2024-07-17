@@ -3,7 +3,8 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faDiagramProject"></fa-icon> Process Equipment - End Uses
+                    <fa-icon [icon]="faList"></fa-icon>
+                     Energy Equipment
                 </h5>
                 <hr>
                 <div class="d-flex w-100 justify-content-end pb-2">
@@ -14,34 +15,35 @@
                         </button>
                     </div>
                 </div>
-                <ng-template [ngIf]="processEquipmentGuids.length != 0" [ngIfElse]="noProcessEquipmentBlock">
+                <ng-template [ngIf]="energyEquipmentGuids.length != 0" [ngIfElse]="noEnergyEquipmentBlock">
                     <div class="accordion" id="equipmentAccordion">
                         <div class="accordion-item"
-                            *ngFor="let processEquipmentGuid of processEquipmentGuids; let equipmentIndex = index;">
+                            *ngFor="let energyEquipmentGuid of energyEquipmentGuids; let equipmentIndex = index;">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    [attr.data-bs-target]="'#'+processEquipmentGuid" aria-expanded="true"
-                                    [attr.aria-controls]="processEquipmentGuid"
+                                    [attr.data-bs-target]="'#'+energyEquipmentGuid" aria-expanded="true"
+                                    [attr.aria-controls]="energyEquipmentGuid"
                                     [ngClass]="{'collapsed': accordionIndex != equipmentIndex}"
                                     (click)="setAccordionIndex(equipmentIndex)">
-                                    <fa-icon class="pe-1" [icon]="faSplotch"></fa-icon>
-                                    {{processEquipmentGuid | processEquipmentDisplay: processEquipments}}
+                                    <fa-icon [icon]="energyEquipmentGuid | equipmentTypeIcon: energyEquipments"
+                                        class="pe-1"></fa-icon>
+                                    {{energyEquipmentGuid | energyEquipmentDisplay: energyEquipments}}
                                 </button>
                             </h2>
-                            <div [id]="processEquipmentGuid" class="accordion-collapse collapse"
+                            <div [id]="energyEquipmentGuid" class="accordion-collapse collapse"
                                 data-bs-parent="#equipmentAccordion"
                                 [ngClass]="{'show': accordionIndex == equipmentIndex}">
                                 <div class="accordion-body">
-                                    <app-process-equipment-form
-                                        [processEquipmentGuid]="processEquipmentGuid"></app-process-equipment-form>
+                                    <app-energy-equipment-form
+                                        [energyEquipmentGuid]="energyEquipmentGuid"></app-energy-equipment-form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </ng-template>
-                <ng-template #noProcessEquipmentBlock>
+                <ng-template #noEnergyEquipmentBlock>
                     <div class="alert alert-info text-center">
-                        No process equipment added. Click "Add Equipment" to add process equipment.
+                        No energy equipment added. Click "Add Equipment" to add energy equipment.
                     </div>
                 </ng-template>
             </div>
@@ -55,7 +57,7 @@
             Go Back
         </button>
         <button class="btn btn-dark btn-sm" (click)="goToNext()">
-            Pre-Assessment
+            Process Equipment
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FacilityProcessEquipmentSetupComponent } from './facility-process-equipment-setup.component';
+import { FacilityEnergyEquipmentSetupComponent } from './facility-energy-equipment-setup.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
@@ -13,12 +13,12 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
-import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
-import { IdbProcessEquipment } from 'src/app/models/processEquipment';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
-describe('FacilityProcessEquipmentSetupComponent', () => {
-  let component: FacilityProcessEquipmentSetupComponent;
-  let fixture: ComponentFixture<FacilityProcessEquipmentSetupComponent>;
+describe('FacilityEnergyEquipmentSetupComponent', () => {
+  let component: FacilityEnergyEquipmentSetupComponent;
+  let fixture: ComponentFixture<FacilityEnergyEquipmentSetupComponent>;
   let userIdbService: Partial<UserIdbService> = {
     user: new BehaviorSubject<IdbUser>(getNewIdbUser())
   }
@@ -36,26 +36,25 @@ describe('FacilityProcessEquipmentSetupComponent', () => {
   let contactIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
-  let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {
-    processEquipments: new BehaviorSubject<Array<IdbProcessEquipment>>([])
+  let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {
+    energyEquipments: new BehaviorSubject<Array<IdbEnergyEquipment>>([])
   }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule],
-      declarations: [FacilityProcessEquipmentSetupComponent],
+      declarations: [FacilityEnergyEquipmentSetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
-        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
-
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService }
       ]
     })
-      .compileComponents();
-
-    fixture = TestBed.createComponent(FacilityProcessEquipmentSetupComponent);
+    .compileComponents();
+    
+    fixture = TestBed.createComponent(FacilityEnergyEquipmentSetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
