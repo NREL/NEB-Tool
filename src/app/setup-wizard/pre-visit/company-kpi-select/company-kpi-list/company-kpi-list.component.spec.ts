@@ -18,6 +18,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { FormsModule } from '@angular/forms';
+import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 
 describe('CompanyKpiListComponent', () => {
   let component: CompanyKpiListComponent;
@@ -42,6 +43,7 @@ describe('CompanyKpiListComponent', () => {
   let energyOpportunitiesIdbService: Partial<EnergyOpportunityIdbService> = {};
   let assessmentIdbService: Partial<AssessmentIdbService> = {};
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
+  let dbChangesService: Partial<DbChangesService> = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -55,7 +57,8 @@ describe('CompanyKpiListComponent', () => {
         { provide: EnergyOpportunityIdbService, useValue: energyOpportunitiesIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
-        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService }
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
+        { provide: DbChangesService, useValue: dbChangesService}
       ]
     })
       .compileComponents();

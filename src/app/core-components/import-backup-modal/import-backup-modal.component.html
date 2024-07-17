@@ -1,0 +1,33 @@
+<div [ngClass]="{'window-overlay': showImportModal}"></div>
+<div class="popup" [ngClass]="{'open': showImportModal}">
+    <div class="popup-header">Import Backup File
+        <button type="button" class="btn-close float-end" aria-label="Close"
+        (click)="cancelImportBackup()"></button>
+    </div>
+    <div class="popup-body">
+        <p>Select backup .json file you previously exported from JUSTIFI application.</p>
+        <input type="file" #selectImportFile id="selectImportFile" (input)="setImportFile($event.target)" accept=".json">
+        <p class="alert alert-danger" *ngIf="importFileError">
+            {{importFileError}}
+        </p>
+
+        <div class="d-flex flex-column pt-3"
+            *ngIf="importFile !== undefined && importFileError === undefined && importForUser">
+            <div class="input-group">
+                <label class="w-50 ps-0 bold">
+                    Import User ID:
+                </label>
+                <div class="w-50">
+                    {{importName}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary me-2" (click)="cancelImportBackup()">Cancel</button>
+        <button class="btn btn-primary" (click)="importBackupFile()"
+            [disabled]="importFile == undefined || importFileError != undefined">Import</button>
+    </div>
+</div>

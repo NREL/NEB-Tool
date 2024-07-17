@@ -26,7 +26,6 @@ export class UserIdbService {
     this.user.next(_user)
   }
 
-
   getAll(): Observable<Array<IdbUser>> {
     return this.dbService.getAll('user');
   }
