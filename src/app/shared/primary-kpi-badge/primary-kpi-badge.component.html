@@ -1,3 +1,9 @@
-<span class="badge" [ngStyle]="{'background-color':kpiOption.primaryKPI | kpiCategoryClass}">
-    {{kpiOption.primaryKPI}}
-</span>
+<ng-template [ngIf]="kpiOption" [ngIfElse]="notFound">
+    <span class="badge" [ngStyle]="{'background-color':kpiOption.primaryKPI | kpiCategoryClass}">
+        {{kpiOption.primaryKPI}}
+    </span>
+</ng-template>
+
+<ng-template #notFound>
+    Not found...
+</ng-template>

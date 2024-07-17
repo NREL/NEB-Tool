@@ -25,6 +25,7 @@ export class PerformanceMetricImpactFormComponent {
 
   keyPerformanceMetric: KeyPerformanceMetric;
   disabledBaseline: boolean = true;
+  
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private router: Router,

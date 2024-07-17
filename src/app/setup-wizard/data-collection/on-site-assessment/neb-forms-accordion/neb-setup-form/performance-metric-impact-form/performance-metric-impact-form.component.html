@@ -8,7 +8,7 @@
                 </a>
             </label>
         </div>
-        <app-primary-kpi-badge [kpiValue]="keyPerformanceMetric.kpiValue"></app-primary-kpi-badge>
+        <app-primary-kpi-badge [kpiValue]="keyPerformanceMetric.kpiValue" [companyGuid]="nonEnergyBenefit.companyId"></app-primary-kpi-badge>
     </div>
     <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
 

@@ -31,7 +31,7 @@ export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, fac
         nebOptionValue = nebOption.optionValue;
         name = nebOption.label;
         performanceMetrics.forEach(metric => {
-            if (nebOption.KPM.indexOf(metric.value) != -1) {
+            if (metric.includeMetric && nebOption.KPM.indexOf(metric.value) != -1) {
                 performanceMetricImpacts.push({
                     kpmValue: metric.value,
                     modificationValue: undefined,
