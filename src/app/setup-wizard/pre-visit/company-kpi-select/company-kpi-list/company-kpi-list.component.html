@@ -8,7 +8,7 @@
     <div class="col-4">
         <button class="btn btn-secondary btn-sm w-100" (click)="openAddCustomModal()">
             <fa-icon [icon]="faPlus"></fa-icon>
-            Add Custom
+            Add Custom KPI
         </button>
     </div>
 </div>
@@ -26,7 +26,7 @@
                     </a>
                 </div>
                 <div>
-                    <app-primary-kpi-badge [kpiValue]="kpi.optionValue"></app-primary-kpi-badge>
+                    <app-primary-kpi-badge [kpiOption]="kpi"></app-primary-kpi-badge>
                 </div>
             </div>
             <div>

@@ -9,14 +9,13 @@
                             <span class="ps-1" [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
                         </div>
                         <div>
-                            <app-primary-kpi-badge
-                                [kpiValue]="keyPerformanceIndicator.optionValue"></app-primary-kpi-badge>
+                            <app-primary-kpi-badge [kpiOption]="keyPerformanceIndicator"></app-primary-kpi-badge>
                         </div>
                     </div>
                 </h5>
                 <hr>
                 <form>
-                    <div class="row mb-2" *ngIf="keyPerformanceIndicator.optionValue == 'other'">
+                    <div class="row mb-2" *ngIf="keyPerformanceIndicator.isCustom">
                         <div class="col-6 bold">
                             <div class="input-group">
                                 <div class="input-group-text">
@@ -39,16 +38,30 @@
                     <div class="d-flex flex-column ps-2 pe-2"
                         *ngFor="let keyPerformanceMetric of keyPerformanceIndicator.performanceMetrics">
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox"
-                                [(ngModel)]="keyPerformanceMetric.includeMetric"
-                                id="{{'includeMetric_'+keyPerformanceMetric.value}}"
-                                name="{{'includeMetric_'+keyPerformanceMetric.value}}" (change)="saveChanges()">
+                        <ng-template [ngIf]="!keyPerformanceMetric.isCustom" [ngIfElse]="customMetricNameBlock">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    [(ngModel)]="keyPerformanceMetric.includeMetric"
+                                    id="{{'includeMetric_'+keyPerformanceMetric.value}}"
+                                    name="{{'includeMetric_'+keyPerformanceMetric.value}}" (change)="saveChanges()">
 
-                            <label class="form-check-label" for="{{'includeMetric_'+keyPerformanceMetric.value}}">
-                                <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
-                                <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span></label>
-                        </div>
+                                <label class="form-check-label" for="{{'includeMetric_'+keyPerformanceMetric.value}}">
+                                    <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
+                                    <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span></label>
+                            </div>
+                        </ng-template>
+                        <ng-template #customMetricNameBlock>
+                            <div class="d-flex w-50">
+                                <div class="input-group">
+                                    <div class="input-group-text">
+                                        <fa-icon [icon]="faScaleUnbalancedFlip"></fa-icon>
+                                    </div>
+                                    <input name="{{'kpmName_'+keyPerformanceMetric.label}}" type="text"
+                                        class="form-control" [(ngModel)]="keyPerformanceMetric.label"
+                                        id="{{'kpmName_'+keyPerformanceMetric.label}}" (input)="saveChanges()">
+                                </div>
+                            </div>
+                        </ng-template>
                         <ng-container *ngIf="keyPerformanceMetric.includeMetric">
                             <ng-template [ngIf]="keyPerformanceMetric.isQuantitative"
                                 [ngIfElse]="qualitativeMetricBlock">

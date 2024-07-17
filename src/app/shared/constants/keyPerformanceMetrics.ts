@@ -9,8 +9,8 @@ export function getPerformanceMetrics(keyPerformanceIndicatorValue: KeyPerforman
         return [
             {
 
-                label: 'Custom',
-                htmlLabel: 'Custom',
+                label: 'Custom KPM',
+                htmlLabel: 'Custom KPM',
                 value: 'custom',
                 kpiValue: keyPerformanceIndicatorValue,
                 isQuantitative: true,

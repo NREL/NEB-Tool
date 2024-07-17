@@ -147,7 +147,7 @@ export class NebSetupFormComponent {
       let kpiOption: KeyPerformanceIndicatorOption = KeyPerformanceIndicatorOptions.find(option => {
         return option.optionValue == this.performanceMetricToAdd.kpiValue
       });
-      keyPerformanceIndicator = getNewKeyPerformanceIndicator(this.nonEnergyBenefit.userId, this.nonEnergyBenefit.companyId, kpiOption);
+      keyPerformanceIndicator = getNewKeyPerformanceIndicator(this.nonEnergyBenefit.userId, this.nonEnergyBenefit.companyId, kpiOption, false);
       keyPerformanceIndicator.performanceMetrics.forEach(_metric => {
         if (_metric.value == this.performanceMetricToAdd.value) {
           _metric.includeMetric = true

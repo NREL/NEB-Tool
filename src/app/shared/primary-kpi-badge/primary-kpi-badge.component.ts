@@ -7,14 +7,16 @@ import { KeyPerformanceIndicatorOption, KeyPerformanceIndicatorOptions, KeyPerfo
   styleUrl: './primary-kpi-badge.component.css'
 })
 export class PrimaryKpiBadgeComponent {
-  @Input({required: true})
+  @Input()
   kpiValue: KeyPerformanceIndicatorValue;
+  @Input()
+  kpiOption: KeyPerformanceIndicatorOption;
 
-  kpi: KeyPerformanceIndicatorOption;
-
-  ngOnInit(){
-    this.kpi = KeyPerformanceIndicatorOptions.find(option => {
-      return option.optionValue == this.kpiValue;
-    });
+  ngOnInit() {
+    if (!this.kpiOption) {
+      this.kpiOption = KeyPerformanceIndicatorOptions.find(option => {
+        return option.optionValue == this.kpiValue;
+      });
+    }
   }
 }

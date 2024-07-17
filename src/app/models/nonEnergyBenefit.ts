@@ -12,7 +12,8 @@ export interface IdbNonEnergyBenefit extends IdbEntry {
     notes: string,
     energyOpportunityId: string,
     nebOptionValue: NebOptionValue,
-    performanceMetricImpacts: Array<PerformanceMetricImpact>
+    performanceMetricImpacts: Array<PerformanceMetricImpact>,
+    isCustom: boolean
 }
 
 export interface PerformanceMetricImpact {
@@ -22,7 +23,7 @@ export interface PerformanceMetricImpact {
     percentSavings?: number
 }
 
-export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, facilityId: string, assessmentId: string, energyOpportunityId: string, nebOption: NebOption, performanceMetrics: Array<KeyPerformanceMetric>): IdbNonEnergyBenefit {
+export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, facilityId: string, assessmentId: string, energyOpportunityId: string, nebOption: NebOption, performanceMetrics: Array<KeyPerformanceMetric>, isCustom: boolean): IdbNonEnergyBenefit {
     let nebOptionValue: NebOptionValue;
     let name: string = 'New NEB';
     let performanceMetricImpacts: Array<PerformanceMetricImpact> = new Array();
@@ -51,6 +52,7 @@ export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, fac
         energyOpportunityId: energyOpportunityId,
         includeNote: false,
         nebOptionValue: nebOptionValue,
-        performanceMetricImpacts: performanceMetricImpacts
+        performanceMetricImpacts: performanceMetricImpacts,
+        isCustom: isCustom
     }
 }
