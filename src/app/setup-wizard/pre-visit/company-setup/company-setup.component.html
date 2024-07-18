@@ -3,7 +3,7 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="name.touched && name.invalid"></fa-icon>
+                    <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="name?.touched && name.invalid"></fa-icon>
                     <fa-icon [icon]="faBuilding" class="me-2"></fa-icon>Company Details
                 </h5>
                 <hr>

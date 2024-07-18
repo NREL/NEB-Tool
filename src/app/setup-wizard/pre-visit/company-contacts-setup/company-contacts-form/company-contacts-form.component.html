@@ -19,7 +19,7 @@
                         <label class="col-sm-5 col-form-label" for="firstname">First Name <span class="required-asterisk">*</span></label>
                         <div class="col-sm-7">
                             <input name="firstname" type="text" class="form-control" formControlName="firstname" id="firstname"
-                                (blur)="saveChanges()">
+                                (input)="saveChanges()">
                             <div class="alert alert-danger form-error" *ngIf="contactForm.controls['firstname'].touched && contactForm.controls['firstname'].getError('required')">
                                 First Name Required
                             </div>    
@@ -27,7 +27,7 @@
                         <label class="col-sm-5 col-form-label" for="lastname">Last Name <span class="required-asterisk">*</span></label>
                         <div class="col-sm-7">
                             <input name="lastname" type="text" class="form-control" formControlName="lastname" id="lastname"
-                                (blur)="saveChanges()">
+                                (input)="saveChanges()">
                             <div class="alert alert-danger form-error" *ngIf="contactForm.controls['lastname'].touched && contactForm.controls['lastname'].getError('required')">
                                 Last Name Required
                             </div>    
@@ -38,12 +38,12 @@
                         <div class="col-sm-7 d-flex">
                             <input type="text" class="form-control"
                                 formControlName="phone"
-                                (blur)="saveChanges()"
+                                (input)="saveChanges()"
                                 id="phone" name="phone">
                             <label class="mx-2 col-form-label" for="ext">ext.</label>
                             <input type="text" class="form-control" style="width: 100px;"
                                 formControlName="ext"
-                                (blur)="saveChanges()"
+                                (input)="saveChanges()"
                                 id="ext" name="ext">
                         </div>
                         <div class="col-sm-7 offset-sm-5">
@@ -58,7 +58,7 @@
                         <div class="col-sm-7">
                             <input type="email" class="form-control"
                                 formControlName="email"
-                                (blur)="saveChanges()"
+                                (input)="saveChanges()"
                                 id="email" name="email">
                             <div *ngIf="contactForm.controls['email'].errors && (contactForm.controls['email'].touched || contactForm.controls['email'].dirty)">
                                 <div class="alert alert-warning form-error" *ngIf="contactForm.controls['email'].errors['email']">Invalid Email</div>
@@ -71,7 +71,7 @@
                         <div class="col-sm-7">
                             <input type="text" class="form-control"
                                 formControlName="role"
-                                (blur)="saveChanges()"
+                                (input)="saveChanges()"
                                 id="role" name="role">
                             <div class="alert alert-warning form-error" *ngIf="contactForm.controls['role'].errors">
                                 Invalid role
@@ -83,7 +83,7 @@
                         <div class="col-sm-7">
                             <input type="text" class="form-control"
                                 formControlName="team"
-                                (blur)="saveChanges()"
+                                (input)="saveChanges()"
                                 id="team" name="team">
                             <div class="alert alert-warning form-error" *ngIf="contactForm.controls['team'].errors">
                                 Invalid team
@@ -97,7 +97,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control"
                                     formControlName="focusArea"
-                                    (blur)="saveChanges()" minlength="1"
+                                    (input)="saveChanges()" minlength="1"
                                     id="focusArea" name="focusArea">
                                 <div class="alert alert-warning form-error" *ngIf="contactForm.controls['focusArea'].errors">
                                     Invalid focus area
@@ -110,7 +110,7 @@
                         <div class="col-sm-7">
                             <textarea class="form-control" name="notes"
                                 formControlName="notes"
-                                (blur)="saveChanges()"></textarea>
+                                (input)="saveChanges()"></textarea>
                             <div class="alert alert-warning form-error" *ngIf="contactForm.controls['notes'].errors">
                                 Invalid notes
                             </div>

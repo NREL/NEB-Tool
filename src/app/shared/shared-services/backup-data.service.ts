@@ -89,7 +89,6 @@ export class BackupDataService {
 
   async importUserBackupFile(backupFile: BackupFile): Promise<IdbUser> {
     // Overwirte existing user with new GUIDs for all dbEntries
-
     // this.analyticsService.sendEvent('import_backup_file');
     this.loadingService.setLoadingMessage('Adding Account...');
     let userGUIDs: { oldId: string, newId: string } = {
