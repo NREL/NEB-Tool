@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { GeneralInformation } from 'src/app/models/generalInformation';
@@ -70,64 +70,90 @@ export class SharedSettingsFormsService {
     let form: FormGroup = this.formBuilder.group({
       includeElectricity: [unitSettings.includeElectricity],
       electricityUnit: [unitSettings.electricityUnit],
-      electricityPrice: [unitSettings.electricityPrice, [Validators.required, Validators.min(0)]],
+      electricityPrice: [unitSettings.electricityPrice, [Validators.min(0)]],
 
       includeNaturalGas: [unitSettings.includeNaturalGas],
       naturalGasUnit: [unitSettings.naturalGasUnit],
-      naturalGasPrice: [unitSettings.naturalGasPrice, [Validators.required, Validators.min(0)]],
+      naturalGasPrice: [unitSettings.naturalGasPrice, [Validators.min(0)]],
 
       includeSteam: [unitSettings.includeSteam],
       steamUnit: [unitSettings.steamUnit],
-      steamPrice: [unitSettings.steamPrice, [Validators.required, Validators.min(0)]],
+      steamPrice: [unitSettings.steamPrice, [Validators.min(0)]],
 
       includeOtherFuel: [unitSettings.includeOtherFuel],
       otherFuelUnit: [unitSettings.otherFuelUnit],
-      otherFuelPrice: [unitSettings.otherFuelPrice, [Validators.required, Validators.min(0)]],
+      otherFuelPrice: [unitSettings.otherFuelPrice, [Validators.min(0)]],
 
       includeCompressedAir: [unitSettings.includeCompressedAir],
       compressedAirUnit: [unitSettings.compressedAirUnit],
-      compressedAirPrice: [unitSettings.compressedAirPrice, [Validators.required, Validators.min(0)]],
+      compressedAirPrice: [unitSettings.compressedAirPrice, [Validators.min(0)]],
 
       includeWater: [unitSettings.includeWater],
       waterUnit: [unitSettings.waterUnit],
-      waterPrice: [unitSettings.waterPrice, [Validators.required, Validators.min(0)]],
+      waterPrice: [unitSettings.waterPrice, [Validators.min(0)]],
 
       includeWasteWater: [unitSettings.includeWasteWater],
       wasteWaterUnit: [unitSettings.wasteWaterUnit],
-      wasteWaterPrice: [unitSettings.wasteWaterPrice, [Validators.required, Validators.min(0)]],
+      wasteWaterPrice: [unitSettings.wasteWaterPrice, [Validators.min(0)]],
     });
+
+    // Update required validators for included items
+    this.setRequiredValidator(form.controls['electricityPrice'], unitSettings.includeElectricity);
+    this.setRequiredValidator(form.controls['naturalGasPrice'], unitSettings.includeNaturalGas);
+    this.setRequiredValidator(form.controls['steamPrice'], unitSettings.includeSteam);
+    this.setRequiredValidator(form.controls['otherFuelPrice'], unitSettings.includeOtherFuel);
+    this.setRequiredValidator(form.controls['compressedAirPrice'], unitSettings.includeCompressedAir);
+    this.setRequiredValidator(form.controls['waterPrice'], unitSettings.includeWater);
+    this.setRequiredValidator(form.controls['wasteWaterPrice'], unitSettings.includeWasteWater);
+
     return form;
   }
 
   updateUnitSettingsFromForm(form: FormGroup,unitSettings: UnitSettings): UnitSettings {
     unitSettings.includeElectricity = form.controls['includeElectricity'].value;
+    this.setRequiredValidator(form.controls['electricityPrice'], unitSettings.includeElectricity);
     unitSettings.electricityUnit = form.controls['electricityUnit'].value;
     unitSettings.electricityPrice = form.controls['electricityPrice'].value;
 
     unitSettings.includeNaturalGas = form.controls['includeNaturalGas'].value;
+    this.setRequiredValidator(form.controls['naturalGasPrice'], unitSettings.includeNaturalGas);
     unitSettings.naturalGasUnit = form.controls['naturalGasUnit'].value;
     unitSettings.naturalGasPrice = form.controls['naturalGasPrice'].value;
 
     unitSettings.includeSteam = form.controls['includeSteam'].value;
+    this.setRequiredValidator(form.controls['steamPrice'], unitSettings.includeSteam);
     unitSettings.steamUnit = form.controls['steamUnit'].value;
     unitSettings.steamPrice = form.controls['steamPrice'].value;
 
     unitSettings.includeOtherFuel = form.controls['includeOtherFuel'].value;
+    this.setRequiredValidator(form.controls['otherFuelPrice'], unitSettings.includeOtherFuel);
     unitSettings.otherFuelUnit = form.controls['otherFuelUnit'].value;
     unitSettings.otherFuelPrice = form.controls['otherFuelPrice'].value;
 
     unitSettings.includeCompressedAir = form.controls['includeCompressedAir'].value;
+    this.setRequiredValidator(form.controls['compressedAirPrice'], unitSettings.includeCompressedAir);
     unitSettings.compressedAirUnit = form.controls['compressedAirUnit'].value;
     unitSettings.compressedAirPrice = form.controls['compressedAirPrice'].value;
 
     unitSettings.includeWater = form.controls['includeWater'].value;
+    this.setRequiredValidator(form.controls['waterPrice'], unitSettings.includeWater);
     unitSettings.waterUnit = form.controls['waterUnit'].value;
     unitSettings.waterPrice = form.controls['waterPrice'].value;
 
     unitSettings.includeWasteWater = form.controls['includeWasteWater'].value;
+    this.setRequiredValidator(form.controls['wasteWaterPrice'], unitSettings.includeWasteWater);
     unitSettings.wasteWaterUnit = form.controls['wasteWaterUnit'].value;
     unitSettings.wasteWaterPrice = form.controls['wasteWaterPrice'].value;
     return unitSettings;
+  }
+
+  setRequiredValidator(control: AbstractControl, isRequired: boolean) {
+    if (isRequired) {
+      control.addValidators(Validators.required);
+    } else {
+      control.removeValidators(Validators.required);
+    }
+    control.updateValueAndValidity;
   }
 
   /**
