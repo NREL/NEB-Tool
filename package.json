@@ -21,7 +21,7 @@
   },
   "private": true,
   "build": {
-    "appId": "gov.nrel.neb-tool",
+    "appId": "gov.nrel.justifi",
     "copyright": "Copyright 2023 NREL. All rights reserved.",
     "productName": "JUSTIFI",
     "directories": {
