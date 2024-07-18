@@ -1,6 +1,9 @@
 <div class="d-flex w-100 justify-content-end pb-2">
+    <button class="me-2 btn btn-secondary btn-sm add-neb-btn" (click)="addNEB()">
+        <fa-icon [icon]="faPlus"></fa-icon> Add NEB
+    </button>
     <button class="btn btn-dark btn-sm add-neb-btn me-2" (click)="showSuggestedNEBs()">
-        <fa-icon [icon]="faSearchPlus"></fa-icon> Find NEBs
+        <fa-icon [icon]="faSearchPlus"></fa-icon> Search NEBs
     </button>
     <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
         <fa-icon [icon]="faTrash"></fa-icon> Delete

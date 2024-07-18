@@ -10,6 +10,18 @@ import { KeyPerformanceIndicatorReport, getKeyPerfomanceIndicatorReport } from "
 ///ASSESSMENT REPORT
 export function getAssessmentReport(assessment: IdbAssessment, energyOpportunities: Array<IdbEnergyOpportunity>, nonEnergyBenefits: Array<IdbNonEnergyBenefit>, companyPerformanceMetrics: Array<KeyPerformanceMetric>): AssessmentReport {
 
+    if(!assessment.energySavings){
+        assessment.energySavings = 0;
+    }
+
+    if(!assessment.costSavings){
+        assessment.costSavings = 0;
+    }
+
+    if(!assessment.implementationCost){
+        assessment.implementationCost = 0;
+    }
+
     let energyOpportunityReports: Array<EnergyOpportunityReport> = new Array();
     let assessmentEnergyOpportunities: Array<IdbEnergyOpportunity> = energyOpportunities.filter(energyOpportunity => {
         return energyOpportunity.assessmentId == assessment.guid;
@@ -33,7 +45,6 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
     });
 
     let allNebReports: Array<NebReport> = _.concat(energyOpportunityNebReports, assessmentNebReports);
-
 
     let totalNonOpportunitySavings: number = _.sumBy(assessmentNebReports, (report: NebReport) => {
         return report.totalCostSavings

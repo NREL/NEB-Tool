@@ -41,7 +41,7 @@ describe('PerformanceMetricImpactFormComponent', () => {
       modificationValue: undefined,
       costAdjustment: undefined
     };
-    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', '', undefined, []);
+    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', '', undefined, [], false);
     fixture.detectChanges();
   });
 

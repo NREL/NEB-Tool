@@ -46,7 +46,6 @@ export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): K
         return 0
     });
     let modifiedCost: number = baselineCost - annualSavings;
-    console.log(annualSavings);
     let percentSavings: number = (annualSavings / baselineCost) * 100
     return {
         kpiReportItems: kpiReportItems,
