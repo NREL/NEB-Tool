@@ -13,6 +13,7 @@ import { ContactContext, IdbContact } from 'src/app/models/contact';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { getNewIdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
+import { NebOptionsModalListPipe } from './neb-options-modal-list.pipe';
 
 describe('AddNebsModalComponent', () => {
   let component: AddNebsModalComponent;
@@ -39,7 +40,9 @@ describe('AddNebsModalComponent', () => {
     keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([]),
     getCompanyKeyPerformanceMetrics: () => { return [] }
   };
-  let nonEnergyBenefitIdbService: Partial<NonEnergyBenefitsIdbService> = {};
+  let nonEnergyBenefitIdbService: Partial<NonEnergyBenefitsIdbService> = {
+    getAssessmentNonEnergyBenefits: () => { return [] }
+  };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '')),
     getByGuid: () => { return getNewIdbAssessment('', '', '') }
@@ -53,7 +56,7 @@ describe('AddNebsModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule],
-      declarations: [AddNebsModalComponent],
+      declarations: [AddNebsModalComponent, NebOptionsModalListPipe],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService },

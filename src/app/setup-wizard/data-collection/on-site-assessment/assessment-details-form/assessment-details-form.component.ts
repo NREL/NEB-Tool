@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { IdbAssessment } from 'src/app/models/assessment';
-import { IdbFacility } from 'src/app/models/facility';
 import { Subscription } from 'rxjs';
-import { ProcessEquipment } from 'src/app/shared/constants/processEquipment';
-import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { IconDefinition, faContactBook, faPeopleGroup, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 
 @Component({
   selector: 'app-assessment-details-form',
@@ -23,21 +22,21 @@ export class AssessmentDetailsFormComponent {
 
   assessment: IdbAssessment;
   assessmentSub: Subscription;
-  processEquipmentOptions: Array<ProcessEquipment>;
   isFormChange: boolean = false;
 
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
-  constructor(private facilityIdbService: FacilityIdbService,
+
+  energyEquipmentOptions: Array<IdbEnergyEquipment>;
+  energyEquipmentSub: Subscription;
+  constructor(
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
-    private setupWizardService: SetupWizardService
+    private setupWizardService: SetupWizardService,
+    private energyEquipmentIdbService: EnergyEquipmentIdbService
   ) { }
 
   ngOnInit() {
-    let facility: IdbFacility = this.facilityIdbService.selectedFacility.getValue();
-    this.processEquipmentOptions = facility.processEquipment;
-
     this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(_assessment => {
       if (!this.isFormChange) {
         this.assessment = _assessment;
@@ -49,11 +48,16 @@ export class AssessmentDetailsFormComponent {
     this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
       this.contacts = _contacts;
     });
+
+    this.energyEquipmentSub = this.energyEquipmentIdbService.energyEquipments.subscribe(_energyEquipment => {
+      this.energyEquipmentOptions = _energyEquipment;
+    })
   }
 
   ngOnDestroy() {
     this.contactsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
+    this.energyEquipmentSub.unsubscribe();
   }
 
   async saveChanges() {

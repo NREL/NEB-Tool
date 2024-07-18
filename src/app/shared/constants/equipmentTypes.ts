@@ -7,5 +7,5 @@
 // };
 
 
-export type EquipmentType = "Pump" | "Fan" | "Process Heating" | "Compressed Air" | "Steam";
-export const EquipmentTypeOptions: Array<EquipmentType> = ["Pump", "Fan", "Process Heating", "Compressed Air", "Steam"];
+export type EquipmentType = "Pump" | "Fan" | "Process Heating" | "Compressed Air" | "Steam" | "Process Cooling" | "Motor" | "Lighting" | "HVAC" | "Mobile";
+export const EquipmentTypeOptions: Array<EquipmentType> = ["Pump", "Fan", "Process Heating", "Compressed Air", "Steam", "Process Cooling", "Motor", "Lighting", "HVAC", "Mobile"];

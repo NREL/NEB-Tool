@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FacilityProcessEquipmentSetupComponent } from './facility-process-equipment-setup.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SetupWizardService } from '../../setup-wizard.service';
 import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { BehaviorSubject } from 'rxjs';
@@ -14,6 +13,8 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 
 describe('FacilityProcessEquipmentSetupComponent', () => {
   let component: FacilityProcessEquipmentSetupComponent;
@@ -21,8 +22,6 @@ describe('FacilityProcessEquipmentSetupComponent', () => {
   let userIdbService: Partial<UserIdbService> = {
     user: new BehaviorSubject<IdbUser>(getNewIdbUser())
   }
-  let setupWizardService: Partial<SetupWizardService> = {
-  };
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
     selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
@@ -37,22 +36,25 @@ describe('FacilityProcessEquipmentSetupComponent', () => {
   let contactIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
+  let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {
+    processEquipments: new BehaviorSubject<Array<IdbProcessEquipment>>([])
+  }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule],
       declarations: [FacilityProcessEquipmentSetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },
-        { provide: SetupWizardService, useValue: setupWizardService },
-        { provide: CompanyIdbService, useValue: companyIdbService },   
+        { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
-        { provide: ContactIdbService, useValue: contactIdbService }
-      
+        { provide: ContactIdbService, useValue: contactIdbService },
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
+
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(FacilityProcessEquipmentSetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -4,6 +4,7 @@ import { ExploreNEBsComponent } from './explore-nebs.component';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
+import { PrimaryKpiBadgeModule } from 'src/app/shared/primary-kpi-badge/primary-kpi-badge.module';
 
 describe('ExploreNEBsComponent', () => {
   let component: ExploreNEBsComponent;
@@ -11,7 +12,7 @@ describe('ExploreNEBsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HelperPipesModule, FontAwesomeModule, FormsModule],
+      imports: [HelperPipesModule, FontAwesomeModule, FormsModule, PrimaryKpiBadgeModule],
       declarations: [ExploreNEBsComponent]
     })
     .compileComponents();

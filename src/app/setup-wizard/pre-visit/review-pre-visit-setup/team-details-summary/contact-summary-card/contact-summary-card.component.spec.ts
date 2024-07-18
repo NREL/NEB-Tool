@@ -10,6 +10,8 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
+import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 
 describe('ContactSummaryCardComponent', () => {
   let component: ContactSummaryCardComponent;
@@ -22,13 +24,17 @@ describe('ContactSummaryCardComponent', () => {
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
+  let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {
+    processEquipments: new BehaviorSubject<Array<IdbProcessEquipment>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, HelperPipesModule, TableEntriesModule],
       declarations: [ContactSummaryCardComponent],
       providers: [
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
-        { provide: FacilityIdbService, useValue: facilityIdbService }
+        { provide: FacilityIdbService, useValue: facilityIdbService },
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
       ]
     })
       .compileComponents();
