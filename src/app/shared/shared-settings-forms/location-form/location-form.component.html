@@ -17,7 +17,7 @@
         <div class="col-6">
             <label for="state">State/Province</label>
             <ng-container *ngIf="(inCompany && company?.generalInformation.country === 'US') || 
-                (!inCompany && company?.generalInformation.country === 'US'); else province">
+                (!inCompany && facility?.generalInformation.country === 'US'); else province">
                 <select class="form-select" formControlName="state" (change)="saveChanges()" id="state" name="state">
                     <option *ngFor="let state of states" [ngValue]="state.name">{{state.name}}</option>
                 </select>
