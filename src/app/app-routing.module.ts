@@ -88,7 +88,8 @@ const routes: Routes = [
           },
           {
             path: 'facility-setup',
-            component: FacilitySetupComponent
+            component: FacilitySetupComponent,
+            canDeactivate: [CanDeactivateGuard]
           },
           {
             path: 'energy-equipment',

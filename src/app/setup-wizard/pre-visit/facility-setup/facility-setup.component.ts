@@ -6,6 +6,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { FormControl, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-facility-setup',
@@ -26,6 +27,8 @@ export class FacilitySetupComponent implements OnInit {
   faIndustry: IconDefinition = faIndustry;
 
   facility: IdbFacility;
+  routeGuardWarningModal: boolean = false;
+
   constructor(private facilityIdbService: FacilityIdbService, private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService
   ) {
@@ -56,5 +59,21 @@ export class FacilitySetupComponent implements OnInit {
   goToProcessEquipment() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/process-equipment');
+  }
+
+  canDeactivate(): Observable<boolean> {
+    if (this.name && this.name.getError('required')) {
+      this.name.markAsTouched();
+      this.dislayWarningModal();
+      return of(false);
+    }
+    return of(true);
+  }
+
+  dislayWarningModal() {
+    this.routeGuardWarningModal = true;
+  }
+  closeWarningModal() {
+    this.routeGuardWarningModal = false;
   }
 }
