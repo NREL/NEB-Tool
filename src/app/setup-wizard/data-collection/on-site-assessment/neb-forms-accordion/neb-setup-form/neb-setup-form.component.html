@@ -62,9 +62,9 @@
     <div class="row mb-1">
         <div class="col-sm-12 col-form-label">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
-                    [(ngModel)]="nonEnergyBenefit.includeNote" name="includeNote" (input)="saveChanges()">
-                <label class="form-check-label" for="includeNote">Non-Energy Benefit Notes</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="{{'includeNEBNote'+nonEnergyBenefit.guid}}"
+                    [(ngModel)]="nonEnergyBenefit.includeNote" name="{{'includeNEBNote'+nonEnergyBenefit.guid}}" (input)="saveChanges()">
+                <label class="form-check-label" for="{{'includeNEBNote'+nonEnergyBenefit.guid}}">Non-Energy Benefit Notes</label>
             </div>
         </div>
         <div class="col-sm-12" *ngIf="nonEnergyBenefit.includeNote">
