@@ -1,5 +1,6 @@
 .report .table td, .report .table th{
     padding: .25rem;
+    font-size: 14px;
 }
 
 .report .savings-table .text-right{

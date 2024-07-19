@@ -348,7 +348,8 @@ export class DbChangesService {
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
     await this.onSiteVisitIdbService.setOnSiteVisits();
-
+    await this.energyEquipmentIdbService.setEnergyEquipments();
+    await this.processEquipmentIdbService.setProcessEquipments();
     this.userIdbService.user.next(user);
   }
 

@@ -26,7 +26,7 @@ export class EnergyOpportunitySetupFormComponent {
   faSearchPlus: IconDefinition = faSearchPlus;
   faPlus: IconDefinition = faPlus;
 
-  opportunityTypes: Array<EnergyOpportunityType> = FanOpportunities;
+  opportunityTypes: Array<EnergyOpportunityType> = [{value: 'other', label: 'Other'}];
   displayDeleteModal: boolean = false;
   constructor(
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
