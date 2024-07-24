@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdbFacility } from 'src/app/models/facility';
-import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen, faGear, faIndustry, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faContactCard, faFilePen, faGear, faIndustry, faLocationDot, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { FormControl, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { Icon } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-facility-setup',
@@ -24,8 +26,11 @@ export class FacilitySetupComponent implements OnInit {
   faContactCard: IconDefinition = faContactCard;
   faLocationDot: IconDefinition = faLocationDot;
   faIndustry: IconDefinition = faIndustry;
+  faCircleExclamation: IconDefinition = faCircleExclamation;
 
   facility: IdbFacility;
+  routeGuardWarningModal: boolean = false;
+
   constructor(private facilityIdbService: FacilityIdbService, private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService
   ) {
@@ -56,5 +61,21 @@ export class FacilitySetupComponent implements OnInit {
   goToProcessEquipment() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/process-equipment');
+  }
+
+  canDeactivate(): Observable<boolean> {
+    if (this.name && this.name.getError('required')) {
+      this.name.markAsTouched();
+      this.dislayWarningModal();
+      return of(false);
+    }
+    return of(true);
+  }
+
+  dislayWarningModal() {
+    this.routeGuardWarningModal = true;
+  }
+  closeWarningModal() {
+    this.routeGuardWarningModal = false;
   }
 }
