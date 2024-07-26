@@ -23,6 +23,24 @@
             </div>
         </div>
 
+        <div class="d-flex flex-column pt-3"
+            *ngIf="importFile !== undefined && importFileError === undefined && importForUser">
+            <div class="input-group">
+                <label class="w-50 ps-0 bold">
+                    Overwrite Current User Data?
+                </label>
+                <select class="form-select w-50" [(ngModel)]="overwriteData" name="overwriteData">
+                    <option [ngValue]="true">Overwrite current user</option>
+                    <option [ngValue]="false">Add to current user</option>
+                </select>
+            </div>
+            <p class="alert alert-warning mt-3" *ngIf="overwriteData">
+                Current user data will be overwritten. This cannot be undone.
+            </p>
+        </div>
+
+        
+
     </div>
     <hr>
     <div class="popup-footer d-flex justify-content-end">
