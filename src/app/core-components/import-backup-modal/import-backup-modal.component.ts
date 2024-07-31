@@ -106,9 +106,9 @@ export class ImportBackupModalComponent implements OnInit, OnDestroy {
       let tmpBackupFile: BackupFile = JSON.parse(this.importFile);
       if (this.importForUser) {
         if (this.overwriteData) {
-          await this.importExistingAccount(tmpBackupFile);
+          await this.overwriteCurrentUser(tmpBackupFile);
         } else {
-          await this.importNewAccount(tmpBackupFile);
+          await this.addToCurrentUser(tmpBackupFile);
         }
       }
       this.loadingService.setLoadingStatus(false);
@@ -121,16 +121,18 @@ export class ImportBackupModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  async importNewAccount(importFile: BackupFile) {
-    let newUser: IdbUser = await this.backupDataService.importUserBackupFile(importFile);
-    await this.dbChangesService.selectUser(newUser, false);
+  async addToCurrentUser(importFile: BackupFile) {
+    // Add backup data to current user
+    await this.backupDataService.importUserBackupFile(importFile, this.currentUser.guid);
+    await this.dbChangesService.selectUser(this.currentUser, false);
   }
 
-  async importExistingAccount(importFile: BackupFile) {
-    // Overwrite current user with backup file content
-    // Delete current user and related data
-    await this.dbChangesService.deleteCurrentUser(this.currentUser);
-    await this.importNewAccount(importFile);
+  async overwriteCurrentUser(importFile: BackupFile) {
+    // Delete data for current user
+    this.loadingService.setLoadingMessage('Deleting Current User Data...');
+    await this.dbChangesService.deleteCurrentUserData(this.currentUser);
+    // Add backup data to current user
+    await this.addToCurrentUser(importFile);
   }
 
 }
