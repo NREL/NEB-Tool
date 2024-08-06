@@ -327,14 +327,13 @@ export class DbChangesService {
   }
 
   // TODO: Multiple users, to set a new when the current is deleted
-  async deleteCurrentUser(user: IdbUser) {
+  // Wipe off the data under current user
+  async deleteCurrentUserData(user: IdbUser) {
     let companies: Array<IdbCompany> = await firstValueFrom(this.companyIdbService.getAll());
     let userCompanies: Array<IdbCompany> = companies.filter(company => {return company.userId === user.guid});
     for (let i = 0; i < userCompanies.length; i++) {
       await this.deleteCompany(userCompanies[i]);
     }
-    await this.userIdbService.deleteUserWithObservable(user.id);
-    // await this.userIdbService.setUser();
   }
 
   async selectUser(user: IdbUser, skipUpdates: boolean) {
