@@ -104,7 +104,7 @@
             *ngFor="let contact of assessment.guid | associatedContacts:'assessment': contacts;"
             (click)="openContactModal(contact)">
             <fa-icon [icon]="faUser"></fa-icon>
-            {{contact.name}}
+            {{contact.firstName}} {{contact.lastName}}
         </button>
         <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
             <fa-icon [icon]="faContactBook"></fa-icon>
