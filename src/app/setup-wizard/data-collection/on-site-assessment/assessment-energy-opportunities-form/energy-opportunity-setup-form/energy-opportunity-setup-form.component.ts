@@ -1,10 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { IconDefinition, faFileLines, faSearchPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faPlus, faSearchPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { EnergyOpportunityType, FanOpportunities } from 'src/app/shared/constants/energyOpportunityOptions';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
+import { getNewIdbNonEnergyBenefit, IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-energy-opportunity-setup-form',
@@ -21,13 +24,15 @@ export class EnergyOpportunitySetupFormComponent {
   faFileLines: IconDefinition = faFileLines;
   faTrash: IconDefinition = faTrash;
   faSearchPlus: IconDefinition = faSearchPlus;
+  faPlus: IconDefinition = faPlus;
 
-  opportunityTypes: Array<EnergyOpportunityType> = FanOpportunities;
+  opportunityTypes: Array<EnergyOpportunityType> = [{value: 'other', label: 'Other'}];
   displayDeleteModal: boolean = false;
   constructor(
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private dbChangesService: DbChangesService,
-    private setupWizardService: SetupWizardService
+    private setupWizardService: SetupWizardService,
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService
   ) {
   }
 
@@ -61,4 +66,13 @@ export class EnergyOpportunitySetupFormComponent {
       energyOpportunityId: this.energyOpportunity.guid
     });
   }
+
+  async addNEB() {
+    let newNonEnergyBenefit: IdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.assessmentId, this.energyOpportunity.guid, undefined, [], true);
+    await firstValueFrom(this.nonEnergyBenefitsIdbService.addWithObservable(newNonEnergyBenefit));
+    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+  }
+
+
+  
 }

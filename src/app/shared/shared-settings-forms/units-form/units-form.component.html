@@ -37,8 +37,11 @@
                             [innerHTML]="form.controls['electricityUnit'].value | unitsDisplay"></span>
                     </span>
                 </div>
-                <div class="alert alert-warning form-error" *ngIf="form.controls['electricityPrice'].touched && form.controls['electricityPrice'].getError('min')">
+                <div class="alert alert-warning form-error" *ngIf="form.controls['electricityPrice'].getError('min')">
                     Value can not be negative.
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['electricityPrice'].getError('required')">
+                    Value can not be empty.
                 </div>
             </div>
         </ng-container>
@@ -69,8 +72,11 @@
                             [innerHTML]="form.controls['naturalGasUnit'].value | unitsDisplay"></span>
                     </span>
                 </div>
-                <div class="alert alert-warning form-error" *ngIf="form.controls['naturalGasPrice'].touched && form.controls['naturalGasPrice'].getError('min')">
+                <div class="alert alert-warning form-error" *ngIf="form.controls['naturalGasPrice'].getError('min')">
                     Value can not be negative.
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['naturalGasPrice'].getError('required')">
+                    Value can not be empty.
                 </div>
             </div>
         </ng-container>
@@ -100,8 +106,11 @@
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['otherFuelUnit'].value | unitsDisplay"></span></span>
                 </div>
-                <div class="alert alert-warning form-error" *ngIf="form.controls['otherFuelPrice'].touched && form.controls['otherFuelPrice'].getError('min')">
+                <div class="alert alert-warning form-error" *ngIf="form.controls['otherFuelPrice'].getError('min')">
                     Value can not be negative.
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['otherFuelPrice'].getError('required')">
+                    Value can not be empty.
                 </div>
             </div>
         </ng-container>
@@ -131,8 +140,11 @@
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['waterUnit'].value | unitsDisplay"></span></span>
                 </div>
-                <div class="alert alert-warning form-error" *ngIf="form.controls['waterPrice'].touched && form.controls['waterPrice'].getError('min')">
+                <div class="alert alert-warning form-error" *ngIf="form.controls['waterPrice'].getError('min')">
                     Value can not be negative.
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['waterPrice'].getError('required')">
+                    Value can not be empty.
                 </div>
             </div>
         </ng-container>
@@ -162,8 +174,11 @@
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['wasteWaterUnit'].value | unitsDisplay"></span></span>
                 </div>
-                <div class="alert alert-warning form-error" *ngIf="form.controls['wasteWaterPrice'].touched && form.controls['wasteWaterPrice'].getError('min')">
+                <div class="alert alert-warning form-error" *ngIf="form.controls['wasteWaterPrice'].getError('min')">
                     Value can not be negative.
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['wasteWaterPrice'].getError('required')">
+                    Value can not be empty.
                 </div>
             </div>
         </ng-container>
@@ -195,8 +210,11 @@
                             [innerHTML]="form.controls['steamUnit'].value | unitsDisplay"></span>
                     </span>
                 </div>
-                <div class="alert alert-warning form-error" *ngIf="form.controls['steamPrice'].touched && form.controls['steamPrice'].getError('min')">
+                <div class="alert alert-warning form-error" *ngIf="form.controls['steamPrice'].getError('min')">
                     Value can not be negative.
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['steamPrice'].getError('required')">
+                    Value can not be empty.
                 </div>
             </div>
         </ng-container>
@@ -229,8 +247,11 @@
                             [innerHTML]="form.controls['compressedAirUnit'].value | unitsDisplay"></span>
                     </span>
                 </div>
-                <div class="alert alert-warning form-error" *ngIf="form.controls['compressedAirPrice'].touched && form.controls['compressedAirPrice'].getError('min')">
+                <div class="alert alert-warning form-error" *ngIf="form.controls['compressedAirPrice'].getError('min')">
                     Value can not be negative.
+                </div>
+                <div class="alert alert-warning form-error" *ngIf="form.controls['compressedAirPrice'].getError('required')">
+                    Value can not be empty.
                 </div>
             </div>
         </ng-container>

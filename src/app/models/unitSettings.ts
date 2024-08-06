@@ -53,10 +53,10 @@ export function getDefaultUnitSettings(): UnitSettings {
 
         includeWater: false,
         waterUnit: 'gal',
-        waterPrice: undefined,
+        waterPrice: 0,
     
         includeWasteWater: false,
         wasteWaterUnit: 'gal',
-        wasteWaterPrice: undefined,
+        wasteWaterPrice: 0,
     }
 }

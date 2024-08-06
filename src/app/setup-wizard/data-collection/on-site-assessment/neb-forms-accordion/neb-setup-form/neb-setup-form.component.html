@@ -23,8 +23,29 @@
 </div>
 <!--FORM-->
 <form>
-    <ng-template [ngIf]="nonEnergyBenefit.performanceMetricImpacts.length > 0" [ngIfElse]="noIncludedMetricsBlock">
-        <ng-container *ngFor="let performanceMetricImpact of nonEnergyBenefit.performanceMetricImpacts">
+    <ng-template [ngIf]="nonEnergyBenefit.isCustom">
+        <div class="row mb-2">
+            <label class="col-sm-5 col-form-label" for="nebName">NEB Name</label>
+            <div class="col-sm-7">
+                <input name="nebName" type="text" class="form-control" [(ngModel)]="nonEnergyBenefit.name" minlength="1"
+                    maxlength="42" id="nebName" (input)="saveChanges()">
+            </div>
+        </div>
+    </ng-template>
+    <div class="row mb-2">
+        <label class="col-sm-5 col-form-label" for="costImpact">Direct Cost Impact</label>
+        <div class="col-sm-7">
+            <div class="input-group">
+                <input type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.costImpact"
+                    name="baselineValue" (input)="saveChanges()">
+                <span class="input-group-text">
+                    &dollar;/yr
+                </span>
+            </div>
+        </div>
+    </div>
+    <ng-template [ngIf]="includedMetrics.length > 0" [ngIfElse]="noIncludedMetricsBlock">
+        <ng-container *ngFor="let performanceMetricImpact of includedMetrics">
             <app-performance-metric-impact-form [performanceMetricImpact]="performanceMetricImpact"
                 [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metric-impact-form>
         </ng-container>
@@ -37,9 +58,9 @@
     <div class="row mb-1">
         <div class="col-sm-12 col-form-label">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
-                    [(ngModel)]="nonEnergyBenefit.includeNote" name="includeNote" (input)="saveChanges()">
-                <label class="form-check-label" for="includeNote">Non-Energy Benefit Notes</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="{{'includeNEBNote'+nonEnergyBenefit.guid}}"
+                    [(ngModel)]="nonEnergyBenefit.includeNote" name="{{'includeNEBNote'+nonEnergyBenefit.guid}}" (input)="saveChanges()">
+                <label class="form-check-label" for="{{'includeNEBNote'+nonEnergyBenefit.guid}}">Non-Energy Benefit Notes</label>
             </div>
         </div>
         <div class="col-sm-12" *ngIf="nonEnergyBenefit.includeNote">

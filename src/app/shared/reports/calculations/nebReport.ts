@@ -16,12 +16,15 @@ export function getNebReport(nonEnergyBenefit: IdbNonEnergyBenefit, companyPerfo
             })
         }
     });
+    let costSavings: number = nonEnergyBenefit.costImpact || 0;
+
+
     return {
         nonEnergyBenefit: nonEnergyBenefit,
         reportPerformanceMetrics: reportPerformanceMetrics,
         //todo: update to handle cost adjustment +/- as good
         //currently treating everything as a reduction
-        totalCostSavings: _.sumBy(reportPerformanceMetrics, (reportPerformanceMetric: ReportPerformanceMetric) => {
+        totalCostSavings: costSavings + _.sumBy(reportPerformanceMetrics, (reportPerformanceMetric: ReportPerformanceMetric) => {
             if (reportPerformanceMetric.performanceMetricImpact.costAdjustment) {
                 return reportPerformanceMetric.performanceMetricImpact.costAdjustment;
             }

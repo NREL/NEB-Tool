@@ -15,7 +15,7 @@ export class CompanyContactsFormService {
     let firstname = '', lastname = '';
     if (contact.name) {
       let names = contact.name.split(',');
-      if (names.length < 1) {
+      if (names.length === 1) {
         firstname = names[0].trim();
       } else {
         firstname = names[0].trim();

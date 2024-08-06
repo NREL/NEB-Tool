@@ -11,8 +11,6 @@ import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { KeyPerformanceMetric } from '../../constants/keyPerformanceMetrics';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { AssessmentReport, getAssessmentReport } from '../calculations/assessmentReport';
-import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
-import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 

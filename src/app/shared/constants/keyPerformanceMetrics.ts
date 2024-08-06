@@ -287,7 +287,11 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         htmlLabel: "Defect Rate-PPM or DPM",
         value: "defectRatePPMorDPM",
         kpiValue: "quality",
-        isQuantitative: false,
+        isQuantitative: true,
+        baselineValue: undefined,
+        costPerValue: undefined,
+        totalUnit: 'product',
+        baselineCost: undefined,
         includeMetric: true
     },
     {

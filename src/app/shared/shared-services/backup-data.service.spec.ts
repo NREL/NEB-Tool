@@ -16,8 +16,6 @@ import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment
 
 describe('BackupDataService', () => {
   let service: BackupDataService;
-
-  
   let userIdbService: Partial<UserIdbService> = {};
   let companyIdbService: Partial<CompanyIdbService> = {};
   let facilityIdbService: Partial<FacilityIdbService> = {};

@@ -19,6 +19,9 @@ export class AssessmentNebsFormComponent {
 
   assessment: IdbAssessment;
   assessmentSub: Subscription;
+
+  newNebName: string;
+  displayNebModal: boolean = false;
   constructor(private assessmentIdbService: AssessmentIdbService,
     private setupWizardService: SetupWizardService,
     private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService

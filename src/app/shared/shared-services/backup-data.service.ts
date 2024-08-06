@@ -87,18 +87,16 @@ export class BackupDataService {
     return backupFile;
   }
 
-  async importUserBackupFile(backupFile: BackupFile): Promise<IdbUser> {
-    // Overwirte existing user with new GUIDs for all dbEntries
-
-    // this.analyticsService.sendEvent('import_backup_file');
-    this.loadingService.setLoadingMessage('Adding Account...');
+  // Add backup file data to the userGuid
+  async importUserBackupFile(backupFile: BackupFile, userGuid: string): Promise<void> {
+    // Overwrite backup user guid with input guid
+    this.loadingService.setLoadingMessage('Adding Backup Data to User: ' + userGuid + '...');
     let userGUIDs: { oldId: string, newId: string } = {
       oldId: backupFile.user.guid,
-      newId: getGUID()
+      newId: userGuid
     }
     delete backupFile.user.id;
     backupFile.user.guid = userGUIDs.newId;
-    let newUser: IdbUser = await firstValueFrom(this.userIdbService.addWithObservable(backupFile.user));
 
     // Adding companies
     this.loadingService.setLoadingMessage('Adding Companies...');
@@ -292,7 +290,6 @@ export class BackupDataService {
       await firstValueFrom(this.onSiteVisitIdbService.addWithObservable(onsitevisit));
     }
 
-    return newUser;
   }
 
   backupFileVersionCheck(fileVersion: string, appVersion: string): boolean {

@@ -8,7 +8,7 @@ import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benef
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
-import { IdbNonEnergyBenefit, PerformanceMetricImpact, getNewIdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
+import { IdbNonEnergyBenefit, getNewIdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { KeyPerformanceMetric, KeyPerformanceMetricValue } from 'src/app/shared/constants/keyPerformanceMetrics';
 import { NebOption, NebOptions } from 'src/app/shared/constants/nonEnergyBenefitOptions';

@@ -1,5 +1,5 @@
 import { KeyPerformanceMetric } from "../../constants/keyPerformanceMetrics";
-import {  PerformanceMetricImpact } from "../../../models/nonEnergyBenefit";
+import { PerformanceMetricImpact } from "../../../models/nonEnergyBenefit";
 import * as _ from 'lodash';
 import { NebReport } from "./nebReport";
 
@@ -8,14 +8,25 @@ export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): K
     let kpiReportItems: Array<KeyPerformanceIndicatorReportItem> = new Array();
     nebReports.forEach(nebReport => {
         nebReport.reportPerformanceMetrics.forEach(performanceMetric => {
+            if(isNaN(performanceMetric.performanceMetricImpact.costAdjustment)){
+                performanceMetric.performanceMetricImpact.costAdjustment = 0;
+            }
             let itemExistIndex: number = kpiReportItems.findIndex(reportItem => {
                 return reportItem.keyPerformanceMetric.value == performanceMetric.keyPerformanceMetric.value;
             });
             if (itemExistIndex != -1) {
-                kpiReportItems[itemExistIndex].performanceMetricImpact.costAdjustment += performanceMetric.performanceMetricImpact.costAdjustment;
-                kpiReportItems[itemExistIndex].performanceMetricImpact.modificationValue += performanceMetric.performanceMetricImpact.modificationValue;
-                kpiReportItems[itemExistIndex].performanceMetricImpact.percentSavings = (kpiReportItems[itemExistIndex].performanceMetricImpact.costAdjustment / kpiReportItems[itemExistIndex].keyPerformanceMetric.baselineCost) * 100;
+                if (performanceMetric.performanceMetricImpact.costAdjustment) {
+                    kpiReportItems[itemExistIndex].performanceMetricImpact.costAdjustment += performanceMetric.performanceMetricImpact.costAdjustment;
+                }
+                if (performanceMetric.performanceMetricImpact.modificationValue) {
+                    kpiReportItems[itemExistIndex].performanceMetricImpact.modificationValue += performanceMetric.performanceMetricImpact.modificationValue;
+                }
+                if (kpiReportItems[itemExistIndex].keyPerformanceMetric.baselineCost) {
+                    kpiReportItems[itemExistIndex].performanceMetricImpact.percentSavings = (kpiReportItems[itemExistIndex].performanceMetricImpact.costAdjustment / kpiReportItems[itemExistIndex].keyPerformanceMetric.baselineCost) * 100;
+                }
             } else {
+
+
                 kpiReportItems.push({
                     keyPerformanceMetric: performanceMetric.keyPerformanceMetric,
                     performanceMetricImpact: {
@@ -46,7 +57,6 @@ export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): K
         return 0
     });
     let modifiedCost: number = baselineCost - annualSavings;
-    console.log(annualSavings);
     let percentSavings: number = (annualSavings / baselineCost) * 100
     return {
         kpiReportItems: kpiReportItems,

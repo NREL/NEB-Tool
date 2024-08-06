@@ -13,7 +13,8 @@ export interface IdbNonEnergyBenefit extends IdbEntry {
     energyOpportunityId: string,
     nebOptionValue: NebOptionValue,
     performanceMetricImpacts: Array<PerformanceMetricImpact>,
-    isCustom: boolean
+    isCustom: boolean,
+    costImpact: number
 }
 
 export interface PerformanceMetricImpact {
@@ -53,6 +54,7 @@ export function getNewIdbNonEnergyBenefit(userId: string, companyId: string, fac
         includeNote: false,
         nebOptionValue: nebOptionValue,
         performanceMetricImpacts: performanceMetricImpacts,
-        isCustom: isCustom
+        isCustom: isCustom,
+        costImpact: 0
     }
 }

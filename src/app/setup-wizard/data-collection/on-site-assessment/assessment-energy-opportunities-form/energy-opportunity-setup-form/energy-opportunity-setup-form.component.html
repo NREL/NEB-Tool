@@ -1,6 +1,9 @@
 <div class="d-flex w-100 justify-content-end pb-2">
+    <button class="me-2 btn btn-secondary btn-sm add-neb-btn" (click)="addNEB()">
+        <fa-icon [icon]="faPlus"></fa-icon> Add NEB
+    </button>
     <button class="btn btn-dark btn-sm add-neb-btn me-2" (click)="showSuggestedNEBs()">
-        <fa-icon [icon]="faSearchPlus"></fa-icon> Find NEBs
+        <fa-icon [icon]="faSearchPlus"></fa-icon> Search NEBs
     </button>
     <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
         <fa-icon [icon]="faTrash"></fa-icon> Delete
@@ -9,16 +12,16 @@
 
 <form>
     <div class="row">
-        <label class="col-sm-5 col-form-label" for="energyOpportunityName">Energy Opportunity Name</label>
+        <label class="col-sm-5 col-form-label" for="{{'energyOpportunityName_'+energyOpportunity.guid}}">Energy Opportunity Name</label>
         <div class="col-sm-7">
-            <input name="energyOpportunityName" type="text" class="form-control" [(ngModel)]="energyOpportunity.name"
-                minlength="1" maxlength="42" id="energyOpportunityName" (input)="saveEnergyOpportunity()">
+            <input name="{{'energyOpportunityName_'+energyOpportunity.guid}}" type="text" class="form-control" [(ngModel)]="energyOpportunity.name"
+                minlength="1" maxlength="42" id="{{'energyOpportunityName_'+energyOpportunity.guid}}" (input)="saveEnergyOpportunity()">
         </div>
     </div>
     <div class="row">
-        <label class="col-sm-5 col-form-label" for="energyOpportunityType">Opportunity Type</label>
+        <label class="col-sm-5 col-form-label" for="{{'opportunityType_'+energyOpportunity.guid}}">Opportunity Type</label>
         <div class="col-sm-7">
-            <select name="opportunityType" class="form-select" id="opportunityType"
+            <select name="{{'opportunityType_'+energyOpportunity.guid}}" class="form-select" id="{{'opportunityType_'+energyOpportunity.guid}}"
                 [(ngModel)]="energyOpportunity.opportunityType" (change)="saveEnergyOpportunity()">
                 <option [ngValue]="undefined">
                     Other
@@ -30,11 +33,11 @@
         </div>
     </div>
     <div class="row">
-        <label class="col-sm-5 col-form-label" for="implementationCost">Implementation Cost</label>
+        <label class="col-sm-5 col-form-label" for="{{'implementationCost_'+energyOpportunity.guid}}">Implementation Cost</label>
         <div class="col-sm-7">
             <div class="input-group">
-                <input name="implementationCost" type="number" class="form-control"
-                    [(ngModel)]="energyOpportunity.implementationCost" id="implementationCost"
+                <input name="{{'implementationCost_'+energyOpportunity.guid}}" type="number" class="form-control"
+                    [(ngModel)]="energyOpportunity.implementationCost" id="{{'implementationCost_'+energyOpportunity.guid}}"
                     (input)="saveEnergyOpportunity()">
                 <span class="input-group-text">&dollar;</span>
             </div>
@@ -43,32 +46,32 @@
     <div class="row">
         <div class="col-12">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="includeSavings"
-                    [(ngModel)]="energyOpportunity.includeSavings" name="includeSavings"
+                <input class="form-check-input" type="checkbox" role="switch" id="{{'includeSavings_'+energyOpportunity.guid}}"
+                    [(ngModel)]="energyOpportunity.includeSavings" name="{{'includeSavings_'+energyOpportunity.guid}}"
                     (input)="saveEnergyOpportunity()">
-                <label class="form-check-label" for="includeSavings">Include Savings</label>
+                <label class="form-check-label" for="{{'includeSavings_'+energyOpportunity.guid}}">Include Savings</label>
             </div>
         </div>
     </div>
 
     <ng-container *ngIf="energyOpportunity.includeSavings">
         <div class="row">
-            <label class="col-sm-5 col-form-label" for="energySavings">Energy Savings</label>
+            <label class="col-sm-5 col-form-label" for="{{'energySavings_'+energyOpportunity.guid}}">Energy Savings</label>
             <div class="col-sm-7">
                 <div class="input-group">
-                    <input name="energySavings" type="number" class="form-control"
-                        [(ngModel)]="energyOpportunity.energySavings" id="energySavings"
+                    <input name="{{'energySavings_'+energyOpportunity.guid}}" type="number" class="form-control"
+                        [(ngModel)]="energyOpportunity.energySavings" id="{{'energySavings_'+energyOpportunity.guid}}"
                         (input)="saveEnergyOpportunity()">
                     <span class="input-group-text">MMBtu/yr</span>
                 </div>
             </div>
         </div>
         <div class="row">
-            <label class="col-sm-5 col-form-label" for="costSavings">Cost Savings</label>
+            <label class="col-sm-5 col-form-label" for="{{'costSavings_'+energyOpportunity.guid}}">Cost Savings</label>
             <div class="col-sm-7">
                 <div class="input-group">
-                    <input name="costSavings" type="number" class="form-control"
-                        [(ngModel)]="energyOpportunity.costSavings" id="costSavings" (input)="saveEnergyOpportunity()">
+                    <input name="{{'costSavings_'+energyOpportunity.guid}}" type="number" class="form-control"
+                        [(ngModel)]="energyOpportunity.costSavings" id="{{'costSavings_'+energyOpportunity.guid}}" (input)="saveEnergyOpportunity()">
                     <span class="input-group-text">&dollar;</span>
                 </div>
             </div>
@@ -77,9 +80,9 @@
     <div class="row">
         <div class="col-sm-12 col-form-label">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="includeNote"
-                    [(ngModel)]="energyOpportunity.includeNote" name="includeNote" (input)="saveEnergyOpportunity()">
-                <label class="form-check-label" for="includeNote">Energy Opportunity Notes</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="{{'includeNotes_'+energyOpportunity.guid}}"
+                    [(ngModel)]="energyOpportunity.includeNote" name="{{'includeNotes_'+energyOpportunity.guid}}" (input)="saveEnergyOpportunity()">
+                <label class="form-check-label" for="{{'includeNotes_'+energyOpportunity.guid}}">Energy Opportunity Notes</label>
             </div>
         </div>
         <div class="col-sm-12 mb-1" *ngIf="energyOpportunity.includeNote">
