@@ -12,7 +12,7 @@ export class ContactNamePipe implements PipeTransform {
       return contact.guid == contactGuid;
     });
     if(contact){
-      return contact.name
+      return contact + ' ' + contact.lastName;
     }
     return '';
   }
