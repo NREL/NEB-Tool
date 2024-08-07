@@ -34,7 +34,7 @@ describe('NebSetupFormComponent', () => {
   };
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]),
-    getByGuid: () => { return getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, [], false) }
+    getByGuid: () => { return getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, false) }
   };
   let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {};
   let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {};
@@ -60,7 +60,7 @@ describe('NebSetupFormComponent', () => {
 
     fixture = TestBed.createComponent(NebSetupFormComponent);
     component = fixture.componentInstance;
-    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, [], false);
+    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, false);
     fixture.detectChanges();
   });
 

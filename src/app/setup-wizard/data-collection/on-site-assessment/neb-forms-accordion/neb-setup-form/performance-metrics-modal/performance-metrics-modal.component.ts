@@ -2,8 +2,10 @@ import { Component, Input } from '@angular/core';
 import { faAsterisk, faChevronDown, faChevronUp, faMagnifyingGlass, faPlus, faSearchPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { getNewKeyPerformanceIndicator, IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
+import { getNewIdbKeyPerformanceMetricImpact, IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { KeyPerformanceIndicatorOption, KeyPerformanceIndicatorOptions } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
 import { KeyPerformanceMetric, KeyPerformanceMetrics, KeyPerformanceMetricValue } from 'src/app/shared/constants/keyPerformanceMetrics';
@@ -37,7 +39,8 @@ export class PerformanceMetricsModalComponent {
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
 
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
-    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
+    private keyPerformanceMetricImpactIdbService: KeyPerformanceMetricImpactsIdbService
   ) {
 
   }
@@ -54,15 +57,6 @@ export class PerformanceMetricsModalComponent {
   }
 
   async confirmAddMetric() {
-    //add performance metric impact to NEB
-    this.nonEnergyBenefit.performanceMetricImpacts.push({
-      kpmValue: this.performanceMetricToAdd.value,
-      modificationValue: 0,
-      costAdjustment: 0,
-      percentSavings: 0
-    });
-    await this.nonEnergyBenefitsIdbService.asyncUpdate(this.nonEnergyBenefit);
-
     //make sure metric is tracked in KPI
     let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.performanceMetricToAdd.kpiValue);
     if (keyPerformanceIndicator) {
@@ -90,6 +84,10 @@ export class PerformanceMetricsModalComponent {
       await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
       await this.nonEnergyBenefitsIdbService.addCompanyKpi(keyPerformanceIndicator);
     }
+
+    let newKeyPerformanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.nonEnergyBenefit.userId, this.nonEnergyBenefit.companyId, this.nonEnergyBenefit.facilityId, this.nonEnergyBenefit.energyOpportunityId, this.nonEnergyBenefit.guid, this.performanceMetricToAdd.value, this.nonEnergyBenefit.assessmentId);
+    await firstValueFrom(this.keyPerformanceMetricImpactIdbService.addWithObservable(newKeyPerformanceMetricImpact));
+    await this.keyPerformanceMetricImpactIdbService.setKeyPerformanceMetricImpacts();
     this.closeAddMetricModal();
   }
 
@@ -98,15 +96,9 @@ export class PerformanceMetricsModalComponent {
   }
 
   setMetricOptions() {
-    let includedMetrics = new Array();
     this.performanceMetricOptions = new Array();
-
-
-    this.nonEnergyBenefit.performanceMetricImpacts.forEach(performanceMetricImpact => {
-      includedMetrics.push(performanceMetricImpact);
-    });
-
-    let metricIds: Array<KeyPerformanceMetricValue> = this.nonEnergyBenefit.performanceMetricImpacts.map(metric => {
+    let includedMetrics: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactIdbService.getByNebGuid(this.nonEnergyBenefit.guid);
+    let metricIds: Array<KeyPerformanceMetricValue> = includedMetrics.map(metric => {
       return metric.kpmValue;
     });
     KeyPerformanceMetrics.forEach(metric => {
@@ -132,6 +124,7 @@ export class PerformanceMetricsModalComponent {
       customMetrics.forEach(metric => {
         console.log(metric);
         if (metricIds.includes(metric.value) == false) {
+          console.log(metric.label);
           this.performanceMetricOptions.push(metric);
         }
       })

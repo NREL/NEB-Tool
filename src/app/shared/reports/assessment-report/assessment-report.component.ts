@@ -13,6 +13,8 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { AssessmentReport, getAssessmentReport } from '../calculations/assessmentReport';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 
 @Component({
   selector: 'app-assessment-report',
@@ -31,7 +33,8 @@ export class AssessmentReportComponent {
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
-    private energyEquipmentIdbService: EnergyEquipmentIdbService
+    private energyEquipmentIdbService: EnergyEquipmentIdbService,
+    private keyPerformanceMetricImpactsIdbService: KeyPerformanceMetricImpactsIdbService
   ) {
   }
 
@@ -45,6 +48,7 @@ export class AssessmentReportComponent {
     let allEnergyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunityIdbService.energyOpportunities.getValue();
     let allNonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitIdbService.nonEnergyBenefits.getValue();
     let companyPerformanceMetrics: Array<KeyPerformanceMetric> = this.keyPerformanceIndicatorIdbService.getCompanyKeyPerformanceMetrics(this.assessment.companyId);
-    this.assessmentReport = getAssessmentReport(this.assessment, allEnergyOpportunities, allNonEnergyBenefits, companyPerformanceMetrics);
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
+    this.assessmentReport = getAssessmentReport(this.assessment, allEnergyOpportunities, allNonEnergyBenefits, companyPerformanceMetrics, keyPerformanceMetricImpacts);
   }
 }

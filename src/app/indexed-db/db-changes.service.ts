@@ -278,22 +278,26 @@ export class DbChangesService {
         }
         await this.contactIdbService.setContacts();
       }
-      //update NEBs
-      let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.getCompanyNonEnergyBenefits(keyPerformanceIndicators[i].companyId);
-      if (nonEnergyBenefits.length > 0) {
-        for (let b = 0; b < nonEnergyBenefits.length; b++) {
-          let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[b];
-          let kpiMetricValues: Array<KeyPerformanceMetricValue> = keyPerformanceIndicators[i].performanceMetrics.flatMap(metric => {
-            return metric.value;
-          });
-          //remove metrics from this kpi
-          nonEnergyBenefit.performanceMetricImpacts = nonEnergyBenefit.performanceMetricImpacts.filter(pmi => {
-            return !kpiMetricValues.includes(pmi.kpmValue);
-          });
-          await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
-        }
-        await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
-      }
+      //TODO: update kpmImpacts
+      // let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
+      // let companyKeyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => {
+      //   return metricImpact.companyId == keyPerformanceIndicators[i].companyId
+      // });
+      // let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.getCompanyNonEnergyBenefits(keyPerformanceIndicators[i].companyId);
+      // if (nonEnergyBenefits.length > 0) {
+      //   for (let b = 0; b < nonEnergyBenefits.length; b++) {
+      //     let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[b];
+      //     let kpiMetricValues: Array<KeyPerformanceMetricValue> = keyPerformanceIndicators[i].performanceMetrics.flatMap(metric => {
+      //       return metric.value;
+      //     });
+      //     //remove metrics from this kpi
+      //     nonEnergyBenefit.performanceMetricImpacts = nonEnergyBenefit.performanceMetricImpacts.filter(pmi => {
+      //       return !kpiMetricValues.includes(pmi.kpmValue);
+      //     });
+      //     await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
+      //   }
+      //   await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+      // }
       await firstValueFrom(this.keyPerformanceIndicatorIdbService.deleteWithObservable(keyPerformanceIndicators[i].id));
     }
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();

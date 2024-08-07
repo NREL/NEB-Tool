@@ -15,7 +15,7 @@ export interface IdbKeyPerformanceMetricImpact extends IdbEntry {
 }
 
 
-export function getNewKeyPerformanceIndicator(userId: string, companyId: string, facilityId: string, energyOpportunityId: string, nebId: string, kpmValue: KeyPerformanceMetricValue, assessemntId: string): IdbKeyPerformanceMetricImpact {
+export function getNewIdbKeyPerformanceMetricImpact(userId: string, companyId: string, facilityId: string, energyOpportunityId: string, nebId: string, kpmValue: KeyPerformanceMetricValue, assessemntId: string): IdbKeyPerformanceMetricImpact {
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,

@@ -44,9 +44,9 @@
             </div>
         </div>
     </div>
-    <ng-template [ngIf]="includedMetrics.length > 0" [ngIfElse]="noIncludedMetricsBlock">
-        <ng-container *ngFor="let performanceMetricImpact of includedMetrics">
-            <app-performance-metric-impact-form [performanceMetricImpact]="performanceMetricImpact"
+    <ng-template [ngIf]="performanceMetricImpactGuids.length > 0" [ngIfElse]="noIncludedMetricsBlock">
+        <ng-container *ngFor="let impactGuid of performanceMetricImpactGuids">
+            <app-performance-metric-impact-form [impactGuid]="impactGuid"
                 [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metric-impact-form>
         </ng-container>
     </ng-template>

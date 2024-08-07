@@ -36,12 +36,8 @@ describe('PerformanceMetricImpactFormComponent', () => {
 
     fixture = TestBed.createComponent(PerformanceMetricImpactFormComponent);
     component = fixture.componentInstance;
-    component.performanceMetricImpact = {
-      kpmValue: 'TRIR',
-      modificationValue: undefined,
-      costAdjustment: undefined
-    };
-    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', '', undefined, [], false);
+    component.impactGuid = '';
+    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', '', undefined, false);
     fixture.detectChanges();
   });
 

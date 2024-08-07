@@ -1,4 +1,4 @@
-<ng-template [ngIf]="keyPerformanceMetric" [ngIfElse]="missingMetricBlock">
+<ng-template [ngIf]="keyPerformanceMetricImpact" [ngIfElse]="missingMetricBlock">
     <div class="pb-2 d-flex w-100 justify-content-between">
         <div>
             <label for="performanceMetric">
@@ -64,7 +64,7 @@
                 <div class="col-6">
                     <div class="input-group">
                         <input type="number" class="form-control"
-                            [(ngModel)]="performanceMetricImpact.modificationValue" name="modificationValue"
+                            [(ngModel)]="keyPerformanceMetricImpact.modificationValue" name="modificationValue"
                             (input)="calculateCost()">
                         <span class="input-group-text">
                             <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
@@ -78,8 +78,8 @@
                     NEB Cost Impact
                 </label>
                 <div class="col-6">
-                    <ng-template [ngIf]="performanceMetricImpact.costAdjustment" [ngIfElse]="noCostAdjustmentBlock">
-                        {{performanceMetricImpact.costAdjustment | currency}}/yr
+                    <ng-template [ngIf]="keyPerformanceMetricImpact.costAdjustment" [ngIfElse]="noCostAdjustmentBlock">
+                        {{keyPerformanceMetricImpact.costAdjustment | currency}}/yr
                     </ng-template>
                     <ng-template #noCostAdjustmentBlock>
                         &mdash;

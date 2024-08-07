@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { IdbKeyPerformanceMetricImpact } from '../models/keyPerformanceMetricImpact';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { IdbKeyPerformanceIndicator } from '../models/keyPerformanceIndicator';
+import { KeyPerformanceMetric } from '../shared/constants/keyPerformanceMetrics';
 
 @Injectable({
   providedIn: 'root'
@@ -45,10 +47,36 @@ export class KeyPerformanceMetricImpactsIdbService {
   }
 
   getByGuid(guid: string): IdbKeyPerformanceMetricImpact {
-    let keyPerformanceInidcators: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpacts.getValue();
-    return keyPerformanceInidcators.find(kpi => {
-      return kpi.guid == guid
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpacts.getValue();
+    return keyPerformanceMetricImpacts.find(kpmImpact => {
+      return kpmImpact.guid == guid
     });
+  }
+
+  getByNebGuid(nebGuid: string): Array<IdbKeyPerformanceMetricImpact> {
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpacts.getValue();
+    return keyPerformanceMetricImpacts.filter(kpmImpact => {
+      return kpmImpact.nebId == nebGuid
+    });
+  }
+
+  getByCompanyGuid(companyGuid: string): Array<IdbKeyPerformanceMetricImpact> {
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpacts.getValue();
+    return keyPerformanceMetricImpacts.filter(kpmImpact => {
+      return kpmImpact.companyId == companyGuid
+    });
+  }
+
+  async updatePerformanceMetricBaseline(keyPerformanceIndicator: IdbKeyPerformanceIndicator, keyPerformanceMetric: KeyPerformanceMetric) {
+    let companyMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.getByCompanyGuid(keyPerformanceIndicator.companyId);
+    for (let i = 0; i < companyMetricImpacts.length; i++) {
+      let metricImpact: IdbKeyPerformanceMetricImpact = companyMetricImpacts[i];
+      if (metricImpact.kpmValue == keyPerformanceMetric.value) {
+        metricImpact.costAdjustment = (metricImpact.modificationValue * keyPerformanceMetric.costPerValue);
+      }
+      await firstValueFrom(this.updateWithObservable(metricImpact));
+    }
+    await this.setKeyPerformanceMetricImpacts();
   }
 
   // getKeyPerformanceMetric(companyGuid: string, performanceMetricValue: KeyPerformanceMetricValue): KeyPerformanceMetric {

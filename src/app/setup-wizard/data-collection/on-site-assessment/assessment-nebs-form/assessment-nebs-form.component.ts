@@ -43,7 +43,7 @@ export class AssessmentNebsFormComponent {
   }
 
   async addNEB() {
-    let newNonEnergyBenefit: IdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, this.assessment.guid, undefined, undefined, [], true);
+    let newNonEnergyBenefit: IdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, this.assessment.guid, undefined, undefined, true);
     await firstValueFrom(this.nonEnergyBenefitIdbService.addWithObservable(newNonEnergyBenefit))
     await this.nonEnergyBenefitIdbService.setNonEnergyBenefits();
   }

@@ -61,35 +61,22 @@ export class NonEnergyBenefitsIdbService {
     });
   }
 
-  async updatePerformanceMetricBaseline(keyPerformanceIndicator: IdbKeyPerformanceIndicator, keyPerformanceMetric: KeyPerformanceMetric) {
-    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.getCompanyNonEnergyBenefits(keyPerformanceIndicator.companyId);
-    for (let i = 0; i < nonEnergyBenefits.length; i++) {
-      let neb: IdbNonEnergyBenefit = nonEnergyBenefits[i];
-      for (let p = 0; p < neb.performanceMetricImpacts.length; p++) {
-        if (neb.performanceMetricImpacts[p].kpmValue == keyPerformanceMetric.value) {
-          neb.performanceMetricImpacts[p].costAdjustment = (neb.performanceMetricImpacts[p].modificationValue * keyPerformanceMetric.costPerValue);
-        }
-      }
-      await firstValueFrom(this.updateWithObservable(neb));
-    }
-    await this.setNonEnergyBenefits();
-  }
-
   async addCompanyKpi(keyPerformanceIndicator: IdbKeyPerformanceIndicator) {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.getCompanyNonEnergyBenefits(keyPerformanceIndicator.companyId);
     for (let i = 0; i < nonEnergyBenefits.length; i++) {
       let neb: IdbNonEnergyBenefit = nonEnergyBenefits[i];
       let nebOption: NebOption = NebOptions.find(option => { return option.optionValue == neb.nebOptionValue });
       if (nebOption) {
-        keyPerformanceIndicator.performanceMetrics.forEach(metric => {
-          if (nebOption.KPM.indexOf(metric.value) != -1) {
-            neb.performanceMetricImpacts.push({
-              kpmValue: metric.value,
-              modificationValue: undefined,
-              costAdjustment: undefined
-            });
-          }
-        });
+        //TODO: add performance metric impact
+        // keyPerformanceIndicator.performanceMetrics.forEach(metric => {
+        //   if (nebOption.KPM.indexOf(metric.value) != -1) {
+        //     neb.performanceMetricImpacts.push({
+        //       kpmValue: metric.value,
+        //       modificationValue: undefined,
+        //       costAdjustment: undefined
+        //     });
+        //   }
+        // });
       }
       await firstValueFrom(this.updateWithObservable(neb));
     }
