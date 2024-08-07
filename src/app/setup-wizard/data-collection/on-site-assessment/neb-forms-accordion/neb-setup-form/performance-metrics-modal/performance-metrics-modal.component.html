@@ -77,8 +77,14 @@
                                 <span [innerHTML]="performanceMetric.htmlLabel"></span>
                             </td>
                             <td>
-                                <span
-                                    [innerHTML]="performanceMetric.kpiValue | kpiValueDisplay:keyPerformanceIndicators"></span>
+                                <ng-template [ngIf]="performanceMetric.kpiGuid" [ngIfElse]="nonExistingBlock">
+                                    <span
+                                        [innerHTML]="performanceMetric.kpiGuid | kpiLabel:keyPerformanceIndicators"></span>
+                                </ng-template>
+                                <ng-template #nonExistingBlock>
+                                    <span
+                                        [innerHTML]="performanceMetric.kpiValue | kpiValueDisplay:keyPerformanceIndicators"></span>
+                                </ng-template>
                             </td>
                             <td>
                                 <app-primary-kpi-badge [kpiValue]="performanceMetric.kpiValue"

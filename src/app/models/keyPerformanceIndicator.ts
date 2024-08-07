@@ -18,6 +18,6 @@ export function getNewKeyPerformanceIndicator(userId: string, companyId: string,
         companyId: companyId,
         ...keyPerformanceIndicatorOption,
         isCustom: isCustom,
-        performanceMetrics: getPerformanceMetrics(keyPerformanceIndicatorOption.optionValue)
+        performanceMetrics: getPerformanceMetrics(keyPerformanceIndicatorOption.optionValue, idbEntry.guid)
     }
 }

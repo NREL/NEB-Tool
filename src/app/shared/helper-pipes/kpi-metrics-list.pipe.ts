@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { KeyPerformanceIndicatorValue } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
-import { KeyPerformanceMetric, KeyPerformanceMetrics } from 'src/app/shared/constants/keyPerformanceMetrics';
+import { KeyPerformanceMetric, KeyPerformanceMetricOption, KeyPerformanceMetricOptions } from 'src/app/shared/constants/keyPerformanceMetrics';
 import * as _ from 'lodash';
 
 @Pipe({
@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 export class KpiMetricsListPipe implements PipeTransform {
 
   transform(optionValue: KeyPerformanceIndicatorValue): Array<KeyPerformanceMetric> {
-    let keyPerformanceMetrics: Array<KeyPerformanceMetric> = KeyPerformanceMetrics;
+    let keyPerformanceMetrics: Array<KeyPerformanceMetricOption> = KeyPerformanceMetricOptions;
     if (optionValue != 'other') {
       keyPerformanceMetrics = keyPerformanceMetrics.filter(performanceMetric => {
         return performanceMetric.kpiValue == optionValue
