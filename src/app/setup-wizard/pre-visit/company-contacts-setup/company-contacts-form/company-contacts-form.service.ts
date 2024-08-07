@@ -11,17 +11,6 @@ export class CompanyContactsFormService {
   constructor(private formBuilder: FormBuilder) { }
 
   getFormFromIdbContact(contact: IdbContact): FormGroup {
-    // Process name before saving
-    let firstname = '', lastname = '';
-    if (contact.name) {
-      let names = contact.name.split(',');
-      if (names.length === 1) {
-        firstname = names[0].trim();
-      } else {
-        firstname = names[0].trim();
-        lastname = names[1].trim();
-      }
-    }
     // Process phone number before saving
     let phone = '';
     let ext = '';
@@ -35,8 +24,8 @@ export class CompanyContactsFormService {
       }
     }
     return this.formBuilder.group({
-      'firstname': [firstname, [Validators.required]],
-      'lastname' : [lastname, [Validators.required]],
+      'firstname': [contact.firstName, [Validators.required]],
+      'lastname' : [contact.lastName, [Validators.required]],
       'phone': [phone, []],
       'ext': [ext, []],
       'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
@@ -48,12 +37,8 @@ export class CompanyContactsFormService {
   }
 
   updateIdbContactFromForm(contactForm: FormGroup, contact: IdbContact): IdbContact {
-    let firstname = contactForm.controls['firstname'].value;
-    let lastname = contactForm.controls['lastname'].value;
-    contact.name = '';
-    if (firstname || lastname) {
-      contact.name = firstname + ', ' + lastname;
-    }
+    contact.firstName = contactForm.controls['firstname'].value;
+    contact.lastName = contactForm.controls['lastname'].value;
     let phone = contactForm.controls['phone'].value;
     let ext = contactForm.controls['ext'].value;
     const phoneWithExt = phone + (ext? ' ext. ' + ext : '');

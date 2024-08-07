@@ -6,7 +6,7 @@
             (contactForm.controls['firstname'].touched && contactForm.controls['firstname'].getError('required'))
             || (contactForm.controls['lastname'].touched && contactForm.controls['lastname'].getError('required')) && contactForm.invalid"></fa-icon>
         <fa-icon [icon]="faUser" class="pe-1"></fa-icon>
-        {{contact.name}}
+        {{contact | contactNameDisplay}}
     </button>
 </h2>
 <div [id]="contactGuid" class="accordion-collapse collapse" data-bs-parent="#contactAccordion"

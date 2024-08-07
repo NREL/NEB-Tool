@@ -6,6 +6,7 @@ import { IdbContact, getNewIdbContact } from 'src/app/models/contact';
 import { BehaviorSubject } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 
 describe('CompanyContactsFormComponent', () => {
   let component: CompanyContactsFormComponent;
@@ -20,7 +21,7 @@ describe('CompanyContactsFormComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FontAwesomeModule],
+      imports: [ReactiveFormsModule, FontAwesomeModule, HelperPipesModule],
       declarations: [CompanyContactsFormComponent],
       providers: [
         { provide: ContactIdbService, useValue: contactIdbService }
