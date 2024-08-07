@@ -53,7 +53,7 @@
                                             *ngFor="let contact of assessment.guid| associatedContacts:'assessment': contacts;">
                                             <span class="badge bg-primary">
                                                 <fa-icon [icon]="faUser"></fa-icon>
-                                                {{contact.firstName}} {{contact.lastName}}
+                                                {{contact | contactNameDisplay}}
                                             </span>
                                         </div>
                                     </div>
