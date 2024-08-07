@@ -23,6 +23,8 @@ import { IdbEnergyEquipment } from '../models/energyEquipment';
 import { IdbProcessEquipment } from '../models/processEquipment';
 import { IdbUser } from '../models/user';
 import { UserIdbService } from './user-idb.service';
+import { KeyPerformanceMetricImpactsIdbService } from './key-performance-metric-impacts-idb.service';
+import { IdbKeyPerformanceMetricImpact } from '../models/keyPerformanceMetricImpact';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +38,8 @@ export class DbChangesService {
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private energyEquipmentIdbService: EnergyEquipmentIdbService,
-    private processEquipmentIdbService: ProcessEquipmentIdbService) { }
+    private processEquipmentIdbService: ProcessEquipmentIdbService,
+    private keyPerformanceMetricImpactsIdbService: KeyPerformanceMetricImpactsIdbService) { }
 
 
   //TODO: loading service messaging and success toast notification
@@ -73,6 +76,10 @@ export class DbChangesService {
     let keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator> = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.getValue();
     let companyKeyPerformanceIndicators: Array<IdbKeyPerformanceIndicator> = keyPerformanceIndicators.filter(kpi => { return kpi.companyId == company.guid });
     await this.deleteKPIs(companyKeyPerformanceIndicators);
+    //delete kpm impacts
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
+    let companyKeyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(kpmImpact => { return kpmImpact.companyId == company.guid });
+    await this.deleteKeyPerformanceMetricImpacts(companyKeyPerformanceMetricImpacts)
     //delete facilities
     let facilities: Array<IdbFacility> = this.facilityIdbService.facilities.getValue();
     let companyFacilities: Array<IdbFacility> = facilities.filter(facility => { return facility.companyId == company.guid });
@@ -100,6 +107,10 @@ export class DbChangesService {
     let assessments: Array<IdbAssessment> = this.assessmentIdbService.assessments.getValue();
     let facilityAssessments: Array<IdbAssessment> = assessments.filter(assessment => { return assessment.facilityId == facility.guid });
     await this.deleteAssessments(facilityAssessments);
+    //delete kpm impacts
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
+    let assessmentKpmImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => { return metricImpact.facilityId == facility.guid; })
+    await this.deleteKeyPerformanceMetricImpacts(assessmentKpmImpacts);
     //delete energy equipment
     let energyEquipments: Array<IdbEnergyEquipment> = this.energyEquipmentIdbService.energyEquipments.getValue();
     let facilityEnergyEquipments: Array<IdbEnergyEquipment> = energyEquipments.filter(energyEquipment => { return energyEquipment.facilityId == facility.guid });
@@ -126,6 +137,10 @@ export class DbChangesService {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
     let assessmentNonEnergyBenefits: Array<IdbNonEnergyBenefit> = nonEnergyBenefits.filter(neb => { return neb.assessmentId == assessment.guid; })
     await this.deleteNonEnergyBenefits(assessmentNonEnergyBenefits);
+    //delete kpm impacts
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
+    let assessmentKpmImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => { return metricImpact.assessmentId == assessment.guid; })
+    await this.deleteKeyPerformanceMetricImpacts(assessmentKpmImpacts);
     //update contacts
     let contacts: Array<IdbContact> = this.contactIdbService.contacts.getValue();
     let assessmentContacts: Array<IdbContact> = contacts.filter(contact => { return contact.assessmentIds.includes(assessment.guid) });
@@ -154,19 +169,25 @@ export class DbChangesService {
   }
 
   async deleteNonEnergyBenefit(nonEnergyBenefit: IdbNonEnergyBenefit) {
+    //delete kpm impacts
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
+    let nebKpmImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => { return metricImpact.nebId == nonEnergyBenefit.guid; })
+    await this.deleteKeyPerformanceMetricImpacts(nebKpmImpacts);
+
     await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
   }
 
   async deleteEnergyOpportunity(energyOpportunity: IdbEnergyOpportunity) {
+    //delete NEBs
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.nonEnergyBenefits.getValue();
-    for (let i = 0; i < nonEnergyBenefits.length; i++) {
-      let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[i];
-      if (nonEnergyBenefit.energyOpportunityId == energyOpportunity.guid) {
-        await firstValueFrom(this.nonEnergyBenefitsIdbService.deleteWithObservable(nonEnergyBenefit.id));
-      }
-    }
-    await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
+    let assessmentNonEnergyBenefits: Array<IdbNonEnergyBenefit> = nonEnergyBenefits.filter(neb => { return neb.energyOpportunityId == energyOpportunity.guid; })
+    await this.deleteNonEnergyBenefits(assessmentNonEnergyBenefits);
+    //delete kpm impacts
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
+    let opportunityKpmImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => { return metricImpact.energyOpportunityId == energyOpportunity.guid; })
+    await this.deleteKeyPerformanceMetricImpacts(opportunityKpmImpacts);
+
     await firstValueFrom(this.energyOpportunityIdbService.deleteWithObservable(energyOpportunity.id));
     await this.energyOpportunityIdbService.setEnergyOpportunities();
   }
@@ -211,6 +232,13 @@ export class DbChangesService {
       await firstValueFrom(this.processEquipmentIdbService.deleteWithObservable(processEquipments[i].id))
     }
     await this.processEquipmentIdbService.setProcessEquipments();
+  }
+
+  async deleteKeyPerformanceMetricImpacts(keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>) {
+    for (let i = 0; i < keyPerformanceMetricImpacts.length; i++) {
+      await firstValueFrom(this.keyPerformanceMetricImpactsIdbService.deleteWithObservable(keyPerformanceMetricImpacts[i].id));
+    }
+    await this.keyPerformanceMetricImpactsIdbService.setKeyPerformanceMetricImpacts();
   }
 
   async deleteNonEnergyBenefits(nonEnergyBenefits: Array<IdbNonEnergyBenefit>) {
@@ -302,8 +330,8 @@ export class DbChangesService {
     let equipmentAssessments: Array<IdbAssessment> = assessments.filter(assessment => {
       return assessment.equipmentId == energyEquipment.guid;
     });
-    if(equipmentAssessments.length > 0){
-      for(let i = 0; i < equipmentAssessments.length; i++){
+    if (equipmentAssessments.length > 0) {
+      for (let i = 0; i < equipmentAssessments.length; i++) {
         equipmentAssessments[i].equipmentId = undefined;
         await firstValueFrom(this.assessmentIdbService.updateWithObservable(equipmentAssessments[i]));
       }
@@ -330,7 +358,7 @@ export class DbChangesService {
   // Wipe off the data under current user
   async deleteCurrentUserData(user: IdbUser) {
     let companies: Array<IdbCompany> = await firstValueFrom(this.companyIdbService.getAll());
-    let userCompanies: Array<IdbCompany> = companies.filter(company => {return company.userId === user.guid});
+    let userCompanies: Array<IdbCompany> = companies.filter(company => { return company.userId === user.guid });
     for (let i = 0; i < userCompanies.length; i++) {
       await this.deleteCompany(userCompanies[i]);
     }
