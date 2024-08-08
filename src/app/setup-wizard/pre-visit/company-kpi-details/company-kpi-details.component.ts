@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { KeyPerformanceMetric } from 'src/app/shared/constants/keyPerformanceMetrics';
 
 @Component({
   selector: 'app-company-kpi-details',
@@ -52,7 +54,8 @@ export class CompanyKpiDetailsComponent {
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private activatedRoute: ActivatedRoute,
     private companyIdbService: CompanyIdbService,
-    private contactIdbService: ContactIdbService
+    private contactIdbService: ContactIdbService,
+    private keyPerformanceMetricImpactIdbService: KeyPerformanceMetricImpactsIdbService
   ) {
   }
 
@@ -90,11 +93,10 @@ export class CompanyKpiDetailsComponent {
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
   }
 
-  calculateCost() {
-    this.keyPerformanceIndicator.performanceMetrics.forEach(metric => {
-      metric.baselineCost = (metric.costPerValue * metric.baselineValue);
-    });
-    this.saveChanges();
+  async calculateCost(keyPerformanceMetric: KeyPerformanceMetric) {
+    keyPerformanceMetric.baselineCost = (keyPerformanceMetric.costPerValue * keyPerformanceMetric.baselineValue);
+    await this.keyPerformanceMetricImpactIdbService.updatePerformanceMetricBaseline(this.keyPerformanceIndicator, keyPerformanceMetric);
+    await this.saveChanges();
   }
 
   goBack() {

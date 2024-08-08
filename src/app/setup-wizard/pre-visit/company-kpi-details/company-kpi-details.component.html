@@ -76,7 +76,7 @@
                                                 <input type="number" class="form-control"
                                                     [(ngModel)]="keyPerformanceMetric.baselineValue"
                                                     name="{{'baselineValue_'+keyPerformanceMetric.value}}"
-                                                    (input)="calculateCost()">
+                                                    (input)="calculateCost(keyPerformanceMetric)">
                                                 <span class="input-group-text">
                                                     <span
                                                         [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
@@ -95,7 +95,7 @@
                                                 <input type="number" class="form-control"
                                                     [(ngModel)]="keyPerformanceMetric.costPerValue"
                                                     name="{{'costPerValue_'+keyPerformanceMetric.value}}"
-                                                    (input)="calculateCost()">
+                                                    (input)="calculateCost(keyPerformanceMetric)">
                                                 <span class="input-group-text">
                                                     &dollar;/<span
                                                         [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>

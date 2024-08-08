@@ -67,17 +67,23 @@ export class KeyPerformanceMetricImpactsIdbService {
     });
   }
 
+  getByKpiGuid(kpiGuid: string): Array<IdbKeyPerformanceMetricImpact> {
+    let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpacts.getValue();
+    return keyPerformanceMetricImpacts.filter(kpmImpact => {
+      return kpmImpact.kpiGuid == kpiGuid
+    });
+  }
+
   async updatePerformanceMetricBaseline(keyPerformanceIndicator: IdbKeyPerformanceIndicator, keyPerformanceMetric: KeyPerformanceMetric) {
-    let companyMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.getByCompanyGuid(keyPerformanceIndicator.companyId);
+    let companyMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.getByKpiGuid(keyPerformanceIndicator.guid);
     for (let i = 0; i < companyMetricImpacts.length; i++) {
       let metricImpact: IdbKeyPerformanceMetricImpact = companyMetricImpacts[i];
-      if (metricImpact.kpmValue == keyPerformanceMetric.value) {
-        metricImpact.costAdjustment = (metricImpact.modificationValue * keyPerformanceMetric.costPerValue);
-      }
+      metricImpact.costAdjustment = (metricImpact.modificationValue * keyPerformanceMetric.costPerValue);
       await firstValueFrom(this.updateWithObservable(metricImpact));
     }
     await this.setKeyPerformanceMetricImpacts();
   }
+
 
   // getKeyPerformanceMetric(companyGuid: string, performanceMetricValue: KeyPerformanceMetricValue): KeyPerformanceMetric {
   //   let companyKeyPerformanceMetrics: Array<KeyPerformanceMetric> = this.getCompanyKeyPerformanceMetrics(companyGuid);

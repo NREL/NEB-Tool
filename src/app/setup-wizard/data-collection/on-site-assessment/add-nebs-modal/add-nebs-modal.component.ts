@@ -87,7 +87,7 @@ export class AddNebsModalComponent {
         for (let x = 0; x < companyPerformanceMetrics.length; x++) {
           let metric: KeyPerformanceMetric = companyPerformanceMetrics[x];
           if (metric.includeMetric && nebOption.KPM.indexOf(metric.value) != -1) {
-            let performanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.guid, newIdbNonEnergyBenefit.guid, metric.value, this.energyOpportunity.assessmentId);
+            let performanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.guid, newIdbNonEnergyBenefit.guid, metric.value, this.energyOpportunity.assessmentId, metric.kpiGuid);
             await firstValueFrom(this.keyPerformanceMetricImpactsIdbService.addWithObservable(performanceMetricImpact));
           }
         }
@@ -97,7 +97,7 @@ export class AddNebsModalComponent {
         for (let x = 0; x < companyPerformanceMetrics.length; x++) {
           let metric: KeyPerformanceMetric = companyPerformanceMetrics[x];
           if (metric.includeMetric && nebOption.KPM.indexOf(metric.value) != -1) {
-            let performanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, undefined, newIdbNonEnergyBenefit.guid, metric.value, this.assessment.guid);
+            let performanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, undefined, newIdbNonEnergyBenefit.guid, metric.value, this.assessment.guid, metric.kpiGuid);
             await firstValueFrom(this.keyPerformanceMetricImpactsIdbService.addWithObservable(performanceMetricImpact));
           }
         }

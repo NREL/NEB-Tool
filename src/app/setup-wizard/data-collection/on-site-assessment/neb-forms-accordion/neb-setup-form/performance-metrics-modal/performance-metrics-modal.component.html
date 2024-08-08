@@ -7,7 +7,7 @@
 <!--METRICS MODAL-->
 <div [ngClass]="{'window-overlay': displayMetricsModal}"></div>
 <div class="popup lg-popup" [ngClass]="{'open': displayMetricsModal }">
-    <div class="popup-header">Add performance metric known to be associated with this NEB?
+    <div class="popup-header">Add performance metric for "{{nonEnergyBenefit.name}}"
         <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeAddMetricModal()"></button>
     </div>
     <div class="popup-body" *ngIf="displayMetricsModal">
@@ -27,7 +27,7 @@
                         <label class="form-check-label" for="filterAssociatedMetrics">Filter associated metrics</label>
                     </div>
                     <p class="small mb-0">
-                        <fa-icon [icon]="faAsterisk"></fa-icon> Denotes metric typically associated with this NEB.
+                        <fa-icon [icon]="faAsterisk"></fa-icon> Denotes metric typically associated with {{nonEnergyBenefit.name}}.
                     </p>
                 </div>
                 <div class="col-3">

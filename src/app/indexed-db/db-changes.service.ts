@@ -278,26 +278,17 @@ export class DbChangesService {
         }
         await this.contactIdbService.setContacts();
       }
-      //TODO: update kpmImpacts
-      // let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
-      // let companyKeyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => {
-      //   return metricImpact.companyId == keyPerformanceIndicators[i].companyId
-      // });
-      // let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefitsIdbService.getCompanyNonEnergyBenefits(keyPerformanceIndicators[i].companyId);
-      // if (nonEnergyBenefits.length > 0) {
-      //   for (let b = 0; b < nonEnergyBenefits.length; b++) {
-      //     let nonEnergyBenefit: IdbNonEnergyBenefit = nonEnergyBenefits[b];
-      //     let kpiMetricValues: Array<KeyPerformanceMetricValue> = keyPerformanceIndicators[i].performanceMetrics.flatMap(metric => {
-      //       return metric.value;
-      //     });
-      //     //remove metrics from this kpi
-      //     nonEnergyBenefit.performanceMetricImpacts = nonEnergyBenefit.performanceMetricImpacts.filter(pmi => {
-      //       return !kpiMetricValues.includes(pmi.kpmValue);
-      //     });
-      //     await firstValueFrom(this.nonEnergyBenefitsIdbService.updateWithObservable(nonEnergyBenefit));
-      //   }
-      //   await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
-      // }
+      //remove associated kpmImpacts
+      let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
+      let kpiAssociatedKeyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => {
+        return metricImpact.kpiGuid == keyPerformanceIndicators[i].guid;
+      });
+      if (kpiAssociatedKeyPerformanceMetricImpacts.length > 0) {
+        for (let x = 0; x < kpiAssociatedKeyPerformanceMetricImpacts.length; x++) {
+          await firstValueFrom(this.keyPerformanceMetricImpactsIdbService.deleteWithObservable(kpiAssociatedKeyPerformanceMetricImpacts[x].id));
+        }
+        await this.keyPerformanceMetricImpactsIdbService.setKeyPerformanceMetricImpacts();
+      }
       await firstValueFrom(this.keyPerformanceIndicatorIdbService.deleteWithObservable(keyPerformanceIndicators[i].id));
     }
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
