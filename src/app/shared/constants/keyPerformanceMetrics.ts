@@ -20,26 +20,29 @@ export function getPerformanceMetrics(keyPerformanceIndicatorValue: KeyPerforman
             }
         })
     } else {
-        return [
-            {
-                label: 'Custom KPM',
-                htmlLabel: 'Custom KPM',
-                value: 'custom',
-                kpiValue: keyPerformanceIndicatorValue,
-                isQuantitative: true,
-                baselineValue: undefined,
-                costPerValue: undefined,
-                totalUnit: 'unit',
-                baselineCost: undefined,
-                isCustom: true,
-                kpiGuid: kpiGuid,
-                guid: getGUID(),
-                includeMetric: true
-            }
-        ]
+        let customKPM: KeyPerformanceMetric = getCustomKPM(keyPerformanceIndicatorValue, kpiGuid);
+        return [customKPM]
     }
 }
 
+export function getCustomKPM(keyPerformanceIndicatorValue: KeyPerformanceIndicatorValue, kpiGuid: string): KeyPerformanceMetric {
+    return {
+        label: 'Custom KPM',
+        htmlLabel: 'Custom KPM',
+        value: 'custom',
+        kpiValue: keyPerformanceIndicatorValue,
+        isQuantitative: true,
+        baselineValue: undefined,
+        costPerValue: undefined,
+        totalUnit: 'unit',
+        baselineCost: undefined,
+        isCustom: true,
+        kpiGuid: kpiGuid,
+        guid: getGUID(),
+        includeMetric: true
+    }
+
+}
 
 export type KeyPerformanceMetricValue =
     'contributeCompanyVision' |

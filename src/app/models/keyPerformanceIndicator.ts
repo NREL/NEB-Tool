@@ -6,6 +6,7 @@ export interface IdbKeyPerformanceIndicator extends IdbEntry, KeyPerformanceIndi
     userId: string,
     companyId: string,
     isCustom: boolean,
+    description: string,
     performanceMetrics: Array<KeyPerformanceMetric>
 }
 
@@ -18,6 +19,7 @@ export function getNewKeyPerformanceIndicator(userId: string, companyId: string,
         companyId: companyId,
         ...keyPerformanceIndicatorOption,
         isCustom: isCustom,
+        description: undefined,
         performanceMetrics: getPerformanceMetrics(keyPerformanceIndicatorOption.optionValue, idbEntry.guid)
     }
 }

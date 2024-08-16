@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconDefinition, faBullseye, faChartBar, faChevronLeft, faChevronRight, faCircleQuestion, faContactBook, faPlus, faScaleUnbalancedFlip, faUser } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faChartBar, faChevronLeft, faChevronRight, faCircleQuestion, faClose, faContactBook, faPlus, faScaleUnbalancedFlip, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
@@ -13,7 +13,7 @@ import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
-import { KeyPerformanceMetric } from 'src/app/shared/constants/keyPerformanceMetrics';
+import { getCustomKPM, KeyPerformanceMetric } from 'src/app/shared/constants/keyPerformanceMetrics';
 
 @Component({
   selector: 'app-company-kpi-details',
@@ -27,6 +27,8 @@ export class CompanyKpiDetailsComponent {
   faChevronLeft: IconDefinition = faChevronLeft;
   faUser: IconDefinition = faUser;
   faContactBook: IconDefinition = faContactBook;
+  faClose: IconDefinition = faClose;
+  faTrash: IconDefinition = faTrash;
 
   keyPerformanceIndicator: IdbKeyPerformanceIndicator;
   primaryKPIs: Array<PrimaryKPI> = PrimaryKPIs;
@@ -49,6 +51,9 @@ export class CompanyKpiDetailsComponent {
 
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
+
+  displayDeleteKpmModal: boolean = false;
+  kpmToDelete: KeyPerformanceMetric;
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
@@ -150,5 +155,29 @@ export class CompanyKpiDetailsComponent {
   closeContactModal() {
     this.displayContactModal = false;
     this.viewContact = undefined;
+  }
+
+  addPerformanceMetric() {
+    let newCustomKPM: KeyPerformanceMetric = getCustomKPM(this.keyPerformanceIndicator.optionValue, this.keyPerformanceIndicator.guid);
+    this.keyPerformanceIndicator.performanceMetrics.push(newCustomKPM);
+    this.saveChanges();
+  }
+
+  openDeleteMetricModal(keyPerformanceMetric: KeyPerformanceMetric) {
+    this.kpmToDelete = keyPerformanceMetric;
+    this.displayDeleteKpmModal = true;
+  }
+
+  closeDeleteKpmModal() {
+    this.displayDeleteKpmModal = false;
+    this.kpmToDelete = undefined;
+  }
+
+  async untrackMetric() {
+    this.keyPerformanceIndicator.performanceMetrics = this.keyPerformanceIndicator.performanceMetrics.filter(kpm => {
+      return kpm.guid != this.kpmToDelete.guid
+    });
+    await this.saveChanges();
+    this.closeDeleteKpmModal();
   }
 }
