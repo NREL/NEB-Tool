@@ -2,8 +2,7 @@
     <div class="col-12">
         <form>
             <div class="row">
-                <label class="col-sm-5 col-form-label" for="equipmentName">Equipment
-                    Name</label>
+                <label class="col-sm-5 col-form-label" for="equipmentName">End Use Name</label>
                 <div class="col-sm-7">
                     <input name="equipmentName" type="text" class="form-control"
                         [(ngModel)]="processEquipment.equipmentName"
@@ -58,14 +57,14 @@
     </div>
     <div class="popup-body">
         <div class="alert alert-danger">
-            Are you sure you want to delete this equipment? Changes will be lost.
+            Are you sure you want to delete this end use? Changes will be lost.
         </div>
         <hr>
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
         <button class="btn btn-danger" (click)="deleteEquipment()"><fa-icon [icon]="faTrash"></fa-icon> Delete
-            Equipment</button>
+            End Use</button>
     </div>
 </div>
 
