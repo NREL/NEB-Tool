@@ -11,12 +11,10 @@ export function getNebReport(nonEnergyBenefit: IdbNonEnergyBenefit, companyPerfo
             let keyPerformanceMetric: KeyPerformanceMetric = companyPerformanceMetrics.find(companyKPM => {
                 return companyKPM.value == performanceMetricImpact.kpmValue
             });
-            if (keyPerformanceMetric.includeMetric) {
-                reportPerformanceMetrics.push({
-                    performanceMetricImpact: performanceMetricImpact,
-                    keyPerformanceMetric: keyPerformanceMetric
-                })
-            }
+            reportPerformanceMetrics.push({
+                performanceMetricImpact: performanceMetricImpact,
+                keyPerformanceMetric: keyPerformanceMetric
+            })
         }
     });
     let costSavings: number = nonEnergyBenefit.costImpact || 0;

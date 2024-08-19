@@ -8,12 +8,13 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import * as _ from 'lodash';
 import { PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbContact } from 'src/app/models/contact';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
 import { getCustomKPM, KeyPerformanceMetric } from 'src/app/shared/constants/keyPerformanceMetrics';
+import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 
 @Component({
   selector: 'app-company-kpi-details',
@@ -54,6 +55,9 @@ export class CompanyKpiDetailsComponent {
 
   displayDeleteKpmModal: boolean = false;
   kpmToDelete: KeyPerformanceMetric;
+
+  keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>;
+  keyPerformanceMetricImpactsSub: Subscription;
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
@@ -74,6 +78,11 @@ export class CompanyKpiDetailsComponent {
     this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
       this.contacts = _contacts;
     });
+
+    this.keyPerformanceMetricImpactsSub = this.keyPerformanceMetricImpactIdbService.keyPerformanceMetricImpacts.subscribe(_keyPerformanceMetricImpacts => {
+      this.keyPerformanceMetricImpacts = _keyPerformanceMetricImpacts;
+    });
+
     this.activatedRoute.params.subscribe(params => {
       let kpiGuid: string = params['id'];
       this.keyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getByGuid(kpiGuid);
@@ -85,6 +94,7 @@ export class CompanyKpiDetailsComponent {
     this.companySub.unsubscribe();
     this.keyPerformanceIndicatorSub.unsubscribe();
     this.contactsSub.unsubscribe();
+    this.keyPerformanceMetricImpactsSub.unsubscribe();
   }
 
   async saveChanges() {
@@ -177,6 +187,15 @@ export class CompanyKpiDetailsComponent {
     this.keyPerformanceIndicator.performanceMetrics = this.keyPerformanceIndicator.performanceMetrics.filter(kpm => {
       return kpm.guid != this.kpmToDelete.guid
     });
+    let kpmImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpacts.filter(kpmImpact => {
+      return kpmImpact.kpmGuid == this.kpmToDelete.guid;
+    });
+    if(kpmImpacts.length > 0){
+      for (let index = 0; index < kpmImpacts.length; index++) {
+          await firstValueFrom(this.keyPerformanceMetricImpactIdbService.deleteWithObservable(kpmImpacts[index].id));
+      }
+      await this.keyPerformanceMetricImpactIdbService.setKeyPerformanceMetricImpacts();
+    }
     await this.saveChanges();
     this.closeDeleteKpmModal();
   }

@@ -55,10 +55,7 @@ export class NebSetupFormComponent {
   kpmImpactsSub: Subscription;
   constructor(
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
-    private router: Router,
-    private onSiteVisitIdbService: OnSiteVisitIdbService,
     private dbChangesService: DbChangesService,
-    private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private contactIdbService: ContactIdbService,
     private setupWizardService: SetupWizardService,
     private keyPerformanceMetricImpactsIdbService: KeyPerformanceMetricImpactsIdbService) {
@@ -66,7 +63,6 @@ export class NebSetupFormComponent {
 
   ngOnInit() {
     this.nonEnergyBenefit = this.nonEnergyBenefitsIdbService.getByGuid(this.nebGuid);
-    // this.setMetrics();
 
     this.contactsSub = this.contactIdbService.contacts.subscribe(_contacts => {
       this.contacts = _contacts;
@@ -128,70 +124,6 @@ export class NebSetupFormComponent {
 
 
   }
-
-  // setMetrics() {
-  //   this.includedMetrics = new Array();
-  //   this.excludedMetrics = new Array();
-  //   this.untrackedMetrics = new Array();
-  //   this.nonEnergyBenefit.performanceMetricImpacts.forEach(performanceMetricImpact => {
-  //     let keyPerformanceMetric: KeyPerformanceMetric = this.keyPerformanceIndicatorIdbService.getKeyPerformanceMetric(this.nonEnergyBenefit.companyId, performanceMetricImpact.kpmValue);
-  //     if (keyPerformanceMetric.includeMetric) {
-  //       this.includedMetrics.push(performanceMetricImpact);
-  //     } else {
-  //       this.excludedMetrics.push(keyPerformanceMetric);
-  //     }
-  //   });
-
-  //   let metricIds: Array<KeyPerformanceMetricValue> = this.nonEnergyBenefit.performanceMetricImpacts.map(metric => {
-  //     return metric.kpmValue;
-  //   });
-  //   KeyPerformanceMetrics.forEach(metric => {
-  //     let nebOption: NebOption = NebOptions.find(option => { return option.optionValue == this.nonEnergyBenefit.nebOptionValue });
-  //     if (nebOption) {
-  //       if (metricIds.includes(metric.value) == false && nebOption.KPM.includes(metric.value)) {
-  //         this.untrackedMetrics.push(metric);
-  //       }
-  //     }
-  //   });
-  // }
-
-  // goToMetric(metric: KeyPerformanceMetric) {
-  //   let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, metric.kpiValue);
-  //   let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-  //   this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-detail/' + keyPerformanceIndicator.guid)
-  // }
-
-  // async addMetric() {
-  //   let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.performanceMetricToAdd.kpiValue);
-  //   if (keyPerformanceIndicator) {
-  //     //if exists turn on untracked metric
-  //     keyPerformanceIndicator.performanceMetrics.forEach(_metric => {
-  //       if (_metric.value == this.performanceMetricToAdd.value) {
-  //         _metric.includeMetric = true
-  //       }
-  //     });
-  //     await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
-  //   } else {
-  //     //add untracked KPI if doesn't exist
-  //     let kpiOption: KeyPerformanceIndicatorOption = KeyPerformanceIndicatorOptions.find(option => {
-  //       return option.optionValue == this.performanceMetricToAdd.kpiValue
-  //     });
-  //     keyPerformanceIndicator = getNewKeyPerformanceIndicator(this.nonEnergyBenefit.userId, this.nonEnergyBenefit.companyId, kpiOption, false);
-  //     keyPerformanceIndicator.performanceMetrics.forEach(_metric => {
-  //       if (_metric.value == this.performanceMetricToAdd.value) {
-  //         _metric.includeMetric = true
-  //       } else {
-  //         _metric.includeMetric = false;
-  //       }
-  //     });
-  //     await firstValueFrom(this.keyPerformanceIndicatorIdbService.addWithObservable(keyPerformanceIndicator));
-  //     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
-  //     await this.nonEnergyBenefitsIdbService.addCompanyKpi(keyPerformanceIndicator);
-  //     this.nonEnergyBenefit = this.nonEnergyBenefitsIdbService.getByGuid(this.nebGuid);
-  //   }
-  //   this.closeAddMetricModal();
-  //   this.setMetrics();
-  // }
 
   openContactModal(viewContact: IdbContact) {
     this.setupWizardService.displayContactModal.next({ context: 'nonEnergyBenefit', viewContact: viewContact, contextGuid: this.nonEnergyBenefit.guid });

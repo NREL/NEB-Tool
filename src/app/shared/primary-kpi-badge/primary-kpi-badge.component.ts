@@ -14,6 +14,8 @@ export class PrimaryKpiBadgeComponent {
   kpiOption: KeyPerformanceIndicatorOption;
   @Input()
   companyGuid: string
+  @Input()
+  fullWidth: boolean;
 
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService) {
   }

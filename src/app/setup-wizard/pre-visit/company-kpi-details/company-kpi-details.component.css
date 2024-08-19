@@ -31,3 +31,9 @@ a.click-link.click-link-danger:hover{
     cursor: pointer;
     text-decoration: underline;
 }
+
+
+.metric-block{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

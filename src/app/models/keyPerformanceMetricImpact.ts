@@ -10,13 +10,14 @@ export interface IdbKeyPerformanceMetricImpact extends IdbEntry {
     nebId: string,
     kpmValue: KeyPerformanceMetricValue,
     kpiGuid: string,
+    kpmGuid: string,
     modificationValue: number,
     costAdjustment: number,
     percentSavings?: number
 }
 
 
-export function getNewIdbKeyPerformanceMetricImpact(userId: string, companyId: string, facilityId: string, energyOpportunityId: string, nebId: string, kpmValue: KeyPerformanceMetricValue, assessemntId: string, kpiGuid: string): IdbKeyPerformanceMetricImpact {
+export function getNewIdbKeyPerformanceMetricImpact(userId: string, companyId: string, facilityId: string, energyOpportunityId: string, nebId: string, kpmValue: KeyPerformanceMetricValue, assessemntId: string, kpiGuid: string, kpmGuid: string): IdbKeyPerformanceMetricImpact {
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
@@ -30,6 +31,7 @@ export function getNewIdbKeyPerformanceMetricImpact(userId: string, companyId: s
         modificationValue: undefined,
         costAdjustment: undefined,
         percentSavings: undefined,
-        kpmValue: kpmValue
+        kpmValue: kpmValue,
+        kpmGuid: kpmGuid
     }
 }

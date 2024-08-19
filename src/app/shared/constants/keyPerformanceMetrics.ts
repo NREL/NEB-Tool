@@ -14,8 +14,7 @@ export function getPerformanceMetrics(keyPerformanceIndicatorValue: KeyPerforman
                 baselineCost: undefined,
                 isCustom: false,
                 kpiGuid: kpiGuid,
-                guid: getGUID(),
-                includeMetric: undefined
+                guid: getGUID()
 
             }
         })
@@ -38,8 +37,7 @@ export function getCustomKPM(keyPerformanceIndicatorValue: KeyPerformanceIndicat
         baselineCost: undefined,
         isCustom: true,
         kpiGuid: kpiGuid,
-        guid: getGUID(),
-        includeMetric: true
+        guid: getGUID()
     }
 
 }
@@ -106,7 +104,6 @@ export interface KeyPerformanceMetric extends KeyPerformanceMetricOption {
     isCustom: boolean,
     kpiGuid: string,
     guid: string,
-    includeMetric: boolean
 }
 
 

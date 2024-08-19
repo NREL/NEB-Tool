@@ -86,8 +86,8 @@ export class AddNebsModalComponent {
         //add associated key performance metric impacts
         for (let x = 0; x < companyPerformanceMetrics.length; x++) {
           let metric: KeyPerformanceMetric = companyPerformanceMetrics[x];
-          if (metric.includeMetric && nebOption.KPM.indexOf(metric.value) != -1) {
-            let performanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.guid, newIdbNonEnergyBenefit.guid, metric.value, this.energyOpportunity.assessmentId, metric.kpiGuid);
+          if (nebOption.KPM.indexOf(metric.value) != -1) {
+            let performanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.guid, newIdbNonEnergyBenefit.guid, metric.value, this.energyOpportunity.assessmentId, metric.kpiGuid, metric.guid);
             await firstValueFrom(this.keyPerformanceMetricImpactsIdbService.addWithObservable(performanceMetricImpact));
           }
         }
@@ -96,8 +96,8 @@ export class AddNebsModalComponent {
         //add associated key performance metric impacts
         for (let x = 0; x < companyPerformanceMetrics.length; x++) {
           let metric: KeyPerformanceMetric = companyPerformanceMetrics[x];
-          if (metric.includeMetric && nebOption.KPM.indexOf(metric.value) != -1) {
-            let performanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, undefined, newIdbNonEnergyBenefit.guid, metric.value, this.assessment.guid, metric.kpiGuid);
+          if (nebOption.KPM.indexOf(metric.value) != -1) {
+            let performanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, undefined, newIdbNonEnergyBenefit.guid, metric.value, this.assessment.guid, metric.kpiGuid, metric.guid);
             await firstValueFrom(this.keyPerformanceMetricImpactsIdbService.addWithObservable(performanceMetricImpact));
           }
         }
