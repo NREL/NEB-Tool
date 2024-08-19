@@ -89,22 +89,39 @@
 <!--delete KPI modal-->
 <div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">
-    <div class="popup-header">Delete <ng-template [ngIf]="kpiToDelete">
+    <ng-template [ngIf]="kpiToDelete">
+        <div class="popup-header">Delete
             <span [innerHTML]="kpiToDelete.htmlLabel"></span>
-        </ng-template>
-        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
-    </div>
-    <div class="popup-body">
-        <div class="alert alert-danger">
-            Are you sure you want to delete <ng-template [ngIf]="kpiToDelete">
-                <span [innerHTML]="kpiToDelete.htmlLabel"></span>
-            </ng-template>? Changes will be lost.
+            <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
         </div>
-        <hr>
-    </div>
-    <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary btn-sm me-2" (click)="closeDeleteModal()">Cancel</button>
-        <button class="btn btn-danger btn-sm" (click)="removeKPI()"><fa-icon [icon]="faTrash"></fa-icon> Delete
-            KPI</button>
-    </div>
+        <div class="popup-body">
+
+            <ng-template
+                [ngIf]="(keyPerformanceMetricImpacts | keyPerformanceMetricImpactsList: kpiToDelete.guid: true).length"
+                [ngIfElse]="noImpactsDeleteBlock">
+                <div class="alert alert-danger">
+                    Are you sure you want to untrack the performance indicator:
+                    <span class="bold" [innerHTML]="kpiToDelete.htmlLabel"></span>? <br>{{(keyPerformanceMetricImpacts |
+                    keyPerformanceMetricImpactsList:
+                    kpiToDelete.guid: true).length}} NEB(s) in your system currently impact this metric. Those impacts
+                    will be
+                    lost. This cannot be undone.
+                </div>
+
+            </ng-template>
+
+            <ng-template #noImpactsDeleteBlock>
+                <div class="alert alert-warning">
+                    Are you sure you want to untrack this performance indicator:
+                    <span class="bold" [innerHTML]="kpiToDelete.htmlLabel"></span>?
+                </div>
+            </ng-template>
+            <hr>
+        </div>
+        <div class="popup-footer d-flex justify-content-end">
+            <button class="btn btn-secondary btn-sm me-2" (click)="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger btn-sm" (click)="removeKPI()"><fa-icon [icon]="faTrash"></fa-icon> Delete
+                KPI</button>
+        </div>
+    </ng-template>
 </div>

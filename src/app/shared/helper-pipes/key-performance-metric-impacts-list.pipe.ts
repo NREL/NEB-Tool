@@ -6,10 +6,16 @@ import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetr
 })
 export class KeyPerformanceMetricImpactsListPipe implements PipeTransform {
 
-  transform(keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>, kpmGuid: string):  Array<IdbKeyPerformanceMetricImpact>{
-    return keyPerformanceMetricImpacts.filter(metricImpact => {
-      return metricImpact.kpmGuid == kpmGuid;
-    });
+  transform(keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>, associatedGuid: string, isKpi?: boolean): Array<IdbKeyPerformanceMetricImpact> {
+    if (isKpi) {
+      return keyPerformanceMetricImpacts.filter(metricImpact => {
+        return metricImpact.kpiGuid == associatedGuid;
+      });
+    } else {
+      return keyPerformanceMetricImpacts.filter(metricImpact => {
+        return metricImpact.kpmGuid == associatedGuid;
+      });
+    }
   }
 
 }
