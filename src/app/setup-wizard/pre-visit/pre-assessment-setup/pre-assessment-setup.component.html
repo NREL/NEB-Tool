@@ -12,7 +12,7 @@
                             <div class="row">
                                 <label class="col-sm-5 col-form-label bold" for="visitDate">Visit Date</label>
                                 <div class="col-sm-7">
-                                    <input type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
+                                    <input name="visitDate" id="visitDate" type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
                                         name="visitDate" (change)="setVisitDate()">
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                                                 <input name="energy" type="number" class="form-control"
                                                                     [(ngModel)]="assessment.energyUse"
                                                                     (input)="saveChanges(assessment)" id="energyUse">
-                                                                <select class="input-group-text">
+                                                                <select name="energyUnit" class="input-group-text">
                                                                     <option *ngFor="let unitOption of unitOptions" [ngValue]="assessment.unitOption.value">
                                                                         {{assessment.unitOption.value | unitsDisplay}}
                                                                     </option>
@@ -128,7 +128,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-5 col-form-label" for="visitDate">Scheduled
                                                             For</label>
-                                                        <div class="col-sm-7">
+                                                        <div id="visitDate" class="col-sm-7">
                                                             {{assessment.visitDate | date}}
                                                         </div>
                                                     </div>

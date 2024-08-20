@@ -98,6 +98,7 @@ export class PreAssessmentSetupComponent {
   
   async saveChanges(assessment: IdbAssessment) {
     this.isFormChange = true;
+    
     this.assessmentIdbService.asyncUpdate(assessment);
   }
 
