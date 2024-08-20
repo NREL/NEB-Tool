@@ -154,6 +154,21 @@
                                     <fa-icon class="pe-1" [icon]="faScaleUnbalancedFlip"></fa-icon>
                                     <span class="bold" [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
                                 </ng-template>
+
+                                <div class="row">
+                                    <label class="col-sm-6 col-form-label"
+                                        for="{{'isQuantitative_'+keyPerformanceMetric.value}}">
+                                        Is Quantitative?
+                                    </label>
+                                    <div class="col-6">
+                                        <select id="{{'isQuantitative_'+keyPerformanceMetric.value}}"
+                                            name="{{'isQuantitative_'+keyPerformanceMetric.value}}" class="form-select"
+                                            [(ngModel)]="keyPerformanceMetric.isQuantitative" (change)="saveChanges()">
+                                            <option [ngValue]="true">Quantitative</option>
+                                            <option [ngValue]="false">Qualitative</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <ng-template [ngIf]="keyPerformanceMetric.isQuantitative"
                                     [ngIfElse]="qualitativeMetricBlock">
                                     <div class="row">
