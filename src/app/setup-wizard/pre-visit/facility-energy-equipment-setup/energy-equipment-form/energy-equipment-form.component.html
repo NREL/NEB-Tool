@@ -31,7 +31,7 @@
                     <select name="utilityType" class="form-select" id="utilityType"
                         [(ngModel)]="energyEquipment.utilityType"
                         (change)="saveChanges()">
-                        <option *ngFor="let option of utilityTypeOptions"
+                        <option *ngFor="let option of utilityTypes"
                             [ngValue]="option">
                             {{option}}
                         </option>

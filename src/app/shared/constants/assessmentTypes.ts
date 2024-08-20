@@ -1,4 +1,4 @@
-import { UtilityType, UtilityTypeOptions } from "./utilityTypes";
+import { UtilityType, UtilityTypes } from "./utilityTypes";
 
 export type AssessmentType = "Pump" | "Fan" | "Process heating" | "Steam" | "Compressed Air" | "Water" | "Treasure Hunt" | "Other";
 export const assessmentTypes: Array<AssessmentType> = ["Pump",  "Fan", "Process heating", "Steam", "Compressed Air", "Water", "Treasure Hunt", "Other"];
@@ -16,6 +16,6 @@ export const assessmentOptions: Array<assessmentOption> = [
     {assessmentType: "Steam", utilityTypes: ['Natural Gas', 'Other Fuels', 'Electricity']},
     {assessmentType: "Compressed Air", utilityTypes: ['Electricity']},
     {assessmentType: "Water", utilityTypes: ['Water']},
-    {assessmentType: "Treasure Hunt", utilityTypes: UtilityTypeOptions},
-    {assessmentType: "Other", utilityTypes: UtilityTypeOptions}
+    {assessmentType: "Treasure Hunt", utilityTypes: UtilityTypes},
+    {assessmentType: "Other", utilityTypes: UtilityTypes}
 ];
