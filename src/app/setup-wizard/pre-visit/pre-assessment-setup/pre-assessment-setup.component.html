@@ -76,6 +76,25 @@
                                                     </div>
 
                                                     <div class="row">
+                                                        <label class="col-sm-5 col-form-label" for="utilityType">Utility Type</label>
+                                                        <div class="col-sm-7">
+
+                                                                <select name="utilityType" class="form-select"
+                                                                    id="utilityType"
+                                                                    *ngIf="assessment.utilityTypes"
+                                                                    [(ngModel)]="assessment.utilityTypes[0]"
+                                                                    (change)="saveChanges(assessment)">
+                                                                    <option
+                                                                        *ngFor="let utilityType of assessment.utilityTypes"
+                                                                        [ngValue]="utilityType">
+                                                                        {{utilityType}}
+                                                                    </option>
+                                                                </select>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
                                                         <label class="col-sm-5 col-form-label" for="energyUse">Annual
                                                             Energy
                                                             Use</label>
@@ -84,7 +103,11 @@
                                                                 <input name="energy" type="number" class="form-control"
                                                                     [(ngModel)]="assessment.energyUse"
                                                                     (input)="saveChanges(assessment)" id="energyUse">
-                                                                <span class="input-group-text">MMBtu/yr</span>
+                                                                <select class="input-group-text">
+                                                                    <option *ngFor="let unitOption of unitOptions" [ngValue]="assessment.unitOption.value">
+                                                                        {{assessment.unitOption.value | unitsDisplay}}
+                                                                    </option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -1,3 +1,4 @@
+import { UnitOption } from "../shared/constants/unitOptions";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
 export interface IdbAssessment extends IdbEntry {
@@ -6,12 +7,14 @@ export interface IdbAssessment extends IdbEntry {
     facilityId: string,
     companyId: string,
     assessmentType: string,
+    utilityTypes: Array<string>,
+    unitOption: UnitOption,
     equipmentId: string,
     energyUse: number,
     cost: number,
     energySavings: number,
     costSavings: number,
-    visitDate: Date
+    visitDate: Date,
     notes: string,
     implementationCost: number
 }
@@ -25,6 +28,8 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         companyId: companyId,
         facilityId: facilityId,
         assessmentType: undefined,
+        utilityTypes: [],
+        unitOption: undefined,
         equipmentId: undefined,
         energyUse: undefined,
         cost: undefined,

@@ -14,6 +14,7 @@ import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { AssessmentType, assessmentTypes } from 'src/app/shared/constants/assessmentTypes';
+import { EnergyUnitOptions, UnitOption } from 'src/app/shared/constants/unitOptions';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -54,6 +55,9 @@ export class PreAssessmentSetupComponent {
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
   isFormChange: boolean = false;
+
+  unitOptions: Array<UnitOption>;
+
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private facilityIdbService: FacilityIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
