@@ -15,7 +15,7 @@ import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { assessmentOptions, AssessmentType, assessmentTypes } from 'src/app/shared/constants/assessmentTypes';
 import { EnergyUnitOptions, UnitOption } from 'src/app/shared/constants/unitOptions';
-import { UtilityOption, utilityOptions } from 'src/app/shared/constants/utilityTypes';
+import { UtilityOption, utilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -58,6 +58,7 @@ export class PreAssessmentSetupComponent {
   isFormChange: boolean = false;
 
   unitOptions: Array<UnitOption>;
+  utilityTypes: Array<UtilityType>;
 
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private facilityIdbService: FacilityIdbService,
@@ -100,17 +101,21 @@ export class PreAssessmentSetupComponent {
   async saveChanges(assessment: IdbAssessment) {
     this.isFormChange = true;
     // update utility type and unit options based on assessment type
-    assessment.utilityTypes = assessmentOptions.find((assessmentOption) => assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
-    const unitOptionsSet = new Set<Array<UnitOption>>;
-    assessment.utilityTypes.forEach(
-      _utilityType => {
-        const _utilityOption : UtilityOption = utilityOptions.find(utilityOption => utilityOption.utilityType == _utilityType);
-        if (!unitOptionsSet.has(_utilityOption.unitOptions)) {
-          unitOptionsSet.add(_utilityOption.unitOptions);
-        }
-      }
-    );
-    this.unitOptions = Array.from(unitOptionsSet).flat();
+    // assessment.utilityTypes = assessmentOptions.find((assessmentOption) => assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
+    // const unitOptionsSet = new Set<Array<UnitOption>>;
+    // assessment.utilityTypes.forEach(
+    //   _utilityType => {
+    //     const _utilityOption : UtilityOption = utilityOptions.find(utilityOption => utilityOption.utilityType == _utilityType);
+    //     if (!unitOptionsSet.has(_utilityOption.unitOptions)) {
+    //       unitOptionsSet.add(_utilityOption.unitOptions);
+    //     }
+    //   }
+    // );
+    // this.unitOptions = Array.from(unitOptionsSet).flat();
+    this.utilityTypes = assessmentOptions.find(assessmentOption => assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
+    assessment.utilityTypes = this.utilityTypes;
+    console.log(assessment.utilityType)
+    this.unitOptions = utilityOptions.find(utilityOption => utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
     this.assessmentIdbService.asyncUpdate(assessment);
   }
 

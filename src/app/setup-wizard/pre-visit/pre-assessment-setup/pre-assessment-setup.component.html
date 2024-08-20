@@ -81,11 +81,10 @@
 
                                                                 <select name="utilityType" class="form-select"
                                                                     id="utilityType"
-                                                                    *ngIf="assessment.utilityTypes"
-                                                                    [(ngModel)]="assessment.utilityTypes[0]"
+                                                                    [(ngModel)]="assessment.utilityType"
                                                                     (change)="saveChanges(assessment)">
                                                                     <option
-                                                                        *ngFor="let utilityType of assessment.utilityTypes"
+                                                                        *ngFor="let utilityType of utilityTypes"
                                                                         [ngValue]="utilityType">
                                                                         {{utilityType}}
                                                                     </option>

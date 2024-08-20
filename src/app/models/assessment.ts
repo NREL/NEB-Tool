@@ -8,6 +8,7 @@ export interface IdbAssessment extends IdbEntry {
     companyId: string,
     assessmentType: string,
     utilityTypes: Array<string>,
+    utilityType: string, // temporary limited to one utility type
     unitOption: UnitOption,
     equipmentId: string,
     energyUse: number,
@@ -29,6 +30,7 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         facilityId: facilityId,
         assessmentType: undefined,
         utilityTypes: [],
+        utilityType: undefined,
         unitOption: undefined,
         equipmentId: undefined,
         energyUse: undefined,
