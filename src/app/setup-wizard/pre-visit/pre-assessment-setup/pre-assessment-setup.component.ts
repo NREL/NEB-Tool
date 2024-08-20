@@ -13,6 +13,7 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { AssessmentType, assessmentTypes } from 'src/app/shared/constants/assessmentTypes';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -40,6 +41,8 @@ export class PreAssessmentSetupComponent {
 
   energyEquipmentSub: Subscription;
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
+
+  assessmentTypes: Array<AssessmentType> = assessmentTypes;
   
   
   displayDeleteModal: boolean = false;

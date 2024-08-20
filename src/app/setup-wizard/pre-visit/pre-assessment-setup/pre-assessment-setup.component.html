@@ -58,27 +58,20 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label" for="equipmentId">Assessment Type</label>
+                                                        <label class="col-sm-5 col-form-label" for="assessmentType">Assessment Type</label>
                                                         <div class="col-sm-7">
-                                                            <ng-template
-                                                                [ngIf]="(assessment.facilityId | energyEquipmentList:'facility':energyEquipmentOptions).length != 0"
-                                                                [ngIfElse]="noEquipmentBlock">
-                                                                <select name="equipmentId" class="form-select"
-                                                                    id="equipmentId"
-                                                                    [(ngModel)]="assessment.equipmentId"
+
+                                                                <select name="assessmentType" class="form-select"
+                                                                    id="assessmentType"
+                                                                    [(ngModel)]="assessment.assessmentType"
                                                                     (change)="saveChanges(assessment)">
                                                                     <option
-                                                                        *ngFor="let energyEquipment of (assessment.facilityId | energyEquipmentList:'facility':energyEquipmentOptions)"
-                                                                        [ngValue]="energyEquipment.guid">
-                                                                        {{energyEquipment.equipmentName}}
+                                                                        *ngFor="let assessmentType of assessmentTypes"
+                                                                        [ngValue]="assessmentType">
+                                                                        {{assessmentType}}
                                                                     </option>
                                                                 </select>
-                                                            </ng-template>
-                                                            <ng-template #noEquipmentBlock>
-                                                                <div class="alert alert-warning mb-0 p-1">
-                                                                    No energy equipment found.
-                                                                </div>
-                                                            </ng-template>
+
                                                         </div>
                                                     </div>
 

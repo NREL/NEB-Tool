@@ -8,6 +8,7 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { AssessmentType, assessmentTypes } from 'src/app/shared/constants/assessmentTypes';
 
 @Component({
   selector: 'app-assessment-details-form',
@@ -29,6 +30,9 @@ export class AssessmentDetailsFormComponent {
 
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
   energyEquipmentSub: Subscription;
+
+  assessmentTypes: Array<AssessmentType> = assessmentTypes;
+  
   constructor(
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
