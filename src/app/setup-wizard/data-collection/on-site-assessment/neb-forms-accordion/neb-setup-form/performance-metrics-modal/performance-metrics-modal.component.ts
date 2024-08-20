@@ -33,7 +33,7 @@ export class PerformanceMetricsModalComponent {
   performanceMetricOptions: Array<KeyPerformanceMetricOption> = [];
 
   kpmSearchStr: string = '';
-  orderByDir: 'asc' | 'desc' = 'desc';
+  orderByDir: 'asc' | 'desc' = 'asc';
   filterAssociatedMetrics: boolean = false;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
 

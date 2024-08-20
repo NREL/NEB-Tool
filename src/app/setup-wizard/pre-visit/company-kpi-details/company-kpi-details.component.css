@@ -19,18 +19,6 @@
     border-style: dashed;
     /* margin-top: 0; */
 }
-.text-right{
-    text-align: right;
-}
-
-a.click-link.click-link-danger{
-    color: red;
-    text-decoration: none;
-}
-a.click-link.click-link-danger:hover{
-    cursor: pointer;
-    text-decoration: underline;
-}
 
 
 .metric-block{

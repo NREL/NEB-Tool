@@ -13,8 +13,8 @@
         </button>
     </div>
     <div class="d-flex">
-        
-        <app-performance-metrics-modal [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metrics-modal>
+
+        <!-- <app-performance-metrics-modal [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metrics-modal> -->
 
         <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
             <fa-icon [icon]="faTrash"></fa-icon> Delete
@@ -36,31 +36,23 @@
         <label class="col-sm-5 col-form-label" for="costImpact">Direct Cost Impact</label>
         <div class="col-sm-7">
             <div class="input-group">
-                <input type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.costImpact"
-                    name="baselineValue" (input)="saveChanges()">
+                <input type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.costImpact" name="baselineValue"
+                    (input)="saveChanges()">
                 <span class="input-group-text">
                     &dollar;/yr
                 </span>
             </div>
         </div>
     </div>
-    <ng-template [ngIf]="performanceMetricImpactGuids.length > 0" [ngIfElse]="noIncludedMetricsBlock">
-        <ng-container *ngFor="let impactGuid of performanceMetricImpactGuids">
-            <app-performance-metric-impact-form [impactGuid]="impactGuid"
-                [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metric-impact-form>
-        </ng-container>
-    </ng-template>
-    <ng-template #noIncludedMetricsBlock>
-        <div class="alert alert-info">
-            No performance metrics tracked for this NEB.
-        </div>
-    </ng-template>
+
     <div class="row mb-1">
         <div class="col-sm-12 col-form-label">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="{{'includeNEBNote'+nonEnergyBenefit.guid}}"
-                    [(ngModel)]="nonEnergyBenefit.includeNote" name="{{'includeNEBNote'+nonEnergyBenefit.guid}}" (input)="saveChanges()">
-                <label class="form-check-label" for="{{'includeNEBNote'+nonEnergyBenefit.guid}}">Non-Energy Benefit Notes</label>
+                <input class="form-check-input" type="checkbox" role="switch"
+                    id="{{'includeNEBNote'+nonEnergyBenefit.guid}}" [(ngModel)]="nonEnergyBenefit.includeNote"
+                    name="{{'includeNEBNote'+nonEnergyBenefit.guid}}" (input)="saveChanges()">
+                <label class="form-check-label" for="{{'includeNEBNote'+nonEnergyBenefit.guid}}">Non-Energy Benefit
+                    Notes</label>
             </div>
         </div>
         <div class="col-sm-12" *ngIf="nonEnergyBenefit.includeNote">
@@ -68,6 +60,56 @@
                 id="nebNotes"></textarea>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+
+    <h6>
+        <!-- <span class="badge badge-dark">{{keyPerformanceIndicator.performanceMetrics.length}}</span> -->
+
+        <div class="d-flex w-100 justify-content-between">
+            <div class="mt-auto bold">
+                Performance Metric Impacts
+            </div>
+            <div>
+                <!-- <app-primary-kpi-badge [kpiOption]="keyPerformanceIndicator"></app-primary-kpi-badge> -->
+                <app-performance-metrics-modal [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metrics-modal>
+            </div>
+        </div>
+    </h6>
+    <p class="fw-light small">
+        Fill out the impacts on company performance metrics (<fa-icon [icon]="faScaleUnbalancedFlip"></fa-icon>) that
+        can be associated with this Non-energy Benefit. Click the "Search Performance Metrics" button and a modal will
+        appear to find and add
+        performance metrics that are typically associated with this NEB.
+    </p>
+    <div class="row">
+        <div class="col">
+            <hr class="metric-hr mt-0">
+        </div>
+    </div>
+
+    <ng-template [ngIf]="performanceMetricImpactGuids.length > 0" [ngIfElse]="noIncludedMetricsBlock">
+        <div class="metric-block">
+            <ng-container *ngFor="let impactGuid of performanceMetricImpactGuids">
+                <app-performance-metric-impact-form [impactGuid]="impactGuid"
+                    [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metric-impact-form>
+                <div class="row">
+                    <div class="col">
+                        <hr class="metric-hr">
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </ng-template>
+    <ng-template #noIncludedMetricsBlock>
+        <div class="alert alert-info">
+            No performance metrics tracked for this NEB.
+        </div>
+    </ng-template>
+
 </form>
 <!--END FORM-->
 
@@ -89,4 +131,3 @@
                 class="me-1"></fa-icon>Discard NEB</button>
     </div>
 </div>
-

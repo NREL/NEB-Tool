@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faPlus, faScaleUnbalancedFlip } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faClose, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { firstValueFrom } from 'rxjs';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
@@ -23,11 +24,14 @@ export class PerformanceMetricImpactFormComponent {
 
   faScaleUnbalancedFlip: IconDefinition = faScaleUnbalancedFlip;
   faPlus: IconDefinition = faPlus;
+  faClose: IconDefinition = faClose;
+  faTrash: IconDefinition = faTrash;
 
   keyPerformanceMetric: KeyPerformanceMetric;
   disabledBaseline: boolean = true;
-  
+
   keyPerformanceMetricImpact: IdbKeyPerformanceMetricImpact;
+  displayDeleteModal: boolean = false;
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -50,13 +54,13 @@ export class PerformanceMetricImpactFormComponent {
     this.saveChanges();
   }
 
-  goToMetric(){
+  goToMetric() {
     let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.keyPerformanceMetricImpact.companyId, this.keyPerformanceMetric.kpiValue);
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-    this.router.navigateByUrl('setup-wizard/pre-visit/'+onSiteVisit.guid+'/company-kpi-detail/' + keyPerformanceIndicator.guid)
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-detail/' + keyPerformanceIndicator.guid)
   }
 
-  async savePerformanceMetric(){    
+  async savePerformanceMetric() {
     console.log('update...')
     let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.keyPerformanceMetric.kpiValue);
     keyPerformanceIndicator.performanceMetrics.forEach(_metric => {
@@ -70,13 +74,26 @@ export class PerformanceMetricImpactFormComponent {
     await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
   }
 
-  setDisabledBaseline(){
+  setDisabledBaseline() {
 
   }
 
-  async calculateBaseline(){
+  async calculateBaseline() {
     this.keyPerformanceMetric.baselineCost = (this.keyPerformanceMetric.baselineValue * this.keyPerformanceMetric.costPerValue);
     await this.savePerformanceMetric();
     await this.calculateCost();
+  }
+
+  openDeleteModal() {
+    this.displayDeleteModal = true;
+  }
+
+  closeDeleteModal() {
+    this.displayDeleteModal = false;
+  }
+
+  async confirmDelete() {
+    await firstValueFrom(this.keyPerformanceMetricImpactIdbService.deleteWithObservable(this.keyPerformanceMetricImpact.id));
+    await this.keyPerformanceMetricImpactIdbService.setKeyPerformanceMetricImpacts();
   }
 }
