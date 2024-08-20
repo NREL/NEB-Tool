@@ -32,7 +32,7 @@
                     *ngFor="let contact of processEquipment.guid | associatedContacts:'processEquipment': contacts;"
                     (click)="openContactModal(contact)">
                     <fa-icon [icon]="faUser"></fa-icon>
-                    {{contact.name}}
+                    {{contact | contactNameDisplay}}
                 </button>
                 <button class="btn btn-sm btn-secondary"
                     (click)="openContactModal(undefined)">

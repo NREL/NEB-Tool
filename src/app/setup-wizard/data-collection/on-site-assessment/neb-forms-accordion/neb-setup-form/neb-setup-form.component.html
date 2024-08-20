@@ -5,7 +5,7 @@
             *ngFor="let contact of nonEnergyBenefit.guid | associatedContacts:'nonEnergyBenefit': contacts;"
             (click)="openContactModal(contact)">
             <fa-icon [icon]="faUser"></fa-icon>
-            {{contact.name}}
+            {{contact | contactNameDisplay}}
         </button>
         <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
             <fa-icon [icon]="faContactBook"></fa-icon>

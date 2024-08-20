@@ -1,7 +1,8 @@
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
 export interface IdbContact extends IdbEntry {
-    name: string,
+    firstName: string,
+    lastName: string,
     phone: string,
     email: string,
     role: string,
@@ -23,7 +24,8 @@ export function getNewIdbContact(userId: string, companyId: string): IdbContact 
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
-        name: undefined,
+        firstName: undefined,
+        lastName: undefined,
         userId: userId,
         companyId: companyId,
         facilityIds: [],

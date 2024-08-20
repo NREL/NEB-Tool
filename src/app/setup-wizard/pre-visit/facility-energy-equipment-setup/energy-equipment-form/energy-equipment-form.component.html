@@ -108,7 +108,7 @@
                     *ngFor="let contact of energyEquipment.guid | associatedContacts:'energyEquipment': contacts;"
                     (click)="openContactModal(contact)">
                     <fa-icon [icon]="faUser"></fa-icon>
-                    {{contact.name}}
+                    {{contact | contactNameDisplay}}
                 </button>
                 <button class="btn btn-sm btn-secondary"
                     (click)="openContactModal(undefined)">

@@ -15,7 +15,7 @@
                                     [ngIf]="(contextGuid | includesContact:contactContext: contact)">
                                     <fa-icon [icon]="faCircleCheck"></fa-icon>
                                 </ng-template>
-                                {{contact.name}}
+                                {{contact | contactNameDisplay}}
                             </div>
                             <button class="btn btn-sm btn-primary btn-sm" (click)="viewContact(contact)">
                                 View
@@ -45,7 +45,7 @@
                                 [ngIf]="(contextGuid | includesContact:contactContext: selectedContact)">
                                 <fa-icon [icon]="faCircleCheck"></fa-icon>
                             </ng-template>
-                            {{selectedContact.name}}
+                            {{selectedContact | contactNameDisplay}}
                         </th>
                     </tr>
                 </thead>

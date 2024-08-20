@@ -27,6 +27,7 @@ import { KpiValueDisplayPipe } from './kpi-value-display.pipe';
 import { EnergyEquipmentDisplayPipe } from './energy-equipment-display.pipe';
 import { EnergyEquipmentListPipe } from './energy-equipment-list.pipe';
 import { KeyPerformanceMetricImpactsListPipe } from './key-performance-metric-impacts-list.pipe';
+import { ContactNameDisplayPipe } from './contact-name-display.pipe';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { KeyPerformanceMetricImpactsListPipe } from './key-performance-metric-im
     AssessmentsListPipe,
     KpiLabelPipe,
     UnitsDisplayPipe,
+    ContactNameDisplayPipe,
     ContactNamePipe,
     EquipmentTypeIconPipe,
     IncludesContactPipe,
@@ -69,6 +71,7 @@ import { KeyPerformanceMetricImpactsListPipe } from './key-performance-metric-im
     AssessmentsListPipe,
     KpiLabelPipe,
     UnitsDisplayPipe,
+    ContactNameDisplayPipe,
     ContactNamePipe,
     EquipmentTypeIconPipe,
     IncludesContactPipe,
