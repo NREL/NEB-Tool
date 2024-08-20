@@ -31,6 +31,8 @@ import { EnergyEquipmentIdbService } from './indexed-db/energy-equipment-idb.ser
 import { IdbEnergyEquipment } from './models/energyEquipment';
 import { ProcessEquipmentIdbService } from './indexed-db/process-equipment-idb.service';
 import { IdbProcessEquipment } from './models/processEquipment';
+import { IdbKeyPerformanceMetricImpact } from './models/keyPerformanceMetricImpact';
+import { KeyPerformanceMetricImpactsIdbService } from './indexed-db/key-performance-metric-impacts-idb.service';
 
 describe('AppComponent', () => {
 
@@ -83,6 +85,10 @@ describe('AppComponent', () => {
     processEquipments: new BehaviorSubject<Array<IdbProcessEquipment>>([])
   }
 
+  let keyPerformanceMetricImpactIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {
+    keyPerformanceMetricImpacts: new BehaviorSubject<Array<IdbKeyPerformanceMetricImpact>>([])
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, FontAwesomeModule],
@@ -99,7 +105,8 @@ describe('AppComponent', () => {
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
         { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
-        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService },
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactIdbService }
       ]
     })
   });

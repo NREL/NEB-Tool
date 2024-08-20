@@ -23,6 +23,8 @@ import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicat
 import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 
 describe('AssessmentEvaluationComponent', () => {
   let component: AssessmentEvaluationComponent;
@@ -59,6 +61,10 @@ describe('AssessmentEvaluationComponent', () => {
   let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {
     energyEquipments: new BehaviorSubject<Array<IdbEnergyEquipment>>([])
   };
+  let keyPerformanceMetricImpactsIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {
+    keyPerformanceMetricImpacts: new BehaviorSubject<Array<IdbKeyPerformanceMetricImpact>>([])
+  };
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -74,6 +80,7 @@ describe('AssessmentEvaluationComponent', () => {
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactsIdbService },
       ]
     })
       .compileComponents();
