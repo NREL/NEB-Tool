@@ -3,7 +3,6 @@ import { faAsterisk, faChevronDown, faChevronUp, faMagnifyingGlass, faPlus, faSe
 import { firstValueFrom } from 'rxjs';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
-import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { getNewKeyPerformanceIndicator, IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { getNewIdbKeyPerformanceMetricImpact, IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
@@ -39,7 +38,6 @@ export class PerformanceMetricsModalComponent {
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
 
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
-    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private keyPerformanceMetricImpactIdbService: KeyPerformanceMetricImpactsIdbService
   ) {
 
@@ -76,7 +74,6 @@ export class PerformanceMetricsModalComponent {
       });
       await firstValueFrom(this.keyPerformanceIndicatorIdbService.addWithObservable(keyPerformanceIndicator));
       await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
-      await this.nonEnergyBenefitsIdbService.addCompanyKpi(keyPerformanceIndicator);
     }
 
     let newKeyPerformanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.nonEnergyBenefit.userId, this.nonEnergyBenefit.companyId, this.nonEnergyBenefit.facilityId, this.nonEnergyBenefit.energyOpportunityId, this.nonEnergyBenefit.guid, addedMetric.value, this.nonEnergyBenefit.assessmentId, keyPerformanceIndicator.guid, addedMetric.guid);

@@ -83,19 +83,4 @@ export class KeyPerformanceMetricImpactsIdbService {
     }
     await this.setKeyPerformanceMetricImpacts();
   }
-
-
-  // getKeyPerformanceMetric(companyGuid: string, performanceMetricValue: KeyPerformanceMetricValue): KeyPerformanceMetric {
-  //   let companyKeyPerformanceMetrics: Array<KeyPerformanceMetric> = this.getCompanyKeyPerformanceMetrics(companyGuid);
-  //   return companyKeyPerformanceMetrics.find(metric => {
-  //     return metric.value == performanceMetricValue
-  //   });
-  // }
-
-  // getKpiFromKpm(companyGuid: string, performanceMetricValue: KeyPerformanceIndicatorValue): IdbKeyPerformanceMetricImpact {
-  //   let keyPerformanceIndicators: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceIndicators.getValue();
-  //   return keyPerformanceIndicators.find(kpi => {
-  //     return kpi.companyId == companyGuid && kpi.optionValue == performanceMetricValue;
-  //   });
-  // }
 }

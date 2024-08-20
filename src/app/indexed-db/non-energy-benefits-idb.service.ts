@@ -61,28 +61,6 @@ export class NonEnergyBenefitsIdbService {
     });
   }
 
-  async addCompanyKpi(keyPerformanceIndicator: IdbKeyPerformanceIndicator) {
-    let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.getCompanyNonEnergyBenefits(keyPerformanceIndicator.companyId);
-    for (let i = 0; i < nonEnergyBenefits.length; i++) {
-      let neb: IdbNonEnergyBenefit = nonEnergyBenefits[i];
-      let nebOption: NebOption = NebOptions.find(option => { return option.optionValue == neb.nebOptionValue });
-      if (nebOption) {
-        //TODO: add performance metric impact
-        // keyPerformanceIndicator.performanceMetrics.forEach(metric => {
-        //   if (nebOption.KPM.indexOf(metric.value) != -1) {
-        //     neb.performanceMetricImpacts.push({
-        //       kpmValue: metric.value,
-        //       modificationValue: undefined,
-        //       costAdjustment: undefined
-        //     });
-        //   }
-        // });
-      }
-      await firstValueFrom(this.updateWithObservable(neb));
-    }
-    await this.setNonEnergyBenefits();
-  }
-
   getEnergyOpportunityNonEnergyBenefits(energyOpportunityGuid: string): Array<IdbNonEnergyBenefit> {
     let nonEnergyBenefits: Array<IdbNonEnergyBenefit> = this.nonEnergyBenefits.getValue();
     return nonEnergyBenefits.filter(neb => {

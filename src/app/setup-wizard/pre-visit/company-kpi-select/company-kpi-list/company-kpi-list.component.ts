@@ -6,7 +6,6 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
-import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbKeyPerformanceIndicator, getNewKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
@@ -50,7 +49,6 @@ export class CompanyKpiListComponent {
     private dbChangesService: DbChangesService,
     private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private keyPerformanceMetricImpactsIdbService: KeyPerformanceMetricImpactsIdbService
   ) {
   }
@@ -106,7 +104,6 @@ export class CompanyKpiListComponent {
     let newKPI: IdbKeyPerformanceIndicator = getNewKeyPerformanceIndicator(this.company.userId, this.company.guid, option, true);
     await firstValueFrom(this.keyPerformanceIndicatorIdbService.addWithObservable(newKPI));
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
-    await this.nonEnergyBenefitsIdbService.addCompanyKpi(newKPI);
     this.closeCustomKPIModal();
   }
 
