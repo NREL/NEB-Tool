@@ -100,22 +100,12 @@ export class PreAssessmentSetupComponent {
   
   async saveChanges(assessment: IdbAssessment) {
     this.isFormChange = true;
-    // update utility type and unit options based on assessment type
-    // assessment.utilityTypes = assessmentOptions.find((assessmentOption) => assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
-    // const unitOptionsSet = new Set<Array<UnitOption>>;
-    // assessment.utilityTypes.forEach(
-    //   _utilityType => {
-    //     const _utilityOption : UtilityOption = utilityOptions.find(utilityOption => utilityOption.utilityType == _utilityType);
-    //     if (!unitOptionsSet.has(_utilityOption.unitOptions)) {
-    //       unitOptionsSet.add(_utilityOption.unitOptions);
-    //     }
-    //   }
-    // );
-    // this.unitOptions = Array.from(unitOptionsSet).flat();
-    this.utilityTypes = assessmentOptions.find(assessmentOption => assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
-    assessment.utilityTypes = this.utilityTypes;
-    console.log(assessment.utilityType)
-    this.unitOptions = utilityOptions.find(utilityOption => utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
+    this.utilityTypes = assessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
+    assessment.utilityTypes = this.utilityTypes; // track all utility types
+    if (!this.utilityTypes.includes(assessment.utilityType)) { // update utility type if the assessment type changes
+      assessment.utilityType = this.utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
+    }
+    this.unitOptions = utilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
     this.assessmentIdbService.asyncUpdate(assessment);
   }
 

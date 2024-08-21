@@ -1,4 +1,5 @@
 import { UnitOption } from "../shared/constants/unitOptions";
+import { UtilityType } from "../shared/constants/utilityTypes";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
 export interface IdbAssessment extends IdbEntry {
@@ -7,8 +8,8 @@ export interface IdbAssessment extends IdbEntry {
     facilityId: string,
     companyId: string,
     assessmentType: string,
-    utilityTypes: Array<string>,
-    utilityType: string, // temporary limited to one utility type
+    utilityTypes: Array<UtilityType>, // track all utility types associated with assessment type
+    utilityType: UtilityType, // temporary limited to one utility type
     unitOption: UnitOption,
     equipmentId: string,
     energyUse: number,
