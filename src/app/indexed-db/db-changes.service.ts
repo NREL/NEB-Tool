@@ -109,8 +109,8 @@ export class DbChangesService {
     await this.deleteAssessments(facilityAssessments);
     //delete kpm impacts
     let keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpactsIdbService.keyPerformanceMetricImpacts.getValue();
-    let assessmentKpmImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => { return metricImpact.facilityId == facility.guid; })
-    await this.deleteKeyPerformanceMetricImpacts(assessmentKpmImpacts);
+    let facilityKpmImpacts: Array<IdbKeyPerformanceMetricImpact> = keyPerformanceMetricImpacts.filter(metricImpact => { return metricImpact.facilityId == facility.guid; })
+    await this.deleteKeyPerformanceMetricImpacts(facilityKpmImpacts);
     //delete energy equipment
     let energyEquipments: Array<IdbEnergyEquipment> = this.energyEquipmentIdbService.energyEquipments.getValue();
     let facilityEnergyEquipments: Array<IdbEnergyEquipment> = energyEquipments.filter(energyEquipment => { return energyEquipment.facilityId == facility.guid });
