@@ -7,14 +7,14 @@ import * as _ from 'lodash';
 })
 export class MetricOptionsModalListPipe implements PipeTransform {
 
-  transform(options: Array<KeyPerformanceMetricOption | KeyPerformanceMetric>, searchStr: string, orderByDir: 'asc' | 'desc'): Array<KeyPerformanceMetricOption | KeyPerformanceMetric> {
-    let filteredOptions: Array<KeyPerformanceMetricOption | KeyPerformanceMetric> = options;
+  transform(options: Array<KeyPerformanceMetric>, searchStr: string, orderByDir: 'asc' | 'desc'): Array<KeyPerformanceMetric> {
+    let filteredOptions: Array<KeyPerformanceMetric> = options;
     if (searchStr) {
       filteredOptions = filteredOptions.filter(option => {
         return option.label.toLowerCase().includes(searchStr.toLowerCase());
       });
     }
-    return _.orderBy(filteredOptions, (option: KeyPerformanceMetricOption | KeyPerformanceMetric) => {
+    return _.orderBy(filteredOptions, (option: KeyPerformanceMetric) => {
       return option.label;
     }, orderByDir);
   }

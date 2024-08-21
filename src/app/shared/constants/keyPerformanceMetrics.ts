@@ -117,6 +117,18 @@ export interface KeyPerformanceMetricOption {
 };
 
 
+export function convertOptionTypeToMetricType(option: KeyPerformanceMetricOption): KeyPerformanceMetric {
+    return {
+        ...option,
+        baselineValue: undefined,
+        costPerValue: undefined,
+        baselineCost: undefined,
+        isCustom: false,
+        kpiGuid: undefined,
+        guid: undefined,
+    }
+}
+
 
 export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
     {
