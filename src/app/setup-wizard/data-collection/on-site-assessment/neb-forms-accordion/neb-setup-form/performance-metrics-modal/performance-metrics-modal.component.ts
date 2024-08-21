@@ -92,11 +92,14 @@ export class PerformanceMetricsModalComponent {
     let metricIds: Array<string> = includedMetrics.map(metric => {
       return metric.guid;
     });
+    let metricValues = includedMetrics.map(metric => {
+      return metric.kpmValue;
+    });
     KeyPerformanceMetricOptions.forEach(metric => {
       if (this.filterAssociatedMetrics == true) {
         let nebOption: NebOption = NebOptions.find(option => { return option.optionValue == this.nonEnergyBenefit.nebOptionValue });
         if (nebOption) {
-          if (metricIds.includes(metric.value) == false && nebOption.KPM.includes(metric.value)) {
+          if (metricValues.includes(metric.value) == false && nebOption.KPM.includes(metric.value)) {
             this.performanceMetricOptions.push(metric);
           }
         }
