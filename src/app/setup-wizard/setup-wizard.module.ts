@@ -52,6 +52,10 @@ import { FacilityEnergyEquipmentSetupComponent } from './pre-visit/facility-ener
 import { EnergyEquipmentFormComponent } from './pre-visit/facility-energy-equipment-setup/energy-equipment-form/energy-equipment-form.component';
 import { PrimaryKpiBadgeModule } from "../shared/primary-kpi-badge/primary-kpi-badge.module";
 import { NebOptionsModalListPipe } from './data-collection/on-site-assessment/add-nebs-modal/neb-options-modal-list.pipe';
+import { PerformanceMetricsModalComponent } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metrics-modal/performance-metrics-modal.component';
+import { MetricOptionsModalListPipe } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metrics-modal/metric-options-modal-list.pipe';
+import { AssociatedMetricIndicatorPipe } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metrics-modal/associated-metric-indicator.pipe';
+import { KpmImpactsTableComponent } from './pre-visit/company-kpi-details/kpm-impacts-table/kpm-impacts-table.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +101,11 @@ import { NebOptionsModalListPipe } from './data-collection/on-site-assessment/ad
     ProcessEquipmentFormComponent,
     FacilityEnergyEquipmentSetupComponent,
     EnergyEquipmentFormComponent,
-    NebOptionsModalListPipe
+    NebOptionsModalListPipe,
+    PerformanceMetricsModalComponent,
+    MetricOptionsModalListPipe,
+    AssociatedMetricIndicatorPipe,
+    KpmImpactsTableComponent
   ],
   imports: [
     CommonModule,

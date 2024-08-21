@@ -14,6 +14,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 
 describe('CompanyKpiDetailsComponent', () => {
   let component: CompanyKpiDetailsComponent;
@@ -32,6 +34,9 @@ describe('CompanyKpiDetailsComponent', () => {
   let contactIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
+  let keyPerformanceMetricImpactsIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {
+    keyPerformanceMetricImpacts: new BehaviorSubject<Array<IdbKeyPerformanceMetricImpact>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule, HelperPipesModule],
@@ -40,7 +45,8 @@ describe('CompanyKpiDetailsComponent', () => {
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
-        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService }
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService },
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactsIdbService }
       ]
     })
       .compileComponents();

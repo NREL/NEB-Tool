@@ -22,6 +22,8 @@ import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicat
 import { TableEntriesModule } from 'src/app/shared/table-entries/table-entries.module';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { ReportsModule } from 'src/app/shared/reports/reports.module';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 
 
 describe('OnSiteAssessmentResultsComponent', () => {
@@ -54,6 +56,9 @@ describe('OnSiteAssessmentResultsComponent', () => {
     keyPerformanceIndicators: new BehaviorSubject<Array<IdbKeyPerformanceIndicator>>([]),
     getCompanyKeyPerformanceMetrics: () => { return [] }
   };
+  let keyPerformanceMetricImpactsIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {
+    keyPerformanceMetricImpacts: new BehaviorSubject<Array<IdbKeyPerformanceMetricImpact>>([])
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -68,6 +73,7 @@ describe('OnSiteAssessmentResultsComponent', () => {
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
         { provide: CompanyIdbService, useValue: companyIdbService },
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactsIdbService },
       ]
     })
     .compileComponents();

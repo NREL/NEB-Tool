@@ -1,7 +1,7 @@
 import { KeyPerformanceMetric } from "../../constants/keyPerformanceMetrics";
-import { PerformanceMetricImpact } from "../../../models/nonEnergyBenefit";
 import * as _ from 'lodash';
 import { NebReport } from "./nebReport";
+import { IdbKeyPerformanceMetricImpact } from "src/app/models/keyPerformanceMetricImpact";
 
 
 export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): KeyPerformanceIndicatorReport {
@@ -84,7 +84,7 @@ export interface KeyPerformanceIndicatorReport {
 
 export interface KeyPerformanceIndicatorReportItem {
     keyPerformanceMetric: KeyPerformanceMetric,
-    performanceMetricImpact: PerformanceMetricImpact,
+    performanceMetricImpact: IdbKeyPerformanceMetricImpact,
     // nebsImpacts: Array<{
     //     nebName: string,
     //     nebValue: NebOptionValue,

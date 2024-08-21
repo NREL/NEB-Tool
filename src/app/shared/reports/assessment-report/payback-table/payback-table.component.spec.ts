@@ -19,7 +19,7 @@ describe('PaybackTableComponent', () => {
     fixture = TestBed.createComponent(PaybackTableComponent);
     component = fixture.componentInstance;
     let assessment: IdbAssessment = getNewIdbAssessment('', '', '');
-    component.assessmentReport = getAssessmentReport(assessment, [], [], []);
+    component.assessmentReport = getAssessmentReport(assessment, [], [], [], []);
     fixture.detectChanges();
   });
 

@@ -45,3 +45,16 @@
     padding-left: 10px;
     padding-bottom: 10px;
 }
+
+.lg-popup.popup{
+    width: 98%;
+    left: 1%;
+    bottom: 1%;
+    height: 98vh;
+    top: 1%
+}
+
+.lg-popup.popup .popup-body{
+    height: calc(98vh - 125px);
+    overflow-y: auto;
+}

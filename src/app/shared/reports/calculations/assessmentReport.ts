@@ -6,9 +6,10 @@ import * as _ from 'lodash';
 import { EnergyOpportunityReport, getEnergyOpportunityReport } from "./energyOpportunityReport";
 import { NebReport, getNebReport } from "./nebReport";
 import { KeyPerformanceIndicatorReport, getKeyPerfomanceIndicatorReport } from "./keyPerformanceIndicatorReport";
+import { IdbKeyPerformanceMetricImpact } from "src/app/models/keyPerformanceMetricImpact";
 
 ///ASSESSMENT REPORT
-export function getAssessmentReport(assessment: IdbAssessment, energyOpportunities: Array<IdbEnergyOpportunity>, nonEnergyBenefits: Array<IdbNonEnergyBenefit>, companyPerformanceMetrics: Array<KeyPerformanceMetric>): AssessmentReport {
+export function getAssessmentReport(assessment: IdbAssessment, energyOpportunities: Array<IdbEnergyOpportunity>, nonEnergyBenefits: Array<IdbNonEnergyBenefit>, companyPerformanceMetrics: Array<KeyPerformanceMetric>, keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>): AssessmentReport {
 
     if(!assessment.energySavings){
         assessment.energySavings = 0;
@@ -27,7 +28,7 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         return energyOpportunity.assessmentId == assessment.guid;
     })
     assessmentEnergyOpportunities.forEach(energyOpportunity => {
-        let energyOpportunityReport: EnergyOpportunityReport = getEnergyOpportunityReport(energyOpportunity, nonEnergyBenefits, companyPerformanceMetrics);
+        let energyOpportunityReport: EnergyOpportunityReport = getEnergyOpportunityReport(energyOpportunity, nonEnergyBenefits, companyPerformanceMetrics, keyPerformanceMetricImpacts);
         energyOpportunityReports.push(energyOpportunityReport);
     });
 
@@ -36,7 +37,7 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         return neb.assessmentId == assessment.guid && !neb.energyOpportunityId
     });
     assessmentNebs.forEach(neb => {
-        let nebReport: NebReport = getNebReport(neb, companyPerformanceMetrics);
+        let nebReport: NebReport = getNebReport(neb, companyPerformanceMetrics, keyPerformanceMetricImpacts);
         assessmentNebReports.push(nebReport);
     });
 

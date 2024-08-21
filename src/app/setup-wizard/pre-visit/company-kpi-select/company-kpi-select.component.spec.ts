@@ -24,6 +24,8 @@ import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benef
 import { SelectedKpiOptionPipe } from './add-kpi-search/selected-kpi-option.pipe';
 import { PrimaryKpiBadgeModule } from 'src/app/shared/primary-kpi-badge/primary-kpi-badge.module';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 
 describe('CompanyKpiSelectComponent', () => {
   let component: CompanyKpiSelectComponent;
@@ -50,6 +52,9 @@ describe('CompanyKpiSelectComponent', () => {
   let assessmentIdbService: Partial<AssessmentIdbService> = {};
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
   let dbChangesService: Partial<DbChangesService> = {};
+  let keyPerformanceMetricImpactsIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {
+    keyPerformanceMetricImpacts: new BehaviorSubject<Array<IdbKeyPerformanceMetricImpact>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule, HelperPipesModule, PrimaryKpiBadgeModule],
@@ -63,7 +68,8 @@ describe('CompanyKpiSelectComponent', () => {
         { provide: EnergyOpportunityIdbService, useValue: energyOpportunitiesIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
-        { provide: DbChangesService, useValue: dbChangesService}
+        { provide: DbChangesService, useValue: dbChangesService},
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactsIdbService}
       ]
     })
       .compileComponents();

@@ -17,6 +17,10 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { IdbContact } from 'src/app/models/contact';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
+import { PerformanceMetricsModalComponent } from './performance-metrics-modal/performance-metrics-modal.component';
+import { PerformanceMetricImpactFormComponent } from './performance-metric-impact-form/performance-metric-impact-form.component';
 
 describe('NebSetupFormComponent', () => {
   let component: NebSetupFormComponent;
@@ -34,17 +38,20 @@ describe('NebSetupFormComponent', () => {
   };
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([]),
-    getByGuid: () => { return getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, [], false) }
+    getByGuid: () => { return getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, false) }
   };
   let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {};
   let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {};
   let contactsIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
   };
+  let keyPerformanceMetricImpactsIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {
+    keyPerformanceMetricImpacts: new BehaviorSubject<Array<IdbKeyPerformanceMetricImpact>>([])
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, HelperPipesModule],
-      declarations: [NebSetupFormComponent],
+      declarations: [NebSetupFormComponent, PerformanceMetricsModalComponent, PerformanceMetricImpactFormComponent ],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },
@@ -54,13 +61,14 @@ describe('NebSetupFormComponent', () => {
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService },
         { provide: ContactIdbService, useValue: contactsIdbService },
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactsIdbService },
       ]
     })
       .compileComponents();
 
     fixture = TestBed.createComponent(NebSetupFormComponent);
     component = fixture.componentInstance;
-    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, [], false);
+    component.nonEnergyBenefit = getNewIdbNonEnergyBenefit('', '', '', '', undefined, undefined, false);
     fixture.detectChanges();
   });
 

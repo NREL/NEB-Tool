@@ -13,6 +13,7 @@ import { KeyPerformanceIndicatorsIdbService } from './indexed-db/key-performance
 import { EnergyOpportunityIdbService } from './indexed-db/energy-opportunity-idb.service';
 import { EnergyEquipmentIdbService } from './indexed-db/energy-equipment-idb.service';
 import { ProcessEquipmentIdbService } from './indexed-db/process-equipment-idb.service';
+import { KeyPerformanceMetricImpactsIdbService } from './indexed-db/key-performance-metric-impacts-idb.service';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,8 @@ export class AppComponent {
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorsIdbService: KeyPerformanceIndicatorsIdbService,
     private energyEquipmentIdbService: EnergyEquipmentIdbService,
-    private processEquipmentIdbService: ProcessEquipmentIdbService) {
+    private processEquipmentIdbService: ProcessEquipmentIdbService,
+    private keyPerformanceMetricImpactIdbService: KeyPerformanceMetricImpactsIdbService) {
   }
 
   async ngOnInit() {
@@ -55,6 +57,9 @@ export class AppComponent {
     //key performance indicators
     await this.keyPerformanceIndicatorsIdbService.setKeyPerformanceIndicators();
     console.log('key performance indicators init..');
+    //key performance metric impacts
+    await this.keyPerformanceMetricImpactIdbService.setKeyPerformanceMetricImpacts()
+    console.log('key performance metric impacts init..');
     //facilities
     await this.facilityIdbService.setFacilities();
     console.log('facilities init..');

@@ -13,6 +13,7 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { LoadingService } from 'src/app/core-components/loading/loading.service';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
 
 describe('BackupDataService', () => {
   let service: BackupDataService;
@@ -28,6 +29,7 @@ describe('BackupDataService', () => {
   let loadingService: Partial<LoadingService> = {};
   let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {};
   let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {};
+  let keyPerformanceMetricImpactsIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {};
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,7 +45,8 @@ describe('BackupDataService', () => {
         { provide: UserIdbService, useValue: userIdbService},
         { provide: LoadingService, useValue: loadingService},
         { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
-        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService },
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactsIdbService }
       ]
 
     });

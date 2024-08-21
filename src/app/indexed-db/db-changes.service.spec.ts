@@ -12,6 +12,7 @@ import { KeyPerformanceIndicatorsIdbService } from './key-performance-indicators
 import { UserIdbService } from './user-idb.service';
 import { ProcessEquipmentIdbService } from './process-equipment-idb.service';
 import { EnergyEquipmentIdbService } from './energy-equipment-idb.service';
+import { KeyPerformanceMetricImpactsIdbService } from './key-performance-metric-impacts-idb.service';
 
 describe('DbChangesService', () => {
   let service: DbChangesService;
@@ -23,12 +24,12 @@ describe('DbChangesService', () => {
     let assessmentIdbService: Partial<AssessmentIdbService> = {};
     let contactIdbService: Partial<ContactIdbService> = {};
     let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {};
-    let keyPerformanceIndicatorService: Partial<KeyPerformanceIndicatorsIdbService> = {};
+    let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {};
     let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {};
     let userIdbService: Partial<UserIdbService> = {}
     let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {};
     let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {};
-    
+    let keyPerformanceMetricImpactsIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {};
     TestBed.configureTestingModule({
       providers: [
         { provide: CompanyIdbService, useValue: companyIdbService },
@@ -38,10 +39,11 @@ describe('DbChangesService', () => {
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
-        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorService },
+        { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService },
         { provide: UserIdbService, useValue: userIdbService },
         { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
-        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService },
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactsIdbService }
       ]
     });
     service = TestBed.inject(DbChangesService);
