@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 })
 export class MetricOptionsModalListPipe implements PipeTransform {
 
-  transform(options: Array<KeyPerformanceMetricOption | KeyPerformanceMetric>, searchStr: string, orderByDir: 'asc' | 'desc'): Array<KeyPerformanceMetric> {
+  transform(options: Array<KeyPerformanceMetricOption | KeyPerformanceMetric>, searchStr: string, orderByDir: 'asc' | 'desc'): Array<KeyPerformanceMetricOption | KeyPerformanceMetric> {
     let filteredOptions: Array<KeyPerformanceMetricOption | KeyPerformanceMetric> = options;
     if (searchStr) {
       filteredOptions = filteredOptions.filter(option => {

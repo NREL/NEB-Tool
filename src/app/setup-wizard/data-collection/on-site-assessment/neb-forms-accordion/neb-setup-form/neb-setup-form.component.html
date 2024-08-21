@@ -13,9 +13,6 @@
         </button>
     </div>
     <div class="d-flex">
-
-        <!-- <app-performance-metrics-modal [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metrics-modal> -->
-
         <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
             <fa-icon [icon]="faTrash"></fa-icon> Delete
         </button>
@@ -25,18 +22,20 @@
 <form>
     <ng-template [ngIf]="nonEnergyBenefit.isCustom">
         <div class="row mb-2">
-            <label class="col-sm-5 col-form-label" for="nebName">NEB Name</label>
+            <label class="col-sm-5 col-form-label" for="{{'nebName'+nonEnergyBenefit.guid}}">NEB Name</label>
             <div class="col-sm-7">
-                <input name="nebName" type="text" class="form-control" [(ngModel)]="nonEnergyBenefit.name" minlength="1"
-                    maxlength="42" id="nebName" (input)="saveChanges()">
+                <input name="{{'nebName'+nonEnergyBenefit.guid}}" type="text" class="form-control"
+                    [(ngModel)]="nonEnergyBenefit.name" minlength="1" maxlength="42"
+                    id="{{'nebName'+nonEnergyBenefit.guid}}" (input)="saveChanges()">
             </div>
         </div>
     </ng-template>
     <div class="row mb-2">
-        <label class="col-sm-5 col-form-label" for="costImpact">Direct Cost Impact</label>
+        <label class="col-sm-5 col-form-label" for="{{'costImpact'+nonEnergyBenefit.guid}}">Direct Cost Impact</label>
         <div class="col-sm-7">
             <div class="input-group">
-                <input type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.costImpact" name="baselineValue"
+                <input type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.costImpact"
+                    name="{{'costImpact'+nonEnergyBenefit.guid}}" id="{{'costImpact'+nonEnergyBenefit.guid}}"
                     (input)="saveChanges()">
                 <span class="input-group-text">
                     &dollar;/yr
@@ -67,14 +66,11 @@
     </div>
 
     <h6>
-        <!-- <span class="badge badge-dark">{{keyPerformanceIndicator.performanceMetrics.length}}</span> -->
-
         <div class="d-flex w-100 justify-content-between">
             <div class="mt-auto bold">
                 Performance Metric Impacts
             </div>
             <div>
-                <!-- <app-primary-kpi-badge [kpiOption]="keyPerformanceIndicator"></app-primary-kpi-badge> -->
                 <app-performance-metrics-modal [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metrics-modal>
             </div>
         </div>
