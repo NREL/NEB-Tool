@@ -136,18 +136,6 @@
         There was an error with this key performance metric.
     </div>
 </ng-template>
-<!-- <div class="row">
-    <div class="col text-right">
-        <a class="click-link small" (click)="setOverrideBaseline()" *ngIf="!overrideBaseline && metricHasOtherImpacts">
-            <fa-icon [icon]="faEdit"></fa-icon> Edit Baseline Values
-        </a>
-        <br>
-        <a class="click-link click-link-danger small" (click)="openDeleteModal()">
-            <fa-icon [icon]="faClose"></fa-icon>
-            Remove Metric Impact
-        </a>
-    </div>
-</div> -->
 
 <div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">

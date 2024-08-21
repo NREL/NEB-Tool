@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faBullseye, faClose, faEdit, faEllipsisVertical, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faClose, faEdit, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
@@ -27,7 +27,6 @@ export class PerformanceMetricImpactFormComponent {
   faClose: IconDefinition = faClose;
   faTrash: IconDefinition = faTrash;
   faEdit: IconDefinition = faEdit;
-  faEllipsisVertical: IconDefinition = faEllipsisVertical
   faBullseye: IconDefinition = faBullseye;
 
   keyPerformanceMetric: KeyPerformanceMetric;

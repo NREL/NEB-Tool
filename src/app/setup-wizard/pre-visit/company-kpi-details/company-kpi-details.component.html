@@ -155,10 +155,6 @@
                                         </div>
                                     </div>
                                 </ng-template>
-                                <!-- <ng-template #nonCustomName>
-                                    <fa-icon class="pe-1" [icon]="faScaleUnbalancedFlip"></fa-icon>
-                                    <span class="bold" [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
-                                </ng-template> -->
 
                                 <div class="row" *ngIf="keyPerformanceMetric.totalUnit">
                                     <label class="col-sm-6 col-form-label pm-label"
@@ -239,15 +235,6 @@
                                     <app-kpm-impacts-table
                                         [kpmGuid]="keyPerformanceMetric.guid"></app-kpm-impacts-table>
                                 </ng-template>
-                                <!-- <div class="row">
-                                    <div class="col text-right">
-                                        <a class="click-link click-link-danger small"
-                                            (click)="openDeleteMetricModal(keyPerformanceMetric)">
-                                            <fa-icon [icon]="faClose"></fa-icon>
-                                            Untrack Metric
-                                        </a>
-                                    </div>
-                                </div> -->
                                 <div class="row">
                                     <div class="col">
                                         <hr class="metric-hr">
