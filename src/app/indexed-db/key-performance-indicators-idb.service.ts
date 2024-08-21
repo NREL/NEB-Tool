@@ -61,7 +61,7 @@ export class KeyPerformanceIndicatorsIdbService {
     let companyKPMs: Array<KeyPerformanceMetric> = new Array();
     companyKPIs.forEach(kpi => {
       kpi.performanceMetrics.forEach(kpiMetric => {
-        if (companyKPMs.findIndex(_kpiMetric => { return _kpiMetric.value == kpiMetric.value }) == -1) {
+        if (kpiMetric.isCustom || companyKPMs.findIndex(_kpiMetric => { return _kpiMetric.value == kpiMetric.value }) == -1) {
           companyKPMs.push(kpiMetric)
         }
       });

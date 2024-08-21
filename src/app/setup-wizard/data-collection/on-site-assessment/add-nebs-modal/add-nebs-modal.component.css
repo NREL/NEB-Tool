@@ -1,17 +1,3 @@
-.neb-modal-popup{
-    width: 98%;
-    left: 1%;
-    bottom: 1%;
-    height: 98vh;
-    top: 1%
-}
-
-
-.popup-body{
-    height: calc(98vh - 125px);
-    overflow-y: auto;
-}
-
 .add-td{
     width: 30px;
 }

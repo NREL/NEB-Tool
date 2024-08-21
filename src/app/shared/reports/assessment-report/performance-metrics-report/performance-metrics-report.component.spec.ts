@@ -29,7 +29,7 @@ describe('PerformanceMetricsReportComponent', () => {
     fixture = TestBed.createComponent(PerformanceMetricsReportComponent);
     component = fixture.componentInstance;
     let assessment: IdbAssessment = getNewIdbAssessment('', '', '');
-    let assessmentReport: AssessmentReport = getAssessmentReport(assessment, [], [], []);
+    let assessmentReport: AssessmentReport = getAssessmentReport(assessment, [], [], [], []);
     component.keyPerformanceIndicatorReport = assessmentReport.keyPerformanceIndicatorReport;
     fixture.detectChanges();
   });

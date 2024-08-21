@@ -12,6 +12,11 @@ export class KpiValueDisplayPipe implements PipeTransform {
       let findOption: IdbKeyPerformanceIndicator = keyPerformanceIndicators.find(option => { return option.optionValue == kpiValue });
       if (findOption) {
         return findOption.htmlLabel;
+      }else{
+        let findOption: KeyPerformanceIndicatorOption = KeyPerformanceIndicatorOptions.find(option => { return option.optionValue == kpiValue });
+        if (findOption) {
+          return findOption.htmlLabel;
+        }
       }
     }else{
       let findOption: KeyPerformanceIndicatorOption = KeyPerformanceIndicatorOptions.find(option => { return option.optionValue == kpiValue });

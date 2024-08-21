@@ -14,6 +14,7 @@ import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { getNewIdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { NebOptionsModalListPipe } from './neb-options-modal-list.pipe';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
 
 describe('AddNebsModalComponent', () => {
   let component: AddNebsModalComponent;
@@ -52,6 +53,7 @@ describe('AddNebsModalComponent', () => {
     getByGuid: () => { return getNewIdbEnergyOpportunity('', '', '', '') }
 
   };
+  let keyPerformanceMetricImpactsIdbService: Partial<KeyPerformanceMetricImpactsIdbService> = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -62,7 +64,8 @@ describe('AddNebsModalComponent', () => {
         { provide: KeyPerformanceIndicatorsIdbService, useValue: keyPerformanceIndicatorIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitIdbService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
-        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService }
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
+        { provide: KeyPerformanceMetricImpactsIdbService, useValue: keyPerformanceMetricImpactsIdbService }
       ]
     })
       .compileComponents();

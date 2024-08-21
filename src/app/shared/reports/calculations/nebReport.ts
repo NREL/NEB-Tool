@@ -1,15 +1,16 @@
 import { KeyPerformanceMetric } from "../../constants/keyPerformanceMetrics";
-import { IdbNonEnergyBenefit, PerformanceMetricImpact } from "../../../models/nonEnergyBenefit";
+import { IdbNonEnergyBenefit } from "../../../models/nonEnergyBenefit";
 import * as _ from 'lodash';
+import { IdbKeyPerformanceMetricImpact } from "src/app/models/keyPerformanceMetricImpact";
 
 ///NEB REPORT
-export function getNebReport(nonEnergyBenefit: IdbNonEnergyBenefit, companyPerformanceMetrics: Array<KeyPerformanceMetric>): NebReport {
+export function getNebReport(nonEnergyBenefit: IdbNonEnergyBenefit, companyPerformanceMetrics: Array<KeyPerformanceMetric>, keyPerformanceMetricImpact: Array<IdbKeyPerformanceMetricImpact>): NebReport {
     let reportPerformanceMetrics: Array<ReportPerformanceMetric> = new Array();
-    nonEnergyBenefit.performanceMetricImpacts.forEach(performanceMetricImpact => {
-        let keyPerformanceMetric: KeyPerformanceMetric = companyPerformanceMetrics.find(companyKPM => {
-            return companyKPM.value == performanceMetricImpact.kpmValue
-        });
-        if (keyPerformanceMetric.includeMetric) {
+    keyPerformanceMetricImpact.forEach(performanceMetricImpact => {
+        if (nonEnergyBenefit.guid == performanceMetricImpact.nebId) {
+            let keyPerformanceMetric: KeyPerformanceMetric = companyPerformanceMetrics.find(companyKPM => {
+                return companyKPM.value == performanceMetricImpact.kpmValue
+            });
             reportPerformanceMetrics.push({
                 performanceMetricImpact: performanceMetricImpact,
                 keyPerformanceMetric: keyPerformanceMetric
@@ -41,5 +42,5 @@ export interface NebReport {
 
 export interface ReportPerformanceMetric {
     keyPerformanceMetric: KeyPerformanceMetric,
-    performanceMetricImpact: PerformanceMetricImpact
+    performanceMetricImpact: IdbKeyPerformanceMetricImpact
 }

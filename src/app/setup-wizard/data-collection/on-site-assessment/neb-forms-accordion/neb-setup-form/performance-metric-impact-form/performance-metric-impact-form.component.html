@@ -1,4 +1,4 @@
-<ng-template [ngIf]="keyPerformanceMetric" [ngIfElse]="missingMetricBlock">
+<ng-template [ngIf]="keyPerformanceMetricImpact" [ngIfElse]="missingMetricBlock">
     <div class="pb-2 d-flex w-100 justify-content-between">
         <div>
             <label for="performanceMetric">
@@ -8,7 +8,8 @@
                 </a>
             </label>
         </div>
-        <app-primary-kpi-badge [kpiValue]="keyPerformanceMetric.kpiValue"></app-primary-kpi-badge>
+        <app-primary-kpi-badge [kpiValue]="keyPerformanceMetric.kpiValue"
+            [companyGuid]="nonEnergyBenefit.companyId"></app-primary-kpi-badge>
     </div>
     <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
 
@@ -64,7 +65,7 @@
                 <div class="col-6">
                     <div class="input-group">
                         <input type="number" class="form-control"
-                            [(ngModel)]="performanceMetricImpact.modificationValue" name="modificationValue"
+                            [(ngModel)]="keyPerformanceMetricImpact.modificationValue" name="modificationValue"
                             (input)="calculateCost()">
                         <span class="input-group-text">
                             <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
@@ -78,8 +79,8 @@
                     Financial Impact
                 </label>
                 <div class="col-6">
-                    <ng-template [ngIf]="performanceMetricImpact.costAdjustment" [ngIfElse]="noCostAdjustmentBlock">
-                        {{performanceMetricImpact.costAdjustment | currency}}/yr
+                    <ng-template [ngIf]="keyPerformanceMetricImpact.costAdjustment" [ngIfElse]="noCostAdjustmentBlock">
+                        {{keyPerformanceMetricImpact.costAdjustment | currency}}/yr
                     </ng-template>
                     <ng-template #noCostAdjustmentBlock>
                         &mdash;
@@ -99,3 +100,27 @@
         There was an error with this key performance metric.
     </div>
 </ng-template>
+<div class="row">
+    <div class="col text-right">
+        <a class="click-link click-link-danger small" (click)="openDeleteModal()">
+            <fa-icon [icon]="faClose"></fa-icon>
+            Remove Metric Impact
+        </a>
+    </div>
+</div>
+
+<div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
+<div class="popup" [ngClass]="{'open': displayDeleteModal }">
+    <div class="popup-header">Remove
+        <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span> Impact
+        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
+    </div>
+    <div class="popup-body">
+        Are you sure you want to remove this impact?
+        <hr>
+    </div>
+    <div class="popup-footer d-flex justify-content-end">
+        <button class="btn btn-secondary btn-sm me-2" (click)="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger btn-sm" (click)="confirmDelete()"><fa-icon [icon]="faTrash"></fa-icon> Remove Impact</button>
+    </div>
+</div>

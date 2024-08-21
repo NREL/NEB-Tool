@@ -15,3 +15,13 @@
     padding: .25rem;
 }
 
+.metric-hr{
+    border-style: dashed;
+    /* margin-top: 0; */
+}
+
+
+.metric-block{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

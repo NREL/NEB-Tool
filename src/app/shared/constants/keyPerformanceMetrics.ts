@@ -1,30 +1,46 @@
+import { getGUID } from "../helpFunctions";
 import { KeyPerformanceIndicatorValue } from "./keyPerformanceIndicatorOptions";
 
-export function getPerformanceMetrics(keyPerformanceIndicatorValue: KeyPerformanceIndicatorValue): Array<KeyPerformanceMetric> {
+export function getPerformanceMetrics(keyPerformanceIndicatorValue: KeyPerformanceIndicatorValue, kpiGuid: string): Array<KeyPerformanceMetric> {
     if (keyPerformanceIndicatorValue != 'other') {
-        return KeyPerformanceMetrics.filter(metric => {
+        let filteredMetricOptions: Array<KeyPerformanceMetricOption> = KeyPerformanceMetricOptions.filter(metric => {
             return metric.kpiValue == keyPerformanceIndicatorValue;
         });
-    } else {
-        return [
-            {
-
-                label: 'Custom',
-                htmlLabel: 'Custom',
-                value: 'custom',
-                kpiValue: keyPerformanceIndicatorValue,
-                isQuantitative: true,
+        return filteredMetricOptions.map(option => {
+            return {
+                ...option,
                 baselineValue: undefined,
                 costPerValue: undefined,
-                totalUnit: 'unit',
                 baselineCost: undefined,
-                isCustom: true,
-                includeMetric: true
+                isCustom: false,
+                kpiGuid: kpiGuid,
+                guid: getGUID()
+
             }
-        ]
+        })
+    } else {
+        let customKPM: KeyPerformanceMetric = getCustomKPM(keyPerformanceIndicatorValue, kpiGuid);
+        return [customKPM]
     }
 }
 
+export function getCustomKPM(keyPerformanceIndicatorValue: KeyPerformanceIndicatorValue, kpiGuid: string): KeyPerformanceMetric {
+    return {
+        label: 'Custom KPM',
+        htmlLabel: 'Custom KPM',
+        value: 'custom',
+        kpiValue: keyPerformanceIndicatorValue,
+        isQuantitative: true,
+        baselineValue: undefined,
+        costPerValue: undefined,
+        totalUnit: 'unit',
+        baselineCost: undefined,
+        isCustom: true,
+        kpiGuid: kpiGuid,
+        guid: getGUID()
+    }
+
+}
 
 export type KeyPerformanceMetricValue =
     'contributeCompanyVision' |
@@ -81,30 +97,46 @@ export type KeyPerformanceMetricValue =
     'custom';
 
 
-export interface KeyPerformanceMetric {
+export interface KeyPerformanceMetric extends KeyPerformanceMetricOption {
+    baselineValue: number,
+    costPerValue: number,
+    baselineCost: number,
+    isCustom: boolean,
+    kpiGuid: string,
+    guid: string,
+}
+
+
+export interface KeyPerformanceMetricOption {
     label: string,
     htmlLabel: string,
     value: KeyPerformanceMetricValue,
     kpiValue: KeyPerformanceIndicatorValue,
     isQuantitative: boolean,
-    baselineValue?: number,
-    costPerValue?: number,
-    totalUnit?: string,
-    baselineCost?: number,
-    isCustom?: boolean,
-    includeMetric: boolean
+    totalUnit?: string
 };
 
 
+export function convertOptionTypeToMetricType(option: KeyPerformanceMetricOption): KeyPerformanceMetric {
+    return {
+        ...option,
+        baselineValue: undefined,
+        costPerValue: undefined,
+        baselineCost: undefined,
+        isCustom: false,
+        kpiGuid: undefined,
+        guid: undefined,
+    }
+}
 
-export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
+
+export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
     {
         label: "Contribution to company's vision or strategy",
         htmlLabel: "Contribution to company's vision or strategy",
         value: "contributeCompanyVision",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Sales growth ($)",
@@ -112,7 +144,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "salesGrowth",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Customer Satisfaction Ratings",
@@ -120,7 +151,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "customerSatisfactionRatings",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Lost Customer Sales ($)",
@@ -128,7 +158,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "lostCustomerSales",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Customer Churn Rate",
@@ -136,7 +165,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "customerChurnRate",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Supplier Satisfaction Ratings",
@@ -144,7 +172,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "supplierSatisfactionRatings",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Productivity rate: Throughput",
@@ -152,7 +179,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "productivityRateThroughput",
         kpiValue: "productivity",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Production Costs",
@@ -160,7 +186,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "productionCosts",
         kpiValue: "productivity",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Cycle Time - Time to make goods",
@@ -168,7 +193,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "cycleTimeToMakeGoods",
         kpiValue: "productivity",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Percent On time to due date",
@@ -176,7 +200,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "percentOnTimeToDueDate",
         kpiValue: "productivity",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Revenue ($) / employee",
@@ -184,7 +207,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "revenuePerEmployee",
         kpiValue: "productivity",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Per-unit product cost",
@@ -192,7 +214,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "perUnitProductCost",
         kpiValue: "productivity",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Work in process",
@@ -200,7 +221,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "workInProcess",
         kpiValue: "productivity",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Num. Equipment caused defects",
@@ -208,11 +228,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "numberEquipmentCausedDefects",
         kpiValue: "machineUtilization",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'defect',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Equipment Downtime",
@@ -220,11 +236,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "equipmentDowntime",
         kpiValue: "machineUtilization",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'hr',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Percent Capacity utilization",
@@ -232,7 +244,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "percentCapacityUtilization",
         kpiValue: "machineUtilization",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Overall Equipment Effectiveness (OEE)",
@@ -240,7 +251,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "overallEquipmentEffectiveness",
         kpiValue: "machineUtilization",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Fork truck (industrial trucks) breakdown downtime time",
@@ -248,11 +258,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "forkTruckBreakdownTime",
         kpiValue: "machineUtilization",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'hr',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Useful equipment life extended (yrs)",
@@ -260,7 +266,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "usefulEquipmentLifeExtended",
         kpiValue: "machineUtilization",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Time to introduce new products or services",
@@ -268,7 +273,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "timeToIntroduceNewProducts",
         kpiValue: "machineUtilization",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "($) Defective Production",
@@ -276,11 +280,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "defectiveProductionDollar",
         kpiValue: "quality",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'product',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Defect Rate-PPM or DPM",
@@ -288,11 +288,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "defectRatePPMorDPM",
         kpiValue: "quality",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'product',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "QTY Customer Complaints (quality)",
@@ -300,7 +296,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "qualityCustomerComplaints",
         kpiValue: "quality",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "$ Customer Returns (quality)",
@@ -308,11 +303,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "qualityCustomerReturns",
         kpiValue: "quality",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'return',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Percent Production (manufacturing) yield",
@@ -320,7 +311,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "percentProductionYield",
         kpiValue: "materialUtilization",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Percent Shrinkage",
@@ -328,7 +318,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "percentShrinkage",
         kpiValue: "materialUtilization",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Dollar Consumables",
@@ -336,11 +325,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "dollarConsumables",
         kpiValue: "materialUtilization",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'consumable',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'consumable'
     },
     {
         label: "Percent Optimized space",
@@ -348,11 +333,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "percentOptimizedSpace",
         kpiValue: "improveSpaceUtilization",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'ft2',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Maintenance Cost",
@@ -360,11 +341,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "maintenanceCost",
         kpiValue: "reduceExpenseCost",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'hr',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'hr'
     },
     {
         label: "Engineering support (dollars or hours)",
@@ -372,11 +349,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "engineeringSupport",
         kpiValue: "reduceExpenseCost",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'hr',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'hr'
     },
     {
         label: "Energy Cost per Unit",
@@ -384,11 +357,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "energyCostPerUnit",
         kpiValue: "energyCost",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'MMBtu',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'MMBtu'
     },
     {
         label: "Hazardous Disposal Costs",
@@ -396,11 +365,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "hazardousDisposalCosts",
         kpiValue: "wasteReductionHazardous",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'gal',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'gal'
     },
     {
         label: "Non-Hazardous Disposal Costs",
@@ -408,11 +373,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "nonHazardousDisposalCosts",
         kpiValue: "wasteReductionNonHazardous",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'gal',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'gal'
     },
     {
         label: "Percent Total or Costs",
@@ -420,7 +381,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "percentTotalOrCost",
         kpiValue: "reduceNonconformingProductWaste",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Consumption Cost",
@@ -428,11 +388,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "consumptionCostWater",
         kpiValue: "waterConsumption",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'gal',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'gal'
     },
     {
         label: "Consumption Cost",
@@ -440,11 +396,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "consumptionCostSewage",
         kpiValue: "sewageVolume",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'gal',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Percent Total lbs.",
@@ -452,11 +404,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "totalLbsDust",
         kpiValue: "dustEmissions",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'lb',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Quantity",
@@ -464,7 +412,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "percentOrTotalChemicalEmissions",
         kpiValue: "chemicalEmissions",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Quantity",
@@ -472,7 +419,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "percentOrTotalRefrigerantEmissions",
         kpiValue: "reduceRefrigerantGasEmissions",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "(OSHA) Total recordable incident rate (TRIR)",
@@ -480,7 +426,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "TRIR",
         kpiValue: "safety",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "OSHA Recordable Incidents",
@@ -488,11 +433,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "oshaRecordableIncidents",
         kpiValue: "safety",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'incident',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Total Safety Non-Recordables, Incidents, Near Misses",
@@ -500,11 +441,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "oshaNonRecordables",
         kpiValue: "safety",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
         totalUnit: 'incident',
-        baselineCost: undefined,
-        includeMetric: true
     },
     {
         label: "Days away from work",
@@ -512,11 +449,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "daysAwayFromWork",
         kpiValue: "safety",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'day',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'day'
     },
     {
         label: "Lost time inury rate (LTIFR)",
@@ -524,11 +457,7 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "lostTimeInjuryRate",
         kpiValue: "safety",
         isQuantitative: true,
-        baselineValue: undefined,
-        costPerValue: undefined,
-        totalUnit: 'day',
-        baselineCost: undefined,
-        includeMetric: true
+        totalUnit: 'day'
     },
     {
         label: "Hearing Conservation Program Compliance - Reduce Occupational Exposure",
@@ -536,7 +465,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "hearingConservationProgram",
         kpiValue: "safety",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Hearing Conservation Program Compliance - Reduce Occupational Exposure",
@@ -544,7 +472,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "hearingConservationProgram",
         kpiValue: "employeeEngagementWorkingEnvironment",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Number of particles",
@@ -552,7 +479,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "numberOfParticles",
         kpiValue: "employeeEngagementWorkingEnvironment",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Workspace or factory floor comfort",
@@ -560,7 +486,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "workspaceOrFactoryFloorComfort",
         kpiValue: "employeeEngagementWorkingEnvironment",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Absenteeism",
@@ -568,7 +493,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "absenteeism",
         kpiValue: "employeeEngagementWorkingEnvironment",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Employee Engagement/Satisfaction",
@@ -576,7 +500,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "employeeEngagementSatisfaction",
         kpiValue: "employeeEngagementWorkforceDevelopment",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Employee Retention Rate",
@@ -584,7 +507,6 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "employeeRetentionRate",
         kpiValue: "employeeEngagementWorkforceDevelopment",
         isQuantitative: false,
-        includeMetric: true
     },
     {
         label: "Talent Turnover Rate",
@@ -592,6 +514,5 @@ export const KeyPerformanceMetrics: Array<KeyPerformanceMetric> = [
         value: "talentTurnoverRate",
         kpiValue: "employeeEngagementWorkforceDevelopment",
         isQuantitative: false,
-        includeMetric: true
     },
 ]

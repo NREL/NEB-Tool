@@ -26,6 +26,8 @@ import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +46,8 @@ export class BackupDataService {
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private loadingService: LoadingService,
     private processEquipmentIdbService: ProcessEquipmentIdbService,
-    private energyEquipmentIdbService: EnergyEquipmentIdbService
+    private energyEquipmentIdbService: EnergyEquipmentIdbService,
+    private keyPerformanceMetricImpactIdbService: KeyPerformanceMetricImpactsIdbService
   ) { }
 
   backupData() {
@@ -78,6 +81,7 @@ export class BackupDataService {
       onSiteVisits: this.onSiteVisitIdbService.onSiteVisits.getValue(),
       energyEquipment: this.energyEquipmentIdbService.energyEquipments.getValue(),
       processEquipment: this.processEquipmentIdbService.processEquipments.getValue(),
+      keyPerformanceMetricImpacts: this.keyPerformanceMetricImpactIdbService.keyPerformanceMetricImpacts.getValue(),
       origin: "JUSTIFI",
       version: environment.version,
       backupFileType: "User",
@@ -290,6 +294,27 @@ export class BackupDataService {
       await firstValueFrom(this.onSiteVisitIdbService.addWithObservable(onsitevisit));
     }
 
+    // adding key performance metric impacts
+    this.loadingService.setLoadingMessage('Adding KPM Impacts...');
+    let kpmImpactGUIDs: Array<{ oldId: string, newId: string }> = new Array();
+    for (let i = 0; i < backupFile.keyPerformanceMetricImpacts.length; i++) {
+      let keyPerformanceMetricImpact: IdbKeyPerformanceMetricImpact = backupFile.keyPerformanceMetricImpacts[i];
+      let newGUID: string = getGUID();
+      kpmImpactGUIDs.push({
+        newId: newGUID,
+        oldId: keyPerformanceMetricImpact.guid
+      });
+      keyPerformanceMetricImpact.guid = newGUID;
+      delete keyPerformanceMetricImpact.id;
+      keyPerformanceMetricImpact.userId = userGUIDs.newId;
+      keyPerformanceMetricImpact.companyId = getNewId(keyPerformanceMetricImpact.companyId, companyGUIDs);
+      keyPerformanceMetricImpact.facilityId = getNewId(keyPerformanceMetricImpact.facilityId, facilityGUIDs);
+      keyPerformanceMetricImpact.assessmentId = getNewId(keyPerformanceMetricImpact.assessmentId, assessmentGUIDs);
+      keyPerformanceMetricImpact.nebId = getNewId(keyPerformanceMetricImpact.nebId, nonEnergyBenefitGUIDs);
+      keyPerformanceMetricImpact.energyOpportunityId = getNewId(keyPerformanceMetricImpact.energyOpportunityId, energyOpportunityGUIDs);
+      await firstValueFrom(this.keyPerformanceMetricImpactIdbService.addWithObservable(keyPerformanceMetricImpact));
+    }
+
   }
 
   backupFileVersionCheck(fileVersion: string, appVersion: string): boolean {
@@ -326,6 +351,7 @@ export interface BackupFile {
   onSiteVisits: Array<IdbOnSiteVisit>,
   energyEquipment: Array<IdbEnergyEquipment>,
   processEquipment: Array<IdbProcessEquipment>,
+  keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>
   origin: "JUSTIFI",
   version: string,
   backupFileType: "User" | "Company" | "Facility",

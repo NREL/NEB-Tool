@@ -3,7 +3,6 @@ import { IconDefinition, faCircleQuestion, faMagnifyingGlass, faMagnifyingGlassP
 import { Subscription, firstValueFrom } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
-import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbKeyPerformanceIndicator, getNewKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { KeyPerformanceIndicatorOption, KeyPerformanceIndicatorOptions, PrimaryKPI, PrimaryKPIs } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
@@ -31,8 +30,7 @@ export class AddKpiSearchComponent {
   keyPerformanceIndicatorOptions: Array<KeyPerformanceIndicatorOption> = KeyPerformanceIndicatorOptions;
   keyPerformanceIndicators: Array<IdbKeyPerformanceIndicator>;
   keyPerformanceIndicatorSub: Subscription;
-  constructor(private companyIdbService: CompanyIdbService, private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
-    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService
+  constructor(private companyIdbService: CompanyIdbService, private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService
   ) {
   }
 
@@ -51,9 +49,8 @@ export class AddKpiSearchComponent {
   }
 
   async addKPI(option: KeyPerformanceIndicatorOption) {
-    let newKPI: IdbKeyPerformanceIndicator = getNewKeyPerformanceIndicator(this.company.userId, this.company.guid, option);
+    let newKPI: IdbKeyPerformanceIndicator = getNewKeyPerformanceIndicator(this.company.userId, this.company.guid, option, false);
     await firstValueFrom(this.keyPerformanceIndicatorIdbService.addWithObservable(newKPI));
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
-    await this.nonEnergyBenefitsIdbService.addCompanyKpi(newKPI);
   }
 }

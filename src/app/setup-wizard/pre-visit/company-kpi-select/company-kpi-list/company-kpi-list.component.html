@@ -1,4 +1,4 @@
-<div class="row">
+<div class="d-flex">
     <div class="col-8">
         <h6>
             <fa-icon [icon]="faBullseye" class="me-2"></fa-icon>
@@ -8,7 +8,7 @@
     <div class="col-4">
         <button class="btn btn-secondary btn-sm w-100" (click)="openAddCustomModal()">
             <fa-icon [icon]="faPlus"></fa-icon>
-            Add Custom
+            Add Custom KPI
         </button>
     </div>
 </div>
@@ -26,7 +26,7 @@
                     </a>
                 </div>
                 <div>
-                    <app-primary-kpi-badge [kpiValue]="kpi.optionValue"></app-primary-kpi-badge>
+                    <app-primary-kpi-badge [kpiOption]="kpi"></app-primary-kpi-badge>
                 </div>
             </div>
             <div>
@@ -80,25 +80,48 @@
         <hr>
     </div>
     <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" (click)="closeCustomKPIModal()">Cancel</button>
-        <button class="btn btn-success" [disabled]="!customKPIName" (click)="confirmCreate()">Create Custom KPI</button>
+        <button class="btn btn-secondary btn-sm me-2" (click)="closeCustomKPIModal()">Cancel</button>
+        <button class="btn btn-success btn-sm" [disabled]="!customKPIName" (click)="confirmCreate()">Create Custom
+            KPI</button>
     </div>
 </div>
 
 <!--delete KPI modal-->
 <div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">
-    <div class="popup-header">Delete KPI
-        <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
-    </div>
-    <div class="popup-body">
-        <div class="alert alert-danger">
-            Are you sure you want to delete this KPI? Changes will be lost.
+    <ng-template [ngIf]="kpiToDelete">
+        <div class="popup-header">Delete
+            <span [innerHTML]="kpiToDelete.htmlLabel"></span>
+            <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeDeleteModal()"></button>
         </div>
-        <hr>
-    </div>
-    <div class="popup-footer d-flex justify-content-end">
-        <button class="btn btn-secondary me-2" (click)="closeDeleteModal()">Cancel</button>
-        <button class="btn btn-danger" (click)="removeKPI()"><fa-icon [icon]="faTrash"></fa-icon> Delete KPI</button>
-    </div>
+        <div class="popup-body">
+
+            <ng-template
+                [ngIf]="(keyPerformanceMetricImpacts | keyPerformanceMetricImpactsList: kpiToDelete.guid: true).length"
+                [ngIfElse]="noImpactsDeleteBlock">
+                <div class="alert alert-danger">
+                    Are you sure you want to untrack the performance indicator:
+                    <span class="bold" [innerHTML]="kpiToDelete.htmlLabel"></span>? <br>{{(keyPerformanceMetricImpacts |
+                    keyPerformanceMetricImpactsList:
+                    kpiToDelete.guid: true).length}} NEB(s) in your system currently impact this metric. Those impacts
+                    will be
+                    lost. This cannot be undone.
+                </div>
+
+            </ng-template>
+
+            <ng-template #noImpactsDeleteBlock>
+                <div class="alert alert-warning">
+                    Are you sure you want to untrack this performance indicator:
+                    <span class="bold" [innerHTML]="kpiToDelete.htmlLabel"></span>?
+                </div>
+            </ng-template>
+            <hr>
+        </div>
+        <div class="popup-footer d-flex justify-content-end">
+            <button class="btn btn-secondary btn-sm me-2" (click)="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger btn-sm" (click)="removeKPI()"><fa-icon [icon]="faTrash"></fa-icon> Delete
+                KPI</button>
+        </div>
+    </ng-template>
 </div>
