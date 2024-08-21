@@ -22,13 +22,35 @@
     </div>
 
     <div class="row">
+        <label class="col-sm-5 col-form-label" for="utilityType">Utility Type</label>
+        <div class="col-sm-7">
+
+                <select name="utilityType" class="form-select"
+                    id="utilityType"
+                    [(ngModel)]="assessment.utilityType"
+                    (change)="saveChanges()">
+                    <option
+                        *ngFor="let utilityType of utilityTypes"
+                        [ngValue]="utilityType">
+                        {{utilityType}}
+                    </option>
+                </select>
+
+        </div>
+    </div>
+
+    <div class="row">
         <label class="col-sm-5 col-form-label" for="energyUse">Annual Energy
             Use</label>
         <div class="col-sm-7">
             <div class="input-group">
                 <input name="energy" type="number" class="form-control" [(ngModel)]="assessment.energyUse"
                     (input)="saveChanges()" id="energyUse">
-                <span class="input-group-text">MMBtu/yr</span>
+                <select name="energyUnit" class="input-group-text">
+                    <option *ngFor="let unitOption of unitOptions" [ngValue]="assessment.unitOption">
+                        <span [innerHTML]="unitOption.value | unitsDisplay"></span>
+                    </option>
+                </select>
             </div>
         </div>
     </div>

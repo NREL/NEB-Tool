@@ -8,7 +8,9 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
-import { AssessmentType, assessmentTypes } from 'src/app/shared/constants/assessmentTypes';
+import { assessmentOptions, AssessmentType, assessmentTypes } from 'src/app/shared/constants/assessmentTypes';
+import { UnitOption } from 'src/app/shared/constants/unitOptions';
+import { utilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-assessment-details-form',
@@ -32,7 +34,9 @@ export class AssessmentDetailsFormComponent {
   energyEquipmentSub: Subscription;
 
   assessmentTypes: Array<AssessmentType> = assessmentTypes;
-  
+  unitOptions: Array<UnitOption>;
+  utilityTypes: Array<UtilityType>;
+
   constructor(
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
@@ -66,6 +70,12 @@ export class AssessmentDetailsFormComponent {
 
   async saveChanges() {
     this.isFormChange = true;
+    this.utilityTypes = assessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
+    this.assessment.utilityTypes = this.utilityTypes; // track all utility types
+    if (!this.utilityTypes.includes(this.assessment.utilityType)) { // update utility type if the assessment type changes
+      this.assessment.utilityType = this.utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
+    }
+    this.unitOptions = utilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.unitOptions || [];
     await this.assessmentIdbService.asyncUpdate(this.assessment);
   }
 
