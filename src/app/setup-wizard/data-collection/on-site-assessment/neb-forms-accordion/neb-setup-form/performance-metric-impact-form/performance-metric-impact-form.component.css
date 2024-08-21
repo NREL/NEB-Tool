@@ -1,9 +1,9 @@
 .form-block{
-    border-left: solid;
+    /* border-left: solid; */
 }
 
 .alert-block, .form-block{
-    margin-left: 2rem;
+    /* margin-left: 2rem; */
     /* margin-right: 2rem; */
 }
 

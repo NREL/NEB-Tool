@@ -11,8 +11,19 @@
         <app-primary-kpi-badge [kpiValue]="keyPerformanceMetric.kpiValue"
             [companyGuid]="nonEnergyBenefit.companyId"></app-primary-kpi-badge>
     </div>
-    <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
 
+    <div class="row" *ngIf="metricHasOtherImpacts && overrideBaseline">
+        <div class="col">
+            <div class="alert alert-warning small p-1 text-center">
+                Warning: This metric has additional NEB impacts associated to it in different areas of the application.
+                Modifying the
+                baseline values may change the values in those associated impacts. Click the metric to view all of the
+                potential impacts cataloged in the system.
+            </div>
+        </div>
+    </div>
+
+    <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
         <div class="form-block">
             <div class="row">
                 <label class="col-sm-6 col-form-label pm-label" for="baselineValue">
@@ -21,7 +32,8 @@
                 <div class="col-6">
                     <div class="input-group">
                         <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.baselineValue"
-                            name="baselineValue" (input)="calculateBaseline()" [disabled]="disabledBaseline">
+                            name="baselineValue" (input)="calculateBaseline()"
+                            [disabled]="(metricHasOtherImpacts && !overrideBaseline)">
                         <span class="input-group-text">
                             <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
                         </span>
@@ -36,7 +48,8 @@
                 <div class="col-6">
                     <div class="input-group">
                         <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.costPerValue"
-                            name="costPerValue" (input)="calculateBaseline()" [disabled]="disabledBaseline">
+                            name="costPerValue" (input)="calculateBaseline()"
+                            [disabled]="(metricHasOtherImpacts && !overrideBaseline)">
                         <span class="input-group-text">
                             &dollar;/<span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
                         </span>
@@ -102,6 +115,10 @@
 </ng-template>
 <div class="row">
     <div class="col text-right">
+        <a class="click-link small" (click)="setOverrideBaseline()" *ngIf="!overrideBaseline && metricHasOtherImpacts">
+            <fa-icon [icon]="faEdit"></fa-icon> Edit Baseline Values
+        </a>
+        <br>
         <a class="click-link click-link-danger small" (click)="openDeleteModal()">
             <fa-icon [icon]="faClose"></fa-icon>
             Remove Metric Impact
@@ -121,6 +138,7 @@
     </div>
     <div class="popup-footer d-flex justify-content-end">
         <button class="btn btn-secondary btn-sm me-2" (click)="closeDeleteModal()">Cancel</button>
-        <button class="btn btn-danger btn-sm" (click)="confirmDelete()"><fa-icon [icon]="faTrash"></fa-icon> Remove Impact</button>
+        <button class="btn btn-danger btn-sm" (click)="confirmDelete()"><fa-icon [icon]="faTrash"></fa-icon> Remove
+            Impact</button>
     </div>
 </div>
