@@ -22,12 +22,12 @@
             </div>
             <div class="card-body">
                 <div class="d-flex flex-column"
-                    *ngFor="let keyPerformanceMetric of (keyPerformanceIndicatorOption.optionValue | kpiMetricsList)">
+                    *ngFor="let keyPerformanceMetricOption of (keyPerformanceIndicatorOption.optionValue | kpiMetricsList)">
                     <div class="d-flex">
                         <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
-                        <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
+                        <span [innerHTML]="keyPerformanceMetricOption.htmlLabel"></span>
                     </div>
-                    <div class="d-flex ps-4" *ngFor="let nebOption of (keyPerformanceMetric.value| nebOptionsList)">
+                    <div class="d-flex ps-4" *ngFor="let nebOption of (keyPerformanceMetricOption.value| nebOptionsList)">
                         <fa-icon [icon]="faWeightHanging" class="me-2"></fa-icon>
                         <span [innerHTML]="nebOption.htmlLabel"></span>
                     </div>
