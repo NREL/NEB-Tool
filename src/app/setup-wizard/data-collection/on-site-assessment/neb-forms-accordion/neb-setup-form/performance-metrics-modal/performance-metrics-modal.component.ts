@@ -7,7 +7,7 @@ import { getNewKeyPerformanceIndicator, IdbKeyPerformanceIndicator } from 'src/a
 import { getNewIdbKeyPerformanceMetricImpact, IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { KeyPerformanceIndicatorOption, KeyPerformanceIndicatorOptions } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
-import { KeyPerformanceMetric, KeyPerformanceMetricOption, KeyPerformanceMetricOptions } from 'src/app/shared/constants/keyPerformanceMetrics';
+import { convertOptionTypeToMetricType, KeyPerformanceMetric, KeyPerformanceMetricOption, KeyPerformanceMetricOptions } from 'src/app/shared/constants/keyPerformanceMetrics';
 import { NebOption, NebOptions } from 'src/app/shared/constants/nonEnergyBenefitOptions';
 
 @Component({
@@ -28,9 +28,9 @@ export class PerformanceMetricsModalComponent {
 
   displayMetricsModal: boolean = false;
 
-  performanceMetricToAdd: KeyPerformanceMetricOption | KeyPerformanceMetric;
+  performanceMetricToAdd: KeyPerformanceMetric;
 
-  performanceMetricOptions: Array<KeyPerformanceMetricOption> = [];
+  performanceMetricOptions: Array<KeyPerformanceMetric> = [];
 
   kpmSearchStr: string = '';
   orderByDir: 'asc' | 'desc' = 'asc';
@@ -82,7 +82,7 @@ export class PerformanceMetricsModalComponent {
     this.closeAddMetricModal();
   }
 
-  addMetric(performanceMetric: KeyPerformanceMetricOption | KeyPerformanceMetric) {
+  addMetric(performanceMetric: KeyPerformanceMetric) {
     this.performanceMetricToAdd = performanceMetric;
   }
 
@@ -92,11 +92,15 @@ export class PerformanceMetricsModalComponent {
     let metricIds: Array<string> = includedMetrics.map(metric => {
       return metric.guid;
     });
-    KeyPerformanceMetricOptions.forEach(metric => {
+    let metricValues = includedMetrics.map(metric => {
+      return metric.kpmValue;
+    });
+    KeyPerformanceMetricOptions.forEach(metricOption => {
+      let metric: KeyPerformanceMetric = convertOptionTypeToMetricType(metricOption)
       if (this.filterAssociatedMetrics == true) {
         let nebOption: NebOption = NebOptions.find(option => { return option.optionValue == this.nonEnergyBenefit.nebOptionValue });
         if (nebOption) {
-          if (metricIds.includes(metric.value) == false && nebOption.KPM.includes(metric.value)) {
+          if (metricValues.includes(metric.value) == false && nebOption.KPM.includes(metric.value)) {
             this.performanceMetricOptions.push(metric);
           }
         }

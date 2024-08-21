@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 })
 export class KpiMetricsListPipe implements PipeTransform {
 
-  transform(optionValue: KeyPerformanceIndicatorValue): Array<KeyPerformanceMetric> {
+  transform(optionValue: KeyPerformanceIndicatorValue): Array<KeyPerformanceMetricOption> {
     let keyPerformanceMetrics: Array<KeyPerformanceMetricOption> = KeyPerformanceMetricOptions;
     if (optionValue != 'other') {
       keyPerformanceMetrics = keyPerformanceMetrics.filter(performanceMetric => {
