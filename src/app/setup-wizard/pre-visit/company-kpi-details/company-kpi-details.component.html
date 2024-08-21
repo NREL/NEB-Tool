@@ -3,18 +3,8 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow" *ngIf="keyPerformanceIndicator">
                 <h5>
-                    <!-- <div class="d-flex w-100 justify-content-between">
-                        <div> -->
                     <fa-icon [icon]="faBullseye"></fa-icon>
                     <span class="ps-1" [innerHTML]="keyPerformanceIndicator.htmlLabel"></span>
-                    <!-- </div>
-                        <div>
-                            <button class="btn btn-success btn-sm" (click)="addPerformanceMetric()">
-                                <fa-icon [icon]="faPlus"></fa-icon>
-                                Add New Metric
-                            </button>
-                        </div>
-                    </div> -->
                 </h5>
                 <hr>
                 <form>
@@ -101,15 +91,12 @@
 
 
                     <h6>
-                        <!-- <span class="badge badge-dark">{{keyPerformanceIndicator.performanceMetrics.length}}</span> -->
-
                         <div class="d-flex w-100 justify-content-between">
                             <div class="mt-auto bold">
                                 Associated Performance Metrics
                             </div>
                             <div>
-                                <!-- <app-primary-kpi-badge [kpiOption]="keyPerformanceIndicator"></app-primary-kpi-badge> -->
-                                <button class="btn btn-success btn-sm" (click)="addPerformanceMetric()">
+                                <button class="btn btn-outline-primary btn-sm" (click)="addPerformanceMetric()">
                                     <fa-icon [icon]="faPlus"></fa-icon>
                                     Add New Metric
                                 </button>
@@ -131,9 +118,27 @@
                         [ngIfElse]="noKpmsBlock">
                         <ng-container *ngFor="let keyPerformanceMetric of keyPerformanceIndicator.performanceMetrics">
                             <div class="metric-block">
-                                <ng-template [ngIf]="keyPerformanceMetric.isCustom" [ngIfElse]="nonCustomName">
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
+                                        <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item"
+                                                (click)="openDeleteMetricModal(keyPerformanceMetric)">
+                                                <fa-icon [icon]="faTrash"></fa-icon>
+                                                Remove Metric
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                                <ng-template [ngIf]="keyPerformanceMetric.isCustom">
                                     <div class="row">
-                                        <label class="col-sm-6 col-form-label"
+                                        <label class="col-sm-6 col-form-label pm-label"
                                             for="{{'kpmName_'+keyPerformanceMetric.guid}}">
                                             Performance Metric Name
                                         </label>
@@ -150,15 +155,15 @@
                                         </div>
                                     </div>
                                 </ng-template>
-                                <ng-template #nonCustomName>
+                                <!-- <ng-template #nonCustomName>
                                     <fa-icon class="pe-1" [icon]="faScaleUnbalancedFlip"></fa-icon>
                                     <span class="bold" [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
-                                </ng-template>
+                                </ng-template> -->
 
-                                <div class="row">
-                                    <label class="col-sm-6 col-form-label"
+                                <div class="row" *ngIf="keyPerformanceMetric.totalUnit">
+                                    <label class="col-sm-6 col-form-label pm-label"
                                         for="{{'isQuantitative_'+keyPerformanceMetric.value}}">
-                                        Is Quantitative?
+                                        Quantitative or Qualitative Metric
                                     </label>
                                     <div class="col-6">
                                         <select id="{{'isQuantitative_'+keyPerformanceMetric.value}}"
@@ -169,10 +174,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <ng-template [ngIf]="keyPerformanceMetric.isQuantitative"
-                                    [ngIfElse]="qualitativeMetricBlock">
+                                <ng-template [ngIf]="keyPerformanceMetric.isQuantitative">
                                     <div class="row">
-                                        <label class="col-sm-6 col-form-label"
+                                        <label class="col-sm-6 col-form-label pm-label"
                                             for="{{'baselineValue_'+keyPerformanceMetric.value}}">
                                             Baseline Amount
                                         </label>
@@ -191,7 +195,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <label class="col-sm-6 col-form-label"
+                                        <label class="col-sm-6 col-form-label pm-label"
                                             for="{{'costPerValue_'+keyPerformanceMetric.value}}">
                                             Cost Per Unit
                                         </label>
@@ -210,7 +214,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <label class="col-sm-6 col-form-label"
+                                        <label class="col-sm-6 col-form-label pm-label"
                                             for="{{'baselineCost_'+keyPerformanceMetric.value}}">
                                             Baseline Cost
                                         </label>
@@ -225,8 +229,8 @@
                                         </div>
                                     </div>
                                 </ng-template>
-                                <ng-template #qualitativeMetricBlock>
-                                    <div class="alert alert-info small">
+                                <ng-template [ngIf]="!keyPerformanceMetric.totalUnit">
+                                    <div class="alert alert-info small mt-2">
                                         Quantitative results unavailable at this time.
                                     </div>
                                 </ng-template>
@@ -235,7 +239,7 @@
                                     <app-kpm-impacts-table
                                         [kpmGuid]="keyPerformanceMetric.guid"></app-kpm-impacts-table>
                                 </ng-template>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col text-right">
                                         <a class="click-link click-link-danger small"
                                             (click)="openDeleteMetricModal(keyPerformanceMetric)">
@@ -243,7 +247,7 @@
                                             Untrack Metric
                                         </a>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row">
                                     <div class="col">
                                         <hr class="metric-hr">

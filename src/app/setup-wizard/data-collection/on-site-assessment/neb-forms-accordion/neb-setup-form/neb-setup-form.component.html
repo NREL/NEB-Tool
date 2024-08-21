@@ -13,9 +13,6 @@
         </button>
     </div>
     <div class="d-flex">
-
-        <!-- <app-performance-metrics-modal [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metrics-modal> -->
-
         <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
             <fa-icon [icon]="faTrash"></fa-icon> Delete
         </button>
@@ -67,14 +64,11 @@
     </div>
 
     <h6>
-        <!-- <span class="badge badge-dark">{{keyPerformanceIndicator.performanceMetrics.length}}</span> -->
-
         <div class="d-flex w-100 justify-content-between">
             <div class="mt-auto bold">
                 Performance Metric Impacts
             </div>
             <div>
-                <!-- <app-primary-kpi-badge [kpiOption]="keyPerformanceIndicator"></app-primary-kpi-badge> -->
                 <app-performance-metrics-modal [nonEnergyBenefit]="nonEnergyBenefit"></app-performance-metrics-modal>
             </div>
         </div>

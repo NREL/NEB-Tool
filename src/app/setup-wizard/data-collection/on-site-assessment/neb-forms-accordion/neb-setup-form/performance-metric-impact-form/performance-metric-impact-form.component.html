@@ -1,21 +1,44 @@
 <ng-template [ngIf]="keyPerformanceMetricImpact" [ngIfElse]="missingMetricBlock">
     <div class="pb-2 d-flex w-100 justify-content-between">
-        <div>
-            <label for="performanceMetric">
-                <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
-                <a class="click-link" (click)="goToMetric()">
+        <div class="d-flex">
+            <div class="dropdown">
+                <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
                     <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
-                </a>
-            </label>
+                </button>
+                <ul class="dropdown-menu">
+                    <li *ngIf="!overrideBaseline && metricHasOtherImpacts">
+                        <a class="dropdown-item" (click)="setOverrideBaseline()">
+                            <fa-icon [icon]="faEdit"></fa-icon> Edit Baseline Values
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" (click)="goToMetric()">
+                            <fa-icon [icon]="faBullseye"></fa-icon>
+                            View KPI Details
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" (click)="openDeleteModal()">
+                            <fa-icon [icon]="faTrash"></fa-icon>
+                            Remove Metric Impact
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <app-primary-kpi-badge [kpiValue]="keyPerformanceMetric.kpiValue"
-            [companyGuid]="nonEnergyBenefit.companyId"></app-primary-kpi-badge>
+        <div class="d-flex">
+            <app-primary-kpi-badge [kpiValue]="keyPerformanceMetric.kpiValue"
+                [companyGuid]="nonEnergyBenefit.companyId"></app-primary-kpi-badge>
+        </div>
     </div>
 
     <div class="row" *ngIf="metricHasOtherImpacts && overrideBaseline">
         <div class="col">
             <div class="alert alert-warning small p-1 text-center">
-                Warning: This metric has additional performance metric impacts added to different NEBs in other areas of the application.
+                Warning: This metric has additional performance metric impacts added to different NEBs in other areas of
+                the application.
                 Modifying the
                 baseline values may change the values in those associated impacts. Click the metric to view all of the
                 potential impacts cataloged in the system.
@@ -113,7 +136,7 @@
         There was an error with this key performance metric.
     </div>
 </ng-template>
-<div class="row">
+<!-- <div class="row">
     <div class="col text-right">
         <a class="click-link small" (click)="setOverrideBaseline()" *ngIf="!overrideBaseline && metricHasOtherImpacts">
             <fa-icon [icon]="faEdit"></fa-icon> Edit Baseline Values
@@ -124,7 +147,7 @@
             Remove Metric Impact
         </a>
     </div>
-</div>
+</div> -->
 
 <div [ngClass]="{'window-overlay': displayDeleteModal}"></div>
 <div class="popup" [ngClass]="{'open': displayDeleteModal }">

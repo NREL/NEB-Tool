@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faClose, faEdit, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faClose, faEdit, faEllipsisVertical, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
@@ -27,6 +27,8 @@ export class PerformanceMetricImpactFormComponent {
   faClose: IconDefinition = faClose;
   faTrash: IconDefinition = faTrash;
   faEdit: IconDefinition = faEdit;
+  faEllipsisVertical: IconDefinition = faEllipsisVertical
+  faBullseye: IconDefinition = faBullseye;
 
   keyPerformanceMetric: KeyPerformanceMetric;
   overrideBaseline: boolean = false;
@@ -50,11 +52,15 @@ export class PerformanceMetricImpactFormComponent {
     this.keyPerformanceMetricImpactsSub = this.keyPerformanceMetricImpactIdbService.keyPerformanceMetricImpacts.subscribe(_kpmImpacts => {
       if (!this.isFormChange) {
         this.keyPerformanceMetricImpact = this.keyPerformanceMetricImpactIdbService.getByGuid(this.impactGuid);
-        this.keyPerformanceMetric = this.keyPerformanceIndicatorIdbService.getKeyPerformanceMetric(this.keyPerformanceMetricImpact.companyId, this.keyPerformanceMetricImpact.kpmGuid);
+        if (this.keyPerformanceMetricImpact) {
+          this.keyPerformanceMetric = this.keyPerformanceIndicatorIdbService.getKeyPerformanceMetric(this.keyPerformanceMetricImpact.companyId, this.keyPerformanceMetricImpact.kpmGuid);
+        }
       } else {
         this.isFormChange = false;
       }
-      this.setDisabledBaseline(_kpmImpacts);
+      if (this.keyPerformanceMetricImpact) {
+        this.setDisabledBaseline(_kpmImpacts);
+      }
     });
   }
 
