@@ -1,0 +1,34 @@
+<ng-template [ngIf]="assessmentNebSummary">
+    <table class="table table-bordered table-sm">
+        <!-- <thead>
+        <tr>
+
+        </tr>
+    </thead> -->
+        <tbody>
+            <tr>
+                <td>
+                    Assessment NEBs
+                </td>
+            </tr>
+            <tr *ngFor="let neb of assessmentNebSummary.assessmentNonEnergyBenefits">
+                <td class="ps-2">
+                    {{neb.name}}
+                </td>
+            </tr>
+
+            <ng-container *ngFor="let opportunitySummary of assessmentNebSummary.energyOpportunityNebSummaries">
+                <tr>
+                    <td colspan="2">
+                        {{opportunitySummary.energyOpportunity.name}}
+                    </td>
+                </tr>
+                <tr *ngFor="let neb of opportunitySummary.nonEnergyBenefits">
+                    <td class="ps-2">
+                        {{neb.name}}
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</ng-template>
