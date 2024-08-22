@@ -9,7 +9,7 @@ export interface UtilityOption {
     unitOptions: Array<UnitOption>
 }
 
-export const utilityOptions: Array<UtilityOption> = [
+export const UtilityOptions: Array<UtilityOption> = [
     {utilityType: 'Electricity', unitOptions: EnergyUnitOptions},
     {utilityType: 'Natural Gas', unitOptions: EnergyUnitOptions},
     {utilityType: 'Other Fuels', unitOptions: EnergyUnitOptions},

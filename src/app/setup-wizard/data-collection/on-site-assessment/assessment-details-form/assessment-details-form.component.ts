@@ -8,9 +8,9 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
-import { assessmentOptions, AssessmentType, assessmentTypes } from 'src/app/shared/constants/assessmentTypes';
+import { AssessmentOptions, AssessmentType, AssessmentTypes } from 'src/app/shared/constants/assessmentTypes';
 import { UnitOption } from 'src/app/shared/constants/unitOptions';
-import { utilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
+import { UtilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-assessment-details-form',
@@ -33,7 +33,7 @@ export class AssessmentDetailsFormComponent {
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
   energyEquipmentSub: Subscription;
 
-  assessmentTypes: Array<AssessmentType> = assessmentTypes;
+  assessmentTypes: Array<AssessmentType> = AssessmentTypes;
 
   constructor(
     private assessmentIdbService: AssessmentIdbService,
@@ -66,23 +66,23 @@ export class AssessmentDetailsFormComponent {
     this.energyEquipmentSub.unsubscribe();
   }
 
-  setUtilityTypes() {
-    let utilityTypes = assessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
+  async setUtilityTypes() {
+    let utilityTypes = AssessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
     this.assessment.utilityTypes = utilityTypes; // track all utility types
     if (!this.assessment.utilityTypes.includes(this.assessment.utilityType)) { // update utility type if the assessment type changes
       this.assessment.utilityType = utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
-      this.setUnitOptionValue();
+      await this.setUnitOptionValue();
     } else {
-      this.saveChanges();
+      await this.saveChanges();
     }
   }
 
-  setUnitOptionValue() {
-    let unitOptions = utilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.unitOptions || [];
+  async setUnitOptionValue() {
+    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.unitOptions || [];
     if (unitOptions.map(unitOption => unitOption.value).indexOf(this.assessment.unitOptionValue) == -1) {
       this.assessment.unitOptionValue = unitOptions?.[0].value;
     }
-    this.saveChanges();
+    await this.saveChanges();
   }
 
   async saveChanges() {

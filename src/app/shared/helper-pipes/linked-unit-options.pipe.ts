@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { UnitOption } from '../constants/unitOptions';
-import { utilityOptions, UtilityType } from '../constants/utilityTypes';
+import { UtilityOptions, UtilityType } from '../constants/utilityTypes';
 
 @Pipe({
   name: 'linkedUnitOptions'
@@ -8,8 +8,7 @@ import { utilityOptions, UtilityType } from '../constants/utilityTypes';
 export class LinkedUnitOptionsPipe implements PipeTransform {
 
   transform(utilityType: UtilityType): Array<UnitOption> {
-    let selectedUtility = utilityOptions.find(_utilityOption => _utilityOption.utilityType == utilityType);
-    console.log(selectedUtility?.unitOptions.length);
+    let selectedUtility = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == utilityType);
     if (selectedUtility) {
       return selectedUtility.unitOptions;
     } else {

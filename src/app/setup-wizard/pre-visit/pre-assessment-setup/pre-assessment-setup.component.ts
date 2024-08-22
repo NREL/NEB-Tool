@@ -13,9 +13,9 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
-import { assessmentOptions, AssessmentType, assessmentTypes } from 'src/app/shared/constants/assessmentTypes';
+import { AssessmentOptions, AssessmentType, AssessmentTypes } from 'src/app/shared/constants/assessmentTypes';
 import { EnergyUnitOptions, UnitOption } from 'src/app/shared/constants/unitOptions';
-import { UtilityOption, utilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
+import { UtilityOption, UtilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -44,8 +44,8 @@ export class PreAssessmentSetupComponent {
   energyEquipmentSub: Subscription;
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
 
-  assessmentTypes: Array<AssessmentType> = assessmentTypes;
-  utilityOptions: Array<UtilityOption> = utilityOptions;
+  assessmentTypes: Array<AssessmentType> = AssessmentTypes;
+  utilityOptions: Array<UtilityOption> = UtilityOptions;
   
   displayDeleteModal: boolean = false;
   assessmentToDelete: IdbAssessment;
@@ -96,23 +96,23 @@ export class PreAssessmentSetupComponent {
   }
   
 
-  setUtilityTypes(assessment: IdbAssessment) {
-    let utilityTypes = assessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
+  async setUtilityTypes(assessment: IdbAssessment) {
+    let utilityTypes = AssessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
     assessment.utilityTypes = utilityTypes; // track all utility types
     if (!assessment.utilityTypes.includes(assessment.utilityType)) { // update utility type if the assessment type changes
       assessment.utilityType = utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
-      this.setUnitOptionValue(assessment);
+      await this.setUnitOptionValue(assessment);
     } else {
-      this.saveChanges(assessment);
+      await this.saveChanges(assessment);
     }
   }
 
-  setUnitOptionValue(assessment: IdbAssessment) {
-    let unitOptions = utilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
+  async setUnitOptionValue(assessment: IdbAssessment) {
+    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
     if (unitOptions.map(unitOption => unitOption.value).indexOf(assessment.unitOptionValue) == -1) {
       assessment.unitOptionValue = unitOptions?.[0].value;
     }
-    this.saveChanges(assessment);
+    await this.saveChanges(assessment);
   }
 
   async saveChanges(assessment: IdbAssessment) {
