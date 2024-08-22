@@ -8,7 +8,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AssessmentSavingsTableComponent } from './assessment-report/assessment-savings-table/assessment-savings-table.component';
 import { PaybackTableComponent } from './assessment-report/payback-table/payback-table.component';
 import { PerformanceMetricsReportComponent } from './assessment-report/performance-metrics-report/performance-metrics-report.component';
-import { AssessmentNebsSummaryTableComponent } from './assessment-nebs-summary-table/assessment-nebs-summary-table.component';
 
 
 
@@ -18,8 +17,7 @@ import { AssessmentNebsSummaryTableComponent } from './assessment-nebs-summary-t
     RollupReportComponent,
     AssessmentSavingsTableComponent,
     PaybackTableComponent,
-    PerformanceMetricsReportComponent,
-    AssessmentNebsSummaryTableComponent
+    PerformanceMetricsReportComponent
   ],
   imports: [
     CommonModule,
@@ -30,8 +28,7 @@ import { AssessmentNebsSummaryTableComponent } from './assessment-nebs-summary-t
   exports: [
     AssessmentReportComponent,
     RollupReportComponent,
-    AssessmentSavingsTableComponent,
-    AssessmentNebsSummaryTableComponent
+    AssessmentSavingsTableComponent
   ]
 })
 export class ReportsModule { }
