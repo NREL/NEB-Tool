@@ -7,7 +7,7 @@ import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-i
 import { IdbContact } from 'src/app/models/contact';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
-import { UtilityType, UtilityTypeOptions } from 'src/app/shared/constants/utilityTypes';
+import { UtilityType, UtilityTypes } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-energy-equipment-form',
@@ -23,7 +23,7 @@ export class EnergyEquipmentFormComponent {
   faContactBook: IconDefinition = faContactBook;
 
   equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
-  utilityTypeOptions: Array<UtilityType> = UtilityTypeOptions;
+  utilityTypes: Array<UtilityType> = UtilityTypes;
   energyEquipment: IdbEnergyEquipment
   displayDeleteModal: boolean = false;
   contacts: Array<IdbContact>;

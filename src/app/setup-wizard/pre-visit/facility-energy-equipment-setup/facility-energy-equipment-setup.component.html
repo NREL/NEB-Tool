@@ -4,7 +4,7 @@
             <div class="form-paper shadow">
                 <h5>
                     <fa-icon [icon]="faList"></fa-icon>
-                     Energy Equipment
+                     Industrial System Inventory
                 </h5>
                 <hr>
                 <div class="d-flex w-100 justify-content-end pb-2">
@@ -43,7 +43,7 @@
                 </ng-template>
                 <ng-template #noEnergyEquipmentBlock>
                     <div class="alert alert-info text-center">
-                        No energy equipment added. Click "Add Equipment" to add energy equipment.
+                        Empty Inventory. Click "Add Equipment" to the industrial system inventory.
                     </div>
                 </ng-template>
             </div>
@@ -57,7 +57,7 @@
             Go Back
         </button>
         <button class="btn btn-dark btn-sm" (click)="goToNext()">
-            Process Equipment
+            End Use Inventory
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>

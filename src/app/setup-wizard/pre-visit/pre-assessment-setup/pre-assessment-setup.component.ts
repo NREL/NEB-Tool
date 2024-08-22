@@ -13,6 +13,9 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { AssessmentOptions, AssessmentType, AssessmentTypes } from 'src/app/shared/constants/assessmentTypes';
+import { EnergyUnitOptions, UnitOption } from 'src/app/shared/constants/unitOptions';
+import { UtilityOption, UtilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -40,7 +43,9 @@ export class PreAssessmentSetupComponent {
 
   energyEquipmentSub: Subscription;
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
-  
+
+  assessmentTypes: Array<AssessmentType> = AssessmentTypes;
+  utilityOptions: Array<UtilityOption> = UtilityOptions;
   
   displayDeleteModal: boolean = false;
   assessmentToDelete: IdbAssessment;
@@ -51,6 +56,7 @@ export class PreAssessmentSetupComponent {
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
   isFormChange: boolean = false;
+
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private facilityIdbService: FacilityIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -89,6 +95,26 @@ export class PreAssessmentSetupComponent {
     this.energyEquipmentSub.unsubscribe();
   }
   
+
+  async setUtilityTypes(assessment: IdbAssessment) {
+    let utilityTypes = AssessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
+    assessment.utilityTypes = utilityTypes; // track all utility types
+    if (!assessment.utilityTypes.includes(assessment.utilityType)) { // update utility type if the assessment type changes
+      assessment.utilityType = utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
+      await this.setUnitOptionValue(assessment);
+    } else {
+      await this.saveChanges(assessment);
+    }
+  }
+
+  async setUnitOptionValue(assessment: IdbAssessment) {
+    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
+    if (unitOptions.map(unitOption => unitOption.value).indexOf(assessment.unitOptionValue) == -1) {
+      assessment.unitOptionValue = unitOptions?.[0].value;
+    }
+    await this.saveChanges(assessment);
+  }
+
   async saveChanges(assessment: IdbAssessment) {
     this.isFormChange = true;
     this.assessmentIdbService.asyncUpdate(assessment);

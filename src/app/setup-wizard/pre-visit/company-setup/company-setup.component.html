@@ -20,9 +20,6 @@
                     <label class="bold">Location</label>
                     <app-location-form [inCompany]="true"></app-location-form>
                     <hr>
-                    <label class="bold">Tracked Utilities</label>
-                    <app-units-form [inCompany]="true"></app-units-form>
-                    <hr>
                     <label class="bold">Additional Details</label>
                     <app-additional-details-form [inCompany]="true"></app-additional-details-form>
                 </ng-template>
@@ -33,7 +30,7 @@
 <nav class="setup-wizard-footer navbar shadow">
     <div class="container-fluid justify-content-end">
         <button class="btn btn-dark" (click)="goToContacts()" [disabled]="name?.invalid">
-            Enter Contacts
+            Enter Stakeholder Contacts
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>

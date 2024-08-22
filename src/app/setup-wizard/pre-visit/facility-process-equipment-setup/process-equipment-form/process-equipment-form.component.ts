@@ -7,7 +7,7 @@ import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment
 import { IdbContact } from 'src/app/models/contact';
 import { IdbProcessEquipment } from 'src/app/models/processEquipment';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
-import { UtilityType, UtilityTypeOptions } from 'src/app/shared/constants/utilityTypes';
+import { UtilityType, UtilityTypes } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-process-equipment-form',

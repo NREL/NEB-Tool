@@ -20,7 +20,7 @@ export function getNewIdbEnergyEquipment(userId: string, companyId: string, faci
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
-        equipmentName: 'New Energy Equipment',
+        equipmentName: 'New Industrial Equipment',
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,

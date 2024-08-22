@@ -9,7 +9,7 @@
         </button>
         <button class="btn btn-sm btn-secondary" (click)="openContactModal(undefined)">
             <fa-icon [icon]="faContactBook"></fa-icon>
-            Team Members
+            Stakeholders
         </button>
     </div>
     <div class="d-flex">
@@ -31,7 +31,7 @@
         </div>
     </ng-template>
     <div class="row mb-2">
-        <label class="col-sm-5 col-form-label" for="{{'costImpact'+nonEnergyBenefit.guid}}">Direct Cost Impact</label>
+        <label class="col-sm-5 col-form-label" for="{{'costImpact'+nonEnergyBenefit.guid}}">Financial Benefit</label>
         <div class="col-sm-7">
             <div class="input-group">
                 <input type="number" class="form-control" [(ngModel)]="nonEnergyBenefit.costImpact"

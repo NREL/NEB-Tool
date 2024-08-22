@@ -12,7 +12,7 @@
                             <div class="row">
                                 <label class="col-sm-5 col-form-label bold" for="visitDate">Visit Date</label>
                                 <div class="col-sm-7">
-                                    <input type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
+                                    <input name="visitDate" id="visitDate" type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
                                         name="visitDate" (change)="setVisitDate()">
                                 </div>
                             </div>
@@ -58,28 +58,38 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label" for="equipmentId">Energy
-                                                            Equipment</label>
+                                                        <label class="col-sm-5 col-form-label" for="assessmentType">Assessment Type</label>
                                                         <div class="col-sm-7">
-                                                            <ng-template
-                                                                [ngIf]="(assessment.facilityId | energyEquipmentList:'facility':energyEquipmentOptions).length != 0"
-                                                                [ngIfElse]="noEquipmentBlock">
-                                                                <select name="equipmentId" class="form-select"
-                                                                    id="equipmentId"
-                                                                    [(ngModel)]="assessment.equipmentId"
-                                                                    (change)="saveChanges(assessment)">
+
+                                                                <select name="assessmentType" class="form-select"
+                                                                    id="assessmentType"
+                                                                    [(ngModel)]="assessment.assessmentType"
+                                                                    (change)="setUtilityTypes(assessment)">
                                                                     <option
-                                                                        *ngFor="let energyEquipment of (assessment.facilityId | energyEquipmentList:'facility':energyEquipmentOptions)"
-                                                                        [ngValue]="energyEquipment.guid">
-                                                                        {{energyEquipment.equipmentName}}
+                                                                        *ngFor="let assessmentType of assessmentTypes"
+                                                                        [ngValue]="assessmentType">
+                                                                        {{assessmentType}}
                                                                     </option>
                                                                 </select>
-                                                            </ng-template>
-                                                            <ng-template #noEquipmentBlock>
-                                                                <div class="alert alert-warning mb-0 p-1">
-                                                                    No energy equipment found.
-                                                                </div>
-                                                            </ng-template>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <label class="col-sm-5 col-form-label" for="utilityType">Utility Type</label>
+                                                        <div class="col-sm-7">
+
+                                                                <select name="utilityType" class="form-select"
+                                                                    id="utilityType"
+                                                                    [(ngModel)]="assessment.utilityType"
+                                                                    (change)="setUnitOptionValue(assessment)">
+                                                                    <option
+                                                                        *ngFor="let utilityType of assessment.utilityTypes"
+                                                                        [ngValue]="utilityType">
+                                                                        {{utilityType}}
+                                                                    </option>
+                                                                </select>
+
                                                         </div>
                                                     </div>
 
@@ -92,7 +102,14 @@
                                                                 <input name="energy" type="number" class="form-control"
                                                                     [(ngModel)]="assessment.energyUse"
                                                                     (input)="saveChanges(assessment)" id="energyUse">
-                                                                <span class="input-group-text">MMBtu/yr</span>
+                                                                <select name="energyUnit" class="input-group-text" id="energyUnit"
+                                                                    [(ngModel)]="assessment.unitOptionValue"
+                                                                    (change)="saveChanges(assessment)">
+                                                                    <option *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions)"
+                                                                        [ngValue]="unitOption.value">
+                                                                        <span [innerHTML]="unitOption.value | unitsDisplay"></span>
+                                                                    </option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -113,7 +130,7 @@
                                                     <div class="row">
                                                         <label class="col-sm-5 col-form-label" for="visitDate">Scheduled
                                                             For</label>
-                                                        <div class="col-sm-7">
+                                                        <div id="visitDate" class="col-sm-7">
                                                             {{assessment.visitDate | date}}
                                                         </div>
                                                     </div>
@@ -134,7 +151,7 @@
                                                         <button class="btn btn-sm btn-secondary"
                                                             (click)="openContactModal(assessmentIndex, undefined)">
                                                             <fa-icon [icon]="faContactBook"></fa-icon>
-                                                            Team Members
+                                                            Stakeholders
                                                         </button>
                                                     </div>
                                                     <div>

@@ -20,7 +20,7 @@
                 <app-location-form [inCompany]="false"></app-location-form>
                 <hr>
                 <label class="bold">Tracked Utilities</label>
-                <app-units-form [inCompany]="false"></app-units-form>
+                <app-units-form></app-units-form>
                 <hr>
                 <label class="bold">Additional Details</label>
                 <app-additional-details-form [inCompany]="false"></app-additional-details-form>
@@ -34,8 +34,8 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button class="btn btn-dark" (click)="goToProcessEquipment()" [disabled]="name?.invalid">
-            Process Equipment
+        <button class="btn btn-dark" (click)="goToEnergyEquipment()" [disabled]="name?.invalid">
+            Industrial System Inventory
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>

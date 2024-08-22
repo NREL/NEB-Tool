@@ -1,3 +1,6 @@
+import { AssessmentType } from "../shared/constants/assessmentTypes";
+import { UnitOption } from "../shared/constants/unitOptions";
+import { UtilityType } from "../shared/constants/utilityTypes";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
 
 export interface IdbAssessment extends IdbEntry {
@@ -5,12 +8,16 @@ export interface IdbAssessment extends IdbEntry {
     userId: string,
     facilityId: string,
     companyId: string,
+    assessmentType: AssessmentType,
+    utilityTypes: Array<UtilityType>, // track all utility types associated with assessment type
+    utilityType: UtilityType, // temporary limited to one utility type
+    unitOptionValue: string,
     equipmentId: string,
     energyUse: number,
     cost: number,
     energySavings: number,
     costSavings: number,
-    visitDate: Date
+    visitDate: Date,
     notes: string,
     implementationCost: number
 }
@@ -23,6 +30,10 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
+        assessmentType: undefined,
+        utilityTypes: [],
+        utilityType: undefined,
+        unitOptionValue: undefined,
         equipmentId: undefined,
         energyUse: undefined,
         cost: undefined,

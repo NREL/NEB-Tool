@@ -8,6 +8,9 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { AssessmentOptions, AssessmentType, AssessmentTypes } from 'src/app/shared/constants/assessmentTypes';
+import { UnitOption } from 'src/app/shared/constants/unitOptions';
+import { UtilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-assessment-details-form',
@@ -29,6 +32,9 @@ export class AssessmentDetailsFormComponent {
 
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
   energyEquipmentSub: Subscription;
+
+  assessmentTypes: Array<AssessmentType> = AssessmentTypes;
+
   constructor(
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
@@ -58,6 +64,25 @@ export class AssessmentDetailsFormComponent {
     this.contactsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
     this.energyEquipmentSub.unsubscribe();
+  }
+
+  async setUtilityTypes() {
+    let utilityTypes = AssessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
+    this.assessment.utilityTypes = utilityTypes; // track all utility types
+    if (!this.assessment.utilityTypes.includes(this.assessment.utilityType)) { // update utility type if the assessment type changes
+      this.assessment.utilityType = utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
+      await this.setUnitOptionValue();
+    } else {
+      await this.saveChanges();
+    }
+  }
+
+  async setUnitOptionValue() {
+    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.unitOptions || [];
+    if (unitOptions.map(unitOption => unitOption.value).indexOf(this.assessment.unitOptionValue) == -1) {
+      this.assessment.unitOptionValue = unitOptions?.[0].value;
+    }
+    await this.saveChanges();
   }
 
   async saveChanges() {
