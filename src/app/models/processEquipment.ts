@@ -19,7 +19,7 @@ export function getNewIdbProcessEquipment(userId: string, companyId: string, fac
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
-        equipmentName: 'New Process Equipment',
+        equipmentName: 'New End Use',
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
