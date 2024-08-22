@@ -1,36 +1,21 @@
-<div class="d-flex w-100 justify-content-end pb-2">
-    <!-- <button class="me-2 btn btn-secondary btn-sm add-neb-btn" (click)="addNEB()">
-        <fa-icon [icon]="faPlus"></fa-icon> Add NEB
-    </button>
-    <button class="btn btn-dark btn-sm add-neb-btn me-2" (click)="showSuggestedNEBs()">
-        <fa-icon [icon]="faSearchPlus"></fa-icon> Search NEBs
-    </button> -->
-    <!-- <div class="d-flex w-100 justify-content-end pt-2 pb-2 me-2"> -->
-    <!-- <div class="dropdown me-2">
-        <button class="btn btn-outline-success btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <fa-icon [icon]="faPlus"></fa-icon> Add NEB
-        </button>
-        <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item" (click)="addNEB()">
-                    <fa-icon [icon]="faPlus"></fa-icon> Add Custom NEB
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" (click)="showSuggestedNEBs()">
-                    <fa-icon [icon]="faSearchPlus"></fa-icon> Search NEBs
-                </a>
-            </li>
-        </ul>
-    </div> -->
-    <!-- </div> -->
+<h6>
+    <div class="d-flex w-100 justify-content-between">
+        <div class="mt-auto bold">
+            Opportunity Details
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
+                <fa-icon [icon]="faTrash"></fa-icon> Delete
+            </button>
+        </div>
+    </div>
+</h6>
 
+<p class="fw-light small">
+    Provide details about the energy opportunity in this assessment. Providing an implementation cost will allow for
+    payback calculations. These details will be rolled up to generate a final report on the assessment.
+</p>
 
-    <button class="btn btn-danger btn-sm" (click)="showDeleteModal()">
-        <fa-icon [icon]="faTrash"></fa-icon> Delete
-    </button>
-</div>
 
 <form>
     <div class="row">
@@ -130,7 +115,7 @@
                 Non-Energy Benefits
             </div>
             <div class="dropdown">
-                <button class="btn btn-outline-success btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                <button class="btn btn-outline-neb btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <fa-icon [icon]="faPlus"></fa-icon> Add NEB
                 </button>
