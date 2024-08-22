@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { IconDefinition, faFileLines, faPlus, faSearchPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faPlus, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { EnergyOpportunityType, FanOpportunities } from 'src/app/shared/constants/energyOpportunityOptions';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
@@ -25,6 +25,7 @@ export class EnergyOpportunitySetupFormComponent {
   faTrash: IconDefinition = faTrash;
   faSearchPlus: IconDefinition = faSearchPlus;
   faPlus: IconDefinition = faPlus;
+  faWeightHanging: IconDefinition = faWeightHanging;
 
   opportunityTypes: Array<EnergyOpportunityType> = [{value: 'other', label: 'Other'}];
   displayDeleteModal: boolean = false;

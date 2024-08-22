@@ -14,3 +14,7 @@
 /* .accordion-button:hover{
     background-color: var(--bs-btn-hover-bg);
 } */
+
+.accordion-button:not(.collapsed), .accordion-body{
+    border-left: solid var(--neb-color) 5px;
+}

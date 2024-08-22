@@ -1,9 +1,33 @@
-<div class="d-flex w-100 justify-content-end pt-2 pb-2">
-    <button class="me-2 btn btn-secondary btn-sm add-neb-btn" (click)="addNEB()">
-        <fa-icon [icon]="faPlus"></fa-icon> Add Custom NEB
-    </button>
-    <button class="btn btn-secondary btn-sm add-neb-btn" (click)="openNebModal()">
-        <fa-icon [icon]="faSearchPlus"></fa-icon> Search NEBs
-    </button>
-</div>
+<h6 class="pt-2 pb-2">
+    <div class="d-flex w-100 justify-content-between">
+        <div class="mt-auto bold">
+            Assessment Non-Energy Benefits
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-neb btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <fa-icon [icon]="faPlus"></fa-icon> Add NEB
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" (click)="addNEB()">
+                        <fa-icon [icon]="faPlus"></fa-icon> Add Custom NEB
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" (click)="openNebModal()">
+                        <fa-icon [icon]="faSearchPlus"></fa-icon> Search NEBs Database
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</h6>
+<p class="fw-light small">
+    Use this section to add Non-Energy Benefits (<fa-icon [icon]="faWeightHanging"></fa-icon>) to this assessment that
+    are <span class="bold">not associated with a specific energy opportunity</span>. Use the "<fa-icon
+        [icon]="faPlus"></fa-icon> Add NEB"
+    dropdown to select adding a "Custom NEB" or searching our database for potential known NEBs.
+</p>
+
 <app-neb-forms-accordion [assessment]="assessment"></app-neb-forms-accordion>

@@ -1,5 +1,5 @@
 <div class="d-flex w-100 justify-content-end pt-2 pb-2">
-    <button class="btn btn-dark btn-sm add-opportunity-btn" (click)="addEnergyOpportunity()"><fa-icon [icon]="faPlus"
+    <button class="btn btn-outline-energy-opp btn-sm" (click)="addEnergyOpportunity()"><fa-icon [icon]="faPlus"
             class="me-1"></fa-icon>Add Energy Opportunity</button>
 </div>
 <ng-template [ngIf]="assessmentEnergyOpportunityGuids.length > 0" [ngIfElse]="noOpportunitiesBlock">
