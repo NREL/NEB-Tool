@@ -64,7 +64,7 @@
                                                                 <select name="assessmentType" class="form-select"
                                                                     id="assessmentType"
                                                                     [(ngModel)]="assessment.assessmentType"
-                                                                    (change)="saveChanges(assessment)">
+                                                                    (change)="setUtilityTypes(assessment)">
                                                                     <option
                                                                         *ngFor="let assessmentType of assessmentTypes"
                                                                         [ngValue]="assessmentType">
@@ -82,9 +82,9 @@
                                                                 <select name="utilityType" class="form-select"
                                                                     id="utilityType"
                                                                     [(ngModel)]="assessment.utilityType"
-                                                                    (change)="saveChanges(assessment)">
+                                                                    (change)="setUnitOptionValue(assessment)">
                                                                     <option
-                                                                        *ngFor="let utilityType of utilityTypes"
+                                                                        *ngFor="let utilityType of assessment.utilityTypes"
                                                                         [ngValue]="utilityType">
                                                                         {{utilityType}}
                                                                     </option>
@@ -102,8 +102,11 @@
                                                                 <input name="energy" type="number" class="form-control"
                                                                     [(ngModel)]="assessment.energyUse"
                                                                     (input)="saveChanges(assessment)" id="energyUse">
-                                                                <select name="energyUnit" class="input-group-text">
-                                                                    <option *ngFor="let unitOption of unitOptions" [ngValue]="assessment.unitOption">
+                                                                <select name="energyUnit" class="input-group-text" id="energyUnit"
+                                                                    [(ngModel)]="assessment.unitOptionValue"
+                                                                    (change)="saveChanges(assessment)">
+                                                                    <option *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions)"
+                                                                        [ngValue]="unitOption.value">
                                                                         <span [innerHTML]="unitOption.value | unitsDisplay"></span>
                                                                     </option>
                                                                 </select>

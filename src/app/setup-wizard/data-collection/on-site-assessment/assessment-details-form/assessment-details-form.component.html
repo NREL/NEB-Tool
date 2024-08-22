@@ -10,8 +10,9 @@
     <div class="row">
         <label class="col-sm-5 col-form-label" for="assessmentType">Assessment Type</label>
         <div class="col-sm-7">
-                <select name="assessmentType" class="form-select" id="assessmentType" [(ngModel)]="assessment.assessmentType"
-                    (change)="saveChanges()">
+                <select name="assessmentType" class="form-select" id="assessmentType"
+                    [(ngModel)]="assessment.assessmentType"
+                    (change)="setUtilityTypes()">
                     <option
                         *ngFor="let assessmentType of assessmentTypes"
                         [ngValue]="assessmentType">
@@ -28,9 +29,9 @@
                 <select name="utilityType" class="form-select"
                     id="utilityType"
                     [(ngModel)]="assessment.utilityType"
-                    (change)="saveChanges()">
+                    (change)="setUnitOptionValue()">
                     <option
-                        *ngFor="let utilityType of utilityTypes"
+                        *ngFor="let utilityType of assessment.utilityTypes"
                         [ngValue]="utilityType">
                         {{utilityType}}
                     </option>
@@ -46,8 +47,10 @@
             <div class="input-group">
                 <input name="energy" type="number" class="form-control" [(ngModel)]="assessment.energyUse"
                     (input)="saveChanges()" id="energyUse">
-                <select name="energyUnit" class="input-group-text">
-                    <option *ngFor="let unitOption of unitOptions" [ngValue]="assessment.unitOption">
+                    <select name="energyUnit" class="input-group-text" id="energyUnit"
+                        [(ngModel)]="assessment.unitOptionValue"
+                        (change)="saveChanges()">
+                    <option *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions)" [ngValue]="assessment.unitOptionValue">
                         <span [innerHTML]="unitOption.value | unitsDisplay"></span>
                     </option>
                 </select>

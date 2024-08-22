@@ -34,8 +34,6 @@ export class AssessmentDetailsFormComponent {
   energyEquipmentSub: Subscription;
 
   assessmentTypes: Array<AssessmentType> = assessmentTypes;
-  unitOptions: Array<UnitOption>;
-  utilityTypes: Array<UtilityType>;
 
   constructor(
     private assessmentIdbService: AssessmentIdbService,
@@ -68,14 +66,27 @@ export class AssessmentDetailsFormComponent {
     this.energyEquipmentSub.unsubscribe();
   }
 
+  setUtilityTypes() {
+    let utilityTypes = assessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
+    this.assessment.utilityTypes = utilityTypes; // track all utility types
+    if (!this.assessment.utilityTypes.includes(this.assessment.utilityType)) { // update utility type if the assessment type changes
+      this.assessment.utilityType = utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
+      this.setUnitOptionValue();
+    } else {
+      this.saveChanges();
+    }
+  }
+
+  setUnitOptionValue() {
+    let unitOptions = utilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.unitOptions || [];
+    if (unitOptions.map(unitOption => unitOption.value).indexOf(this.assessment.unitOptionValue) == -1) {
+      this.assessment.unitOptionValue = unitOptions?.[0].value;
+    }
+    this.saveChanges();
+  }
+
   async saveChanges() {
     this.isFormChange = true;
-    this.utilityTypes = assessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
-    this.assessment.utilityTypes = this.utilityTypes; // track all utility types
-    if (!this.utilityTypes.includes(this.assessment.utilityType)) { // update utility type if the assessment type changes
-      this.assessment.utilityType = this.utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
-    }
-    this.unitOptions = utilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.unitOptions || [];
     await this.assessmentIdbService.asyncUpdate(this.assessment);
   }
 

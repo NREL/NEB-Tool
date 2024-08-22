@@ -45,7 +45,7 @@ export class PreAssessmentSetupComponent {
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
 
   assessmentTypes: Array<AssessmentType> = assessmentTypes;
-  
+  utilityOptions: Array<UtilityOption> = utilityOptions;
   
   displayDeleteModal: boolean = false;
   assessmentToDelete: IdbAssessment;
@@ -56,9 +56,6 @@ export class PreAssessmentSetupComponent {
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
   isFormChange: boolean = false;
-
-  unitOptions: Array<UnitOption>;
-  utilityTypes: Array<UtilityType>;
 
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private facilityIdbService: FacilityIdbService,
@@ -98,14 +95,28 @@ export class PreAssessmentSetupComponent {
     this.energyEquipmentSub.unsubscribe();
   }
   
+
+  setUtilityTypes(assessment: IdbAssessment) {
+    let utilityTypes = assessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
+    assessment.utilityTypes = utilityTypes; // track all utility types
+    if (!assessment.utilityTypes.includes(assessment.utilityType)) { // update utility type if the assessment type changes
+      assessment.utilityType = utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
+      this.setUnitOptionValue(assessment);
+    } else {
+      this.saveChanges(assessment);
+    }
+  }
+
+  setUnitOptionValue(assessment: IdbAssessment) {
+    let unitOptions = utilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
+    if (unitOptions.map(unitOption => unitOption.value).indexOf(assessment.unitOptionValue) == -1) {
+      assessment.unitOptionValue = unitOptions?.[0].value;
+    }
+    this.saveChanges(assessment);
+  }
+
   async saveChanges(assessment: IdbAssessment) {
     this.isFormChange = true;
-    this.utilityTypes = assessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
-    assessment.utilityTypes = this.utilityTypes; // track all utility types
-    if (!this.utilityTypes.includes(assessment.utilityType)) { // update utility type if the assessment type changes
-      assessment.utilityType = this.utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
-    }
-    this.unitOptions = utilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
     this.assessmentIdbService.asyncUpdate(assessment);
   }
 
