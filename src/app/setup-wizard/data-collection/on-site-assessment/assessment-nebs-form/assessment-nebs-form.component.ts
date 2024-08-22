@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IconDefinition, faPlus, faSearchPlus } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faPlus, faSearchPlus, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
@@ -16,6 +16,7 @@ export class AssessmentNebsFormComponent {
 
   faSearchPlus: IconDefinition = faSearchPlus;
   faPlus: IconDefinition = faPlus;
+  faWeightHanging: IconDefinition = faWeightHanging;
 
   assessment: IdbAssessment;
   assessmentSub: Subscription;

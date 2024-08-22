@@ -54,3 +54,8 @@ ul {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+
+.metric-border{
+   border-left: dashed 5px var(--metric-color);
+}

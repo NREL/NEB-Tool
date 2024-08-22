@@ -44,7 +44,7 @@ export class AddNebsModalComponent {
   displayAllNebs: boolean = true;
   selectedNebs: Array<IdbNonEnergyBenefit>;
   nebSearchStr: string = '';
-  orderByDir: 'asc' | 'desc' = 'desc';
+  orderByDir: 'asc' | 'desc' = 'asc';
 
   constructor(private setupWizardService: SetupWizardService, private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService,

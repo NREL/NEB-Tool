@@ -96,7 +96,7 @@
                                 Associated Performance Metrics
                             </div>
                             <div>
-                                <button class="btn btn-outline-primary btn-sm" (click)="addPerformanceMetric()">
+                                <button class="btn btn-outline-metric btn-sm" (click)="addPerformanceMetric()">
                                     <fa-icon [icon]="faPlus"></fa-icon>
                                     Add New Metric
                                 </button>
@@ -119,7 +119,7 @@
                         <ng-container *ngFor="let keyPerformanceMetric of keyPerformanceIndicator.performanceMetrics">
                             <div class="metric-block">
                                 <div class="dropdown">
-                                    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
+                                    <button class="btn btn-outline-metric btn-sm dropdown-toggle" type="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
                                         <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
