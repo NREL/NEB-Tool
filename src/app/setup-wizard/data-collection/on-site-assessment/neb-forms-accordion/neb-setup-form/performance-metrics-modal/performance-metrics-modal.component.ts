@@ -7,7 +7,7 @@ import { getNewKeyPerformanceIndicator, IdbKeyPerformanceIndicator } from 'src/a
 import { getNewIdbKeyPerformanceMetricImpact, IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { KeyPerformanceIndicatorOption, KeyPerformanceIndicatorOptions } from 'src/app/shared/constants/keyPerformanceIndicatorOptions';
-import { convertOptionTypeToMetricType, KeyPerformanceMetric, KeyPerformanceMetricOption, KeyPerformanceMetricOptions } from 'src/app/shared/constants/keyPerformanceMetrics';
+import { convertOptionTypeToMetricType, getPerformanceMetrics, KeyPerformanceMetric, KeyPerformanceMetricOption, KeyPerformanceMetricOptions } from 'src/app/shared/constants/keyPerformanceMetrics';
 import { NebOption, NebOptions } from 'src/app/shared/constants/nonEnergyBenefitOptions';
 
 @Component({
@@ -59,12 +59,23 @@ export class PerformanceMetricsModalComponent {
     let addedMetric: KeyPerformanceMetric;
     let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.performanceMetricToAdd.kpiValue);
     if (keyPerformanceIndicator) {
+      //check metric is being tracked in existing KPI
       addedMetric = keyPerformanceIndicator.performanceMetrics.find(_metric => {
         return (_metric.value == this.performanceMetricToAdd.value);
       });
-      await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
+      if (!addedMetric) {
+        //if not being tracked. Add metric to existing KPI
+        let metrics: Array<KeyPerformanceMetric> = getPerformanceMetrics(keyPerformanceIndicator.optionValue, keyPerformanceIndicator.guid);
+        addedMetric = metrics.find(_metric => {
+          return (_metric.value == this.performanceMetricToAdd.value);
+        });
+        if (addedMetric) {
+          keyPerformanceIndicator.performanceMetrics.push(addedMetric);
+          await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
+        }
+      }
     } else {
-      //add untracked KPI if doesn't exist
+      //add untracked KPI if doesn't exist and all associated metrics
       let kpiOption: KeyPerformanceIndicatorOption = KeyPerformanceIndicatorOptions.find(option => {
         return option.optionValue == this.performanceMetricToAdd.kpiValue
       });
