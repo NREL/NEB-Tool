@@ -36,3 +36,16 @@ a.click-link.click-link-danger:hover{
     cursor: pointer;
     text-decoration: underline;
 }
+
+.dropdown-menu{
+    padding: 0px;
+}
+
+.dropdown-item:hover{
+    cursor: pointer;
+}
+
+
+.pm-label{
+    padding-left: 1.5rem;
+}

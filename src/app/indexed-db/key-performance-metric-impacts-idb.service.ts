@@ -83,4 +83,11 @@ export class KeyPerformanceMetricImpactsIdbService {
     }
     await this.setKeyPerformanceMetricImpacts();
   }
+
+  getAllKpmImpacts(kpmGuid: string): Array<IdbKeyPerformanceMetricImpact> {
+    let allKpmImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpacts.getValue();
+    return allKpmImpacts.filter(kpmImpact => {
+      return kpmImpact.kpmGuid == kpmGuid;
+    });
+  }
 }

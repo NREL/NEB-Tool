@@ -26,7 +26,7 @@ export class KpmImpactsTableComponent {
   faChevronRight: IconDefinition = faChevronRight;
   faChevronDown: IconDefinition = faChevronDown;
 
-  displayTable: boolean = false;
+  displayTable: boolean = true;
 
   keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>;
   keyPerformanceMetricImpactsSub: Subscription;
