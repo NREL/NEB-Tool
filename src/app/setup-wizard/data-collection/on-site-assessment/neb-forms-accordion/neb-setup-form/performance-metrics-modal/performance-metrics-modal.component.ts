@@ -87,12 +87,6 @@ export class PerformanceMetricsModalComponent {
       await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
     }
 
-    if (!addedMetric) {
-      addedMetric = {
-        ...this.performanceMetricToAdd,
-      }
-    }
-
     let newKeyPerformanceMetricImpact: IdbKeyPerformanceMetricImpact = getNewIdbKeyPerformanceMetricImpact(this.nonEnergyBenefit.userId, this.nonEnergyBenefit.companyId, this.nonEnergyBenefit.facilityId, this.nonEnergyBenefit.energyOpportunityId, this.nonEnergyBenefit.guid, addedMetric.value, this.nonEnergyBenefit.assessmentId, keyPerformanceIndicator.guid, addedMetric.guid);
     await firstValueFrom(this.keyPerformanceMetricImpactIdbService.addWithObservable(newKeyPerformanceMetricImpact));
     await this.keyPerformanceMetricImpactIdbService.setKeyPerformanceMetricImpacts();
