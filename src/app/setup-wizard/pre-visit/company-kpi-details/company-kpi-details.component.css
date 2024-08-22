@@ -18,6 +18,7 @@
 .metric-hr{
     border-style: dashed;
     /* margin-top: 0; */
+    border-width: 2px;
 }
 
 

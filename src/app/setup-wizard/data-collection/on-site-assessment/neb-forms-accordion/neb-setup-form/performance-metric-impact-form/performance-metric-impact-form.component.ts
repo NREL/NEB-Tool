@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faClose, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { firstValueFrom } from 'rxjs';
+import { IconDefinition, faBullseye, faClose, faEdit, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
@@ -26,12 +26,19 @@ export class PerformanceMetricImpactFormComponent {
   faPlus: IconDefinition = faPlus;
   faClose: IconDefinition = faClose;
   faTrash: IconDefinition = faTrash;
+  faEdit: IconDefinition = faEdit;
+  faBullseye: IconDefinition = faBullseye;
 
   keyPerformanceMetric: KeyPerformanceMetric;
-  disabledBaseline: boolean = true;
+  overrideBaseline: boolean = false;
 
   keyPerformanceMetricImpact: IdbKeyPerformanceMetricImpact;
   displayDeleteModal: boolean = false;
+  metricHasOtherImpacts: boolean = false;
+
+  keyPerformanceMetricImpactsSub: Subscription;
+
+  isFormChange: boolean = false;
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -41,11 +48,36 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   ngOnInit() {
-    this.keyPerformanceMetricImpact = this.keyPerformanceMetricImpactIdbService.getByGuid(this.impactGuid);
-    this.keyPerformanceMetric = this.keyPerformanceIndicatorIdbService.getKeyPerformanceMetric(this.keyPerformanceMetricImpact.companyId, this.keyPerformanceMetricImpact.kpmValue)
+    this.keyPerformanceMetricImpactsSub = this.keyPerformanceMetricImpactIdbService.keyPerformanceMetricImpacts.subscribe(_kpmImpacts => {
+      if (!this.isFormChange) {
+        this.keyPerformanceMetricImpact = this.keyPerformanceMetricImpactIdbService.getByGuid(this.impactGuid);
+        if (this.keyPerformanceMetricImpact) {
+          this.keyPerformanceMetric = this.keyPerformanceIndicatorIdbService.getKeyPerformanceMetric(this.keyPerformanceMetricImpact.companyId, this.keyPerformanceMetricImpact.kpmGuid);
+        }
+      } else {
+        this.isFormChange = false;
+      }
+      if (this.keyPerformanceMetricImpact) {
+        this.setDisabledBaseline(_kpmImpacts);
+      }
+    });
   }
 
+  ngOnDestroy() {
+    this.keyPerformanceMetricImpactsSub.unsubscribe();
+  }
+
+  setDisabledBaseline(allKpmImpacts: Array<IdbKeyPerformanceMetricImpact>) {
+    //disable baseline if other impacts in the system then one being edited in this component.
+    let filteredImpacts: Array<IdbKeyPerformanceMetricImpact> = allKpmImpacts.filter(kpmImpact => {
+      return kpmImpact.guid != this.impactGuid && kpmImpact.kpmGuid == this.keyPerformanceMetricImpact.kpmGuid;
+    });
+    this.metricHasOtherImpacts = (filteredImpacts.length != 0);
+  }
+
+
   async saveChanges() {
+    this.isFormChange = true;
     await this.keyPerformanceMetricImpactIdbService.asyncUpdate(this.keyPerformanceMetricImpact);
   }
 
@@ -55,16 +87,15 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   goToMetric() {
-    let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.keyPerformanceMetricImpact.companyId, this.keyPerformanceMetric.kpiValue);
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-detail/' + keyPerformanceIndicator.guid)
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-detail/' + this.keyPerformanceMetricImpact.kpiGuid)
   }
 
   async savePerformanceMetric() {
-    console.log('update...')
-    let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getKpiFromKpm(this.nonEnergyBenefit.companyId, this.keyPerformanceMetric.kpiValue);
+    this.isFormChange = true;
+    let keyPerformanceIndicator: IdbKeyPerformanceIndicator = this.keyPerformanceIndicatorIdbService.getByGuid(this.keyPerformanceMetric.kpiGuid);
     keyPerformanceIndicator.performanceMetrics.forEach(_metric => {
-      if (_metric.value == this.keyPerformanceMetric.value) {
+      if (_metric.guid == this.keyPerformanceMetric.guid) {
         _metric.baselineCost = this.keyPerformanceMetric.baselineCost;
         _metric.baselineValue = this.keyPerformanceMetric.baselineValue;
         _metric.costPerValue = this.keyPerformanceMetric.costPerValue;
@@ -72,10 +103,6 @@ export class PerformanceMetricImpactFormComponent {
     });
     await this.keyPerformanceMetricImpactIdbService.updatePerformanceMetricBaseline(keyPerformanceIndicator, this.keyPerformanceMetric);
     await this.keyPerformanceIndicatorIdbService.asyncUpdate(keyPerformanceIndicator);
-  }
-
-  setDisabledBaseline() {
-
   }
 
   async calculateBaseline() {
@@ -95,5 +122,9 @@ export class PerformanceMetricImpactFormComponent {
   async confirmDelete() {
     await firstValueFrom(this.keyPerformanceMetricImpactIdbService.deleteWithObservable(this.keyPerformanceMetricImpact.id));
     await this.keyPerformanceMetricImpactIdbService.setKeyPerformanceMetricImpacts();
+  }
+
+  setOverrideBaseline() {
+    this.overrideBaseline = true;
   }
 }

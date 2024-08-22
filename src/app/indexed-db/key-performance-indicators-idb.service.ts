@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { IdbKeyPerformanceIndicator } from '../models/keyPerformanceIndicator';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
-import { KeyPerformanceMetric, KeyPerformanceMetricValue } from '../shared/constants/keyPerformanceMetrics';
+import { KeyPerformanceMetric } from '../shared/constants/keyPerformanceMetrics';
 import { KeyPerformanceIndicatorValue } from '../shared/constants/keyPerformanceIndicatorOptions';
 
 @Injectable({
@@ -69,10 +69,10 @@ export class KeyPerformanceIndicatorsIdbService {
     return companyKPMs;
   }
 
-  getKeyPerformanceMetric(companyGuid: string, performanceMetricValue: KeyPerformanceMetricValue): KeyPerformanceMetric {
+  getKeyPerformanceMetric(companyGuid: string, kpmGuid: string): KeyPerformanceMetric {
     let companyKeyPerformanceMetrics: Array<KeyPerformanceMetric> = this.getCompanyKeyPerformanceMetrics(companyGuid);
     return companyKeyPerformanceMetrics.find(metric => {
-      return metric.value == performanceMetricValue
+      return metric.guid == kpmGuid
     });
   }
 
