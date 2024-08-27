@@ -31,7 +31,6 @@ export class CompanyContactsFormService {
       'email': [contact.email, [Validators.email, Validators.maxLength(255)]],
       'role': [contact.role, []],
       'team': [contact.team, []],
-      'focusArea': [contact.focusArea, []],
       'notes': [contact.notes, []]
     }, {validator: this.phoneNumberValidator()});
   }
@@ -46,7 +45,6 @@ export class CompanyContactsFormService {
     contact.email = contactForm.controls['email'].value;
     contact.role = contactForm.controls['role'].value;
     contact.team = contactForm.controls['team'].value;
-    contact.focusArea = contactForm.controls['focusArea'].value;
     contact.notes = contactForm.controls['notes'].value;
     return contact;
   }

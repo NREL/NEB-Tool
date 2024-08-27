@@ -23,7 +23,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Role
+                        Title
                     </td>
                     <td>
                         <app-single-cell-item [strValue]="contact.role"></app-single-cell-item>
@@ -39,14 +39,6 @@
                 </tr>
                 <tr>
                     <td>
-                        Focus Area
-                    </td>
-                    <td>
-                        <app-single-cell-item [strValue]="contact.focusArea"></app-single-cell-item>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         Notes
                     </td>
                     <td>
@@ -55,7 +47,7 @@
                 </tr>
                 <tr>
                     <td>
-                        KPI's
+                        KPIs
                     </td>
                     <td>
                         <ng-template [ngIf]="contact.kpiIds.length != 0" [ngIfElse]="kpiMdash">
@@ -73,7 +65,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Equipment
+                        End Use
                     </td>
                     <td>
                         <ng-template [ngIf]="contact.processEquipmentIds.length != 0" [ngIfElse]="equipmentMdash">
