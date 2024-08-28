@@ -12,15 +12,15 @@
 </h6>
 
 <p class="fw-light small">
-    Provide details about the energy opportunity in this assessment. Providing an implementation cost will allow for
+    Provide details about this energy efficiency opportunity in this assessment. Providing an implementation cost will allow for
     payback calculations. These details will be rolled up to generate a final report on the assessment.
 </p>
 
 
 <form>
     <div class="row">
-        <label class="col-sm-5 col-form-label" for="{{'energyOpportunityName_'+energyOpportunity.guid}}">Energy
-            Opportunity Name</label>
+        <label class="col-sm-5 col-form-label" for="{{'energyOpportunityName_'+energyOpportunity.guid}}">Opportunity
+            Name</label>
         <div class="col-sm-7">
             <input name="{{'energyOpportunityName_'+energyOpportunity.guid}}" type="text" class="form-control"
                 [(ngModel)]="energyOpportunity.name" minlength="1" maxlength="42"
@@ -98,7 +98,7 @@
                 <input class="form-check-input" type="checkbox" role="switch"
                     id="{{'includeNotes_'+energyOpportunity.guid}}" [(ngModel)]="energyOpportunity.includeNote"
                     name="{{'includeNotes_'+energyOpportunity.guid}}" (input)="saveEnergyOpportunity()">
-                <label class="form-check-label" for="{{'includeNotes_'+energyOpportunity.guid}}">Energy Opportunity
+                <label class="form-check-label" for="{{'includeNotes_'+energyOpportunity.guid}}">Opportunity
                     Notes</label>
             </div>
         </div>
@@ -135,10 +135,9 @@
         </div>
     </h6>
     <p class="fw-light small">
-        Use this section to add Non-Energy Benefits (<fa-icon [icon]="faWeightHanging"></fa-icon>) that are <span
-            class="bold">directly
-            associated with this energy opportunity</span>. Use the "<fa-icon [icon]="faPlus"></fa-icon> Add NEB"
-        dropdown to select adding a "Custom NEB" or searching our database for potential known NEBs.
+        Use the "<fa-icon [icon]="faPlus"></fa-icon> Add NEB" dropdown to add Non-Energy Benefits 
+            (<fa-icon [icon]="faWeightHanging"></fa-icon>) that are <span class="bold">directly
+            associated with this energy efficiency opportunity</span>.
     </p>
 
     <app-neb-forms-accordion [energyOpportunity]="energyOpportunity"></app-neb-forms-accordion>

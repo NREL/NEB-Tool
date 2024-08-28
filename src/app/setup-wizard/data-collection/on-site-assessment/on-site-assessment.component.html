@@ -5,7 +5,7 @@
                 <nav class="navbar top-nav">
                     <div>
                         <h5>
-                            <fa-icon [icon]="faScrewdriverWrench"></fa-icon> {{assessment.name}}
+                            <fa-icon [icon]="faScrewdriverWrench"></fa-icon> {{assessment.name}} @if (assessment.assessmentType) {- {{assessment.assessmentType}}}
                         </h5>
                     </div>
                     <ul class="nav nav-underline">
@@ -15,7 +15,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link pt-0" [routerLink]="'energy-opportunities'"
-                            [routerLinkActive]="['active']">Energy Opportunities</a>
+                            [routerLinkActive]="['active']">Energy Efficiency Opportunities</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link pt-0" [routerLink]="'nebs'"

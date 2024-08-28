@@ -10,8 +10,8 @@
                     <div class="d-flex w-100 justify-content-between pb-2">
                         <div class="p-0">
                             <div class="row">
-                                <label class="col-sm-5 col-form-label bold" for="visitDate">Visit Date</label>
-                                <div class="col-sm-7">
+                                <label class="col-sm-6 col-form-label bold" for="visitDate">Assessment Date</label>
+                                <div class="col-sm-6">
                                     <input name="visitDate" id="visitDate" type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
                                         name="visitDate" (change)="setVisitDate()">
                                 </div>
@@ -128,8 +128,8 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label" for="visitDate">Scheduled
-                                                            For</label>
+                                                        <label class="col-sm-5 col-form-label" for="visitDate">Assessment
+                                                            Date</label>
                                                         <div id="visitDate" class="col-sm-7">
                                                             {{assessment.visitDate | date}}
                                                         </div>

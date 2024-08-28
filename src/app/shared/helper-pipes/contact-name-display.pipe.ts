@@ -9,7 +9,7 @@ export class ContactNameDisplayPipe implements PipeTransform {
 
   transform(contact: IdbContact): string {
     if (contact) {
-      return contact.firstName + ' ' + contact.lastName;
+      return (contact.firstName || '') + ' ' + (contact.lastName  || '');
     } else {
       return '';
     }
