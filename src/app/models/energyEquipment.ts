@@ -1,5 +1,5 @@
 import { getNewIdbEntry, IdbEntry } from "./idbEntry"
-import { EquipmentType } from "../shared/constants/equipmentTypes"
+import { EquipmentType, EquipmentTypeOptions } from "../shared/constants/equipmentTypes"
 import { UtilityType } from "../shared/constants/utilityTypes"
 
 export interface IdbEnergyEquipment extends IdbEntry {
@@ -11,27 +11,31 @@ export interface IdbEnergyEquipment extends IdbEntry {
     equipmentType: EquipmentType,
     utilityType: UtilityType,
     size: number,
+    sizeUnit: string,
     operatingHours: number,
     loadFactor: number,
     efficiency: number,
-    numberOfEquipment: number
+    numberOfEquipment: number,
+    annualEnergyUse: number,
 }
 
 export function getNewIdbEnergyEquipment(userId: string, companyId: string, facilityId: string): IdbEnergyEquipment {
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
-        equipmentName: 'New Industrial Equipment',
         userId: userId,
         companyId: companyId,
         facilityId: facilityId,
-        size: undefined,
-        operatingHours: undefined,
-        loadFactor: undefined,
+        equipmentName: 'New Industrial Equipment',
+        equipmentType: "Pump",
+        utilityType: "Electricity",
+        size: 0,
+        sizeUnit: "kWh",
+        operatingHours: 0,
+        loadFactor: 0,
+        efficiency: 0.5,
+        numberOfEquipment: 1,
         notes: undefined,
-        equipmentType: undefined,
-        utilityType: undefined,
-        efficiency: undefined,
-        numberOfEquipment: 1
+        annualEnergyUse: 0
     }
 }

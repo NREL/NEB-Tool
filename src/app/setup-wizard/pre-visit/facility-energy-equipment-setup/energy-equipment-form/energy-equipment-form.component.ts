@@ -7,7 +7,7 @@ import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-i
 import { IdbContact } from 'src/app/models/contact';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
-import { UtilityType, UtilityTypes } from 'src/app/shared/constants/utilityTypes';
+import { UtilityOption, UtilityOptions, UtilityType, UtilityTypes } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-energy-equipment-form',
@@ -24,6 +24,7 @@ export class EnergyEquipmentFormComponent {
 
   equipmentTypeOptions: Array<EquipmentType> = EquipmentTypeOptions;
   utilityTypes: Array<UtilityType> = UtilityTypes;
+  utilityOptions: Array<UtilityOption> = UtilityOptions;
   energyEquipment: IdbEnergyEquipment
   displayDeleteModal: boolean = false;
   contacts: Array<IdbContact>;
@@ -44,6 +45,14 @@ export class EnergyEquipmentFormComponent {
 
   ngOnDestroy() {
     this.contactSub.unsubscribe();
+  }
+
+  async calculateAnnualEnergyUse() {
+    this.energyEquipment.annualEnergyUse = this.energyEquipment.size * this.energyEquipment.operatingHours * this.energyEquipment.loadFactor / 100 / this.energyEquipment.efficiency * this.energyEquipment.numberOfEquipment;
+    if (!this.energyEquipment.annualEnergyUse || this.energyEquipment.annualEnergyUse === Infinity) {
+      this.energyEquipment.annualEnergyUse = 0;
+    }
+    await this.saveChanges();
   }
 
   async saveChanges() {
