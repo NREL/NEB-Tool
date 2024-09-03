@@ -12,6 +12,10 @@ import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { NebFormsAccordionComponent } from '../neb-forms-accordion/neb-forms-accordion.component';
+import { EnergyOpportunityNebsTableComponent } from './energy-opportunity-nebs-table/energy-opportunity-nebs-table.component';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
+import { EnergyOpportunityNebsListPipe } from './energy-opportunity-nebs-table/energy-opportunity-nebs-list.pipe';
 
 describe('AssessmentNebsFormComponent', () => {
   let component: AssessmentNebsFormComponent;
@@ -27,14 +31,19 @@ describe('AssessmentNebsFormComponent', () => {
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
   };
+
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {
+    energyOpportunities: new BehaviorSubject<Array<IdbEnergyOpportunity>>([])
+  }
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule],
-      declarations: [AssessmentNebsFormComponent, NebSetupFormComponent, NebFormsAccordionComponent],
+      declarations: [AssessmentNebsFormComponent, NebSetupFormComponent, NebFormsAccordionComponent, EnergyOpportunityNebsTableComponent, EnergyOpportunityNebsListPipe],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
-        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService }
+        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService }
       ]
     })
       .compileComponents();
