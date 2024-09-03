@@ -13,7 +13,8 @@ export interface IdbEnergyEquipment extends IdbEntry {
     size: number,
     operatingHours: number,
     loadFactor: number,
-    efficiency: number
+    efficiency: number,
+    numberOfEquipment: number
 }
 
 export function getNewIdbEnergyEquipment(userId: string, companyId: string, facilityId: string): IdbEnergyEquipment {
@@ -30,6 +31,7 @@ export function getNewIdbEnergyEquipment(userId: string, companyId: string, faci
         notes: undefined,
         equipmentType: undefined,
         utilityType: undefined,
-        efficiency: undefined
+        efficiency: undefined,
+        numberOfEquipment: 1
     }
 }

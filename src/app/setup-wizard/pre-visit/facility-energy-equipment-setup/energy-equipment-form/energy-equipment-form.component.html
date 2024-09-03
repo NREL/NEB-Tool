@@ -89,6 +89,18 @@
                 </div>
             </div>
             <div class="row">
+                <label class="col-sm-5 col-form-label"
+                    for="numberOfEquipment">Number of Equipment</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <input type="number" class="form-control"
+                            name="numberOfEquipment"
+                            [(ngModel)]="energyEquipment.numberOfEquipment"
+                            (input)="saveChanges()">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <label class="col-sm-5 col-form-label" for="notes">Notes</label>
                 <div class="col-sm-7">
                     <textarea class="form-control" name="notes"
