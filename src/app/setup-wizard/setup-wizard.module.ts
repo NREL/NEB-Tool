@@ -56,6 +56,8 @@ import { PerformanceMetricsModalComponent } from './data-collection/on-site-asse
 import { MetricOptionsModalListPipe } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metrics-modal/metric-options-modal-list.pipe';
 import { AssociatedMetricIndicatorPipe } from './data-collection/on-site-assessment/neb-forms-accordion/neb-setup-form/performance-metrics-modal/associated-metric-indicator.pipe';
 import { KpmImpactsTableComponent } from './pre-visit/company-kpi-details/kpm-impacts-table/kpm-impacts-table.component';
+import { EnergyOpportunityNebsTableComponent } from './data-collection/on-site-assessment/assessment-nebs-form/energy-opportunity-nebs-table/energy-opportunity-nebs-table.component';
+import { EnergyOpportunityNebsListPipe } from './data-collection/on-site-assessment/assessment-nebs-form/energy-opportunity-nebs-table/energy-opportunity-nebs-list.pipe';
 
 @NgModule({
   declarations: [
@@ -105,7 +107,9 @@ import { KpmImpactsTableComponent } from './pre-visit/company-kpi-details/kpm-im
     PerformanceMetricsModalComponent,
     MetricOptionsModalListPipe,
     AssociatedMetricIndicatorPipe,
-    KpmImpactsTableComponent
+    KpmImpactsTableComponent,
+    EnergyOpportunityNebsTableComponent,
+    EnergyOpportunityNebsListPipe
   ],
   imports: [
     CommonModule,
