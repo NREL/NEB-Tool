@@ -10,8 +10,13 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li *ngIf="!overrideBaseline && metricHasOtherImpacts">
-                            <a class="dropdown-item" (click)="setOverrideBaseline()">
+                            <a class="dropdown-item" (click)="setOverrideBaseline(true)">
                                 <fa-icon [icon]="faEdit"></fa-icon> Edit Baseline Values
+                            </a>
+                        </li>
+                        <li *ngIf="overrideBaseline">
+                            <a class="dropdown-item" (click)="setOverrideBaseline(false)">
+                                <fa-icon [icon]="faLock"></fa-icon> Lock Baseline Values
                             </a>
                         </li>
                         <li>
