@@ -48,7 +48,7 @@ export class EnergyEquipmentFormComponent {
   }
 
   async calculateAnnualEnergyUse() {
-    this.energyEquipment.annualEnergyUse = this.energyEquipment.size * this.energyEquipment.operatingHours * this.energyEquipment.loadFactor / 100 / this.energyEquipment.efficiency * this.energyEquipment.numberOfEquipment;
+    this.energyEquipment.annualEnergyUse = this.energyEquipment.size * this.energyEquipment.operatingHours * this.energyEquipment.loadFactor / this.energyEquipment.efficiency * this.energyEquipment.numberOfEquipment;
     if (!this.energyEquipment.annualEnergyUse || this.energyEquipment.annualEnergyUse === Infinity) {
       this.energyEquipment.annualEnergyUse = 0;
     }
