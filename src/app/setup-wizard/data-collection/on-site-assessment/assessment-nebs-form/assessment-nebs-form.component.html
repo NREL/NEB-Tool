@@ -24,9 +24,14 @@
     </div>
 </h6>
 <p class="fw-light small">
-    Use the "<fa-icon [icon]="faPlus"></fa-icon> Add NEB" dropdown to add Non-Energy Benefits 
-    (<fa-icon [icon]="faWeightHanging"></fa-icon>) that are 
-    <span class="bold">not associated with any specific energy efficiency opportunity</span> to this assessment .
+    Use the "<fa-icon [icon]="faPlus"></fa-icon> Add NEB" dropdown to add Non-Energy Benefits
+    (<fa-icon [icon]="faWeightHanging"></fa-icon>) that 
+    <span class="bold">are not associated with any specific energy efficiency opportunity</span> to this assessment.
 </p>
 
 <app-neb-forms-accordion [assessment]="assessment"></app-neb-forms-accordion>
+
+<hr>
+
+
+<app-energy-opportunity-nebs-table [assessment]="assessment"></app-energy-opportunity-nebs-table>
