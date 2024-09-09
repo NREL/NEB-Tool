@@ -173,57 +173,96 @@
                                 <ng-template [ngIf]="keyPerformanceMetric.isQuantitative">
                                     <div class="row">
                                         <label class="col-sm-6 col-form-label pm-label"
-                                            for="{{'baselineValue_'+keyPerformanceMetric.value}}">
-                                            Baseline Amount
+                                            for="{{'calculationMethod_'+keyPerformanceMetric.value}}">
+                                            Calculation Method
                                         </label>
                                         <div class="col-6">
-                                            <div class="input-group">
-                                                <input type="number" class="form-control"
-                                                    [(ngModel)]="keyPerformanceMetric.baselineValue"
-                                                    name="{{'baselineValue_'+keyPerformanceMetric.value}}"
-                                                    (input)="calculateCost(keyPerformanceMetric)">
-                                                <span class="input-group-text">
-                                                    <span
-                                                        [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
-                                                </span>
+                                            <select id="{{'calculationMethod_'+keyPerformanceMetric.value}}"
+                                                name="{{'calculationMethod_'+keyPerformanceMetric.value}}"
+                                                class="form-select" [(ngModel)]="keyPerformanceMetric.calculationMethod"
+                                                (change)="saveChanges()">
+                                                <option [ngValue]="'costPerUnit'">Cost Per Unit</option>
+                                                <option [ngValue]="'directCost'">Direct Cost</option>
+                                                <option [ngValue]="'percentTotal'">Percent Total</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--COST PER UNIT-->
+                                    <ng-template [ngIf]="keyPerformanceMetric.calculationMethod == 'costPerUnit'">
+                                        <div class="row">
+                                            <label class="col-sm-6 col-form-label pm-label"
+                                                for="{{'baselineValue_'+keyPerformanceMetric.value}}">
+                                                Baseline Amount
+                                            </label>
+                                            <div class="col-6">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control"
+                                                        [(ngModel)]="keyPerformanceMetric.baselineValue"
+                                                        name="{{'baselineValue_'+keyPerformanceMetric.value}}"
+                                                        (input)="calculateCost(keyPerformanceMetric)">
+                                                    <span class="input-group-text">
+                                                        <span
+                                                            [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <label class="col-sm-6 col-form-label pm-label"
-                                            for="{{'costPerValue_'+keyPerformanceMetric.value}}">
-                                            Cost Per Unit
-                                        </label>
-                                        <div class="col-6">
-                                            <div class="input-group">
-                                                <input type="number" class="form-control"
-                                                    [(ngModel)]="keyPerformanceMetric.costPerValue"
-                                                    name="{{'costPerValue_'+keyPerformanceMetric.value}}"
-                                                    (input)="calculateCost(keyPerformanceMetric)">
-                                                <span class="input-group-text">
-                                                    &dollar;/<span
-                                                        [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
-                                                </span>
+                                        <div class="row">
+                                            <label class="col-sm-6 col-form-label pm-label"
+                                                for="{{'costPerValue_'+keyPerformanceMetric.value}}">
+                                                Cost Per Unit
+                                            </label>
+                                            <div class="col-6">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control"
+                                                        [(ngModel)]="keyPerformanceMetric.costPerValue"
+                                                        name="{{'costPerValue_'+keyPerformanceMetric.value}}"
+                                                        (input)="calculateCost(keyPerformanceMetric)">
+                                                    <span class="input-group-text">
+                                                        &dollar;/<span
+                                                            [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <label class="col-sm-6 col-form-label pm-label"
-                                            for="{{'baselineCost_'+keyPerformanceMetric.value}}">
-                                            Baseline Cost
-                                        </label>
-                                        <div class="col-6">
-                                            <ng-template [ngIf]="keyPerformanceMetric.baselineCost"
-                                                [ngIfElse]="noCostBlock">
-                                                {{keyPerformanceMetric.baselineCost | currency}}/yr
-                                            </ng-template>
-                                            <ng-template #noCostBlock>
-                                                &mdash;
-                                            </ng-template>
+                                        <div class="row">
+                                            <label class="col-sm-6 col-form-label pm-label"
+                                                for="{{'baselineCost_'+keyPerformanceMetric.value}}">
+                                                Baseline Cost
+                                            </label>
+                                            <div class="col-6">
+                                                <ng-template [ngIf]="keyPerformanceMetric.baselineCost"
+                                                    [ngIfElse]="noCostBlock">
+                                                    {{keyPerformanceMetric.baselineCost | currency}}/yr
+                                                </ng-template>
+                                                <ng-template #noCostBlock>
+                                                    &mdash;
+                                                </ng-template>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </ng-template>
+                                    <!--DIRECT COST-->
+                                    <ng-template [ngIf]="keyPerformanceMetric.calculationMethod == 'directCost'">
+                                        <div class="row">
+                                            <label class="col-sm-6 col-form-label pm-label"
+                                                for="{{'baselineCost_'+keyPerformanceMetric.value}}">
+                                                Baseline Cost
+                                            </label>
+                                            <div class="col-6">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control"
+                                                        [(ngModel)]="keyPerformanceMetric.costPerValue"
+                                                        name="{{'baselineCost_'+keyPerformanceMetric.value}}"
+                                                        (input)="calculateCost(keyPerformanceMetric)">
+                                                    <span class="input-group-text">
+                                                        &dollar;/yr
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
                                 </ng-template>
                                 <ng-template [ngIf]="!keyPerformanceMetric.totalUnit">
                                     <div class="alert alert-info small mt-2">

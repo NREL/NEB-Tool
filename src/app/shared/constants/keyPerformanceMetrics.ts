@@ -14,6 +14,7 @@ export function getPerformanceMetrics(keyPerformanceIndicatorValue: KeyPerforman
                 baselineCost: undefined,
                 isCustom: false,
                 kpiGuid: kpiGuid,
+                calculationMethod: 'costPerUnit',
                 guid: getGUID()
 
             }
@@ -37,7 +38,8 @@ export function getCustomKPM(keyPerformanceIndicatorValue: KeyPerformanceIndicat
         baselineCost: undefined,
         isCustom: true,
         kpiGuid: kpiGuid,
-        guid: getGUID()
+        guid: getGUID(),
+        calculationMethod: 'costPerUnit'
     }
 
 }
@@ -97,6 +99,8 @@ export type KeyPerformanceMetricValue =
     'custom';
 
 
+export type KpmCalculationMethod = 'costPerUnit' | 'percentTotal' | 'directCost';
+
 export interface KeyPerformanceMetric extends KeyPerformanceMetricOption {
     baselineValue: number,
     costPerValue: number,
@@ -104,6 +108,7 @@ export interface KeyPerformanceMetric extends KeyPerformanceMetricOption {
     isCustom: boolean,
     kpiGuid: string,
     guid: string,
+    calculationMethod: KpmCalculationMethod
 }
 
 
@@ -126,6 +131,7 @@ export function convertOptionTypeToMetricType(option: KeyPerformanceMetricOption
         isCustom: false,
         kpiGuid: undefined,
         guid: undefined,
+        calculationMethod: 'costPerUnit'
     }
 }
 
