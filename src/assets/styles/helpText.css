@@ -1,0 +1,5 @@
+.help-text{
+    padding: .25rem;
+    width: 100%;
+    flex-grow: inherit;
+}

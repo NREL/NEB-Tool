@@ -1,0 +1,1 @@
+export type HelpContext = 'company-setup' | 'company-contacts' | 'company-kpi-select';
