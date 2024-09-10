@@ -59,6 +59,7 @@ import { KpmImpactsTableComponent } from './pre-visit/company-kpi-details/kpm-im
 import { EnergyOpportunityNebsTableComponent } from './data-collection/on-site-assessment/assessment-nebs-form/energy-opportunity-nebs-table/energy-opportunity-nebs-table.component';
 import { EnergyOpportunityNebsListPipe } from './data-collection/on-site-assessment/assessment-nebs-form/energy-opportunity-nebs-table/energy-opportunity-nebs-list.pipe';
 import { SetupWizardHelpPanelModule } from './setup-wizard-help-panel/setup-wizard-help-panel.module';
+import { LabelWithTooltipModule } from '../shared/label-with-tooltip/label-with-tooltip.module';
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import { SetupWizardHelpPanelModule } from './setup-wizard-help-panel/setup-wiza
     PrimaryKpiBadgeModule,
     ReactiveFormsModule,
     ReportsModule,
-    SetupWizardHelpPanelModule
+    SetupWizardHelpPanelModule,
+    LabelWithTooltipModule
   ]
 })
 export class SetupWizardModule { }

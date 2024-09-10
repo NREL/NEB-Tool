@@ -3,13 +3,17 @@
         <div class="col-10 pt-4 pb-4">
             <div class="form-paper shadow">
                 <h5>
-                    <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error" *ngIf="name?.touched && name.invalid"></fa-icon>
+                    <fa-icon [icon]="faCircleExclamation" class="pe-1 fa-error"
+                        *ngIf="name?.touched && name.invalid"></fa-icon>
                     <fa-icon [icon]="faBuilding" class="me-2"></fa-icon>Company Details
                 </h5>
                 <hr>
                 <ng-template [ngIf]="selectedCompany">
                     <form>
-                        <label class="bold" for="companyName">Company Name <span class="required-asterisk">*</span></label>
+                        <!-- <label class="bold" for="companyName">Company Name <span
+                                class="required-asterisk">*</span></label> -->
+                        <app-label-with-tooltip [field]="'companyName'" [label]="'Company Name'" [isRequired]="true"
+                            [labelId]="'companyName'" [isFloatRight]="true"></app-label-with-tooltip>
                         <input name="companyName" type="text" class="form-control" [formControl]="name"
                             (input)="saveChanges()" minlength="1" maxlength="100" id="companyName">
                         <div class="alert alert-danger form-error" *ngIf="name.touched && name.getError('required')">
