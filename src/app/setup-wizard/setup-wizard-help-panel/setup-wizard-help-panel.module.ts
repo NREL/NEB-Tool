@@ -16,6 +16,9 @@ import { AssessmentDetailsHelpComponent } from './assessment-details-help/assess
 import { EnergyOpportunitiesHelpComponent } from './energy-opportunities-help/energy-opportunities-help.component';
 import { AssessmentNebsHelpComponent } from './assessment-nebs-help/assessment-nebs-help.component';
 import { AssessmentResultsHelpComponent } from './assessment-results-help/assessment-results-help.component';
+import { DataFollowUpHelpComponent } from './data-follow-up-help/data-follow-up-help.component';
+import { AssessmentReportHelpComponent } from './assessment-report-help/assessment-report-help.component';
+import { RollupReportHelpComponent } from './rollup-report-help/rollup-report-help.component';
 
 
 
@@ -35,7 +38,10 @@ import { AssessmentResultsHelpComponent } from './assessment-results-help/assess
     AssessmentDetailsHelpComponent,
     EnergyOpportunitiesHelpComponent,
     AssessmentNebsHelpComponent,
-    AssessmentResultsHelpComponent
+    AssessmentResultsHelpComponent,
+    DataFollowUpHelpComponent,
+    AssessmentReportHelpComponent,
+    RollupReportHelpComponent
   ],
   imports: [
     CommonModule,

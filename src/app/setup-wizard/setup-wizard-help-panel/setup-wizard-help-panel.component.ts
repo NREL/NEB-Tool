@@ -79,6 +79,15 @@ export class SetupWizardHelpPanelComponent {
     } else if (url.includes('assessment') && url.includes('results')) {
       this.helpContext = 'assessment-results';
       this.helpLabel = 'Assessment Results Help';
+    } else if (url.includes('follow-up')) {
+      this.helpContext = 'follow-up';
+      this.helpLabel = 'Follow Up Help';
+    } else if (url.includes('assessment-report')) {
+      this.helpContext = 'assessment-report';
+      this.helpLabel = 'Assessment Report Help';
+    } else if (url.includes('visit-report')) {
+      this.helpContext = 'rollup-report';
+      this.helpLabel = 'Rollup Report Help';
     }
     else {
       this.helpContext = undefined;

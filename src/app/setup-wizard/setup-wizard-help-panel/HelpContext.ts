@@ -11,4 +11,7 @@ export type HelpContext = 'company-setup' |
     'manage-assessments' |
     'energy-opportunities' |
     'assessment-nebs' |
-    'assessment-results';
+    'assessment-results' |
+    'follow-up' | 
+    'assessment-report' | 
+    'rollup-report';
