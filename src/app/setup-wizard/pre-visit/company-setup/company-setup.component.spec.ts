@@ -14,6 +14,7 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { LabelWithTooltipModule } from 'src/app/shared/label-with-tooltip/label-with-tooltip.module';
 
 describe('CompanySetupComponent', () => {
   let component: CompanySetupComponent;
@@ -37,7 +38,7 @@ describe('CompanySetupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule, ReactiveFormsModule],
+      imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule, ReactiveFormsModule, LabelWithTooltipModule],
       declarations: [CompanySetupComponent],
       providers: [
         { provide: UserIdbService, useValue: userIdbService },

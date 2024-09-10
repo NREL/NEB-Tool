@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { LabelTooltips } from './LabelTooltips';
 import { faQuestionCircle, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-declare var bootstrap: any;
+
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-label-with-tooltip',
@@ -9,11 +10,11 @@ declare var bootstrap: any;
   styleUrl: './label-with-tooltip.component.css'
 })
 export class LabelWithTooltipComponent {
-  @Input({required: true})
+  @Input({ required: true })
   field: string;
   @Input()
   label: string;
-  @Input({required: true})
+  @Input({ required: true })
   labelId: string;
 
   @Input()
@@ -35,28 +36,32 @@ export class LabelWithTooltipComponent {
 
   ngOnInit(): void {
     this.helpTooltip = LabelTooltips[this.field];
-    if(!this.helpTooltip){
+    if (!this.helpTooltip) {
       this.helpTooltip = {
         tooltip: 'Help Text Missing. Sorry :/'
       }
     }
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     // Bootstrap tooltip initialization
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    this.tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-    }) 
+    if (bootstrap) {
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      this.tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
+    }
   }
 
-  ngOnDestroy(){
-    for (const tooltip of this.tooltipList) {
-      tooltip.dispose();
+  ngOnDestroy() {
+    if (this.tooltipList) {
+      for (const tooltip of this.tooltipList) {
+        tooltip.dispose();
+      }
+      this.tooltipList = new Array<any>();
     }
-    this.tooltipList = new Array<any>();
   }
-  
+
   hideTooltipHover() {
     this.showTooltipHover = false;
   }
@@ -65,7 +70,7 @@ export class LabelWithTooltipComponent {
     this.showTooltipHover = true;
   }
 
-  toggleClickTooltip(){
+  toggleClickTooltip() {
     this.showTooltipClick = !this.showTooltipClick;
   }
 }

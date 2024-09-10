@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LabelWithTooltipComponent } from './label-with-tooltip.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('LabelWithTooltipComponent', () => {
   let component: LabelWithTooltipComponent;
@@ -8,6 +9,7 @@ describe('LabelWithTooltipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [FontAwesomeModule],
       declarations: [LabelWithTooltipComponent]
     })
     .compileComponents();
