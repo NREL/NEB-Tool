@@ -2,14 +2,21 @@
     [ngClass]="{'collapsed': collapseHelpPanel}">
     <div class="ps-1 pe-1 w-100 pb-2 d-flex">
         <div class="toggle-collapse">
-            <button class="btn btn-sm btn-outline-secondary" (click)="toggleCollapseHelpPanel()">
+            <a class="click-link" (click)="toggleCollapseHelpPanel()">
                 <fa-icon [icon]="faCircleQuestion"></fa-icon>
-            </button>
+            </a>
+
+            <!-- <button class="btn btn-sm btn-outline-secondary" (click)="toggleCollapseHelpPanel()">
+                <fa-icon [icon]="faCircleQuestion"></fa-icon>
+            </button> -->
         </div>
     </div>
-    <div class="w-100">
+    <div class="w-100" *ngIf="!collapseHelpPanel">
         <app-company-setup-help *ngIf="helpContext == 'company-setup'"></app-company-setup-help>
         <app-company-contacts-help *ngIf="helpContext == 'company-contacts'"></app-company-contacts-help>
         <app-company-kpi-select-help *ngIf="helpContext == 'company-kpi-select'"></app-company-kpi-select-help>
+        <app-facility-setup-help *ngIf="helpContext == 'facility-setup'"></app-facility-setup-help>
+        <app-company-kpi-detail-help *ngIf="helpContext == 'company-kpi-detail'"></app-company-kpi-detail-help>
+        <app-energy-equipment-help *ngIf="helpContext == 'energy-equipment'"></app-energy-equipment-help>
     </div>
 </div>

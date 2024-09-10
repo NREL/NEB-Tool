@@ -3,10 +3,10 @@
 
     <div class="ps-1 pe-1 w-100 pb-2">
         <div class="text-end toggle-collapse">
-            <button class="btn btn-sm btn-outline-secondary" (click)="toggleSidebar()">
-                <fa-icon *ngIf="sidebarOpen" [icon]="faMinimize"></fa-icon>
-                <fa-icon *ngIf="!sidebarOpen" [icon]="faMaximize"></fa-icon>
-            </button>
+            <a class="click-link" (click)="toggleSidebar()">
+                <fa-icon *ngIf="!sidebarOpen" [icon]="faChevronRight"></fa-icon>
+                <fa-icon *ngIf="sidebarOpen" [icon]="faChevronLeft"></fa-icon>
+            </a>
         </div>
     </div>
     <ng-container *ngIf="onSiteVisit">

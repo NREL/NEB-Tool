@@ -3,3 +3,8 @@
     width: 100%;
     flex-grow: inherit;
 }
+
+.help-text p {
+    font-weight: 300;
+    font-size: .875rem;
+}

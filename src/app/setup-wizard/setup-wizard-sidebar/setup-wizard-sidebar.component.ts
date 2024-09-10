@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { IconDefinition, faChevronDown, faChevronUp, faFolderOpen, faMaximize, faMinimize, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronDown, faChevronUp, faFolderOpen, faCircleExclamation, faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
@@ -22,11 +22,11 @@ import { FormControl } from '@angular/forms';
 export class SetupWizardSidebarComponent implements OnInit, OnDestroy {
 
   faFolderOpen: IconDefinition = faFolderOpen;
-  faMinimize: IconDefinition = faMinimize;
-  faMaximize: IconDefinition = faMaximize;
   faCircleExclamation: IconDefinition = faCircleExclamation;
   faChevronDown: IconDefinition = faChevronDown;
   faChevronUp: IconDefinition = faChevronUp;
+  faChevronRight: IconDefinition = faChevronCircleRight;
+  faChevronLeft: IconDefinition = faChevronCircleLeft;
 
   displayStartOverModal: boolean;
 

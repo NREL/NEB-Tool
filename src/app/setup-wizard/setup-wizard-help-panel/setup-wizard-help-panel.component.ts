@@ -39,7 +39,13 @@ export class SetupWizardHelpPanelComponent {
       this.helpContext = 'company-contacts';
     } else if (url.includes('company-kpi-select')) {
       this.helpContext = 'company-kpi-select';
-    } else {
+    } else if (url.includes('company-kpi-detail')) {
+      this.helpContext = 'company-kpi-detail';
+    }else if (url.includes('facility-setup')) {
+      this.helpContext = 'facility-setup';
+    }else if (url.includes('energy-equipment')) {
+      this.helpContext = 'energy-equipment';
+    }else {
       this.helpContext = undefined;
     }
   }
