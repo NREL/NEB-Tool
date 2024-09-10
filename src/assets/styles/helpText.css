@@ -8,3 +8,7 @@
     font-weight: 300;
     font-size: .875rem;
 }
+
+.help-text .panel-label h5{
+    font-weight: 300;
+}

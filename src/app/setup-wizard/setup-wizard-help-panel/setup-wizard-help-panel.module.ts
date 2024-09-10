@@ -8,6 +8,9 @@ import { CompanyKpiSelectHelpComponent } from './company-kpi-select-help/company
 import { CompanyKpiDetailHelpComponent } from './company-kpi-detail-help/company-kpi-detail-help.component';
 import { FacilitySetupHelpComponent } from './facility-setup-help/facility-setup-help.component';
 import { EnergyEquipmentHelpComponent } from './energy-equipment-help/energy-equipment-help.component';
+import { EndUsesHelpComponent } from './end-uses-help/end-uses-help.component';
+import { PreAssessmentHelpComponent } from './pre-assessment-help/pre-assessment-help.component';
+import { ReviewPreVisitHelpComponent } from './review-pre-visit-help/review-pre-visit-help.component';
 
 
 
@@ -19,7 +22,10 @@ import { EnergyEquipmentHelpComponent } from './energy-equipment-help/energy-equ
     CompanyKpiSelectHelpComponent,
     CompanyKpiDetailHelpComponent,
     FacilitySetupHelpComponent,
-    EnergyEquipmentHelpComponent
+    EnergyEquipmentHelpComponent,
+    EndUsesHelpComponent,
+    PreAssessmentHelpComponent,
+    ReviewPreVisitHelpComponent
   ],
   imports: [
     CommonModule,
