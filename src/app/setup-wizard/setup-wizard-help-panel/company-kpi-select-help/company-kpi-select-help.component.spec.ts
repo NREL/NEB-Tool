@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CompanyKpiSelectHelpComponent } from './company-kpi-select-help.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('CompanyKpiSelectHelpComponent', () => {
   let component: CompanyKpiSelectHelpComponent;
@@ -8,6 +9,7 @@ describe('CompanyKpiSelectHelpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [FontAwesomeModule],
       declarations: [CompanyKpiSelectHelpComponent]
     })
     .compileComponents();

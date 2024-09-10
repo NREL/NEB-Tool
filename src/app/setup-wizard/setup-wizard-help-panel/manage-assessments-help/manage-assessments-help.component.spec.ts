@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageAssessmentsHelpComponent } from './manage-assessments-help.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('ManageAssessmentsHelpComponent', () => {
   let component: ManageAssessmentsHelpComponent;
@@ -8,6 +9,7 @@ describe('ManageAssessmentsHelpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [FontAwesomeModule],
       declarations: [ManageAssessmentsHelpComponent]
     })
     .compileComponents();
