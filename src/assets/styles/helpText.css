@@ -4,7 +4,7 @@
     flex-grow: inherit;
 }
 
-.help-text p {
+.help-text p, .help-text ol {
     font-weight: 300;
     font-size: .875rem;
 }

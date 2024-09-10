@@ -11,6 +11,11 @@ import { EnergyEquipmentHelpComponent } from './energy-equipment-help/energy-equ
 import { EndUsesHelpComponent } from './end-uses-help/end-uses-help.component';
 import { PreAssessmentHelpComponent } from './pre-assessment-help/pre-assessment-help.component';
 import { ReviewPreVisitHelpComponent } from './review-pre-visit-help/review-pre-visit-help.component';
+import { ManageAssessmentsHelpComponent } from './manage-assessments-help/manage-assessments-help.component';
+import { AssessmentDetailsHelpComponent } from './assessment-details-help/assessment-details-help.component';
+import { EnergyOpportunitiesHelpComponent } from './energy-opportunities-help/energy-opportunities-help.component';
+import { AssessmentNebsHelpComponent } from './assessment-nebs-help/assessment-nebs-help.component';
+import { AssessmentResultsHelpComponent } from './assessment-results-help/assessment-results-help.component';
 
 
 
@@ -25,7 +30,12 @@ import { ReviewPreVisitHelpComponent } from './review-pre-visit-help/review-pre-
     EnergyEquipmentHelpComponent,
     EndUsesHelpComponent,
     PreAssessmentHelpComponent,
-    ReviewPreVisitHelpComponent
+    ReviewPreVisitHelpComponent,
+    ManageAssessmentsHelpComponent,
+    AssessmentDetailsHelpComponent,
+    EnergyOpportunitiesHelpComponent,
+    AssessmentNebsHelpComponent,
+    AssessmentResultsHelpComponent
   ],
   imports: [
     CommonModule,

@@ -6,4 +6,9 @@ export type HelpContext = 'company-setup' |
     'energy-equipment' |
     'end-uses' |
     'pre-assessment' |
-    'review-pre-visit';
+    'review-pre-visit' |
+    'assessment-details' |
+    'manage-assessments' |
+    'energy-opportunities' |
+    'assessment-nebs' |
+    'assessment-results';

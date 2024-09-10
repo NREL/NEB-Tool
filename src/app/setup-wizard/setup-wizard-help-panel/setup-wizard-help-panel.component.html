@@ -8,10 +8,6 @@
             <div class="d-flex mt-2 ps-1 panel-label" *ngIf="!collapseHelpPanel">
                 <h5 class="mb-0">{{helpLabel}}</h5>
             </div>
-
-            <!-- <button class="btn btn-sm btn-outline-secondary" (click)="toggleCollapseHelpPanel()">
-                <fa-icon [icon]="faCircleQuestion"></fa-icon>
-            </button> -->
         </div>
     </div>
     <div class="w-100">
@@ -27,5 +23,10 @@
         <app-end-uses-help *ngIf="helpContext == 'end-uses'"></app-end-uses-help>
         <app-pre-assessment-help *ngIf="helpContext == 'pre-assessment'"></app-pre-assessment-help>
         <app-review-pre-visit-help *ngIf="helpContext == 'review-pre-visit'"></app-review-pre-visit-help>
+        <app-assessment-details-help *ngIf="helpContext == 'assessment-details'"></app-assessment-details-help>
+        <app-manage-assessments-help *ngIf="helpContext == 'manage-assessments'"></app-manage-assessments-help>
+        <app-energy-opportunities-help *ngIf="helpContext == 'energy-opportunities'"></app-energy-opportunities-help>
+        <app-assessment-nebs-help *ngIf="helpContext == 'assessment-nebs'"></app-assessment-nebs-help>
+        <app-assessment-results-help *ngIf="helpContext == 'assessment-results'"></app-assessment-results-help>
     </div>
 </div>

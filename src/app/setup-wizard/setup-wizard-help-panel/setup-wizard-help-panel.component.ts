@@ -46,22 +46,40 @@ export class SetupWizardHelpPanelComponent {
     } else if (url.includes('company-kpi-detail')) {
       this.helpContext = 'company-kpi-detail';
       this.helpLabel = 'KPI Details Help';
-    }else if (url.includes('facility-setup')) {
+    } else if (url.includes('facility-setup')) {
       this.helpContext = 'facility-setup';
       this.helpLabel = 'Facility Setup Help';
-    }else if (url.includes('energy-equipment')) {
+    } else if (url.includes('energy-equipment')) {
       this.helpContext = 'energy-equipment';
       this.helpLabel = 'Industrial System Inventory Help';
-    }else if (url.includes('end-uses')) {
+    } else if (url.includes('end-uses')) {
       this.helpContext = 'end-uses';
       this.helpLabel = 'End Uses Help';
-    }else if (url.includes('pre-assessment')) {
+    } else if (url.includes('pre-assessment')) {
       this.helpContext = 'pre-assessment';
       this.helpLabel = 'Pre-Assessment Help';
-    }else if (url.includes('review-pre-visit')) {
+    } else if (url.includes('review-pre-visit')) {
       this.helpContext = 'review-pre-visit';
       this.helpLabel = 'Review Pre-Visit Help';
-    }   
+    } else if (url.includes('manage-assessments')) {
+      this.helpContext = 'manage-assessments';
+      this.helpLabel = 'Manage Assessments Help';
+    } else if (url.includes('manage-assessments')) {
+      this.helpContext = 'manage-assessments';
+      this.helpLabel = 'Manage Assessments Help';
+    } else if (url.includes('assessment') && url.includes('details')) {
+      this.helpContext = 'assessment-details';
+      this.helpLabel = 'Assessment Details Help';
+    } else if (url.includes('assessment') && url.includes('energy-opportunities')) {
+      this.helpContext = 'energy-opportunities';
+      this.helpLabel = 'Energy Efficiency Opportunities Help';
+    } else if (url.includes('assessment') && url.includes('nebs')) {
+      this.helpContext = 'assessment-nebs';
+      this.helpLabel = 'Assessment NEBs Help';
+    } else if (url.includes('assessment') && url.includes('results')) {
+      this.helpContext = 'assessment-results';
+      this.helpLabel = 'Assessment Results Help';
+    }
     else {
       this.helpContext = undefined;
     }
