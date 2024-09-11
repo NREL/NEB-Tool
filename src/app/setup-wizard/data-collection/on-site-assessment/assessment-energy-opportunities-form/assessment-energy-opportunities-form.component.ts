@@ -55,7 +55,7 @@ export class AssessmentEnergyOpportunitiesFormComponent {
 
   ngAfterViewInit() {
     //open the accordion for last viewed energy opp
-    let energyOppGuid: string = this.localStorageDataService.energyOppGuid;
+    let energyOppGuid: string = this.localStorageDataService.energyOppAccordionGuid;
     if (energyOppGuid && this.assessmentEnergyOpportunityGuids.includes(energyOppGuid)) {
       this.toggleBS(energyOppGuid);
       this.cd.detectChanges();
@@ -106,7 +106,7 @@ export class AssessmentEnergyOpportunitiesFormComponent {
     } else {
       this.accordionGuid = undefined;
     }
-    this.localStorageDataService.setEnergyOppGuid(this.accordionGuid);
+    this.localStorageDataService.setEnergyOppAccordionGuid(this.accordionGuid);
   }
 
   childFormInitialized(oppGuid: string) {

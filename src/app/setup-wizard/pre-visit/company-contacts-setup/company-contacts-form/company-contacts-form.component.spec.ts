@@ -32,8 +32,7 @@ describe('CompanyContactsFormComponent', () => {
     fixture = TestBed.createComponent(CompanyContactsFormComponent);
     component = fixture.componentInstance;
     component.contactGuid = '';
-    component.accordionIndex = 0;
-    component.contactIndex = 0;
+    component.accordionGuid = '';
     fixture.detectChanges();
   });
 

@@ -7,16 +7,18 @@ import { LocalStorageService } from 'ngx-webstorage';
 export class LocalStorageDataService {
 
   setupHelpPanelCollapsed: boolean;
-  energyOppGuid: string;
-  nebGuid: string;
+  energyOppAccordionGuid: string;
+  nebAccordionGuid: string;
+  contactAccordionGuid: string
   constructor(private localStorageService: LocalStorageService) {
     this.setupHelpPanelCollapsed = this.localStorageService.retrieve("setupHelpPanelCollapsed");
     if (this.setupHelpPanelCollapsed == undefined) {
       this.setSetupPanelCollapsed(false);
     }
 
-    this.energyOppGuid = this.localStorageService.retrieve("energyOppGuid");
-    this.nebGuid = this.localStorageService.retrieve("nebGuid");
+    this.energyOppAccordionGuid = this.localStorageService.retrieve("energyOppAccordionGuid");
+    this.nebAccordionGuid = this.localStorageService.retrieve("nebAccordionGuid");
+    this.contactAccordionGuid = this.localStorageService.retrieve("contactAccordionGuid");
   }
 
   setSetupPanelCollapsed(val: boolean) {
@@ -24,13 +26,18 @@ export class LocalStorageDataService {
     this.localStorageService.store('setupHelpPanelCollapsed', this.setupHelpPanelCollapsed);
   }
 
-  setEnergyOppGuid(energyOppGuid: string){
-    this.energyOppGuid = energyOppGuid;
-    this.localStorageService.store('energyOppGuid', this.energyOppGuid);
+  setEnergyOppAccordionGuid(energyOppAccordionGuid: string) {
+    this.energyOppAccordionGuid = energyOppAccordionGuid;
+    this.localStorageService.store('energyOppAccordionGuid', this.energyOppAccordionGuid);
   }
 
-  setNebGuid(nebGuid: string){
-    this.nebGuid = nebGuid;
-    this.localStorageService.store('nebGuid', this.nebGuid);
+  setNebAccordionGuid(nebAccordionGuid: string) {
+    this.nebAccordionGuid = nebAccordionGuid;
+    this.localStorageService.store('nebAccordionGuid', this.nebAccordionGuid);
+  }
+
+  setContactAccordionGuid(contactAccordionGuid: string) {
+    this.contactAccordionGuid = contactAccordionGuid;
+    this.localStorageService.store('contactAccordionGuid', this.contactAccordionGuid);
   }
 }

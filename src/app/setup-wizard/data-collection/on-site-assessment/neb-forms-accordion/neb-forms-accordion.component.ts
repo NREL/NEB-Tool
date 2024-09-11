@@ -52,7 +52,7 @@ export class NebFormsAccordionComponent {
 
   ngAfterViewInit() {
     //open the accordion for last viewed neb
-    let lastNebGuid: string = this.localStorageDataService.nebGuid;
+    let lastNebGuid: string = this.localStorageDataService.nebAccordionGuid;
     if (lastNebGuid && this.nebGuids.includes(lastNebGuid)) {
       this.toggleBS(lastNebGuid);
       this.cd.detectChanges();
@@ -118,7 +118,7 @@ export class NebFormsAccordionComponent {
     } else {
       this.accordionGuid = undefined;
     }
-    this.localStorageDataService.setNebGuid(this.accordionGuid);
+    this.localStorageDataService.setNebAccordionGuid(this.accordionGuid);
   }
 
   childFormInitialized(oppGuid: string, isLast: boolean) {
