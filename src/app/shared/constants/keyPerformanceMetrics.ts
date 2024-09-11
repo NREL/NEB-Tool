@@ -40,7 +40,8 @@ export function getCustomKPM(keyPerformanceIndicatorValue: KeyPerformanceIndicat
         kpiGuid: kpiGuid,
         guid: getGUID(),
         calculationMethod: 'costPerUnit',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     }
 
 }
@@ -120,7 +121,8 @@ export interface KeyPerformanceMetricOption {
     kpiValue: KeyPerformanceIndicatorValue,
     isQuantitative: boolean,
     totalUnit?: string,
-    goalToIncrease: boolean
+    goalToIncrease: boolean,
+    timePeriod: string
 };
 
 
@@ -146,7 +148,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "contributeCompanyVision",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Sales growth ($)",
@@ -154,7 +157,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "salesGrowth",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Customer Satisfaction Ratings",
@@ -162,7 +166,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "customerSatisfactionRatings",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Lost Customer Sales ($)",
@@ -170,7 +175,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "lostCustomerSales",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Customer Churn Rate",
@@ -178,7 +184,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "customerChurnRate",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Supplier Satisfaction Ratings",
@@ -186,7 +193,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "supplierSatisfactionRatings",
         kpiValue: "strategicRelationshipImpact",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Productivity rate: Throughput",
@@ -194,7 +202,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "productivityRateThroughput",
         kpiValue: "productivity",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Production Costs",
@@ -202,7 +211,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "productionCosts",
         kpiValue: "productivity",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Cycle Time - Time to make goods",
@@ -210,7 +220,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "cycleTimeToMakeGoods",
         kpiValue: "productivity",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Percent On time to due date",
@@ -218,7 +229,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "percentOnTimeToDueDate",
         kpiValue: "productivity",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Revenue ($) / employee",
@@ -226,7 +238,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "revenuePerEmployee",
         kpiValue: "productivity",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Per-unit product cost",
@@ -234,7 +247,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "perUnitProductCost",
         kpiValue: "productivity",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Work in process",
@@ -242,7 +256,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "workInProcess",
         kpiValue: "productivity",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Num. Equipment caused defects",
@@ -251,7 +266,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "machineUtilization",
         isQuantitative: true,
         totalUnit: 'defect',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Equipment Downtime",
@@ -260,7 +276,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "machineUtilization",
         isQuantitative: true,
         totalUnit: 'hr',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Percent Capacity utilization",
@@ -268,7 +285,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "percentCapacityUtilization",
         kpiValue: "machineUtilization",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Overall Equipment Effectiveness (OEE)",
@@ -276,7 +294,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "overallEquipmentEffectiveness",
         kpiValue: "machineUtilization",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Fork truck (industrial trucks) breakdown downtime time",
@@ -285,7 +304,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "machineUtilization",
         isQuantitative: true,
         totalUnit: 'hr',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Useful equipment life extended (yrs)",
@@ -293,7 +313,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "usefulEquipmentLifeExtended",
         kpiValue: "machineUtilization",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Time to introduce new products or services",
@@ -301,7 +322,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "timeToIntroduceNewProducts",
         kpiValue: "machineUtilization",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "($) Defective Production",
@@ -310,7 +332,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "quality",
         isQuantitative: true,
         totalUnit: 'product',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Defect Rate-PPM or DPM",
@@ -319,7 +342,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "quality",
         isQuantitative: true,
         totalUnit: 'product',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "QTY Customer Complaints (quality)",
@@ -327,7 +351,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "qualityCustomerComplaints",
         kpiValue: "quality",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "$ Customer Returns (quality)",
@@ -336,7 +361,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "quality",
         isQuantitative: true,
         totalUnit: 'return',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Percent Production (manufacturing) yield",
@@ -344,7 +370,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "percentProductionYield",
         kpiValue: "materialUtilization",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Percent Shrinkage",
@@ -352,7 +379,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "percentShrinkage",
         kpiValue: "materialUtilization",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Dollar Consumables",
@@ -361,7 +389,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "materialUtilization",
         isQuantitative: true,
         totalUnit: 'consumable',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Percent Optimized space",
@@ -370,7 +399,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "improveSpaceUtilization",
         isQuantitative: true,
         totalUnit: 'ft2',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Maintenance Cost",
@@ -379,7 +409,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "reduceExpenseCost",
         isQuantitative: true,
         totalUnit: 'hr',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Engineering support (dollars or hours)",
@@ -388,7 +419,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "reduceExpenseCost",
         isQuantitative: true,
         totalUnit: 'hr',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Energy Cost per Unit",
@@ -397,7 +429,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "energyCost",
         isQuantitative: true,
         totalUnit: 'MMBtu',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Hazardous Disposal Costs",
@@ -406,7 +439,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "wasteReductionHazardous",
         isQuantitative: true,
         totalUnit: 'gal',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Non-Hazardous Disposal Costs",
@@ -415,7 +449,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "wasteReductionNonHazardous",
         isQuantitative: true,
         totalUnit: 'gal',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Percent Total or Costs",
@@ -423,7 +458,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "percentTotalOrCost",
         kpiValue: "reduceNonconformingProductWaste",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Consumption Cost",
@@ -432,7 +468,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "waterConsumption",
         isQuantitative: true,
         totalUnit: 'gal',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Consumption Cost",
@@ -441,7 +478,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "sewageVolume",
         isQuantitative: true,
         totalUnit: 'gal',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Percent Total lbs.",
@@ -450,7 +488,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "dustEmissions",
         isQuantitative: true,
         totalUnit: 'lb',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Quantity",
@@ -458,7 +497,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "percentOrTotalChemicalEmissions",
         kpiValue: "chemicalEmissions",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Quantity",
@@ -466,7 +506,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "percentOrTotalRefrigerantEmissions",
         kpiValue: "reduceRefrigerantGasEmissions",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "(OSHA) Total recordable incident rate (TRIR)",
@@ -474,7 +515,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "TRIR",
         kpiValue: "safety",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "OSHA Recordable Incidents",
@@ -483,7 +525,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "safety",
         isQuantitative: true,
         totalUnit: 'incident',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Total Safety Non-Recordables, Incidents, Near Misses",
@@ -492,7 +535,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "safety",
         isQuantitative: true,
         totalUnit: 'incident',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Days away from work",
@@ -501,7 +545,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "safety",
         isQuantitative: true,
         totalUnit: 'day',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Lost time inury rate (LTIFR)",
@@ -510,7 +555,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         kpiValue: "safety",
         isQuantitative: true,
         totalUnit: 'day',
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Hearing Conservation Program Compliance - Reduce Occupational Exposure",
@@ -518,7 +564,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "hearingConservationProgram",
         kpiValue: "safety",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Hearing Conservation Program Compliance - Reduce Occupational Exposure",
@@ -526,7 +573,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "hearingConservationProgram",
         kpiValue: "employeeEngagementWorkingEnvironment",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Number of particles",
@@ -534,7 +582,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "numberOfParticles",
         kpiValue: "employeeEngagementWorkingEnvironment",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Workspace or factory floor comfort",
@@ -542,7 +591,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "workspaceOrFactoryFloorComfort",
         kpiValue: "employeeEngagementWorkingEnvironment",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Absenteeism",
@@ -550,7 +600,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "absenteeism",
         kpiValue: "employeeEngagementWorkingEnvironment",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Employee Engagement/Satisfaction",
@@ -558,7 +609,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "employeeEngagementSatisfaction",
         kpiValue: "employeeEngagementWorkforceDevelopment",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Employee Retention Rate",
@@ -566,7 +618,8 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "employeeRetentionRate",
         kpiValue: "employeeEngagementWorkforceDevelopment",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
     {
         label: "Talent Turnover Rate",
@@ -574,6 +627,7 @@ export const KeyPerformanceMetricOptions: Array<KeyPerformanceMetricOption> = [
         value: "talentTurnoverRate",
         kpiValue: "employeeEngagementWorkforceDevelopment",
         isQuantitative: false,
-        goalToIncrease: true
+        goalToIncrease: true,
+        timePeriod: 'yr'
     },
 ]

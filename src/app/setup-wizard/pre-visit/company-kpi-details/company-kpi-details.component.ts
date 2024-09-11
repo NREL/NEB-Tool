@@ -60,6 +60,8 @@ export class CompanyKpiDetailsComponent {
   keyPerformanceMetricImpactsSub: Subscription;
 
   showMetricDropdownId: string;
+
+  timeOptions: Array<string> = ['day', 'week', 'month', 'year'];
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,

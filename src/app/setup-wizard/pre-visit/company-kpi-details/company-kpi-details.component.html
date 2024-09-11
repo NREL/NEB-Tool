@@ -214,6 +214,36 @@
                                     <ng-template [ngIf]="keyPerformanceMetric.calculationMethod == 'costPerUnit'">
                                         <div class="row">
                                             <label class="col-sm-6 col-form-label pm-label"
+                                                for="{{'totalUnit_'+keyPerformanceMetric.value}}">
+                                                Unit
+                                            </label>
+                                            <div class="col-6">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="keyPerformanceMetric.totalUnit"
+                                                        name="{{'totalUnit_'+keyPerformanceMetric.value}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--TODO: Issue 231-->
+                                        <!-- <div class="row">
+                                            <label class="col-sm-6 col-form-label pm-label"
+                                                for="{{'timePeriod_'+keyPerformanceMetric.value}}">
+                                                Time Period
+                                            </label>
+                                            <div class="col-6">
+                                                <select id="{{'timePeriod_'+keyPerformanceMetric.value}}"
+                                                    name="{{'timePeriod_'+keyPerformanceMetric.value}}"
+                                                    class="form-select"
+                                                    [(ngModel)]="keyPerformanceMetric.timePeriod"
+                                                    (change)="saveChanges()">
+                                                    <option *ngFor="let option of timeOptions" [ngValue]="option">
+                                                        {{option | unitsDisplay}}</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                        <div class="row">
+                                            <label class="col-sm-6 col-form-label pm-label"
                                                 for="{{'baselineValue_'+keyPerformanceMetric.value}}">
                                                 Baseline Amount
                                             </label>
@@ -226,6 +256,9 @@
                                                     <span class="input-group-text">
                                                         <span
                                                             [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
+                                                        <!--TODO: Issue 231-->
+                                                        <!-- <span
+                                                            [innerHTML]="keyPerformanceMetric.timePeriod | unitsDisplay"></span> -->
                                                     </span>
                                                 </div>
                                             </div>
