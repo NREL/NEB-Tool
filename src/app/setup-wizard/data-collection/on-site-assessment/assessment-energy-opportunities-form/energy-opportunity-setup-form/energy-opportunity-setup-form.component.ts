@@ -27,8 +27,9 @@ export class EnergyOpportunitySetupFormComponent {
   faPlus: IconDefinition = faPlus;
   faWeightHanging: IconDefinition = faWeightHanging;
 
-  opportunityTypes: Array<EnergyOpportunityType> = [{value: 'other', label: 'Other'}];
+  opportunityTypes: Array<EnergyOpportunityType> = [{ value: 'other', label: 'Other' }];
   displayDeleteModal: boolean = false;
+  showAddNebDropdown: boolean = false;
   constructor(
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private dbChangesService: DbChangesService,
@@ -62,6 +63,7 @@ export class EnergyOpportunitySetupFormComponent {
   }
 
   showSuggestedNEBs() {
+    this.showAddNebDropdown = false;
     this.setupWizardService.displayAddNebsModal.next({
       assessmentId: this.energyOpportunity.assessmentId,
       energyOpportunityId: this.energyOpportunity.guid
@@ -69,11 +71,14 @@ export class EnergyOpportunitySetupFormComponent {
   }
 
   async addNEB() {
+    this.showAddNebDropdown = false;
     let newNonEnergyBenefit: IdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.assessmentId, this.energyOpportunity.guid, undefined, true);
     await firstValueFrom(this.nonEnergyBenefitsIdbService.addWithObservable(newNonEnergyBenefit));
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
   }
 
+  toggleAddNebDropdown() {
+    this.showAddNebDropdown = !this.showAddNebDropdown;
+  }
 
-  
 }

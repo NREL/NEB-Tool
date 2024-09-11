@@ -58,6 +58,8 @@ export class CompanyKpiDetailsComponent {
 
   keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>;
   keyPerformanceMetricImpactsSub: Subscription;
+
+  showMetricDropdownId: string;
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
@@ -198,5 +200,14 @@ export class CompanyKpiDetailsComponent {
     }
     await this.saveChanges();
     this.closeDeleteKpmModal();
+  }
+
+
+  toggleDropdown(metricGuid: string) {
+    if (this.showMetricDropdownId != metricGuid) {
+      this.showMetricDropdownId = metricGuid;
+    } else {
+      this.showMetricDropdownId = undefined;
+    }
   }
 }

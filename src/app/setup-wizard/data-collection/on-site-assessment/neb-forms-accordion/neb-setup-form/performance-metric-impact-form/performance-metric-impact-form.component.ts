@@ -40,6 +40,7 @@ export class PerformanceMetricImpactFormComponent {
   keyPerformanceMetricImpactsSub: Subscription;
 
   isFormChange: boolean = false;
+  showDropdownMenu: boolean = false;
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -88,6 +89,7 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   goToMetric() {
+    this.showDropdownMenu = false;
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-detail/' + this.keyPerformanceMetricImpact.kpiGuid)
   }
@@ -114,6 +116,7 @@ export class PerformanceMetricImpactFormComponent {
 
   openDeleteModal() {
     this.displayDeleteModal = true;
+    this.showDropdownMenu = false;
   }
 
   closeDeleteModal() {
@@ -127,5 +130,10 @@ export class PerformanceMetricImpactFormComponent {
 
   setOverrideBaseline(overrideBaseline: boolean) {
     this.overrideBaseline = overrideBaseline;
+    this.showDropdownMenu = false;
+  }
+
+  toggleDropdownMenu() {
+    this.showDropdownMenu = !this.showDropdownMenu;
   }
 }

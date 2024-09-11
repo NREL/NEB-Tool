@@ -23,6 +23,7 @@ export class AssessmentNebsFormComponent {
 
   newNebName: string;
   displayNebModal: boolean = false;
+  showAddNebDropdown: boolean = false;
   constructor(private assessmentIdbService: AssessmentIdbService,
     private setupWizardService: SetupWizardService,
     private nonEnergyBenefitIdbService: NonEnergyBenefitsIdbService
@@ -40,12 +41,18 @@ export class AssessmentNebsFormComponent {
   }
 
   openNebModal() {
+    this.showAddNebDropdown = false;
     this.setupWizardService.displayAddNebsModal.next({ assessmentId: this.assessment.guid, energyOpportunityId: undefined });
   }
 
   async addNEB() {
+    this.showAddNebDropdown = false;
     let newNonEnergyBenefit: IdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.assessment.userId, this.assessment.companyId, this.assessment.facilityId, this.assessment.guid, undefined, undefined, true);
     await firstValueFrom(this.nonEnergyBenefitIdbService.addWithObservable(newNonEnergyBenefit))
     await this.nonEnergyBenefitIdbService.setNonEnergyBenefits();
+  }
+
+  toggleAddNebDropdown() {
+    this.showAddNebDropdown = !this.showAddNebDropdown;
   }
 }

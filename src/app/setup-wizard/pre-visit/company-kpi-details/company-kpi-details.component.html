@@ -120,11 +120,13 @@
                             <div class="metric-block">
                                 <div class="dropdown">
                                     <button class="btn btn-outline-metric btn-sm dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                        (click)="toggleDropdown(keyPerformanceMetric.guid)">
                                         <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
                                         <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
                                     </button>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu"
+                                        [ngClass]="{'show': keyPerformanceMetric.guid == showMetricDropdownId}">
                                         <li>
                                             <a class="dropdown-item"
                                                 (click)="openDeleteMetricModal(keyPerformanceMetric)">
