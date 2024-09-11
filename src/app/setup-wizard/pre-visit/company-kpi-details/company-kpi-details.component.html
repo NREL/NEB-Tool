@@ -172,6 +172,26 @@
                                 </div>
                                 <ng-template [ngIf]="keyPerformanceMetric.isQuantitative">
                                     <div class="row">
+                                        <!-- <label class="col-sm-6 col-form-label pm-label"
+                                            for="{{'goalToIncrease_'+keyPerformanceMetric.value}}">
+                                            Desired Impact
+                                        </label> -->
+                                        <div class="col-sm-6 col-form-label pm-label">
+                                            <app-label-with-tooltip [field]="'goalToIncrease'"
+                                                [labelId]="'goalToIncrease_'+keyPerformanceMetric.value"
+                                                [label]="'Desired Impact'"></app-label-with-tooltip>
+                                        </div>
+                                        <div class="col-6">
+                                            <select id="{{'goalToIncrease_'+keyPerformanceMetric.value}}"
+                                                name="{{'goalToIncrease_'+keyPerformanceMetric.value}}"
+                                                class="form-select" [(ngModel)]="keyPerformanceMetric.goalToIncrease"
+                                                (change)="saveChanges()">
+                                                <option [ngValue]="true">Increase Metric</option>
+                                                <option [ngValue]="false">Decrease Metric</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <label class="col-sm-6 col-form-label pm-label"
                                             for="{{'calculationMethod_'+keyPerformanceMetric.value}}">
                                             Calculation Method
@@ -187,6 +207,7 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <!--COST PER UNIT-->
                                     <ng-template [ngIf]="keyPerformanceMetric.calculationMethod == 'costPerUnit'">
                                         <div class="row">
@@ -244,7 +265,7 @@
                                         </div>
                                     </ng-template>
                                     <!--DIRECT COST-->
-                                    <ng-template [ngIf]="keyPerformanceMetric.calculationMethod == 'directCost'">
+                                    <ng-template [ngIf]="keyPerformanceMetric.calculationMethod != 'costPerUnit'">
                                         <div class="row">
                                             <label class="col-sm-6 col-form-label pm-label"
                                                 for="{{'baselineCost_'+keyPerformanceMetric.value}}">
@@ -271,8 +292,10 @@
                                 </ng-template>
                                 <ng-template
                                     [ngIf]="(keyPerformanceMetricImpacts | keyPerformanceMetricImpactsList: keyPerformanceMetric.guid).length">
-                                    <app-kpm-impacts-table
-                                        [kpmGuid]="keyPerformanceMetric.guid"></app-kpm-impacts-table>
+                                    <div class="mt-3">
+                                        <app-kpm-impacts-table
+                                            [kpmGuid]="keyPerformanceMetric.guid"></app-kpm-impacts-table>
+                                    </div>
                                 </ng-template>
                                 <div class="row">
                                     <div class="col">
