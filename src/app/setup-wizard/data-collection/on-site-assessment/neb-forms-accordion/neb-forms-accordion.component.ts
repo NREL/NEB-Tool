@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
@@ -6,7 +6,8 @@ import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import * as _ from 'lodash';
 import { IconDefinition, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
-import * as bootstrap from 'bootstrap';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-neb-forms-accordion',
@@ -25,7 +26,12 @@ export class NebFormsAccordionComponent {
   nonEnergyBenefitsSub: Subscription;
   nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
   accordionGuid: string;
-  constructor(private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService) {
+  isAddNew: boolean = false;
+  constructor(private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
+    private bootstrapService: BootstrapService,
+    private cd: ChangeDetectorRef,
+    private localStorageDataService: LocalStorageDataService
+  ) {
 
   }
 
@@ -44,6 +50,15 @@ export class NebFormsAccordionComponent {
     this.nonEnergyBenefitsSub.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    //open the accordion for last viewed neb
+    let lastNebGuid: string = this.localStorageDataService.nebGuid;
+    if (lastNebGuid && this.nebGuids.includes(lastNebGuid)) {
+      this.toggleBS(lastNebGuid);
+      this.cd.detectChanges();
+    }
+  }
+
   setEnergyOpportunityNebGuids() {
     // only want to update neb list if changes made
     // otherwise forms get re-init when the list updates
@@ -55,6 +70,9 @@ export class NebFormsAccordionComponent {
         return neb.guid
       });
       if (tmpOpportunityNebs.length != this.nebGuids.length) {
+        if (this.nebGuids.length != 0 && tmpOpportunityNebs.length > this.nebGuids.length) {
+          this.isAddNew = true;
+        }
         this.nebGuids = tmpOpportunityNebs;
       } else {
         let xor: Array<string> = _.xor(this.nebGuids, tmpOpportunityNebs)
@@ -78,6 +96,9 @@ export class NebFormsAccordionComponent {
         return neb.guid
       });
       if (tmpAssessmentNebs.length != this.nebGuids.length) {
+        if (this.nebGuids.length != 0 && tmpAssessmentNebs.length > this.nebGuids.length) {
+          this.isAddNew = true;
+        }
         this.nebGuids = tmpAssessmentNebs;
       } else {
         let xor: Array<string> = _.xor(this.nebGuids, tmpAssessmentNebs)
@@ -91,12 +112,20 @@ export class NebFormsAccordionComponent {
   }
 
   toggleBS(nebGuid: string) {
-    let element = document.getElementById('#' + nebGuid);
-    new bootstrap.Collapse(element);
+    this.bootstrapService.bsCollapse('#' + nebGuid);
     if (this.accordionGuid != nebGuid) {
       this.accordionGuid = nebGuid;
     } else {
       this.accordionGuid = undefined;
+    }
+    this.localStorageDataService.setNebGuid(this.accordionGuid);
+  }
+
+  childFormInitialized(oppGuid: string, isLast: boolean) {
+    if (this.isAddNew == true && isLast) {
+      this.toggleBS(oppGuid);
+      this.isAddNew = false;
+      this.cd.detectChanges();
     }
   }
 }

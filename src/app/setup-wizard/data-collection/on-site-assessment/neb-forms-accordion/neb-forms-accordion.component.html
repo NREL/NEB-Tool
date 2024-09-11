@@ -1,10 +1,9 @@
 <ng-template [ngIf]="nebGuids.length > 0" [ngIfElse]="noNEBsBlock">
     <div class="accordion" id="nebFormsAccordion">
-        <div class="accordion-item" *ngFor="let nebGuid of nebGuids; let index = index;">
+        <div class="accordion-item" *ngFor="let nebGuid of nebGuids; let index = index; let last = last;">
             <h2 class="accordion-header">
-                <button class="accordion-button" type="button"
-                    [attr.data-bs-target]="'#'+nebGuid" aria-expanded="true" [attr.aria-controls]="nebGuid"
-                    (click)="toggleBS(nebGuid)" 
+                <button class="accordion-button" type="button" [attr.data-bs-target]="'#'+nebGuid" aria-expanded="true"
+                    [attr.aria-controls]="nebGuid" (click)="toggleBS(nebGuid)"
                     [ngClass]="{'collapsed': accordionGuid != nebGuid}">
                     <fa-icon class="pe-2" [icon]="faWeightHanging"></fa-icon> {{nebGuid |
                     nebDisplay:nonEnergyBenefits}}
@@ -12,7 +11,8 @@
             </h2>
             <div [id]="'#'+nebGuid" class="accordion-collapse collapse" data-bs-parent="#nebFormsAccordion">
                 <div class="accordion-body">
-                    <app-neb-setup-form [nebGuid]="nebGuid"></app-neb-setup-form>
+                    <app-neb-setup-form [nebGuid]="nebGuid"
+                        (emitInitialized)="childFormInitialized(nebGuid, last)"></app-neb-setup-form>
                 </div>
             </div>
         </div>

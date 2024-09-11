@@ -10,17 +10,18 @@
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     [attr.data-bs-target]="'#'+energyOpportunityGuid" aria-expanded="true"
-                    [attr.aria-controls]="energyOpportunityGuid" [ngClass]="{'collapsed': accordionIndex != index}"
-                    (click)="setAccordionIndex(index)">
+                    [attr.aria-controls]="energyOpportunityGuid"
+                    [ngClass]="{'collapsed': accordionGuid != energyOpportunityGuid}"
+                    (click)="toggleBS(energyOpportunityGuid)">
                     <fa-icon class="pe-2" [icon]="faFileLines"></fa-icon> {{energyOpportunityGuid |
                     energyOpportunityDisplay:energyOpportunities}}
                 </button>
             </h2>
-            <div [id]="energyOpportunityGuid" class="accordion-collapse collapse"
-                data-bs-parent="#energyOpportunityAccordion" [ngClass]="{'show': accordionIndex == index}">
+            <div [id]="'#'+energyOpportunityGuid" class="accordion-collapse collapse"
+                data-bs-parent="#energyOpportunityAccordion">
                 <div class="accordion-body">
                     <app-energy-opportunity-setup-form
-                        [energyOpportunityGuid]="energyOpportunityGuid"></app-energy-opportunity-setup-form>
+                        [energyOpportunityGuid]="energyOpportunityGuid" (emitInitialized)="childFormInitialized(energyOpportunityGuid)"></app-energy-opportunity-setup-form>
                 </div>
             </div>
         </div>
