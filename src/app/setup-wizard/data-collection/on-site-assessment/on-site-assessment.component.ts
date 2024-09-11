@@ -120,7 +120,9 @@ export class OnSiteAssessmentComponent {
       if (this.assessmentIndex != this.onSiteVisit.assessmentIds.length - 1) {
         this.goToNextAssessment();
       } else {
-        this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');
+        //TODO: Issue 226
+        // this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');
+        this.router.navigateByUrl('/setup-wizard/data-evaluation/' + this.onSiteVisit.guid);
       }
     }
   }

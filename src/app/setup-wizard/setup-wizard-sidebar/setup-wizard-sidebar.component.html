@@ -1,12 +1,12 @@
-<div *ngIf="displaySidebar" class="h-100 navbar d-flex flex-column align-items-start justify-content-start shadow"
+<div class="h-100 navbar d-flex flex-column align-items-start justify-content-start shadow"
     [ngClass]="{'collapsed': !sidebarOpen}">
 
     <div class="ps-1 pe-1 w-100 pb-2">
         <div class="text-end toggle-collapse">
-            <button class="btn btn-sm btn-outline-secondary" (click)="toggleSidebar()">
-                <fa-icon *ngIf="sidebarOpen" [icon]="faMinimize"></fa-icon>
-                <fa-icon *ngIf="!sidebarOpen" [icon]="faMaximize"></fa-icon>
-            </button>
+            <a class="click-link" (click)="toggleSidebar()">
+                <fa-icon *ngIf="!sidebarOpen" [icon]="faChevronRight"></fa-icon>
+                <fa-icon *ngIf="sidebarOpen" [icon]="faChevronLeft"></fa-icon>
+            </a>
         </div>
     </div>
     <ng-container *ngIf="onSiteVisit">
@@ -62,7 +62,7 @@
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/process-equipment'"
+                    <a class="nav-link secondary-nav" [routerLink]="'pre-visit/'+onSiteVisit.guid+'/end-uses'"
                         [routerLinkActive]="['active']">
                         End Use Inventory
                     </a>
@@ -135,12 +135,13 @@
                         </a>
                     </div>
                 </ng-container>
-                <div class="nav-item">
+                <!--TODO: Issue #226-->
+                <!-- <div class="nav-item">
                     <a class="nav-link" [routerLink]="'data-collection/'+onSiteVisit.guid+'/review-data-collection'"
                         [routerLinkActive]="['active']">
                         Preliminary Results
                     </a>
-                </div>
+                </div> -->
             </div>
             <div class="p-2 w-100">
                 <hr class="my-1">
