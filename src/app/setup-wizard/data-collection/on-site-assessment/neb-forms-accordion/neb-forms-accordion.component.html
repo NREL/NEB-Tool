@@ -2,15 +2,15 @@
     <div class="accordion" id="nebFormsAccordion">
         <div class="accordion-item" *ngFor="let nebGuid of nebGuids; let index = index;">
             <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                <button class="accordion-button" type="button"
                     [attr.data-bs-target]="'#'+nebGuid" aria-expanded="true" [attr.aria-controls]="nebGuid"
-                    [ngClass]="{'collapsed': accordionIndex != index}" (click)="setAccordionIndex(index)">
+                    (click)="toggleBS(nebGuid)" 
+                    [ngClass]="{'collapsed': accordionGuid != nebGuid}">
                     <fa-icon class="pe-2" [icon]="faWeightHanging"></fa-icon> {{nebGuid |
                     nebDisplay:nonEnergyBenefits}}
                 </button>
             </h2>
-            <div [id]="nebGuid" class="accordion-collapse collapse" data-bs-parent="#nebFormsAccordion"
-                [ngClass]="{'show': accordionIndex == index}">
+            <div [id]="'#'+nebGuid" class="accordion-collapse collapse" data-bs-parent="#nebFormsAccordion">
                 <div class="accordion-body">
                     <app-neb-setup-form [nebGuid]="nebGuid"></app-neb-setup-form>
                 </div>

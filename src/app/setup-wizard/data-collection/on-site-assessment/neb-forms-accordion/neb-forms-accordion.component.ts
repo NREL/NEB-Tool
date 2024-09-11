@@ -6,6 +6,7 @@ import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import * as _ from 'lodash';
 import { IconDefinition, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-neb-forms-accordion',
@@ -23,7 +24,7 @@ export class NebFormsAccordionComponent {
   nebGuids: Array<string> = [];
   nonEnergyBenefitsSub: Subscription;
   nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
-  accordionIndex: number = 0;
+  accordionGuid: string;
   constructor(private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService) {
 
   }
@@ -64,7 +65,6 @@ export class NebFormsAccordionComponent {
     } else {
       this.nebGuids = [];
     }
-
   }
 
   setAssessmentNebGuids() {
@@ -90,7 +90,13 @@ export class NebFormsAccordionComponent {
     }
   }
 
-  setAccordionIndex(index: number){
-    this.accordionIndex = index;
+  toggleBS(nebGuid: string) {
+    let element = document.getElementById('#' + nebGuid);
+    new bootstrap.Collapse(element);
+    if (this.accordionGuid != nebGuid) {
+      this.accordionGuid = nebGuid;
+    } else {
+      this.accordionGuid = undefined;
+    }
   }
 }
