@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { IconDefinition, faChevronDown, faChevronUp, faFolderOpen, faMaximize, faMinimize, faMinus, faPlus, faRotateLeft, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronDown, faChevronUp, faFolderOpen, faCircleExclamation, faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { SetupWizardService } from '../setup-wizard.service';
 import { Subscription } from 'rxjs';
 import { IdbAssessment } from 'src/app/models/assessment';
@@ -11,8 +11,6 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { IdbCompany } from 'src/app/models/company';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
-import { CompanySetupComponent } from '../pre-visit/company-setup/company-setup.component'; 
-import { CompanyContactsSetupComponent } from '../pre-visit/company-contacts-setup/company-contacts-setup.component';
 import { CompanySetupService } from '../pre-visit/company-setup/company-setup.service';
 import { FormControl } from '@angular/forms';
 
@@ -24,13 +22,12 @@ import { FormControl } from '@angular/forms';
 export class SetupWizardSidebarComponent implements OnInit, OnDestroy {
 
   faFolderOpen: IconDefinition = faFolderOpen;
-  faMinimize: IconDefinition = faMinimize;
-  faMaximize: IconDefinition = faMaximize;
   faCircleExclamation: IconDefinition = faCircleExclamation;
   faChevronDown: IconDefinition = faChevronDown;
   faChevronUp: IconDefinition = faChevronUp;
+  faChevronRight: IconDefinition = faChevronCircleRight;
+  faChevronLeft: IconDefinition = faChevronCircleLeft;
 
-  displaySidebar: boolean = true;
   displayStartOverModal: boolean;
 
   assessmentsSub: Subscription;
