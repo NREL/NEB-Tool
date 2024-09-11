@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { faCircleQuestion, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { HelpContext } from './HelpContext';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-setup-wizard-help-panel',
@@ -17,7 +18,7 @@ export class SetupWizardHelpPanelComponent {
   helpContext: HelpContext;
   helpLabel: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private localStorageDataService: LocalStorageDataService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.setHelpContext(event.urlAfterRedirects);
@@ -26,11 +27,13 @@ export class SetupWizardHelpPanelComponent {
   }
 
   ngOnInit() {
+    this.collapseHelpPanel = this.localStorageDataService.setupHelpPanelCollapsed;
     this.setHelpContext(this.router.url);
   }
 
   toggleCollapseHelpPanel() {
     this.collapseHelpPanel = !this.collapseHelpPanel;
+    this.localStorageDataService.setSetupPanelCollapsed(this.collapseHelpPanel);
   }
 
   setHelpContext(url: string) {
