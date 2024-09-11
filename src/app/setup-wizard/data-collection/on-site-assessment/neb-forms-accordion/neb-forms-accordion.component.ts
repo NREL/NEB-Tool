@@ -27,6 +27,7 @@ export class NebFormsAccordionComponent {
   nonEnergyBenefits: Array<IdbNonEnergyBenefit>;
   accordionGuid: string;
   isAddNew: boolean = false;
+  isOnInit: boolean = true;
   constructor(private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private bootstrapService: BootstrapService,
     private cd: ChangeDetectorRef,
@@ -44,6 +45,7 @@ export class NebFormsAccordionComponent {
         this.setAssessmentNebGuids();
       }
     });
+    this.isOnInit = false;
   }
 
   ngOnDestroy() {
@@ -70,7 +72,7 @@ export class NebFormsAccordionComponent {
         return neb.guid
       });
       if (tmpOpportunityNebs.length != this.nebGuids.length) {
-        if (this.nebGuids.length != 0 && tmpOpportunityNebs.length > this.nebGuids.length) {
+        if (this.isOnInit == false && tmpOpportunityNebs.length > this.nebGuids.length) {
           this.isAddNew = true;
         }
         this.nebGuids = tmpOpportunityNebs;
@@ -96,7 +98,7 @@ export class NebFormsAccordionComponent {
         return neb.guid
       });
       if (tmpAssessmentNebs.length != this.nebGuids.length) {
-        if (this.nebGuids.length != 0 && tmpAssessmentNebs.length > this.nebGuids.length) {
+        if (this.isOnInit == false && tmpAssessmentNebs.length > this.nebGuids.length) {
           this.isAddNew = true;
         }
         this.nebGuids = tmpAssessmentNebs;
