@@ -115,9 +115,9 @@ export class FacilityEnergyEquipmentSetupComponent {
     this.localStorageDataService.setEnergyEquipmentAccordionGuid(this.accordionGuid);
   }
 
-  childFormInitialized(oppGuid: string, isLast: boolean) {
+  childFormInitialized(equipmentGuid: string, isLast: boolean) {
     if (this.isAddNew == true && isLast) {
-      this.toggleBS(oppGuid);
+      this.toggleBS(equipmentGuid);
       this.isAddNew = false;
       this.cd.detectChanges();
     }
