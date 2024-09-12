@@ -15,6 +15,9 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 import { IdbProcessEquipment } from 'src/app/models/processEquipment';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 
 describe('FacilityProcessEquipmentSetupComponent', () => {
   let component: FacilityProcessEquipmentSetupComponent;
@@ -39,6 +42,10 @@ describe('FacilityProcessEquipmentSetupComponent', () => {
   let processEquipmentIdbService: Partial<ProcessEquipmentIdbService> = {
     processEquipments: new BehaviorSubject<Array<IdbProcessEquipment>>([])
   }
+
+  let localStorageDataService: Partial<LocalStorageDataService> = {};
+  let cd: Partial<ChangeDetectorRef> = {};
+  let bootstrapService: Partial<BootstrapService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule],
@@ -49,7 +56,10 @@ describe('FacilityProcessEquipmentSetupComponent', () => {
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
-        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService }
+        { provide: ProcessEquipmentIdbService, useValue: processEquipmentIdbService },
+        { provide: LocalStorageDataService, useValue: localStorageDataService },
+        { provide: ChangeDetectorRef, useValue: cd },
+        { provide: BootstrapService, useValue: bootstrapService }
 
       ]
     })

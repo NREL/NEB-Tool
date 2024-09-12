@@ -5,6 +5,9 @@ import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benef
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { BehaviorSubject } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 
 describe('NebFormsAccordionComponent', () => {
   let component: NebFormsAccordionComponent;
@@ -13,12 +16,19 @@ describe('NebFormsAccordionComponent', () => {
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
   };
+
+  let localStorageDataService: Partial<LocalStorageDataService> = {};
+  let cd: Partial<ChangeDetectorRef> = {};
+  let bootstrapService: Partial<BootstrapService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule],
       declarations: [NebFormsAccordionComponent],
       providers: [
-        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService }
+        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
+        { provide: LocalStorageDataService, useValue: localStorageDataService },
+        { provide: ChangeDetectorRef, useValue: cd },
+        { provide: BootstrapService, useValue: bootstrapService }
       ]
     })
     .compileComponents();

@@ -7,6 +7,9 @@ import { BehaviorSubject } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 
 describe('CompanyContactsFormComponent', () => {
   let component: CompanyContactsFormComponent;
@@ -19,12 +22,18 @@ describe('CompanyContactsFormComponent', () => {
       return getNewIdbContact('', '')
     }
   };
+  let localStorageDataService: Partial<LocalStorageDataService> = {};
+  let cd: Partial<ChangeDetectorRef> = {};
+  let bootstrapService: Partial<BootstrapService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FontAwesomeModule, HelperPipesModule],
       declarations: [CompanyContactsFormComponent],
       providers: [
-        { provide: ContactIdbService, useValue: contactIdbService }
+        { provide: ContactIdbService, useValue: contactIdbService },
+        { provide: LocalStorageDataService, useValue: localStorageDataService },
+        { provide: ChangeDetectorRef, useValue: cd },
+        { provide: BootstrapService, useValue: bootstrapService }
       ]
     })
       .compileComponents();
