@@ -1,5 +1,5 @@
 <ng-template [ngIf]="nebGuids.length > 0" [ngIfElse]="noNEBsBlock">
-    <div class="accordion" id="nebFormsAccordion">
+    <div class="accordion" [id]="'nebFormsAccordion_'+energyOpportunity?.guid">
         <div class="accordion-item" *ngFor="let nebGuid of nebGuids; let index = index; let last = last;">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" [attr.data-bs-target]="'#'+nebGuid" aria-expanded="true"
@@ -9,7 +9,7 @@
                     nebDisplay:nonEnergyBenefits}}
                 </button>
             </h2>
-            <div [id]="'#'+nebGuid" class="accordion-collapse collapse" data-bs-parent="#nebFormsAccordion">
+            <div [id]="'#'+nebGuid" class="accordion-collapse collapse" [attr.data-bs-parent]="'#nebFormsAccordion_'+energyOpportunity?.guid">
                 <div class="accordion-body">
                     <app-neb-setup-form [nebGuid]="nebGuid"
                         (emitInitialized)="childFormInitialized(nebGuid, last)"></app-neb-setup-form>

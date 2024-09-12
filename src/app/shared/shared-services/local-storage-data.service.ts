@@ -10,6 +10,7 @@ export class LocalStorageDataService {
   energyOppAccordionGuid: string;
   nebAccordionGuid: string;
   contactAccordionGuid: string
+  energyEquipmentAccordionGuid: string;
   constructor(private localStorageService: LocalStorageService) {
     this.setupHelpPanelCollapsed = this.localStorageService.retrieve("setupHelpPanelCollapsed");
     if (this.setupHelpPanelCollapsed == undefined) {
@@ -19,6 +20,7 @@ export class LocalStorageDataService {
     this.energyOppAccordionGuid = this.localStorageService.retrieve("energyOppAccordionGuid");
     this.nebAccordionGuid = this.localStorageService.retrieve("nebAccordionGuid");
     this.contactAccordionGuid = this.localStorageService.retrieve("contactAccordionGuid");
+    this.energyEquipmentAccordionGuid = this.localStorageService.retrieve("energyEquipmentAccordionGuid");
   }
 
   setSetupPanelCollapsed(val: boolean) {
@@ -39,5 +41,10 @@ export class LocalStorageDataService {
   setContactAccordionGuid(contactAccordionGuid: string) {
     this.contactAccordionGuid = contactAccordionGuid;
     this.localStorageService.store('contactAccordionGuid', this.contactAccordionGuid);
+  }
+
+  setEnergyEquipmentAccordionGuid(energyEquipmentAccordionGuid: string) {
+    this.energyEquipmentAccordionGuid = energyEquipmentAccordionGuid;
+    this.localStorageService.store('energyEquipmentAccordionGuid', this.energyEquipmentAccordionGuid);
   }
 }
