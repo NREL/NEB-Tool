@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faContactBook, faPlus, faScrewdriverWrench, faToolbox, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
-import { IdbFacility } from 'src/app/models/facility';
 import { IdbContact } from 'src/app/models/contact';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
@@ -14,8 +13,7 @@ import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { AssessmentOptions, AssessmentType, AssessmentTypes } from 'src/app/shared/constants/assessmentTypes';
-import { EnergyUnitOptions, UnitOption } from 'src/app/shared/constants/unitOptions';
-import { UtilityOption, UtilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
+import { UtilityOption, UtilityOptions } from 'src/app/shared/constants/utilityTypes';
 import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 
@@ -199,12 +197,4 @@ export class PreAssessmentSetupComponent {
     }
     this.localStorageDataService.setAssessmentAccordionGuid(this.accordionGuid);
   }
-
-  // childFormInitialized(assessmentGuid: string, isLast: boolean) {
-  //   if (this.isAddNew == true && isLast) {
-  //     this.toggleBS(assessmentGuid);
-  //     this.isAddNew = false;
-  //     this.cd.detectChanges();
-  //   }
-  // }
 }

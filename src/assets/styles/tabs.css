@@ -1,12 +1,12 @@
-/* .nav-tabs .nav-link.active {
+.nav-tabs .nav-link.active {
     background-color: #0079c2;
     color: white;
 }
 
 .nav-tabs .nav-link {
     background-color: white;
-    /* color: white; *
+    /* color: white; */
     border-top: 1px solid;
     border-left: 1px solid;
     border-right: 1px solid;
-} */
+}
