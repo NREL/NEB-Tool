@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faContactBook, faPlus, faScrewdriverWrench, faToolbox, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
@@ -16,6 +16,8 @@ import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-i
 import { AssessmentOptions, AssessmentType, AssessmentTypes } from 'src/app/shared/constants/assessmentTypes';
 import { EnergyUnitOptions, UnitOption } from 'src/app/shared/constants/unitOptions';
 import { UtilityOption, UtilityOptions, UtilityType } from 'src/app/shared/constants/utilityTypes';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -39,8 +41,6 @@ export class PreAssessmentSetupComponent {
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
 
-  accordionIndex: number = 0;
-
   energyEquipmentSub: Subscription;
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
 
@@ -57,12 +57,17 @@ export class PreAssessmentSetupComponent {
   onSiteVisitSub: Subscription;
   isFormChange: boolean = false;
 
+  accordionGuid: string;
+  isAddNew: boolean = false;
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private facilityIdbService: FacilityIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private contactIdbService: ContactIdbService,
     private dbChangesService: DbChangesService,
-    private energyEquipmentIdbService: EnergyEquipmentIdbService
+    private energyEquipmentIdbService: EnergyEquipmentIdbService,
+    private bootstrapService: BootstrapService,
+    private localStorageDataService: LocalStorageDataService,
+    private cd: ChangeDetectorRef
   ) {
   }
 
@@ -95,6 +100,14 @@ export class PreAssessmentSetupComponent {
     this.energyEquipmentSub.unsubscribe();
   }
   
+  ngAfterViewInit() {
+    //open the accordion for last viewed neb
+    let lastAssessmentGuid: string = this.localStorageDataService.assessmentAccordionGuid;
+    if (lastAssessmentGuid) {
+      this.toggleBS(lastAssessmentGuid);
+      this.cd.detectChanges();
+    }
+  }
 
   async setUtilityTypes(assessment: IdbAssessment) {
     let utilityTypes = AssessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
@@ -120,10 +133,6 @@ export class PreAssessmentSetupComponent {
     this.assessmentIdbService.asyncUpdate(assessment);
   }
 
-  setAccordionIndex(index: number) {
-    this.accordionIndex = index;
-  }
-
   goBack() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/end-uses');
@@ -141,7 +150,7 @@ export class PreAssessmentSetupComponent {
     await this.assessmentIdbService.setAssessments();
     this.onSiteVisit.assessmentIds.push(assessment.guid);
     await this.onSiteVisitIdbService.asyncUpdate(this.onSiteVisit);
-    this.setAccordionIndex(this.onSiteVisit.assessmentIds.length - 1);
+    this.toggleBS(assessment.guid);
   }
 
   openDeleteModal(assessment: IdbAssessment) {
@@ -157,7 +166,6 @@ export class PreAssessmentSetupComponent {
   async removeAssessment() {
     await this.dbChangesService.deleteAssessment(this.assessmentToDelete);
     this.closeDeleteModal();
-    this.setAccordionIndex(0);
   }
 
   openContactModal(assessmentIndex: number, viewContact: IdbContact) {
@@ -181,4 +189,22 @@ export class PreAssessmentSetupComponent {
     }
     await this.onSiteVisitIdbService.asyncUpdate(this.onSiteVisit);
   }
+
+  toggleBS(assessmentGuid: string) {
+    this.bootstrapService.bsCollapse('#' + assessmentGuid);
+    if (this.accordionGuid != assessmentGuid) {
+      this.accordionGuid = assessmentGuid;
+    } else {
+      this.accordionGuid = undefined;
+    }
+    this.localStorageDataService.setAssessmentAccordionGuid(this.accordionGuid);
+  }
+
+  // childFormInitialized(assessmentGuid: string, isLast: boolean) {
+  //   if (this.isAddNew == true && isLast) {
+  //     this.toggleBS(assessmentGuid);
+  //     this.isAddNew = false;
+  //     this.cd.detectChanges();
+  //   }
+  // }
 }

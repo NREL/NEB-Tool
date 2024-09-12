@@ -107,10 +107,10 @@ export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy
     }
   }
 
-  toggleBS(nebGuid: string) {
-    this.bootstrapService.bsCollapse('#' + nebGuid);
-    if (this.accordionGuid != nebGuid) {
-      this.accordionGuid = nebGuid;
+  toggleBS(equipmentGuid: string) {
+    this.bootstrapService.bsCollapse('#' + equipmentGuid);
+    if (this.accordionGuid != equipmentGuid) {
+      this.accordionGuid = equipmentGuid;
     } else {
       this.accordionGuid = undefined;
     }
