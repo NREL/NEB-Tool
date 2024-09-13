@@ -16,6 +16,9 @@ import { EnergyOpportunityNebsTableComponent } from './energy-opportunity-nebs-t
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { EnergyOpportunityNebsListPipe } from './energy-opportunity-nebs-table/energy-opportunity-nebs-list.pipe';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 
 describe('AssessmentNebsFormComponent', () => {
   let component: AssessmentNebsFormComponent;
@@ -35,6 +38,9 @@ describe('AssessmentNebsFormComponent', () => {
   let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {
     energyOpportunities: new BehaviorSubject<Array<IdbEnergyOpportunity>>([])
   }
+  let localStorageDataService: Partial<LocalStorageDataService> = {};
+  let cd: Partial<ChangeDetectorRef> = {};
+  let bootstrapService: Partial<BootstrapService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule],
@@ -43,7 +49,10 @@ describe('AssessmentNebsFormComponent', () => {
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
-        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService }
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
+        { provide: LocalStorageDataService, useValue: localStorageDataService },
+        { provide: ChangeDetectorRef, useValue: cd },
+        { provide: BootstrapService, useValue: bootstrapService }
       ]
     })
       .compileComponents();

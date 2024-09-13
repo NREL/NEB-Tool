@@ -20,6 +20,9 @@ import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.modu
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 
 describe('PreAssessmentSetupComponent', () => {
   let component: PreAssessmentSetupComponent;
@@ -50,6 +53,9 @@ describe('PreAssessmentSetupComponent', () => {
     energyEquipments: new BehaviorSubject<Array<IdbEnergyEquipment>>([])
   };
   let dbChangesService: Partial<DbChangesService> = {}
+  let localStorageDataService: Partial<LocalStorageDataService> = {};
+  let cd: Partial<ChangeDetectorRef> = {};
+  let bootstrapService: Partial<BootstrapService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, HelperPipesModule],
@@ -62,7 +68,10 @@ describe('PreAssessmentSetupComponent', () => {
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: ContactIdbService, useValue: contactIdbService },
         { provide: DbChangesService, useValue: dbChangesService },
-        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService }
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService },
+        { provide: LocalStorageDataService, useValue: localStorageDataService },
+        { provide: ChangeDetectorRef, useValue: cd },
+        { provide: BootstrapService, useValue: bootstrapService }
       ]
     })
       .compileComponents();

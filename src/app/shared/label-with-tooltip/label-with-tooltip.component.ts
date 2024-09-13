@@ -44,7 +44,7 @@ export class LabelWithTooltipComponent {
   }
 
   ngAfterViewInit() {
-    // Bootstrap tooltip initialization
+    //Bootstrap tooltip initialization
     if (bootstrap) {
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       this.tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
