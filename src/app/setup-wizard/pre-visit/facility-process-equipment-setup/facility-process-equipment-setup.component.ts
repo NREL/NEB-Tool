@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronLeft, faChevronRight, faDiagramProject, faPlus, faSplotch } from '@fortawesome/free-solid-svg-icons';
 import { IdbFacility } from 'src/app/models/facility';
@@ -9,6 +9,8 @@ import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.serv
 import { getNewIdbProcessEquipment, IdbProcessEquipment } from 'src/app/models/processEquipment';
 import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 import * as _ from 'lodash';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-facility-process-equipment-setup',
@@ -17,7 +19,6 @@ import * as _ from 'lodash';
 })
 export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy {
 
-  accordionIndex: number = 0;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
   faDiagramProject: IconDefinition = faDiagramProject;
@@ -28,9 +29,15 @@ export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy
   processEquipmentsSub: Subscription
   processEquipments: Array<IdbProcessEquipment>;
   processEquipmentGuids: Array<string> = [];
+
+  accordionGuid: string;
+  isAddNew: boolean = false;
   constructor(private facilityIdbService: FacilityIdbService, private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private processEquipmentIdbService: ProcessEquipmentIdbService
+    private processEquipmentIdbService: ProcessEquipmentIdbService,
+    private bootstrapService: BootstrapService,
+    private localStorageDataService: LocalStorageDataService,
+    private cd: ChangeDetectorRef
   ) {
 
   }
@@ -51,7 +58,17 @@ export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy
     this.processEquipmentsSub.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    //open the accordion for last viewed neb
+    let lastEquipmentGuid: string = this.localStorageDataService.processEquipmentAccordionGuid;
+    if (lastEquipmentGuid && this.processEquipmentGuids.includes(lastEquipmentGuid)) {
+      this.toggleBS(lastEquipmentGuid);
+      this.cd.detectChanges();
+    }
+  }
+
   async addEquipment() {
+    this.isAddNew = true;
     let newProcessEquipment: IdbProcessEquipment = getNewIdbProcessEquipment(this.facility.userId, this.facility.companyId, this.facility.guid);
     await firstValueFrom(this.processEquipmentIdbService.addWithObservable(newProcessEquipment));
     await this.processEquipmentIdbService.setProcessEquipments();
@@ -65,10 +82,6 @@ export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy
   goToNext() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/pre-assessment');
-  }
-
-  setAccordionIndex(index: number) {
-    this.accordionIndex = index;
   }
 
   setProcessEquipmentGuids() {
@@ -92,6 +105,24 @@ export class FacilityProcessEquipmentSetupComponent implements OnInit, OnDestroy
     } else {
       this.processEquipmentGuids = [];
     }
-
   }
+
+  toggleBS(equipmentGuid: string) {
+    this.bootstrapService.bsCollapse('#' + equipmentGuid);
+    if (this.accordionGuid != equipmentGuid) {
+      this.accordionGuid = equipmentGuid;
+    } else {
+      this.accordionGuid = undefined;
+    }
+    this.localStorageDataService.setProcessEquipmentAccordionGuid(this.accordionGuid);
+  }
+
+  childFormInitialized(equipmentGuid: string, isLast: boolean) {
+    if (this.isAddNew == true && isLast) {
+      this.toggleBS(equipmentGuid);
+      this.isAddNew = false;
+      this.cd.detectChanges();
+    }
+  }
+  
 }

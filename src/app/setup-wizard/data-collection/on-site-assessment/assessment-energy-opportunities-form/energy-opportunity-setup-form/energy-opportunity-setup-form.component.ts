@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IconDefinition, faFileLines, faPlus, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { EnergyOpportunityType, FanOpportunities } from 'src/app/shared/constants/energyOpportunityOptions';
@@ -17,6 +17,8 @@ import { firstValueFrom } from 'rxjs';
 export class EnergyOpportunitySetupFormComponent {
   @Input({ required: true })
   energyOpportunityGuid: string;
+  @Output('emitInitialized')
+  emitInitialized = new EventEmitter<boolean>();
 
 
   energyOpportunity: IdbEnergyOpportunity;
@@ -43,6 +45,10 @@ export class EnergyOpportunitySetupFormComponent {
   }
 
   ngOnDestroy() {
+  }
+
+  ngAfterViewInit() {
+    this.emitInitialized.emit(true);
   }
 
   async deleteEnergyOpportunity() {

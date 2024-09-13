@@ -59,9 +59,8 @@ export class CompanyKpiDetailsComponent {
   keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>;
   keyPerformanceMetricImpactsSub: Subscription;
 
-  showMetricDropdownId: string;
-
   timeOptions: Array<string> = ['day', 'week', 'month', 'year'];
+  dropdownMenuGuid: string;
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
@@ -194,9 +193,9 @@ export class CompanyKpiDetailsComponent {
     let kpmImpacts: Array<IdbKeyPerformanceMetricImpact> = this.keyPerformanceMetricImpacts.filter(kpmImpact => {
       return kpmImpact.kpmGuid == this.kpmToDelete.guid;
     });
-    if(kpmImpacts.length > 0){
+    if (kpmImpacts.length > 0) {
       for (let index = 0; index < kpmImpacts.length; index++) {
-          await firstValueFrom(this.keyPerformanceMetricImpactIdbService.deleteWithObservable(kpmImpacts[index].id));
+        await firstValueFrom(this.keyPerformanceMetricImpactIdbService.deleteWithObservable(kpmImpacts[index].id));
       }
       await this.keyPerformanceMetricImpactIdbService.setKeyPerformanceMetricImpacts();
     }
@@ -204,12 +203,11 @@ export class CompanyKpiDetailsComponent {
     this.closeDeleteKpmModal();
   }
 
-
-  toggleDropdown(metricGuid: string) {
-    if (this.showMetricDropdownId != metricGuid) {
-      this.showMetricDropdownId = metricGuid;
+  setDropdownMenuGuid(guid: string) {
+    if (this.dropdownMenuGuid != guid) {
+      this.dropdownMenuGuid = guid;
     } else {
-      this.showMetricDropdownId = undefined;
+      this.dropdownMenuGuid = undefined;
     }
   }
 }

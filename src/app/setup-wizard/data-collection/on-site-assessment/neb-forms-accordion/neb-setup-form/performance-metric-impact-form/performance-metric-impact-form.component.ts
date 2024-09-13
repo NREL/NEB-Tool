@@ -115,6 +115,7 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   openDeleteModal() {
+    this.showDropdownMenu = false;
     this.displayDeleteModal = true;
     this.showDropdownMenu = false;
   }
@@ -129,11 +130,16 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   setOverrideBaseline(overrideBaseline: boolean) {
+    this.showDropdownMenu = false;
     this.overrideBaseline = overrideBaseline;
     this.showDropdownMenu = false;
   }
 
   toggleDropdownMenu() {
+    this.showDropdownMenu = !this.showDropdownMenu;
+  }
+
+  toggleShowDropdownMenu(){
     this.showDropdownMenu = !this.showDropdownMenu;
   }
 }
