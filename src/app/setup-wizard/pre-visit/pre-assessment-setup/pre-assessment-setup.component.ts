@@ -108,7 +108,7 @@ export class PreAssessmentSetupComponent {
   }
 
   async setUnitOptionValue(assessment: IdbAssessment) {
-    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
+    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.powerUnitOptions || [];
     if (unitOptions.map(unitOption => unitOption.value).indexOf(assessment.unitOptionValue) == -1) {
       assessment.unitOptionValue = unitOptions?.[0].value;
     }

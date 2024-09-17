@@ -105,7 +105,7 @@
                                                                 <select name="energyUnit" class="input-group-text" id="energyUnit"
                                                                     [(ngModel)]="assessment.unitOptionValue"
                                                                     (change)="saveChanges(assessment)">
-                                                                    <option *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions)"
+                                                                    <option *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions: 'Energy')"
                                                                         [ngValue]="unitOption.value">
                                                                         <span [innerHTML]="unitOption.value | unitsDisplay"></span>
                                                                     </option>

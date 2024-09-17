@@ -1,4 +1,4 @@
-import { EnergyUnitOptions, MassUnitOptions, UnitOption, VolumeGasOptions, VolumeLiquidOptions } from "./unitOptions";
+import { EnergyUnitOptions, MassUnitOptions, PowerUnitOptions, UnitOption, VolumeGasOptions, VolumeLiquidOptions } from "./unitOptions";
 
 export type UtilityType = 'Electricity' | 'Natural Gas' | 'Other Fuels' | 'Water' | 'Waste Water' | 'Steam' | 'Compressed Air';
 export const UtilityTypes: Array<UtilityType> = ['Electricity', 'Natural Gas', 'Other Fuels', 'Water', 'Waste Water', 'Steam', 'Compressed Air'];
@@ -6,15 +6,16 @@ export const UtilityTypes: Array<UtilityType> = ['Electricity', 'Natural Gas', '
 // Define utility type - unit relationship
 export interface UtilityOption {
     utilityType: UtilityType,
-    unitOptions: Array<UnitOption>
+    energyUnitOptions: Array<UnitOption>,
+    powerUnitOptions: Array<UnitOption>
 }
 
 export const UtilityOptions: Array<UtilityOption> = [
-    {utilityType: 'Electricity', unitOptions: EnergyUnitOptions},
-    {utilityType: 'Natural Gas', unitOptions: EnergyUnitOptions},
-    {utilityType: 'Other Fuels', unitOptions: EnergyUnitOptions},
-    {utilityType: 'Water', unitOptions: VolumeLiquidOptions},
-    {utilityType: 'Waste Water', unitOptions: VolumeLiquidOptions},
-    {utilityType: 'Steam', unitOptions: MassUnitOptions},
-    {utilityType: 'Compressed Air', unitOptions: VolumeGasOptions},
+    {utilityType: 'Electricity', energyUnitOptions: EnergyUnitOptions, powerUnitOptions: PowerUnitOptions},
+    {utilityType: 'Natural Gas', energyUnitOptions: EnergyUnitOptions, powerUnitOptions: PowerUnitOptions},
+    {utilityType: 'Other Fuels', energyUnitOptions: EnergyUnitOptions, powerUnitOptions: PowerUnitOptions},
+    {utilityType: 'Water', energyUnitOptions: VolumeLiquidOptions, powerUnitOptions: PowerUnitOptions},
+    {utilityType: 'Waste Water', energyUnitOptions: VolumeLiquidOptions, powerUnitOptions: PowerUnitOptions},
+    {utilityType: 'Steam', energyUnitOptions: MassUnitOptions, powerUnitOptions: PowerUnitOptions},
+    {utilityType: 'Compressed Air', energyUnitOptions: VolumeGasOptions, powerUnitOptions: PowerUnitOptions},
 ];

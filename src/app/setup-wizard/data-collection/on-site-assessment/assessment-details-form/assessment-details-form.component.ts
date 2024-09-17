@@ -78,7 +78,7 @@ export class AssessmentDetailsFormComponent {
   }
 
   async setUnitOptionValue() {
-    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.unitOptions || [];
+    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.energyUnitOptions || [];
     if (unitOptions.map(unitOption => unitOption.value).indexOf(this.assessment.unitOptionValue) == -1) {
       this.assessment.unitOptionValue = unitOptions?.[0].value;
     }
