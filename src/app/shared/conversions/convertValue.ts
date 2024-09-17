@@ -26,14 +26,26 @@ export class ConvertValue {
     constructor() {
     }
 
-    convertValue(value: number, from: string, to: string): 
+    convertValue(value: number, from?: string, to?: string): 
         { convertedValue: number, hasError: boolean } {
 
         if (value == undefined) {
             return { convertedValue: value, hasError: true };
         }
-        if (from == undefined || to == undefined) {
+        if (from == undefined) {
+            // If no from unit is provided, return the value as is
             return { convertedValue: value, hasError: true };
+        }
+
+        if (to == undefined) {
+            // If no to unit is provided, default to convert to metric anchor
+            let tempToUnit = this.getUnit(from);
+            if (tempToUnit == undefined) {
+                console.log(from);
+            }
+            if (tempToUnit != undefined) {
+                to = this._measures[tempToUnit.measure]._anchors.metric.unit;
+            }
         }
 
         // Don't change the value if origin and destination are the same
