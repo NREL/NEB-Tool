@@ -1,5 +1,5 @@
 import { getNewIdbEntry, IdbEntry } from "./idbEntry"
-import { EquipmentType, EquipmentTypeOptions } from "../shared/constants/equipmentTypes"
+import { EquipmentType, EquipmentTypes } from "../shared/constants/equipmentTypes"
 import { UtilityType } from "../shared/constants/utilityTypes"
 
 export interface IdbEnergyEquipment extends IdbEntry {
@@ -12,6 +12,11 @@ export interface IdbEnergyEquipment extends IdbEntry {
     utilityType: UtilityType,
     size: number,
     sizeUnit: string,
+    autoCalculate: boolean,
+    fuelConsumption: number,
+    fuelVolumeUnit: string,
+    fuelEnergyUnit: string,
+    fuelHHV: number,
     operatingHours: number,
     loadFactor: number,
     efficiency: number,
@@ -30,7 +35,12 @@ export function getNewIdbEnergyEquipment(userId: string, companyId: string, faci
         equipmentType: "Pump",
         utilityType: "Electricity",
         size: 0,
-        sizeUnit: "kWh",
+        sizeUnit: "kW",
+        autoCalculate: false,
+        fuelConsumption: 0,
+        fuelHHV: 0,
+        fuelVolumeUnit: "gal",
+        fuelEnergyUnit: "kWh",
         operatingHours: 0,
         loadFactor: 0,
         efficiency: 0.5,

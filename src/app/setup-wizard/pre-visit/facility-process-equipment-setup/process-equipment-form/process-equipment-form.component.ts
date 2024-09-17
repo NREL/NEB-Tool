@@ -6,7 +6,7 @@ import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { ProcessEquipmentIdbService } from 'src/app/indexed-db/process-equipment-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { IdbProcessEquipment } from 'src/app/models/processEquipment';
-import { EquipmentType, EquipmentTypeOptions } from 'src/app/shared/constants/equipmentTypes';
+import { EquipmentType, EquipmentTypes } from 'src/app/shared/constants/equipmentTypes';
 import { UtilityType, UtilityTypes } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
