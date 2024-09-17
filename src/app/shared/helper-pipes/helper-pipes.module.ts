@@ -29,6 +29,7 @@ import { EnergyEquipmentListPipe } from './energy-equipment-list.pipe';
 import { KeyPerformanceMetricImpactsListPipe } from './key-performance-metric-impacts-list.pipe';
 import { ContactNameDisplayPipe } from './contact-name-display.pipe';
 import { LinkedUnitOptionsPipe } from './linked-unit-options.pipe';
+import { LinkedUtilityOptionsPipe } from './linked-utility-options.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { LinkedUnitOptionsPipe } from './linked-unit-options.pipe';
     EnergyEquipmentDisplayPipe,
     EnergyEquipmentListPipe,
     KeyPerformanceMetricImpactsListPipe,
-    LinkedUnitOptionsPipe
+    LinkedUnitOptionsPipe,
+    LinkedUtilityOptionsPipe
   ],
   imports: [
     CommonModule
@@ -94,7 +96,8 @@ import { LinkedUnitOptionsPipe } from './linked-unit-options.pipe';
     EnergyEquipmentDisplayPipe,
     EnergyEquipmentListPipe,
     KeyPerformanceMetricImpactsListPipe,
-    LinkedUnitOptionsPipe
+    LinkedUnitOptionsPipe,
+    LinkedUtilityOptionsPipe
   ]
 })
 export class HelperPipesModule { }

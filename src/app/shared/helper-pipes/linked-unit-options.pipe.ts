@@ -7,10 +7,15 @@ import { UtilityOptions, UtilityType } from '../constants/utilityTypes';
 })
 export class LinkedUnitOptionsPipe implements PipeTransform {
 
-  transform(utilityType: UtilityType): Array<UnitOption> {
+  transform(utilityType: UtilityType, unitType: string): Array<UnitOption> {
     let selectedUtility = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == utilityType);
     if (selectedUtility) {
-      return selectedUtility.unitOptions;
+      if (unitType == 'Energy') {
+        return selectedUtility.energyUnitOptions;
+      } else if (unitType == 'Power') {
+        return selectedUtility.powerUnitOptions;
+      }
+      return [];
     } else {
       return [];
     }
