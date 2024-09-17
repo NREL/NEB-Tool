@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { faChevronLeft, faChevronRight, faList, faPlus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom, Subscription } from 'rxjs';
@@ -9,6 +9,8 @@ import { getNewIdbEnergyEquipment, IdbEnergyEquipment } from 'src/app/models/ene
 import { IdbFacility } from 'src/app/models/facility';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import * as _ from 'lodash';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 
 @Component({
   selector: 'app-facility-energy-equipment-setup',
@@ -17,10 +19,8 @@ import * as _ from 'lodash';
 })
 export class FacilityEnergyEquipmentSetupComponent {
 
-  accordionIndex: number = 0;
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
-  // faDiagramProject: IconDefinition = faDiagramProject;
   faPlus: IconDefinition = faPlus;
   faList: IconDefinition = faList;
   facility: IdbFacility;
@@ -28,9 +28,14 @@ export class FacilityEnergyEquipmentSetupComponent {
   energyEquipmentsSub: Subscription
   energyEquipments: Array<IdbEnergyEquipment>;
   energyEquipmentGuids: Array<string> = [];
+  accordionGuid: string;
+  isAddNew: boolean = false;
   constructor(private facilityIdbService: FacilityIdbService, private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private energyEquipmentIdbService: EnergyEquipmentIdbService
+    private energyEquipmentIdbService: EnergyEquipmentIdbService,
+    private bootstrapService: BootstrapService,
+    private localStorageDataService: LocalStorageDataService,
+    private cd: ChangeDetectorRef
   ) {
 
   }
@@ -51,7 +56,17 @@ export class FacilityEnergyEquipmentSetupComponent {
     this.energyEquipmentsSub.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    //open the accordion for last viewed neb
+    let lastEquipmentGuid: string = this.localStorageDataService.energyEquipmentAccordionGuid;
+    if (lastEquipmentGuid && this.energyEquipmentGuids.includes(lastEquipmentGuid)) {
+      this.toggleBS(lastEquipmentGuid);
+      this.cd.detectChanges();
+    }
+  }
+
   async addEquipment() {
+    this.isAddNew = true;
     let newEnergyEquipment: IdbEnergyEquipment = getNewIdbEnergyEquipment(this.facility.userId, this.facility.companyId, this.facility.guid);
     await firstValueFrom(this.energyEquipmentIdbService.addWithObservable(newEnergyEquipment));
     await this.energyEquipmentIdbService.setEnergyEquipments();
@@ -64,11 +79,7 @@ export class FacilityEnergyEquipmentSetupComponent {
 
   goToNext() {
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
-    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/process-equipment');
-  }
-
-  setAccordionIndex(index: number) {
-    this.accordionIndex = index;
+    this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/end-uses');
   }
 
   setEnergyEquipmentGuids() {
@@ -92,6 +103,23 @@ export class FacilityEnergyEquipmentSetupComponent {
     } else {
       this.energyEquipmentGuids = [];
     }
+  }
 
+  toggleBS(equipmentGuid: string) {
+    this.bootstrapService.bsCollapse('#' + equipmentGuid);
+    if (this.accordionGuid != equipmentGuid) {
+      this.accordionGuid = equipmentGuid;
+    } else {
+      this.accordionGuid = undefined;
+    }
+    this.localStorageDataService.setEnergyEquipmentAccordionGuid(this.accordionGuid);
+  }
+
+  childFormInitialized(equipmentGuid: string, isLast: boolean) {
+    if (this.isAddNew == true && isLast) {
+      this.toggleBS(equipmentGuid);
+      this.isAddNew = false;
+      this.cd.detectChanges();
+    }
   }
 }

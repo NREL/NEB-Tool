@@ -16,15 +16,17 @@
                 </div>
                 <ng-template [ngIf]="companyContactGuids.length > 0" [ngIfElse]="noContactsBlock">
                     <div class="accordion" id="contactAccordion">
-                        <div class="accordion-item" *ngFor="let contactGuid of companyContactGuids; let index = index;">
-                            <app-company-contacts-form [contactGuid]="contactGuid" [contactIndex]="index"
-                                [accordionIndex]="accordionIndex"></app-company-contacts-form>
+                        <div class="accordion-item"
+                            *ngFor="let contactGuid of companyContactGuids; let index = index; let last = last;">
+                            <app-company-contacts-form [contactGuid]="contactGuid" [accordionGuid]="accordionGuid"
+                                (emitInitialized)="childFormInitialized(contactGuid, last)"></app-company-contacts-form>
                         </div>
                     </div>
                 </ng-template>
                 <ng-template #noContactsBlock>
                     <div class="alert alert-warning">
-                        No stakeholder contacts added for this company. Click "<fa-icon [icon]="faPlus"></fa-icon> Add Stakeholder"
+                        No stakeholder contacts added for this company. Click "<fa-icon [icon]="faPlus"></fa-icon> Add
+                        Stakeholder"
                         to add a contact to this company.
                     </div>
                 </ng-template>
@@ -38,8 +40,8 @@
             <fa-icon [icon]="faChevronLeft"></fa-icon>
             Go Back
         </button>
-        <button class="btn btn-dark" (click)="goToKPIs()" [disabled]="hasInvalidContacts">
-            Company KPIs
+        <button class="btn btn-dark btn-sm" (click)="goToKPIs()" [disabled]="hasInvalidContacts">
+            Select KPIs
             <fa-icon [icon]="faChevronRight"></fa-icon>
         </button>
     </div>

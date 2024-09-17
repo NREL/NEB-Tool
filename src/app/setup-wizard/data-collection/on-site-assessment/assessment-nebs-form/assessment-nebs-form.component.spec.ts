@@ -12,6 +12,13 @@ import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { NebFormsAccordionComponent } from '../neb-forms-accordion/neb-forms-accordion.component';
+import { EnergyOpportunityNebsTableComponent } from './energy-opportunity-nebs-table/energy-opportunity-nebs-table.component';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
+import { EnergyOpportunityNebsListPipe } from './energy-opportunity-nebs-table/energy-opportunity-nebs-list.pipe';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 
 describe('AssessmentNebsFormComponent', () => {
   let component: AssessmentNebsFormComponent;
@@ -27,14 +34,25 @@ describe('AssessmentNebsFormComponent', () => {
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
   };
+
+  let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {
+    energyOpportunities: new BehaviorSubject<Array<IdbEnergyOpportunity>>([])
+  }
+  let localStorageDataService: Partial<LocalStorageDataService> = {};
+  let cd: Partial<ChangeDetectorRef> = {};
+  let bootstrapService: Partial<BootstrapService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, FormsModule, RouterTestingModule],
-      declarations: [AssessmentNebsFormComponent, NebSetupFormComponent, NebFormsAccordionComponent],
+      declarations: [AssessmentNebsFormComponent, NebSetupFormComponent, NebFormsAccordionComponent, EnergyOpportunityNebsTableComponent, EnergyOpportunityNebsListPipe],
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
-        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService }
+        { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
+        { provide: LocalStorageDataService, useValue: localStorageDataService },
+        { provide: ChangeDetectorRef, useValue: cd },
+        { provide: BootstrapService, useValue: bootstrapService }
       ]
     })
       .compileComponents();

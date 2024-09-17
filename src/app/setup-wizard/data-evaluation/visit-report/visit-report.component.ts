@@ -30,6 +30,6 @@ export class VisitReportComponent {
   }
 
   goBack() {
-    this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/review-data-collection');
+    this.router.navigateByUrl('/setup-wizard/data-evaluation/' + this.onSiteVisit.guid + '/assessment-report/' + this.onSiteVisit.assessmentIds[this.onSiteVisit.assessmentIds.length - 1]);
   }
 }

@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { IdbEnergyOpportunity, getNewIdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { NebFormsAccordionComponent } from '../../neb-forms-accordion/neb-forms-accordion.component';
+import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 
 describe('EnergyOpportunitySetupFormComponent', () => {
   let component: EnergyOpportunitySetupFormComponent;
@@ -29,6 +32,9 @@ describe('EnergyOpportunitySetupFormComponent', () => {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
   };
   let dbChangesService: Partial<DbChangesService> = {}
+  let localStorageDataService: Partial<LocalStorageDataService> = {};
+  let cd: Partial<ChangeDetectorRef> = {};
+  let bootstrapService: Partial<BootstrapService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule, FormsModule],
@@ -38,6 +44,9 @@ describe('EnergyOpportunitySetupFormComponent', () => {
         { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
         { provide: NonEnergyBenefitsIdbService, useValue: nonEnergyBenefitsIdbService },
         { provide: DbChangesService, useValue: dbChangesService },
+        { provide: LocalStorageDataService, useValue: localStorageDataService },
+        { provide: ChangeDetectorRef, useValue: cd },
+        { provide: BootstrapService, useValue: bootstrapService }
       ]
 
     })

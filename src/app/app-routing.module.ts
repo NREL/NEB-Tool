@@ -96,7 +96,7 @@ const routes: Routes = [
             component: FacilityEnergyEquipmentSetupComponent
           },
           {
-            path: 'process-equipment',
+            path: 'end-uses',
             component: FacilityProcessEquipmentSetupComponent
           },
           {

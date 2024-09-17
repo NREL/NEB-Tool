@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { IconDefinition, faFileLines, faPlus, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { EnergyOpportunityType, FanOpportunities } from 'src/app/shared/constants/energyOpportunityOptions';
@@ -17,6 +17,8 @@ import { firstValueFrom } from 'rxjs';
 export class EnergyOpportunitySetupFormComponent {
   @Input({ required: true })
   energyOpportunityGuid: string;
+  @Output('emitInitialized')
+  emitInitialized = new EventEmitter<boolean>();
 
 
   energyOpportunity: IdbEnergyOpportunity;
@@ -27,8 +29,9 @@ export class EnergyOpportunitySetupFormComponent {
   faPlus: IconDefinition = faPlus;
   faWeightHanging: IconDefinition = faWeightHanging;
 
-  opportunityTypes: Array<EnergyOpportunityType> = [{value: 'other', label: 'Other'}];
+  opportunityTypes: Array<EnergyOpportunityType> = [{ value: 'other', label: 'Other' }];
   displayDeleteModal: boolean = false;
+  showAddNebDropdown: boolean = false;
   constructor(
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private dbChangesService: DbChangesService,
@@ -42,6 +45,10 @@ export class EnergyOpportunitySetupFormComponent {
   }
 
   ngOnDestroy() {
+  }
+
+  ngAfterViewInit() {
+    this.emitInitialized.emit(true);
   }
 
   async deleteEnergyOpportunity() {
@@ -62,6 +69,7 @@ export class EnergyOpportunitySetupFormComponent {
   }
 
   showSuggestedNEBs() {
+    this.showAddNebDropdown = false;
     this.setupWizardService.displayAddNebsModal.next({
       assessmentId: this.energyOpportunity.assessmentId,
       energyOpportunityId: this.energyOpportunity.guid
@@ -69,11 +77,14 @@ export class EnergyOpportunitySetupFormComponent {
   }
 
   async addNEB() {
+    this.showAddNebDropdown = false;
     let newNonEnergyBenefit: IdbNonEnergyBenefit = getNewIdbNonEnergyBenefit(this.energyOpportunity.userId, this.energyOpportunity.companyId, this.energyOpportunity.facilityId, this.energyOpportunity.assessmentId, this.energyOpportunity.guid, undefined, true);
     await firstValueFrom(this.nonEnergyBenefitsIdbService.addWithObservable(newNonEnergyBenefit));
     await this.nonEnergyBenefitsIdbService.setNonEnergyBenefits();
   }
 
+  toggleAddNebDropdown() {
+    this.showAddNebDropdown = !this.showAddNebDropdown;
+  }
 
-  
 }

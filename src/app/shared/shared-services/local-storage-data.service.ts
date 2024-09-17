@@ -6,48 +6,59 @@ import { LocalStorageService } from 'ngx-webstorage';
 })
 export class LocalStorageDataService {
 
-
-  locationAccordionOpen: boolean;
-  primaryContactAccordionOpen: boolean;
-  unitsAccordionOpen: boolean;
-  additionalDetailsAccordionOpen: boolean;
+  setupHelpPanelCollapsed: boolean;
+  energyOppAccordionGuid: string;
+  nebAccordionGuid: string;
+  contactAccordionGuid: string
+  energyEquipmentAccordionGuid: string;
+  processEquipmentAccordionGuid: string;
+  assessmentAccordionGuid: string;
   constructor(private localStorageService: LocalStorageService) {
-    this.locationAccordionOpen = this.localStorageService.retrieve("locationAccordionOpen");
-    if (this.locationAccordionOpen == undefined) {
-      this.setLocationAccordionOpen(true);
+    this.setupHelpPanelCollapsed = this.localStorageService.retrieve("setupHelpPanelCollapsed");
+    if (this.setupHelpPanelCollapsed == undefined) {
+      this.setSetupPanelCollapsed(false);
     }
-    this.primaryContactAccordionOpen = this.localStorageService.retrieve("primaryContactAccordionOpen");
-    if (this.primaryContactAccordionOpen == undefined) {
-      this.setPrimaryContactAccordionOpen(true);
-    }
-    this.unitsAccordionOpen = this.localStorageService.retrieve("unitsAccordionOpen");
-    if (this.unitsAccordionOpen == undefined) {
-      this.setUnitsAccordionOpen(true);
-    }
-    this.additionalDetailsAccordionOpen = this.localStorageService.retrieve("additionalDetailsAccordionOpen");
-    if (this.additionalDetailsAccordionOpen == undefined) {
-      this.setAdditionalDetailsAccordionOpen(true);
-    }
+
+    this.energyOppAccordionGuid = this.localStorageService.retrieve("energyOppAccordionGuid");
+    this.nebAccordionGuid = this.localStorageService.retrieve("nebAccordionGuid");
+    this.contactAccordionGuid = this.localStorageService.retrieve("contactAccordionGuid");
+    this.energyEquipmentAccordionGuid = this.localStorageService.retrieve("energyEquipmentAccordionGuid");
+    this.processEquipmentAccordionGuid = this.localStorageService.retrieve("processEquipmentAccordionGuid");
+    this.assessmentAccordionGuid = this.localStorageService.retrieve("assessmentAccordionGuid");
   }
 
-  setLocationAccordionOpen(val: boolean) {
-    this.locationAccordionOpen = val;
-    this.localStorageService.store('locationAccordionOpen', this.locationAccordionOpen);
+  setSetupPanelCollapsed(val: boolean) {
+    this.setupHelpPanelCollapsed = val;
+    this.localStorageService.store('setupHelpPanelCollapsed', this.setupHelpPanelCollapsed);
   }
 
-  setPrimaryContactAccordionOpen(val: boolean) {
-    this.primaryContactAccordionOpen = val;
-    this.localStorageService.store('primaryContactAccordionOpen', this.primaryContactAccordionOpen);
+  setEnergyOppAccordionGuid(energyOppAccordionGuid: string) {
+    this.energyOppAccordionGuid = energyOppAccordionGuid;
+    this.localStorageService.store('energyOppAccordionGuid', this.energyOppAccordionGuid);
   }
 
-  setUnitsAccordionOpen(val: boolean) {
-    this.unitsAccordionOpen = val;
-    this.localStorageService.store('unitsAccordionOpen', this.unitsAccordionOpen);
+  setNebAccordionGuid(nebAccordionGuid: string) {
+    this.nebAccordionGuid = nebAccordionGuid;
+    this.localStorageService.store('nebAccordionGuid', this.nebAccordionGuid);
   }
 
-  setAdditionalDetailsAccordionOpen(val: boolean) {
-    this.additionalDetailsAccordionOpen = val;
-    this.localStorageService.store('additionalDetailsAccordionOpen', this.additionalDetailsAccordionOpen);
+  setContactAccordionGuid(contactAccordionGuid: string) {
+    this.contactAccordionGuid = contactAccordionGuid;
+    this.localStorageService.store('contactAccordionGuid', this.contactAccordionGuid);
   }
 
+  setEnergyEquipmentAccordionGuid(energyEquipmentAccordionGuid: string) {
+    this.energyEquipmentAccordionGuid = energyEquipmentAccordionGuid;
+    this.localStorageService.store('energyEquipmentAccordionGuid', this.energyEquipmentAccordionGuid);
+  }
+
+  setProcessEquipmentAccordionGuid(processEquipmentAccordionGuid: string) {
+    this.processEquipmentAccordionGuid = processEquipmentAccordionGuid;
+    this.localStorageService.store('processEquipmentAccordionGuid', this.processEquipmentAccordionGuid);
+  }
+
+  setAssessmentAccordionGuid(assessmentAccordionGuid: string) {
+    this.assessmentAccordionGuid = assessmentAccordionGuid;
+    this.localStorageService.store('assessmentAccordionGuid', this.assessmentAccordionGuid);
+  }
 }

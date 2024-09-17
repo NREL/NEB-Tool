@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { IconDefinition, faChevronDown, faChevronRight, faContactBook, faPlus, faScaleUnbalancedFlip, faSearchPlus, faTrash, faUser, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -23,7 +23,8 @@ import * as _ from 'lodash';
 export class NebSetupFormComponent {
   @Input({ required: true })
   nebGuid: string;
-
+  @Output('emitInitialized')
+  emitInitialized = new EventEmitter<boolean>();
 
   nonEnergyBenefit: IdbNonEnergyBenefit;
 
@@ -79,6 +80,12 @@ export class NebSetupFormComponent {
     this.kpmImpactsSub.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    //emit after intialized. 
+    //When adding new nebs this will trigger the form to open
+    this.emitInitialized.emit(true);
+  }
+
   async saveChanges() {
     await this.nonEnergyBenefitsIdbService.asyncUpdate(this.nonEnergyBenefit);
   }
@@ -100,7 +107,7 @@ export class NebSetupFormComponent {
     this.saveChanges();
   }
 
-  setMetricGuids(){
+  setMetricGuids() {
     // only want to update neb list if changes made
     // otherwise forms get re-init when the list updates
     if (this.nonEnergyBenefit && this.keyPerformanceMetricImpacts) {

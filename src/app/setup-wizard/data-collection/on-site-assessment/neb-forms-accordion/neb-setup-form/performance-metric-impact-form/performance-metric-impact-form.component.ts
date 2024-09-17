@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faBullseye, faClose, faEdit, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faBullseye, faClose, faEdit, faLock, faPlus, faScaleUnbalancedFlip, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-performance-indicators-idb.service';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
@@ -28,6 +28,7 @@ export class PerformanceMetricImpactFormComponent {
   faTrash: IconDefinition = faTrash;
   faEdit: IconDefinition = faEdit;
   faBullseye: IconDefinition = faBullseye;
+  faLock: IconDefinition = faLock;
 
   keyPerformanceMetric: KeyPerformanceMetric;
   overrideBaseline: boolean = false;
@@ -39,6 +40,7 @@ export class PerformanceMetricImpactFormComponent {
   keyPerformanceMetricImpactsSub: Subscription;
 
   isFormChange: boolean = false;
+  showDropdownMenu: boolean = false;
   constructor(private keyPerformanceIndicatorIdbService: KeyPerformanceIndicatorsIdbService,
     private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -87,6 +89,7 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   goToMetric() {
+    this.showDropdownMenu = false;
     let onSiteVisit: IdbOnSiteVisit = this.onSiteVisitIdbService.selectedVisit.getValue();
     this.router.navigateByUrl('setup-wizard/pre-visit/' + onSiteVisit.guid + '/company-kpi-detail/' + this.keyPerformanceMetricImpact.kpiGuid)
   }
@@ -112,6 +115,7 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   openDeleteModal() {
+    this.showDropdownMenu = false;
     this.displayDeleteModal = true;
   }
 
@@ -124,7 +128,12 @@ export class PerformanceMetricImpactFormComponent {
     await this.keyPerformanceMetricImpactIdbService.setKeyPerformanceMetricImpacts();
   }
 
-  setOverrideBaseline() {
-    this.overrideBaseline = true;
+  setOverrideBaseline(overrideBaseline: boolean) {
+    this.showDropdownMenu = false;
+    this.overrideBaseline = overrideBaseline;
+  }
+
+  toggleShowDropdownMenu(){
+    this.showDropdownMenu = !this.showDropdownMenu;
   }
 }

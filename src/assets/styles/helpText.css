@@ -1,0 +1,14 @@
+.help-text{
+    padding: .25rem;
+    width: 100%;
+    flex-grow: inherit;
+}
+
+.help-text p, .help-text ol {
+    font-weight: 300;
+    font-size: .875rem;
+}
+
+.help-text .panel-label h5{
+    font-weight: 300;
+}

@@ -17,23 +17,22 @@
                 <ng-template [ngIf]="processEquipmentGuids.length != 0" [ngIfElse]="noProcessEquipmentBlock">
                     <div class="accordion" id="equipmentAccordion">
                         <div class="accordion-item"
-                            *ngFor="let processEquipmentGuid of processEquipmentGuids; let equipmentIndex = index;">
+                            *ngFor="let processEquipmentGuid of processEquipmentGuids; let last = last;">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     [attr.data-bs-target]="'#'+processEquipmentGuid" aria-expanded="true"
                                     [attr.aria-controls]="processEquipmentGuid"
-                                    [ngClass]="{'collapsed': accordionIndex != equipmentIndex}"
-                                    (click)="setAccordionIndex(equipmentIndex)">
+                                    [ngClass]="{'collapsed': accordionGuid != processEquipmentGuid}"
+                                    (click)="toggleBS(processEquipmentGuid)">
                                     <fa-icon class="pe-1" [icon]="faSplotch"></fa-icon>
                                     {{processEquipmentGuid | processEquipmentDisplay: processEquipments}}
                                 </button>
                             </h2>
-                            <div [id]="processEquipmentGuid" class="accordion-collapse collapse"
-                                data-bs-parent="#equipmentAccordion"
-                                [ngClass]="{'show': accordionIndex == equipmentIndex}">
+                            <div [id]="'#'+processEquipmentGuid" class="accordion-collapse collapse"
+                                data-bs-parent="#equipmentAccordion">
                                 <div class="accordion-body">
-                                    <app-process-equipment-form
-                                        [processEquipmentGuid]="processEquipmentGuid"></app-process-equipment-form>
+                                    <app-process-equipment-form [processEquipmentGuid]="processEquipmentGuid"
+                                        (emitInitialized)="childFormInitialized(processEquipmentGuid, last)"></app-process-equipment-form>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +40,8 @@
                 </ng-template>
                 <ng-template #noProcessEquipmentBlock>
                     <div class="alert alert-info text-center">
-                        Empty end use inventory. Click "Add Equipment" to end use inventory.
+                        Empty end use inventory. Click "<fa-icon [icon]="faPlus"></fa-icon> Add End Use" to add end uses
+                        to the inventory.
                     </div>
                 </ng-template>
             </div>

@@ -4,7 +4,7 @@
             <div class="form-paper shadow">
                 <h5>
                     <fa-icon [icon]="faList"></fa-icon>
-                     Industrial System Inventory
+                    Industrial System Inventory
                 </h5>
                 <hr>
                 <div class="d-flex w-100 justify-content-end pb-2">
@@ -18,24 +18,23 @@
                 <ng-template [ngIf]="energyEquipmentGuids.length != 0" [ngIfElse]="noEnergyEquipmentBlock">
                     <div class="accordion" id="equipmentAccordion">
                         <div class="accordion-item"
-                            *ngFor="let energyEquipmentGuid of energyEquipmentGuids; let equipmentIndex = index;">
+                            *ngFor="let energyEquipmentGuid of energyEquipmentGuids; let last = last;">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     [attr.data-bs-target]="'#'+energyEquipmentGuid" aria-expanded="true"
                                     [attr.aria-controls]="energyEquipmentGuid"
-                                    [ngClass]="{'collapsed': accordionIndex != equipmentIndex}"
-                                    (click)="setAccordionIndex(equipmentIndex)">
+                                    [ngClass]="{'collapsed': accordionGuid != energyEquipmentGuid}"
+                                    (click)="toggleBS(energyEquipmentGuid)">
                                     <fa-icon [icon]="energyEquipmentGuid | equipmentTypeIcon: energyEquipments"
                                         class="pe-1"></fa-icon>
                                     {{energyEquipmentGuid | energyEquipmentDisplay: energyEquipments}}
                                 </button>
                             </h2>
-                            <div [id]="energyEquipmentGuid" class="accordion-collapse collapse"
-                                data-bs-parent="#equipmentAccordion"
-                                [ngClass]="{'show': accordionIndex == equipmentIndex}">
+                            <div [id]="'#'+energyEquipmentGuid" class="accordion-collapse collapse"
+                                data-bs-parent="#equipmentAccordion">
                                 <div class="accordion-body">
-                                    <app-energy-equipment-form
-                                        [energyEquipmentGuid]="energyEquipmentGuid"></app-energy-equipment-form>
+                                    <app-energy-equipment-form [energyEquipmentGuid]="energyEquipmentGuid"
+                                        (emitInitialized)="childFormInitialized(energyEquipmentGuid, last)"></app-energy-equipment-form>
                                 </div>
                             </div>
                         </div>

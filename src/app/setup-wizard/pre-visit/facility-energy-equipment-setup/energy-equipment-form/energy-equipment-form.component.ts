@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faContactBook, faTrash, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
@@ -19,6 +19,8 @@ import { ConvertValue } from 'src/app/shared/conversions/convertValue';
 export class EnergyEquipmentFormComponent {
   @Input({ required: true })
   energyEquipmentGuid: string;
+  @Output('emitInitialized')
+  emitInitialized = new EventEmitter<boolean>();
 
   faTrash: IconDefinition = faTrash;
   faUser: IconDefinition = faUser;
@@ -112,6 +114,12 @@ export class EnergyEquipmentFormComponent {
       this.energyEquipment.annualEnergyUse = 0;
     }
     await this.saveChanges();
+  }
+  
+  ngAfterViewInit() {
+    //emit after intialized. 
+    //When adding new energy equipment this will trigger the form to open
+    this.emitInitialized.emit(true);
   }
 
   async saveChanges() {

@@ -12,8 +12,8 @@
                             <div class="row">
                                 <label class="col-sm-6 col-form-label bold" for="visitDate">Assessment Date</label>
                                 <div class="col-sm-6">
-                                    <input name="visitDate" id="visitDate" type="date" class="form-control" [(ngModel)]="onSiteVisit.visitDate"
-                                        name="visitDate" (change)="setVisitDate()">
+                                    <input name="visitDate" id="visitDate" type="date" class="form-control"
+                                        [(ngModel)]="onSiteVisit.visitDate" name="visitDate" (change)="setVisitDate()">
                                 </div>
                             </div>
                         </div>
@@ -33,81 +33,95 @@
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         [attr.data-bs-target]="'#'+assessment.guid" aria-expanded="true"
                                         [attr.aria-controls]="assessment.guid"
-                                        [ngClass]="{'collapsed': accordionIndex != assessmentIndex}"
-                                        (click)="setAccordionIndex(assessmentIndex)">
+                                        [ngClass]="{'collapsed': accordionGuid != assessment.guid}"
+                                        (click)="toggleBS(assessment.guid)">
                                         <fa-icon [icon]="faScrewdriverWrench" class="me-1"></fa-icon>
                                         {{assessment.name}}
                                     </button>
                                 </h2>
-                                <div [id]="assessment.guid" class="accordion-collapse collapse"
-                                    data-bs-parent="#assessmentAccordion"
-                                    [ngClass]="{'show': accordionIndex == assessmentIndex}">
+                                <div [id]="'#'+assessment.guid" class="accordion-collapse collapse"
+                                    data-bs-parent="#assessmentAccordion">
                                     <div class="accordion-body">
                                         <div class="row">
                                             <div class="col-12">
                                                 <form>
                                                     <div class="row">
                                                         <label class="col-sm-5 col-form-label"
-                                                            for="assessmentName">Assessment Name</label>
+                                                            for="{{'assessmentName_'+assessment.guid}}">Assessment
+                                                            Name</label>
                                                         <div class="col-sm-7">
-                                                            <input name="assessmentName" type="text"
-                                                                class="form-control" [(ngModel)]="assessment.name"
+                                                            <input name="{{'assessmentName_'+assessment.guid}}"
+                                                                type="text" class="form-control"
+                                                                [(ngModel)]="assessment.name"
                                                                 (input)="saveChanges(assessment)" minlength="1"
-                                                                maxlength="42" id="assessmentName">
+                                                                maxlength="42"
+                                                                id="{{'assessmentName_'+assessment.guid}}">
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label" for="assessmentType">Assessment Type</label>
+                                                        <label class="col-sm-5 col-form-label"
+                                                            for="{{'assessmentType_'+assessment.guid}}">Assessment
+                                                            Type</label>
                                                         <div class="col-sm-7">
 
-                                                                <select name="assessmentType" class="form-select"
-                                                                    id="assessmentType"
-                                                                    [(ngModel)]="assessment.assessmentType"
-                                                                    (change)="setUtilityTypes(assessment)">
-                                                                    <option
-                                                                        *ngFor="let assessmentType of assessmentTypes"
-                                                                        [ngValue]="assessmentType">
-                                                                        {{assessmentType}}
-                                                                    </option>
-                                                                </select>
+                                                            <select name="{{'assessmentType_'+assessment.guid}}"
+                                                                class="form-select"
+                                                                id="{{'assessmentType_'+assessment.guid}}"
+                                                                [(ngModel)]="assessment.assessmentType"
+                                                                (change)="setUtilityTypes(assessment)">
+                                                                <option *ngFor="let assessmentType of assessmentTypes"
+                                                                    [ngValue]="assessmentType">
+                                                                    {{assessmentType}}
+                                                                </option>
+                                                            </select>
 
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label" for="utilityType">Utility Type</label>
+                                                        <label class="col-sm-5 col-form-label"
+                                                            for="{{'utilityType_'+assessment.guid}}">Utility
+                                                            Type</label>
                                                         <div class="col-sm-7">
 
-                                                                <select name="utilityType" class="form-select"
-                                                                    id="utilityType"
-                                                                    [(ngModel)]="assessment.utilityType"
-                                                                    (change)="setUnitOptionValue(assessment)">
-                                                                    <option
-                                                                        *ngFor="let utilityType of assessment.utilityTypes"
-                                                                        [ngValue]="utilityType">
-                                                                        {{utilityType}}
-                                                                    </option>
-                                                                </select>
+                                                            <select name="{{'utilityType_'+assessment.guid}}"
+                                                                class="form-select"
+                                                                id="{{'utilityType_'+assessment.guid}}"
+                                                                [(ngModel)]="assessment.utilityType"
+                                                                (change)="setUnitOptionValue(assessment)">
+                                                                <option
+                                                                    *ngFor="let utilityType of assessment.utilityTypes"
+                                                                    [ngValue]="utilityType">
+                                                                    {{utilityType}}
+                                                                </option>
+                                                            </select>
 
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label" for="energyUse">Annual
+                                                        <label class="col-sm-5 col-form-label"
+                                                            for="{{'energyUse_'+assessment.guid}}">Annual
                                                             Energy
                                                             Use</label>
                                                         <div class="col-sm-7">
                                                             <div class="input-group">
-                                                                <input name="energy" type="number" class="form-control"
+                                                                <input name="{{'energyUse_'+assessment.guid}}"
+                                                                    type="number" class="form-control"
                                                                     [(ngModel)]="assessment.energyUse"
-                                                                    (input)="saveChanges(assessment)" id="energyUse">
-                                                                <select name="energyUnit" class="input-group-text" id="energyUnit"
+                                                                    (input)="saveChanges(assessment)"
+                                                                    id="{{'energyUse_'+assessment.guid}}">
+                                                                <select name="{{'energyUnit_'+assessment.guid}}"
+                                                                    class="input-group-text"
+                                                                    id="{{'energyUnit_'+assessment.guid}}"
                                                                     [(ngModel)]="assessment.unitOptionValue"
                                                                     (change)="saveChanges(assessment)">
-                                                                    <option *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions: 'Energy')"
+                                                                    <option
+                                                                        *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions: 'Energy')"
                                                                         [ngValue]="unitOption.value">
-                                                                        <span [innerHTML]="unitOption.value | unitsDisplay"></span>
+                                                                        <span
+                                                                            [innerHTML]="unitOption.value | unitsDisplay"></span>
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -115,20 +129,23 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label" for="cost">Annual
+                                                        <label class="col-sm-5 col-form-label"
+                                                            for="{{'cost_'+assessment.guid}}">Annual
                                                             Costs</label>
                                                         <div class="col-sm-7">
                                                             <div class="input-group">
-                                                                <input name="cost" type="number" class="form-control"
-                                                                    [(ngModel)]="assessment.cost"
-                                                                    (input)="saveChanges(assessment)" id="cost">
+                                                                <input name="{{'cost_'+assessment.guid}}" type="number"
+                                                                    class="form-control" [(ngModel)]="assessment.cost"
+                                                                    (input)="saveChanges(assessment)"
+                                                                    id="{{'cost_'+assessment.guid}}">
                                                                 <span class="input-group-text">&dollar;</span>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label" for="visitDate">Assessment
+                                                        <label class="col-sm-5 col-form-label"
+                                                            for="visitDate">Assessment
                                                             Date</label>
                                                         <div id="visitDate" class="col-sm-7">
                                                             {{assessment.visitDate | date}}

@@ -4,14 +4,19 @@
             <div class="d-flex">
                 <div class="dropdown">
                     <button class="btn btn-outline-metric btn-sm dropdown-toggle" type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                        data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleShowDropdownMenu()">
                         <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
                         <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" [ngClass]="{'show': showDropdownMenu}">
                         <li *ngIf="!overrideBaseline && metricHasOtherImpacts">
-                            <a class="dropdown-item" (click)="setOverrideBaseline()">
+                            <a class="dropdown-item" (click)="setOverrideBaseline(true)">
                                 <fa-icon [icon]="faEdit"></fa-icon> Edit Baseline Values
+                            </a>
+                        </li>
+                        <li *ngIf="overrideBaseline">
+                            <a class="dropdown-item" (click)="setOverrideBaseline(false)">
+                                <fa-icon [icon]="faLock"></fa-icon> Lock Baseline Values
                             </a>
                         </li>
                         <li>
