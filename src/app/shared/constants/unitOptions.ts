@@ -8,13 +8,22 @@ export const EnergyUnitOptions: Array<UnitOption> = [
     {
         display: 'Kilowatt-hour (kWh)',
         value: 'kWh',
-        unitsOfMeasure: 'Imperial'
+        unitsOfMeasure: 'Metric'
+    },
+    {   display: 'Watt-hour (Wh)',
+        value: 'Wh',
+        unitsOfMeasure: 'Metric'
     },
     {
         display: 'Megawatt-hour (MWh)',
         value: 'MWh',
         unitsOfMeasure: 'Imperial'
     },
+    // {
+    //     display: 'Horsepower-hour (HP-hr)',
+    //     value: 'HP-hr',
+    //     unitsOfMeasure: 'Imperial'
+    // },
     {
         display: 'Kilojoules (kJ)',
         value: 'kJ',
@@ -51,6 +60,50 @@ export const EnergyUnitOptions: Array<UnitOption> = [
         unitsOfMeasure: 'Imperial'
     }
 ];
+
+
+export const PowerUnitOptions: Array<UnitOption> = [
+    {
+        display: 'Kilowatt (kW)',
+        value: 'kW',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Watt (W)',
+        value: 'W',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Megawatt (MW)',
+        value: 'MW',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Horsepower (hp)',
+        value: 'hp',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Kilojoules per hour (kJ/hr)',
+        value: 'kJhr',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Gigajoules per hour (GJ/hr)',
+        value: 'GJhr',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Megajoules per hour (MJ/hr)',
+        value: 'MJhr',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Million British Thermal Units per hour (MMBtu/hr)',
+        value: 'MMBtuhr',
+        unitsOfMeasure: 'Metric'
+    }
+]
 
 
 export const VolumeLiquidOptions: Array<UnitOption> = [
@@ -183,6 +236,64 @@ export const ChilledWaterUnitOptions: Array<UnitOption> = [
         display: 'Gallons-Fahrenheit (gal-&#x2109;)',
         value: 'galF',
         unitsOfMeasure: 'Imperial'
+    },
+
+]
+
+// export const HeatingValueUnitOptions: Array<UnitOption> = [
+//     {
+//         display: 'BTU per Cubic Foot (BTU/ft&#x00B3;)',
+//         value: 'btuft3',
+//         unitsOfMeasure: 'Imperial'
+//     },
+//     {
+//         display: 'BTU per Standard Cubic Foot (BTU/SCF)',
+//         value: 'btuSCF',
+//         unitsOfMeasure: 'Imperial'
+//     },
+//     {
+//         display: 'BTU per Gallon (BTU/gal)',
+//         value: 'btugal',
+//         unitsOfMeasure: 'Imperial'
+//     },
+//     {
+//         display: 'BTU per Cubic Meter (BTU/m&#x00B3;)',
+//         value: 'btum3',
+//         unitsOfMeasure: 'Metric'
+//     },
+//     {
+//         display: 'BTU per Liter (BTU/L)',
+//         value: 'btuL',
+//         unitsOfMeasure: 'Metric'
+//     },
+//     {
+//         display: 'KJ per Cubic Meter (KJ/m&#x00B3;)',
+//         value: 'KJm3',
+//         unitsOfMeasure: 'Metric'
+//     },
+//     {
+//         display: 'KJ per Liter (KJ/L)',
+//         value: 'KJL',
+//         unitsOfMeasure: 'Metric'
+//     },
+//     {
+//         display: 'KJ per Gallon (KJ/gal)',
+//         value: 'KJgal',
+//         unitsOfMeasure: 'Imperial'
+//     }
+
+// ]
+
+export const ProcessCoolingUnitOptions: Array<UnitOption> = [
+    {
+        display: 'Tons of Refrigeration (TR)',
+        value: 'TR',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Kilowatt (kW)',
+        value: 'kW',
+        unitsOfMeasure: 'Metric'
     },
 
 ]
