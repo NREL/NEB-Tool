@@ -177,6 +177,82 @@ export const VolumeGasOptions: Array<UnitOption> = [
     },
 ]
 
+export const SteamUnitOptions: Array<UnitOption> = [
+    {
+        display: 'Pounds (lb)',
+        value: 'lb',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Kilograms (kg)',
+        value: 'kg',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Tons',
+        value: 'ton',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Metric Tonnes (tonnes)',
+        value: 'tonne',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Thousand pounds (klb)',
+        value: 'klb',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Kilowatt-hour (kWh)',
+        value: 'kWh',
+        unitsOfMeasure: 'Metric'
+    },
+    {   display: 'Watt-hour (Wh)',
+        value: 'Wh',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Megawatt-hour (MWh)',
+        value: 'MWh',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Kilojoules (kJ)',
+        value: 'kJ',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Gigajoules (GJ)',
+        value: 'GJ',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Megajoules (MJ)',
+        value: 'MJ',
+        unitsOfMeasure: 'Imperial'
+    },
+    {
+        display: 'Therms',
+        value: 'Therms',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Dekatherms (DTherms)',
+        value: 'Dtherms',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Million British Thermal Units (MMBtu)',
+        value: 'MMBtu',
+        unitsOfMeasure: 'Metric'
+    },
+    {
+        display: 'Kilocalorie (kcal)',
+        value: 'kcal',
+        unitsOfMeasure: 'Imperial'
+    }
+]
 
 export const SizeUnitOptions: Array<UnitOption> = [
     {
