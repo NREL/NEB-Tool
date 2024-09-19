@@ -30,6 +30,7 @@ import { KeyPerformanceMetricImpactsListPipe } from './key-performance-metric-im
 import { ContactNameDisplayPipe } from './contact-name-display.pipe';
 import { LinkedUnitOptionsPipe } from './linked-unit-options.pipe';
 import { LinkedUtilityOptionsPipe } from './linked-utility-options.pipe';
+import { NumberDisplayPipe } from './number-display.pipe';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { LinkedUtilityOptionsPipe } from './linked-utility-options.pipe';
     EnergyEquipmentListPipe,
     KeyPerformanceMetricImpactsListPipe,
     LinkedUnitOptionsPipe,
-    LinkedUtilityOptionsPipe
+    LinkedUtilityOptionsPipe,
+    NumberDisplayPipe
   ],
   imports: [
     CommonModule
@@ -97,7 +99,8 @@ import { LinkedUtilityOptionsPipe } from './linked-utility-options.pipe';
     EnergyEquipmentListPipe,
     KeyPerformanceMetricImpactsListPipe,
     LinkedUnitOptionsPipe,
-    LinkedUtilityOptionsPipe
+    LinkedUtilityOptionsPipe,
+    NumberDisplayPipe
   ]
 })
 export class HelperPipesModule { }
