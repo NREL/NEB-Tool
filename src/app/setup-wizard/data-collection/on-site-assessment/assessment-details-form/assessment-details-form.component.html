@@ -12,7 +12,7 @@
         <div class="col-sm-7">
                 <select name="assessmentType" class="form-select" id="assessmentType"
                     [(ngModel)]="assessment.assessmentType"
-                    (change)="setUtilityTypes()">
+                    (change)="assessmentTypeChange()">
                     <option
                         *ngFor="let assessmentType of assessmentTypes"
                         [ngValue]="assessmentType">
@@ -29,7 +29,7 @@
                 <select name="utilityType" class="form-select"
                     id="utilityType"
                     [(ngModel)]="assessment.utilityType"
-                    (change)="setUnitOptionValue()">
+                    (change)="utilityTypeChange()">
                     <option
                         *ngFor="let utilityType of assessment.utilityTypes"
                         [ngValue]="utilityType">
@@ -47,12 +47,13 @@
             <div class="input-group">
                 <input name="energy" type="number" class="form-control" [(ngModel)]="assessment.energyUse"
                     (input)="saveChanges()" id="energyUse">
-                    <select name="energyUnit" class="input-group-text" id="energyUnit"
+                    <select name="energyUnit" class="input-group-text" id="energyUnit" name="energyUnit"
                         [(ngModel)]="assessment.unitOptionValue"
                         (change)="saveChanges()">
-                    <option *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions: 'Power')" [ngValue]="assessment.unitOptionValue">
-                        <span [innerHTML]="unitOption.value | unitsDisplay"></span>
-                    </option>
+                        <option *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions: 'Energy')"
+                            [ngValue]="unitOption.value">
+                            <span [innerHTML]="unitOption.value | unitsDisplay"></span>
+                        </option>
                 </select>
             </div>
         </div>
@@ -71,7 +72,7 @@
     </div>
 
     <div class="row">
-        <label class="col-sm-5 col-form-label" for="visitDate">Assessment
+        <label class="col-sm-5 col-form-label">Assessment
             Date</label>
         <div class="col-sm-7">
             {{assessment.visitDate | date}}
