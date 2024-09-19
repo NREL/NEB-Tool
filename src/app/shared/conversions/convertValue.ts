@@ -8,6 +8,7 @@ import { energy } from "./definitions/energy";
 import { length } from './definitions/length';
 import * as _ from 'lodash';
 import { area } from "./definitions/area";
+import { rate } from "./definitions/rate";
 
 export class ConvertValue {
     _measures = {
@@ -18,52 +19,64 @@ export class ConvertValue {
         pressure: pressure,
         power: power,
         energy: energy,
-        area: area
+        area: area,
+        rate: rate
     };
 
-    origin: any;
-    destination: any;
-    convertedValue: number;
-    hasError: boolean;
-    constructor(value: number, from: string, to: string) {
-        if (value != undefined) {
-            this.origin = this.getUnit(from);
-            this.destination = this.getUnit(to);
-
-            if (!this.origin || !this.destination) {
-                this.hasError = true;
-                this.convertedValue = value;
-            } else {
-                this.hasError = false;
-                this.convertedValue = this.convertValue(value);
-            }
-        }
+    constructor() {
     }
 
-    convertValue(value: number) {
+    convertValue(value: number, from?: string, to?: string): 
+        { convertedValue: number, hasError: boolean } {
+
+        if (value == undefined) {
+            return { convertedValue: value, hasError: true };
+        }
+        if (from == undefined) {
+            // If no from unit is provided, return the value as is
+            return { convertedValue: value, hasError: true };
+        }
+
+        if (to == undefined) {
+            // If no to unit is provided, default to convert to metric anchor
+            let tempToUnit = this.getUnit(from);
+            if (tempToUnit == undefined) {
+                console.log(from);
+            }
+            if (tempToUnit != undefined) {
+                to = this._measures[tempToUnit.measure]._anchors.metric.unit;
+            }
+        }
+
         // Don't change the value if origin and destination are the same
-        if (this.origin.abbr === this.destination.abbr) {
-            return value;
+        if (from === to) {
+            return { convertedValue: value, hasError: false };
+        }
+
+        let origin = this.getUnit(from);
+        let destination = this.getUnit(to);
+
+        if (origin == undefined || destination == undefined) {
+            return { convertedValue: value, hasError: true };
         }
 
         // You can't go from liquid to mass, for example
-        if (this.destination.measure !== this.origin.measure) {
-            this.hasError = true;
-            return value;
+        if (destination.measure !== origin.measure) {
+            return { convertedValue: value, hasError: true };
         }
 
         /**
          * Convert from the source value to its anchor inside the system
          */
-        let result: number = value * this.origin.unit.to_anchor;
+        let result: number = value * origin.to_anchor;
 
         /**
          * For some changes it's a simple shift (C to K)
          * So we'll add it when converting into the unit (later)
          * and subtract it when converting from the unit
          */
-        if (this.origin.unit.anchor_shift) {
-            result -= this.origin.unit.anchor_shift;
+        if (origin.anchor_shift) {
+            result -= origin.anchor_shift;
         }
 
         /**
@@ -71,44 +84,54 @@ export class ConvertValue {
          * aren't ratio based or require more than a simple shift. We can provide a custom
          * transform here to provide the direct result
          */
-        if (this.origin.system !== this.destination.system) {
-            let transform = this._measures[this.origin.measure]._anchors[this.origin.system].transform;
+        if (origin.system !== destination.system) {
+            let transform = this._measures[origin.measure]._anchors[origin.system].transform;
             if (typeof transform === 'function') {
                 result = transform(result);
             }
             else {
-                result *= this._measures[this.origin.measure]._anchors[this.origin.system].ratio;
+                result *= this._measures[origin.measure]._anchors[origin.system].ratio;
             }
         }
 
         /**
          * This shift has to be done after the system conversion business
          */
-        if (this.destination.unit.anchor_shift) {
-            result += this.destination.unit.anchor_shift;
+        if (destination.anchor_shift) {
+            result += destination.anchor_shift;
         }
 
         /**
          * Convert to another unit inside the destination system
          */
-        this.hasError = false;
-        return result / this.destination.unit.to_anchor;
+        return { convertedValue: result / destination.to_anchor, hasError: false };
     }
 
 
-    getUnit(abbr: string): { name: { display: string, plural: string, singular: string }, to_anchor: number } {
-        var found: { name: { display: string, plural: string, singular: string }, to_anchor: number };
-        for (const property in this._measures) {
+    getUnit(abbr: string):
+        {   name: { display: string, plural: string, singular: string },
+            to_anchor: number,
+            measure?: string,
+            system?: string,
+            anchor_shift?: number } {
+        let found: { name: { display: string, plural: string, singular: string },
+                    to_anchor: number,
+                    measure?: string,
+                    system?: string,
+                    anchor_shift?: number };
+        for (const property in this._measures) { // length, mass, volume, etc.
             if (!found) {
                 let measure = this._measures[property];
-                for (const measureProp in measure as any) {
+                for (const measureProp in measure as any) { // metric, imperial, etc.
                     if (!found) {
                         let system = measure[measureProp];
                         if (system != '_anchors') {
-                            for (const systemProp in system) {
+                            for (const systemProp in system) { // C, F, K, etc.
                                 if (!found) {
                                     if (abbr == systemProp) {
                                         found = system[systemProp];
+                                        found.measure = property; // add the measure property
+                                        found.system = measureProp; // add the system property
                                         break;
                                     }
                                 }

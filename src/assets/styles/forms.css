@@ -17,6 +17,10 @@
     border-radius: 0;
 }
 
+.form-control-plaintext{
+    flex: 1;
+}
+
 .col-form-label{
     line-height: 1;
 }

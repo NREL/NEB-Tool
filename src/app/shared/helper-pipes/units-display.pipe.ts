@@ -8,13 +8,17 @@ export class UnitsDisplayPipe implements PipeTransform {
 
   transform(value: string, per?: string): any {
     if (value && value !== 'F' && value !== 'C' && value !== 'K') {
-      let foundUnit = new ConvertValue(undefined, undefined, undefined).getUnit(value);
+      let foundUnit = new ConvertValue().getUnit(value);
       if (foundUnit) {
         let dispUnit: string = foundUnit.name.display;
         dispUnit = dispUnit.replace('(', '');
         dispUnit = dispUnit.replace(')', '');
-        if (per && value != 'kWh') {
-          dispUnit = dispUnit + per
+        if (per) {
+          if (value === 'kWh' && per === 'hr') {
+            dispUnit = 'kW';
+          } else {
+            dispUnit = dispUnit + '/' + per;
+          }
         }
         return dispUnit;
       } else {

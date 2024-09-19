@@ -118,7 +118,7 @@
                                                                     [(ngModel)]="assessment.unitOptionValue"
                                                                     (change)="saveChanges(assessment)">
                                                                     <option
-                                                                        *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions)"
+                                                                        *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions: 'Energy')"
                                                                         [ngValue]="unitOption.value">
                                                                         <span
                                                                             [innerHTML]="unitOption.value | unitsDisplay"></span>
