@@ -6,6 +6,7 @@ export interface IdbCompany extends IdbEntry {
     userId: string,
     generalInformation: GeneralInformation,
     displayFacilities: boolean,
+    companyEnergyUnit: string,
 }
 
 export function getNewIdbCompany(userId: string): IdbCompany {
@@ -16,6 +17,7 @@ export function getNewIdbCompany(userId: string): IdbCompany {
         userId: userId,
         generalInformation: generalInformation,
         displayFacilities: true,
+        companyEnergyUnit: 'kWh',
     }
 }
 
