@@ -60,6 +60,7 @@ import { EnergyOpportunityNebsTableComponent } from './data-collection/on-site-a
 import { EnergyOpportunityNebsListPipe } from './data-collection/on-site-assessment/assessment-nebs-form/energy-opportunity-nebs-table/energy-opportunity-nebs-list.pipe';
 import { SetupWizardHelpPanelModule } from './setup-wizard-help-panel/setup-wizard-help-panel.module';
 import { LabelWithTooltipModule } from '../shared/label-with-tooltip/label-with-tooltip.module';
+import { KpmDetailsFormModule } from '../shared/kpm-details-form/kpm-details-form.module';
 
 @NgModule({
   declarations: [
@@ -127,7 +128,8 @@ import { LabelWithTooltipModule } from '../shared/label-with-tooltip/label-with-
     ReactiveFormsModule,
     ReportsModule,
     SetupWizardHelpPanelModule,
-    LabelWithTooltipModule
+    LabelWithTooltipModule,
+    KpmDetailsFormModule
   ]
 })
 export class SetupWizardModule { }

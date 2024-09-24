@@ -78,7 +78,11 @@ export class KeyPerformanceMetricImpactsIdbService {
     let companyMetricImpacts: Array<IdbKeyPerformanceMetricImpact> = this.getByKpiGuid(keyPerformanceIndicator.guid);
     for (let i = 0; i < companyMetricImpacts.length; i++) {
       let metricImpact: IdbKeyPerformanceMetricImpact = companyMetricImpacts[i];
-      metricImpact.costAdjustment = (metricImpact.modificationValue * keyPerformanceMetric.costPerValue);
+      if (keyPerformanceMetric.calculationMethod == 'costPerUnit') {
+        metricImpact.costAdjustment = (metricImpact.modificationValue * keyPerformanceMetric.costPerValue);
+      } else if (keyPerformanceMetric.calculationMethod == 'percentTotal') {
+        metricImpact.costAdjustment = keyPerformanceMetric.baselineCost * (metricImpact.modificationValue / 100);
+      }
       await firstValueFrom(this.updateWithObservable(metricImpact));
     }
     await this.setKeyPerformanceMetricImpacts();

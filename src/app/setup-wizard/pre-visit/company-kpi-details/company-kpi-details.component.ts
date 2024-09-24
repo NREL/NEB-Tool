@@ -112,7 +112,6 @@ export class CompanyKpiDetailsComponent {
   }
 
   async calculateCost(keyPerformanceMetric: KeyPerformanceMetric) {
-    keyPerformanceMetric.baselineCost = (keyPerformanceMetric.costPerValue * keyPerformanceMetric.baselineValue);
     await this.keyPerformanceMetricImpactIdbService.updatePerformanceMetricBaseline(this.keyPerformanceIndicator, keyPerformanceMetric);
     await this.saveChanges();
   }
@@ -172,7 +171,7 @@ export class CompanyKpiDetailsComponent {
 
   addPerformanceMetric() {
     let newCustomKPM: KeyPerformanceMetric = getCustomKPM(this.keyPerformanceIndicator.optionValue, this.keyPerformanceIndicator.guid);
-    this.keyPerformanceIndicator.performanceMetrics.push(newCustomKPM);
+    this.keyPerformanceIndicator.performanceMetrics.unshift(newCustomKPM);
     this.saveChanges();
   }
 

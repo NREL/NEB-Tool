@@ -84,7 +84,11 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   calculateCost() {
-    this.keyPerformanceMetricImpact.costAdjustment = (this.keyPerformanceMetricImpact.modificationValue * this.keyPerformanceMetric.costPerValue);
+    if (this.keyPerformanceMetric.calculationMethod == 'costPerUnit') {
+      this.keyPerformanceMetricImpact.costAdjustment = (this.keyPerformanceMetricImpact.modificationValue * this.keyPerformanceMetric.costPerValue);
+    } else if (this.keyPerformanceMetric.calculationMethod == 'percentTotal') {
+      this.keyPerformanceMetricImpact.costAdjustment = this.keyPerformanceMetric.baselineCost * (this.keyPerformanceMetricImpact.modificationValue / 100);
+    }
     this.saveChanges();
   }
 
@@ -139,7 +143,7 @@ export class PerformanceMetricImpactFormComponent {
     this.showDropdownMenu = !this.showDropdownMenu;
   }
 
-  toggleShowDropdownMenu(){
+  toggleShowDropdownMenu() {
     this.showDropdownMenu = !this.showDropdownMenu;
   }
 }
