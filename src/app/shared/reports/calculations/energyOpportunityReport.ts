@@ -25,9 +25,13 @@ export function getEnergyOpportunityReport(energyOpportunity: IdbEnergyOpportuni
     });
     let totalCostSavings: number = totalEnergyCostSavings + totalNebSavings;
     let paybackWithNebs: number = (energyOpportunity.implementationCost / totalCostSavings);
+    if(paybackWithNebs == Infinity){
+        paybackWithNebs = 0;
+    }
     let paybackWithoutNebs: number = (energyOpportunity.implementationCost / totalEnergyCostSavings);
-
-
+    if(paybackWithoutNebs == Infinity){
+        paybackWithoutNebs = 0;
+    }
 
     return {
         energyOpportunity: energyOpportunity,
