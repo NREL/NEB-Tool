@@ -66,22 +66,26 @@ export class AssessmentDetailsFormComponent {
     this.energyEquipmentSub.unsubscribe();
   }
 
-  async setUtilityTypes() {
-    let utilityTypes = AssessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
+  async assessmentTypeChange() {
+    let utilityTypes = AssessmentOptions.find(
+      _assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
     this.assessment.utilityTypes = utilityTypes; // track all utility types
-    if (!this.assessment.utilityTypes.includes(this.assessment.utilityType)) { // update utility type if the assessment type changes
-      this.assessment.utilityType = utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
-      await this.setUnitOptionValue();
+    // utility type is not the default if the assessment type changes
+    if (this.assessment.utilityType !== utilityTypes[0]) {
+      this.assessment.utilityType = utilityTypes?.[0]; // update to the first/default utility type
+      await this.utilityTypeChange();
     } else {
       await this.saveChanges();
     }
   }
 
-  async setUnitOptionValue() {
-    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.unitOptions || [];
-    if (unitOptions.map(unitOption => unitOption.value).indexOf(this.assessment.unitOptionValue) == -1) {
-      this.assessment.unitOptionValue = unitOptions?.[0].value;
+  async utilityTypeChange() {
+    let _energyDefaultUnit = UtilityOptions.find(
+      _utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.energyDefaultUnit;
+    if (this.assessment.unitOptionValue !== _energyDefaultUnit.value) {
+      this.assessment.unitOptionValue = _energyDefaultUnit.value;
     }
+    console.log(this.assessment.unitOptionValue);
     await this.saveChanges();
   }
 
@@ -91,7 +95,8 @@ export class AssessmentDetailsFormComponent {
   }
 
   openContactModal(viewContact: IdbContact) {
-    this.setupWizardService.displayContactModal.next({ context: 'assessment', viewContact: viewContact, contextGuid: this.assessment.guid });
+    this.setupWizardService.displayContactModal.next(
+      { context: 'assessment', viewContact: viewContact, contextGuid: this.assessment.guid });
 
   }
 }

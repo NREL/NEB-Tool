@@ -69,7 +69,7 @@
                                                                 class="form-select"
                                                                 id="{{'assessmentType_'+assessment.guid}}"
                                                                 [(ngModel)]="assessment.assessmentType"
-                                                                (change)="setUtilityTypes(assessment)">
+                                                                (change)="assessmentTypeChange(assessment)">
                                                                 <option *ngFor="let assessmentType of assessmentTypes"
                                                                     [ngValue]="assessmentType">
                                                                     {{assessmentType}}
@@ -89,7 +89,7 @@
                                                                 class="form-select"
                                                                 id="{{'utilityType_'+assessment.guid}}"
                                                                 [(ngModel)]="assessment.utilityType"
-                                                                (change)="setUnitOptionValue(assessment)">
+                                                                (change)="utilityTypeChange(assessment)">
                                                                 <option
                                                                     *ngFor="let utilityType of assessment.utilityTypes"
                                                                     [ngValue]="utilityType">
@@ -118,7 +118,7 @@
                                                                     [(ngModel)]="assessment.unitOptionValue"
                                                                     (change)="saveChanges(assessment)">
                                                                     <option
-                                                                        *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions)"
+                                                                        *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions: 'Energy')"
                                                                         [ngValue]="unitOption.value">
                                                                         <span
                                                                             [innerHTML]="unitOption.value | unitsDisplay"></span>

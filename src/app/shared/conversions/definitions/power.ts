@@ -84,7 +84,15 @@ export const power = {
       }
       , to_anchor: 1 / 2544.43
     },
-    MJh: {
+    MMBtuhr: {
+      name: {
+        singular: 'Million British thermal unit per hour',
+        plural: 'Million British thermal unit per hour',
+        display: '(MMBtu/hr)'
+      }
+      , to_anchor: 1000000 / 2544.43
+    },
+    MJhr: {
       name: {
         singular: 'Megajoule per hour',
         plural: 'Megajoules per hour',
@@ -92,7 +100,7 @@ export const power = {
       },
       to_anchor: .372506136
     },
-    kJh: {
+    kJhr: {
       name: {
         singular: 'Kilojoule per hour',
         plural: 'Kilojoules per hour',
@@ -100,13 +108,21 @@ export const power = {
       }
       , to_anchor: .000372506136
     },
-    GJh: {
+    GJhr: {
       name: {
         singular: 'Gigajoule per hour',
         plural: 'Gigajoules per hour',
         display: '(GJ/hr)'
       }
       , to_anchor: 372.506136
+    },
+    TR: {
+      name: {
+        singular: 'Ton of Refrigeration',
+        plural: 'Tons of Refrigeration',
+        display: '(ton)'
+      }
+      , to_anchor: 4.714
     }
   },
   _anchors: {

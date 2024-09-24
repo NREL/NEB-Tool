@@ -107,21 +107,24 @@ export class PreAssessmentSetupComponent {
     }
   }
 
-  async setUtilityTypes(assessment: IdbAssessment) {
-    let utilityTypes = AssessmentOptions.find(_assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
+  async assessmentTypeChange(assessment: IdbAssessment) {
+    let utilityTypes = AssessmentOptions.find(
+      _assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
     assessment.utilityTypes = utilityTypes; // track all utility types
-    if (!assessment.utilityTypes.includes(assessment.utilityType)) { // update utility type if the assessment type changes
-      assessment.utilityType = utilityTypes?.[0]; // update to the first utility type if current type is not in the associated types
-      await this.setUnitOptionValue(assessment);
+    // utility type is not the default if the assessment type changes
+    if (assessment.utilityType !== utilityTypes[0]) {
+      assessment.utilityType = utilityTypes?.[0]; // update to the first/default utility type
+      await this.utilityTypeChange(assessment);
     } else {
       await this.saveChanges(assessment);
     }
   }
 
-  async setUnitOptionValue(assessment: IdbAssessment) {
-    let unitOptions = UtilityOptions.find(_utilityOption => _utilityOption.utilityType == assessment.utilityType)?.unitOptions || [];
-    if (unitOptions.map(unitOption => unitOption.value).indexOf(assessment.unitOptionValue) == -1) {
-      assessment.unitOptionValue = unitOptions?.[0].value;
+  async utilityTypeChange(assessment: IdbAssessment) {
+    let _energyDefaultUnit = UtilityOptions.find(
+      _utilityOption => _utilityOption.utilityType == assessment.utilityType)?.energyDefaultUnit;
+    if (assessment.unitOptionValue !== _energyDefaultUnit.value) {
+      assessment.unitOptionValue = _energyDefaultUnit.value;
     }
     await this.saveChanges(assessment);
   }
