@@ -120,11 +120,13 @@
                             <div class="metric-block">
                                 <div class="dropdown">
                                     <button class="btn btn-outline-metric btn-sm dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false" (click)="setDropdownMenuGuid(keyPerformanceMetric.guid)">
+                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                        (click)="setDropdownMenuGuid(keyPerformanceMetric.guid)">
                                         <fa-icon [icon]="faScaleUnbalancedFlip" class="me-2"></fa-icon>
                                         <span [innerHTML]="keyPerformanceMetric.htmlLabel"></span>
                                     </button>
-                                    <ul class="dropdown-menu" [ngClass]="{'show': dropdownMenuGuid == keyPerformanceMetric.guid}">
+                                    <ul class="dropdown-menu"
+                                        [ngClass]="{'show': dropdownMenuGuid == keyPerformanceMetric.guid}">
                                         <li>
                                             <a class="dropdown-item"
                                                 (click)="openDeleteMetricModal(keyPerformanceMetric)">
@@ -134,11 +136,9 @@
                                         </li>
                                     </ul>
                                 </div>
-
-
                                 <ng-template [ngIf]="keyPerformanceMetric.isCustom">
                                     <div class="row">
-                                        <label class="col-sm-6 col-form-label pm-label"
+                                        <label class="col-sm-6 col-form-label"
                                             for="{{'kpmName_'+keyPerformanceMetric.guid}}">
                                             Performance Metric Name
                                         </label>
@@ -155,85 +155,15 @@
                                         </div>
                                     </div>
                                 </ng-template>
-
-                                <div class="row" *ngIf="keyPerformanceMetric.totalUnit">
-                                    <label class="col-sm-6 col-form-label pm-label"
-                                        for="{{'isQuantitative_'+keyPerformanceMetric.value}}">
-                                        Metric Type
-                                    </label>
-                                    <div class="col-6">
-                                        <select id="{{'isQuantitative_'+keyPerformanceMetric.value}}"
-                                            name="{{'isQuantitative_'+keyPerformanceMetric.value}}" class="form-select"
-                                            [(ngModel)]="keyPerformanceMetric.isQuantitative" (change)="saveChanges()">
-                                            <option [ngValue]="true">Quantitative</option>
-                                            <option [ngValue]="false">Qualitative</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <ng-template [ngIf]="keyPerformanceMetric.isQuantitative">
-                                    <div class="row">
-                                        <label class="col-sm-6 col-form-label pm-label"
-                                            for="{{'baselineValue_'+keyPerformanceMetric.value}}">
-                                            Baseline Amount
-                                        </label>
-                                        <div class="col-6">
-                                            <div class="input-group">
-                                                <input type="number" class="form-control"
-                                                    [(ngModel)]="keyPerformanceMetric.baselineValue"
-                                                    name="{{'baselineValue_'+keyPerformanceMetric.value}}"
-                                                    (input)="calculateCost(keyPerformanceMetric)">
-                                                <span class="input-group-text">
-                                                    <span
-                                                        [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <label class="col-sm-6 col-form-label pm-label"
-                                            for="{{'costPerValue_'+keyPerformanceMetric.value}}">
-                                            Cost Per Unit
-                                        </label>
-                                        <div class="col-6">
-                                            <div class="input-group">
-                                                <input type="number" class="form-control"
-                                                    [(ngModel)]="keyPerformanceMetric.costPerValue"
-                                                    name="{{'costPerValue_'+keyPerformanceMetric.value}}"
-                                                    (input)="calculateCost(keyPerformanceMetric)">
-                                                <span class="input-group-text">
-                                                    &dollar;/<span
-                                                        [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <label class="col-sm-6 col-form-label pm-label"
-                                            for="{{'baselineCost_'+keyPerformanceMetric.value}}">
-                                            Baseline Cost
-                                        </label>
-                                        <div class="col-6">
-                                            <ng-template [ngIf]="keyPerformanceMetric.baselineCost"
-                                                [ngIfElse]="noCostBlock">
-                                                {{keyPerformanceMetric.baselineCost | currency}}/yr
-                                            </ng-template>
-                                            <ng-template #noCostBlock>
-                                                &mdash;
-                                            </ng-template>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                                <ng-template [ngIf]="!keyPerformanceMetric.totalUnit">
-                                    <div class="alert alert-info small mt-2">
-                                        Quantitative results unavailable at this time.
-                                    </div>
-                                </ng-template>
+                                <app-kpm-details-form [keyPerformanceMetric]="keyPerformanceMetric"
+                                    (emitSave)="saveChanges()"
+                                    (emitCalculate)="calculateCost(keyPerformanceMetric)"></app-kpm-details-form>
                                 <ng-template
                                     [ngIf]="(keyPerformanceMetricImpacts | keyPerformanceMetricImpactsList: keyPerformanceMetric.guid).length">
-                                    <app-kpm-impacts-table
-                                        [kpmGuid]="keyPerformanceMetric.guid"></app-kpm-impacts-table>
+                                    <div class="mt-3">
+                                        <app-kpm-impacts-table
+                                            [kpmGuid]="keyPerformanceMetric.guid"></app-kpm-impacts-table>
+                                    </div>
                                 </ng-template>
                                 <div class="row">
                                     <div class="col">
