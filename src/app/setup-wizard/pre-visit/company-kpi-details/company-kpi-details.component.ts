@@ -103,10 +103,12 @@ export class CompanyKpiDetailsComponent {
   async saveChanges() {
     if (this.keyPerformanceIndicator.optionValue == 'other') {
       this.keyPerformanceIndicator.htmlLabel = this.keyPerformanceIndicator.label;
-      this.keyPerformanceIndicator.performanceMetrics.forEach(metric => {
-        metric.htmlLabel = metric.label;
-      })
     }
+    this.keyPerformanceIndicator.performanceMetrics.forEach(metric => {
+      if (metric.isCustom) {
+        metric.htmlLabel = metric.label;
+      }
+    })
     await this.keyPerformanceIndicatorIdbService.asyncUpdate(this.keyPerformanceIndicator);
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
   }
