@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { KpmDetailsFormComponent } from './kpm-details-form.component';
+import { getCustomKPM } from '../constants/keyPerformanceMetrics';
+import { LabelWithTooltipModule } from '../label-with-tooltip/label-with-tooltip.module';
+import { FormsModule } from '@angular/forms';
+import { HelperPipesModule } from '../helper-pipes/helper-pipes.module';
 
 describe('KpmDetailsFormComponent', () => {
   let component: KpmDetailsFormComponent;
@@ -8,12 +12,14 @@ describe('KpmDetailsFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [LabelWithTooltipModule, FormsModule, HelperPipesModule],
       declarations: [KpmDetailsFormComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(KpmDetailsFormComponent);
     component = fixture.componentInstance;
+    component.keyPerformanceMetric = getCustomKPM('other', '');
     fixture.detectChanges();
   });
 
