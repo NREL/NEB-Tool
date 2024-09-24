@@ -100,13 +100,8 @@
                         [isCurrency]="false"></app-single-cell-item>
                 </td>
             </tr>
-            <tr *ngIf="energyOpportunityReport.nebReports.length > 0">
-                <td colspan="3" class="ps-4">
-                    Additional Operational Benefits
-                </td>
-            </tr>
             <tr *ngFor="let nebReport of energyOpportunityReport.nebReports">
-                <td class="ps-5">
+                <td class="ps-4">
                     <fa-icon class="pe-1" [icon]="faWeightHanging"></fa-icon>
                     {{nebReport.nonEnergyBenefit.name}}
                 </td>

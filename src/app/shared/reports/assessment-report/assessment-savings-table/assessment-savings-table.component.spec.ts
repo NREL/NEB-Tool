@@ -4,6 +4,7 @@ import { AssessmentSavingsTableComponent } from './assessment-savings-table.comp
 import { TableEntriesModule } from 'src/app/shared/table-entries/table-entries.module';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { getAssessmentReport } from '../../calculations/assessmentReport';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('AssessmentSavingsTableComponent', () => {
   let component: AssessmentSavingsTableComponent;
@@ -11,7 +12,7 @@ describe('AssessmentSavingsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TableEntriesModule],
+      imports: [TableEntriesModule, FontAwesomeModule],
       declarations: [AssessmentSavingsTableComponent]
     })
     .compileComponents();
