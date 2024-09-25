@@ -307,6 +307,7 @@ export class BackupDataService {
       keyPerformanceMetricImpact.guid = newGUID;
       delete keyPerformanceMetricImpact.id;
       keyPerformanceMetricImpact.userId = userGUIDs.newId;
+      keyPerformanceMetricImpact.kpiGuid = getNewId(keyPerformanceMetricImpact.kpiGuid, keyPerformanceIndicatorGUIDs);
       keyPerformanceMetricImpact.companyId = getNewId(keyPerformanceMetricImpact.companyId, companyGUIDs);
       keyPerformanceMetricImpact.facilityId = getNewId(keyPerformanceMetricImpact.facilityId, facilityGUIDs);
       keyPerformanceMetricImpact.assessmentId = getNewId(keyPerformanceMetricImpact.assessmentId, assessmentGUIDs);
