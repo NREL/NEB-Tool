@@ -133,9 +133,8 @@
                                                                 <input name="{{'energyUse_'+assessment.guid}}"
                                                                     type="number" class="form-control"
                                                                     [disabled]="true"
-                                                                    [(ngModel)]="assessment.energyUse"
-                                                                    (input)="saveChanges(assessment)"
-                                                                    id="{{'energyUse_'+assessment.guid}}">
+                                                                    id="{{'energyUse_'+assessment.guid}}"
+                                                                    [value]="assessment.energyUse | number:'1.0-2'">
                                                                 <span class="input-group-text"
                                                                     [innerHTML]="getCompany(assessment).companyEnergyUnit| unitsDisplay">
                                                                 </span>

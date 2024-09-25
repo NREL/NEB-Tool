@@ -41,7 +41,6 @@ export class PreAssessmentSetupComponent {
 
   assessments: Array<IdbAssessment>;
   assessmentsSub: Subscription;
-  assessmentForms: FormGroup[] = [];
 
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
@@ -79,7 +78,6 @@ export class PreAssessmentSetupComponent {
     private bootstrapService: BootstrapService,
     private localStorageDataService: LocalStorageDataService,
     private cd: ChangeDetectorRef,
-    private sharedSettingsFormsService: SharedSettingsFormsService
   ) {
   }
 
@@ -95,9 +93,6 @@ export class PreAssessmentSetupComponent {
     this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
       if (!this.isFormChange) {
         this.assessments = _assessments;
-        this.assessmentForms = _assessments.map(assessment => {
-          return this.sharedSettingsFormsService.getEnergyUseForm(assessment);
-        });
       } else {
         this.isFormChange = false;
       }
@@ -137,6 +132,7 @@ export class PreAssessmentSetupComponent {
   }
 
   getCompany(assessment: IdbAssessment) {
+    // get company data for energy unit conversion
     return this.companies.find(_company => _company.guid == assessment.companyId);
   }
 
@@ -157,12 +153,8 @@ export class PreAssessmentSetupComponent {
     await this.saveChanges(assessment);
   }
 
-  async saveChanges(assessment: IdbAssessment, index?: number) {
+  async saveChanges(assessment: IdbAssessment) {
     this.isFormChange = true;
-    if (index !== undefined) {
-      const updatedAssessment = this.sharedSettingsFormsService.updateEnergyUseFromForm(
-        this.assessmentForms[index], assessment);
-    }
     this.assessmentIdbService.asyncUpdate(assessment);
   }
 

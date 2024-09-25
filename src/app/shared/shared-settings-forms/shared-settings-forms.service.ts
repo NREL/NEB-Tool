@@ -149,31 +149,6 @@ export class SharedSettingsFormsService {
     return unitSettings;
   }
 
-  getEnergyUseForm(assessment: IdbAssessment): FormGroup {
-    return this.formBuilder.group({
-      energyUse: this.formBuilder.array(
-        assessment.utilityEnergyUses.map(energyUse => {
-          return this.formBuilder.group({
-            utilityType: [energyUse.utilityType],
-            include: [energyUse.include],
-            energyUse: [energyUse.energyUse],
-            unit: [energyUse.unit]
-          });
-        })
-      )
-    });
-  }
-  
-  updateEnergyUseFromForm(form: FormGroup, assessment: IdbAssessment): IdbAssessment {
-    form.controls['energyUse'].value.forEach((energyUse, index) => {
-      assessment.utilityEnergyUses[index].utilityType = energyUse.utilityType;
-      assessment.utilityEnergyUses[index].include = energyUse.include;
-      assessment.utilityEnergyUses[index].energyUse = energyUse.energyUse;
-      assessment.utilityEnergyUses[index].unit = energyUse.unit;
-    });
-    return assessment;
-  }
-
   setRequiredValidator(control: AbstractControl, isRequired: boolean) {
     if (isRequired) {
       control.addValidators(Validators.required);

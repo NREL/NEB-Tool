@@ -1,18 +1,7 @@
 .card {
-    border: 1px solid #ddd;
-    border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .card-header {
-    background-color: #f7f7f7;
     font-weight: bold;
-  }
-  
-  .card-body {
-    padding: 1rem;
-  }
-  
-  .form-group {
-    margin-bottom: 1rem;
   }
