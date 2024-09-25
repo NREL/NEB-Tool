@@ -11,15 +11,15 @@ import { IdbKeyPerformanceMetricImpact } from "src/app/models/keyPerformanceMetr
 ///ASSESSMENT REPORT
 export function getAssessmentReport(assessment: IdbAssessment, energyOpportunities: Array<IdbEnergyOpportunity>, nonEnergyBenefits: Array<IdbNonEnergyBenefit>, companyPerformanceMetrics: Array<KeyPerformanceMetric>, keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>): AssessmentReport {
 
-    if(!assessment.energySavings){
+    if (!assessment.energySavings) {
         assessment.energySavings = 0;
     }
 
-    if(!assessment.costSavings){
+    if (!assessment.costSavings) {
         assessment.costSavings = 0;
     }
 
-    if(!assessment.implementationCost){
+    if (!assessment.implementationCost) {
         assessment.implementationCost = 0;
     }
 
@@ -53,7 +53,6 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
     if (assessment.costSavings) {
         totalNonOpportunitySavings += assessment.costSavings;
     }
-
     let energyOpportunityCostSavings: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
         return report.totalEnergyCostSavings
     });
@@ -63,30 +62,68 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
         totalEnergyCostSavings += energyOpportunityCostSavings;
     };
 
+    if (assessment.costSavings) {
+        totalEnergyCostSavings += assessment.costSavings;
+    }
+
     let totalAssessmentNebSavings: number = _.sumBy(assessmentNebReports, (report: NebReport) => {
         return report.totalCostSavings
     });
     let energyOpportunityNebSavings: number = _.sumBy(energyOpportunityNebReports, (report: NebReport) => {
         return report.totalCostSavings
     });
-    let totalNebSavings: number = totalNonOpportunitySavings + energyOpportunityNebSavings;
+    let totalNebSavings: number = totalAssessmentNebSavings + energyOpportunityNebSavings;
 
     let totalCostSavings: number = totalEnergyCostSavings + totalNebSavings;
 
-    let totalEnergySavings: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
-        return report.energyOpportunity.energySavings
-    }) + assessment.energySavings;
+    let opportunityEnergySavings: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
+        if (report.energyOpportunity.energySavings) {
+            return report.energyOpportunity.energySavings;
+        }
+        return 0;
+    });
 
-    let implementationCost: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
-        return report.energyOpportunity.implementationCost
-    }) + assessment.implementationCost
+    let totalEnergySavings: number = 0;
+    if (assessment.energySavings) {
+        totalEnergySavings += assessment.energySavings;
+    }
+    if (opportunityEnergySavings) {
+        totalEnergySavings += opportunityEnergySavings;
+    };
+
+
+    let energyOpportunityImplementationCost: number = _.sumBy(energyOpportunityReports, (report: EnergyOpportunityReport) => {
+        if (report.energyOpportunity.implementationCost) {
+            return report.energyOpportunity.implementationCost;
+        }
+        return 0;
+    })
+
+    let implementationCost: number = 0;
+    if (energyOpportunityImplementationCost) {
+        implementationCost += energyOpportunityImplementationCost;
+    }
+    if (assessment.implementationCost) {
+        implementationCost += assessment.implementationCost;
+    }
 
     let totalPaybackWithNebs: number = (implementationCost / totalCostSavings);
-    let totalPaybackWithoutNebs: number = (implementationCost / totalEnergyCostSavings);
-
+    if (totalPaybackWithNebs == Infinity) {
+        totalPaybackWithNebs = 0;
+    }
+    let totalPaybackWithoutNebs: number = (implementationCost / totalNonOpportunitySavings);
+    if (totalPaybackWithoutNebs == Infinity) {
+        totalPaybackWithoutNebs = 0;
+    }
     let nonOpportunityPaybackWithoutNebs: number = (assessment.implementationCost / assessment.costSavings);
+    if (nonOpportunityPaybackWithoutNebs == Infinity) {
+        nonOpportunityPaybackWithoutNebs = 0;
+    }
     let nonOpportunityPaybackWithNebs: number = (assessment.implementationCost / totalNonOpportunitySavings);
-    let totalNonOpportunityAssessmentSavings: number = totalAssessmentNebSavings + assessment.energySavings;
+    if (nonOpportunityPaybackWithNebs == Infinity) {
+        nonOpportunityPaybackWithNebs = 0;
+    }
+    let totalNonOpportunityAssessmentSavings: number = totalAssessmentNebSavings + assessment.costSavings;
     return {
         assessment: assessment,
         energyOpportunityReports: energyOpportunityReports,
