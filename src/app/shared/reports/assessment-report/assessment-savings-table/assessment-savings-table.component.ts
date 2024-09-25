@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IconDefinition, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faScrewdriverWrench, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 import { AssessmentReport } from '../../calculations/assessmentReport';
 
 @Component({
@@ -13,4 +13,6 @@ export class AssessmentSavingsTableComponent {
 
 
   faWeightHanging: IconDefinition = faWeightHanging;
+  faScrewdriverWrench: IconDefinition = faScrewdriverWrench;
+  faFileLines: IconDefinition = faFileLines;
 }
