@@ -15,7 +15,6 @@ export type KeyPerformanceIndicatorValue =
     'reduceNonconformingProductWaste' |
     'wasteReductionNonHazardous' |
     'wasteReductionHazardous' |
-    'energyCost' |
     'reduceExpenseCost' |
     'improveSpaceUtilization' |
     'employeeEngagementWorkforceDevelopment' |
@@ -71,12 +70,6 @@ export const KeyPerformanceIndicatorOptions: Array<KeyPerformanceIndicatorOption
         label: 'Reduce Expense Cost',
         htmlLabel: 'Reduce Expense Cost',
         optionValue: 'reduceExpenseCost'
-    },
-    {
-        primaryKPI: 'Sustainability (Environmental Impact)',
-        label: 'Energy Cost',
-        htmlLabel: 'Energy Cost',
-        optionValue: 'energyCost'
     },
     {
         primaryKPI: 'Sustainability (Environmental Impact)',
