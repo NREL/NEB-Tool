@@ -48,9 +48,6 @@ export class PreAssessmentSetupComponent {
   energyEquipmentSub: Subscription;
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
 
-  companiesSub: Subscription;
-  companies: Array<IdbCompany>;
-
   convertValue: ConvertValue = new ConvertValue();
 
   assessmentTypes: Array<AssessmentType> = AssessmentTypes;
@@ -65,6 +62,8 @@ export class PreAssessmentSetupComponent {
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
   isFormChange: boolean = false;
+
+  companyEnergyUnit: string;
 
   accordionGuid: string;
   isAddNew: boolean = false;
@@ -102,9 +101,8 @@ export class PreAssessmentSetupComponent {
       this.energyEquipmentOptions = equipments;
     });
 
-    this.companiesSub = this.companyIdbService.companies.subscribe(_companies => {
-      this.companies = _companies;
-    });
+    this.companyEnergyUnit = this.companyIdbService.getByGUID(this.onSiteVisit.companyId).companyEnergyUnit;
+
   }
 
   ngOnDestroy() {
@@ -112,7 +110,6 @@ export class PreAssessmentSetupComponent {
     this.contactsSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
     this.energyEquipmentSub.unsubscribe();
-    this.companiesSub.unsubscribe();
   }
   
   ngAfterViewInit() {
@@ -131,11 +128,6 @@ export class PreAssessmentSetupComponent {
     await this.calculateEnergyUse(assessment);
   }
 
-  getCompany(assessment: IdbAssessment) {
-    // get company data for energy unit conversion
-    return this.companies.find(_company => _company.guid == assessment.companyId);
-  }
-
   async calculateEnergyUse(assessment: IdbAssessment) {
     let result = 0;
     assessment.utilityTypes.forEach(utilityType => {
@@ -145,7 +137,7 @@ export class PreAssessmentSetupComponent {
         let convertedValue = this.convertValue.convertValue(
           utilityEnergyUse.energyUse,
           utilityEnergyUse.unit,
-          this.getCompany(assessment).companyEnergyUnit).convertedValue;
+          this.companyEnergyUnit).convertedValue;
         result += convertedValue;
       }
     });
