@@ -79,51 +79,66 @@
                                                         </div>
                                                     </div>
 
+                                                    <hr>
                                                     <div class="row">
-                                                        <label class="col-sm-5 col-form-label"
-                                                            for="{{'utilityType_'+assessment.guid}}">Utility
-                                                            Type</label>
-                                                        <div class="col-sm-7">
-
-                                                            <select name="{{'utilityType_'+assessment.guid}}"
-                                                                class="form-select"
-                                                                id="{{'utilityType_'+assessment.guid}}"
-                                                                [(ngModel)]="assessment.utilityType"
-                                                                (change)="utilityTypeChange(assessment)">
-                                                                <option
-                                                                    *ngFor="let utilityType of assessment.utilityTypes"
-                                                                    [ngValue]="utilityType">
-                                                                    {{utilityType}}
-                                                                </option>
-                                                            </select>
-
+                                                        <h6>Utility Types</h6>
+                                                        <p class="fw-light">Select the utility types that are
+                                                            applicable to this assessment and enter the annual energy use for each type.</p>
+                                                        <ng-container *ngFor="let use of assessment.utilityEnergyUses">
+                                                        <div class="col-md-4 col-lg-3 mb-3" *ngIf="assessment.utilityTypes.includes(use.utilityType)">
+                                                          <div class="card h-100">
+                                                            <div class="card-header">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    name="{{'include_utilityType_' + use.utilityType + assessment.guid}}"
+                                                                    id="{{'include_utilityType_' + use.utilityType + assessment.guid}}"
+                                                                    [(ngModel)]="use.include"
+                                                                    (change)="calculateEnergyUse(assessment)">
+                                                                {{ use.utilityType }}
+                                                            </div>
+                                                            <div class="card-body">
+                                                              <div class="form-group row align-items-center">
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control" 
+                                                                        name="{{'energyUse_' + use.utilityType + assessment.guid}}" 
+                                                                        id="{{'energyUse_' + use.utilityType + assessment.guid}}"
+                                                                        [(ngModel)]="use.energyUse"
+                                                                        (input)="calculateEnergyUse(assessment)">
+                                                                    <select class="input-group-text" 
+                                                                        name="{{'energyUnit_' + use.utilityType + assessment.guid}}"
+                                                                        id="{{'energyUnit_' + use.utilityType + assessment.guid}}"
+                                                                            [(ngModel)]="use.unit"
+                                                                            (change)="calculateEnergyUse(assessment)">
+                                                                        <option
+                                                                            *ngFor="let unitOption of (use.utilityType | linkedUnitOptions: 'Energy')"
+                                                                            [ngValue]="unitOption.value">
+                                                                            <span
+                                                                                [innerHTML]="unitOption.value | unitsDisplay"></span>
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
                                                         </div>
-                                                    </div>
-
+                                                        </ng-container>
+                                                      </div>
+                                                    <hr>
                                                     <div class="row">
                                                         <label class="col-sm-5 col-form-label"
-                                                            for="{{'energyUse_'+assessment.guid}}">Annual
+                                                            for="{{'energyUse_'+assessment.guid}}">Total
                                                             Energy
                                                             Use</label>
                                                         <div class="col-sm-7">
                                                             <div class="input-group">
                                                                 <input name="{{'energyUse_'+assessment.guid}}"
                                                                     type="number" class="form-control"
+                                                                    [disabled]="true"
                                                                     [(ngModel)]="assessment.energyUse"
                                                                     (input)="saveChanges(assessment)"
                                                                     id="{{'energyUse_'+assessment.guid}}">
-                                                                <select name="{{'energyUnit_'+assessment.guid}}"
-                                                                    class="input-group-text"
-                                                                    id="{{'energyUnit_'+assessment.guid}}"
-                                                                    [(ngModel)]="assessment.unitOptionValue"
-                                                                    (change)="saveChanges(assessment)">
-                                                                    <option
-                                                                        *ngFor="let unitOption of (assessment.utilityType | linkedUnitOptions: 'Energy')"
-                                                                        [ngValue]="unitOption.value">
-                                                                        <span
-                                                                            [innerHTML]="unitOption.value | unitsDisplay"></span>
-                                                                    </option>
-                                                                </select>
+                                                                <span class="input-group-text"
+                                                                    [innerHTML]="getCompany(assessment).companyEnergyUnit| unitsDisplay">
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>

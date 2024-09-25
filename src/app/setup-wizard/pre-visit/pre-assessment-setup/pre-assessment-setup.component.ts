@@ -16,6 +16,12 @@ import { AssessmentOptions, AssessmentType, AssessmentTypes } from 'src/app/shar
 import { UtilityOption, UtilityOptions } from 'src/app/shared/constants/utilityTypes';
 import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { IdbCompany } from 'src/app/models/company';
+import { ConvertValue } from 'src/app/shared/conversions/convertValue';
+import { UtilityEnergyUse } from 'src/app/models/utilityEnergyUses';
+import { SharedSettingsFormsService } from 'src/app/shared/shared-settings-forms/shared-settings-forms.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -35,12 +41,18 @@ export class PreAssessmentSetupComponent {
 
   assessments: Array<IdbAssessment>;
   assessmentsSub: Subscription;
+  assessmentForms: FormGroup[] = [];
 
   contacts: Array<IdbContact>;
   contactsSub: Subscription;
 
   energyEquipmentSub: Subscription;
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
+
+  companiesSub: Subscription;
+  companies: Array<IdbCompany>;
+
+  convertValue: ConvertValue = new ConvertValue();
 
   assessmentTypes: Array<AssessmentType> = AssessmentTypes;
   utilityOptions: Array<UtilityOption> = UtilityOptions;
@@ -58,6 +70,7 @@ export class PreAssessmentSetupComponent {
   accordionGuid: string;
   isAddNew: boolean = false;
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
+    private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private contactIdbService: ContactIdbService,
@@ -65,7 +78,8 @@ export class PreAssessmentSetupComponent {
     private energyEquipmentIdbService: EnergyEquipmentIdbService,
     private bootstrapService: BootstrapService,
     private localStorageDataService: LocalStorageDataService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private sharedSettingsFormsService: SharedSettingsFormsService
   ) {
   }
 
@@ -81,6 +95,9 @@ export class PreAssessmentSetupComponent {
     this.assessmentsSub = this.assessmentIdbService.assessments.subscribe(_assessments => {
       if (!this.isFormChange) {
         this.assessments = _assessments;
+        this.assessmentForms = _assessments.map(assessment => {
+          return this.sharedSettingsFormsService.getEnergyUseForm(assessment);
+        });
       } else {
         this.isFormChange = false;
       }
@@ -88,7 +105,11 @@ export class PreAssessmentSetupComponent {
 
     this.energyEquipmentSub = this.energyEquipmentIdbService.energyEquipments.subscribe(equipments => {
       this.energyEquipmentOptions = equipments;
-    })
+    });
+
+    this.companiesSub = this.companyIdbService.companies.subscribe(_companies => {
+      this.companies = _companies;
+    });
   }
 
   ngOnDestroy() {
@@ -96,6 +117,7 @@ export class PreAssessmentSetupComponent {
     this.contactsSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
     this.energyEquipmentSub.unsubscribe();
+    this.companiesSub.unsubscribe();
   }
   
   ngAfterViewInit() {
@@ -111,26 +133,36 @@ export class PreAssessmentSetupComponent {
     let utilityTypes = AssessmentOptions.find(
       _assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
     assessment.utilityTypes = utilityTypes; // track all utility types
-    // utility type is not the default if the assessment type changes
-    if (assessment.utilityType !== utilityTypes[0]) {
-      assessment.utilityType = utilityTypes?.[0]; // update to the first/default utility type
-      await this.utilityTypeChange(assessment);
-    } else {
-      await this.saveChanges(assessment);
-    }
+    await this.calculateEnergyUse(assessment);
   }
 
-  async utilityTypeChange(assessment: IdbAssessment) {
-    let _energyDefaultUnit = UtilityOptions.find(
-      _utilityOption => _utilityOption.utilityType == assessment.utilityType)?.energyDefaultUnit;
-    if (assessment.unitOptionValue !== _energyDefaultUnit.value) {
-      assessment.unitOptionValue = _energyDefaultUnit.value;
-    }
+  getCompany(assessment: IdbAssessment) {
+    return this.companies.find(_company => _company.guid == assessment.companyId);
+  }
+
+  async calculateEnergyUse(assessment: IdbAssessment) {
+    let result = 0;
+    assessment.utilityTypes.forEach(utilityType => {
+      let utilityEnergyUse: UtilityEnergyUse = assessment.utilityEnergyUses.find(
+        _energyUse => _energyUse.utilityType == utilityType);
+      if (utilityEnergyUse.include) {
+        let convertedValue = this.convertValue.convertValue(
+          utilityEnergyUse.energyUse,
+          utilityEnergyUse.unit,
+          this.getCompany(assessment).companyEnergyUnit).convertedValue;
+        result += convertedValue;
+      }
+    });
+    assessment.energyUse = result;
     await this.saveChanges(assessment);
   }
 
-  async saveChanges(assessment: IdbAssessment) {
+  async saveChanges(assessment: IdbAssessment, index?: number) {
     this.isFormChange = true;
+    if (index !== undefined) {
+      const updatedAssessment = this.sharedSettingsFormsService.updateEnergyUseFromForm(
+        this.assessmentForms[index], assessment);
+    }
     this.assessmentIdbService.asyncUpdate(assessment);
   }
 

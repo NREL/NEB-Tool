@@ -67,26 +67,26 @@ export class AssessmentDetailsFormComponent {
   }
 
   async assessmentTypeChange() {
-    let utilityTypes = AssessmentOptions.find(
-      _assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
-    this.assessment.utilityTypes = utilityTypes; // track all utility types
-    // utility type is not the default if the assessment type changes
-    if (this.assessment.utilityType !== utilityTypes[0]) {
-      this.assessment.utilityType = utilityTypes?.[0]; // update to the first/default utility type
-      await this.utilityTypeChange();
-    } else {
-      await this.saveChanges();
-    }
+    // let utilityTypes = AssessmentOptions.find(
+    //   _assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
+    // this.assessment.utilityTypes = utilityTypes; // track all utility types
+    // // utility type is not the default if the assessment type changes
+    // if (this.assessment.utilityType !== utilityTypes[0]) {
+    //   this.assessment.utilityType = utilityTypes?.[0]; // update to the first/default utility type
+    //   await this.utilityTypeChange();
+    // } else {
+    //   await this.saveChanges();
+    // }
   }
 
   async utilityTypeChange() {
-    let _energyDefaultUnit = UtilityOptions.find(
-      _utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.energyDefaultUnit;
-    if (this.assessment.unitOptionValue !== _energyDefaultUnit.value) {
-      this.assessment.unitOptionValue = _energyDefaultUnit.value;
-    }
-    console.log(this.assessment.unitOptionValue);
-    await this.saveChanges();
+    // let _energyDefaultUnit = UtilityOptions.find(
+    //   _utilityOption => _utilityOption.utilityType == this.assessment.utilityType)?.energyDefaultUnit;
+    // if (this.assessment.unitOptionValue !== _energyDefaultUnit.value) {
+    //   this.assessment.unitOptionValue = _energyDefaultUnit.value;
+    // }
+    // console.log(this.assessment.unitOptionValue);
+    // await this.saveChanges();
   }
 
   async saveChanges() {

@@ -1,9 +1,9 @@
 
-import { UtilityOptions } from "../shared/constants/utilityTypes";
+import { UtilityOptions, UtilityType } from "../shared/constants/utilityTypes";
 import { getDefaultUnitSettings } from "./unitSettings";
 
 export interface UtilityEnergyUse {
-    utilityType: string;
+    utilityType: UtilityType;
     include: boolean;
     energyUse: number;
     unit: string;

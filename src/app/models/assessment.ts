@@ -13,7 +13,7 @@ export interface IdbAssessment extends IdbEntry {
     utilityTypes: Array<UtilityType>, // track all utility types associated with assessment type
     utilityEnergyUses: Array<UtilityEnergyUse>, // track all utility energy uses
     // utilityType: UtilityType, // temporary limited to one utility type
-    unitOptionValue: string,
+    // unitOptionValue: string,
     equipmentId: string,
     energyUse: number,
     cost: number,
@@ -40,7 +40,7 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         utilityTypes: defaultUtilityTypes,
         utilityEnergyUses: getDefaultUtilityEnergyUses(),
         // utilityType: undefined,
-        unitOptionValue: undefined,
+        // unitOptionValue: undefined,
         equipmentId: undefined,
         energyUse: undefined,
         cost: undefined,
