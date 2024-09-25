@@ -84,7 +84,11 @@ export class PerformanceMetricImpactFormComponent {
   }
 
   calculateCost() {
-    this.keyPerformanceMetricImpact.costAdjustment = (this.keyPerformanceMetricImpact.modificationValue * this.keyPerformanceMetric.costPerValue);
+    if (this.keyPerformanceMetric.calculationMethod == 'costPerUnit') {
+      this.keyPerformanceMetricImpact.costAdjustment = (this.keyPerformanceMetricImpact.modificationValue * this.keyPerformanceMetric.costPerValue);
+    } else if (this.keyPerformanceMetric.calculationMethod == 'percentTotal') {
+      this.keyPerformanceMetricImpact.costAdjustment = this.keyPerformanceMetric.baselineCost * (this.keyPerformanceMetricImpact.modificationValue / 100);
+    }
     this.saveChanges();
   }
 
@@ -117,6 +121,7 @@ export class PerformanceMetricImpactFormComponent {
   openDeleteModal() {
     this.showDropdownMenu = false;
     this.displayDeleteModal = true;
+    this.showDropdownMenu = false;
   }
 
   closeDeleteModal() {
@@ -131,9 +136,14 @@ export class PerformanceMetricImpactFormComponent {
   setOverrideBaseline(overrideBaseline: boolean) {
     this.showDropdownMenu = false;
     this.overrideBaseline = overrideBaseline;
+    this.showDropdownMenu = false;
   }
 
-  toggleShowDropdownMenu(){
+  toggleDropdownMenu() {
+    this.showDropdownMenu = !this.showDropdownMenu;
+  }
+
+  toggleShowDropdownMenu() {
     this.showDropdownMenu = !this.showDropdownMenu;
   }
 }

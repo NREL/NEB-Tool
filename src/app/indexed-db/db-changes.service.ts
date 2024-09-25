@@ -372,6 +372,7 @@ export class DbChangesService {
     await this.onSiteVisitIdbService.setOnSiteVisits();
     await this.energyEquipmentIdbService.setEnergyEquipments();
     await this.processEquipmentIdbService.setProcessEquipments();
+    await this.keyPerformanceMetricImpactsIdbService.setKeyPerformanceMetricImpacts();
     this.userIdbService.user.next(user);
   }
 

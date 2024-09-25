@@ -58,6 +58,8 @@ export class CompanyKpiDetailsComponent {
 
   keyPerformanceMetricImpacts: Array<IdbKeyPerformanceMetricImpact>;
   keyPerformanceMetricImpactsSub: Subscription;
+
+  timeOptions: Array<string> = ['day', 'week', 'month', 'year'];
   dropdownMenuGuid: string;
   constructor(private router: Router,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
@@ -101,16 +103,17 @@ export class CompanyKpiDetailsComponent {
   async saveChanges() {
     if (this.keyPerformanceIndicator.optionValue == 'other') {
       this.keyPerformanceIndicator.htmlLabel = this.keyPerformanceIndicator.label;
-      this.keyPerformanceIndicator.performanceMetrics.forEach(metric => {
-        metric.htmlLabel = metric.label;
-      })
     }
+    this.keyPerformanceIndicator.performanceMetrics.forEach(metric => {
+      if (metric.isCustom) {
+        metric.htmlLabel = metric.label;
+      }
+    })
     await this.keyPerformanceIndicatorIdbService.asyncUpdate(this.keyPerformanceIndicator);
     await this.keyPerformanceIndicatorIdbService.setKeyPerformanceIndicators();
   }
 
   async calculateCost(keyPerformanceMetric: KeyPerformanceMetric) {
-    keyPerformanceMetric.baselineCost = (keyPerformanceMetric.costPerValue * keyPerformanceMetric.baselineValue);
     await this.keyPerformanceMetricImpactIdbService.updatePerformanceMetricBaseline(this.keyPerformanceIndicator, keyPerformanceMetric);
     await this.saveChanges();
   }
@@ -170,7 +173,7 @@ export class CompanyKpiDetailsComponent {
 
   addPerformanceMetric() {
     let newCustomKPM: KeyPerformanceMetric = getCustomKPM(this.keyPerformanceIndicator.optionValue, this.keyPerformanceIndicator.guid);
-    this.keyPerformanceIndicator.performanceMetrics.push(newCustomKPM);
+    this.keyPerformanceIndicator.performanceMetrics.unshift(newCustomKPM);
     this.saveChanges();
   }
 

@@ -8,6 +8,7 @@ import { energy } from "./definitions/energy";
 import { length } from './definitions/length';
 import * as _ from 'lodash';
 import { area } from "./definitions/area";
+import { time } from "./definitions/time";
 import { rate } from "./definitions/rate";
 
 export class ConvertValue {
@@ -20,6 +21,7 @@ export class ConvertValue {
         power: power,
         energy: energy,
         area: area,
+        time: time,
         rate: rate
     };
 

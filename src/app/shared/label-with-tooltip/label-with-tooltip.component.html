@@ -1,5 +1,7 @@
-<label class="w-100" for={{labelId}} [ngClass]="{'bold': isBold, 'semibold': isSemiBold}"> 
+<label class="w-100" for={{labelId}} [ngClass]="{'bold': isBold, 'semibold': isSemiBold}">
     {{label}}<span *ngIf="isRequired" class="required">*</span>
-    <fa-icon class="ps-1" [icon]="faQuestionCircle" [ngClass]="{'float-right': isFloatRight}" data-bs-toggle="tooltip"
-        data-bs-placement="top" title={{helpTooltip.tooltip}} data-bs-html="true"></fa-icon>
+    <span class="ps-1" [ngClass]="{'float-right': isFloatRight}" data-bs-toggle="tooltip" data-bs-placement="top"
+        title={{helpTooltip.tooltip}} data-bs-html="true">
+        <fa-icon [icon]="faQuestionCircle"></fa-icon>
+    </span>
 </label>

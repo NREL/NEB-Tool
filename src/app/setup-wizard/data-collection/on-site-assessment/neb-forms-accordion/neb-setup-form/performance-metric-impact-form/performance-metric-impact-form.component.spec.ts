@@ -12,6 +12,7 @@ import { getNewIdbKeyPerformanceMetricImpact, IdbKeyPerformanceMetricImpact } fr
 import { PrimaryKpiBadgeModule } from 'src/app/shared/primary-kpi-badge/primary-kpi-badge.module';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { FormsModule } from '@angular/forms';
+import { KpmDetailsFormModule } from 'src/app/shared/kpm-details-form/kpm-details-form.module';
 
 describe('PerformanceMetricImpactFormComponent', () => {
   let component: PerformanceMetricImpactFormComponent;
@@ -24,18 +25,22 @@ describe('PerformanceMetricImpactFormComponent', () => {
   let keyPerformanceIndicatorIdbService: Partial<KeyPerformanceIndicatorsIdbService> = {
     getKeyPerformanceMetric: () => {
       return {
-        baselineValue: 0,
-        costPerValue: 0,
-        baselineCost: 0,
-        isCustom: false,
-        kpiGuid: '',
-        guid: '',   
-        label: '',
-        htmlLabel: '',
-        value: 'TRIR',
+        label: 'Custom KPM',
+        htmlLabel: 'Custom KPM',
+        value: 'custom',
         kpiValue: 'other',
-        isQuantitative: true,    
-      }
+        isQuantitative: true,
+        baselineValue: undefined,
+        costPerValue: undefined,
+        totalUnit: 'unit',
+        baselineCost: undefined,
+        isCustom: true,
+        kpiGuid: '',
+        guid: '',
+        calculationMethod: 'costPerUnit',
+        goalToIncrease: true,
+        timePeriod: 'yr'
+      };
     }
   };
 
@@ -47,7 +52,7 @@ describe('PerformanceMetricImpactFormComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, PrimaryKpiBadgeModule, HelperPipesModule, FormsModule],
+      imports: [FontAwesomeModule, PrimaryKpiBadgeModule, HelperPipesModule, FormsModule, KpmDetailsFormModule],
       declarations: [PerformanceMetricImpactFormComponent],
       providers: [
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },

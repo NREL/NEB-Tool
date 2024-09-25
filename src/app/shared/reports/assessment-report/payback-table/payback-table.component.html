@@ -32,7 +32,7 @@
             </td>
             <td>
                 <app-single-cell-item [isCurrency]="true"
-                    [numValue]="assessmentReport.assessment.energySavings"></app-single-cell-item>
+                    [numValue]="assessmentReport.assessment.costSavings"></app-single-cell-item>
             </td>
             <td>
                 <app-single-cell-item [isCurrency]="true"
@@ -48,7 +48,7 @@
             </td>
         </tr>
         <tr *ngFor="let energyOpportunityReport of assessmentReport.energyOpportunityReports">
-            <td>
+            <td class="ps-4">
                 {{energyOpportunityReport.energyOpportunity.name}}
             </td>
             <td>
@@ -84,7 +84,7 @@
             </th>
             <th>
                 <app-single-cell-item [isCurrency]="true"
-                    [numValue]="assessmentReport.totalEnergySavings"></app-single-cell-item>
+                    [numValue]="assessmentReport.totalEnergyCostSavings"></app-single-cell-item>
             </th>
             <th>
                 <app-single-cell-item [isCurrency]="true"

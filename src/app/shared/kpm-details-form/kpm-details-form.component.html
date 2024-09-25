@@ -1,0 +1,150 @@
+<div class="row" *ngIf="keyPerformanceMetric.totalUnit">
+    <label class="col-sm-6 col-form-label" for="{{'isQuantitative_'+keyPerformanceMetric.value}}">
+        Metric Type
+    </label>
+    <div class="col-6">
+        <select id="{{'isQuantitative_'+keyPerformanceMetric.value}}"
+            name="{{'isQuantitative_'+keyPerformanceMetric.value}}" class="form-select"
+            [(ngModel)]="keyPerformanceMetric.isQuantitative" (change)="saveChanges()" [disabled]="disableForm">
+            <option [ngValue]="true">Quantitative</option>
+            <option [ngValue]="false">Qualitative</option>
+        </select>
+    </div>
+</div>
+<ng-template [ngIf]="keyPerformanceMetric.isQuantitative">
+    <div class="row">
+        <!-- <label class="col-sm-6 col-form-label"
+            for="{{'goalToIncrease_'+keyPerformanceMetric.value}}">
+            Desired Impact
+        </label> -->
+        <div class="col-sm-6 col-form-label">
+            <app-label-with-tooltip [field]="'goalToIncrease'" [labelId]="'goalToIncrease_'+keyPerformanceMetric.value"
+                [label]="'Desired Impact'"></app-label-with-tooltip>
+        </div>
+        <div class="col-6">
+            <select id="{{'goalToIncrease_'+keyPerformanceMetric.value}}"
+                name="{{'goalToIncrease_'+keyPerformanceMetric.value}}" class="form-select"
+                [(ngModel)]="keyPerformanceMetric.goalToIncrease" (change)="saveChanges()" [disabled]="disableForm">
+                <option [ngValue]="true">Increase Metric</option>
+                <option [ngValue]="false">Decrease Metric</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-sm-6 col-form-label" for="{{'calculationMethod_'+keyPerformanceMetric.value}}">
+            Calculation Method
+        </label>
+        <div class="col-6">
+            <select id="{{'calculationMethod_'+keyPerformanceMetric.value}}"
+                name="{{'calculationMethod_'+keyPerformanceMetric.value}}" class="form-select"
+                [(ngModel)]="keyPerformanceMetric.calculationMethod" (change)="saveChanges()" [disabled]="disableForm">
+                <option [ngValue]="'costPerUnit'">Cost Per Unit</option>
+                <option [ngValue]="'directCost'">Direct Cost</option>
+                <option [ngValue]="'percentTotal'">Percent Total</option>
+            </select>
+        </div>
+    </div>
+
+    <!--COST PER UNIT-->
+    <ng-template [ngIf]="keyPerformanceMetric.calculationMethod == 'costPerUnit'">
+        <div class="row">
+            <label class="col-sm-6 col-form-label" for="{{'totalUnit_'+keyPerformanceMetric.value}}">
+                Unit
+            </label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="keyPerformanceMetric.totalUnit"
+                        name="{{'totalUnit_'+keyPerformanceMetric.value}}" [disabled]="disableForm">
+                </div>
+            </div>
+        </div>
+        <!--TODO: Issue 231-->
+        <!-- <div class="row">
+            <label class="col-sm-6 col-form-label"
+                for="{{'timePeriod_'+keyPerformanceMetric.value}}">
+                Time Period
+            </label>
+            <div class="col-6">
+                <select id="{{'timePeriod_'+keyPerformanceMetric.value}}"
+                    name="{{'timePeriod_'+keyPerformanceMetric.value}}"
+                    class="form-select"
+                    [(ngModel)]="keyPerformanceMetric.timePeriod"
+                    (change)="saveChanges()">
+                    <option *ngFor="let option of timeOptions" [ngValue]="option">
+                        {{option | unitsDisplay}}</option>
+                </select>
+            </div>
+        </div> -->
+        <div class="row">
+            <label class="col-sm-6 col-form-label" for="{{'baselineValue_'+keyPerformanceMetric.value}}">
+                Baseline Amount
+            </label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.baselineValue"
+                        name="{{'baselineValue_'+keyPerformanceMetric.value}}" (input)="calculateCost()"
+                        [disabled]="disableForm">
+                    <span class="input-group-text">
+                        <span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>/yr
+                        <!--TODO: Issue 231-->
+                        <!-- <span
+                            [innerHTML]="keyPerformanceMetric.timePeriod | unitsDisplay"></span> -->
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-sm-6 col-form-label" for="{{'costPerValue_'+keyPerformanceMetric.value}}">
+                Cost Per Unit
+            </label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.costPerValue"
+                        name="{{'costPerValue_'+keyPerformanceMetric.value}}" (input)="calculateCost()"
+                        [disabled]="disableForm">
+                    <span class="input-group-text">
+                        &dollar;/<span [innerHTML]="keyPerformanceMetric.totalUnit | unitsDisplay"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-sm-6 col-form-label" for="{{'baselineCost_'+keyPerformanceMetric.value}}">
+                Baseline Cost
+            </label>
+            <div class="col-6">
+                <ng-template [ngIf]="keyPerformanceMetric.baselineCost" [ngIfElse]="noCostBlock">
+                    {{keyPerformanceMetric.baselineCost | currency}}/yr
+                </ng-template>
+                <ng-template #noCostBlock>
+                    &mdash;
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+    <!--DIRECT COST or PERCENT-->
+    <ng-template [ngIf]="keyPerformanceMetric.calculationMethod != 'costPerUnit'">
+        <div class="row">
+            <label class="col-sm-6 col-form-label" for="{{'baselineCost_'+keyPerformanceMetric.value}}">
+                Baseline Cost
+            </label>
+            <div class="col-6">
+                <div class="input-group">
+                    <input type="number" class="form-control" [(ngModel)]="keyPerformanceMetric.baselineCost"
+                        name="{{'baselineCost_'+keyPerformanceMetric.value}}" (input)="calculateCost()"
+                        [disabled]="disableForm">
+                    <span class="input-group-text">
+                        &dollar;/yr
+                    </span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</ng-template>
+<ng-template [ngIf]="!keyPerformanceMetric.totalUnit">
+    <div class="alert alert-info small mt-2">
+        Quantitative results unavailable at this time.
+    </div>
+</ng-template>
