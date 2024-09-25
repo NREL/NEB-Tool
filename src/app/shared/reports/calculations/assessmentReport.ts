@@ -87,7 +87,7 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
     if (assessment.energySavings) {
         totalEnergySavings += assessment.energySavings;
     }
-    if (energyOpportunityCostSavings) {
+    if (opportunityEnergySavings) {
         totalEnergySavings += opportunityEnergySavings;
     };
 
