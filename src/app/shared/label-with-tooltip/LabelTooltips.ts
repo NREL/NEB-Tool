@@ -8,4 +8,7 @@ export const LabelTooltips = {
     "energyUnit": {
         "tooltip": "The base energy consumption unit for the company for reporting purposes."
     },
+    "calculationMethod": {
+        "tooltip": "The method used to calculate impacts on the metric."
+    }
 }
