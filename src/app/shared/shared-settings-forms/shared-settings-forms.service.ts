@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 import { GeneralInformation } from 'src/app/models/generalInformation';
 import { UnitSettings } from 'src/app/models/unitSettings';
 import valZip from 'val-zip';
+import { energy } from '../conversions/definitions/energy';
 
 @Injectable({
   providedIn: 'root'

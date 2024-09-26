@@ -27,6 +27,7 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
   selectedCompany: IdbCompany;
   selectedCompanySub: Subscription;
   name: FormControl;
+  energyUnit: FormControl;
   routeGuardWarningModal: boolean = false;
 
   constructor(private router: Router,
@@ -46,6 +47,7 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
     });
     if (this.selectedCompany) {
       this.name = new FormControl(this.selectedCompany.generalInformation.name, [Validators.required]);
+      this.energyUnit = new FormControl(this.selectedCompany.companyEnergyUnit, []); // Default value
       this.companySetupService.setControl(this.name);
     }
   }
@@ -71,6 +73,7 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
   async saveChanges() {
     this.selectedCompany = this.companyIdbService.selectedCompany.getValue();
     this.selectedCompany.generalInformation.name = this.name.value;
+    this.selectedCompany.companyEnergyUnit = this.energyUnit.value;
     await this.companyIdbService.asyncUpdate(this.selectedCompany);
   }
 

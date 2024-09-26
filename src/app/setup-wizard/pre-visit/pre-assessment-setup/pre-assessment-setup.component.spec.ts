@@ -33,7 +33,8 @@ describe('PreAssessmentSetupComponent', () => {
   }
   let companyIdbService: Partial<CompanyIdbService> = {
     companies: new BehaviorSubject<Array<IdbCompany>>([]),
-    selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany(''))
+    selectedCompany: new BehaviorSubject<IdbCompany>(getNewIdbCompany('')),
+    getByGUID: (guid: string) => (getNewIdbCompany(''))
   };
   let facilityIdbService: Partial<FacilityIdbService> = {
     facilities: new BehaviorSubject<Array<IdbFacility>>([]),

@@ -1,4 +1,7 @@
 export const energy = {
+  // 1. Unit identifier is the key of the unit, e.g. Wh, mWh
+  //  make sure it is unique
+  // 2. 'display' is what rendered in the UIs
   metric: {
     Wh: {
       name: {

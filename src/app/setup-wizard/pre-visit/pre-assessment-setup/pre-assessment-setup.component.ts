@@ -16,6 +16,12 @@ import { AssessmentOptions, AssessmentType, AssessmentTypes } from 'src/app/shar
 import { UtilityOption, UtilityOptions } from 'src/app/shared/constants/utilityTypes';
 import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
 import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { IdbCompany } from 'src/app/models/company';
+import { ConvertValue } from 'src/app/shared/conversions/convertValue';
+import { UtilityEnergyUse } from 'src/app/models/utilityEnergyUses';
+import { SharedSettingsFormsService } from 'src/app/shared/shared-settings-forms/shared-settings-forms.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -42,6 +48,8 @@ export class PreAssessmentSetupComponent {
   energyEquipmentSub: Subscription;
   energyEquipmentOptions: Array<IdbEnergyEquipment>;
 
+  convertValue: ConvertValue = new ConvertValue();
+
   assessmentTypes: Array<AssessmentType> = AssessmentTypes;
   utilityOptions: Array<UtilityOption> = UtilityOptions;
   
@@ -55,9 +63,12 @@ export class PreAssessmentSetupComponent {
   onSiteVisitSub: Subscription;
   isFormChange: boolean = false;
 
+  companyEnergyUnit: string;
+
   accordionGuid: string;
   isAddNew: boolean = false;
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
+    private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private contactIdbService: ContactIdbService,
@@ -65,7 +76,7 @@ export class PreAssessmentSetupComponent {
     private energyEquipmentIdbService: EnergyEquipmentIdbService,
     private bootstrapService: BootstrapService,
     private localStorageDataService: LocalStorageDataService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {
   }
 
@@ -88,7 +99,10 @@ export class PreAssessmentSetupComponent {
 
     this.energyEquipmentSub = this.energyEquipmentIdbService.energyEquipments.subscribe(equipments => {
       this.energyEquipmentOptions = equipments;
-    })
+    });
+
+    this.companyEnergyUnit = this.companyIdbService.getByGUID(this.onSiteVisit.companyId).companyEnergyUnit;
+
   }
 
   ngOnDestroy() {
@@ -111,21 +125,23 @@ export class PreAssessmentSetupComponent {
     let utilityTypes = AssessmentOptions.find(
       _assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
     assessment.utilityTypes = utilityTypes; // track all utility types
-    // utility type is not the default if the assessment type changes
-    if (assessment.utilityType !== utilityTypes[0]) {
-      assessment.utilityType = utilityTypes?.[0]; // update to the first/default utility type
-      await this.utilityTypeChange(assessment);
-    } else {
-      await this.saveChanges(assessment);
-    }
+    await this.calculateEnergyUse(assessment);
   }
 
-  async utilityTypeChange(assessment: IdbAssessment) {
-    let _energyDefaultUnit = UtilityOptions.find(
-      _utilityOption => _utilityOption.utilityType == assessment.utilityType)?.energyDefaultUnit;
-    if (assessment.unitOptionValue !== _energyDefaultUnit.value) {
-      assessment.unitOptionValue = _energyDefaultUnit.value;
-    }
+  async calculateEnergyUse(assessment: IdbAssessment) {
+    let result = 0;
+    assessment.utilityTypes.forEach(utilityType => {
+      let utilityEnergyUse: UtilityEnergyUse = assessment.utilityEnergyUses.find(
+        _energyUse => _energyUse.utilityType == utilityType);
+      if (utilityEnergyUse.include) {
+        let convertedValue = this.convertValue.convertValue(
+          utilityEnergyUse.energyUse,
+          utilityEnergyUse.unit,
+          this.companyEnergyUnit).convertedValue;
+        result += convertedValue;
+      }
+    });
+    assessment.energyUse = result;
     await this.saveChanges(assessment);
   }
 
