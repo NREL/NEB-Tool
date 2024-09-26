@@ -45,7 +45,7 @@ export class UserPortfolioComponent {
 
     this.companiesSub = this.companyIdbService.companies.subscribe(companies => {
       this.companies = companies;
-    })
+    });
   }
 
   ngOnDestroy(){

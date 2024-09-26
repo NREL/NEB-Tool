@@ -1,0 +1,24 @@
+.dashboard .card{
+    border-radius: 0;
+}
+
+.dashboard .card-title{
+    font-size: 26px;
+}
+
+.dashboard .card-title.secondary{
+    font-size: 20px;
+}
+
+.dashboard .card-text{
+    font-size: 14px;
+}
+
+.dashboard th.actions,.dashboard  td.actions{
+    width: 15px;
+}
+
+.dashboard table th,.dashboard  table td{
+    padding: .2rem;
+    vertical-align: middle;
+}
