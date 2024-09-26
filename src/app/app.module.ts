@@ -20,6 +20,7 @@ import { HelperPipesModule } from './shared/helper-pipes/helper-pipes.module';
 import { AssessmentDashboardModule } from './assessment-dashboard/assessment-dashboard.module';
 import { SetupWizardModalComponent } from './core-components/setup-wizard-modal/setup-wizard-modal.component';
 import { ImportBackupModalComponent } from './core-components/import-backup-modal/import-backup-modal.component';
+import { UserPortfolioModule } from './user-portfolio/user-portfolio.module';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ImportBackupModalComponent } from './core-components/import-backup-moda
     FormsModule,
     SetupWizardModule,
     HelperPipesModule,
-    AssessmentDashboardModule
+    AssessmentDashboardModule,
+    UserPortfolioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

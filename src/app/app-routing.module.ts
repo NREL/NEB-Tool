@@ -44,6 +44,7 @@ import { VisitReportComponent } from './setup-wizard/data-evaluation/visit-repor
 import { AssessmentEvaluationComponent } from './setup-wizard/data-evaluation/assessment-evaluation/assessment-evaluation.component';
 import { OnSiteAssessmentResultsComponent } from './setup-wizard/data-collection/on-site-assessment/on-site-assessment-results/on-site-assessment-results.component';
 import { FacilityEnergyEquipmentSetupComponent } from './setup-wizard/pre-visit/facility-energy-equipment-setup/facility-energy-equipment-setup.component';
+import { UserPortfolioComponent } from './user-portfolio/user-portfolio.component';
 
 const routes: Routes = [
   {
@@ -177,31 +178,35 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    component: UserDashboardComponent,
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'home'
-      },
-      {
-        path: 'home',
-        component: UserDashboardHomeComponent
-      },
-      {
-        path: 'settings',
-        component: UserSettingsComponent
-      },
-      {
-        path: 'help',
-        component: UserDashboardHelpComponent
-      },
-      {
-        path: 'nebs-database',
-        component: ExploreNEBsComponent
-      }
-    ]
+    component: UserPortfolioComponent
   },
+  // {
+  //   path: 'user',
+  //   component: UserDashboardComponent,
+  //   children: [
+  //     {
+  //       path: '',
+  //       pathMatch: 'full',
+  //       redirectTo: 'home'
+  //     },
+  //     {
+  //       path: 'home',
+  //       component: UserDashboardHomeComponent
+  //     },
+  //     {
+  //       path: 'settings',
+  //       component: UserSettingsComponent
+  //     },
+  //     {
+  //       path: 'help',
+  //       component: UserDashboardHelpComponent
+  //     },
+  //     {
+  //       path: 'nebs-database',
+  //       component: ExploreNEBsComponent
+  //     }
+  //   ]
+  // },
   {
     path: 'company/:id',
     component: CompanyDashboardComponent,
