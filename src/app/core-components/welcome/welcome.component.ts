@@ -31,7 +31,7 @@ export class WelcomeComponent {
   faSearchPlus: IconDefinition = faSearchPlus;
   faStopwatch: IconDefinition = faStopwatch
 
-
+  userSub: Subscription
   user: IdbUser;
 
   onSiteVisits: Array<IdbOnSiteVisit>;
@@ -52,7 +52,9 @@ export class WelcomeComponent {
   }
 
   ngOnInit() {
-    this.user = this.userIdbService.user.getValue();
+    this.userSub = this.userIdbService.user.subscribe(user => {
+      this.user = user;
+    });
     this.onSiteVisitSub = this.onSiteVisitIdbService.onSiteVisits.subscribe(visits => {
       this.onSiteVisits =  _.orderBy(visits, (visit: IdbOnSiteVisit) => {
         return new Date(visit.modifiedDate);
@@ -72,6 +74,7 @@ export class WelcomeComponent {
     this.onSiteVisitSub.unsubscribe();
     this.facilitiesSub.unsubscribe();
     this.companiesSub.unsubscribe();
+    this.userSub.unsubscribe();
   }
 
   async saveChanges() {
