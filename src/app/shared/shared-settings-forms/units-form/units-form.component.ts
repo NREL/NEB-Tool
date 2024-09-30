@@ -17,10 +17,6 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
 
   faGear: IconDefinition = faGear;
   form: FormGroup;
-  energyUnitOptions: Array<UnitOption> = EnergyUnitOptions;
-  volumeGasOptions: Array<UnitOption> = VolumeGasOptions;
-  volumeLiquidOptions: Array<UnitOption> = VolumeLiquidOptions;
-  massUnitOptions: Array<UnitOption> = MassUnitOptions;
 
   facility: IdbFacility;
   facilitySub: Subscription;

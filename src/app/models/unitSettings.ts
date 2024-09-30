@@ -1,3 +1,5 @@
+import { UtilityOptions } from "../shared/constants/utilityTypes";
+
 export interface UnitSettings {
     includeElectricity: boolean,
     electricityUnit: string,
@@ -19,9 +21,9 @@ export interface UnitSettings {
     wasteWaterUnit: string,
     wasteWaterPrice: number,
 
-    includeOtherFuel: boolean,
-    otherFuelUnit: string,
-    otherFuelPrice: number,
+    includeOtherFuels: boolean,
+    otherFuelsUnit: string,
+    otherFuelsPrice: number,
 
     includeCompressedAir: boolean,
     compressedAirUnit: string,
@@ -29,34 +31,18 @@ export interface UnitSettings {
 }
 
 export function getDefaultUnitSettings(): UnitSettings {
-    return {
-        //TODO: Default Unit Prices
-        includeElectricity: true,
-        electricityUnit: 'kWh',
-        electricityPrice: 0,
-    
-        includeNaturalGas: true,
-        naturalGasUnit: 'MMBtu',
-        naturalGasPrice: 0,
-        
-        includeSteam: false,
-        steamUnit: 'lb',
-        steamPrice: 0,
-        
-        includeOtherFuel: false,
-        otherFuelUnit: 'MMBtu',
-        otherFuelPrice: 0,
-    
-        includeCompressedAir: false,
-        compressedAirUnit: 'SCF',
-        compressedAirPrice: 0,
+    const settings: UnitSettings = UtilityOptions.reduce((settings, option) => {
+        const utilityType = option.utilityType.replace(/\s+/g, ''); // Remove spaces
+        const camelCaseType = utilityType.charAt(0).toLowerCase()
+                 + utilityType.slice(1); // Lowercase first letter
 
-        includeWater: false,
-        waterUnit: 'gal',
-        waterPrice: 0,
-    
-        includeWasteWater: false,
-        wasteWaterUnit: 'gal',
-        wasteWaterPrice: 0,
-    }
+        settings[`include${utilityType}`] = false;
+        settings[`${camelCaseType}Unit`] = option.energyDefaultUnit.value;
+        settings[`${camelCaseType}Price`] = 0;
+        return settings;
+    }, {} as UnitSettings);
+    // set defaults to include electricity and natural gas
+    settings.includeElectricity = true;
+    settings.includeNaturalGas = true;
+    return settings;
 }

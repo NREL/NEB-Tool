@@ -82,9 +82,9 @@ export class SharedSettingsFormsService {
       steamUnit: [unitSettings.steamUnit],
       steamPrice: [unitSettings.steamPrice, [Validators.min(0)]],
 
-      includeOtherFuel: [unitSettings.includeOtherFuel],
-      otherFuelUnit: [unitSettings.otherFuelUnit],
-      otherFuelPrice: [unitSettings.otherFuelPrice, [Validators.min(0)]],
+      includeOtherFuels: [unitSettings.includeOtherFuels],
+      otherFuelsUnit: [unitSettings.otherFuelsUnit],
+      otherFuelsPrice: [unitSettings.otherFuelsPrice, [Validators.min(0)]],
 
       includeCompressedAir: [unitSettings.includeCompressedAir],
       compressedAirUnit: [unitSettings.compressedAirUnit],
@@ -103,7 +103,7 @@ export class SharedSettingsFormsService {
     this.setRequiredValidator(form.controls['electricityPrice'], unitSettings.includeElectricity);
     this.setRequiredValidator(form.controls['naturalGasPrice'], unitSettings.includeNaturalGas);
     this.setRequiredValidator(form.controls['steamPrice'], unitSettings.includeSteam);
-    this.setRequiredValidator(form.controls['otherFuelPrice'], unitSettings.includeOtherFuel);
+    this.setRequiredValidator(form.controls['otherFuelsPrice'], unitSettings.includeOtherFuels);
     this.setRequiredValidator(form.controls['compressedAirPrice'], unitSettings.includeCompressedAir);
     this.setRequiredValidator(form.controls['waterPrice'], unitSettings.includeWater);
     this.setRequiredValidator(form.controls['wasteWaterPrice'], unitSettings.includeWasteWater);
@@ -127,10 +127,10 @@ export class SharedSettingsFormsService {
     unitSettings.steamUnit = form.controls['steamUnit'].value;
     unitSettings.steamPrice = form.controls['steamPrice'].value;
 
-    unitSettings.includeOtherFuel = form.controls['includeOtherFuel'].value;
-    this.setRequiredValidator(form.controls['otherFuelPrice'], unitSettings.includeOtherFuel);
-    unitSettings.otherFuelUnit = form.controls['otherFuelUnit'].value;
-    unitSettings.otherFuelPrice = form.controls['otherFuelPrice'].value;
+    unitSettings.includeOtherFuels = form.controls['includeOtherFuels'].value;
+    this.setRequiredValidator(form.controls['otherFuelsPrice'], unitSettings.includeOtherFuels);
+    unitSettings.otherFuelsUnit = form.controls['otherFuelsUnit'].value;
+    unitSettings.otherFuelsPrice = form.controls['otherFuelsPrice'].value;
 
     unitSettings.includeCompressedAir = form.controls['includeCompressedAir'].value;
     this.setRequiredValidator(form.controls['compressedAirPrice'], unitSettings.includeCompressedAir);
