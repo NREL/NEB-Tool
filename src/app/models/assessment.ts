@@ -2,6 +2,7 @@ import { AssessmentOptions, AssessmentType } from "../shared/constants/assessmen
 import { UnitOption } from "../shared/constants/unitOptions";
 import { UtilityType } from "../shared/constants/utilityTypes";
 import { IdbEntry, getNewIdbEntry } from "./idbEntry";
+import { UnitSettings } from "./unitSettings";
 import { getDefaultUtilityEnergyUses, UtilityEnergyUse } from "./utilityEnergyUses";
 
 export interface IdbAssessment extends IdbEntry {
@@ -28,7 +29,8 @@ const defaultAssessmentType: AssessmentType = "Pump";
 const defaultUtilityTypes: Array<UtilityType> = AssessmentOptions.find(
     _option => _option.assessmentType === defaultAssessmentType)?.utilityTypes || [];
 
-export function getNewIdbAssessment(userId: string, companyId: string, facilityId: string): IdbAssessment {
+export function getNewIdbAssessment(userId: string, companyId: string, facilityId: string,
+    facilityUnitSettings: UnitSettings): IdbAssessment {
     let idbEntry: IdbEntry = getNewIdbEntry();
     return {
         ...idbEntry,
@@ -38,7 +40,7 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         facilityId: facilityId,
         assessmentType: defaultAssessmentType,
         utilityTypes: defaultUtilityTypes,
-        utilityEnergyUses: getDefaultUtilityEnergyUses(),
+        utilityEnergyUses: getDefaultUtilityEnergyUses(facilityUnitSettings),
         utilityType: undefined,
         unitOptionValue: undefined,
         equipmentId: undefined,
