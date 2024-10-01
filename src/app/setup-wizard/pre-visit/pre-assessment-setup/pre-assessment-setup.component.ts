@@ -22,6 +22,7 @@ import { ConvertValue } from 'src/app/shared/conversions/convertValue';
 import { UtilityEnergyUse } from 'src/app/models/utilityEnergyUses';
 import { SharedSettingsFormsService } from 'src/app/shared/shared-settings-forms/shared-settings-forms.service';
 import { FormGroup } from '@angular/forms';
+import { UnitSettings } from 'src/app/models/unitSettings';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -63,7 +64,10 @@ export class PreAssessmentSetupComponent {
   onSiteVisitSub: Subscription;
   isFormChange: boolean = false;
 
+  companySub: Subscription;
   companyEnergyUnit: string;
+  facilitySub: Subscription;
+  facilityUnitSettings: UnitSettings
 
   accordionGuid: string;
   isAddNew: boolean = false;
@@ -101,7 +105,29 @@ export class PreAssessmentSetupComponent {
       this.energyEquipmentOptions = equipments;
     });
 
-    this.companyEnergyUnit = this.companyIdbService.getByGUID(this.onSiteVisit.companyId).companyEnergyUnit;
+    this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+      if (_company.guid === this.onSiteVisit.companyId) {
+        this.companyEnergyUnit = _company.companyEnergyUnit;
+      } else {
+        this.companyEnergyUnit = this.companyIdbService.getByGUID(this.onSiteVisit.companyId).companyEnergyUnit;
+      }
+      let filteredAssessments = this.assessments.filter(assessment => this.onSiteVisit.assessmentIds.includes(assessment.guid));
+      filteredAssessments.forEach(async assessment => {
+        await this.calculateEnergyUseCost(assessment);
+      });
+    });
+
+    this.facilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
+      if (_facility.guid === this.onSiteVisit.facilityId) {
+        this.facilityUnitSettings = _facility.unitSettings;
+      } else {
+        this.facilityUnitSettings = this.facilityIdbService.getByGUID(this.onSiteVisit.facilityId).unitSettings;
+      }
+      let filteredAssessments = this.assessments.filter(assessment => this.onSiteVisit.assessmentIds.includes(assessment.guid));
+      filteredAssessments.forEach(async assessment => {
+        await this.calculateEnergyUseCost(assessment);
+      });
+    });
 
   }
 
@@ -110,6 +136,8 @@ export class PreAssessmentSetupComponent {
     this.contactsSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
     this.energyEquipmentSub.unsubscribe();
+    this.companySub.unsubscribe();
+    this.facilitySub.unsubscribe();
   }
   
   ngAfterViewInit() {
@@ -125,23 +153,33 @@ export class PreAssessmentSetupComponent {
     let utilityTypes = AssessmentOptions.find(
       _assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
     assessment.utilityTypes = utilityTypes; // track all utility types
-    await this.calculateEnergyUse(assessment);
+    await this.calculateEnergyUseCost(assessment);
   }
 
-  async calculateEnergyUse(assessment: IdbAssessment) {
-    let result = 0;
+  async calculateEnergyUseCost(assessment: IdbAssessment) {
+    let use = 0, cost = 0;
     assessment.utilityTypes.forEach(utilityType => {
       let utilityEnergyUse: UtilityEnergyUse = assessment.utilityEnergyUses.find(
         _energyUse => _energyUse.utilityType == utilityType);
       if (utilityEnergyUse.include) {
-        let convertedValue = this.convertValue.convertValue(
+        // calculate use
+        let convertedUse = this.convertValue.convertValue(
           utilityEnergyUse.energyUse,
           utilityEnergyUse.unit,
           this.companyEnergyUnit).convertedValue;
-        result += convertedValue;
+        use += convertedUse;
+        // calculate cost
+        let trimmedType = utilityType.replace(/\s+/g, ''); // Remove spaces
+        let camelCaseType = trimmedType.charAt(0).toLowerCase() + trimmedType.slice(1);
+        let convertedCost = this.convertValue.convertValue(
+          utilityEnergyUse.energyUse,
+          utilityEnergyUse.unit,
+          this.facilityUnitSettings[`${camelCaseType}Unit`]).convertedValue;
+        cost += convertedCost;
       }
     });
-    assessment.energyUse = result;
+    assessment.energyUse = use;
+    assessment.cost = cost;
     await this.saveChanges(assessment);
   }
 
