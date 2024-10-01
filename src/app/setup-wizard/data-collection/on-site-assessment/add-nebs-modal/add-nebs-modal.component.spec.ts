@@ -15,6 +15,7 @@ import { getNewIdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { NebOptionsModalListPipe } from './neb-options-modal-list.pipe';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('AddNebsModalComponent', () => {
   let component: AddNebsModalComponent;
@@ -45,8 +46,8 @@ describe('AddNebsModalComponent', () => {
     getAssessmentNonEnergyBenefits: () => { return [] }
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '')),
-    getByGuid: () => { return getNewIdbAssessment('', '', '') }
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings())),
+    getByGuid: () => { return getNewIdbAssessment('', '', '', getDefaultUnitSettings()) }
 
   };
   let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {

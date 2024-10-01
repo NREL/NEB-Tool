@@ -28,6 +28,7 @@ import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-i
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
 import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('AssessmentReportComponent', () => {
   let component: AssessmentReportComponent;
@@ -37,7 +38,7 @@ describe('AssessmentReportComponent', () => {
   };
 
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings()))
   }
 
   let companyIdbService: Partial<CompanyIdbService> = {
@@ -90,7 +91,7 @@ describe('AssessmentReportComponent', () => {
 
     fixture = TestBed.createComponent(AssessmentReportComponent);
     component = fixture.componentInstance;
-    component.assessment = getNewIdbAssessment('', '', '');
+    component.assessment = getNewIdbAssessment('', '', '', getDefaultUnitSettings());
     fixture.detectChanges();
   });
 

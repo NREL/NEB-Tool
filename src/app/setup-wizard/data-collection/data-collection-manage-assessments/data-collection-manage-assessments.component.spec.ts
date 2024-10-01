@@ -10,6 +10,7 @@ import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit
 import { BehaviorSubject } from 'rxjs';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 
 describe('DataCollectionManageAssessmentsComponent', () => {
   let component: DataCollectionManageAssessmentsComponent;
@@ -21,7 +22,8 @@ describe('DataCollectionManageAssessmentsComponent', () => {
   let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
     selectedVisit: new BehaviorSubject<IdbOnSiteVisit>(getNewIdbOnSiteVisit('', '', ''))
   };
-  let dbChangesService: Partial<DbChangesService> = {}
+  let dbChangesService: Partial<DbChangesService> = {};
+  let facilityIdbService: Partial<FacilityIdbService> = {};
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule, FontAwesomeModule, HelperPipesModule],
@@ -29,7 +31,8 @@ describe('DataCollectionManageAssessmentsComponent', () => {
       providers: [
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
-        { provide: DbChangesService, useValue: dbChangesService }
+        { provide: DbChangesService, useValue: dbChangesService },
+        { provide: FacilityIdbService, useValue: facilityIdbService }
       ]
     })
     .compileComponents();

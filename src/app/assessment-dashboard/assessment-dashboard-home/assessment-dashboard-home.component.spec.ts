@@ -13,13 +13,14 @@ import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.modu
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('AssessmentDashboardHomeComponent', () => {
   let component: AssessmentDashboardHomeComponent;
   let fixture: ComponentFixture<AssessmentDashboardHomeComponent>;
 
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings()))
   };
   let companyIdbService: Partial<CompanyIdbService> = {};
   let facilityIdbService: Partial<FacilityIdbService> = {};

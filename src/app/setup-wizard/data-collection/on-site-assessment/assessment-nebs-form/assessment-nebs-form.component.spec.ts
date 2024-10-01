@@ -19,6 +19,7 @@ import { EnergyOpportunityNebsListPipe } from './energy-opportunity-nebs-table/e
 import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('AssessmentNebsFormComponent', () => {
   let component: AssessmentNebsFormComponent;
@@ -29,7 +30,7 @@ describe('AssessmentNebsFormComponent', () => {
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings()))
   };
   let nonEnergyBenefitsIdbService: Partial<NonEnergyBenefitsIdbService> = {
     nonEnergyBenefits: new BehaviorSubject<Array<IdbNonEnergyBenefit>>([])
