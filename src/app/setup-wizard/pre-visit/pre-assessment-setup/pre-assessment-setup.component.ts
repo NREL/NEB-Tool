@@ -111,10 +111,6 @@ export class PreAssessmentSetupComponent {
       } else {
         this.companyEnergyUnit = this.companyIdbService.getByGUID(this.onSiteVisit.companyId).companyEnergyUnit;
       }
-      let filteredAssessments = this.assessments.filter(assessment => this.onSiteVisit.assessmentIds.includes(assessment.guid));
-      filteredAssessments.forEach(async assessment => {
-        await this.calculateEnergyUseCost(assessment);
-      });
     });
 
     this.facilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
@@ -123,10 +119,6 @@ export class PreAssessmentSetupComponent {
       } else {
         this.facilityUnitSettings = this.facilityIdbService.getByGUID(this.onSiteVisit.facilityId).unitSettings;
       }
-      let filteredAssessments = this.assessments.filter(assessment => this.onSiteVisit.assessmentIds.includes(assessment.guid));
-      filteredAssessments.forEach(async assessment => {
-        await this.calculateEnergyUseCost(assessment);
-      });
     });
 
   }
