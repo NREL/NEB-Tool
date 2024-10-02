@@ -141,7 +141,7 @@
                                                             for="{{'cost_'+assessment.guid}}">Annual
                                                             Costs</label>
                                                         <div class="col-sm-7" id="{{'cost_'+assessment.guid}}">
-                                                            {{assessment.cost | number:'1.0-2'}}&nbsp;&dollar;
+                                                            {{assessment.cost | currency:'USD':'symbol':'1.0-2'}}
                                                         </div>
                                                     </div>
 

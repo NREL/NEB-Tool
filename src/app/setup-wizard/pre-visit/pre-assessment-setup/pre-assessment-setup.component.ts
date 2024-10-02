@@ -106,19 +106,11 @@ export class PreAssessmentSetupComponent {
     });
 
     this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
-      if (_company.guid === this.onSiteVisit.companyId) {
-        this.companyEnergyUnit = _company.companyEnergyUnit;
-      } else {
-        this.companyEnergyUnit = this.companyIdbService.getByGUID(this.onSiteVisit.companyId).companyEnergyUnit;
-      }
+      this.companyEnergyUnit = _company.companyEnergyUnit;
     });
 
     this.facilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
-      if (_facility.guid === this.onSiteVisit.facilityId) {
-        this.facilityUnitSettings = _facility.unitSettings;
-      } else {
-        this.facilityUnitSettings = this.facilityIdbService.getByGUID(this.onSiteVisit.facilityId).unitSettings;
-      }
+      this.facilityUnitSettings = _facility.unitSettings;
     });
 
   }
@@ -167,7 +159,7 @@ export class PreAssessmentSetupComponent {
           utilityEnergyUse.energyUse,
           utilityEnergyUse.unit,
           this.facilityUnitSettings[`${camelCaseType}Unit`]).convertedValue;
-        cost += convertedCost;
+        cost += convertedCost * this.facilityUnitSettings[`${camelCaseType}Price`];
       }
     });
     assessment.energyUse = use;

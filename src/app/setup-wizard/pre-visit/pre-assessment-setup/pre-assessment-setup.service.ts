@@ -49,7 +49,7 @@ export class PreAssessmentSetupService {
             utilityEnergyUse.energyUse,
             utilityEnergyUse.unit,
             facilityUnitSettings[`${camelCaseType}Unit`]).convertedValue;
-          cost += convertedCost;
+          cost += convertedCost * facilityUnitSettings[`${camelCaseType}Price`];
         }
       });
       assessment.cost = cost;
