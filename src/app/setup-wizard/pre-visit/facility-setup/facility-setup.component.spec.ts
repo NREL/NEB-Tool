@@ -14,6 +14,8 @@ import { IdbCompany, getNewIdbCompany } from 'src/app/models/company';
 import { IdbUser, getNewIdbUser } from 'src/app/models/user';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { PreAssessmentSetupService } from '../pre-assessment-setup/pre-assessment-setup.service';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 
 describe('FacilitySetupComponent', () => {
   let component: FacilitySetupComponent;
@@ -36,6 +38,9 @@ describe('FacilitySetupComponent', () => {
     selectedVisit: new BehaviorSubject<IdbOnSiteVisit>(getNewIdbOnSiteVisit('', '', ''))
   };
 
+  let preAassessmentSetupService: Partial<PreAssessmentSetupService> = {};
+  let assessmentIdbService: Partial<AssessmentIdbService> = {};
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule, ReactiveFormsModule],
@@ -45,7 +50,9 @@ describe('FacilitySetupComponent', () => {
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },   
         { provide: FacilityIdbService, useValue: facilityIdbService },
-        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService }
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
+        { provide: PreAssessmentSetupService, useValue: preAassessmentSetupService },
+        { provide: AssessmentIdbService, useValue: assessmentIdbService }
       ]
     })
     .compileComponents();

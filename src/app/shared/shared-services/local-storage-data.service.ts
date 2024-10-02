@@ -20,7 +20,12 @@ export class LocalStorageDataService {
     }
 
     this.energyOppAccordionGuid = this.localStorageService.retrieve("energyOppAccordionGuid");
-    this.nebAccordionGuid = this.localStorageService.retrieve("nebAccordionGuid");
+    const storedNebAccordionGuid = this.localStorageService.retrieve("nebAccordionGuid");
+    if (storedNebAccordionGuid == undefined) {
+      this.nebAccordionGuid = '';
+    } else {
+      this.nebAccordionGuid = storedNebAccordionGuid;
+    }
     this.contactAccordionGuid = this.localStorageService.retrieve("contactAccordionGuid");
     this.energyEquipmentAccordionGuid = this.localStorageService.retrieve("energyEquipmentAccordionGuid");
     this.processEquipmentAccordionGuid = this.localStorageService.retrieve("processEquipmentAccordionGuid");

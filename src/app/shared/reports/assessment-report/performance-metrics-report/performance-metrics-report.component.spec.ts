@@ -7,6 +7,7 @@ import { KeyPerformanceIndicatorsIdbService } from 'src/app/indexed-db/key-perfo
 import { BehaviorSubject } from 'rxjs';
 import { IdbKeyPerformanceIndicator } from 'src/app/models/keyPerformanceIndicator';
 import { TableEntriesModule } from 'src/app/shared/table-entries/table-entries.module';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('PerformanceMetricsReportComponent', () => {
   let component: PerformanceMetricsReportComponent;
@@ -28,7 +29,7 @@ describe('PerformanceMetricsReportComponent', () => {
 
     fixture = TestBed.createComponent(PerformanceMetricsReportComponent);
     component = fixture.componentInstance;
-    let assessment: IdbAssessment = getNewIdbAssessment('', '', '');
+    let assessment: IdbAssessment = getNewIdbAssessment('', '', '', getDefaultUnitSettings());
     let assessmentReport: AssessmentReport = getAssessmentReport(assessment, [], [], [], []);
     component.keyPerformanceIndicatorReport = assessmentReport.keyPerformanceIndicatorReport;
     fixture.detectChanges();

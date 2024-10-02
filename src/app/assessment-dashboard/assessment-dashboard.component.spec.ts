@@ -7,12 +7,13 @@ import { AssessmentIdbService } from '../indexed-db/assessment-idb.service';
 import { BehaviorSubject } from 'rxjs';
 import { IdbAssessment, getNewIdbAssessment } from '../models/assessment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { getDefaultUnitSettings } from '../models/unitSettings';
 
 describe('AssessmentDashboardComponent', () => {
   let component: AssessmentDashboardComponent;
   let fixture: ComponentFixture<AssessmentDashboardComponent>;
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings()))
   }
   beforeEach(async () => {
     await TestBed.configureTestingModule({

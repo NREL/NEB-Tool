@@ -7,6 +7,11 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbFacility } from 'src/app/models/facility';
 import { IconDefinition, faGear } from '@fortawesome/free-solid-svg-icons';
 import { SharedSettingsFormsService } from '../shared-settings-forms.service';
+import { PreAssessmentSetupService } from 'src/app/setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.service';
+import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 
 @Component({
   selector: 'app-units-form',
@@ -17,16 +22,19 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
 
   faGear: IconDefinition = faGear;
   form: FormGroup;
-  energyUnitOptions: Array<UnitOption> = EnergyUnitOptions;
-  volumeGasOptions: Array<UnitOption> = VolumeGasOptions;
-  volumeLiquidOptions: Array<UnitOption> = VolumeLiquidOptions;
-  massUnitOptions: Array<UnitOption> = MassUnitOptions;
 
   facility: IdbFacility;
   facilitySub: Subscription;
+
+  facilityAssessments: Array<IdbAssessment> = [];
+  hasAssessments: boolean = false;
+  priceChanged: boolean = false;
+
   constructor(
     private facilityIdbService: FacilityIdbService,
-    private sharedSettingsFormsService: SharedSettingsFormsService) {
+    private sharedSettingsFormsService: SharedSettingsFormsService,
+    private preAssessmentSetupService: PreAssessmentSetupService,
+    private assessmentIdbService: AssessmentIdbService,) {
   }
 
   ngOnInit() {
@@ -36,6 +44,10 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
         this.form = this.sharedSettingsFormsService.getUnitsForm(_facility.unitSettings);
       }
       this.facility = _facility;
+      this.facilityAssessments = this.assessmentIdbService .getByOtherGuid(this.facility.guid, 'facility');
+      if (this.facilityAssessments.length > 0) {
+        this.hasAssessments = true;
+      }
     });
   }
 
@@ -43,6 +55,13 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
     if (this.facilitySub) {
       this.facilitySub.unsubscribe();
     }
+  }
+
+  async savePriceChanges() {
+    this.priceChanged = true;
+    await this.saveChanges();
+    await this.preAssessmentSetupService.updateAssessmentEnergyCost(
+      this.facilityAssessments, this.facility.unitSettings);
   }
 
   async saveChanges() {

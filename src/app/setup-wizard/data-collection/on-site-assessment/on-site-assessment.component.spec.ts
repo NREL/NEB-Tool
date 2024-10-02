@@ -22,12 +22,13 @@ import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportuni
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { AssessmentEnergyOpportunitiesFormComponent } from './assessment-energy-opportunities-form/assessment-energy-opportunities-form.component';
 import { SetupWizardService } from '../../setup-wizard.service';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('OnSiteAssessmentComponent', () => {
   let component: OnSiteAssessmentComponent;
   let fixture: ComponentFixture<OnSiteAssessmentComponent>;
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings()))
   };
   let contactIdbService: Partial<ContactIdbService> = {
     contacts: new BehaviorSubject<Array<IdbContact>>([])
