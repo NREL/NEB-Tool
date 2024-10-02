@@ -13,9 +13,8 @@ export class PreAssessmentSetupService {
 
   constructor(private assessmentIdbService: AssessmentIdbService) { }
 
-  async updateAssessmentEnergyUse(assessmentIds: Array<string>, companyEnergyUnit: string) {
-    for (const assessmentID of assessmentIds) {
-      let assessment = await this.assessmentIdbService.getByGuid(assessmentID);
+  async updateAssessmentEnergyUse(assessments: Array<IdbAssessment>, companyEnergyUnit: string) {
+    for (const assessment of assessments) {
       let use = 0;
       assessment.utilityTypes.forEach(utilityType => {
         let utilityEnergyUse: UtilityEnergyUse = assessment.utilityEnergyUses.find(
@@ -34,9 +33,8 @@ export class PreAssessmentSetupService {
     }
   }
 
-  async updateAssessmentEnergyCost(assessmentIds: Array<string>, facilityUnitSettings: UnitSettings) {
-    for (const assessmentID of assessmentIds) {
-      let assessment = await this.assessmentIdbService.getByGuid(assessmentID);
+  async updateAssessmentEnergyCost(assessments: Array<IdbAssessment>, facilityUnitSettings: UnitSettings) {
+    for (const assessment of assessments) {
       let use = 0, cost = 0;
       assessment.utilityTypes.forEach(utilityType => {
         let utilityEnergyUse: UtilityEnergyUse = assessment.utilityEnergyUses.find(

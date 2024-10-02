@@ -9,6 +9,8 @@ import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { FormControl, Validators } from '@angular/forms';
 import { CompanySetupService } from './company-setup.service';
 import { PreAssessmentSetupService } from '../pre-assessment-setup/pre-assessment-setup.service';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
 
 @Component({
   selector: 'app-company-setup',
@@ -33,13 +35,15 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
 
   hasAssessments: boolean = false;
   energyUnitChange: boolean = false;
-  filteredVisits: Array<IdbOnSiteVisit> = [];
+
+  companyAssessments: Array<IdbAssessment> = [];
 
   constructor(private router: Router,
     private companyIdbService: CompanyIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private companySetupService: CompanySetupService,
-    private preAassessmentSetupService: PreAssessmentSetupService
+    private preAassessmentSetupService: PreAssessmentSetupService,
+    private assessmentIdbService: AssessmentIdbService,
   ) {
 
   }
@@ -53,15 +57,9 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
       this.energyUnit = new FormControl(this.selectedCompany.companyEnergyUnit, []); // Default value
       this.companySetupService.setControl(this.name);
 
-      this.filteredVisits = this.onSiteVisitIdbService.onSiteVisits?.getValue()
-        .filter(_visit => _visit.companyId === this.selectedCompany.guid);
-      if (this.filteredVisits && this.filteredVisits.length > 0) {
-        for (let _visit of this.filteredVisits) {
-          if (_visit.assessmentIds.length > 0) {
-            this.hasAssessments = true;
-            break;
-          }
-        }
+      this.companyAssessments = this.assessmentIdbService.getByOtherGuid(this.selectedCompany.guid, 'company');
+      if (this.companyAssessments.length > 0) {
+        this.hasAssessments = true;
       }
     }
   }
@@ -86,11 +84,9 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
 
   async saveUnitChanges() {
     this.energyUnitChange = true;
-    for (let _visit of this.filteredVisits) {
-      await this.preAassessmentSetupService.updateAssessmentEnergyUse(
-        _visit.assessmentIds, this.energyUnit.value);
-    }
     await this.saveChanges();
+    await this.preAassessmentSetupService.updateAssessmentEnergyUse(
+      this.companyAssessments, this.energyUnit.value);
   }
 
   async saveChanges() {

@@ -10,6 +10,8 @@ import { SharedSettingsFormsService } from '../shared-settings-forms.service';
 import { PreAssessmentSetupService } from 'src/app/setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { IdbAssessment } from 'src/app/models/assessment';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 
 @Component({
   selector: 'app-units-form',
@@ -24,7 +26,7 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
   facility: IdbFacility;
   facilitySub: Subscription;
 
-  filteredVisits: Array<IdbOnSiteVisit> = [];
+  facilityAssessments: Array<IdbAssessment> = [];
   hasAssessments: boolean = false;
   priceChanged: boolean = false;
 
@@ -32,7 +34,7 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
     private facilityIdbService: FacilityIdbService,
     private sharedSettingsFormsService: SharedSettingsFormsService,
     private preAssessmentSetupService: PreAssessmentSetupService,
-    private onSiteVisitIdbService: OnSiteVisitIdbService,) {
+    private assessmentIdbService: AssessmentIdbService,) {
   }
 
   ngOnInit() {
@@ -42,13 +44,9 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
         this.form = this.sharedSettingsFormsService.getUnitsForm(_facility.unitSettings);
       }
       this.facility = _facility;
-      this.filteredVisits = this.onSiteVisitIdbService.onSiteVisits.getValue()
-        .filter(_visit => _visit.facilityId === this.facility.guid);
-      for (let _visit of this.filteredVisits) {
-        if (_visit.assessmentIds.length > 0) {
-          this.hasAssessments = true;
-          break;
-        }
+      this.facilityAssessments = this.assessmentIdbService .getByOtherGuid(this.facility.guid, 'facility');
+      if (this.facilityAssessments.length > 0) {
+        this.hasAssessments = true;
       }
     });
   }
@@ -62,10 +60,8 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
   async savePriceChanges() {
     this.priceChanged = true;
     await this.saveChanges();
-    for (let _visit of this.filteredVisits) {
-      await this.preAssessmentSetupService.updateAssessmentEnergyCost(
-        _visit.assessmentIds, this.facility.unitSettings);
-      }
+    await this.preAssessmentSetupService.updateAssessmentEnergyCost(
+      this.facilityAssessments, this.facility.unitSettings);
   }
 
   async saveChanges() {

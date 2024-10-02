@@ -15,6 +15,7 @@ import { IdbUser, getNewIdbUser } from 'src/app/models/user';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { PreAssessmentSetupService } from '../pre-assessment-setup/pre-assessment-setup.service';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 
 describe('FacilitySetupComponent', () => {
   let component: FacilitySetupComponent;
@@ -38,6 +39,7 @@ describe('FacilitySetupComponent', () => {
   };
 
   let preAassessmentSetupService: Partial<PreAssessmentSetupService> = {};
+  let assessmentIdbService: Partial<AssessmentIdbService> = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -49,7 +51,8 @@ describe('FacilitySetupComponent', () => {
         { provide: CompanyIdbService, useValue: companyIdbService },   
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
-        { provide: PreAssessmentSetupService, useValue: preAassessmentSetupService }
+        { provide: PreAssessmentSetupService, useValue: preAassessmentSetupService },
+        { provide: AssessmentIdbService, useValue: assessmentIdbService }
       ]
     })
     .compileComponents();
