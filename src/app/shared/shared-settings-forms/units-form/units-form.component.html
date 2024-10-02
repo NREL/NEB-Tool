@@ -1,3 +1,6 @@
+<div class="alert alert-warning small p-1" *ngIf="hasAssessments && priceChanged">
+    Warning: The energy cost of all the assessments associated with this facility are updated.
+</div>
 <form [formGroup]="form">
     <div class="row">
         <div class="col-4">
@@ -34,7 +37,7 @@
             <div class="col-4">
                 <div class="input-group">
                     <input class="form-control" type="number" step="any" min="0" formControlName="electricityPrice"
-                        name="electricityPrice" (change)="saveChanges()">
+                        name="electricityPrice" (change)="savePriceChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['electricityUnit'].value | unitsDisplay"></span>
                     </span>
@@ -72,7 +75,7 @@
                 <div class="input-group">
                     <input class="form-control" type="number" step="any" min="0"
                         formControlName="naturalGasPrice"
-                        name="naturalGasPrice" (change)="saveChanges()">
+                        name="naturalGasPrice" (change)="savePriceChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['naturalGasUnit'].value | unitsDisplay"></span>
                     </span>
@@ -109,7 +112,7 @@
             <div class="col-4">
                 <div class="input-group">
                     <input class="form-control" type="number" step="any" min="0"
-                        formControlName="otherFuelsPrice" name="otherFuelsPrice" (change)="saveChanges()">
+                        formControlName="otherFuelsPrice" name="otherFuelsPrice" (change)="savePriceChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['otherFuelsUnit'].value | unitsDisplay"></span></span>
                 </div>
@@ -145,7 +148,7 @@
             <div class="col-4">
                 <div class="input-group">
                     <input class="form-control" type="number" step="any" min="0"
-                        formControlName="waterPrice" name="waterPrice" (change)="saveChanges()">
+                        formControlName="waterPrice" name="waterPrice" (change)="savePriceChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['waterUnit'].value | unitsDisplay"></span></span>
                 </div>
@@ -171,7 +174,7 @@
         </div>
         <ng-container *ngIf="form.controls['includeWasteWater'].value">
             <div class="col-4">
-                <select class="form-select" formControlName="wasteWaterUnit" (change)="saveChanges()">
+                <select class="form-select" formControlName="wasteWaterUnit" (change)="savePriceChanges()">
                     <option *ngFor="let liquidOption of ('Waste Water' | linkedUnitOptions  : 'Energy')"
                         [ngValue]="liquidOption.value">
                         <span [innerHTML]="liquidOption.value | unitsDisplay"></span>
@@ -218,7 +221,7 @@
             <div class="col-4">
                 <div class="input-group">
                     <input class="form-control" type="number" step="any" min="0"
-                        formControlName="steamPrice" name="steamPrice" (change)="saveChanges()">
+                        formControlName="steamPrice" name="steamPrice" (change)="savePriceChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['steamUnit'].value | unitsDisplay"></span>
                     </span>
@@ -256,7 +259,7 @@
             <div class="col-4">
                 <div class="input-group">
                     <input class="form-control" type="number" step="any" min="0" formControlName="compressedAirPrice"
-                        name="compressedAirPrice" (change)="saveChanges()">
+                        name="compressedAirPrice" (change)="savePriceChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['compressedAirUnit'].value | unitsDisplay"></span>
                     </span>
