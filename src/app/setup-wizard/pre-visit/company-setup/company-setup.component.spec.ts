@@ -15,6 +15,7 @@ import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit, getNewIdbOnSiteVisit } from 'src/app/models/onSiteVisit';
 import { LabelWithTooltipModule } from 'src/app/shared/label-with-tooltip/label-with-tooltip.module';
+import { PreAssessmentSetupService } from '../pre-assessment-setup/pre-assessment-setup.service';
 
 describe('CompanySetupComponent', () => {
   let component: CompanySetupComponent;
@@ -35,6 +36,7 @@ describe('CompanySetupComponent', () => {
   let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {
     selectedVisit: new BehaviorSubject<IdbOnSiteVisit>(getNewIdbOnSiteVisit('', '', ''))
   };
+  let preAassessmentSetupService: Partial<PreAssessmentSetupService> = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -46,6 +48,7 @@ describe('CompanySetupComponent', () => {
         { provide: CompanyIdbService, useValue: companyIdbService },
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
+        { provide: PreAssessmentSetupService, useValue: preAassessmentSetupService }
       ]
     })
       .compileComponents();

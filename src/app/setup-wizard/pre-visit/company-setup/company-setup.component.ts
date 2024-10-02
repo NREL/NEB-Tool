@@ -53,12 +53,14 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
       this.energyUnit = new FormControl(this.selectedCompany.companyEnergyUnit, []); // Default value
       this.companySetupService.setControl(this.name);
 
-      this.filteredVisits = this.onSiteVisitIdbService.onSiteVisits.getValue()
+      this.filteredVisits = this.onSiteVisitIdbService.onSiteVisits?.getValue()
         .filter(_visit => _visit.companyId === this.selectedCompany.guid);
-      for (let _visit of this.filteredVisits) {
-        if (_visit.assessmentIds.length > 0) {
-          this.hasAssessments = true;
-          break;
+      if (this.filteredVisits && this.filteredVisits.length > 0) {
+        for (let _visit of this.filteredVisits) {
+          if (_visit.assessmentIds.length > 0) {
+            this.hasAssessments = true;
+            break;
+          }
         }
       }
     }

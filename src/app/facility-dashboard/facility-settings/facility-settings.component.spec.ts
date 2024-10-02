@@ -12,6 +12,8 @@ import { IdbFacility, getNewIdbFacility } from 'src/app/models/facility';
 import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { UserIdbService } from 'src/app/indexed-db/user-idb.service';
+import { PreAssessmentSetupService } from 'src/app/setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 
 describe('FacilitySettingsComponent', () => {
   let component: FacilitySettingsComponent;
@@ -25,6 +27,8 @@ describe('FacilitySettingsComponent', () => {
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
   let userIdbService: Partial<UserIdbService> = {};
+  let onsiteVisitIdbService: Partial<OnSiteVisitIdbService> = {};
+  let preAassessmentSetupService: Partial<PreAssessmentSetupService> = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -35,7 +39,9 @@ describe('FacilitySettingsComponent', () => {
         { provide: FacilityIdbService, useValue: facilityIdbService },
         { provide: LocalStorageDataService, useValue: {}},
         { provide: DbChangesService, useValue: {}},
-        { provide: UserIdbService, useValue: userIdbService}
+        { provide: UserIdbService, useValue: userIdbService},
+        { provide: OnSiteVisitIdbService, useValue: onsiteVisitIdbService},
+        { provide: PreAssessmentSetupService, useValue: preAassessmentSetupService }
       ]
     })
     .compileComponents();
