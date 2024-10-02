@@ -27,7 +27,7 @@
         </div>
         <ng-container *ngIf="form.controls['includeElectricity'].value">
             <div class="col-4">
-                <select class="form-select" formControlName="electricityUnit" (change)="saveChanges()">
+                <select class="form-select" formControlName="electricityUnit" (change)="savePriceChanges()">
                     <option *ngFor="let energyUnitOption of ('Electricity' | linkedUnitOptions  : 'Energy')"
                         [ngValue]="energyUnitOption.value">
                         <span [innerHTML]="energyUnitOption.value | unitsDisplay"></span>
@@ -64,7 +64,7 @@
         </div>
         <ng-container *ngIf="form.controls['includeNaturalGas'].value">
             <div class="col-4">
-                <select class="form-select" formControlName="naturalGasUnit" (change)="saveChanges()">
+                <select class="form-select" formControlName="naturalGasUnit" (change)="savePriceChanges()">
                     <option *ngFor="let energyUnitOption of ('Natural Gas' | linkedUnitOptions  : 'Energy')"
                         [ngValue]="energyUnitOption.value">
                         <span [innerHTML]="energyUnitOption.value | unitsDisplay"></span>
@@ -102,7 +102,7 @@
         </div>
         <ng-container *ngIf="form.controls['includeOtherFuels'].value">
             <div class="col-4">
-                <select class="form-select" formControlName="otherFuelsUnit" (change)="saveChanges()">
+                <select class="form-select" formControlName="otherFuelsUnit" (change)="savePriceChanges()">
                     <option *ngFor="let energyUnitOption of ('Other Fuels' | linkedUnitOptions  : 'Energy')"
                         [ngValue]="energyUnitOption.value">
                         <span [innerHTML]="energyUnitOption.value | unitsDisplay"></span>
@@ -138,7 +138,7 @@
         </div>
         <ng-container *ngIf="form.controls['includeWater'].value">
             <div class="col-4">
-                <select class="form-select" formControlName="waterUnit" (change)="saveChanges()">
+                <select class="form-select" formControlName="waterUnit" (change)="savePriceChanges()">
                     <option *ngFor="let liquidOption of ('Water' | linkedUnitOptions  : 'Energy')"
                         [ngValue]="liquidOption.value">
                         <span [innerHTML]="liquidOption.value | unitsDisplay"></span>
@@ -184,7 +184,7 @@
             <div class="col-4">
                 <div class="input-group">
                     <input class="form-control" type="number" step="any" min="0"
-                        formControlName="wasteWaterPrice" name="wasteWaterPrice" (change)="saveChanges()">
+                        formControlName="wasteWaterPrice" name="wasteWaterPrice" (change)="savePriceChanges()">
                     <span class="input-group-text">&dollar;/<span
                             [innerHTML]="form.controls['wasteWaterUnit'].value | unitsDisplay"></span></span>
                 </div>
@@ -211,7 +211,7 @@
         </div>
         <ng-container *ngIf="form.controls['includeSteam'].value">
             <div class="col-4">
-                <select class="form-select" formControlName="steamUnit" (change)="saveChanges()">
+                <select class="form-select" formControlName="steamUnit" (change)="savePriceChanges()">
                     <option *ngFor="let massUnitOption of ('Steam' | linkedUnitOptions  : 'Energy')"
                         [ngValue]="massUnitOption.value">
                         <span [innerHTML]="massUnitOption.value | unitsDisplay"></span>
@@ -249,7 +249,7 @@
         </div>
         <ng-container *ngIf="form.controls['includeCompressedAir'].value">
             <div class="col-4">
-                <select class="form-select" formControlName="compressedAirUnit" (change)="saveChanges()">
+                <select class="form-select" formControlName="compressedAirUnit" (change)="savePriceChanges()">
                     <option *ngFor="let volumeGasOption of ('Compressed Air' | linkedUnitOptions  : 'Energy')"
                         [ngValue]="volumeGasOption.value">
                         <span [innerHTML]="volumeGasOption.value | unitsDisplay"></span>
