@@ -20,7 +20,13 @@
                 <thead>
                     <tr>
                         <th>
+                            Company
+                        </th>
+                        <th>
                             Facility
+                        </th>
+                        <th>
+                            Assessments
                         </th>
                         <th>
                             Visit Date
@@ -36,7 +42,15 @@
                 <tbody>
                     <tr *ngFor="let visit of onSiteVisits">
                         <td>
+                            {{visit.companyId | companyName: companies}}
+                        </td>
+                        <td>
                             {{visit.facilityId | facilityName: facilities}}
+                        </td>
+                        <td>
+                            <span class="badge bg-dark">
+                                {{visit.assessmentIds.length}}
+                            </span>
                         </td>
                         <td>
                             {{visit.visitDate | date}}
