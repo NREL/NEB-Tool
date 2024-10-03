@@ -53,6 +53,9 @@ export class AssessmentSavingsChartComponent {
         b: 50,
         r: 50,
         t: 50
+      },
+      yaxis: {
+        tickprefix: '$'
       }
     };
 
