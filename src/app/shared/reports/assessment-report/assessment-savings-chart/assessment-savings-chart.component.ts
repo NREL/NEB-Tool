@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AssessmentReport } from '../../calculations/assessmentReport';
 import { PlotlyService } from 'angular-plotly.js';
+import { graphColors } from 'src/app/shared/constants/graphColors';
 
 @Component({
   selector: 'app-assessment-savings-chart',
@@ -15,29 +16,17 @@ export class AssessmentSavingsChartComponent {
 
   @ViewChild('percentSavingsGauge', { static: false }) percentSavingsGauge: ElementRef;
   @ViewChild('percentSavingsWithNebsGauge', { static: false }) percentSavingsWithNebsGauge: ElementRef;
+  @ViewChild('nebsPieChart', { static: false }) nebsPieChart: ElementRef;
   constructor(private plotlyService: PlotlyService) {
 
   }
 
   ngAfterViewInit() {
     this.drawChart();
+    this.drawPieChart();
   }
 
   drawChart() {
-    //pie chart..
-    // let trace = {
-    //   values: this.assessmentReport.energyOpportunityReports.map(report => { return report.totalCostSavings }),
-    //   labels: this.assessmentReport.energyOpportunityReports.map(report => { return report.energyOpportunity.name }),
-    //   type: 'pie'
-    // }
-
-    // trace.values.push(this.assessmentReport.assessment.costSavings);
-    // trace.labels.push('Assessment Savings');
-
-    // trace.values.push(this.assessmentReport.assessment.cost - this.assessmentReport.totalCostSavings);
-    // trace.labels.push('Modified Cost')
-
-    // var data = [trace];
 
 
     let percentSavings = (this.assessmentReport.totalEnergyCostSavings / this.assessmentReport.assessment.cost) * 100
@@ -45,10 +34,10 @@ export class AssessmentSavingsChartComponent {
       {
         domain: { x: [0, 1], y: [0, 1] },
         value: percentSavings,
-        title: { text: "Energy Savings" },
+        title: { text: "Assessment Energy Savings" },
         type: "indicator",
         mode: "gauge+number",
-        number: { suffix: '%'},
+        number: { suffix: '%' },
         gauge: {
           axis: { range: [null, 100], automargin: true },
         }
@@ -77,8 +66,8 @@ export class AssessmentSavingsChartComponent {
       {
         domain: { x: [0, 1], y: [0, 1] },
         value: percentSavingsNebs,
-        number: { suffix: '%'},
-        title: { text: "Savings W/ NEBs" },
+        number: { suffix: '%' },
+        title: { text: "Assessment Savings W/ NEBs" },
         type: "indicator",
         mode: "gauge+number",
         gauge: {
@@ -87,6 +76,82 @@ export class AssessmentSavingsChartComponent {
       },
     ];
     this.plotlyService.newPlot(this.percentSavingsWithNebsGauge.nativeElement, savingsDataWithNebs, layout, config);
+  }
+
+
+  drawPieChart() {
+    //pie chart..
+    let trace = {
+      values: [],
+      labels: [],
+      type: 'pie',
+      hole: .4,
+      ticksuffix: '$/yr',
+      marker: {
+        colors: graphColors,
+        line: {
+          width: [],
+          color: '#fff'
+        }
+      }
+    }
+
+    trace.values.push(this.assessmentReport.assessment.costSavings);
+    trace.labels.push('Assessment (Energy Cost) Savings');
+    trace.marker.line.width.push(2)
+
+    this.assessmentReport.energyOpportunityReports.forEach(report => {
+      if (report.totalEnergyCostSavings) {
+        trace.labels.push(report.energyOpportunity.name + ' (Energy Cost) Savings')
+        trace.values.push(report.totalEnergyCostSavings)
+        trace.marker.line.width.push(2)
+      }
+
+      report.nebReports.forEach(nebReport => {
+        trace.labels.push(nebReport.nonEnergyBenefit.name)
+        trace.values.push(nebReport.totalCostSavings)
+        trace.marker.line.width.push(2)
+      })
+    })
+
+
+    this.assessmentReport.assessmentNebReports.forEach(nebReport => {
+      trace.labels.push(nebReport.nonEnergyBenefit.name)
+      trace.values.push(nebReport.totalCostSavings)
+      trace.marker.line.width.push(2)
+    })
+    // let trace = {
+    //   values: this.assessmentReport.energyOpportunityReports.map(report => { return report.totalCostSavings }),
+    //   labels: this.assessmentReport.energyOpportunityReports.map(report => { return report.energyOpportunity.name }),
+    //   type: 'pie',
+    //   hole: .4
+    // }
+
+
+    // trace.values.push(this.assessmentReport.assessment.cost - this.assessmentReport.totalCostSavings);
+    // trace.labels.push('Modified Cost')
+
+    var data = [trace];
+    var layout = {
+      title: 'Percent Savings Contribution',
+      legend: {
+        orientation: "h"
+      },
+      // height: 250,
+      margin: {
+        l: 50,
+        b: 50,
+        r: 50,
+        t: 50
+      },
+    };
+
+    let config = {
+      modeBarButtonsToRemove: ['autoScale2d', 'lasso2d', 'pan2d', 'select2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
+      displaylogo: false,
+      responsive: true,
+    };
+    this.plotlyService.newPlot(this.nebsPieChart.nativeElement, data, layout, config);
   }
 
 }
