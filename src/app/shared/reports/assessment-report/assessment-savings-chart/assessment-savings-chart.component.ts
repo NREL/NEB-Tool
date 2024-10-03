@@ -23,14 +23,12 @@ export class AssessmentSavingsChartComponent {
 
   ngAfterViewInit() {
     if(this.assessmentReport){
-      this.drawChart();
+      this.drawGaugeCharts();
       this.drawPieChart();
     }
   }
 
-  drawChart() {
-
-
+  drawGaugeCharts() {
     let percentSavings = (this.assessmentReport.totalEnergyCostSavings / this.assessmentReport.assessment.cost) * 100
     var savingsData = [
       {
@@ -125,16 +123,6 @@ export class AssessmentSavingsChartComponent {
       trace.values.push(nebReport.totalCostSavings)
       trace.marker.line.width.push(2)
     })
-    // let trace = {
-    //   values: this.assessmentReport.energyOpportunityReports.map(report => { return report.totalCostSavings }),
-    //   labels: this.assessmentReport.energyOpportunityReports.map(report => { return report.energyOpportunity.name }),
-    //   type: 'pie',
-    //   hole: .4
-    // }
-
-
-    // trace.values.push(this.assessmentReport.assessment.cost - this.assessmentReport.totalCostSavings);
-    // trace.labels.push('Modified Cost')
 
     var data = [trace];
     var layout = {
@@ -142,7 +130,6 @@ export class AssessmentSavingsChartComponent {
       legend: {
         orientation: "h"
       },
-      // height: 250,
       margin: {
         l: 50,
         b: 50,

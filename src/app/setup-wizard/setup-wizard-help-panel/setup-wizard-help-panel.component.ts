@@ -34,6 +34,7 @@ export class SetupWizardHelpPanelComponent {
   toggleCollapseHelpPanel() {
     this.collapseHelpPanel = !this.collapseHelpPanel;
     this.localStorageDataService.setSetupPanelCollapsed(this.collapseHelpPanel);
+    //needed to resize charts
     setTimeout(() => {
       window.dispatchEvent(new Event("resize"));
     }, 100)

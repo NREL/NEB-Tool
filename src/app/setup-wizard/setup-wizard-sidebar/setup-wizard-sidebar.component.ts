@@ -74,6 +74,7 @@ export class SetupWizardSidebarComponent implements OnInit, OnDestroy {
 
     this.sidebarOpenSub = this.setupWizardService.sidebarOpen.subscribe(val => {
       this.sidebarOpen = val;
+      //needed to resize charts
       setTimeout(() => {
         window.dispatchEvent(new Event("resize"));
       }, 100)
