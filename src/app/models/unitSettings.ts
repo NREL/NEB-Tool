@@ -2,30 +2,37 @@ import { UtilityOptions } from "../shared/constants/utilityTypes";
 
 export interface UnitSettings {
     includeElectricity: boolean,
+    electricityUse: number,
     electricityUnit: string,
     electricityPrice: number,
 
     includeNaturalGas: boolean,
+    naturalGasUse: number,
     naturalGasUnit: string,
     naturalGasPrice: number,
     
     includeSteam: boolean,
+    steamUse: number,
     steamUnit: string,
     steamPrice: number,
     
     includeWater: boolean,
+    waterUse: number,
     waterUnit: string,
     waterPrice: number,
 
     includeWasteWater: boolean,
+    wasteWaterUse: number,
     wasteWaterUnit: string,
     wasteWaterPrice: number,
 
     includeOtherFuels: boolean,
+    otherFuelsUse: number,
     otherFuelsUnit: string,
     otherFuelsPrice: number,
 
     includeCompressedAir: boolean,
+    compressedAirUse: number,
     compressedAirUnit: string,
     compressedAirPrice: number,
 }
@@ -37,6 +44,7 @@ export function getDefaultUnitSettings(): UnitSettings {
                  + utilityType.slice(1); // Lowercase first letter
 
         settings[`include${utilityType}`] = false;
+        settings[`${camelCaseType}Use`] = 0;
         settings[`${camelCaseType}Unit`] = option.energyDefaultUnit.value;
         settings[`${camelCaseType}Price`] = 0;
         return settings;
