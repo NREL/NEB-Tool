@@ -12,13 +12,14 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('AssessmentsTableComponent', () => {
   let component: AssessmentsTableComponent;
   let fixture: ComponentFixture<AssessmentsTableComponent>;
 
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '')),
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings())),
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
   let facilityIdbService: Partial<FacilityIdbService> = {

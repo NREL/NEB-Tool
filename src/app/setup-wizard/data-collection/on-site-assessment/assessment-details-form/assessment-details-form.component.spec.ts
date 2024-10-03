@@ -15,6 +15,7 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { HelperPipesModule } from 'src/app/shared/helper-pipes/helper-pipes.module';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('AssessmentDetailsFormComponent', () => {
   let component: AssessmentDetailsFormComponent;
@@ -24,7 +25,7 @@ describe('AssessmentDetailsFormComponent', () => {
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings()))
   };
   let setupWizardService: Partial<SetupWizardService> = {
     sidebarOpen: new BehaviorSubject<boolean>(false),

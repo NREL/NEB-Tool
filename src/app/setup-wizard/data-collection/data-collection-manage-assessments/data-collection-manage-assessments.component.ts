@@ -4,6 +4,7 @@ import { IconDefinition, faChevronLeft, faChevronRight, faPlus, faScrewdriverWre
 import { Subscription, firstValueFrom } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
@@ -31,7 +32,8 @@ export class DataCollectionManageAssessmentsComponent {
   assessmentToDelete: IdbAssessment;
   constructor(private router: Router, private assessmentIdbService: AssessmentIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
-    private dbChangesService: DbChangesService
+    private dbChangesService: DbChangesService,
+    private facilityIdbService: FacilityIdbService,
   ) {
   }
 
@@ -62,7 +64,10 @@ export class DataCollectionManageAssessmentsComponent {
   }
 
   async addAssessment() {
-    let assessment: IdbAssessment = getNewIdbAssessment(this.onSiteVisit.userId, this.onSiteVisit.companyId, this.onSiteVisit.facilityId);
+    let assessment: IdbAssessment = getNewIdbAssessment(this.onSiteVisit.userId, 
+      this.onSiteVisit.companyId, this.onSiteVisit.facilityId,
+      this.facilityIdbService.getByGUID(this.onSiteVisit.facilityId).unitSettings
+    );
     assessment.visitDate = this.onSiteVisit.visitDate;
     await firstValueFrom(this.assessmentIdbService.addWithObservable(assessment));
     await this.assessmentIdbService.setAssessments();

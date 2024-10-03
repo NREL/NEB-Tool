@@ -92,7 +92,7 @@
                                                                     name="{{'include_utilityType_' + use.utilityType + assessment.guid}}"
                                                                     id="{{'include_utilityType_' + use.utilityType + assessment.guid}}"
                                                                     [(ngModel)]="use.include"
-                                                                    (change)="calculateEnergyUse(assessment)">
+                                                                    (change)="calculateEnergyUseCost(assessment)">
                                                                 {{ use.utilityType }}
                                                             </div>
                                                             <div class="card-body">
@@ -102,12 +102,12 @@
                                                                         name="{{'energyUse_' + use.utilityType + assessment.guid}}" 
                                                                         id="{{'energyUse_' + use.utilityType + assessment.guid}}"
                                                                         [(ngModel)]="use.energyUse"
-                                                                        (input)="calculateEnergyUse(assessment)">
+                                                                        (input)="calculateEnergyUseCost(assessment)">
                                                                     <select class="input-group-text" 
                                                                         name="{{'energyUnit_' + use.utilityType + assessment.guid}}"
                                                                         id="{{'energyUnit_' + use.utilityType + assessment.guid}}"
                                                                             [(ngModel)]="use.unit"
-                                                                            (change)="calculateEnergyUse(assessment)">
+                                                                            (change)="calculateEnergyUseCost(assessment)">
                                                                         <option
                                                                             *ngFor="let unitOption of (use.utilityType | linkedUnitOptions: 'Energy')"
                                                                             [ngValue]="unitOption.value">
@@ -128,17 +128,11 @@
                                                             for="{{'energyUse_'+assessment.guid}}">Total
                                                             Energy
                                                             Use</label>
-                                                        <div class="col-sm-7">
-                                                            <div class="input-group">
-                                                                <input name="{{'energyUse_'+assessment.guid}}"
-                                                                    type="number" class="form-control"
-                                                                    [disabled]="true"
-                                                                    id="{{'energyUse_'+assessment.guid}}"
-                                                                    [value]="assessment.energyUse | number:'1.0-2'">
-                                                                <span class="input-group-text"
-                                                                    [innerHTML]="companyEnergyUnit | unitsDisplay">
-                                                                </span>
-                                                            </div>
+                                                        <div class="col-sm-7" id="{{'energyUse_'+assessment.guid}}">
+                                                            {{assessment.energyUse | number:'1.0-2'}}&nbsp;
+                                                            <span
+                                                                [innerHTML]="companyEnergyUnit | unitsDisplay">
+                                                            </span>
                                                         </div>
                                                     </div>
 
@@ -146,14 +140,8 @@
                                                         <label class="col-sm-5 col-form-label"
                                                             for="{{'cost_'+assessment.guid}}">Annual
                                                             Costs</label>
-                                                        <div class="col-sm-7">
-                                                            <div class="input-group">
-                                                                <input name="{{'cost_'+assessment.guid}}" type="number"
-                                                                    class="form-control" [(ngModel)]="assessment.cost"
-                                                                    (input)="saveChanges(assessment)"
-                                                                    id="{{'cost_'+assessment.guid}}">
-                                                                <span class="input-group-text">&dollar;</span>
-                                                            </div>
+                                                        <div class="col-sm-7" id="{{'cost_'+assessment.guid}}">
+                                                            {{assessment.cost | currency:'USD':'symbol':'1.0-2'}}
                                                         </div>
                                                     </div>
 

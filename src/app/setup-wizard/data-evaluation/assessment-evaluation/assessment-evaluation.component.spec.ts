@@ -25,6 +25,7 @@ import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-i
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 import { KeyPerformanceMetricImpactsIdbService } from 'src/app/indexed-db/key-performance-metric-impacts-idb.service';
 import { IdbKeyPerformanceMetricImpact } from 'src/app/models/keyPerformanceMetricImpact';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('AssessmentEvaluationComponent', () => {
   let component: AssessmentEvaluationComponent;
@@ -35,7 +36,7 @@ describe('AssessmentEvaluationComponent', () => {
   };
 
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings()))
   }
 
   let companyIdbService: Partial<CompanyIdbService> = {

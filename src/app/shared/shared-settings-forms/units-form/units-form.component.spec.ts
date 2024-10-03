@@ -10,6 +10,9 @@ import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HelperPipesModule } from '../../helper-pipes/helper-pipes.module';
+import { PreAssessmentSetupService } from 'src/app/setup-wizard/pre-visit/pre-assessment-setup/pre-assessment-setup.service';
+import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 
 describe('UnitsFormComponent', () => {
   let component: UnitsFormComponent;
@@ -23,6 +26,10 @@ describe('UnitsFormComponent', () => {
     selectedFacility: new BehaviorSubject<IdbFacility>(getNewIdbFacility('', ''))
   };
   let setupWizardService: Partial<SetupWizardService> = {  };
+  let onSiteVisitIdbService: Partial<OnSiteVisitIdbService> = {};
+  let preAassessmentSetupService: Partial<PreAssessmentSetupService> = {};
+  let assessmentIdbService: Partial<AssessmentIdbService> = {};
+  
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FontAwesomeModule, HelperPipesModule],
@@ -30,7 +37,10 @@ describe('UnitsFormComponent', () => {
       providers: [
         { provide: SetupWizardService, useValue: setupWizardService },
         { provide: CompanyIdbService, useValue: companyIdbService },
-        { provide: FacilityIdbService, useValue: facilityIdbService }
+        { provide: FacilityIdbService, useValue: facilityIdbService },
+        { provide: PreAssessmentSetupService, useValue: preAassessmentSetupService },
+        { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
+        { provide: AssessmentIdbService, useValue: assessmentIdbService }
       ]
     });
     fixture = TestBed.createComponent(UnitsFormComponent);

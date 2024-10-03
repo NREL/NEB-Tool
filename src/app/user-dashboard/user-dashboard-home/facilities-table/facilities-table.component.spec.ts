@@ -13,6 +13,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('FacilitiesTableComponent', () => {
   let component: FacilitiesTableComponent;
@@ -28,7 +29,7 @@ describe('FacilitiesTableComponent', () => {
   };
 
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '')),
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings())),
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
 

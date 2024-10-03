@@ -4,6 +4,7 @@ import { PaybackTableComponent } from './payback-table.component';
 import { getAssessmentReport } from '../../calculations/assessmentReport';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
 import { TableEntriesModule } from 'src/app/shared/table-entries/table-entries.module';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('PaybackTableComponent', () => {
   let component: PaybackTableComponent;
@@ -18,7 +19,7 @@ describe('PaybackTableComponent', () => {
     
     fixture = TestBed.createComponent(PaybackTableComponent);
     component = fixture.componentInstance;
-    let assessment: IdbAssessment = getNewIdbAssessment('', '', '');
+    let assessment: IdbAssessment = getNewIdbAssessment('', '', '', getDefaultUnitSettings());
     component.assessmentReport = getAssessmentReport(assessment, [], [], [], []);
     fixture.detectChanges();
   });
