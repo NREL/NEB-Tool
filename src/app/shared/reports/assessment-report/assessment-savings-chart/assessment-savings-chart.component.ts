@@ -22,8 +22,10 @@ export class AssessmentSavingsChartComponent {
   }
 
   ngAfterViewInit() {
-    this.drawChart();
-    this.drawPieChart();
+    if(this.assessmentReport){
+      this.drawChart();
+      this.drawPieChart();
+    }
   }
 
   drawChart() {

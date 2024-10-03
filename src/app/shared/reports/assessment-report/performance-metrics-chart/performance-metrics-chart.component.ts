@@ -17,10 +17,12 @@ export class PerformanceMetricsChartComponent {
   }
 
   ngAfterViewInit() {
-    this.drawChart();
+    if (this.keyPerformanceIndicatorReport) {
+      this.drawChart();
+    }
   }
 
-  drawChart(){
+  drawChart() {
     var trace1 = {
       x: this.keyPerformanceIndicatorReport.kpiReportItems.map(kpiReport => {
         return kpiReport.keyPerformanceMetric.htmlLabel
@@ -31,7 +33,7 @@ export class PerformanceMetricsChartComponent {
       name: 'Modified Cost',
       type: 'bar'
     };
-    
+
     var trace2 = {
       x: this.keyPerformanceIndicatorReport.kpiReportItems.map(kpiReport => {
         return kpiReport.keyPerformanceMetric.htmlLabel
@@ -42,9 +44,9 @@ export class PerformanceMetricsChartComponent {
       name: 'Annual Savings',
       type: 'bar'
     };
-    
-    var data = [trace1, trace2];    
-    var layout = {barmode: 'stack'};
+
+    var data = [trace1, trace2];
+    var layout = { barmode: 'stack' };
 
     let config = {
       modeBarButtonsToRemove: ['autoScale2d', 'lasso2d', 'pan2d', 'select2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
