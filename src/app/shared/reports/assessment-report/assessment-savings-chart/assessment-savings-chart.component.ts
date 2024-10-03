@@ -1,0 +1,92 @@
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AssessmentReport } from '../../calculations/assessmentReport';
+import { PlotlyService } from 'angular-plotly.js';
+
+@Component({
+  selector: 'app-assessment-savings-chart',
+  templateUrl: './assessment-savings-chart.component.html',
+  styleUrl: './assessment-savings-chart.component.css'
+})
+export class AssessmentSavingsChartComponent {
+  @Input({ required: true })
+  assessmentReport: AssessmentReport;
+
+
+
+  @ViewChild('percentSavingsGauge', { static: false }) percentSavingsGauge: ElementRef;
+  @ViewChild('percentSavingsWithNebsGauge', { static: false }) percentSavingsWithNebsGauge: ElementRef;
+  constructor(private plotlyService: PlotlyService) {
+
+  }
+
+  ngAfterViewInit() {
+    this.drawChart();
+  }
+
+  drawChart() {
+    //pie chart..
+    // let trace = {
+    //   values: this.assessmentReport.energyOpportunityReports.map(report => { return report.totalCostSavings }),
+    //   labels: this.assessmentReport.energyOpportunityReports.map(report => { return report.energyOpportunity.name }),
+    //   type: 'pie'
+    // }
+
+    // trace.values.push(this.assessmentReport.assessment.costSavings);
+    // trace.labels.push('Assessment Savings');
+
+    // trace.values.push(this.assessmentReport.assessment.cost - this.assessmentReport.totalCostSavings);
+    // trace.labels.push('Modified Cost')
+
+    // var data = [trace];
+
+
+    let percentSavings = (this.assessmentReport.totalEnergyCostSavings / this.assessmentReport.assessment.cost) * 100
+    var savingsData = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: percentSavings,
+        title: { text: "Energy Savings" },
+        type: "indicator",
+        mode: "gauge+number",
+        number: { suffix: '%'},
+        gauge: {
+          axis: { range: [null, 100], automargin: true },
+        }
+      },
+    ];
+
+    var layout = {
+      height: 250,
+      margin: {
+        l: 50,
+        b: 50,
+        r: 50,
+        t: 50
+      }
+    };
+
+    let config = {
+      modeBarButtonsToRemove: ['autoScale2d', 'lasso2d', 'pan2d', 'select2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
+      displaylogo: false,
+      responsive: true,
+    };
+    this.plotlyService.newPlot(this.percentSavingsGauge.nativeElement, savingsData, layout, config);
+
+    let percentSavingsNebs = (this.assessmentReport.totalCostSavings / this.assessmentReport.assessment.cost) * 100
+    var savingsDataWithNebs = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: percentSavingsNebs,
+        number: { suffix: '%'},
+        title: { text: "Savings W/ NEBs" },
+        type: "indicator",
+        mode: "gauge+number",
+        gauge: {
+          axis: { range: [null, 100] },
+        }
+      },
+    ];
+    this.plotlyService.newPlot(this.percentSavingsWithNebsGauge.nativeElement, savingsDataWithNebs, layout, config);
+  }
+
+}

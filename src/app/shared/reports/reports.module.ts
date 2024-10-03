@@ -9,6 +9,7 @@ import { AssessmentSavingsTableComponent } from './assessment-report/assessment-
 import { PaybackTableComponent } from './assessment-report/payback-table/payback-table.component';
 import { PerformanceMetricsReportComponent } from './assessment-report/performance-metrics-report/performance-metrics-report.component';
 import { PerformanceMetricsChartComponent } from './assessment-report/performance-metrics-chart/performance-metrics-chart.component';
+import { AssessmentSavingsChartComponent } from './assessment-report/assessment-savings-chart/assessment-savings-chart.component';
 
 
 
@@ -19,7 +20,8 @@ import { PerformanceMetricsChartComponent } from './assessment-report/performanc
     AssessmentSavingsTableComponent,
     PaybackTableComponent,
     PerformanceMetricsReportComponent,
-    PerformanceMetricsChartComponent
+    PerformanceMetricsChartComponent,
+    AssessmentSavingsChartComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { PerformanceMetricsChartComponent } from './assessment-report/performanc
   exports: [
     AssessmentReportComponent,
     RollupReportComponent,
-    AssessmentSavingsTableComponent
+    AssessmentSavingsTableComponent,
+    AssessmentSavingsChartComponent
   ]
 })
 export class ReportsModule { }

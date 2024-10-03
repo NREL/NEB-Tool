@@ -34,6 +34,9 @@ export class SetupWizardHelpPanelComponent {
   toggleCollapseHelpPanel() {
     this.collapseHelpPanel = !this.collapseHelpPanel;
     this.localStorageDataService.setSetupPanelCollapsed(this.collapseHelpPanel);
+    setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+    }, 100)
   }
 
   setHelpContext(url: string) {
