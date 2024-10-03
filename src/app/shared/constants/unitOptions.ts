@@ -1,6 +1,6 @@
 export interface UnitOption {
     display: string,
-    value: string,
+    value: string, // Identifier to match the key in unit definitions.
     unitsOfMeasure: string
 }
 

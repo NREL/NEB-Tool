@@ -42,7 +42,8 @@
               "src/assets/styles/dashboards.css"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
+              "node_modules/plotly.js/dist/plotly.min.js"
             ],
             "allowedCommonJsDependencies": [
               "lodash",

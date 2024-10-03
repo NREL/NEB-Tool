@@ -74,6 +74,10 @@ export class SetupWizardSidebarComponent implements OnInit, OnDestroy {
 
     this.sidebarOpenSub = this.setupWizardService.sidebarOpen.subscribe(val => {
       this.sidebarOpen = val;
+      //needed to resize charts
+      setTimeout(() => {
+        window.dispatchEvent(new Event("resize"));
+      }, 100)
     });
 
     this.onSiteVisitSub = this.onSiteVisitIdbService.selectedVisit.subscribe(val => {
@@ -124,40 +128,40 @@ export class SetupWizardSidebarComponent implements OnInit, OnDestroy {
     this.setupWizardService.sidebarOpen.next(!this.sidebarOpen);
   }
 
-  toggleCollapsePrevisit(){
+  toggleCollapsePrevisit() {
     this.collapsePreVisit = !this.collapsePreVisit;
   }
 
-  checkCollapsePrevisit(){
-    if(this.collapsePreVisit){
+  checkCollapsePrevisit() {
+    if (this.collapsePreVisit) {
       let isInPrevisit: boolean = (this.router.url.includes('pre-visit') == true);
-      if(isInPrevisit){
+      if (isInPrevisit) {
         this.toggleCollapsePrevisit();
       }
     }
   }
 
-  toggleCollapseDataCollection(){
+  toggleCollapseDataCollection() {
     this.collapseDataCollection = !this.collapseDataCollection;
   }
 
-  checkCollapseDataCollection(){
-    if(this.collapseDataCollection){
+  checkCollapseDataCollection() {
+    if (this.collapseDataCollection) {
       let isInDataCollection: boolean = (this.router.url.includes('data-collection') == true);
-      if(isInDataCollection){
+      if (isInDataCollection) {
         this.toggleCollapseDataCollection();
       }
     }
   }
 
-  toggleCollapseDataEvaluation(){
+  toggleCollapseDataEvaluation() {
     this.collapseDataEvaluation = !this.collapseDataEvaluation;
   }
 
-  checkCollapseDataEvaluation(){
-    if(this.collapseDataEvaluation){
+  checkCollapseDataEvaluation() {
+    if (this.collapseDataEvaluation) {
       let isInDataEvaluation: boolean = (this.router.url.includes('data-evaluation') == true);
-      if(isInDataEvaluation){
+      if (isInDataEvaluation) {
         this.toggleCollapseDataEvaluation();
       }
     }

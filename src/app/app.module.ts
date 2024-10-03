@@ -21,6 +21,7 @@ import { AssessmentDashboardModule } from './assessment-dashboard/assessment-das
 import { SetupWizardModalComponent } from './core-components/setup-wizard-modal/setup-wizard-modal.component';
 import { ImportBackupModalComponent } from './core-components/import-backup-modal/import-backup-modal.component';
 import { UserPortfolioModule } from './user-portfolio/user-portfolio.module';
+import { PlotlyViaWindowModule } from 'angular-plotly.js';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { UserPortfolioModule } from './user-portfolio/user-portfolio.module';
     SetupWizardModule,
     HelperPipesModule,
     AssessmentDashboardModule,
-    UserPortfolioModule
+    UserPortfolioModule,
+    PlotlyViaWindowModule
   ],
   providers: [],
   bootstrap: [AppComponent]
