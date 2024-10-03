@@ -12,7 +12,6 @@ import { FacilityDashboardModule } from './facility-dashboard/facility-dashboard
 import { IndexedDbModule } from './indexed-db/indexed-db.module';
 import { LoadingComponent } from './core-components/loading/loading.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { FormsModule } from '@angular/forms';
 import { SetupWizardModule } from './setup-wizard/setup-wizard.module';
 import { SidebarComponent } from './core-components/sidebar/sidebar.component';
@@ -40,7 +39,6 @@ import { ImportBackupModalComponent } from './core-components/import-backup-moda
     FacilityDashboardModule,
     IndexedDbModule,
     FontAwesomeModule,
-    NgxWebstorageModule.forRoot(),
     FormsModule,
     SetupWizardModule,
     HelperPipesModule,
