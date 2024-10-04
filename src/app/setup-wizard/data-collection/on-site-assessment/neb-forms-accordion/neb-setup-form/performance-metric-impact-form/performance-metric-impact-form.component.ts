@@ -88,6 +88,8 @@ export class PerformanceMetricImpactFormComponent {
       this.keyPerformanceMetricImpact.costAdjustment = (this.keyPerformanceMetricImpact.modificationValue * this.keyPerformanceMetric.costPerValue);
     } else if (this.keyPerformanceMetric.calculationMethod == 'percentTotal') {
       this.keyPerformanceMetricImpact.costAdjustment = this.keyPerformanceMetric.baselineCost * (this.keyPerformanceMetricImpact.modificationValue / 100);
+    } else if(this.keyPerformanceMetric.calculationMethod == 'directCost'){
+      this.keyPerformanceMetricImpact.costAdjustment = this.keyPerformanceMetricImpact.modificationValue;
     }
     this.saveChanges();
   }

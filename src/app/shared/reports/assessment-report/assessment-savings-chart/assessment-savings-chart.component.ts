@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { AssessmentReport } from '../../calculations/assessmentReport';
 import { PlotlyService } from 'angular-plotly.js';
 import { graphColors } from 'src/app/shared/constants/graphColors';
@@ -22,7 +22,14 @@ export class AssessmentSavingsChartComponent {
   }
 
   ngAfterViewInit() {
-    if(this.assessmentReport){
+    if (this.assessmentReport) {
+      this.drawGaugeCharts();
+      this.drawPieChart();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes['assessmentReport'].isFirstChange()) {
       this.drawGaugeCharts();
       this.drawPieChart();
     }

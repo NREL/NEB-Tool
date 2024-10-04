@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { PlotlyService } from 'angular-plotly.js';
 import { KeyPerformanceIndicatorReport, KeyPerformanceIndicatorReportItem } from '../../calculations/keyPerformanceIndicatorReport';
 import * as _ from 'lodash';
@@ -22,8 +22,13 @@ export class PerformanceMetricsChartComponent {
     }
   }
 
-  drawChart() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes['keyPerformanceIndicatorReport'].isFirstChange()) {
+      this.drawChart();
+    }
+  }
 
+  drawChart() {
     let kpiReportItems: Array<KeyPerformanceIndicatorReportItem> = this.keyPerformanceIndicatorReport.kpiReportItems;
     kpiReportItems = _.orderBy(kpiReportItems, (reportItem: KeyPerformanceIndicatorReportItem) => {
       return reportItem.keyPerformanceMetric.baselineCost;
