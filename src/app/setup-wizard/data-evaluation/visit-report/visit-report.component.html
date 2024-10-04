@@ -4,7 +4,7 @@
             <div class="form-paper shadow">
                 <nav class="navbar top-nav">
                     <h5>
-                        Rollup Report
+                        On Site Visit Report
                     </h5>
                 </nav>
                 <app-on-site-visit-report [onSiteVisit]="onSiteVisit"></app-on-site-visit-report>
@@ -20,7 +20,7 @@
                         <fa-icon [icon]="faScrewdriverWrench"></fa-icon> {{assessment.name}} Report
                     </h5>
                 </nav>
-                <app-assessment-report [assessment]="assessment"></app-assessment-report>
+                <app-assessment-report [assessment]="assessment" [inRollup]="true"></app-assessment-report>
             </div>
         </div>
     </div>

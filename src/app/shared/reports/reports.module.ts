@@ -11,6 +11,7 @@ import { PerformanceMetricsReportComponent } from './assessment-report/performan
 import { PerformanceMetricsChartComponent } from './assessment-report/performance-metrics-chart/performance-metrics-chart.component';
 import { AssessmentSavingsChartComponent } from './assessment-report/assessment-savings-chart/assessment-savings-chart.component';
 import { OnSiteVisitReportComponent } from './on-site-visit-report/on-site-visit-report.component';
+import { ReportDetailsTableComponent } from './report-details-table/report-details-table.component';
 
 
 
@@ -23,7 +24,8 @@ import { OnSiteVisitReportComponent } from './on-site-visit-report/on-site-visit
     PerformanceMetricsReportComponent,
     PerformanceMetricsChartComponent,
     AssessmentSavingsChartComponent,
-    OnSiteVisitReportComponent
+    OnSiteVisitReportComponent,
+    ReportDetailsTableComponent
   ],
   imports: [
     CommonModule,
