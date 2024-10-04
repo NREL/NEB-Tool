@@ -15,6 +15,7 @@ import { NebFormsAccordionComponent } from '../neb-forms-accordion/neb-forms-acc
 import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('AssessmentEnergyOpportunitiesFormComponent', () => {
   let component: AssessmentEnergyOpportunitiesFormComponent;
@@ -26,7 +27,7 @@ describe('AssessmentEnergyOpportunitiesFormComponent', () => {
   };
   let assessmentIdbService: Partial<AssessmentIdbService> = {
     assessments: new BehaviorSubject<Array<IdbAssessment>>([]),
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', ''))
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings()))
   };
   let energyOpportunityIdbService: Partial<EnergyOpportunityIdbService> = {
     energyOpportunities: new BehaviorSubject<Array<IdbEnergyOpportunity>>([])

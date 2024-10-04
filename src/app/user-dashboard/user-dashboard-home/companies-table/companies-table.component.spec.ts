@@ -12,6 +12,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { IdbAssessment, getNewIdbAssessment } from 'src/app/models/assessment';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('CompaniesTableComponent', () => {
   let component: CompaniesTableComponent;
@@ -27,7 +28,7 @@ describe('CompaniesTableComponent', () => {
   };
 
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '')),
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings())),
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
 

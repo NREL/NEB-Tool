@@ -57,4 +57,15 @@ export class AssessmentIdbService {
     let assessments: Array<IdbAssessment> = this.assessments.getValue();
     return assessments.find(_assessment => { return _assessment.guid == guid });
   }
+
+  getByOtherGuid(guid: string, idType: string): Array<IdbAssessment> {
+    let assessments: Array<IdbAssessment> = this.assessments.getValue();
+    if (idType == 'company') {
+      return assessments.filter(_assessment => { return _assessment.companyId == guid });
+    } else if (idType == 'facility') {
+      return assessments.filter(_assessment => { return _assessment.facilityId == guid });
+    } else {
+      return [];
+    }
+  }
 }

@@ -11,12 +11,13 @@ import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('ManageAssessmentComponent', () => {
   let component: ManageAssessmentComponent;
   let fixture: ComponentFixture<ManageAssessmentComponent>;
   let assessmentIdbService: Partial<AssessmentIdbService> = {
-    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '')),
+    selectedAssessment: new BehaviorSubject<IdbAssessment>(getNewIdbAssessment('', '', '', getDefaultUnitSettings())),
     assessments: new BehaviorSubject<Array<IdbAssessment>>([])
   };
   let companyIdbService: Partial<CompanyIdbService> = {};

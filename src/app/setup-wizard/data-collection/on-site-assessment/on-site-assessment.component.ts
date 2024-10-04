@@ -59,13 +59,18 @@ export class OnSiteAssessmentComponent {
 
     this.activatedRoute.params.subscribe(params => {
       let assessmentGUID: string = params['id'];
-      this.assessmentIndex = this.onSiteVisit.assessmentIds.findIndex(_assessmentGuid => { return _assessmentGuid == assessmentGUID });
-      if (this.assessmentIndex != -1) {
-        this.assessmentIdbService.setSelectedFromGUID(this.onSiteVisit.assessmentIds[this.assessmentIndex]);
-      } else if (this.assessmentIndex == -1 && this.onSiteVisit.assessmentIds.length > 0) {
-        this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[0], 'details');
-      } else if (!this.assessment) {
-        this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
+      if (this.onSiteVisit && this.onSiteVisit.assessmentIds) {
+        this.assessmentIndex = this.onSiteVisit.assessmentIds.findIndex(_assessmentGuid => { return _assessmentGuid == assessmentGUID });
+        if (this.assessmentIndex != -1) {
+          this.assessmentIdbService.setSelectedFromGUID(this.onSiteVisit.assessmentIds[this.assessmentIndex]);
+        } else if (this.assessmentIndex == -1 && this.onSiteVisit.assessmentIds.length > 0) {
+          this.navigateToOnSiteAssessment(this.onSiteVisit.assessmentIds[0], 'details');
+        } else if (!this.assessment) {
+          this.router.navigateByUrl('/setup-wizard/data-collection/' + this.onSiteVisit.guid + '/manage-assessments');
+        }
+      } else {
+        console.log('visit does not exist. Nav back to getting started..');
+        this.router.navigateByUrl('/welcome');
       }
     });
   }

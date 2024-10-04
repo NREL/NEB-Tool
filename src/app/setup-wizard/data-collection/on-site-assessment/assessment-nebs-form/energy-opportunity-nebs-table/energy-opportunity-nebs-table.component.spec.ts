@@ -8,6 +8,7 @@ import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportuni
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { EnergyOpportunityNebsListPipe } from './energy-opportunity-nebs-list.pipe';
 import { getNewIdbAssessment } from 'src/app/models/assessment';
+import { getDefaultUnitSettings } from 'src/app/models/unitSettings';
 
 describe('EnergyOpportunityNebsTableComponent', () => {
   let component: EnergyOpportunityNebsTableComponent;
@@ -32,7 +33,7 @@ describe('EnergyOpportunityNebsTableComponent', () => {
     
     fixture = TestBed.createComponent(EnergyOpportunityNebsTableComponent);
     component = fixture.componentInstance;
-    component.assessment = getNewIdbAssessment('', '', '');
+    component.assessment = getNewIdbAssessment('', '', '', getDefaultUnitSettings());
     fixture.detectChanges();
   });
 

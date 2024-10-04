@@ -76,16 +76,16 @@
             </td>
         </tr>
 
-        <tr *ngIf="facility.unitSettings.includeOtherFuel">
+        <tr *ngIf="facility.unitSettings.includeOtherFuels">
             <td>
                 Other Fuel
             </td>
             <td>
-                <span [innerHTML]="facility.unitSettings.otherFuelUnit | unitsDisplay"></span>
+                <span [innerHTML]="facility.unitSettings.otherFuelsUnit | unitsDisplay"></span>
             </td>
             <td>
-                {{facility.unitSettings.otherFuelPrice}} &dollar;/<span
-                    [innerHTML]="facility.unitSettings.otherFuelUnit | unitsDisplay"></span>
+                {{facility.unitSettings.otherFuelsPrice}} &dollar;/<span
+                    [innerHTML]="facility.unitSettings.otherFuelsUnit | unitsDisplay"></span>
             </td>
         </tr>
 

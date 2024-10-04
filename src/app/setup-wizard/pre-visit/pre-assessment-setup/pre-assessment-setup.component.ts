@@ -22,6 +22,7 @@ import { ConvertValue } from 'src/app/shared/conversions/convertValue';
 import { UtilityEnergyUse } from 'src/app/models/utilityEnergyUses';
 import { SharedSettingsFormsService } from 'src/app/shared/shared-settings-forms/shared-settings-forms.service';
 import { FormGroup } from '@angular/forms';
+import { UnitSettings } from 'src/app/models/unitSettings';
 
 @Component({
   selector: 'app-pre-assessment-setup',
@@ -63,7 +64,10 @@ export class PreAssessmentSetupComponent {
   onSiteVisitSub: Subscription;
   isFormChange: boolean = false;
 
+  companySub: Subscription;
   companyEnergyUnit: string;
+  facilitySub: Subscription;
+  facilityUnitSettings: UnitSettings
 
   accordionGuid: string;
   isAddNew: boolean = false;
@@ -101,7 +105,13 @@ export class PreAssessmentSetupComponent {
       this.energyEquipmentOptions = equipments;
     });
 
-    this.companyEnergyUnit = this.companyIdbService.getByGUID(this.onSiteVisit.companyId).companyEnergyUnit;
+    this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+      this.companyEnergyUnit = _company.companyEnergyUnit;
+    });
+
+    this.facilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
+      this.facilityUnitSettings = _facility.unitSettings;
+    });
 
   }
 
@@ -110,6 +120,8 @@ export class PreAssessmentSetupComponent {
     this.contactsSub.unsubscribe();
     this.assessmentsSub.unsubscribe();
     this.energyEquipmentSub.unsubscribe();
+    this.companySub.unsubscribe();
+    this.facilitySub.unsubscribe();
   }
   
   ngAfterViewInit() {
@@ -125,23 +137,33 @@ export class PreAssessmentSetupComponent {
     let utilityTypes = AssessmentOptions.find(
       _assessmentOption => _assessmentOption.assessmentType == assessment.assessmentType)?.utilityTypes || [];
     assessment.utilityTypes = utilityTypes; // track all utility types
-    await this.calculateEnergyUse(assessment);
+    await this.calculateEnergyUseCost(assessment);
   }
 
-  async calculateEnergyUse(assessment: IdbAssessment) {
-    let result = 0;
+  async calculateEnergyUseCost(assessment: IdbAssessment) {
+    let use = 0, cost = 0;
     assessment.utilityTypes.forEach(utilityType => {
       let utilityEnergyUse: UtilityEnergyUse = assessment.utilityEnergyUses.find(
         _energyUse => _energyUse.utilityType == utilityType);
       if (utilityEnergyUse.include) {
-        let convertedValue = this.convertValue.convertValue(
+        // calculate use
+        let convertedUse = this.convertValue.convertValue(
           utilityEnergyUse.energyUse,
           utilityEnergyUse.unit,
           this.companyEnergyUnit).convertedValue;
-        result += convertedValue;
+        use += convertedUse;
+        // calculate cost
+        let trimmedType = utilityType.replace(/\s+/g, ''); // Remove spaces
+        let camelCaseType = trimmedType.charAt(0).toLowerCase() + trimmedType.slice(1);
+        let convertedCost = this.convertValue.convertValue(
+          utilityEnergyUse.energyUse,
+          utilityEnergyUse.unit,
+          this.facilityUnitSettings[`${camelCaseType}Unit`]).convertedValue;
+        cost += convertedCost * this.facilityUnitSettings[`${camelCaseType}Price`];
       }
     });
-    assessment.energyUse = result;
+    assessment.energyUse = use;
+    assessment.cost = cost;
     await this.saveChanges(assessment);
   }
 
@@ -161,7 +183,8 @@ export class PreAssessmentSetupComponent {
   }
 
   async addAssessment() {
-    let assessment: IdbAssessment = getNewIdbAssessment(this.onSiteVisit.userId, this.onSiteVisit.companyId, this.onSiteVisit.facilityId);
+    let assessment: IdbAssessment = getNewIdbAssessment(this.onSiteVisit.userId, this.onSiteVisit.companyId, this.onSiteVisit.facilityId,
+      this.facilityIdbService.getByGUID(this.onSiteVisit.facilityId).unitSettings);
     assessment.visitDate = this.onSiteVisit.visitDate;
     await firstValueFrom(this.assessmentIdbService.addWithObservable(assessment));
     await this.assessmentIdbService.setAssessments();
