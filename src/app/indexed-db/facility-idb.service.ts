@@ -67,4 +67,18 @@ export class FacilityIdbService {
     await this.setFacilities();
     return newFacility.guid;
   }
+
+  getByOtherGuid(guid: string, type: string): Array<IdbFacility> {
+    let facilities: Array<IdbFacility> = this.facilities.getValue();
+    let _facilities: Array<IdbFacility> = facilities.filter(facility => {
+      if (type == 'company') {
+        return facility.companyId == guid;
+      } else if (type == 'user') {
+        return facility.userId == guid;
+      } else {
+        return false;
+      }
+    });
+    return _facilities;
+  }
 }
