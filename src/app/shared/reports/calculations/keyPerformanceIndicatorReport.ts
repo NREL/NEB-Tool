@@ -12,7 +12,11 @@ export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): K
                 performanceMetric.performanceMetricImpact.costAdjustment = 0;
             }
             let itemExistIndex: number = kpiReportItems.findIndex(reportItem => {
-                return reportItem.keyPerformanceMetric.value == performanceMetric.keyPerformanceMetric.value;
+                if(reportItem.keyPerformanceMetric.isCustom == false){
+                    return reportItem.keyPerformanceMetric.value == performanceMetric.keyPerformanceMetric.value;
+                }else {
+                    return reportItem.keyPerformanceMetric.label == performanceMetric.keyPerformanceMetric.label;
+                }
             });
             if (itemExistIndex != -1) {
                 if (performanceMetric.performanceMetricImpact.costAdjustment) {
@@ -25,8 +29,9 @@ export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): K
                     kpiReportItems[itemExistIndex].performanceMetricImpact.percentSavings = (kpiReportItems[itemExistIndex].performanceMetricImpact.costAdjustment / kpiReportItems[itemExistIndex].keyPerformanceMetric.baselineCost) * 100;
                 }
             } else {
+                if(performanceMetric.keyPerformanceMetric.isCustom){
 
-
+                }
                 kpiReportItems.push({
                     keyPerformanceMetric: performanceMetric.keyPerformanceMetric,
                     performanceMetricImpact: {
@@ -45,13 +50,13 @@ export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): K
     })
 
     let baselineCost: number = _.sumBy(kpiReportItems, (reportItem: KeyPerformanceIndicatorReportItem) => {
-        if (reportItem.keyPerformanceMetric.isQuantitative) {
+        if (reportItem.keyPerformanceMetric.isQuantitative && reportItem.keyPerformanceMetric.baselineCost) {
             return reportItem.keyPerformanceMetric.baselineCost;
         }
         return 0
     });
     let annualSavings: number = _.sumBy(kpiReportItems, (reportItem: KeyPerformanceIndicatorReportItem) => {
-        if (reportItem.keyPerformanceMetric.isQuantitative) {
+        if (reportItem.keyPerformanceMetric.isQuantitative && reportItem.performanceMetricImpact.costAdjustment) {
             return reportItem.performanceMetricImpact.costAdjustment;
         }
         return 0
