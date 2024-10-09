@@ -111,7 +111,7 @@ export function getAssessmentReport(assessment: IdbAssessment, energyOpportuniti
     if (totalPaybackWithNebs == Infinity) {
         totalPaybackWithNebs = 0;
     }
-    let totalPaybackWithoutNebs: number = (implementationCost / totalNonOpportunitySavings);
+    let totalPaybackWithoutNebs: number = (implementationCost / totalEnergyCostSavings);
     if (totalPaybackWithoutNebs == Infinity) {
         totalPaybackWithoutNebs = 0;
     }
