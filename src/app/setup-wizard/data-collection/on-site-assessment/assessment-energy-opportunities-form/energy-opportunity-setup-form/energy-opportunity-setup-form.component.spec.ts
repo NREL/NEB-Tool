@@ -15,6 +15,8 @@ import { NebFormsAccordionComponent } from '../../neb-forms-accordion/neb-forms-
 import { LocalStorageDataService } from 'src/app/shared/shared-services/local-storage-data.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { BootstrapService } from 'src/app/shared/shared-services/bootstrap.service';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { IdbCompany } from 'src/app/models/company';
 
 describe('EnergyOpportunitySetupFormComponent', () => {
   let component: EnergyOpportunitySetupFormComponent;
@@ -35,6 +37,9 @@ describe('EnergyOpportunitySetupFormComponent', () => {
   let localStorageDataService: Partial<LocalStorageDataService> = {};
   let cd: Partial<ChangeDetectorRef> = {};
   let bootstrapService: Partial<BootstrapService> = {};
+  let companyIdbService: Partial<CompanyIdbService> = {
+    selectedCompany: new BehaviorSubject<IdbCompany>(null)
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule, FormsModule],
@@ -46,7 +51,8 @@ describe('EnergyOpportunitySetupFormComponent', () => {
         { provide: DbChangesService, useValue: dbChangesService },
         { provide: LocalStorageDataService, useValue: localStorageDataService },
         { provide: ChangeDetectorRef, useValue: cd },
-        { provide: BootstrapService, useValue: bootstrapService }
+        { provide: BootstrapService, useValue: bootstrapService },
+        { provide: CompanyIdbService, useValue: companyIdbService }
       ]
 
     })

@@ -4,9 +4,12 @@ import { FacilitySetupService } from './facility-setup.service';
 
 describe('FacilitySetupService', () => {
   let service: FacilitySetupService;
+  let facilitySetupService: Partial<FacilitySetupService> = {};
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [{ provide: FacilitySetupService, useValue: facilitySetupService }]
+    });
     service = TestBed.inject(FacilitySetupService);
   });
 
