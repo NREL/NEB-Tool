@@ -24,7 +24,8 @@
     <tbody>
         <tr *ngFor="let kpiReportItem of keyPerformanceIndicatorReport.kpiReportItems">
             <td class="">
-                {{kpiReportItem.keyPerformanceMetric.kpiValue | kpiValueDisplay: keyPerformanceIndicators}}
+                <span
+                    [innerHTML]="kpiReportItem.keyPerformanceMetric.kpiValue | kpiValueDisplay: keyPerformanceIndicators"></span>
             </td>
             <td class="">
                 <span [innerHTML]="kpiReportItem.keyPerformanceMetric.htmlLabel"></span>
@@ -45,8 +46,7 @@
                         [isCurrency]="true"></app-single-cell-item>
                 </td>
                 <td class="text-right">
-                    <app-single-cell-item
-                        [numValue]="kpiReportItem.performanceMetricImpact.percentSavings"
+                    <app-single-cell-item [numValue]="kpiReportItem.performanceMetricImpact.percentSavings"
                         [isCurrency]="false" [units]="'%'"></app-single-cell-item>
                 </td>
             </ng-template>
@@ -62,24 +62,22 @@
             <th colspan="2">
                 Totals
             </th>
-            <td class="text-right">
+            <th class="text-right">
                 <app-single-cell-item [numValue]="keyPerformanceIndicatorReport.total.baselineCost"
                     [isCurrency]="true"></app-single-cell-item>
-            </td>
-            <td class="text-right">
-                <app-single-cell-item
-                    [numValue]="keyPerformanceIndicatorReport.total.annualSavings"
+            </th>
+            <th class="text-right">
+                <app-single-cell-item [numValue]="keyPerformanceIndicatorReport.total.annualSavings"
                     [isCurrency]="true"></app-single-cell-item>
-            </td>
-            <td class="text-right">
+            </th>
+            <th class="text-right">
                 <app-single-cell-item [numValue]="keyPerformanceIndicatorReport.total.modifiedCost"
                     [isCurrency]="true"></app-single-cell-item>
-            </td>
-            <td class="text-right">
-                <app-single-cell-item
-                    [numValue]="keyPerformanceIndicatorReport.total.percentSavings"
+            </th>
+            <th class="text-right">
+                <app-single-cell-item [numValue]="keyPerformanceIndicatorReport.total.percentSavings"
                     [isCurrency]="false" [units]="'%'"></app-single-cell-item>
-            </td>
+            </th>
         </tr>
     </tfoot>
 </table>

@@ -31,7 +31,7 @@ export class PerformanceMetricsChartComponent {
 
     var trace1 = {
       x: kpiReportItems.map(kpiReport => {
-        return kpiReport.keyPerformanceMetric.htmlLabel
+        return kpiReport.keyPerformanceMetric.label
       }),
       y: kpiReportItems.map(kpiReportItem => {
         return kpiReportItem.keyPerformanceMetric.baselineCost - kpiReportItem.performanceMetricImpact.costAdjustment
@@ -42,7 +42,7 @@ export class PerformanceMetricsChartComponent {
 
     var trace2 = {
       x: kpiReportItems.map(kpiReport => {
-        return kpiReport.keyPerformanceMetric.htmlLabel
+        return kpiReport.keyPerformanceMetric.label
       }),
       y: kpiReportItems.map(kpiReportItem => {
         return kpiReportItem.performanceMetricImpact.costAdjustment
