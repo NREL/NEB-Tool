@@ -12,6 +12,8 @@ import { OnSiteVisitReportComponent } from './on-site-visit-report/on-site-visit
 import { ReportDetailsTableComponent } from './report-details-table/report-details-table.component';
 import { PerformanceMetricsTableComponent } from './performance-metrics-table/performance-metrics-table.component';
 import { PerformanceMetricsTablePipe } from './performance-metrics-table/performance-metrics-table.pipe';
+import { OnSiteVisitSavingsChartComponent } from './on-site-visit-report/on-site-visit-savings-chart/on-site-visit-savings-chart.component';
+import { OnSiteVisitPaybackTableComponent } from './on-site-visit-report/on-site-visit-payback-table/on-site-visit-payback-table.component';
 
 
 
@@ -25,7 +27,9 @@ import { PerformanceMetricsTablePipe } from './performance-metrics-table/perform
     OnSiteVisitReportComponent,
     ReportDetailsTableComponent,
     PerformanceMetricsTableComponent,
-    PerformanceMetricsTablePipe
+    PerformanceMetricsTablePipe,
+    OnSiteVisitSavingsChartComponent,
+    OnSiteVisitPaybackTableComponent
   ],
   imports: [
     CommonModule,

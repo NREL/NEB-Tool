@@ -42,7 +42,10 @@ export class PerformanceMetricsChartComponent {
         return kpiReportItem.keyPerformanceMetric.baselineCost - kpiReportItem.performanceMetricImpact.costAdjustment
       }),
       name: 'Modified Cost',
-      type: 'bar'
+      type: 'bar',
+      marker: {
+        color: '#e67e22'
+      }
     };
 
     var trace2 = {
@@ -54,6 +57,9 @@ export class PerformanceMetricsChartComponent {
       }),
       name: 'Annual Savings',
       type: 'bar',
+      marker: {
+        color: '#196f3d'
+      }
     };
 
     var data = [trace1, trace2];

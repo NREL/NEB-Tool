@@ -7,6 +7,7 @@ import { IdbNonEnergyBenefit } from "src/app/models/nonEnergyBenefit";
 import { IdbKeyPerformanceMetricImpact } from "src/app/models/keyPerformanceMetricImpact";
 import { getKeyPerfomanceIndicatorReport, KeyPerformanceIndicatorReport } from "./keyPerformanceIndicatorReport";
 import { NebReport } from "./nebReport";
+import * as _ from 'lodash';
 
 export function getOnSiteVisitReport(assessmentIds: Array<string>, assessments: Array<IdbAssessment>,
     energyOpportunities: Array<IdbEnergyOpportunity>, nonEnergyBenefits: Array<IdbNonEnergyBenefit>,
@@ -23,10 +24,43 @@ export function getOnSiteVisitReport(assessmentIds: Array<string>, assessments: 
     let allNebReports: Array<NebReport> = assessmentReports.flatMap(report => {
         return report.allNebReports
     });
+
+    let totalEnergyCostSavings: number = _.sumBy(assessmentReports, (report: AssessmentReport) => {
+        return report.totalEnergyCostSavings
+    });
+
+    let totalCostSavings: number = _.sumBy(assessmentReports, (report: AssessmentReport) => {
+        return report.totalCostSavings
+    });
+
+    let totalEnergyCosts: number = _.sumBy(assessmentReports, (report: AssessmentReport) => {
+        return report.assessment.cost
+    });
+
+    let totalImplementationCost: number = _.sumBy(assessmentReports, (report: AssessmentReport) => {
+        if(report.totalImplementationCost){
+            return report.totalImplementationCost
+        }
+        return 0;
+    });
+    let totalPaybackWithoutNebs: number = (totalImplementationCost / totalEnergyCostSavings);
+    if (totalPaybackWithoutNebs == Infinity || isNaN(totalPaybackWithoutNebs)) {
+        totalPaybackWithoutNebs = 0;
+    }
+    let totalPaybackWithNebs: number = (totalImplementationCost / totalCostSavings);
+    if (totalPaybackWithNebs == Infinity || isNaN(totalPaybackWithNebs)) {
+        totalPaybackWithNebs = 0;
+    }
     return {
         assessmentReports: assessmentReports,
         allNebReports: allNebReports,
-        keyPerformanceIndicatorReport: getKeyPerfomanceIndicatorReport(allNebReports)
+        keyPerformanceIndicatorReport: getKeyPerfomanceIndicatorReport(allNebReports),
+        totalEnergyCostSavings: totalEnergyCostSavings,
+        totalCostSavings: totalCostSavings,
+        totalEnergyCosts: totalEnergyCosts,
+        totalPaybackWithNebs: totalPaybackWithNebs,
+        totalPaybackWithoutNebs: totalPaybackWithoutNebs,
+        totalImplementationCost: totalImplementationCost
     };
 }
 
@@ -34,5 +68,11 @@ export function getOnSiteVisitReport(assessmentIds: Array<string>, assessments: 
 export interface OnSiteVisitReport {
     assessmentReports: Array<AssessmentReport>,
     allNebReports: Array<NebReport>,
-    keyPerformanceIndicatorReport: KeyPerformanceIndicatorReport
+    keyPerformanceIndicatorReport: KeyPerformanceIndicatorReport,
+    totalEnergyCostSavings: number,
+    totalEnergyCosts: number,
+    totalCostSavings: number,
+    totalImplementationCost: number,
+    totalPaybackWithoutNebs: number,
+    totalPaybackWithNebs: number
 }
