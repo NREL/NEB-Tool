@@ -69,6 +69,7 @@ export class EnergyEquipmentFormComponent {
 
   ngOnDestroy() {
     this.contactSub.unsubscribe();
+    this.companySub.unsubscribe();
   }
 
   async industrialSystemChange() {

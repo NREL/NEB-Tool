@@ -54,6 +54,7 @@ export class EnergyOpportunitySetupFormComponent {
   }
 
   ngOnDestroy() {
+    this.companySub.unsubscribe();
   }
 
   ngAfterViewInit() {

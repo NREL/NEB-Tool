@@ -87,13 +87,15 @@ export class AssessmentDetailsFormComponent {
     this.contactsSub.unsubscribe();
     this.assessmentSub.unsubscribe();
     this.energyEquipmentSub.unsubscribe();
+    this.facilitySub.unsubscribe();
+    this.companySub.unsubscribe();
   }
 
   async assessmentTypeChange() {
     let utilityTypes = AssessmentOptions.find(
       _assessmentOption => _assessmentOption.assessmentType == this.assessment.assessmentType)?.utilityTypes || [];
     this.assessment.utilityTypes = utilityTypes; // track all utility types
-    this.calculateEnergyUseCost();
+    await this.calculateEnergyUseCost();
   }
 
   async calculateEnergyUseCost() {
