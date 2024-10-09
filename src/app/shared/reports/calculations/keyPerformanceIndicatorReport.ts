@@ -8,13 +8,13 @@ export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): K
     let kpiReportItems: Array<KeyPerformanceIndicatorReportItem> = new Array();
     nebReports.forEach(nebReport => {
         nebReport.reportPerformanceMetrics.forEach(performanceMetric => {
-            if(isNaN(performanceMetric.performanceMetricImpact.costAdjustment)){
+            if (isNaN(performanceMetric.performanceMetricImpact.costAdjustment)) {
                 performanceMetric.performanceMetricImpact.costAdjustment = 0;
             }
             let itemExistIndex: number = kpiReportItems.findIndex(reportItem => {
-                if(reportItem.keyPerformanceMetric.isCustom == false){
+                if (reportItem.keyPerformanceMetric.isCustom == false) {
                     return reportItem.keyPerformanceMetric.value == performanceMetric.keyPerformanceMetric.value;
-                }else {
+                } else {
                     return reportItem.keyPerformanceMetric.label == performanceMetric.keyPerformanceMetric.label;
                 }
             });
@@ -29,14 +29,15 @@ export function getKeyPerfomanceIndicatorReport(nebReports: Array<NebReport>): K
                     kpiReportItems[itemExistIndex].performanceMetricImpact.percentSavings = (kpiReportItems[itemExistIndex].performanceMetricImpact.costAdjustment / kpiReportItems[itemExistIndex].keyPerformanceMetric.baselineCost) * 100;
                 }
             } else {
-                if(performanceMetric.keyPerformanceMetric.isCustom){
+                if (performanceMetric.keyPerformanceMetric.isCustom) {
 
                 }
                 kpiReportItems.push({
                     keyPerformanceMetric: performanceMetric.keyPerformanceMetric,
                     performanceMetricImpact: {
                         ...performanceMetric.performanceMetricImpact,
-                        percentSavings: (performanceMetric.performanceMetricImpact.costAdjustment / performanceMetric.keyPerformanceMetric.baselineCost) * 100
+                        percentSavings: (performanceMetric.performanceMetricImpact.costAdjustment / performanceMetric.keyPerformanceMetric.baselineCost) * 100,
+                        modifiedCost: (performanceMetric.keyPerformanceMetric.baselineCost - performanceMetric.performanceMetricImpact.costAdjustment)
                     },
                     // nebsImpacts: [{
                     //     nebName: string,
@@ -89,7 +90,7 @@ export interface KeyPerformanceIndicatorReport {
 
 export interface KeyPerformanceIndicatorReportItem {
     keyPerformanceMetric: KeyPerformanceMetric,
-    performanceMetricImpact: IdbKeyPerformanceMetricImpact,
+    performanceMetricImpact: IdbKeyPerformanceMetricImpact
     // nebsImpacts: Array<{
     //     nebName: string,
     //     nebValue: NebOptionValue,

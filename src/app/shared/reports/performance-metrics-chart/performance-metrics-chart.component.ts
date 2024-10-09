@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { PlotlyService } from 'angular-plotly.js';
-import { KeyPerformanceIndicatorReport, KeyPerformanceIndicatorReportItem } from '../../calculations/keyPerformanceIndicatorReport';
+import { KeyPerformanceIndicatorReport, KeyPerformanceIndicatorReportItem } from '../calculations/keyPerformanceIndicatorReport';
 import * as _ from 'lodash';
 @Component({
   selector: 'app-performance-metrics-chart',
@@ -60,8 +60,15 @@ export class PerformanceMetricsChartComponent {
     var layout = {
       barmode: 'stack',
       yaxis: {
-        tickprefix: '$'
+        tickprefix: '$',
+        automargin: true
+      },
+      xaxis: {
+        automargin: true
       }
+      // legend: {
+      //   orientation: "h"
+      // },
     };
 
     let config = {
