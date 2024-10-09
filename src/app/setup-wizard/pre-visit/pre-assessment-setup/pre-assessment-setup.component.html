@@ -87,7 +87,7 @@
                                                     <ng-container *ngFor="let use of assessment.utilityEnergyUses">
                                                         <div class="row mb-1 utility-row"
                                                             *ngIf="assessment.utilityTypes.includes(use.utilityType)">
-                                                            <div class="col-5">
+                                                            <div class="col-4">
                                                                 <div class="input-group">
                                                                     <div class="input-group-text">
                                                                         <input class="form-check-input" type="checkbox"
@@ -102,7 +102,7 @@
                                                                 </div>
                                                             </div>
                                                             <ng-container *ngIf="use.include">
-                                                                <div class="col-7">
+                                                                <div class="col-8">
                                                                     <div class="form-group row align-items-center">
                                                                         <div class="input-group">
                                                                             <input type="number" class="form-control"
@@ -113,7 +113,7 @@
                                                                             <select class="input-group-text"
                                                                                 name="{{'energyUnit_' + use.utilityType + assessment.guid}}"
                                                                                 id="{{'energyUnit_' + use.utilityType + assessment.guid}}"
-                                                                                [(ngModel)]="use.unit"
+                                                                                [(ngModel)]="use.energyUnit"
                                                                                 (change)="calculateEnergyUseCost(assessment)">
                                                                                 <option
                                                                                     *ngFor="let unitOption of (use.utilityType | linkedUnitOptions: 'Energy')"
@@ -123,6 +123,36 @@
                                                                                 </option>
                                                                             </select>
                                                                         </div>
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="use.include
+                                                                && !(use.utilityType | isStandardUnit :use.energyUnit : 'Energy')">
+                                                                <div class="col-4">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="disabled-input-label-secondary" [disabled]="true"
+                                                                        value="{{use.utilityType | utilityHhvDisplay}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" type="number" step="any" min="0"
+                                                                            name="{{'energyHHV_' + use.utilityType + assessment.guid}}"
+                                                                            id="{{'energyHHV_' + use.utilityType + assessment.guid}}"
+                                                                            [(ngModel)]="use.energyHHV"
+                                                                            (change)="calculateEnergyUseCost(assessment)">
+                                                                        <select class="input-group-text" 
+                                                                            name="{{'energyUnitStandard_' + use.utilityType + assessment.guid}}"
+                                                                            id="{{'energyUnitStandard_' + use.utilityType + assessment.guid}}"
+                                                                            [(ngModel)]="use.energyUnitStandard"
+                                                                            (change)="calculateEnergyUseCost(assessment)">
+                                                                            <option *ngFor="let energyUnitOption of energyUnitOptions"
+                                                                                [ngValue]="energyUnitOption.value">
+                                                                                <span [innerHTML]="energyUnitOption.value | unitsDisplay">
+                                                                                </span>/<span [innerHTML]="use.energyUnit| unitsDisplay">
+                                                                                </span>
+                                                                            </option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </ng-container>

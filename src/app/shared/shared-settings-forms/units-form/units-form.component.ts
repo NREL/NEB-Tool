@@ -38,6 +38,8 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
   hasAssessments: boolean = false;
   priceChanged: boolean = false;
 
+  energyUnitOptions: Array<UnitOption> = EnergyUnitOptions;
+
   constructor(
     private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
@@ -94,10 +96,23 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
       let trimmedType = utilityType.replace(/\s+/g, ''); // Remove spaces
       let camelCaseType = trimmedType.charAt(0).toLowerCase() + trimmedType.slice(1);
       if (this.facility.unitSettings[`include${trimmedType}`]) {
-        let convertedUse = this.convertValue.convertValue(
-          this.facility.unitSettings[`${camelCaseType}Use`],
-          this.facility.unitSettings[`${camelCaseType}Unit`],
-          this.companyEnergyUnit).convertedValue;
+        let convertedUse = 0;
+        let selectedUnitOption = option.energyUnitOptions.find(
+          _unitOption => _unitOption.value == this.facility.unitSettings[`${camelCaseType}Unit`]);
+        if (option.isStandardEnergyUnit && selectedUnitOption.isStandard !== false) {
+          // standard energy unit
+          convertedUse = this.convertValue.convertValue(
+            this.facility.unitSettings[`${camelCaseType}Use`],
+            this.facility.unitSettings[`${camelCaseType}Unit`],
+            this.companyEnergyUnit).convertedValue;
+        } else {
+          // non-standard energy unit
+          convertedUse = this.convertValue.convertValue(
+            this.facility.unitSettings[`${camelCaseType}Use`] *
+            this.facility.unitSettings[`${camelCaseType}HHV`],
+            this.facility.unitSettings[`${camelCaseType}EnergyUnit`],
+            this.companyEnergyUnit).convertedValue;
+        }
         use += convertedUse;
         cost += this.facility.unitSettings[`${camelCaseType}Use`] *
           this.facility.unitSettings[`${camelCaseType}Price`];

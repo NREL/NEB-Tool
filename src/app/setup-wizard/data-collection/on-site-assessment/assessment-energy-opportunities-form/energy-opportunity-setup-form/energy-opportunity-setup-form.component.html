@@ -76,7 +76,7 @@
                     <input name="{{'energySavings_'+energyOpportunity.guid}}" type="number" class="form-control"
                         [(ngModel)]="energyOpportunity.energySavings" id="{{'energySavings_'+energyOpportunity.guid}}"
                         (input)="saveEnergyOpportunity()">
-                    <span class="input-group-text">MMBtu/yr</span>
+                    <span class="input-group-text" [innerHTML]="(companyEnergyUnit | unitsDisplay) + '/yr'"></span>
                 </div>
             </div>
         </div>
