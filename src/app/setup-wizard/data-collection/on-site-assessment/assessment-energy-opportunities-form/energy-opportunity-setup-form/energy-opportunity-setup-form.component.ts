@@ -7,7 +7,8 @@ import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benefits-idb.service';
 import { getNewIdbNonEnergyBenefit, IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 
 @Component({
   selector: 'app-energy-opportunity-setup-form',
@@ -32,16 +33,24 @@ export class EnergyOpportunitySetupFormComponent {
   opportunityTypes: Array<EnergyOpportunityType> = [{ value: 'other', label: 'Other' }];
   displayDeleteModal: boolean = false;
   showAddNebDropdown: boolean = false;
+
+  companySub: Subscription;
+  companyEnergyUnit: string;
+
   constructor(
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private dbChangesService: DbChangesService,
     private setupWizardService: SetupWizardService,
-    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService
+    private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
+    private companyIdbService: CompanyIdbService,
   ) {
   }
 
   ngOnInit() {
     this.energyOpportunity = this.energyOpportunityIdbService.getByGuid(this.energyOpportunityGuid);
+    this.companySub = this.companyIdbService.selectedCompany.subscribe(company => {
+      this.companyEnergyUnit = company.companyEnergyUnit;
+    });
   }
 
   ngOnDestroy() {

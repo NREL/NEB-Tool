@@ -150,7 +150,7 @@
             <div class="input-group">
                 <input name="energySavings" type="number" class="form-control" [(ngModel)]="assessment.energySavings"
                     (input)="saveChanges()" id="energySavings">
-                <span class="input-group-text">MMBtu/yr</span>
+                <span class="input-group-text" [innerHTML]="(companyEnergyUnit | unitsDisplay) + '/yr'"></span>
             </div>
         </div>
     </div>

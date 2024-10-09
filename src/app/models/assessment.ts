@@ -42,10 +42,10 @@ export function getNewIdbAssessment(userId: string, companyId: string, facilityI
         equipmentId: undefined,
         energyUse: 0,
         cost: 0,
-        energySavings: undefined,
-        costSavings: undefined,
+        energySavings: 0,
+        costSavings: 0,
         notes: undefined,
         visitDate: undefined,
-        implementationCost: undefined
+        implementationCost: 0
     }
 }

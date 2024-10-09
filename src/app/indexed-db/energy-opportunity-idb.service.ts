@@ -59,4 +59,19 @@ export class EnergyOpportunityIdbService {
       return opportunity.guid == guid;
     });
   }
+
+  getByOtherGuid(guid: string, idType: string): Array<IdbEnergyOpportunity> {
+    let energyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunities.getValue();
+    if (idType == 'company') {
+      return energyOpportunities.filter(opportunity => {
+        return opportunity.companyId == guid;
+      });
+    } else if (idType == 'facility') {
+      return energyOpportunities.filter(opportunity => {
+        return opportunity.facilityId == guid;
+      });
+    } else {
+      return [];
+    }
+  }
 }

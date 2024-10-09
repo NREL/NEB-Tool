@@ -45,6 +45,18 @@ export class PreAssessmentSetupService {
         }
       });
       assessment.energyUse = use;
+      // Update assessment energy savings
+      if (companyEnergyUnit === 'MMBtu') {
+        assessment.energySavings = this.convertValue.convertValue(
+          assessment.energySavings,
+          'kWh',
+          'MMBtu').convertedValue;
+      } else {
+        assessment.energySavings = this.convertValue.convertValue(
+          assessment.energySavings,
+          'MMBtu',
+          'kWh').convertedValue;
+      }
       await this.saveChanges(assessment);
     }
   }
