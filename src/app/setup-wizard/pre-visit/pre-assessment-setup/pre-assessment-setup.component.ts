@@ -68,7 +68,7 @@ export class PreAssessmentSetupComponent {
   companySub: Subscription;
   companyEnergyUnit: string;
   facilitySub: Subscription;
-  facilityUnitSettings: UnitSettings
+  facilityUnitSettings: UnitSettings;
   energyUnitOptions: Array<UnitOption> = EnergyUnitOptions;
 
   accordionGuid: string;
