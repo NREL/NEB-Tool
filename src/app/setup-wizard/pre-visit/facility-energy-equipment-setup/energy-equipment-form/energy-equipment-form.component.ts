@@ -75,30 +75,18 @@ export class EnergyEquipmentFormComponent {
     let _utilityTypes = this.equipmentTypeOptions.find(
       option => option.equipmentType === this.energyEquipment.equipmentType
     )?.utilityTypes || [];
-    if (!(_utilityTypes.includes(this.energyEquipment.utilityType)) || this.energyEquipment.utilityType) {
-      this.energyEquipment.utilityType = _utilityTypes[0]; // Set to first utility type
-    }
+    this.energyEquipment.utilityType = _utilityTypes[0]; // Set to first utility type
+    this.energyEquipment.sizeUnit = this.equipmentTypeOptions.find(
+      option => option.equipmentType === this.energyEquipment.equipmentType
+    )?.defaultUnit || 'kW'; // Set to default unit
     await this.utilityTypeChange();
   }
 
   async utilityTypeChange() {
     if (this.energyEquipment.equipmentType === 'Process Cooling') { // Process Cooling unit changes
-      if (!this.processCoolingUnitOptions.map(option => option.value).includes(this.energyEquipment.sizeUnit)) {
-        this.energyEquipment.sizeUnit = this.processCoolingUnitOptions[0].value;
-        await this.updateEnergyCalculations();
-      } else {
-        await this.saveChanges();
-      }
-    } else {
-      let _utilityOption = this.utilityOptions.find(option => option.utilityType === this.energyEquipment.utilityType);
-      let _unitOptions = _utilityOption.powerUnitOptions;
-      if (!_unitOptions.map(option => option.value).includes(this.energyEquipment.sizeUnit)) {
-        this.energyEquipment.sizeUnit = _unitOptions[0].value;
-        await this.updateEnergyCalculations();
-      } else {
-        await this.saveChanges();
-      }
+      this.energyEquipment.sizeUnit = this.processCoolingUnitOptions[0].value;
     }
+    await this.updateEnergyCalculations();
   }
 
   async updateEnergyCalculations() {
