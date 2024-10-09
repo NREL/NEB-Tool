@@ -9,6 +9,9 @@ import { NonEnergyBenefitsIdbService } from 'src/app/indexed-db/non-energy-benef
 import { getNewIdbNonEnergyBenefit, IdbNonEnergyBenefit } from 'src/app/models/nonEnergyBenefit';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
+import { UtilityEnergyUse } from 'src/app/models/utilityEnergyUses';
+import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
+import { UtilityOptions } from 'src/app/shared/constants/utilityTypes';
 
 @Component({
   selector: 'app-energy-opportunity-setup-form',
@@ -37,12 +40,16 @@ export class EnergyOpportunitySetupFormComponent {
   companySub: Subscription;
   companyEnergyUnit: string;
 
+  assessmentSub: Subscription;
+  assessmentEnergyUses: Array<UtilityEnergyUse>;
+
   constructor(
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private dbChangesService: DbChangesService,
     private setupWizardService: SetupWizardService,
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private companyIdbService: CompanyIdbService,
+    private assessmentIdbService: AssessmentIdbService,
   ) {
   }
 
@@ -51,10 +58,14 @@ export class EnergyOpportunitySetupFormComponent {
     this.companySub = this.companyIdbService.selectedCompany.subscribe(company => {
       this.companyEnergyUnit = company.companyEnergyUnit;
     });
+    this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(assessment => {
+      this.assessmentEnergyUses = assessment.utilityEnergyUses;
+    });
   }
 
   ngOnDestroy() {
     this.companySub.unsubscribe();
+    this.assessmentSub.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -64,6 +75,22 @@ export class EnergyOpportunitySetupFormComponent {
   async deleteEnergyOpportunity() {
     await this.dbChangesService.deleteEnergyOpportunity(this.energyOpportunity)
     this.closeDeleteModal();
+  }
+
+  async changeUtilityType() {
+    let energyUse = this.assessmentEnergyUses.find(use => 
+      use.utilityType === this.energyOpportunity.utilityType);
+      let selectedUtilityOption = UtilityOptions.find(
+        _option => _option.utilityType == this.energyOpportunity.utilityType);
+    let selectedUnitOption = selectedUtilityOption.energyUnitOptions.find(
+        _unitOption => _unitOption.value == energyUse.energyUnit);
+    if (selectedUtilityOption.isStandardEnergyUnit 
+        && selectedUnitOption.isStandard !== false) { // Standard unit
+        this.energyOpportunity.energyUnit = energyUse.energyUnit;
+    } else { // Non-standard unit
+        this.energyOpportunity.energyUnit = energyUse.energyUnitStandard;
+    }
+    await this.saveEnergyOpportunity();
   }
 
   async saveEnergyOpportunity() {
