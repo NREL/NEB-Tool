@@ -5,8 +5,10 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { IdbContact } from 'src/app/models/contact';
 import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { UnitSettings } from 'src/app/models/unitSettings';
 import { EquipmentType, EquipmentTypeOptions, EquipmentTypes } from 'src/app/shared/constants/equipmentTypes';
 import { EnergyUnitOptions, ProcessCoolingUnitOptions, UnitOption, VolumeGasOptions, VolumeLiquidOptions } from 'src/app/shared/constants/unitOptions';
 import { UtilityOption, UtilityOptions, UtilityType, UtilityTypes } from 'src/app/shared/constants/utilityTypes';
@@ -49,11 +51,14 @@ export class EnergyEquipmentFormComponent {
 
   companySub: Subscription;
   companyEnergyUnit: string;
+  facilitySub: Subscription;
+  facilityUnitSettings: UnitSettings;
 
   constructor(private energyEquipmentIdbService: EnergyEquipmentIdbService,
     private dbChangesService: DbChangesService,
     private contactIdbService: ContactIdbService,
     private companyIdbService: CompanyIdbService,
+    private facilityIdbService: FacilityIdbService,
   ) { }
 
   ngOnInit() {
@@ -64,6 +69,10 @@ export class EnergyEquipmentFormComponent {
 
     this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
       this.companyEnergyUnit = _company.companyEnergyUnit;
+    });
+
+    this.facilitySub = this.facilityIdbService.selectedFacility.subscribe(_facility => {
+      this.facilityUnitSettings = _facility.unitSettings;
     });
   }
 
@@ -87,6 +96,7 @@ export class EnergyEquipmentFormComponent {
     if (this.energyEquipment.equipmentType === 'Process Cooling') { // Process Cooling unit changes
       this.energyEquipment.sizeUnit = this.processCoolingUnitOptions[0].value;
     }
+    this.updateFacilityUtilityUnit();
     await this.updateEnergyCalculations();
   }
 
@@ -118,11 +128,44 @@ export class EnergyEquipmentFormComponent {
     if (!this.energyEquipment.annualEnergyUse || this.energyEquipment.annualEnergyUse === Infinity) {
       this.energyEquipment.annualEnergyUse = 0;
     }
+    this.convertAnnualEnergyUse();
     await this.saveChanges();
+  }
+
+  updateFacilityUtilityUnit() {
+    const utilityType = this.energyEquipment.utilityType.replace(/\s+/g, '');
+    const camelCaseType = utilityType.charAt(0).toLowerCase()
+              + utilityType.slice(1); // Lowercase first letter
+    if (this.facilityUnitSettings[`include${camelCaseType}`]) {
+      let selectedUtilityOption = this.utilityOptions.find(
+        _option => _option.utilityType == utilityType);
+      let selectedUnitOption = selectedUtilityOption.energyUnitOptions.find(
+        _unitOption => _unitOption.value == this.energyEquipment.facilityUtilityUnit);
+      if (selectedUtilityOption.isStandardEnergyUnit 
+        && selectedUnitOption.isStandard !== false) { // Standard unit
+        this.energyEquipment.facilityUtilityUnit = this.facilityUnitSettings[`${camelCaseType}Unit`];
+      } else { // Non-standard unit
+        this.energyEquipment.facilityUtilityUnit = this.facilityUnitSettings[`${camelCaseType}EnergyUnit`];
+      }
+    } else {
+      this.energyEquipment.facilityUtilityUnit = this.companyEnergyUnit; // Default to company unit
+    }
+  }
+
+  convertAnnualEnergyUse() {
+    this.energyEquipment.annualEnergyUseByUtility = this.convertValue.convertValue(
+      this.energyEquipment.annualEnergyUse,
+      this.companyEnergyUnit,
+      this.energyEquipment.facilityUtilityUnit
+    ).convertedValue;
+    if (!this.energyEquipment.annualEnergyUseByUtility || 
+      this.energyEquipment.annualEnergyUseByUtility === Infinity) {
+      this.energyEquipment.annualEnergyUseByUtility = 0;
+    }
   }
   
   ngAfterViewInit() {
-    //emit after intialized. 
+    //emit after initialized. 
     //When adding new energy equipment this will trigger the form to open
     this.emitInitialized.emit(true);
   }

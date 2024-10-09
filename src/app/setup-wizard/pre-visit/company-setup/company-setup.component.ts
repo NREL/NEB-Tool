@@ -18,6 +18,10 @@ import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { EnergyOpportunitySetupFormComponent } from '../../data-collection/on-site-assessment/assessment-energy-opportunities-form/energy-opportunity-setup-form/energy-opportunity-setup-form.component';
 import { AssessmentEnergyOpportunitiesFormService } from '../../data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.service';
+import { FacilityEnergyEquipmentSetupComponent } from '../facility-energy-equipment-setup/facility-energy-equipment-setup.component';
+import { FacilityEnergyEquipmentSetupService } from '../facility-energy-equipment-setup/facility-energy-equipment-setup.service';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
 
 @Component({
   selector: 'app-company-setup',
@@ -46,6 +50,7 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
   companyAssessments: Array<IdbAssessment> = [];
   companyFacilities: Array<IdbFacility> = [];
   companyEnergyOpportunities: Array<IdbEnergyOpportunity> = [];
+  companyEnergyEquipments: Array<IdbEnergyEquipment> = [];
 
   constructor(private router: Router,
     private companyIdbService: CompanyIdbService,
@@ -57,6 +62,8 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
     private facilitySetupService: FacilitySetupService,
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private assessmentEnergyOpportunitiesFormService: AssessmentEnergyOpportunitiesFormService,
+    private facilityEnergyEquipmentSetupService: FacilityEnergyEquipmentSetupService,
+    private energyEquipmentIdbService: EnergyEquipmentIdbService,
   ) {
 
   }
@@ -77,6 +84,7 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
 
       this.companyFacilities = this.facilityIdbService.getByOtherGuid(this.selectedCompany.guid, 'company');
       this.companyEnergyOpportunities = this.energyOpportunityIdbService.getByOtherGuid(this.selectedCompany.guid, 'company');
+      this.companyEnergyEquipments = this.energyEquipmentIdbService.getByOtherGuid(this.selectedCompany.guid, 'company');
     }
   }
 
@@ -105,8 +113,10 @@ export class CompanySetupComponent implements OnInit, OnDestroy {
       this.companyAssessments, this.energyUnit.value);
     await this.facilitySetupService.updateFacilityEnergyUse(
       this.companyFacilities, this.energyUnit.value);
-    await this.assessmentEnergyOpportunitiesFormService.updateEnergyOpportunityEnergyUse(
+    await this.assessmentEnergyOpportunitiesFormService.updateEnergyOpportunityEnergyUseFromCompany(
       this.companyEnergyOpportunities, this.energyUnit.value);
+    await this.facilityEnergyEquipmentSetupService.updateEnergyEquipmentEnergyUse(
+      this.companyEnergyEquipments, this.energyUnit.value);
   }
 
   async saveChanges() {
