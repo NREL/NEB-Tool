@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faContactBook, faTrash, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { ContactIdbService } from 'src/app/indexed-db/contact-idb.service';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
@@ -27,7 +28,9 @@ export class EnergyEquipmentFormComponent {
   faContactBook: IconDefinition = faContactBook;
 
   equipmentTypes: Array<EquipmentType> = EquipmentTypes;
-  equipmentTypeOptions: Array<{ equipmentType: EquipmentType, utilityTypes: Array<UtilityType> }> = EquipmentTypeOptions;
+  equipmentTypeOptions: Array<{ equipmentType: EquipmentType, 
+      utilityTypes: Array<UtilityType>,
+      defaultUnit: string }> = EquipmentTypeOptions;
   utilityOptions: Array<UtilityOption> = UtilityOptions;
 
   fuelVolumeUnitOptions:Array<UnitOption> = [...VolumeLiquidOptions, ...VolumeGasOptions];
@@ -43,15 +46,24 @@ export class EnergyEquipmentFormComponent {
   contactSub: Subscription;
   viewContact: IdbContact;
   displayContactModal: boolean = false;
+
+  companySub: Subscription;
+  companyEnergyUnit: string;
+
   constructor(private energyEquipmentIdbService: EnergyEquipmentIdbService,
     private dbChangesService: DbChangesService,
-    private contactIdbService: ContactIdbService
+    private contactIdbService: ContactIdbService,
+    private companyIdbService: CompanyIdbService,
   ) { }
 
   ngOnInit() {
     this.energyEquipment = this.energyEquipmentIdbService.getByGuid(this.energyEquipmentGuid);
     this.contactSub = this.contactIdbService.contacts.subscribe(_contacts => {
       this.contacts = _contacts;
+    });
+
+    this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
+      this.companyEnergyUnit = _company.companyEnergyUnit;
     });
   }
 
@@ -104,12 +116,16 @@ export class EnergyEquipmentFormComponent {
     }
   }
 
-  async calculateAnnualEnergyUse() {
+  convertSize(): number {
     let unitConv = this.convertValue.convertValue(1, this.energyEquipment.sizeUnit).convertedValue * 3600; // Wh to J
-    unitConv = unitConv / this.convertValue.convertValue(1, 'kWh').convertedValue; // J to kWh (for now)
-    this.energyEquipment.annualEnergyUse = this.energyEquipment.size * this.energyEquipment.operatingHours *
-      (this.energyEquipment.loadFactor / 100) / (this.energyEquipment.efficiency / 100) * this.energyEquipment.numberOfEquipment *
-      unitConv;
+    unitConv = unitConv / this.convertValue.convertValue(1, this.companyEnergyUnit).convertedValue;
+    return this.energyEquipment.size * unitConv;
+  }
+
+  async calculateAnnualEnergyUse() {
+    let convertedSize = this.convertSize();
+    this.energyEquipment.annualEnergyUse = convertedSize * this.energyEquipment.operatingHours *
+      (this.energyEquipment.loadFactor / 100) / (this.energyEquipment.efficiency / 100) * this.energyEquipment.numberOfEquipment;
     if (!this.energyEquipment.annualEnergyUse || this.energyEquipment.annualEnergyUse === Infinity) {
       this.energyEquipment.annualEnergyUse = 0;
     }
