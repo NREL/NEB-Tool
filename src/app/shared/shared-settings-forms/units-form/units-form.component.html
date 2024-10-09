@@ -7,7 +7,7 @@
             Include
         </div>
         <div class="col-4">
-            <label>Energy Use</label>
+            <label>Energy/Utility Use</label>
         </div>
         <div class="col-4">
             <label>Price</label>
@@ -176,6 +176,29 @@
                 </div>
             </div>
         </ng-container>
+        <ng-container *ngIf="form.controls['includeWater'].value 
+            && !('Water' | isStandardUnit: form.controls['waterUnit'].value: 'Energy')">
+            <div class="col-4">
+                <div class="input-group">
+                    <input type="text" class="disabled-input-label-secondary" [disabled]="true"
+                    value="Water HHV">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="waterHHV"
+                        name="waterHHV" (change)="saveChanges()">
+                    <select class="input-group-text" formControlName="waterEnergyUnit" (change)="saveChanges()">
+                        <option *ngFor="let energyUnitOption of energyUnitOptions"
+                            [ngValue]="energyUnitOption.value">
+                            <span [innerHTML]="energyUnitOption.value | unitsDisplay">
+                            </span>/<span [innerHTML]="form.controls['waterUnit'].value | unitsDisplay">
+                            </span>
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </ng-container>
     </div>
     <!--Waste Water-->
     <div class="row mb-1">
@@ -213,6 +236,29 @@
                 </div>
                 <div class="alert alert-warning form-error" *ngIf="form.controls['wasteWaterPrice'].getError('required')">
                     Value can not be empty.
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="form.controls['includeWasteWater'].value
+            && !('Waste Water' | isStandardUnit: form.controls['wasteWaterUnit'].value : 'Energy')">
+            <div class="col-4">
+                <div class="input-group">
+                    <input type="text" class="disabled-input-label-secondary" [disabled]="true"
+                    value="Waste Water HHV">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="wasteWaterHHV"
+                        name="wasteWaterHHV" (change)="saveChanges()">
+                    <select class="input-group-text" formControlName="wasteWaterEnergyUnit" (change)="saveChanges()">
+                        <option *ngFor="let energyUnitOption of energyUnitOptions"
+                            [ngValue]="energyUnitOption.value">
+                            <span [innerHTML]="energyUnitOption.value | unitsDisplay">
+                            </span>/<span [innerHTML]="form.controls['wasteWaterUnit'].value | unitsDisplay">
+                            </span>
+                        </option>
+                    </select>
                 </div>
             </div>
         </ng-container>
@@ -258,6 +304,29 @@
                 </div>
             </div>
         </ng-container>
+        <ng-container *ngIf="form.controls['includeSteam'].value
+            && !('Steam' | isStandardUnit : form.controls['steamUnit'].value : 'Energy')">
+            <div class="col-4">
+                <div class="input-group">
+                    <input type="text" class="disabled-input-label-secondary" [disabled]="true"
+                    value="{{'Steam' | utilityHhvDisplay}}">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="steamHHV"
+                        name="steamHHV" (change)="saveChanges()">
+                    <select class="input-group-text" formControlName="steamEnergyUnit" (change)="saveChanges()">
+                        <option *ngFor="let energyUnitOption of energyUnitOptions"
+                            [ngValue]="energyUnitOption.value">
+                            <span [innerHTML]="energyUnitOption.value | unitsDisplay">
+                            </span>/<span [innerHTML]="form.controls['steamUnit'].value | unitsDisplay">
+                            </span>
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </ng-container>
     </div>
     <!--Compressed Air-->
     <div class="row mb-1">
@@ -297,6 +366,29 @@
                 </div>
                 <div class="alert alert-warning form-error" *ngIf="form.controls['compressedAirPrice'].getError('required')">
                     Value can not be empty.
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="form.controls['includeCompressedAir'].value
+            && !('Compressed Air' |isStandardUnit :form.controls['compressedAirUnit'].value : 'Energy')">
+            <div class="col-4">
+                <div class="input-group">
+                    <input type="text" class="disabled-input-label-secondary" [disabled]="true"
+                    value="{{'Compressed Air' | utilityHhvDisplay}}">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <input class="form-control" type="number" step="any" min="0" formControlName="compressedAirHHV"
+                        name="compressedAirHHV" (change)="saveChanges()">
+                    <select class="input-group-text" formControlName="compressedAirEnergyUnit" (change)="saveChanges()">
+                        <option *ngFor="let energyUnitOption of energyUnitOptions"
+                            [ngValue]="energyUnitOption.value">
+                            <span [innerHTML]="energyUnitOption.value | unitsDisplay">
+                            </span>/<span [innerHTML]="form.controls['compressedAirUnit'].value | unitsDisplay">
+                            </span>
+                        </option>
+                    </select>
                 </div>
             </div>
         </ng-container>

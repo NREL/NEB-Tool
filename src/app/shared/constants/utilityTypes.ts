@@ -1,4 +1,4 @@
-import { EnergyUnitOptions, MassUnitOptions, PowerUnitOptions, SteamUnitOptions, UnitOption, VolumeGasOptions, VolumeLiquidOptions } from "./unitOptions";
+import { EnergyUnitOptions, MassUnitOptions, PowerUnitOptions, EnergySteamUnitOptions, UnitOption, VolumeGasOptions, VolumeLiquidOptions } from "./unitOptions";
 
 export type UtilityType = 'Electricity' | 'Natural Gas' | 'Other Fuels' | 'Water' | 'Waste Water' | 'Steam' | 'Compressed Air';
 export const UtilityTypes: Array<UtilityType> = ['Electricity', 'Natural Gas', 'Other Fuels', 'Water', 'Waste Water', 'Steam', 'Compressed Air'];
@@ -7,6 +7,7 @@ export const UtilityTypes: Array<UtilityType> = ['Electricity', 'Natural Gas', '
 export interface UtilityOption {
     utilityType: UtilityType,
     energyUnitOptions: Array<UnitOption>,
+    isStandardEnergyUnit: boolean,
     energyDefaultUnit: UnitOption,
     powerUnitOptions: Array<UnitOption>,
     powerDefaultUnit: UnitOption
@@ -20,37 +21,58 @@ const kSCF: UnitOption = VolumeGasOptions.find(unitOption => unitOption.value ==
 
 export const UtilityOptions: Array<UtilityOption> = [
     {
-        utilityType: 'Electricity', energyUnitOptions: EnergyUnitOptions, powerUnitOptions: PowerUnitOptions,
+        utilityType: 'Electricity',
+        energyUnitOptions: EnergyUnitOptions,
+        powerUnitOptions: PowerUnitOptions,
+        isStandardEnergyUnit: true,
         energyDefaultUnit: kWh,
         powerDefaultUnit: undefined
     },
     {
-        utilityType: 'Natural Gas', energyUnitOptions: EnergyUnitOptions, powerUnitOptions: PowerUnitOptions,
+        utilityType: 'Natural Gas',
+        energyUnitOptions: EnergyUnitOptions,
+        isStandardEnergyUnit: true,
+        powerUnitOptions: PowerUnitOptions,
         energyDefaultUnit: MMBtu,
         powerDefaultUnit: undefined
     },
     {
-        utilityType: 'Other Fuels', energyUnitOptions: EnergyUnitOptions, powerUnitOptions: PowerUnitOptions,
+        utilityType: 'Other Fuels',
+        energyUnitOptions: EnergyUnitOptions,
+        isStandardEnergyUnit: true,
+        powerUnitOptions: PowerUnitOptions,
         energyDefaultUnit: MMBtu,
         powerDefaultUnit: undefined
     },
     {
-        utilityType: 'Water', energyUnitOptions: VolumeLiquidOptions, powerUnitOptions: PowerUnitOptions,
+        utilityType: 'Water',
+        energyUnitOptions: VolumeLiquidOptions,
+        isStandardEnergyUnit: false,
+        powerUnitOptions: PowerUnitOptions,
         energyDefaultUnit: kgal,
         powerDefaultUnit: undefined
     },
     {
-        utilityType: 'Waste Water', energyUnitOptions: VolumeLiquidOptions, powerUnitOptions: PowerUnitOptions,
+        utilityType: 'Waste Water', 
+        energyUnitOptions: VolumeLiquidOptions,
+        isStandardEnergyUnit: false,
+        powerUnitOptions: PowerUnitOptions,
         energyDefaultUnit: kgal,
         powerDefaultUnit: undefined
     },
     {
-        utilityType: 'Steam', energyUnitOptions: SteamUnitOptions, powerUnitOptions: PowerUnitOptions,
+        utilityType: 'Steam',
+        energyUnitOptions: EnergySteamUnitOptions,
+        isStandardEnergyUnit: true,
+        powerUnitOptions: PowerUnitOptions,
         energyDefaultUnit: klb,
         powerDefaultUnit: undefined
     },
     {
-        utilityType: 'Compressed Air', energyUnitOptions: VolumeGasOptions, powerUnitOptions: PowerUnitOptions,
+        utilityType: 'Compressed Air',
+        energyUnitOptions: VolumeGasOptions,
+        isStandardEnergyUnit: false,
+        powerUnitOptions: PowerUnitOptions,
         energyDefaultUnit: kSCF,
         powerDefaultUnit: undefined
     },

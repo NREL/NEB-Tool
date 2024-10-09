@@ -7,3 +7,9 @@
 .utility-row:hover, .utility-row:hover .disabled-input-label {
   background-color: #efefef;
 }
+
+.disabled-input-label-secondary{
+    background-color: white;
+    border: none;
+    margin-left: 28px;
+}
