@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IdbEnergyOpportunity } from '../models/energyOpportunity';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { guidType } from '../shared/constants/guidTypes';
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,7 @@ export class EnergyOpportunityIdbService {
     });
   }
 
-  getByOtherGuid(guid: string, idType: string): Array<IdbEnergyOpportunity> {
+  getByOtherGuid(guid: string, idType: guidType): Array<IdbEnergyOpportunity> {
     let energyOpportunities: Array<IdbEnergyOpportunity> = this.energyOpportunities.getValue();
     if (idType == 'company') {
       return energyOpportunities.filter(opportunity => {

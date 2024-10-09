@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { IdbFacility, getNewIdbFacility } from '../models/facility';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { guidType } from '../shared/constants/guidTypes';
 
 @Injectable({
   providedIn: 'root'
@@ -68,12 +69,12 @@ export class FacilityIdbService {
     return newFacility.guid;
   }
 
-  getByOtherGuid(guid: string, type: string): Array<IdbFacility> {
+  getByOtherGuid(guid: string, idType: guidType): Array<IdbFacility> {
     let facilities: Array<IdbFacility> = this.facilities.getValue();
     let _facilities: Array<IdbFacility> = facilities.filter(facility => {
-      if (type == 'company') {
+      if (idType == 'company') {
         return facility.companyId == guid;
-      } else if (type == 'user') {
+      } else if (idType == 'user') {
         return facility.userId == guid;
       } else {
         return false;
