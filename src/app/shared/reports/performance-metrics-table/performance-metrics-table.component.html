@@ -1,4 +1,4 @@
-<table class="table table-bordered savings-table table-hover ordered">
+<table class="table table-bordered savings-table table-hover ordered" *ngIf="keyPerformanceIndicatorReport">
     <thead>
         <tr>
             <th (click)="setOrderByField('kpiValue')" [ngClass]="{'ordered-th': orderByField == 'kpiValue'}">

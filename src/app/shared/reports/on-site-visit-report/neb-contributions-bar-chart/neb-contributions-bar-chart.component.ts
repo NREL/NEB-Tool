@@ -19,12 +19,12 @@ export class NebContributionsBarChartComponent {
   }
 
   ngAfterViewInit() {
-    this.drawChart();
+    if (this.onSiteVisitReport) {
+      this.drawChart();
+    }
   }
 
   drawChart() {
-    console.log(this.onSiteVisitReport);
-
     let data = [{
       x: this.onSiteVisitReport.assessmentReports.map(report => { return report.totalEnergyCostSavings }),
       y: this.onSiteVisitReport.assessmentReports.map(report => { return report.assessment.name }),
@@ -74,7 +74,7 @@ export class NebContributionsBarChartComponent {
 
     var layout = {
       title: 'Assessment Savings',
-      barmode: 'stack',      
+      barmode: 'stack',
       yaxis: {
         automargin: true
       },
