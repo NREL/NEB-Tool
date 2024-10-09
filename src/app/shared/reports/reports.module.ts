@@ -14,6 +14,7 @@ import { PerformanceMetricsTableComponent } from './performance-metrics-table/pe
 import { PerformanceMetricsTablePipe } from './performance-metrics-table/performance-metrics-table.pipe';
 import { OnSiteVisitSavingsChartComponent } from './on-site-visit-report/on-site-visit-savings-chart/on-site-visit-savings-chart.component';
 import { OnSiteVisitPaybackTableComponent } from './on-site-visit-report/on-site-visit-payback-table/on-site-visit-payback-table.component';
+import { NebContributionsBarChartComponent } from './on-site-visit-report/neb-contributions-bar-chart/neb-contributions-bar-chart.component';
 
 
 
@@ -29,7 +30,8 @@ import { OnSiteVisitPaybackTableComponent } from './on-site-visit-report/on-site
     PerformanceMetricsTableComponent,
     PerformanceMetricsTablePipe,
     OnSiteVisitSavingsChartComponent,
-    OnSiteVisitPaybackTableComponent
+    OnSiteVisitPaybackTableComponent,
+    NebContributionsBarChartComponent
   ],
   imports: [
     CommonModule,

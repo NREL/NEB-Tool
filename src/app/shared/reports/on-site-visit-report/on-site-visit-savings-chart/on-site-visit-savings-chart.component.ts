@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { PlotlyService } from 'angular-plotly.js';
 import { OnSiteVisitReport } from '../../calculations/visitReport';
+import { graphColors } from 'src/app/shared/constants/graphColors';
 
 @Component({
   selector: 'app-on-site-visit-savings-chart',
@@ -90,65 +91,51 @@ export class OnSiteVisitSavingsChartComponent {
 
   drawPieChart() {
     //pie chart..
-    // let trace = {
-    //   values: [],
-    //   labels: [],
-    //   type: 'pie',
-    //   hole: .4,
-    //   ticksuffix: '$/yr',
-    //   marker: {
-    //     colors: graphColors,
-    //     line: {
-    //       width: [],
-    //       color: '#fff'
-    //     }
-    //   }
-    // }
+    let trace = {
+      values: [],
+      labels: [],
+      type: 'pie',
+      hole: .4,
+      ticksuffix: '$/yr',
+      marker: {
+        colors: graphColors,
+        line: {
+          width: [],
+          color: '#fff'
+        }
+      }
+    }
 
-    // trace.values.push(this.assessmentReport.assessment.costSavings);
-    // trace.labels.push('Assessment (Energy Cost) Savings');
-    // trace.marker.line.width.push(2)
-
-    // this.assessmentReport.energyOpportunityReports.forEach(report => {
-    //   if (report.totalEnergyCostSavings) {
-    //     trace.labels.push(report.energyOpportunity.name + ' (Energy Cost) Savings')
-    //     trace.values.push(report.totalEnergyCostSavings)
-    //     trace.marker.line.width.push(2)
-    //   }
-
-    //   report.nebReports.forEach(nebReport => {
-    //     trace.labels.push(nebReport.nonEnergyBenefit.name)
-    //     trace.values.push(nebReport.totalCostSavings)
-    //     trace.marker.line.width.push(2)
-    //   })
-    // })
+    this.onSiteVisitReport.assessmentReports.forEach(assessmentReport => {
+      trace.values.push(assessmentReport.totalEnergyCostSavings);
+      trace.labels.push(assessmentReport.assessment.name + ' (Energy Cost) Savings');
+      trace.marker.line.width.push(2);
 
 
-    // this.assessmentReport.assessmentNebReports.forEach(nebReport => {
-    //   trace.labels.push(nebReport.nonEnergyBenefit.name)
-    //   trace.values.push(nebReport.totalCostSavings)
-    //   trace.marker.line.width.push(2)
-    // })
+      trace.values.push(assessmentReport.totalNebSavings);
+      trace.labels.push(assessmentReport.assessment.name + ' (NEB) Savings');
+      trace.marker.line.width.push(2);
+    })
 
-    // var data = [trace];
-    // var layout = {
-    //   title: 'Percent Savings Contribution',
-    //   legend: {
-    //     orientation: "h"
-    //   },
-    //   margin: {
-    //     l: 50,
-    //     b: 50,
-    //     r: 50,
-    //     t: 50
-    //   },
-    // };
+    var data = [trace];
+    var layout = {
+      title: 'Percent Savings Contribution',
+      legend: {
+        orientation: "h"
+      },
+      margin: {
+        l: 50,
+        b: 50,
+        r: 50,
+        t: 50
+      },
+    };
 
-    // let config = {
-    //   modeBarButtonsToRemove: ['autoScale2d', 'lasso2d', 'pan2d', 'select2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
-    //   displaylogo: false,
-    //   responsive: true,
-    // };
-    // this.plotlyService.newPlot(this.nebsPieChart.nativeElement, data, layout, config);
+    let config = {
+      modeBarButtonsToRemove: ['autoScale2d', 'lasso2d', 'pan2d', 'select2d', 'toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian'],
+      displaylogo: false,
+      responsive: true,
+    };
+    this.plotlyService.newPlot(this.nebsPieChart.nativeElement, data, layout, config);
   }
 }
