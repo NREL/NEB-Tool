@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SetupWizardService } from 'src/app/setup-wizard/setup-wizard.service';
-import { IconDefinition, faFileLines, faPlus, faSearchPlus, faTrash, faWeightHanging } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faFileLines, faPlus, faSearchPlus, faTrash, faWeightHanging, faCalculator } from '@fortawesome/free-solid-svg-icons';
 import { EnergyOpportunityType, FanOpportunities } from 'src/app/shared/constants/energyOpportunityOptions';
 import { DbChangesService } from 'src/app/indexed-db/db-changes.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
@@ -12,6 +12,9 @@ import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { UtilityEnergyUse } from 'src/app/models/utilityEnergyUses';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { UtilityOptions } from 'src/app/shared/constants/utilityTypes';
+import { UnitSettings } from 'src/app/models/unitSettings';
+import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
+import { ConvertValue } from 'src/app/shared/conversions/convertValue';
 
 @Component({
   selector: 'app-energy-opportunity-setup-form',
@@ -32,6 +35,7 @@ export class EnergyOpportunitySetupFormComponent {
   faSearchPlus: IconDefinition = faSearchPlus;
   faPlus: IconDefinition = faPlus;
   faWeightHanging: IconDefinition = faWeightHanging;
+  faCalculator: IconDefinition = faCalculator;
 
   opportunityTypes: Array<EnergyOpportunityType> = [{ value: 'other', label: 'Other' }];
   displayDeleteModal: boolean = false;
@@ -43,6 +47,11 @@ export class EnergyOpportunitySetupFormComponent {
   assessmentSub: Subscription;
   assessmentEnergyUses: Array<UtilityEnergyUse>;
 
+  facilitySub: Subscription;
+  facilityUnitSettings: UnitSettings;
+
+  convertValue = new ConvertValue();
+
   constructor(
     private energyOpportunityIdbService: EnergyOpportunityIdbService,
     private dbChangesService: DbChangesService,
@@ -50,6 +59,7 @@ export class EnergyOpportunitySetupFormComponent {
     private nonEnergyBenefitsIdbService: NonEnergyBenefitsIdbService,
     private companyIdbService: CompanyIdbService,
     private assessmentIdbService: AssessmentIdbService,
+    private facilityIdbService: FacilityIdbService,
   ) {
   }
 
@@ -61,11 +71,15 @@ export class EnergyOpportunitySetupFormComponent {
     this.assessmentSub = this.assessmentIdbService.selectedAssessment.subscribe(assessment => {
       this.assessmentEnergyUses = assessment.utilityEnergyUses;
     });
+    this.facilitySub = this.facilityIdbService.selectedFacility.subscribe(facility => {
+      this.facilityUnitSettings = facility.unitSettings;
+    });
   }
 
   ngOnDestroy() {
     this.companySub.unsubscribe();
     this.assessmentSub.unsubscribe();
+    this.facilitySub.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -80,15 +94,18 @@ export class EnergyOpportunitySetupFormComponent {
   async changeUtilityType() {
     let energyUse = this.assessmentEnergyUses.find(use => 
       use.utilityType === this.energyOpportunity.utilityType);
-      let selectedUtilityOption = UtilityOptions.find(
-        _option => _option.utilityType == this.energyOpportunity.utilityType);
-    let selectedUnitOption = selectedUtilityOption.energyUnitOptions.find(
-        _unitOption => _unitOption.value == energyUse.energyUnit);
-    if (selectedUtilityOption.isStandardEnergyUnit 
-        && selectedUnitOption.isStandard !== false) { // Standard unit
-        this.energyOpportunity.energyUnit = energyUse.energyUnit;
-    } else { // Non-standard unit
-        this.energyOpportunity.energyUnit = energyUse.energyUnitStandard;
+    this.energyOpportunity.energyUnit = energyUse.energyUnit;
+    await this.saveEnergyOpportunity();
+  }
+
+  async calculateCostSavings() {
+    let trimmedType = this.energyOpportunity.utilityType.replace(/\s+/g, '');
+    let camelCaseType = trimmedType.charAt(0).toLowerCase() + trimmedType.slice(1);
+    if (this.facilityUnitSettings[`include${trimmedType}`]) {
+      this.energyOpportunity.costSavings = this.convertValue.convertValue(
+        this.energyOpportunity.energySavings *this.facilityUnitSettings[`${camelCaseType}Price`],
+        this.energyOpportunity.energyUnit,
+        this.facilityUnitSettings[`${camelCaseType}Unit`]).convertedValue;
     }
     await this.saveEnergyOpportunity();
   }

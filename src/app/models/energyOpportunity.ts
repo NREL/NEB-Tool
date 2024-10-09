@@ -29,16 +29,7 @@ export function getNewIdbEnergyOpportunity(userId: string, companyId: string, fa
     let energyUnit: string = 'MMBtu';
     if (utilityType) {
         let energyUse = utilityEnergyUses.find(use => use.utilityType === utilityType);
-        let selectedUtilityOption = UtilityOptions.find(
-            _option => _option.utilityType == utilityType);
-        let selectedUnitOption = selectedUtilityOption.energyUnitOptions.find(
-            _unitOption => _unitOption.value == energyUse.energyUnit);
-        if (selectedUtilityOption.isStandardEnergyUnit 
-            && selectedUnitOption.isStandard !== false) { // Standard unit
-            energyUnit = energyUse.energyUnit;
-        } else { // Non-standard unit
-            energyUnit = energyUse.energyUnitStandard;
-        }
+        energyUnit = energyUse.energyUnit;
     }
     return {
         ...idbEntry,

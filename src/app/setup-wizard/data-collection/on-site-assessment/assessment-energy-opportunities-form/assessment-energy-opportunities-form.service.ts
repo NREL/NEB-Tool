@@ -32,10 +32,4 @@ export class AssessmentEnergyOpportunitiesFormService {
     }
   }
 
-  async updateEnergyOpportunityEnergyUseFromFacility(energyOpportunities: Array<IdbEnergyOpportunity>, 
-      facilityUnitSettings: UnitSettings) {
-    for (const energyOpportunity of energyOpportunities) {
-      // TODO: Update energy opportunity by facility unit settings
-    }
-  }
 }
