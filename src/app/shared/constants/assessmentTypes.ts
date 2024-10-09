@@ -12,10 +12,10 @@ export interface AssessmentOption {
 export const AssessmentOptions: Array<AssessmentOption> = [
     {assessmentType: "Pump", utilityTypes: ['Electricity']},
     {assessmentType: "Fan", utilityTypes: ['Electricity']},
-    {assessmentType: "Process heating", utilityTypes: ['Natural Gas']},
-    {assessmentType: "Steam", utilityTypes: ['Natural Gas']},
+    {assessmentType: "Process heating", utilityTypes: ['Natural Gas', 'Other Fuels', 'Electricity']},
+    {assessmentType: "Steam", utilityTypes: ['Natural Gas', "Other Fuels", 'Electricity']},
     {assessmentType: "Compressed Air", utilityTypes: ['Electricity']},
     {assessmentType: "Water", utilityTypes: ['Water']},
-    {assessmentType: "Treasure Hunt", utilityTypes: ['Electricity', 'Natural Gas']},
+    {assessmentType: "Treasure Hunt", utilityTypes: UtilityTypes},
     {assessmentType: "Other", utilityTypes: UtilityTypes}
 ];

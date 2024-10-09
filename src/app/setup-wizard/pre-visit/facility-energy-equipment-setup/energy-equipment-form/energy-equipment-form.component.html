@@ -114,6 +114,17 @@
             </div>
             <div class="row">
                 <label class="col-sm-5 col-form-label"
+                    >Total
+                    Size in Company Unit</label>
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        {{ convertSize() | number: '1.0-2' }}&nbsp;
+                        <span [innerHTML]="companyEnergyUnit | unitsDisplay"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-5 col-form-label"
                     for="operatingHours">Operating
                     Hours</label>
                 <div class="col-sm-7">
@@ -181,7 +192,8 @@
                 <div class="col-sm-7">
                     <span class="d-flex justify-content-center bold"
                     id="energyUse" name="energyUse">
-                        {{energyEquipment.annualEnergyUse | number:'1.0-2'}} kWh
+                        {{energyEquipment.annualEnergyUse | number:'1.0-2'}}
+                        {{companyEnergyUnit | unitsDisplay}}
                     </span>
                 </div>
             </div>
