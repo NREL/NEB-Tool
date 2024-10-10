@@ -23,11 +23,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let kpiReportItem of keyPerformanceIndicatorReport.kpiReportItems">
-            <td class="">
+            <td>
                 <span
-                    [innerHTML]="kpiReportItem.keyPerformanceMetric.kpiValue | kpiValueDisplay: keyPerformanceIndicators"></span>
+                    [innerHTML]="kpiReportItem.keyPerformanceMetric.kpiGuid | kpiLabel:keyPerformanceIndicators"></span>
             </td>
-            <td class="">
+            <td>
                 <span [innerHTML]="kpiReportItem.keyPerformanceMetric.htmlLabel"></span>
             </td>
             <ng-template [ngIf]="kpiReportItem.keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeBlock">

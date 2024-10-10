@@ -20,5 +20,6 @@ export class PerformanceMetricsReportComponent {
 
   ngOnInit() {
     this.keyPerformanceIndicators = this.keyPerformanceIndicatorIdbService.keyPerformanceIndicators.getValue();
+    console.log(this.keyPerformanceIndicators);
   }
 } 
