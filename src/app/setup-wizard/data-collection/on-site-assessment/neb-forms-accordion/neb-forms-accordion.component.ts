@@ -97,7 +97,6 @@ export class NebFormsAccordionComponent {
   }
 
   setAssessmentNebGuids() {
-    console.log('set');
     // only want to update neb list if changes made
     // otherwise forms get re-init when the list updates
     if (this.assessment && this.nonEnergyBenefits) {
