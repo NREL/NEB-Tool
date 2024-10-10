@@ -16,6 +16,9 @@ import { UtilityEnergyUse } from 'src/app/models/utilityEnergyUses';
 import { UnitSettings } from 'src/app/models/unitSettings';
 import { FacilityIdbService } from 'src/app/indexed-db/facility-idb.service';
 import { ConvertValue } from 'src/app/shared/conversions/convertValue';
+import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { AssessmentEnergyOpportunitiesFormService } from '../assessment-energy-opportunities-form/assessment-energy-opportunities-form.service';
 
 @Component({
   selector: 'app-assessment-details-form',
@@ -48,6 +51,8 @@ export class AssessmentDetailsFormComponent {
 
   convertValue = new ConvertValue();
 
+  assessmentEnergyOpportunities: Array<IdbEnergyOpportunity>;
+
   constructor(
     private assessmentIdbService: AssessmentIdbService,
     private contactIdbService: ContactIdbService,
@@ -55,6 +60,9 @@ export class AssessmentDetailsFormComponent {
     private energyEquipmentIdbService: EnergyEquipmentIdbService,
     private companyIdbService: CompanyIdbService,
     private facilityIdbService: FacilityIdbService,
+    private energyOpportunityIdbService: EnergyOpportunityIdbService,
+    private assessmentEnergyOpportunitiesFormService: AssessmentEnergyOpportunitiesFormService,
+    
   ) { }
 
   ngOnInit() {
@@ -98,7 +106,15 @@ export class AssessmentDetailsFormComponent {
     await this.calculateEnergyUseCost();
   }
 
+  updateEnergyOpportunities() {
+    this.assessmentEnergyOpportunities = this.energyOpportunityIdbService.getByOtherGuid(
+      this.assessment.guid, 'assessment');
+    this.assessmentEnergyOpportunitiesFormService.updateEnergyOpportunityFromAssessment(
+      this.assessmentEnergyOpportunities, this.assessment.utilityEnergyUses);
+  }
+
   async calculateEnergyUseCost() {
+    this.updateEnergyOpportunities();
     let use = 0, cost = 0;
     this.assessment.utilityTypes.forEach(utilityType => {
       let utilityEnergyUse: UtilityEnergyUse = this.assessment.utilityEnergyUses.find(

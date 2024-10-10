@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
 import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
 import { UnitSettings } from 'src/app/models/unitSettings';
+import { UtilityEnergyUse } from 'src/app/models/utilityEnergyUses';
+import { UtilityType } from 'src/app/shared/constants/utilityTypes';
 import { ConvertValue } from 'src/app/shared/conversions/convertValue';
 
 @Injectable({
@@ -32,4 +34,32 @@ export class AssessmentEnergyOpportunitiesFormService {
     }
   }
 
+  async updateEnergyOpportunityFromAssessment(energyOpportunities: Array<IdbEnergyOpportunity>,
+    utilityEnergyUses: Array<UtilityEnergyUse>) {
+    for (const energyOpportunity of energyOpportunities) {
+      let utilityTypes: Array<UtilityType> = utilityEnergyUses
+        .filter(use => use.include)
+        .map(use => use.utilityType);
+      energyOpportunity.utilityTypes = utilityTypes;
+
+      let utilityType: UtilityType;
+      let energyUnit: string = 'MMBtu';
+
+      if (!utilityTypes.includes(energyOpportunity.utilityType)) {
+        utilityType = utilityTypes?.[0];
+      } else {
+        utilityType = energyOpportunity.utilityType;
+      }
+
+      if (utilityType) {
+        let energyUse = utilityEnergyUses.find(use => use.utilityType === utilityType);
+        energyUnit = energyUse.energyUnit;
+      }
+
+      energyOpportunity.utilityTypes = utilityTypes;
+      energyOpportunity.utilityType = utilityType;
+      energyOpportunity.energyUnit = energyUnit;
+      await this.energyOpportunityIdbService.asyncUpdate(energyOpportunity);
+    }
+  }
 }
