@@ -71,6 +71,10 @@ export class EnergyOpportunityIdbService {
       return energyOpportunities.filter(opportunity => {
         return opportunity.facilityId == guid;
       });
+    } else if (idType == 'assessment') {
+      return energyOpportunities.filter(opportunity => {
+        return opportunity.assessmentId == guid;
+      });
     } else {
       return [];
     }

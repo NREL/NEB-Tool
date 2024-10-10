@@ -18,6 +18,7 @@ import { LabelWithTooltipModule } from 'src/app/shared/label-with-tooltip/label-
 import { PreAssessmentSetupService } from '../pre-assessment-setup/pre-assessment-setup.service';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
 
 describe('CompanySetupComponent', () => {
   let component: CompanySetupComponent;
@@ -48,6 +49,10 @@ describe('CompanySetupComponent', () => {
     getByOtherGuid: (guid, idType) => []
   };
 
+  let energyEquipmentIdbService: Partial<EnergyEquipmentIdbService> = {
+    getByOtherGuid: (guid, idType) => []
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, SharedSettingsFormsModule, FormsModule, ReactiveFormsModule, LabelWithTooltipModule],
@@ -60,7 +65,8 @@ describe('CompanySetupComponent', () => {
         { provide: OnSiteVisitIdbService, useValue: onSiteVisitIdbService },
         { provide: PreAssessmentSetupService, useValue: preAassessmentSetupService },
         { provide: AssessmentIdbService, useValue: assessmentIdbService },
-        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService }
+        { provide: EnergyOpportunityIdbService, useValue: energyOpportunityIdbService },
+        { provide: EnergyEquipmentIdbService, useValue: energyEquipmentIdbService }
       ]
     })
       .compileComponents();

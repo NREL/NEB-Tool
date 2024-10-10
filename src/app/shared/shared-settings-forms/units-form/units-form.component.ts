@@ -16,6 +16,12 @@ import { IdbCompany } from 'src/app/models/company';
 import { CompanyIdbService } from 'src/app/indexed-db/company-idb.service';
 import { UtilityOptions } from '../../constants/utilityTypes';
 import { ConvertValue } from '../../conversions/convertValue';
+import { IdbEnergyEquipment } from 'src/app/models/energyEquipment';
+import { EnergyEquipmentIdbService } from 'src/app/indexed-db/energy-equipment-idb.service';
+import { FacilityEnergyEquipmentSetupService } from 'src/app/setup-wizard/pre-visit/facility-energy-equipment-setup/facility-energy-equipment-setup.service';
+import { IdbEnergyOpportunity } from 'src/app/models/energyOpportunity';
+import { EnergyOpportunityIdbService } from 'src/app/indexed-db/energy-opportunity-idb.service';
+import { AssessmentEnergyOpportunitiesFormService } from 'src/app/setup-wizard/data-collection/on-site-assessment/assessment-energy-opportunities-form/assessment-energy-opportunities-form.service';
 
 @Component({
   selector: 'app-units-form',
@@ -38,6 +44,8 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
   hasAssessments: boolean = false;
   priceChanged: boolean = false;
 
+  facilityEnergyEquipments: Array<IdbEnergyEquipment> = [];
+
   energyUnitOptions: Array<UnitOption> = EnergyUnitOptions;
 
   constructor(
@@ -45,7 +53,10 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
     private facilityIdbService: FacilityIdbService,
     private sharedSettingsFormsService: SharedSettingsFormsService,
     private preAssessmentSetupService: PreAssessmentSetupService,
-    private assessmentIdbService: AssessmentIdbService,) {
+    private assessmentIdbService: AssessmentIdbService,
+    private energyEquipmentIdbService: EnergyEquipmentIdbService,
+    private facilityEnergyEquipmentSetupService: FacilityEnergyEquipmentSetupService,
+  ) {
   }
 
   ngOnInit() {
@@ -59,6 +70,7 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
       if (this.facilityAssessments.length > 0) {
         this.hasAssessments = true;
       }
+      this.facilityEnergyEquipments = this.energyEquipmentIdbService.getByOtherGuid(this.facility.guid, 'facility');
     });
 
     this.companySub = this.companyIdbService.selectedCompany.subscribe(_company => {
@@ -87,6 +99,7 @@ export class UnitsFormComponent implements OnInit, OnDestroy{
     this.calculate();
     await this.facilityIdbService.asyncUpdate(this.facility);
     this.priceChanged = false;
+    this.facilityEnergyEquipmentSetupService.updateEnergyEquipmentEnergyUseByUtility(this.facilityEnergyEquipments, this.facility.unitSettings);
   }
 
   calculate() {
