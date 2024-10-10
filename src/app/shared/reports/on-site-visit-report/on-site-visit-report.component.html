@@ -1,0 +1,27 @@
+<div class="d-flex flex-column report">
+    <app-report-details-table [onSiteVisit]="onSiteVisit"></app-report-details-table>
+    <app-performance-metrics-table
+        [keyPerformanceIndicatorReport]="onSiteVisitReport.keyPerformanceIndicatorReport"></app-performance-metrics-table>
+    <app-performance-metrics-chart
+        [keyPerformanceIndicatorReport]="onSiteVisitReport.keyPerformanceIndicatorReport"></app-performance-metrics-chart>
+    <hr>
+    <app-on-site-visit-payback-table [onSiteVisitReport]="onSiteVisitReport"></app-on-site-visit-payback-table>
+    <app-on-site-visit-savings-chart [onSiteVisitReport]="onSiteVisitReport"></app-on-site-visit-savings-chart>
+    <app-neb-contributions-bar-chart [onSiteVisitReport]="onSiteVisitReport"></app-neb-contributions-bar-chart>
+    <!-- <hr class="report-spacer"> -->
+    <!-- <ng-container *ngFor="let assessmentReport of onSiteVisitReport.assessmentReports">
+        <h5>
+            {{assessmentReport.assessment.name}} Report
+        </h5>
+        <app-performance-metrics-report
+            [keyPerformanceIndicatorReport]="assessmentReport.keyPerformanceIndicatorReport"></app-performance-metrics-report>
+        <app-performance-metrics-chart
+            [keyPerformanceIndicatorReport]="assessmentReport.keyPerformanceIndicatorReport"></app-performance-metrics-chart>
+        <hr>
+        <app-payback-table [assessmentReport]="assessmentReport"></app-payback-table>
+        <hr>
+        <app-assessment-savings-chart [assessmentReport]="assessmentReport"></app-assessment-savings-chart>
+        <app-assessment-savings-table [assessmentReport]="assessmentReport"></app-assessment-savings-table>
+        <hr class="report-spacer">
+    </ng-container> -->
+</div>
