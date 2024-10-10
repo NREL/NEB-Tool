@@ -41,7 +41,7 @@ export class AssessmentSavingsChartComponent {
       {
         domain: { x: [0, 1], y: [0, 1] },
         value: percentSavings,
-        title: { text: "Assessment Energy Savings" },
+        title: { text: "Energy Cost Savings" },
         type: "indicator",
         mode: "gauge+number",
         number: { suffix: '%' },
@@ -77,7 +77,7 @@ export class AssessmentSavingsChartComponent {
         domain: { x: [0, 1], y: [0, 1] },
         value: percentSavingsNebs,
         number: { suffix: '%' },
-        title: { text: "Assessment Savings W/ NEBs" },
+        title: { text: "Savings W/ NEBs" },
         type: "indicator",
         mode: "gauge+number",
         gauge: {
