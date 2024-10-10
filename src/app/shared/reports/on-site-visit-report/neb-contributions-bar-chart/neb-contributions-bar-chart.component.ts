@@ -4,6 +4,7 @@ import { OnSiteVisitReport } from '../../calculations/visitReport';
 import { NebReport } from '../../calculations/nebReport';
 import * as _ from 'lodash';
 import { graphColors } from 'src/app/shared/constants/graphColors';
+import { AssessmentReport } from '../../calculations/assessmentReport';
 @Component({
   selector: 'app-neb-contributions-bar-chart',
   templateUrl: './neb-contributions-bar-chart.component.html',
@@ -11,7 +12,7 @@ import { graphColors } from 'src/app/shared/constants/graphColors';
 })
 export class NebContributionsBarChartComponent {
   @Input({ required: true })
-  onSiteVisitReport: OnSiteVisitReport;
+  assessmentReports: Array<AssessmentReport>;
 
   @ViewChild('nebContributionBarChart', { static: false }) nebContributionBarChart: ElementRef;
   constructor(private plotlyService: PlotlyService) {
@@ -19,27 +20,34 @@ export class NebContributionsBarChartComponent {
   }
 
   ngAfterViewInit() {
-    if (this.onSiteVisitReport) {
+    if (this.assessmentReports) {
       this.drawChart();
     }
   }
 
   drawChart() {
     let data = [{
-      x: this.onSiteVisitReport.assessmentReports.map(report => { return report.totalEnergyCostSavings }),
-      y: this.onSiteVisitReport.assessmentReports.map(report => { return report.assessment.name }),
+      x: this.assessmentReports.map(report => { return report.totalEnergyCostSavings }),
+      y: this.assessmentReports.map(report => { return report.assessment.name }),
       name: 'Energy Cost Savings',
       orientation: 'h',
       marker: {
         color: '#196f3d',
-        width: 1
+        // width: 1,
+        line: {
+          color: '#fff',
+          width: 1
+        }
       },
       type: 'bar'
     }];
 
-    let allNebReports: Array<NebReport> = this.onSiteVisitReport.assessmentReports.flatMap(assessmentReport => {
+    let allNebReports: Array<NebReport> = this.assessmentReports.flatMap(assessmentReport => {
       return assessmentReport.allNebReports;
     });
+    allNebReports = _.orderBy(allNebReports, (nebReport: NebReport) => {
+      return nebReport.totalCostSavings;
+    }, 'desc');
     let nebNames: Array<string> = allNebReports.map(report => {
       return report.nonEnergyBenefit.name;
     });
@@ -54,11 +62,15 @@ export class NebContributionsBarChartComponent {
         orientation: 'h',
         marker: {
           color: graphColors[index],
-          width: 1
+          // width: 1,
+          line: {
+            color: '#fff',
+            width: 1
+          }
         },
         type: 'bar'
       }
-      this.onSiteVisitReport.assessmentReports.forEach(assessmentReport => {
+      this.assessmentReports.forEach(assessmentReport => {
         let matchingNebReport: NebReport = assessmentReport.allNebReports.find(nebReport => {
           return nebReport.nonEnergyBenefit.name == nebName;
         });

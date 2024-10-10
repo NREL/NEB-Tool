@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faFolderOpen, faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChartPie, faChevronLeft, faFolderOpen, faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
@@ -16,6 +16,7 @@ export class VisitReportComponent {
   faChevronLeft: IconDefinition = faChevronLeft;
   faFolderOpen: IconDefinition = faFolderOpen;
   faScrewdriverWrench: IconDefinition = faScrewdriverWrench;
+  faChartPie: IconDefinition = faChartPie;
 
   onSiteVisit: IdbOnSiteVisit;
   assessments: Array<IdbAssessment>;
