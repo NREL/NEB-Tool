@@ -1,16 +1,16 @@
 import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
-import { AssessmentReport } from '../../calculations/assessmentReport';
 import { PlotlyService } from 'angular-plotly.js';
+import { OnSiteVisitReport } from '../../calculations/visitReport';
 import { graphColors } from 'src/app/shared/constants/graphColors';
 
 @Component({
-  selector: 'app-assessment-savings-chart',
-  templateUrl: './assessment-savings-chart.component.html',
-  styleUrl: './assessment-savings-chart.component.css'
+  selector: 'app-on-site-visit-savings-chart',
+  templateUrl: './on-site-visit-savings-chart.component.html',
+  styleUrl: './on-site-visit-savings-chart.component.css'
 })
-export class AssessmentSavingsChartComponent {
+export class OnSiteVisitSavingsChartComponent {
   @Input({ required: true })
-  assessmentReport: AssessmentReport;
+  onSiteVisitReport: OnSiteVisitReport;
 
 
 
@@ -22,26 +22,26 @@ export class AssessmentSavingsChartComponent {
   }
 
   ngAfterViewInit() {
-    if (this.assessmentReport) {
+    if (this.onSiteVisitReport) {
       this.drawGaugeCharts();
       this.drawPieChart();
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes['assessmentReport'].isFirstChange()) {
+    if (!changes['onSiteVisitReport'].isFirstChange()) {
       this.drawGaugeCharts();
       this.drawPieChart();
     }
   }
 
   drawGaugeCharts() {
-    let percentSavings = (this.assessmentReport.totalEnergyCostSavings / this.assessmentReport.assessment.cost) * 100
+    let percentSavings = (this.onSiteVisitReport.totalEnergyCostSavings / this.onSiteVisitReport.totalEnergyCosts) * 100
     var savingsData = [
       {
         domain: { x: [0, 1], y: [0, 1] },
         value: percentSavings,
-        title: { text: "Energy Cost Savings" },
+        title: { text: "Energy Savings" },
         type: "indicator",
         mode: "gauge+number",
         number: { suffix: '%' },
@@ -71,13 +71,13 @@ export class AssessmentSavingsChartComponent {
     };
     this.plotlyService.newPlot(this.percentSavingsGauge.nativeElement, savingsData, layout, config);
 
-    let percentSavingsNebs = (this.assessmentReport.totalCostSavings / this.assessmentReport.assessment.cost) * 100
+    let percentSavingsNebs = (this.onSiteVisitReport.totalCostSavings / this.onSiteVisitReport.totalEnergyCosts) * 100
     var savingsDataWithNebs = [
       {
         domain: { x: [0, 1], y: [0, 1] },
         value: percentSavingsNebs,
         number: { suffix: '%' },
-        title: { text: "Savings W/ NEBs" },
+        title: { text: "Assessment Savings W/ NEBs" },
         type: "indicator",
         mode: "gauge+number",
         gauge: {
@@ -106,29 +106,15 @@ export class AssessmentSavingsChartComponent {
       }
     }
 
-    trace.values.push(this.assessmentReport.assessment.costSavings);
-    trace.labels.push('Assessment (Energy Cost) Savings');
-    trace.marker.line.width.push(2)
-
-    this.assessmentReport.energyOpportunityReports.forEach(report => {
-      if (report.totalEnergyCostSavings) {
-        trace.labels.push(report.energyOpportunity.name + ' (Energy Cost) Savings')
-        trace.values.push(report.totalEnergyCostSavings)
-        trace.marker.line.width.push(2)
-      }
-
-      report.nebReports.forEach(nebReport => {
-        trace.labels.push(nebReport.nonEnergyBenefit.name)
-        trace.values.push(nebReport.totalCostSavings)
-        trace.marker.line.width.push(2)
-      })
-    })
+    this.onSiteVisitReport.assessmentReports.forEach(assessmentReport => {
+      trace.values.push(assessmentReport.totalEnergyCostSavings);
+      trace.labels.push(assessmentReport.assessment.name + ' (Energy Cost) Savings');
+      trace.marker.line.width.push(2);
 
 
-    this.assessmentReport.assessmentNebReports.forEach(nebReport => {
-      trace.labels.push(nebReport.nonEnergyBenefit.name)
-      trace.values.push(nebReport.totalCostSavings)
-      trace.marker.line.width.push(2)
+      trace.values.push(assessmentReport.totalNebSavings);
+      trace.labels.push(assessmentReport.assessment.name + ' (NEB) Savings');
+      trace.marker.line.width.push(2);
     })
 
     var data = [trace];
@@ -152,5 +138,4 @@ export class AssessmentSavingsChartComponent {
     };
     this.plotlyService.newPlot(this.nebsPieChart.nativeElement, data, layout, config);
   }
-
 }

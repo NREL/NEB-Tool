@@ -15,8 +15,10 @@ export class KpmDetailsFormComponent {
   emitSave: EventEmitter<boolean> = new EventEmitter();
   @Output('emitCalculate')
   emitCalculate: EventEmitter<boolean> = new EventEmitter();
+  @Input({required: true})
+  context: 'preVisit' | 'onSite';
 
-  
+
   saveChanges() {
     this.emitSave.emit(true);
   }
@@ -26,5 +28,8 @@ export class KpmDetailsFormComponent {
       this.keyPerformanceMetric.baselineCost = (this.keyPerformanceMetric.costPerValue * this.keyPerformanceMetric.baselineValue);
     }
     this.emitCalculate.emit(true);
+    if (this.context == 'onSite') {
+      this.saveChanges();
+    }
   }
 }

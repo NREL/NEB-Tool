@@ -57,8 +57,8 @@
         <ng-template [ngIf]="keyPerformanceMetric.isQuantitative" [ngIfElse]="qualitativeMetricBlock">
             <div class="form-block">
                 <app-kpm-details-form [keyPerformanceMetric]="keyPerformanceMetric"
-                    [disableForm]="(metricHasOtherImpacts && !overrideBaseline)" (emitSave)="saveChanges()"
-                    (emitCalculate)="calculateCost()"></app-kpm-details-form>
+                    [disableForm]="(metricHasOtherImpacts && !overrideBaseline)" (emitSave)="savePerformanceMetric()"
+                    (emitCalculate)="calculateCost()" [context]="'onSite'"></app-kpm-details-form>
                 <div class="row">
                     <label class="col-sm-6 col-form-label" for="modificationValue">
                         Impact on KPM
