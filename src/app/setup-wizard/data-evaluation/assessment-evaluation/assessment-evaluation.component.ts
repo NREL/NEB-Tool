@@ -1,25 +1,27 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconDefinition, faChevronLeft, faChevronRight, faChartPie, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition, faChevronLeft, faChevronRight, faChartPie, faFilePdf, faFilePowerpoint } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AssessmentIdbService } from 'src/app/indexed-db/assessment-idb.service';
 import { OnSiteVisitIdbService } from 'src/app/indexed-db/on-site-visit-idb.service';
 import { IdbAssessment } from 'src/app/models/assessment';
 import { IdbOnSiteVisit } from 'src/app/models/onSiteVisit';
+import { PowerpointReportGeneratorService } from 'src/app/shared/shared-services/powerpoint-report-generator.service';
 import { SharedDataService } from 'src/app/shared/shared-services/shared-data.service';
 
 @Component({
-    selector: 'app-assessment-evaluation',
-    templateUrl: './assessment-evaluation.component.html',
-    styleUrl: './assessment-evaluation.component.css',
-    standalone: false
+  selector: 'app-assessment-evaluation',
+  templateUrl: './assessment-evaluation.component.html',
+  styleUrl: './assessment-evaluation.component.css',
+  standalone: false
 })
 export class AssessmentEvaluationComponent {
   faChevronRight: IconDefinition = faChevronRight;
   faChevronLeft: IconDefinition = faChevronLeft;
   faFilePdf: IconDefinition = faFilePdf;
   faChartPie: IconDefinition = faChartPie;
-  
+  faFilePowerpoint: IconDefinition = faFilePowerpoint;
+
   assessmentIndex: number;
   onSiteVisit: IdbOnSiteVisit;
   onSiteVisitSub: Subscription;
@@ -30,7 +32,8 @@ export class AssessmentEvaluationComponent {
   constructor(private activatedRoute: ActivatedRoute, private assessmentIdbService: AssessmentIdbService,
     private onSiteVisitIdbService: OnSiteVisitIdbService,
     private router: Router,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private powerpointReportGeneratorService: PowerpointReportGeneratorService
   ) {
 
   }
@@ -106,5 +109,10 @@ export class AssessmentEvaluationComponent {
         this.sharedDataService.print.next(false)
       }, 1000)
     }, 100)
+  }
+
+  generatePowerPoint() {
+    this.sharedDataService.createPowerPoint.next(true);
+    this.sharedDataService.createPowerPoint.next(false);
   }
 }

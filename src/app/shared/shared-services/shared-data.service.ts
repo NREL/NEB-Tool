@@ -16,10 +16,12 @@ export class SharedDataService {
   }>;
 
   print: BehaviorSubject<boolean>;
+  createPowerPoint: BehaviorSubject<boolean>;
   constructor() {
     this.createAssessmentModalOpen = new BehaviorSubject<boolean>(false);
     this.sidebarOpen = new BehaviorSubject<boolean>(false);
     this.displayAddNebsModal = new BehaviorSubject<{ assessmentId: string, energyOpportunityId: string }>(undefined);
     this.print = new BehaviorSubject<boolean>(false);
+    this.createPowerPoint = new BehaviorSubject<boolean>(false);
   }
 }
